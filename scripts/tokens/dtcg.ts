@@ -179,10 +179,12 @@ export class Output {
    * @param dir output directory
    * @param suffix files this output owns; other files in `dir` (such as
    *     build output next to tokens/css/*.css) are left alone
+   * @param ignore owned-looking files to leave alone (e.g. build output)
    */
   constructor(
     readonly dir: string,
     readonly suffix: string,
+    readonly ignore?: RegExp,
   ) {}
 
   add(name: string, content: string) {
@@ -194,8 +196,8 @@ export class Output {
   /** Returns the list of out-of-date files (empty when up to date). */
   commit(check: boolean): string[] {
     const stale: string[] = [];
-    const existing = (fs.existsSync(this.dir) ? fs.readdirSync(this.dir) : []).filter((name) =>
-      name.endsWith(this.suffix),
+    const existing = (fs.existsSync(this.dir) ? fs.readdirSync(this.dir) : []).filter(
+      (name) => name.endsWith(this.suffix) && !this.ignore?.test(name),
     );
     for (const name of existing) {
       if (!this.files.has(name)) {

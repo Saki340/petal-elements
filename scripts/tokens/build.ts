@@ -16,7 +16,8 @@
  *    -> tokens/dtcg/compose/*.tokens.json
  * 3. Web DTCG, plus the Compose expressive springs the web tokens lack,
  *    -> Style Dictionary -> tokens/css/*.css
- * 4. Comparison reports -> tokens/reports/*.md
+ * 4. Web DTCG -> tokens/versions/v34/*.scss (v0.192 functions, v34 values)
+ * 5. Comparison reports -> tokens/reports/*.md
  */
 
 import {readComposeTokens} from './compose.js';
@@ -24,6 +25,7 @@ import {compare, Flat, flattenDtcg, flattenLegacy, report, sourceLine} from './c
 import {buildCss} from './css.js';
 import {kebab, Output, SOURCES, stableJson} from './dtcg.js';
 import {readLegacyTokens} from './legacy.js';
+import {buildCompatSass, compatReport} from './sass.js';
 import {readWebTokens} from './web.js';
 
 const check = process.argv.includes('--check');
@@ -52,7 +54,15 @@ for (const [name, content] of await buildCss(web.files, expressiveMotion.tokens)
 }
 outputs.push(cssOut);
 
-// 4. Reports.
+// 4. Sass modules for the components (v0.192 shape, v34 values).
+const legacyTokens = readLegacyTokens();
+const compat = buildCompatSass(web.files, legacyTokens);
+// The build writes *-meta.scss next to these files.
+const sassOut = new Output('tokens/versions/v34', '.scss', /-meta\.scss$/);
+for (const [name, content] of compat.output) sassOut.add(name, content);
+outputs.push(sassOut);
+
+// 5. Reports.
 const onlyLightDark = (flat: Flat): Flat =>
   new Map([...flat].filter(([k]) => !k.includes('/') || k.startsWith('dark/')));
 const webFlat = onlyLightDark(flattenDtcg(web.files));
@@ -62,7 +72,7 @@ const composeFlat = flattenDtcg(
     tokens: f.tokens,
   })),
 );
-const legacyFlat = flattenLegacy(readLegacyTokens());
+const legacyFlat = flattenLegacy(legacyTokens);
 
 const webName = `web v${SOURCES.web.version}`;
 const skippedNote = (title: string, names: string[]) =>
@@ -113,6 +123,7 @@ reportsOut.add(
     comparison: compare(webFlat, legacyFlat),
   }),
 );
+reportsOut.add('compat-v34.md', compatReport(compat.reports));
 outputs.push(reportsOut);
 
 const stale = outputs.flatMap((output) => output.commit(check));

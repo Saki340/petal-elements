@@ -39,6 +39,11 @@ export interface WebFile {
   /** Context from the file name, e.g. `dark__high-contrast`, or ''. */
   context: string;
   tokens: Group;
+  /**
+   * Sass variable name -> token name, for the converted tokens. Typography
+   * mixins are keyed `@name`.
+   */
+  variables: Map<string, string>;
 }
 
 export interface WebTokens {
@@ -232,6 +237,7 @@ export function readWebTokens(): WebTokens {
     };
     const context = module.includes('__') ? module.slice(module.indexOf('__') + 2) : '';
     const tokens: Group = header(SOURCES.web, `_${module}.scss`, context ? {context} : {});
+    const variables = new Map<string, string>();
     for (const t of raw) {
       if (t.composite) {
         skipped.push(t.name);
@@ -248,8 +254,9 @@ export function readWebTokens(): WebTokens {
       }
       if (t.deprecated) token.$deprecated = t.deprecated;
       setToken(tokens, t.name, token);
+      variables.set(t.variable, t.name);
     }
-    files.push({module, context, tokens});
+    files.push({module, context, tokens, variables});
   }
   return {files, skipped: [...new Set(skipped)].sort()};
 }
