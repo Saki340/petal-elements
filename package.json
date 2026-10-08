@@ -50,6 +50,7 @@
     "**/*.css",
     "**/*.css.map",
     "custom-elements.json",
+    "NOTICE",
     "!web-test-runner.config.js",
     "!commitlint.config.js",
     "!**/test/**",
