@@ -40,14 +40,13 @@ pseudo-classes into classes, so all states show at the same time.
 
 ## Colors
 
-`?theme=v0_192` (the default) applies the v0.192 color schemes the components
-are built with today; the light values equal the fallbacks compiled into the
-components. The baseline therefore records the components as they were before
-any token change.
+The pages load the generated [tokens/css/sys.css](../tokens/css/sys.css)
+(`?theme=sys`, the default), whose light values equal the fallbacks compiled
+into the components.
 
-`VISUAL_THEME=sys npm run test:visual` uses the generated
-[tokens/css/sys.css](../tokens/css/sys.css) instead, to preview what the new
-tokens change.
+`VISUAL_THEME=v0_192 npm run test:visual` applies the v0.192 color schemes
+instead, to compare with the look before the token update (see
+[token-update-v34.md](token-update-v34.md)).
 
 ## Determinism
 

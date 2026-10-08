@@ -20,6 +20,8 @@ tokens/versions/latest/sass  ──► tokens/dtcg/web/*.tokens.json ──┐
                                                                  ├─► Style Dictionary ─► tokens/css/*.css
 androidx *Tokens.kt (pinned) ──► tokens/dtcg/compose/*.tokens.json ┘   (expressive springs only)
 
+web DTCG + v0.192 Sass ──► tokens/versions/v34/*.scss (used by the components)
+
 web + compose + v0.192 ──► tokens/reports/*.md
 ```
 
@@ -84,6 +86,16 @@ takes to settle within 0.1%:
 
 `<speed>` is `fast`, `default` or `slow`; `<kind>` is `spatial` (position,
 size, shape; may overshoot) or `effects` (color, opacity).
+
+### Sass modules for the components
+
+The components read tokens through the Sass wrappers in `tokens/*.scss`,
+which call `values()` functions in a versioned folder. `tokens/versions/v34/`
+is generated with the same functions and keys as `tokens/versions/v0_192/`
+and the v34 values, so a wrapper switches by changing its `@use` line. See
+[token-update-v34.md](token-update-v34.md) for what changed and
+[tokens/reports/compat-v34.md](../tokens/reports/compat-v34.md) for
+coverage.
 
 ## Findings (2026-10-08)
 

@@ -25,6 +25,9 @@ Modifications (details in the git history):
   scripts/rebrand.ts and re-applied after each upstream merge.
 - Build steps rewritten as Node scripts so the build runs on Windows
   (scripts/build-tasks.ts).
+- The token wrappers in tokens/*.scss for the system tokens and the core
+  components read the generated tokens/versions/v34/ modules instead of
+  tokens/versions/v0_192/ (see docs/token-update-v34.md).
 - Package metadata, README, contributing, security, issue template and CI files
   replaced or edited for this project.
 - Google Sans font files and two documentation images with third-party content
