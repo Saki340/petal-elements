@@ -33,6 +33,9 @@ Please follow our [code of conduct](CODE_OF_CONDUCT.md).
   npm run check:rebrand
   ```
 
+- For changes that affect how components look, also run
+  `npm run test:visual` and explain every screenshot change in the PR (see
+  [docs/visual-testing.md](docs/visual-testing.md)).
 - Design token values must come from source (the Material Design web tokens
   in `tokens/versions/`, or Jetpack Compose Material 3), not from screenshots or
   memory. Mention the source in the PR.
