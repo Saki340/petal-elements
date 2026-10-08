@@ -4,6 +4,9 @@
     "catalog",
     "**/demo",
     "scripts/",
-    "labs/gb/"
+    "labs/gb/",
+    "tests/visual/specs/",
+    "tests/visual/playwright.config.ts",
+    "tests/visual/global-setup.ts"
   ]
 }

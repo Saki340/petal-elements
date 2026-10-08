@@ -32,6 +32,8 @@ const DEV_ONLY = new Set([
   'CC-BY-4.0',
   'CC0-1.0',
   'MPL-2.0',
+  // Fonts used only by the visual tests (@fontsource/roboto).
+  'OFL-1.1',
   'Python-2.0',
   'Unlicense',
   'WTFPL',

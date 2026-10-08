@@ -1,0 +1,346 @@
+/**
+ * @license
+ * Copyright 2026 Saki
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/**
+ * @fileoverview Renders one component as a grid of variants (rows) and
+ * states (columns) for the visual regression tests.
+ *
+ *     /tests/visual/index.html?component=button&scheme=dark
+ *
+ * Hover, focus and pressed are simulated with the component harnesses
+ * (testing/harness.ts), so all states show at once. `document.body` gets
+ * `data-ready` when the grid is fully rendered.
+ */
+
+import '../../all.js';
+
+import {html, nothing, render, TemplateResult} from 'lit';
+
+import {ButtonHarness} from '../../button/harness.js';
+import {CheckboxHarness} from '../../checkbox/harness.js';
+import {ChipHarness} from '../../chips/harness.js';
+import {FabHarness} from '../../fab/harness.js';
+import {IconButtonHarness} from '../../iconbutton/harness.js';
+import {RadioHarness} from '../../radio/harness.js';
+import {SwitchHarness} from '../../switch/harness.js';
+import {TabHarness} from '../../tabs/harness.js';
+import {Harness} from '../../testing/harness.js';
+import {TextFieldHarness} from '../../textfield/harness.js';
+
+type State = 'default' | 'hover' | 'focus' | 'pressed' | 'disabled';
+
+const INTERACTIVE: State[] = ['default', 'hover', 'focus', 'pressed', 'disabled'];
+
+interface Row {
+  name: string;
+  render: (state: State) => TemplateResult;
+}
+
+interface Gallery {
+  states: State[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  harness?: new (element: any) => Harness;
+  rows: Row[];
+}
+
+const disabled = (state: State) => state === 'disabled';
+
+/** A plain plus sign, so no icon font is needed. */
+const plus = html`<svg viewBox="0 0 24 24" fill="currentColor"><path d="M11 5h2v14h-2zM5 11h14v2H5z" /></svg>`;
+/** A plain square outline. */
+const square = html`<svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 5h14v14H5zm2 2v10h10V7z" /></svg>`;
+const icon = (slot?: string, svg = plus) =>
+  html`<petal-icon slot=${slot ?? nothing}>${svg}</petal-icon>`;
+
+const buttons = ['filled', 'outlined', 'text', 'elevated', 'filled-tonal'];
+
+const galleries: Record<string, Gallery> = {
+  button: {
+    states: INTERACTIVE,
+    harness: ButtonHarness,
+    rows: buttons.flatMap((variant) => [
+      {
+        name: variant,
+        render: (state) => {
+          switch (variant) {
+            case 'filled':
+              return html`<petal-filled-button data-subject ?disabled=${disabled(state)}>Label</petal-filled-button>`;
+            case 'outlined':
+              return html`<petal-outlined-button data-subject ?disabled=${disabled(state)}>Label</petal-outlined-button>`;
+            case 'text':
+              return html`<petal-text-button data-subject ?disabled=${disabled(state)}>Label</petal-text-button>`;
+            case 'elevated':
+              return html`<petal-elevated-button data-subject ?disabled=${disabled(state)}>Label</petal-elevated-button>`;
+            default:
+              return html`<petal-filled-tonal-button data-subject ?disabled=${disabled(state)}>Label</petal-filled-tonal-button>`;
+          }
+        },
+      },
+      {
+        name: `${variant} + icon`,
+        render: (state) => {
+          const content = html`${icon('icon')}Label`;
+          switch (variant) {
+            case 'filled':
+              return html`<petal-filled-button data-subject has-icon ?disabled=${disabled(state)}>${content}</petal-filled-button>`;
+            case 'outlined':
+              return html`<petal-outlined-button data-subject has-icon ?disabled=${disabled(state)}>${content}</petal-outlined-button>`;
+            case 'text':
+              return html`<petal-text-button data-subject has-icon ?disabled=${disabled(state)}>${content}</petal-text-button>`;
+            case 'elevated':
+              return html`<petal-elevated-button data-subject has-icon ?disabled=${disabled(state)}>${content}</petal-elevated-button>`;
+            default:
+              return html`<petal-filled-tonal-button data-subject has-icon ?disabled=${disabled(state)}>${content}</petal-filled-tonal-button>`;
+          }
+        },
+      },
+    ]),
+  },
+
+  'icon-button': {
+    states: INTERACTIVE,
+    harness: IconButtonHarness,
+    rows: ['standard', 'filled', 'filled-tonal', 'outlined'].flatMap((variant) =>
+      [
+        ['', false, false],
+        [' toggle off', true, false],
+        [' toggle on', true, true],
+      ].map(([suffix, toggle, selected]) => ({
+        name: `${variant}${suffix}`,
+        render: (state: State) => {
+          const content = html`${icon()}${icon('selected', square)}`;
+          const d = disabled(state);
+          switch (variant) {
+            case 'standard':
+              return html`<petal-icon-button data-subject ?toggle=${toggle} ?selected=${selected} ?disabled=${d}>${content}</petal-icon-button>`;
+            case 'filled':
+              return html`<petal-filled-icon-button data-subject ?toggle=${toggle} ?selected=${selected} ?disabled=${d}>${content}</petal-filled-icon-button>`;
+            case 'filled-tonal':
+              return html`<petal-filled-tonal-icon-button data-subject ?toggle=${toggle} ?selected=${selected} ?disabled=${d}>${content}</petal-filled-tonal-icon-button>`;
+            default:
+              return html`<petal-outlined-icon-button data-subject ?toggle=${toggle} ?selected=${selected} ?disabled=${d}>${content}</petal-outlined-icon-button>`;
+          }
+        },
+      })),
+    ),
+  },
+
+  fab: {
+    states: ['default', 'hover', 'focus', 'pressed'],
+    harness: FabHarness,
+    rows: [
+      ...['surface', 'primary', 'secondary', 'tertiary'].map((variant) => ({
+        name: variant,
+        render: () => html`<petal-fab data-subject variant=${variant}>${icon('icon')}</petal-fab>`,
+      })),
+      ...['small', 'large'].map((size) => ({
+        name: `primary ${size}`,
+        render: () => html`<petal-fab data-subject variant="primary" size=${size}>${icon('icon')}</petal-fab>`,
+      })),
+      {
+        name: 'extended',
+        render: () => html`<petal-fab data-subject variant="primary" label="Label">${icon('icon')}</petal-fab>`,
+      },
+      {
+        name: 'lowered',
+        render: () => html`<petal-fab data-subject lowered>${icon('icon')}</petal-fab>`,
+      },
+    ],
+  },
+
+  checkbox: {
+    states: INTERACTIVE,
+    harness: CheckboxHarness,
+    rows: [
+      ['unchecked', false, false],
+      ['checked', true, false],
+      ['indeterminate', false, true],
+    ].map(([name, checked, indeterminate]) => ({
+      name: name as string,
+      render: (state) =>
+        html`<petal-checkbox data-subject ?checked=${checked} ?indeterminate=${indeterminate} ?disabled=${disabled(state)}></petal-checkbox>`,
+    })),
+  },
+
+  radio: {
+    states: INTERACTIVE,
+    harness: RadioHarness,
+    rows: [
+      ['unchecked', false],
+      ['checked', true],
+    ].map(([name, checked]) => ({
+      name: name as string,
+      render: (state) =>
+        html`<petal-radio data-subject name=${`r-${name}-${state}`} ?checked=${checked} ?disabled=${disabled(state)}></petal-radio>`,
+    })),
+  },
+
+  switch: {
+    states: INTERACTIVE,
+    harness: SwitchHarness,
+    rows: [
+      ['off', false, ''],
+      ['on', true, ''],
+      ['off, icons', false, 'icons'],
+      ['on, icons', true, 'icons'],
+      ['on, selected icon only', true, 'selected'],
+    ].map(([name, selected, icons]) => ({
+      name: name as string,
+      render: (state) =>
+        html`<petal-switch data-subject ?selected=${selected} ?icons=${icons !== ''} ?show-only-selected-icon=${icons === 'selected'} ?disabled=${disabled(state)}></petal-switch>`,
+    })),
+  },
+
+  'text-field': {
+    states: ['default', 'hover', 'focus', 'disabled'],
+    harness: TextFieldHarness,
+    rows: ['filled', 'outlined'].flatMap((variant) =>
+      [
+        {name: 'empty', props: {}},
+        {name: 'value', props: {value: 'Value'}},
+        {name: 'supporting text', props: {value: 'Value', supportingText: 'Supporting text'}},
+        {name: 'error', props: {value: 'Value', error: true, errorText: 'Error text'}},
+        {name: 'icons', props: {value: 'Value', icons: true}},
+      ].map(({name, props}) => ({
+        name: `${variant} ${name}`,
+        render: (state: State) => {
+          const p = props as {value?: string; supportingText?: string; error?: boolean; errorText?: string; icons?: boolean};
+          const content = p.icons ? html`${icon('leading-icon')}${icon('trailing-icon', square)}` : nothing;
+          return variant === 'filled'
+            ? html`<petal-filled-text-field data-subject label="Label" .value=${p.value ?? ''} supporting-text=${p.supportingText ?? nothing} ?error=${p.error} error-text=${p.errorText ?? nothing} ?disabled=${disabled(state)}>${content}</petal-filled-text-field>`
+            : html`<petal-outlined-text-field data-subject label="Label" .value=${p.value ?? ''} supporting-text=${p.supportingText ?? nothing} ?error=${p.error} error-text=${p.errorText ?? nothing} ?disabled=${disabled(state)}>${content}</petal-outlined-text-field>`;
+        },
+      })),
+    ),
+  },
+
+  chips: {
+    states: INTERACTIVE,
+    harness: ChipHarness,
+    rows: [
+      {name: 'assist', render: (s: State) => html`<petal-assist-chip data-subject label="Assist" ?disabled=${disabled(s)}>${icon('icon')}</petal-assist-chip>`},
+      {name: 'assist elevated', render: (s: State) => html`<petal-assist-chip data-subject elevated label="Assist" ?disabled=${disabled(s)}>${icon('icon')}</petal-assist-chip>`},
+      {name: 'filter', render: (s: State) => html`<petal-filter-chip data-subject label="Filter" ?disabled=${disabled(s)}></petal-filter-chip>`},
+      {name: 'filter selected', render: (s: State) => html`<petal-filter-chip data-subject selected label="Filter" ?disabled=${disabled(s)}></petal-filter-chip>`},
+      {name: 'filter removable', render: (s: State) => html`<petal-filter-chip data-subject removable selected label="Filter" ?disabled=${disabled(s)}></petal-filter-chip>`},
+      {name: 'input', render: (s: State) => html`<petal-input-chip data-subject label="Input" ?disabled=${disabled(s)}></petal-input-chip>`},
+      {name: 'suggestion', render: (s: State) => html`<petal-suggestion-chip data-subject label="Suggestion" ?disabled=${disabled(s)}></petal-suggestion-chip>`},
+    ],
+  },
+
+  progress: {
+    states: ['default'],
+    rows: [
+      {name: 'linear 40%', render: () => html`<petal-linear-progress value="0.4"></petal-linear-progress>`},
+      {name: 'linear buffer', render: () => html`<petal-linear-progress value="0.4" buffer="0.7"></petal-linear-progress>`},
+      {name: 'linear indeterminate', render: () => html`<petal-linear-progress indeterminate></petal-linear-progress>`},
+      {name: 'circular 40%', render: () => html`<petal-circular-progress value="0.4"></petal-circular-progress>`},
+      {name: 'circular indeterminate', render: () => html`<petal-circular-progress indeterminate></petal-circular-progress>`},
+    ],
+  },
+
+  tabs: {
+    states: ['default', 'hover', 'focus', 'pressed'],
+    harness: TabHarness,
+    // The state is applied to the second, inactive tab.
+    rows: [
+      {
+        name: 'primary',
+        render: () => html`<petal-tabs><petal-primary-tab>One</petal-primary-tab><petal-primary-tab data-subject>Two</petal-primary-tab><petal-primary-tab>Three</petal-primary-tab></petal-tabs>`,
+      },
+      {
+        name: 'primary + icon',
+        render: () => html`<petal-tabs><petal-primary-tab has-icon>${icon('icon')}One</petal-primary-tab><petal-primary-tab data-subject has-icon>${icon('icon')}Two</petal-primary-tab><petal-primary-tab has-icon>${icon('icon')}Three</petal-primary-tab></petal-tabs>`,
+      },
+      {
+        name: 'secondary',
+        render: () => html`<petal-tabs><petal-secondary-tab>One</petal-secondary-tab><petal-secondary-tab data-subject>Two</petal-secondary-tab><petal-secondary-tab>Three</petal-secondary-tab></petal-tabs>`,
+      },
+    ],
+  },
+};
+
+async function settle() {
+  await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+}
+
+/** Waits for every Lit element in the tree, including shadow roots. */
+async function updateAll(root: ParentNode) {
+  for (const element of root.querySelectorAll('*')) {
+    const update = (element as {updateComplete?: Promise<unknown>}).updateComplete;
+    if (update) await update;
+    if (element.shadowRoot) await updateAll(element.shadowRoot);
+  }
+}
+
+async function main() {
+  const params = new URLSearchParams(location.search);
+  const name = params.get('component') ?? '';
+  const gallery = galleries[name];
+  if (!gallery) throw new Error(`Unknown component "${name}"`);
+  document.documentElement.style.colorScheme = params.get('scheme') ?? 'light';
+
+  const root = document.getElementById('gallery')!;
+  render(
+    html`<table>
+      <thead><tr><th></th>${gallery.states.map((s) => html`<th>${s}</th>`)}</tr></thead>
+      <tbody>
+        ${gallery.rows.map(
+          (row) => html`<tr>
+            <th>${row.name}</th>
+            ${gallery.states.map((state) => html`<td data-state=${state}>${row.render(state)}</td>`)}
+          </tr>`,
+        )}
+      </tbody>
+    </table>`,
+    root,
+  );
+
+  await Promise.all([document.fonts.load('400 16px Roboto'), document.fonts.load('500 16px Roboto')]);
+  await updateAll(root);
+
+  if (gallery.harness) {
+    for (const cell of root.querySelectorAll<HTMLElement>('td[data-state]')) {
+      const subject = cell.querySelector<HTMLElement>('[data-subject]');
+      if (!subject) throw new Error(`No [data-subject] in ${name}`);
+      const harness = new gallery.harness(subject);
+      switch (cell.dataset['state']) {
+        case 'hover':
+          await harness.startHover();
+          break;
+        case 'focus':
+          await harness.focusWithKeyboard();
+          break;
+        case 'pressed':
+          await harness.startClickWithMouse();
+          break;
+        default:
+          break;
+      }
+    }
+  }
+
+  await updateAll(root);
+  await document.fonts.ready;
+  await settle();
+  // End every animation and transition (shadow roots included): finite ones
+  // jump to their end state, infinite ones (indeterminate progress) are
+  // removed, so each run renders the same frame.
+  for (const animation of document.getAnimations()) {
+    if (animation.effect?.getComputedTiming().endTime === Infinity) {
+      animation.cancel();
+    } else {
+      animation.finish();
+    }
+  }
+  await settle();
+  document.body.dataset['ready'] = '';
+}
+
+main().catch((error: Error) => {
+  document.body.dataset['error'] = error.message;
+  throw error;
+});

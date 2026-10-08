@@ -41,7 +41,8 @@
     "check:rebrand": "wireit",
     "tokens": "wireit",
     "check:tokens": "wireit",
-    "tokens:upstream": "wireit"
+    "tokens:upstream": "wireit",
+    "test:visual": "wireit"
   },
   "type": "module",
   "customElements": "custom-elements.json",
@@ -65,7 +66,8 @@
     "!scripts/",
     "!**/testing/**",
     "testing/harness.{js,js.map,d.ts}",
-    "testing/transform-pseudo-classes.{js,js.map,d.ts}"
+    "testing/transform-pseudo-classes.{js,js.map,d.ts}",
+    "!tests/**"
   ],
   "workspaces": [
     "catalog"
@@ -77,9 +79,11 @@
     "tslib": "^2.4.0"
   },
   "devDependencies": {
+    "@fontsource/roboto": "5.3.0",
     "@lit-labs/analyzer": "^0.14.0",
     "@lit-labs/gen-manifest": "^0.3.6",
     "@lit-labs/gen-utils": "^0.3.4",
+    "@playwright/test": "1.56.1",
     "@rollup/plugin-multi-entry": "^6.0.1",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-terser": "^1.0.0",
@@ -336,6 +340,18 @@
       "command": "node scripts/tokens/upstream.js",
       "dependencies": [
         "build:scripts"
+      ],
+      "output": []
+    },
+    "test:visual": {
+      "command": "playwright test -c tests/visual",
+      "dependencies": [
+        "build:ts",
+        "build:scripts"
+      ],
+      "files": [
+        "tests/visual/**",
+        "!tests/visual/__screenshots__/**"
       ],
       "output": []
     }

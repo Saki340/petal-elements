@@ -1,0 +1,72 @@
+<!doctype html>
+<!--
+  @license
+  Copyright 2026 Saki
+  SPDX-License-Identifier: Apache-2.0
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>petal-elements visual tests</title>
+    <script>
+      // ?theme=v0_192 (default): colors the components are built with today.
+      // ?theme=sys: the generated tokens/css/sys.css.
+      const theme = new URLSearchParams(location.search).get('theme') || 'v0_192';
+      const href =
+        theme === 'sys' ? '/tokens/css/sys.css' : '/.cache/visual/theme-v0_192.css';
+      document.write(`<link rel="stylesheet" href="${href}" />`);
+    </script>
+    <style>
+      /* Roboto from @fontsource/roboto (OFL-1.1), for the tests only. */
+      @font-face {
+        font-family: Roboto;
+        font-weight: 400;
+        src: url(/node_modules/@fontsource/roboto/files/roboto-latin-400-normal.woff2) format('woff2');
+      }
+      @font-face {
+        font-family: Roboto;
+        font-weight: 500;
+        src: url(/node_modules/@fontsource/roboto/files/roboto-latin-500-normal.woff2) format('woff2');
+      }
+      @font-face {
+        font-family: Roboto;
+        font-weight: 700;
+        src: url(/node_modules/@fontsource/roboto/files/roboto-latin-700-normal.woff2) format('woff2');
+      }
+      body {
+        margin: 0;
+        background: var(--md-sys-color-surface, #fef7ff);
+        color: var(--md-sys-color-on-surface, #1d1b20);
+        font: 400 12px/16px Roboto;
+      }
+      #gallery {
+        display: inline-block;
+        padding: 16px;
+        background: var(--md-sys-color-surface, #fef7ff);
+      }
+      table {
+        border-collapse: collapse;
+      }
+      th {
+        padding: 8px 12px;
+        font-weight: 500;
+        text-align: start;
+        white-space: nowrap;
+      }
+      td {
+        padding: 12px;
+        vertical-align: middle;
+      }
+      petal-linear-progress {
+        width: 200px;
+      }
+      petal-tabs {
+        width: 360px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="gallery"></div>
+    <script type="module" src="./gallery.js"></script>
+  </body>
+</html>
