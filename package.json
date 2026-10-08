@@ -38,7 +38,10 @@
     "update-docs:sass-ext": "wireit",
     "update-size": "wireit",
     "check:licenses": "wireit",
-    "check:rebrand": "wireit"
+    "check:rebrand": "wireit",
+    "tokens": "wireit",
+    "check:tokens": "wireit",
+    "tokens:upstream": "wireit"
   },
   "type": "module",
   "customElements": "custom-elements.json",
@@ -51,6 +54,8 @@
     "**/*.css.map",
     "custom-elements.json",
     "NOTICE",
+    "tokens/sources.json",
+    "tokens/dtcg/web/*.tokens.json",
     "!web-test-runner.config.js",
     "!commitlint.config.js",
     "!**/test/**",
@@ -88,6 +93,7 @@
     "rollup": "^2.79.1",
     "sass": "^1.93.2",
     "sass-true": "^6.1.0",
+    "style-dictionary": "^5.5.5",
     "typescript": "5.9.2",
     "web-test-runner-jasmine": "^0.0.6",
     "wireit": "^0.14.12"
@@ -178,7 +184,8 @@
       "output": [
         "**/*.css",
         "**/*.css.map",
-        "!catalog/"
+        "!catalog/",
+        "!tokens/css/**"
       ],
       "dependencies": [
         "build:sass:generate"
@@ -294,6 +301,39 @@
     },
     "check:rebrand": {
       "command": "node scripts/rebrand.js --check",
+      "dependencies": [
+        "build:scripts"
+      ],
+      "output": []
+    },
+    "tokens": {
+      "command": "node scripts/tokens/build.js",
+      "dependencies": [
+        "build:scripts"
+      ],
+      "files": [
+        "tokens/sources.json",
+        "tokens/versions/latest/sass/**",
+        "tokens/versions/v0_192/**",
+        "!tokens/versions/**/*-meta.scss"
+      ],
+      "output": [
+        "tokens/dtcg/**",
+        "tokens/css/*.css",
+        "tokens/reports/**"
+      ],
+      "clean": false
+    },
+    "check:tokens": {
+      "command": "node scripts/tokens/build.js --check && node scripts/tokens/check-usage.js",
+      "dependencies": [
+        "build:scripts",
+        "build:sass"
+      ],
+      "output": []
+    },
+    "tokens:upstream": {
+      "command": "node scripts/tokens/upstream.js",
       "dependencies": [
         "build:scripts"
       ],

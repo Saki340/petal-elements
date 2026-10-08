@@ -1,0 +1,19 @@
+{
+  "web": {
+    "description": "Material Design web tokens shipped in material-web. Primary source.",
+    "repository": "https://github.com/material-components/material-web",
+    "commit": "763a97326fc2d0f425366cc3fa87bd0eccfaabdc",
+    "path": "tokens/versions/latest/sass",
+    "version": "34.0.21",
+    "copyright": "Copyright 2026 Google LLC",
+    "license": "Apache-2.0"
+  },
+  "compose": {
+    "description": "Jetpack Compose Material 3 tokens. Used to cross-check the web tokens.",
+    "repository": "https://github.com/androidx/androidx",
+    "commit": "df73c2438e78ba644a436dc402ede6ba2d472812",
+    "path": "compose/material3/material3/src/commonMain/kotlin/androidx/compose/material3/tokens",
+    "copyright": "Copyright The Android Open Source Project",
+    "license": "Apache-2.0"
+  }
+}
