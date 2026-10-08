@@ -9,9 +9,9 @@ material.
 | Source | License | Copyright | Used for |
 |---|---|---|---|
 | [material-components/material-web](https://github.com/material-components/material-web) | Apache-2.0 | Google LLC | The whole code base, including the Material Design web tokens in `tokens/versions/` |
+| [androidx/androidx](https://github.com/androidx/androidx) (Jetpack Compose Material 3 `tokens/*Tokens.kt`, pinned commit in `tokens/sources.json`) | Apache-2.0 | The Android Open Source Project | `tokens/dtcg/compose/` (cross-check) and the expressive springs in `tokens/css/sys.css`; see [tokens.md](tokens.md) |
 
-Sources added later (for example Jetpack Compose Material 3 token files from
-[androidx/androidx](https://github.com/androidx/androidx), or
+Sources added later (for example
 [material-color-utilities](https://github.com/material-foundation/material-color-utilities))
 are added to this table and to [NOTICE](../NOTICE) in the same change that
 first brings their material into the repository.
@@ -38,7 +38,9 @@ first brings their material into the repository.
 
 - Generated files must say where they come from: source repository, pinned
   commit, that they are generated, and the original copyright and license
-  notice of the source.
+  notice of the source. The token scripts do this: CSS files in a comment
+  header, DTCG JSON files in the root `$description` and
+  `$extensions["dev.petal-elements"]`.
 
 ## Names and content
 

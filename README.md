@@ -28,6 +28,7 @@ history, and works towards Material 3 Expressive:
 - Design token values come from the Material Design web tokens (v34) that ship
   in the Material Web repository, cross-checked against the Jetpack Compose
   Material 3 sources. Values are taken from source, never estimated by eye.
+  See [docs/tokens.md](docs/tokens.md).
 - Missing Expressive specs and components (shape morphing, spring motion,
   button groups, …) are added step by step and checked with visual regression
   tests.

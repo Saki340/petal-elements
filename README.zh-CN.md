@@ -23,7 +23,7 @@ Google 的 Material Web 项目
 petal-elements 在 Material Web 代码库（保留完整 git 历史）的基础上继续开发，目标是 Material 3 Expressive：
 
 - 组件沿用 Material Web 的基础设施：ripple、焦点环、状态层、通过 `ElementInternals` 的表单关联和无障碍支持。
-- 设计令牌的数值来自 Material Web 仓库自带的 Material Design Web 令牌（v34），并与 Jetpack Compose Material 3 源码交叉核对。数值一律以源码为准，不凭目测估计。
+- 设计令牌的数值来自 Material Web 仓库自带的 Material Design Web 令牌（v34），并与 Jetpack Compose Material 3 源码交叉核对。数值一律以源码为准，不凭目测估计。详见 [docs/tokens.md](docs/tokens.md)。
 - 逐步补上缺失的 Expressive 规格和组件（形状变形、弹簧动效、按钮组等），并用视觉回归测试验证。
 - 持续跟进上游并合并其修复，包括上游 `labs/` 中的 Expressive 工作。
 

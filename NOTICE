@@ -33,3 +33,21 @@ Modifications (details in the git history):
 Source files changed from upstream keep their original copyright and license
 header and carry the line "Modified for petal-elements" where the file format
 allows comments.
+
+The Material Design web tokens in tokens/versions/ are part of Material Web.
+Files generated from them (tokens/dtcg/web/, tokens/css/) state their source
+commit and Google's copyright in their headers.
+
+-------------------------------------------------------------------------------
+Jetpack Compose Material 3 design tokens
+https://github.com/androidx/androidx
+Copyright The Android Open Source Project
+Licensed under the Apache License, Version 2.0.
+
+Token values are read from
+compose/material3/material3/src/commonMain/kotlin/androidx/compose/material3/tokens/
+at commit df73c2438e78ba644a436dc402ede6ba2d472812 (pinned in
+tokens/sources.json) and converted to W3C Design Tokens files in
+tokens/dtcg/compose/. The expressive motion springs in tokens/css/sys.css come
+from ExpressiveMotionTokens.kt. Generated files state their source commit and
+the original copyright in their headers.
