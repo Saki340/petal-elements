@@ -36,7 +36,9 @@
     "update-docs": "wireit",
     "update-docs:components": "wireit",
     "update-docs:sass-ext": "wireit",
-    "update-size": "wireit"
+    "update-size": "wireit",
+    "check:licenses": "wireit",
+    "check:rebrand": "wireit"
   },
   "type": "module",
   "customElements": "custom-elements.json",
@@ -278,6 +280,23 @@
         "build:scripts",
         "build"
       ]
+    },
+    "check:licenses": {
+      "command": "node scripts/check-licenses.js",
+      "dependencies": [
+        "build:scripts"
+      ],
+      "files": [
+        "package-lock.json"
+      ],
+      "output": []
+    },
+    "check:rebrand": {
+      "command": "node scripts/rebrand.js --check",
+      "dependencies": [
+        "build:scripts"
+      ],
+      "output": []
     }
   }
 }
