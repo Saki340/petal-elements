@@ -1,0 +1,32 @@
+# Copyright 2026 Saki
+# SPDX-License-Identifier: Apache-2.0
+
+# Weekly check for token changes in Jetpack Compose (androidx) and
+# material-web since the commits pinned in tokens/sources.json. The run fails
+# when something changed; the job summary lists the changes.
+
+name: Upstream tokens
+
+on:
+  schedule:
+    - cron: '17 3 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - run: npm run tokens:upstream
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

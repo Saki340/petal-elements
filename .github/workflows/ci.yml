@@ -25,10 +25,18 @@ jobs:
         with:
           node-version: 22
           cache: npm
+      # Compose token sources, downloaded by scripts/tokens at the pinned commit.
+      - uses: actions/cache@v4
+        with:
+          path: .cache/compose
+          key: compose-tokens-${{ hashFiles('tokens/sources.json') }}
 
       - run: npm ci
       - run: npm run check:licenses
       - run: npm run check:rebrand
       - run: npm run build
+      - run: npm run check:tokens
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: npx playwright install --with-deps chromium
       - run: npm test
