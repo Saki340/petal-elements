@@ -1,0 +1,75 @@
+//
+// Copyright 2026 Saki
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// Colors of toggle buttons (`toggle` and `selected`), from the web tokens
+// md.comp.button.{filled,tonal,outlined,elevated}.{selected,unselected}.*
+// (tokens/versions/v34/values).
+
+@use 'sass:map';
+
+// Private property -> token key without the `selected-` / `unselected-` prefix.
+$_properties: (
+  'container-color': 'container-color',
+  'label-text-color': 'label-text-color',
+  'icon-color': 'icon-color',
+  'hover-label-text-color': 'hovered-label-text-color',
+  'hover-icon-color': 'hovered-icon-color',
+  'hover-state-layer-color': 'hovered-state-layer-color',
+  'focus-label-text-color': 'focused-label-text-color',
+  'focus-icon-color': 'focused-icon-color',
+  'pressed-label-text-color': 'pressed-label-text-color',
+  'pressed-icon-color': 'pressed-icon-color',
+  'pressed-state-layer-color': 'pressed-state-layer-color',
+);
+
+@mixin _state($values, $state) {
+  @each $property, $key in $_properties {
+    $value: map.get($values, '#{$state}-#{$key}');
+    @if $value != null {
+      --_#{$property}: #{$value};
+    }
+  }
+}
+
+/// @param $values A value map from tokens/versions/v34/values.
+/// @param $outlined Whether this is the outlined button: unselected uses the
+///     outlined button's outline color, selected has a container and no
+///     outline (Compose's OutlinedToggleButton), also when disabled.
+@mixin styles($values, $outlined: false) {
+  :host([toggle]:not([selected])) {
+    @include _state($values, 'unselected');
+    @if $outlined {
+      --_outline-color: #{map.get($values, 'outline-color')};
+      --_pressed-outline-color: #{map.get(
+          $values,
+          'unselected-pressed-outline-color'
+        )};
+      --_disabled-outline-color: #{map.get(
+          $values,
+          'unselected-disabled-outline-color'
+        )};
+    }
+  }
+
+  :host([toggle][selected]) {
+    @include _state($values, 'selected');
+    @if $outlined {
+      // No outline, so the state layer covers the whole container.
+      --_outline-width: 0px;
+      --_outline-color: transparent;
+      --_pressed-outline-color: transparent;
+      --_disabled-outline-color: transparent;
+      // Outlined buttons have no disabled container; a selected one does.
+      --_disabled-container-color: #{map.get(
+          $values,
+          'selected-disabled-container-color'
+        )};
+      --_disabled-container-opacity: #{map.get(
+          $values,
+          'disabled-container-opacity'
+        )};
+    }
+  }
+}

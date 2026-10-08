@@ -100,6 +100,54 @@ const galleries: Record<string, Gallery> = {
     ]),
   },
 
+  // Material 3 Expressive sizes. The pressed column shows the pressed shape.
+  'button-sizes': {
+    states: INTERACTIVE,
+    harness: ButtonHarness,
+    rows: [
+      ...['xsmall', 'small', 'medium', 'large', 'xlarge'].flatMap((size) =>
+        ['round', 'square'].map((shape) => ({
+          name: `${size} ${shape}`,
+          render: (state: State) =>
+            html`<petal-filled-button data-subject size=${size} shape=${shape} ?disabled=${disabled(state)}>${icon('icon')}Label</petal-filled-button>`,
+        })),
+      ),
+      ...['xsmall', 'medium', 'large', 'xlarge'].map((size) => ({
+        name: `outlined ${size}`,
+        render: (state: State) =>
+          html`<petal-outlined-button data-subject size=${size} ?disabled=${disabled(state)}>Label</petal-outlined-button>`,
+      })),
+    ],
+  },
+
+  'toggle-button': {
+    states: INTERACTIVE,
+    harness: ButtonHarness,
+    rows: ['filled', 'filled-tonal', 'outlined', 'elevated'].flatMap((variant) =>
+      [
+        ['off', false, 'round'],
+        ['on', true, 'round'],
+        ['on, square', true, 'square'],
+      ].map(([suffix, selected, shape]) => ({
+        name: `${variant} ${suffix}`,
+        render: (state: State) => {
+          const d = disabled(state);
+          const content = html`${icon('icon')}Label`;
+          switch (variant) {
+            case 'filled':
+              return html`<petal-filled-button data-subject toggle ?selected=${selected} size="small" shape=${shape} ?disabled=${d}>${content}</petal-filled-button>`;
+            case 'filled-tonal':
+              return html`<petal-filled-tonal-button data-subject toggle ?selected=${selected} size="small" shape=${shape} ?disabled=${d}>${content}</petal-filled-tonal-button>`;
+            case 'outlined':
+              return html`<petal-outlined-button data-subject toggle ?selected=${selected} size="small" shape=${shape} ?disabled=${d}>${content}</petal-outlined-button>`;
+            default:
+              return html`<petal-elevated-button data-subject toggle ?selected=${selected} size="small" shape=${shape} ?disabled=${d}>${content}</petal-elevated-button>`;
+          }
+        },
+      })),
+    ),
+  },
+
   'icon-button': {
     states: INTERACTIVE,
     harness: IconButtonHarness,

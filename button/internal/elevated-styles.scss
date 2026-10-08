@@ -1,10 +1,15 @@
 //
 // Copyright 2021 Google LLC
 // SPDX-License-Identifier: Apache-2.0
+// Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
 //
 
 // go/keep-sorted start
 @use './elevated-button';
+@use './toggle';
+@use '../../tokens/versions/v34/values/md-comp-button-elevated' as toggle-tokens;
 // go/keep-sorted end
 
 @include elevated-button.styles;
+
+@include toggle.styles(toggle-tokens.$values);

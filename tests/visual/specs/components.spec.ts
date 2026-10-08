@@ -9,6 +9,8 @@ import {expect, test} from '@playwright/test';
 /** Galleries in tests/visual/gallery.ts. */
 const COMPONENTS = [
   'button',
+  'button-sizes',
+  'toggle-button',
   'icon-button',
   'fab',
   'checkbox',

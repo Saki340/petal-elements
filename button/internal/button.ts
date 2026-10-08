@@ -15,12 +15,25 @@ import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 import {mixinDelegatesAria} from '../../internal/aria/delegate.js';
 import {safeHref} from '../../internal/directives/safe-href.js';
 import {
+  afterDispatch,
+  setupDispatchHooks,
+} from '../../internal/events/dispatch-hooks.js';
+import {
   dispatchActivationClick,
   isActivationClick,
 } from '../../internal/events/form-label-activation.js';
 import {mixinElementInternals} from '../../labs/behaviors/element-internals.js';
 import {mixinFormAssociated} from '../../labs/behaviors/form-associated.js';
 import {mixinFormSubmitter} from '../../labs/behaviors/form-submitter.js';
+
+/**
+ * Material 3 Expressive button sizes. Without a size, the button keeps its
+ * original (pre-Expressive) metrics.
+ */
+export type ButtonSize = 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
+
+/** Container shape of a sized button. */
+export type ButtonShape = 'round' | 'square';
 
 // Separate variable needed for closure.
 const buttonBaseClass = mixinDelegatesAria(
@@ -29,6 +42,10 @@ const buttonBaseClass = mixinDelegatesAria(
 
 /**
  * A button component.
+ *
+ * @fires input {InputEvent} Dispatched when a toggle button toggles --bubbles
+ * --composed
+ * @fires change {Event} Dispatched when a toggle button toggles --bubbles
  */
 export abstract class Button extends buttonBaseClass {
   /** @nocollapse */
@@ -93,6 +110,37 @@ export abstract class Button extends buttonBaseClass {
   @property({type: Boolean, attribute: 'has-icon', reflect: true}) hasIcon =
     false;
 
+  /**
+   * Material 3 Expressive size. Sets the height, padding, icon size, label
+   * typescale and shapes, and makes the shape morph while pressed. Without a
+   * size, the button keeps its original metrics.
+   */
+  // No default value, so no `size` attribute is reflected.
+  @property({reflect: true}) size?: ButtonSize;
+
+  /**
+   * Container shape of a sized button: `round` (default) or `square`.
+   */
+  @property({reflect: true}) shape?: ButtonShape;
+
+  /**
+   * When true, the button toggles between selected and unselected on click
+   * and exposes `aria-pressed`. Not available for text buttons or links.
+   */
+  @property({type: Boolean, reflect: true}) toggle = false;
+
+  /**
+   * Whether a toggle button is selected.
+   */
+  @property({type: Boolean, reflect: true}) selected = false;
+
+  /** Whether this button variant has a toggle (selected) style. */
+  protected supportsToggle = true;
+
+  private get isToggle() {
+    return this.toggle && this.supportsToggle && !this.href;
+  }
+
   @query('.button') private readonly buttonElement!: HTMLElement | null;
 
   @queryAssignedElements({slot: 'icon', flatten: true})
@@ -101,6 +149,7 @@ export abstract class Button extends buttonBaseClass {
   constructor() {
     super();
     if (!isServer) {
+      setupDispatchHooks(this, 'click');
       this.addEventListener('click', this.handleClick.bind(this), {
         capture: true,
       });
@@ -146,6 +195,7 @@ export abstract class Button extends buttonBaseClass {
       id="button"
       class="button"
       ?disabled=${this.disabled}
+      aria-pressed=${this.isToggle ? String(this.selected) : nothing}
       aria-disabled=${this.softDisabled || nothing}
       aria-label="${ariaLabel || nothing}"
       aria-haspopup="${ariaHasPopup || nothing}"
@@ -195,6 +245,25 @@ export abstract class Button extends buttonBaseClass {
       event.stopImmediatePropagation();
       event.preventDefault();
       return;
+    }
+
+    if (this.isToggle) {
+      // Toggle after other listeners ran, unless one of them called
+      // preventDefault(). Save the state first, since a listener may also
+      // change it.
+      const wasSelected = this.selected;
+      afterDispatch(event, () => {
+        if (this.disabled || event.defaultPrevented) {
+          return;
+        }
+
+        this.selected = !wasSelected;
+        this.dispatchEvent(
+          new InputEvent('input', {bubbles: true, composed: true}),
+        );
+        // Bubbles but does not compose, like native <input> and <select>.
+        this.dispatchEvent(new Event('change', {bubbles: true}));
+      });
     }
 
     if (!isActivationClick(event) || !this.buttonElement) {

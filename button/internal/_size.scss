@@ -1,0 +1,145 @@
+//
+// Copyright 2026 Saki
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// Material 3 Expressive button sizes (`size` attribute), container shapes
+// (`shape`) and the shape morph while pressed or toggled.
+//
+// Values come from the web tokens md.comp.button.{xsmall,...,xlarge}
+// (tokens/versions/v34/values). Where Compose's ButtonDefaults deliberately
+// override a token, the component follows Compose:
+// - small pressed shape: 6dp (ButtonDefaults / ToggleButtonDefaults), not
+//   corner.small (8dp);
+// - xsmall icon spacing: 4dp (ButtonDefaults.ExtraSmallIconSpacing), not 8dp;
+// - the pressed morph of a plain button uses the default effects spring, so it
+//   does not bounce (Button.kt); toggle buttons use fast spatial
+//   (ToggleButton.kt).
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'sass:map';
+@use 'sass:meta';
+@use 'sass:string';
+@use '../../tokens/versions/v34/values/md-comp-button-large' as large;
+@use '../../tokens/versions/v34/values/md-comp-button-medium' as medium;
+@use '../../tokens/versions/v34/values/md-comp-button-small' as small;
+@use '../../tokens/versions/v34/values/md-comp-button-xlarge' as xlarge;
+@use '../../tokens/versions/v34/values/md-comp-button-xsmall' as xsmall;
+@use '../../tokens/versions/v34/values/md-sys-motion-springs' as springs;
+// go/keep-sorted end
+
+$sizes: (
+  'xsmall': xsmall.$values,
+  'small': small.$values,
+  'medium': medium.$values,
+  'large': large.$values,
+  'xlarge': xlarge.$values,
+);
+
+// Compose ButtonDefaults overrides (see above).
+$_overrides: (
+  'small': (
+    'pressed-container-shape': 6px,
+  ),
+  'xsmall': (
+    'icon-label-space': 4px,
+  ),
+);
+
+// A fully rounded corner as half the height instead of 9999px, so the morph
+// to and from it is gradual.
+@function _shape($value) {
+  @if string.index(meta.inspect($value), '--md-sys-shape-corner-full') {
+    @return calc(var(--_container-height) / 2);
+  }
+  @return $value;
+}
+
+@function _get($size, $key) {
+  $override: map.get($_overrides, $size, $key);
+  @return if($override != null, $override, map.get($sizes, $size, $key));
+}
+
+/// Outline width of sized outlined buttons; included by the outlined button.
+@mixin outline-width() {
+  @each $size, $values in $sizes {
+    :host([size='#{$size}']) {
+      --_outline-width: #{_get($size, 'outlined-outline-width')};
+    }
+  }
+}
+
+@mixin styles() {
+  @each $size, $values in $sizes {
+    :host([size='#{$size}']) {
+      --_container-height: #{_get($size, 'container-height')};
+      --_icon-size: #{_get($size, 'icon-size')};
+      --_icon-label-space: #{_get($size, 'icon-label-space')};
+      --_label-text-font: #{_get($size, 'label-text-font')};
+      --_label-text-line-height: #{_get($size, 'label-text-line-height')};
+      --_label-text-size: #{_get($size, 'label-text-size')};
+      --_label-text-weight: #{_get($size, 'label-text-weight')};
+      // The same padding with and without icons (ButtonDefaults content
+      // padding for each size).
+      --_leading-space: #{_get($size, 'leading-space')};
+      --_trailing-space: #{_get($size, 'trailing-space')};
+      --_with-leading-icon-leading-space: #{_get($size, 'leading-space')};
+      --_with-leading-icon-trailing-space: #{_get($size, 'trailing-space')};
+      --_with-trailing-icon-leading-space: #{_get($size, 'leading-space')};
+      --_with-trailing-icon-trailing-space: #{_get($size, 'trailing-space')};
+      --_shape-round: #{_shape(_get($size, 'container-shape-round'))};
+      --_shape-square: #{_shape(_get($size, 'container-shape-square'))};
+      --_shape-pressed: #{_shape(_get($size, 'pressed-container-shape'))};
+      --_shape-selected-round: #{_shape(
+          _get($size, 'selected-container-shape-round')
+        )};
+      --_shape-selected-square: #{_shape(
+          _get($size, 'selected-container-shape-square')
+        )};
+    }
+  }
+
+  :host([size]) {
+    --_shape: var(--_shape-round);
+    --_container-shape-start-start: var(--_shape);
+    --_container-shape-start-end: var(--_shape);
+    --_container-shape-end-end: var(--_shape);
+    --_container-shape-end-start: var(--_shape);
+    --_shape-easing: #{map.get(springs.$values, 'spring-default-effects')};
+    --_shape-duration: #{map.get(
+        springs.$values,
+        'spring-default-effects-duration'
+      )};
+    gap: var(--_icon-label-space);
+    transition-property: border-start-start-radius, border-start-end-radius,
+      border-end-end-radius, border-end-start-radius;
+    transition-duration: var(--_shape-duration);
+    transition-timing-function: var(--_shape-easing);
+  }
+
+  :host([size][toggle]) {
+    --_shape-easing: #{map.get(springs.$values, 'spring-fast-spatial')};
+    --_shape-duration: #{map.get(springs.$values, 'spring-fast-spatial-duration')};
+  }
+
+  :host([size][shape='square']) {
+    --_shape: var(--_shape-square);
+  }
+
+  :host([size][toggle][selected]) {
+    --_shape: var(--_shape-selected-round);
+  }
+
+  :host([size][toggle][selected][shape='square']) {
+    --_shape: var(--_shape-selected-square);
+  }
+
+  :host([size]:active:not([disabled], [soft-disabled])) {
+    --_shape: var(--_shape-pressed);
+  }
+
+  // Parts that draw the shape follow the host's (animated) radius.
+  :host([size]) .outline {
+    border-radius: inherit;
+  }
+}
