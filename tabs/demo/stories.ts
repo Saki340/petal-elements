@@ -5,15 +5,15 @@
  * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
-import '@material/web/icon/icon.js';
-import '@material/web/iconbutton/icon-button.js';
-import '@material/web/tabs/primary-tab.js';
-import '@material/web/tabs/secondary-tab.js';
-import '@material/web/tabs/tabs.js';
+import 'petal-elements/icon/icon.js';
+import 'petal-elements/iconbutton/icon-button.js';
+import 'petal-elements/tabs/primary-tab.js';
+import 'petal-elements/tabs/secondary-tab.js';
+import 'petal-elements/tabs/tabs.js';
 
 import {MaterialStoryInit} from './material-collection.js';
-import {PetalTabs} from '@material/web/tabs/tabs.js';
-import {styles as typescaleStyles} from '@material/web/typography/md-typescale-styles.cssresult.js';
+import {PetalTabs} from 'petal-elements/tabs/tabs.js';
+import {styles as typescaleStyles} from 'petal-elements/typography/md-typescale-styles.cssresult.js';
 import {css, html, nothing} from 'lit';
 import {ref} from 'lit/directives/ref.js';
 

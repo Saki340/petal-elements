@@ -5,17 +5,17 @@
  * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
-import '@material/web/labs/gb/components/navbar/md-gb-nav-bar.js';
-import '@material/web/labs/gb/components/navbar/md-gb-nav-bar-item.js';
-import '@material/web/labs/gb/styles/icon/md-gb-icon.js';
+import 'petal-elements/labs/gb/components/navbar/md-gb-nav-bar.js';
+import 'petal-elements/labs/gb/components/navbar/md-gb-nav-bar-item.js';
+import 'petal-elements/labs/gb/styles/icon/md-gb-icon.js';
 
 import {type MaterialStoryInit} from './material-collection.js';
-import {type NavBarItemLayout} from '@material/web/labs/gb/components/navbar/nav-bar.js';
-import {adoptStyles} from '@material/web/labs/gb/styles/adopt-styles.js';
+import {type NavBarItemLayout} from 'petal-elements/labs/gb/components/navbar/nav-bar.js';
+import {adoptStyles} from 'petal-elements/labs/gb/styles/adopt-styles.js';
 import {css, html} from 'lit';
 
-import {styles as m3Styles} from '@material/web/labs/gb/styles/m3.css' with {type: 'css'}; // github-only
-// import {styles as m3Styles} from '@material/web/labs/gb/styles/m3.cssresult.js'; // google3-only
+import {styles as m3Styles} from 'petal-elements/labs/gb/styles/m3.css' with {type: 'css'}; // github-only
+// import {styles as m3Styles} from 'petal-elements/labs/gb/styles/m3.cssresult.js'; // google3-only
 
 /** Knob types for navigation bar stories. */
 export interface StoryKnobs {

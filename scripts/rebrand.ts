@@ -19,12 +19,14 @@
  *   CSS classes with the same name;
  * - element class names listed in `HTMLElementTagNameMap`
  *   (`MdFilledButton` -> `PetalFilledButton`);
+ * - the package name in imports (`@material/web/...` -> `petal-elements/...`);
  * - Google-licensed files that change get a modification notice under their
  *   SPDX line (Apache-2.0 section 4(b)).
  *
  * What does not change: CSS custom properties (`--md-*`), Sass names,
  * file names and import paths (`md-focus-ring.js`), generated tokens in
- * tokens/versions/, and CHANGELOG.md.
+ * tokens/versions/, CHANGELOG.md, and our own files that name the upstream
+ * project on purpose (README, NOTICE, docs/licensing.md).
  */
 
 import {execFileSync} from 'child_process';
@@ -40,6 +42,8 @@ const SKIP = [
   /(^|\/)package-lock\.json$/,
   /^tokens\/versions\//,
   /^scripts\/rebrand\.ts$/,
+  /^README(\.[\w-]+)?\.md$/,
+  /^docs\/licensing\.md$/,
 ];
 
 const check = process.argv.includes('--check');
@@ -84,6 +88,8 @@ const tagPattern = new RegExp(
   'g',
 );
 const classPattern = new RegExp(`\\bMd(${alternatives(classes)})\\b`, 'g');
+// `@material/web` but not `@material/web-foo` or other `@material/*` packages.
+const packagePattern = /@material\/web(?![\w-])/g;
 
 function addNotice(source: string) {
   if (source.includes(NOTICE_LINE.slice(0, 30))) return source;
@@ -99,7 +105,8 @@ let changed = 0;
 for (const [file, source] of sources) {
   let next = source
     .replace(tagPattern, `${NEW}-$1`)
-    .replace(classPattern, 'Petal$1');
+    .replace(classPattern, 'Petal$1')
+    .replace(packagePattern, 'petal-elements');
   if (next === source) continue;
   next = addNotice(next);
   changed++;

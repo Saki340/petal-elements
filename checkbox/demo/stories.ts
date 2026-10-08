@@ -5,7 +5,7 @@
  * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
-import '@material/web/checkbox/checkbox.js';
+import 'petal-elements/checkbox/checkbox.js';
 
 import {
   labelStyles,

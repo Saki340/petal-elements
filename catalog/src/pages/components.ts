@@ -5,9 +5,9 @@
  * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
-import '@material/web/iconbutton/outlined-icon-button.js';
+import 'petal-elements/iconbutton/outlined-icon-button.js';
 
-import {PetalOutlinedIconButton} from '@material/web/iconbutton/outlined-icon-button.js';
+import {PetalOutlinedIconButton} from 'petal-elements/iconbutton/outlined-icon-button.js';
 import type {PlaygroundPreview} from 'playground-elements/playground-preview.js';
 import {PostDoc} from 'postdoc-lib';
 

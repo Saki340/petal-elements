@@ -5,9 +5,9 @@
  * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
-import '@material/web/field/filled-field.js';
-import '@material/web/field/outlined-field.js';
-import '@material/web/icon/icon.js';
+import 'petal-elements/field/filled-field.js';
+import 'petal-elements/field/outlined-field.js';
+import 'petal-elements/icon/icon.js';
 
 import {MaterialStoryInit} from './material-collection.js';
 import {css, html, nothing} from 'lit';

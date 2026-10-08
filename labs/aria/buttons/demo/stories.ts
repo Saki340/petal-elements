@@ -5,7 +5,7 @@
  * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
-import '@material/web/labs/aria/buttons/md-aria-toggle.js';
+import 'petal-elements/labs/aria/buttons/md-aria-toggle.js';
 
 import {MaterialStoryInit} from './material-collection.js';
 import {css, html} from 'lit';

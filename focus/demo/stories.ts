@@ -5,7 +5,7 @@
  * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
-import '@material/web/focus/md-focus-ring.js';
+import 'petal-elements/focus/md-focus-ring.js';
 
 import {MaterialStoryInit} from './material-collection.js';
 import {css, html} from 'lit';

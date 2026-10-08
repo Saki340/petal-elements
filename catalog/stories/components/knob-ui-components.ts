@@ -6,13 +6,13 @@
  */
 
 // These imports are resolved by Lit playground's unpkg loader
-import '@material/web/button/outlined-button.js';
-import '@material/web/checkbox/checkbox.js';
-import '@material/web/radio/radio.js';
-import '@material/web/ripple/ripple.js';
-import '@material/web/select/filled-select.js';
-import '@material/web/select/select-option.js';
-import '@material/web/textfield/filled-text-field.js';
+import 'petal-elements/button/outlined-button.js';
+import 'petal-elements/checkbox/checkbox.js';
+import 'petal-elements/radio/radio.js';
+import 'petal-elements/ripple/ripple.js';
+import 'petal-elements/select/filled-select.js';
+import 'petal-elements/select/select-option.js';
+import 'petal-elements/textfield/filled-text-field.js';
 
 import { css, html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';

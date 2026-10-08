@@ -19,7 +19,7 @@ tag: 'docType:gettingStarted'
 ## CDN
 
 For fast prototyping, we recommend using [esm.run](https://esm.run/)<!-- {.external} -->,
-a CDN that allows you to use `@material/web` without installing and building
+a CDN that allows you to use `petal-elements` without installing and building
 from NPM.
 
 <!-- LINT.IfChange -->
@@ -30,13 +30,13 @@ from NPM.
   <script type="importmap">
     {
       "imports": {
-        "@material/web/": "https://esm.run/@material/web/"
+        "petal-elements/": "https://esm.run/petal-elements/"
       }
     }
   </script>
   <script type="module">
-    import '@material/web/all.js';
-    import {styles as typescaleStyles} from '@material/web/typography/md-typescale-styles.js';
+    import 'petal-elements/all.js';
+    import {styles as typescaleStyles} from 'petal-elements/typography/md-typescale-styles.js';
 
     document.adoptedStyleSheets.push(typescaleStyles.styleSheet);
   </script>
@@ -78,19 +78,19 @@ Install Material web components using
 [npm and node](https://nodejs.org)<!-- {.external} -->.
 
 ```shell
-npm install @material/web
+npm install petal-elements
 ```
 
 ## Import
 
 Import element definitions from
-`@material/web/<component>/<component-variant>.js`.
+`petal-elements/<component>/<component-variant>.js`.
 
 ```js
 // index.js
-import '@material/web/button/filled-button.js';
-import '@material/web/button/outlined-button.js';
-import '@material/web/checkbox/checkbox.js';
+import 'petal-elements/button/filled-button.js';
+import 'petal-elements/button/outlined-button.js';
+import 'petal-elements/checkbox/checkbox.js';
 ```
 
 <!--#include file="../googlers/quick-start-import.md" -->

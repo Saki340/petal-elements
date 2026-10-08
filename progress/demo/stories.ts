@@ -5,14 +5,14 @@
  * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
-import '@material/web/button/filled-tonal-button.js';
-import '@material/web/icon/icon.js';
-import '@material/web/iconbutton/icon-button.js';
-import '@material/web/progress/circular-progress.js';
-import '@material/web/progress/linear-progress.js';
+import 'petal-elements/button/filled-tonal-button.js';
+import 'petal-elements/icon/icon.js';
+import 'petal-elements/iconbutton/icon-button.js';
+import 'petal-elements/progress/circular-progress.js';
+import 'petal-elements/progress/linear-progress.js';
 
 import {MaterialStoryInit} from './material-collection.js';
-import {PetalCircularProgress} from '@material/web/progress/circular-progress.js';
+import {PetalCircularProgress} from 'petal-elements/progress/circular-progress.js';
 import {css, html} from 'lit';
 import {classMap} from 'lit/directives/class-map.js';
 

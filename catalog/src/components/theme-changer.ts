@@ -5,14 +5,14 @@
  * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
-import '@material/web/focus/md-focus-ring.js';
-import '@material/web/icon/icon.js';
-import '@material/web/labs/segmentedbutton/outlined-segmented-button.js';
-import '@material/web/labs/segmentedbuttonset/outlined-segmented-button-set.js';
+import 'petal-elements/focus/md-focus-ring.js';
+import 'petal-elements/icon/icon.js';
+import 'petal-elements/labs/segmentedbutton/outlined-segmented-button.js';
+import 'petal-elements/labs/segmentedbuttonset/outlined-segmented-button-set.js';
 import './copy-code-button.js';
 import './hct-slider.js';
 
-import type {PetalOutlinedSegmentedButton} from '@material/web/labs/segmentedbutton/outlined-segmented-button.js';
+import type {PetalOutlinedSegmentedButton} from 'petal-elements/labs/segmentedbutton/outlined-segmented-button.js';
 import {css, html, LitElement} from 'lit';
 import {customElement, query, queryAll, state} from 'lit/decorators.js';
 import {live} from 'lit/directives/live.js';

@@ -5,7 +5,7 @@
  * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
-import '@material/web/switch/switch.js';
+import 'petal-elements/switch/switch.js';
 
 import {
   labelStyles,

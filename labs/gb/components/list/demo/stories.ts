@@ -5,19 +5,19 @@
  * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
-import '@material/web/labs/gb/components/list/md-gb-list.js';
-import '@material/web/labs/gb/components/list/md-gb-list-item.js';
-import '@material/web/labs/gb/styles/icon/md-gb-icon.js';
+import 'petal-elements/labs/gb/components/list/md-gb-list.js';
+import 'petal-elements/labs/gb/components/list/md-gb-list-item.js';
+import 'petal-elements/labs/gb/styles/icon/md-gb-icon.js';
 
 import {MaterialStoryInit} from './material-collection.js';
-import {styles as checkboxStyles} from '@material/web/labs/gb/components/checkbox/checkbox.cssresult.js';
-import {styles as focusRingStyles} from '@material/web/labs/gb/components/focus/focus-ring.cssresult.js';
-import {list, listItem} from '@material/web/labs/gb/components/list/list.js';
-import {styles as listStyles} from '@material/web/labs/gb/components/list/list.cssresult.js';
-import {styles as radioStyles} from '@material/web/labs/gb/components/radio/radio.cssresult.js';
-import {styles as rippleStyles} from '@material/web/labs/gb/components/ripple/ripple.cssresult.js';
-import {adoptStyles} from '@material/web/labs/gb/styles/adopt-styles.js';
-import {styles as m3Styles} from '@material/web/labs/gb/styles/m3.cssresult.js';
+import {styles as checkboxStyles} from 'petal-elements/labs/gb/components/checkbox/checkbox.cssresult.js';
+import {styles as focusRingStyles} from 'petal-elements/labs/gb/components/focus/focus-ring.cssresult.js';
+import {list, listItem} from 'petal-elements/labs/gb/components/list/list.js';
+import {styles as listStyles} from 'petal-elements/labs/gb/components/list/list.cssresult.js';
+import {styles as radioStyles} from 'petal-elements/labs/gb/components/radio/radio.cssresult.js';
+import {styles as rippleStyles} from 'petal-elements/labs/gb/components/ripple/ripple.cssresult.js';
+import {adoptStyles} from 'petal-elements/labs/gb/styles/adopt-styles.js';
+import {styles as m3Styles} from 'petal-elements/labs/gb/styles/m3.cssresult.js';
 import {css, html} from 'lit';
 
 /** Knob types for list stories. */

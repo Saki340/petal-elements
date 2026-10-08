@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import * as fs from 'fs/promises';
@@ -101,7 +102,7 @@ await fs.writeFile('docs/size.md', newMarkdownContent);
 // Text formatting functions for markdown table.
 
 function getImport(input: string) {
-  return `\`@material/web/${input}\``;
+  return `\`petal-elements/${input}\``;
 }
 
 function getCssPercent(size: Size) {

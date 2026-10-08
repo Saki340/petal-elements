@@ -30,7 +30,7 @@ attribute selectors.
 Provide selector strings to `ariaSelector()` before querying.
 
 ```ts
-import {ariaSelector} from '@material/web/migrations/v2/query-selector-aria';
+import {ariaSelector} from 'petal-elements/migrations/v2/query-selector-aria';
 
 const agreeCheckbox = document.querySelector(
   ariaSelector('petal-checkbox[aria-label="Agree"]')
@@ -48,7 +48,7 @@ Sass component token functions return a `var()` with the component's custom
 property, instead of just a value.
 
 ```scss
-@use '@material/web/tokens';
+@use 'petal-elements/tokens';
 
 $checkbox-tokens: tokens.md-comp-checkbox-values();
 // (
@@ -64,7 +64,7 @@ functions instead of CSS values. This may introduce additional unnecessary CSS
 or break Sass.
 
 ```scss
-@use '@material/web/tokens';
+@use 'petal-elements/tokens';
 
 $checkbox-tokens: tokens.md-comp-checkbox-values();
 
@@ -77,7 +77,7 @@ $double-icon-size: math.mult(map.get($checkbox-tokens, 'icon-size'), 2);
 Add the parameter `$exclude-custom-properties: true` to the values function.
 
 ```scss
-@use '@material/web/tokens';
+@use 'petal-elements/tokens';
 
 $checkbox-tokens: tokens.md-comp-checkbox-values($exclude-custom-properties: true);
 // (

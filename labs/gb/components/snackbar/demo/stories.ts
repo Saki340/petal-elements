@@ -5,17 +5,17 @@
  * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
-import '@material/web/labs/gb/components/button/md-gb-button.js';
-import '@material/web/labs/gb/components/snackbar/md-gb-snackbar.js';
+import 'petal-elements/labs/gb/components/button/md-gb-button.js';
+import 'petal-elements/labs/gb/components/snackbar/md-gb-snackbar.js';
 
 import {type MaterialStoryInit} from './material-collection.js';
-import {type SnackbarElement} from '@material/web/labs/gb/components/snackbar/snackbar-element.js';
-import {adoptStyles} from '@material/web/labs/gb/styles/adopt-styles.js';
+import {type SnackbarElement} from 'petal-elements/labs/gb/components/snackbar/snackbar-element.js';
+import {adoptStyles} from 'petal-elements/labs/gb/styles/adopt-styles.js';
 import {css, html, nothing, type TemplateResult} from 'lit';
 import {createRef, ref} from 'lit/directives/ref.js';
 
-import {styles as m3Styles} from '@material/web/labs/gb/styles/m3.css' with {type: 'css'}; // github-only
-// import {styles as m3Styles} from '@material/web/labs/gb/styles/m3.cssresult.js'; // google3-only
+import {styles as m3Styles} from 'petal-elements/labs/gb/styles/m3.css' with {type: 'css'}; // github-only
+// import {styles as m3Styles} from 'petal-elements/labs/gb/styles/m3.cssresult.js'; // google3-only
 
 /** Knob types for snackbar stories. */
 export interface StoryKnobs {

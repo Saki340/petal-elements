@@ -5,15 +5,15 @@
  * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
-import '@material/web/button/outlined-button.js';
-import '@material/web/button/text-button.js';
-import '@material/web/icon/icon.js';
-import '@material/web/iconbutton/icon-button.js';
-import '@material/web/textfield/filled-text-field.js';
-import '@material/web/textfield/outlined-text-field.js';
+import 'petal-elements/button/outlined-button.js';
+import 'petal-elements/button/text-button.js';
+import 'petal-elements/icon/icon.js';
+import 'petal-elements/iconbutton/icon-button.js';
+import 'petal-elements/textfield/filled-text-field.js';
+import 'petal-elements/textfield/outlined-text-field.js';
 
 import {MaterialStoryInit} from './material-collection.js';
-import {PetalFilledTextField} from '@material/web/textfield/filled-text-field.js';
+import {PetalFilledTextField} from 'petal-elements/textfield/filled-text-field.js';
 import {css, html, nothing} from 'lit';
 
 /** Knob types for Textfield stories. */

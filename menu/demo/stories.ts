@@ -5,16 +5,16 @@
  * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
-import '@material/web/button/filled-button.js';
-import '@material/web/divider/divider.js';
-import '@material/web/icon/icon.js';
-import '@material/web/menu/menu.js';
-import '@material/web/menu/menu-item.js';
-import '@material/web/menu/sub-menu.js';
+import 'petal-elements/button/filled-button.js';
+import 'petal-elements/divider/divider.js';
+import 'petal-elements/icon/icon.js';
+import 'petal-elements/menu/menu.js';
+import 'petal-elements/menu/menu-item.js';
+import 'petal-elements/menu/sub-menu.js';
 
 import {MaterialStoryInit} from './material-collection.js';
-import {CloseMenuEvent} from '@material/web/menu/internal/controllers/shared.js';
-import {Corner, FocusState, PetalMenu, MenuItem} from '@material/web/menu/menu.js';
+import {CloseMenuEvent} from 'petal-elements/menu/internal/controllers/shared.js';
+import {Corner, FocusState, PetalMenu, MenuItem} from 'petal-elements/menu/menu.js';
 import {css, html} from 'lit';
 
 /** Knob types for Menu stories. */

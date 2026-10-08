@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import './material-collection.js';
@@ -14,7 +15,7 @@ import {
   setUpDemo,
   title,
 } from './material-collection.js';
-import {Corner, FocusState} from '@material/web/menu/menu.js';
+import {Corner, FocusState} from 'petal-elements/menu/menu.js';
 import {
   boolInput,
   Knob,

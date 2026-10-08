@@ -5,7 +5,7 @@
  * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
-import '@material/web/radio/radio.js';
+import 'petal-elements/radio/radio.js';
 
 import {
   labelStyles,

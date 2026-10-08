@@ -5,10 +5,10 @@
  * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
-import '@material/web/divider/divider.js';
-import '@material/web/icon/icon.js';
-import '@material/web/list/list.js';
-import '@material/web/list/list-item.js';
+import 'petal-elements/divider/divider.js';
+import 'petal-elements/icon/icon.js';
+import 'petal-elements/list/list.js';
+import 'petal-elements/list/list-item.js';
 
 import {MaterialStoryInit} from './material-collection.js';
 import {css, html, nothing} from 'lit';

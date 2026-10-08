@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import './material-collection.js';
@@ -13,7 +14,7 @@ import {
   materialInitsToStoryInits,
   setUpDemo,
 } from './material-collection.js';
-import {type NavBarItemLayout} from '@material/web/labs/gb/components/navbar/nav-bar.js';
+import {type NavBarItemLayout} from 'petal-elements/labs/gb/components/navbar/nav-bar.js';
 import {boolInput, Knob, selectDropdown} from './index.js';
 
 import {stories, type StoryKnobs} from './stories.js';

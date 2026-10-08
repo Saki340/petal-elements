@@ -2,11 +2,12 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {MaterialStoryInit} from './material-collection.js';
-import {ripple} from '@material/web/labs/gb/components/ripple/ripple.js';
-import {styles as rippleStyles} from '@material/web/labs/gb/components/ripple/ripple.cssresult.js';
+import {ripple} from 'petal-elements/labs/gb/components/ripple/ripple.js';
+import {styles as rippleStyles} from 'petal-elements/labs/gb/components/ripple/ripple.cssresult.js';
 import {css, html} from 'lit';
 
 /** Knob types for ripple stories. */

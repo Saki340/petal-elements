@@ -7,9 +7,9 @@
 
 /* Fork of Lit stories story-knob-renderer with m3 components and theming */
 
-import '@material/web/elevation/elevation.js';
-import '@material/web/icon/icon.js';
-import '@material/web/iconbutton/icon-button.js';
+import 'petal-elements/elevation/elevation.js';
+import 'petal-elements/icon/icon.js';
+import 'petal-elements/iconbutton/icon-button.js';
 
 import {css, html, LitElement, PropertyValues} from 'lit';
 import {customElement, property, query} from 'lit/decorators.js';

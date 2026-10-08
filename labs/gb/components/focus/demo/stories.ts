@@ -2,10 +2,11 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {MaterialStoryInit} from './material-collection.js';
-import {styles as focusRingStyles} from '@material/web/labs/gb/components/focus/focus-ring.cssresult.js';
+import {styles as focusRingStyles} from 'petal-elements/labs/gb/components/focus/focus-ring.cssresult.js';
 import {css, html} from 'lit';
 
 /** Knob types for focus ring stories. */

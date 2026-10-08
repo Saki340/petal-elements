@@ -5,16 +5,16 @@
  * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
-import '@material/web/button/filled-button.js';
-import '@material/web/button/filled-tonal-button.js';
-import '@material/web/button/text-button.js';
-import '@material/web/dialog/dialog.js';
-import '@material/web/icon/icon.js';
-import '@material/web/iconbutton/icon-button.js';
-import '@material/web/radio/radio.js';
-import '@material/web/textfield/filled-text-field.js';
+import 'petal-elements/button/filled-button.js';
+import 'petal-elements/button/filled-tonal-button.js';
+import 'petal-elements/button/text-button.js';
+import 'petal-elements/dialog/dialog.js';
+import 'petal-elements/icon/icon.js';
+import 'petal-elements/iconbutton/icon-button.js';
+import 'petal-elements/radio/radio.js';
+import 'petal-elements/textfield/filled-text-field.js';
 
-import {PetalDialog} from '@material/web/dialog/dialog.js';
+import {PetalDialog} from 'petal-elements/dialog/dialog.js';
 import {MaterialStoryInit} from './material-collection.js';
 import {css, html, nothing} from 'lit';
 

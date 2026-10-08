@@ -5,14 +5,14 @@
  * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
-import '@material/web/icon/icon.js';
-import '@material/web/iconbutton/filled-icon-button.js';
-import '@material/web/iconbutton/filled-tonal-icon-button.js';
-import '@material/web/iconbutton/icon-button.js';
-import '@material/web/iconbutton/outlined-icon-button.js';
+import 'petal-elements/icon/icon.js';
+import 'petal-elements/iconbutton/filled-icon-button.js';
+import 'petal-elements/iconbutton/filled-tonal-icon-button.js';
+import 'petal-elements/iconbutton/icon-button.js';
+import 'petal-elements/iconbutton/outlined-icon-button.js';
 
 import {MaterialStoryInit} from './material-collection.js';
-import {styles as typescaleStyles} from '@material/web/typography/md-typescale-styles.cssresult.js';
+import {styles as typescaleStyles} from 'petal-elements/typography/md-typescale-styles.cssresult.js';
 import {css, html} from 'lit';
 
 /** Knob types for icon button stories. */

@@ -2,9 +2,10 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
-import '@material/web/button/filled-button.js';
-import '@material/web/menu/menu.js';
-import '@material/web/menu/menu-item.js';
-import '@material/web/menu/sub-menu.js';
+import 'petal-elements/button/filled-button.js';
+import 'petal-elements/menu/menu.js';
+import 'petal-elements/menu/menu-item.js';
+import 'petal-elements/menu/sub-menu.js';

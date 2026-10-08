@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import './material-collection.js';
@@ -16,7 +17,7 @@ import {
 import {
   type ToolbarColor,
   type ToolbarOrientation,
-} from '@material/web/labs/gb/components/toolbar/toolbar.js';
+} from 'petal-elements/labs/gb/components/toolbar/toolbar.js';
 import {boolInput, Knob, selectDropdown} from './index.js';
 
 import {stories, StoryKnobs} from './stories.js';

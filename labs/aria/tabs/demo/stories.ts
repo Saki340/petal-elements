@@ -5,9 +5,9 @@
  * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
-import '@material/web/labs/aria/tabs/md-aria-tab.js';
-import '@material/web/labs/aria/tabs/md-aria-tablist.js';
-import '@material/web/labs/aria/tabs/md-aria-tabpanel.js';
+import 'petal-elements/labs/aria/tabs/md-aria-tab.js';
+import 'petal-elements/labs/aria/tabs/md-aria-tablist.js';
+import 'petal-elements/labs/aria/tabs/md-aria-tabpanel.js';
 
 import {MaterialStoryInit} from './material-collection.js';
 import {css, html} from 'lit';

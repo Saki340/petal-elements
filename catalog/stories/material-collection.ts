@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 /* Slimmed down version of material-collection */
@@ -46,7 +47,7 @@ export function title(): KnobUi<void> {
  * // demo.ts
  * import {StoryKnobs} from './stories.js';
  * import {MaterialCollection, KnobTypesToKnobs} from
- * '@material/web/internal/demo/stories/material-collection';
+ * 'petal-elements/internal/demo/stories/material-collection';
  *
  * const stories = new MaterialCollection<KnobTypesToKnobs<StoryKnobs>>(...);
  * ```
@@ -64,7 +65,7 @@ export type KnobTypesToKnobs<
  * @example
  * ```ts
  * import {MaterialStoryInit} from
- * '@material/web/internal/demo/stories/material-collection';
+ * 'petal-elements/internal/demo/stories/material-collection';
  * // stories.ts
  * export interface StoryKnobs {
  *   checked: boolean;

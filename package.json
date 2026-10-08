@@ -1,13 +1,14 @@
 {
-  "name": "@material/web",
-  "version": "2.5.0",
+  "name": "petal-elements",
+  "version": "0.1.0",
   "publishConfig": {
     "access": "public"
   },
-  "description": "Material web components",
+  "description": "Community-maintained Material 3 Expressive web components. Not an official Google project.",
   "keywords": [
-    "material",
-    "material design",
+    "material 3",
+    "material 3 expressive",
+    "m3",
     "design system",
     "components",
     "web components",
@@ -15,13 +16,14 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/material-components/material-web.git"
+    "url": "git+https://github.com/Saki340/petal-elements.git"
   },
   "license": "Apache-2.0",
+  "author": "Saki",
   "bugs": {
-    "url": "https://github.com/material-components/material-web/issues"
+    "url": "https://github.com/Saki340/petal-elements/issues"
   },
-  "homepage": "https://github.com/material-components/material-web#readme",
+  "homepage": "https://github.com/Saki340/petal-elements#readme",
   "scripts": {
     "build": "wireit",
     "build:ts": "wireit",

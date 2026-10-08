@@ -6,14 +6,14 @@
  */
 
 import {MaterialStoryInit} from './material-collection.js';
-import '@material/web/labs/gb/components/slider/md-gb-slider.js';
+import 'petal-elements/labs/gb/components/slider/md-gb-slider.js';
 import {
   type SliderOrientation,
   type SliderSize,
-} from '@material/web/labs/gb/components/slider/slider.js';
-import {adoptStyles} from '@material/web/labs/gb/styles/adopt-styles.js';
-import '@material/web/labs/gb/styles/icon/md-gb-icon.js';
-import {styles as m3Styles} from '@material/web/labs/gb/styles/m3.cssresult.js';
+} from 'petal-elements/labs/gb/components/slider/slider.js';
+import {adoptStyles} from 'petal-elements/labs/gb/styles/adopt-styles.js';
+import 'petal-elements/labs/gb/styles/icon/md-gb-icon.js';
+import {styles as m3Styles} from 'petal-elements/labs/gb/styles/m3.cssresult.js';
 import {css, html} from 'lit';
 
 export {type SliderOrientation, type SliderSize};

@@ -5,12 +5,12 @@
  * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
-import '@material/web/labs/gb/components/switch/md-gb-switch.js';
-import '@material/web/labs/gb/styles/icon/md-gb-icon.js';
+import 'petal-elements/labs/gb/components/switch/md-gb-switch.js';
+import 'petal-elements/labs/gb/styles/icon/md-gb-icon.js';
 
 import {MaterialStoryInit} from './material-collection.js';
-import {adoptStyles} from '@material/web/labs/gb/styles/adopt-styles.js';
-import {styles as m3Styles} from '@material/web/labs/gb/styles/m3.cssresult.js';
+import {adoptStyles} from 'petal-elements/labs/gb/styles/adopt-styles.js';
+import {styles as m3Styles} from 'petal-elements/labs/gb/styles/m3.cssresult.js';
 import {css, html, nothing} from 'lit';
 
 /** Knob types for switch stories. */

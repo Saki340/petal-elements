@@ -5,9 +5,9 @@
  * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
-import '@material/web/icon/icon.js';
-import '@material/web/labs/navigationbar/navigation-bar.js';
-import '@material/web/labs/navigationtab/navigation-tab.js';
+import 'petal-elements/icon/icon.js';
+import 'petal-elements/labs/navigationbar/navigation-bar.js';
+import 'petal-elements/labs/navigationtab/navigation-tab.js';
 
 import {MaterialStoryInit} from './material-collection.js';
 import {css, html} from 'lit';

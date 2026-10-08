@@ -5,9 +5,9 @@
  * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
-import '@material/web/slider/slider.js';
+import 'petal-elements/slider/slider.js';
 
-import type {PetalSlider} from '@material/web/slider/slider.js';
+import type {PetalSlider} from 'petal-elements/slider/slider.js';
 import {css, html, LitElement} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {styleMap} from 'lit/directives/style-map.js';

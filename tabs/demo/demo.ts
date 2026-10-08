@@ -14,7 +14,7 @@ import {
   materialInitsToStoryInits,
   setUpDemo,
 } from './material-collection.js';
-import {PetalTabs} from '@material/web/tabs/tabs.js';
+import {PetalTabs} from 'petal-elements/tabs/tabs.js';
 import {
   boolInput,
   Knob,

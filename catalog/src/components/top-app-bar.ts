@@ -5,11 +5,11 @@
  * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
-import '@material/web/focus/md-focus-ring.js';
-import '@material/web/icon/icon.js';
-import '@material/web/iconbutton/icon-button.js';
+import 'petal-elements/focus/md-focus-ring.js';
+import 'petal-elements/icon/icon.js';
+import 'petal-elements/iconbutton/icon-button.js';
 
-import type {PetalIconButton} from '@material/web/iconbutton/icon-button.js';
+import type {PetalIconButton} from 'petal-elements/iconbutton/icon-button.js';
 import {css, html, LitElement} from 'lit';
 import {customElement, query, state} from 'lit/decorators.js';
 import {live} from 'lit/directives/live.js';

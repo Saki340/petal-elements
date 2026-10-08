@@ -5,20 +5,20 @@
  * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
-import '@material/web/labs/gb/components/menu/md-gb-menu.js';
-import '@material/web/labs/gb/components/menu/md-gb-menu-group.js';
-import '@material/web/labs/gb/components/menu/md-gb-menu-item.js';
+import 'petal-elements/labs/gb/components/menu/md-gb-menu.js';
+import 'petal-elements/labs/gb/components/menu/md-gb-menu-group.js';
+import 'petal-elements/labs/gb/components/menu/md-gb-menu-item.js';
 
 import {MaterialStoryInit} from './material-collection.js';
-import {button} from '@material/web/labs/gb/components/button/button.js';
-import {styles as buttonStyles} from '@material/web/labs/gb/components/button/button.cssresult.js';
-import {divider} from '@material/web/labs/gb/components/divider/divider.js';
-import {styles as dividerStyles} from '@material/web/labs/gb/components/divider/divider.cssresult.js';
-import {styles as focusRingStyles} from '@material/web/labs/gb/components/focus/focus-ring.cssresult.js';
-import {styles as menuStyles} from '@material/web/labs/gb/components/menu/menu.cssresult.js';
-import {styles as rippleStyles} from '@material/web/labs/gb/components/ripple/ripple.cssresult.js';
-import {adoptStyles} from '@material/web/labs/gb/styles/adopt-styles.js';
-import {styles as m3Styles} from '@material/web/labs/gb/styles/m3.cssresult.js';
+import {button} from 'petal-elements/labs/gb/components/button/button.js';
+import {styles as buttonStyles} from 'petal-elements/labs/gb/components/button/button.cssresult.js';
+import {divider} from 'petal-elements/labs/gb/components/divider/divider.js';
+import {styles as dividerStyles} from 'petal-elements/labs/gb/components/divider/divider.cssresult.js';
+import {styles as focusRingStyles} from 'petal-elements/labs/gb/components/focus/focus-ring.cssresult.js';
+import {styles as menuStyles} from 'petal-elements/labs/gb/components/menu/menu.cssresult.js';
+import {styles as rippleStyles} from 'petal-elements/labs/gb/components/ripple/ripple.cssresult.js';
+import {adoptStyles} from 'petal-elements/labs/gb/styles/adopt-styles.js';
+import {styles as m3Styles} from 'petal-elements/labs/gb/styles/m3.cssresult.js';
 import {css, html} from 'lit';
 
 /** Knob types for menu stories. */

@@ -5,12 +5,12 @@
  * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
-import '@material/web/chips/assist-chip.js';
-import '@material/web/chips/chip-set.js';
-import '@material/web/chips/filter-chip.js';
-import '@material/web/chips/input-chip.js';
-import '@material/web/chips/suggestion-chip.js';
-import '@material/web/icon/icon.js';
+import 'petal-elements/chips/assist-chip.js';
+import 'petal-elements/chips/chip-set.js';
+import 'petal-elements/chips/filter-chip.js';
+import 'petal-elements/chips/input-chip.js';
+import 'petal-elements/chips/suggestion-chip.js';
+import 'petal-elements/icon/icon.js';
 
 import {MaterialStoryInit} from './material-collection.js';
 import {css, html, svg} from 'lit';

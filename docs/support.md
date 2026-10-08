@@ -80,7 +80,7 @@ apply.
 For example, using Sass:
 
 ```scss
-@use '@material/web/color/color';
+@use 'petal-elements/color/color';
 
 :root {
   @media (prefers-color-scheme: dark) {
@@ -101,8 +101,8 @@ for more info on how to generate a set of dark theme tokens.
 -   Use Sass APIs.
 
     ```scss
-    @use '@material/web/color/color';
-    @use '@material/web/color/typography';
+    @use 'petal-elements/color/color';
+    @use 'petal-elements/color/typography';
 
     :root {
       @include color.light-theme;

@@ -5,13 +5,13 @@
  * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
-import '@material/web/slider/slider.js';
+import 'petal-elements/slider/slider.js';
 
 import {
   labelStyles,
   MaterialStoryInit,
 } from './material-collection.js';
-import {PetalSlider} from '@material/web/slider/slider.js';
+import {PetalSlider} from 'petal-elements/slider/slider.js';
 import {css, html} from 'lit';
 
 /** Knob types for slider stories. */

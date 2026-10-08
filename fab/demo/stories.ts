@@ -5,11 +5,11 @@
  * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
-import '@material/web/fab/branded-fab.js';
-import '@material/web/fab/fab.js';
-import '@material/web/icon/icon.js';
+import 'petal-elements/fab/branded-fab.js';
+import 'petal-elements/fab/fab.js';
+import 'petal-elements/icon/icon.js';
 
-import {FabSize} from '@material/web/fab/fab.js';
+import {FabSize} from 'petal-elements/fab/fab.js';
 import {
   labelStyles,
   MaterialStoryInit,

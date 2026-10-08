@@ -5,10 +5,10 @@
  * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
-import '@material/web/icon/icon.js';
-import '@material/web/select/filled-select.js';
-import '@material/web/select/outlined-select.js';
-import '@material/web/select/select-option.js';
+import 'petal-elements/icon/icon.js';
+import 'petal-elements/select/filled-select.js';
+import 'petal-elements/select/outlined-select.js';
+import 'petal-elements/select/select-option.js';
 
 import {MaterialStoryInit} from './material-collection.js';
 import {html, nothing} from 'lit';

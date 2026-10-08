@@ -5,10 +5,10 @@
  * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
-import '@material/web/labs/aria/menu/md-aria-fieldset.js';
-import '@material/web/labs/aria/menu/md-aria-menubar.js';
-import '@material/web/labs/aria/menu/md-aria-menuitem.js';
-import '@material/web/labs/aria/menu/md-aria-menulist.js';
+import 'petal-elements/labs/aria/menu/md-aria-fieldset.js';
+import 'petal-elements/labs/aria/menu/md-aria-menubar.js';
+import 'petal-elements/labs/aria/menu/md-aria-menuitem.js';
+import 'petal-elements/labs/aria/menu/md-aria-menulist.js';
 
 import {MaterialStoryInit} from './material-collection.js';
 import {css, html} from 'lit';

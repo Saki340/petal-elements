@@ -41,62 +41,62 @@ dependencies. We track three metrics:
 
 | Component | gzip | minified | *% CSS* | Import |
 | --- | --- | --- | --- | --- |
-| **All** | **72.1kb** | 455.5kb | *64% CSS* | `@material/web/all.js` |
-| **Common** | **53.7kb** | 287.6kb | *52% CSS* | `@material/web/common.js` |
+| **All** | **72.1kb** | 455.5kb | *64% CSS* | `petal-elements/all.js` |
+| **Common** | **53.7kb** | 287.6kb | *52% CSS* | `petal-elements/common.js` |
 | **Button** | **8.4kb** | 48.4kb | *64% CSS* |  |
-|  | 7.0kb | 29.0kb | *47% CSS* | `@material/web/button/elevated-button.js` |
-|  | 7.0kb | 28.9kb | *47% CSS* | `@material/web/button/filled-button.js` |
-|  | 7.0kb | 29.3kb | *48% CSS* | `@material/web/button/filled-tonal-button.js` |
-|  | 6.8kb | 27.4kb | *46% CSS* | `@material/web/button/outlined-button.js` |
-|  | 6.6kb | 25.8kb | *43% CSS* | `@material/web/button/text-button.js` |
-| **Checkbox** | **7.0kb** | 27.3kb | *37% CSS* | `@material/web/checkbox/checkbox.js` |
+|  | 7.0kb | 29.0kb | *47% CSS* | `petal-elements/button/elevated-button.js` |
+|  | 7.0kb | 28.9kb | *47% CSS* | `petal-elements/button/filled-button.js` |
+|  | 7.0kb | 29.3kb | *48% CSS* | `petal-elements/button/filled-tonal-button.js` |
+|  | 6.8kb | 27.4kb | *46% CSS* | `petal-elements/button/outlined-button.js` |
+|  | 6.6kb | 25.8kb | *43% CSS* | `petal-elements/button/text-button.js` |
+| **Checkbox** | **7.0kb** | 27.3kb | *37% CSS* | `petal-elements/checkbox/checkbox.js` |
 | **Chips** | **10.5kb** | 62.6kb | *62% CSS* |  |
-|  | 5.1kb | 17.7kb | *21% CSS* | `@material/web/chips/chip-set.js` |
-|  | 6.8kb | 28.5kb | *49% CSS* | `@material/web/chips/assist-chip.js` |
-|  | 8.3kb | 38.6kb | *53% CSS* | `@material/web/chips/filter-chip.js` |
-|  | 7.8kb | 35.4kb | *52% CSS* | `@material/web/chips/input-chip.js` |
-|  | 6.8kb | 28.9kb | *49% CSS* | `@material/web/chips/suggestion-chip.js` |
-| **Dialog** | **5.0kb** | 17.1kb | *27% CSS* | `@material/web/dialog/dialog.js` |
-| **Divider** | **0.6kb** | 1.3kb | *34% CSS* | `@material/web/divider/divider.js` |
-| **Elevation** | **0.6kb** | 1.7kb | *62% CSS* | `@material/web/elevation/elevation.js` |
+|  | 5.1kb | 17.7kb | *21% CSS* | `petal-elements/chips/chip-set.js` |
+|  | 6.8kb | 28.5kb | *49% CSS* | `petal-elements/chips/assist-chip.js` |
+|  | 8.3kb | 38.6kb | *53% CSS* | `petal-elements/chips/filter-chip.js` |
+|  | 7.8kb | 35.4kb | *52% CSS* | `petal-elements/chips/input-chip.js` |
+|  | 6.8kb | 28.9kb | *49% CSS* | `petal-elements/chips/suggestion-chip.js` |
+| **Dialog** | **5.0kb** | 17.1kb | *27% CSS* | `petal-elements/dialog/dialog.js` |
+| **Divider** | **0.6kb** | 1.3kb | *34% CSS* | `petal-elements/divider/divider.js` |
+| **Elevation** | **0.6kb** | 1.7kb | *62% CSS* | `petal-elements/elevation/elevation.js` |
 | **Fab** | **7.2kb** | 38.5kb | *66% CSS* |  |
-|  | 6.9kb | 34.0kb | *63% CSS* | `@material/web/fab/fab.js` |
-|  | 6.1kb | 25.7kb | *50% CSS* | `@material/web/fab/branded-fab.js` |
+|  | 6.9kb | 34.0kb | *63% CSS* | `petal-elements/fab/fab.js` |
+|  | 6.1kb | 25.7kb | *50% CSS* | `petal-elements/fab/branded-fab.js` |
 | **Field** | **6.1kb** | 41.5kb | *83% CSS* |  |
-|  | 4.7kb | 25.5kb | *74% CSS* | `@material/web/field/filled-field.js` |
-|  | 5.0kb | 27.7kb | *76% CSS* | `@material/web/field/outlined-field.js` |
-| **Focus** | **1.5kb** | 5.4kb | *49% CSS* | `@material/web/focus/md-focus-ring.js` |
-| **Icon** | **0.7kb** | 1.3kb | *47% CSS* | `@material/web/icon/icon.js` |
+|  | 4.7kb | 25.5kb | *74% CSS* | `petal-elements/field/filled-field.js` |
+|  | 5.0kb | 27.7kb | *76% CSS* | `petal-elements/field/outlined-field.js` |
+| **Focus** | **1.5kb** | 5.4kb | *49% CSS* | `petal-elements/focus/md-focus-ring.js` |
+| **Icon** | **0.7kb** | 1.3kb | *47% CSS* | `petal-elements/icon/icon.js` |
 | **Icon button** | **7.7kb** | 44.9kb | *64% CSS* |  |
-|  | 6.2kb | 24.8kb | *40% CSS* | `@material/web/iconbutton/icon-button.js` |
-|  | 6.4kb | 26.9kb | *44% CSS* | `@material/web/iconbutton/filled-icon-button.js` |
-|  | 6.4kb | 27.5kb | *45% CSS* | `@material/web/iconbutton/filled-tonal-icon-button.js` |
-|  | 6.4kb | 26.5kb | *44% CSS* | `@material/web/iconbutton/outlined-icon-button.js` |
+|  | 6.2kb | 24.8kb | *40% CSS* | `petal-elements/iconbutton/icon-button.js` |
+|  | 6.4kb | 26.9kb | *44% CSS* | `petal-elements/iconbutton/filled-icon-button.js` |
+|  | 6.4kb | 27.5kb | *45% CSS* | `petal-elements/iconbutton/filled-tonal-icon-button.js` |
+|  | 6.4kb | 26.5kb | *44% CSS* | `petal-elements/iconbutton/outlined-icon-button.js` |
 | **List** | **7.3kb** | 28.4kb | *33% CSS* |  |
-|  | 1.6kb | 4.7kb | *4% CSS* | `@material/web/list/list.js` |
-|  | 6.1kb | 23.9kb | *39% CSS* | `@material/web/list/list-item.js` |
+|  | 1.6kb | 4.7kb | *4% CSS* | `petal-elements/list/list.js` |
+|  | 6.1kb | 23.9kb | *39% CSS* | `petal-elements/list/list-item.js` |
 | **Menu** | **14.1kb** | 55.9kb | *22% CSS* |  |
-|  | 8.2kb | 30.2kb | *17% CSS* | `@material/web/menu/menu.js` |
-|  | 6.8kb | 26.5kb | *36% CSS* | `@material/web/menu/menu-item.js` |
-|  | 8.6kb | 33.0kb | *11% CSS* | `@material/web/menu/sub-menu.js` |
+|  | 8.2kb | 30.2kb | *17% CSS* | `petal-elements/menu/menu.js` |
+|  | 6.8kb | 26.5kb | *36% CSS* | `petal-elements/menu/menu-item.js` |
+|  | 8.6kb | 33.0kb | *11% CSS* | `petal-elements/menu/sub-menu.js` |
 | **Progress** | **3.8kb** | 14.8kb | *65% CSS* |  |
-|  | 2.9kb | 9.6kb | *56% CSS* | `@material/web/progress/linear-progress.js` |
-|  | 2.5kb | 8.3kb | *51% CSS* | `@material/web/progress/circular-progress.js` |
-| **Radio** | **6.6kb** | 24.4kb | *28% CSS* | `@material/web/radio/radio.js` |
-| **Ripple** | **2.7kb** | 7.7kb | *13% CSS* | `@material/web/ripple/ripple.js` |
+|  | 2.9kb | 9.6kb | *56% CSS* | `petal-elements/progress/linear-progress.js` |
+|  | 2.5kb | 8.3kb | *51% CSS* | `petal-elements/progress/circular-progress.js` |
+| **Radio** | **6.6kb** | 24.4kb | *28% CSS* | `petal-elements/radio/radio.js` |
+| **Ripple** | **2.7kb** | 7.7kb | *13% CSS* | `petal-elements/ripple/ripple.js` |
 | **Select** | **26.6kb** | 146.9kb | *56% CSS* |  |
-|  | 18.8kb | 93.6kb | *47% CSS* | `@material/web/select/filled-select.js` |
-|  | 19.0kb | 94.1kb | *47% CSS* | `@material/web/select/outlined-select.js` |
-|  | 6.9kb | 27.6kb | *35% CSS* | `@material/web/select/select-option.js` |
-| **Slider** | **9.9kb** | 43.2kb | *45% CSS* | `@material/web/slider/slider.js` |
-| **Switch** | **8.0kb** | 33.5kb | *45% CSS* | `@material/web/switch/switch.js` |
+|  | 18.8kb | 93.6kb | *47% CSS* | `petal-elements/select/filled-select.js` |
+|  | 19.0kb | 94.1kb | *47% CSS* | `petal-elements/select/outlined-select.js` |
+|  | 6.9kb | 27.6kb | *35% CSS* | `petal-elements/select/select-option.js` |
+| **Slider** | **9.9kb** | 43.2kb | *45% CSS* | `petal-elements/slider/slider.js` |
+| **Switch** | **8.0kb** | 33.5kb | *45% CSS* | `petal-elements/switch/switch.js` |
 | **Tabs** | **7.7kb** | 35.2kb | *50% CSS* |  |
-|  | 6.1kb | 21.9kb | *25% CSS* | `@material/web/tabs/tabs.js` |
-|  | 6.2kb | 25.6kb | *49% CSS* | `@material/web/tabs/primary-tab.js` |
-|  | 6.1kb | 25.2kb | *48% CSS* | `@material/web/tabs/secondary-tab.js` |
+|  | 6.1kb | 21.9kb | *25% CSS* | `petal-elements/tabs/tabs.js` |
+|  | 6.2kb | 25.6kb | *49% CSS* | `petal-elements/tabs/primary-tab.js` |
+|  | 6.1kb | 25.2kb | *48% CSS* | `petal-elements/tabs/secondary-tab.js` |
 | **Text field** | **14.7kb** | 97.2kb | *73% CSS* |  |
-|  | 11.5kb | 64.1kb | *61% CSS* | `@material/web/textfield/filled-text-field.js` |
-|  | 11.7kb | 64.6kb | *61% CSS* | `@material/web/textfield/outlined-text-field.js` |
+|  | 11.5kb | 64.1kb | *61% CSS* | `petal-elements/textfield/filled-text-field.js` |
+|  | 11.7kb | 64.6kb | *61% CSS* | `petal-elements/textfield/outlined-text-field.js` |
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 

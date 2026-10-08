@@ -21,8 +21,8 @@ These Sass utilities are intended to reduce boilerplate for common Sass
 metaprogramming use cases, such as type checking.
 
 ```scss
-@use '@material/web/sass/ext/assert';
-@use '@material/web/sass/ext/map_ext';
+@use 'petal-elements/sass/ext/assert';
+@use 'petal-elements/sass/ext/map_ext';
 
 @mixin theme($values) {
   $values: assert.is-type($values, 'map');
@@ -69,7 +69,7 @@ would not reduce complexity.
 ```scss {.bad}
 // Using sass/ext here does not reduce boilerplate, and adds another API to
 // learn and maintain.
-@use '@material/web/sass/ext/type';
+@use 'petal-elements/sass/ext/type';
 
 @function value-or-default($value, $default) {
   @if type.matches($value, 'null') {

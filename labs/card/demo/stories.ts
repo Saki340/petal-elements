@@ -5,13 +5,13 @@
  * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
-import '@material/web/button/filled-button.js';
-import '@material/web/labs/card/elevated-card.js';
-import '@material/web/labs/card/filled-card.js';
-import '@material/web/labs/card/outlined-card.js';
+import 'petal-elements/button/filled-button.js';
+import 'petal-elements/labs/card/elevated-card.js';
+import 'petal-elements/labs/card/filled-card.js';
+import 'petal-elements/labs/card/outlined-card.js';
 
 import {MaterialStoryInit} from './material-collection.js';
-import {styles as typescaleStyles} from '@material/web/typography/md-typescale-styles.cssresult.js';
+import {styles as typescaleStyles} from 'petal-elements/typography/md-typescale-styles.cssresult.js';
 import {css, html} from 'lit';
 
 /** Knob types for card stories. */

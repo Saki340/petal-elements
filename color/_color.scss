@@ -1,6 +1,7 @@
 //
 // Copyright 2023 Google LLC
 // SPDX-License-Identifier: Apache-2.0
+// Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
 //
 
 // go/keep-sorted start
@@ -14,7 +15,7 @@
 /// scheme.
 ///
 /// @example scss
-///   @use '@material/web/color/color';
+///   @use 'petal-elements/color/color';
 ///
 ///   :root {
 ///     @include color.theme(
@@ -59,8 +60,8 @@
 ///
 /// @example scss
 ///   @use 'sass:map';
-///   @use '@material/web/color/color';
-///   @use '@material/web/tokens';
+///   @use 'petal-elements/color/color';
+///   @use 'petal-elements/tokens';
 ///
 ///   // Tip: if only changing part of the palette, merge the default palette
 ///   // values to inherit other tones (such as neutral and error tones).
@@ -130,8 +131,8 @@
 ///
 /// @example scss
 ///   @use 'sass:map';
-///   @use '@material/web/color/color';
-///   @use '@material/web/tokens';
+///   @use 'petal-elements/color/color';
+///   @use 'petal-elements/tokens';
 ///
 ///   // Tip: if only changing part of the palette, merge the default palette
 ///   // values to inherit other tones (such as neutral and error tones).

@@ -2,13 +2,14 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 /**
  * @fileoverview A convenience bundle import that includes common components.
  *
  * WARNING: This import is intended for prototyping and development builds only.
- * It is smaller than `@material/web/all.js` and includes the most common
+ * It is smaller than `petal-elements/all.js` and includes the most common
  * components for starting a project. Import only the individual components used
  * for production.
  */

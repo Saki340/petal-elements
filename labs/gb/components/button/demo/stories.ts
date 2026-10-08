@@ -5,16 +5,16 @@
  * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
-import '@material/web/labs/gb/components/button/md-gb-button.js';
-import '@material/web/labs/gb/styles/icon/md-gb-icon.js';
+import 'petal-elements/labs/gb/components/button/md-gb-button.js';
+import 'petal-elements/labs/gb/styles/icon/md-gb-icon.js';
 
 import {MaterialStoryInit} from './material-collection.js';
 import {
   ButtonColor,
   ButtonSize,
-} from '@material/web/labs/gb/components/button/button.js';
-import {adoptStyles} from '@material/web/labs/gb/styles/adopt-styles.js';
-import {styles as m3Styles} from '@material/web/labs/gb/styles/m3.cssresult.js';
+} from 'petal-elements/labs/gb/components/button/button.js';
+import {adoptStyles} from 'petal-elements/labs/gb/styles/adopt-styles.js';
+import {styles as m3Styles} from 'petal-elements/labs/gb/styles/m3.cssresult.js';
 import {css, html, nothing} from 'lit';
 
 /** Knob types for button stories. */

@@ -2,12 +2,13 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import './material-collection.js';
 import './index.js';
 
-import {FabSize} from '@material/web/fab/fab.js';
+import {FabSize} from 'petal-elements/fab/fab.js';
 import {
   KnobTypesToKnobs,
   MaterialCollection,

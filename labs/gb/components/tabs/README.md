@@ -55,7 +55,7 @@ into view on focus. Consumers must invoke `setupTabs()` on the tablist element
 to attach the framework-agnostic focus listener:
 
 ```ts
-import {setupTabs} from '@material/web/labs/gb/components/tabs/tabs.js';
+import {setupTabs} from 'petal-elements/labs/gb/components/tabs/tabs.js';
 
 const tabsElement = document.querySelector('.tabs');
 setupTabs(tabsElement);
