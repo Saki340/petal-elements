@@ -40,3 +40,33 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: npx playwright install --with-deps chromium
       - run: npm test
+
+  # Visual regression tests run on Linux only, in Playwright's container, so
+  # rendering matches the Linux baseline. Generate that baseline with the
+  # "Visual baselines" workflow.
+  visual:
+    runs-on: ubuntu-latest
+    container: mcr.microsoft.com/playwright:v1.56.1-noble
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check for a Linux baseline
+        id: baseline
+        shell: bash
+        run: |
+          if [ -d tests/visual/__screenshots__/linux ]; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::notice::No Linux baseline yet; run the Visual baselines workflow."
+          fi
+      - if: steps.baseline.outputs.exists == 'true'
+        run: npm ci
+      - if: steps.baseline.outputs.exists == 'true'
+        run: npm run build
+      - if: steps.baseline.outputs.exists == 'true'
+        run: npm run test:visual
+      - if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-report
+          path: .cache/visual/

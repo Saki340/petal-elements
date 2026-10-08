@@ -1,0 +1,32 @@
+# Copyright 2026 Saki
+# SPDX-License-Identifier: Apache-2.0
+
+# Generates the Linux screenshots for the visual regression tests and uploads
+# them as an artifact. Download it, copy the files to
+# tests/visual/__screenshots__/linux/ and commit them after reviewing.
+#
+# The container's Playwright version must match @playwright/test in
+# package.json.
+
+name: Visual baselines
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  baselines:
+    runs-on: ubuntu-latest
+    container: mcr.microsoft.com/playwright:v1.56.1-noble
+
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm ci
+      - run: npm run build
+      - run: npm run test:visual -- --update-snapshots
+      - uses: actions/upload-artifact@v4
+        with:
+          name: visual-baselines-linux
+          path: tests/visual/__screenshots__/linux/
