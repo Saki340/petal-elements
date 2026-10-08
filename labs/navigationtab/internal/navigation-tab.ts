@@ -2,6 +2,7 @@
  * @license
  * Copyright 2022 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '../../../focus/md-focus-ring.js';
@@ -26,7 +27,7 @@ const navigationTabBaseClass = mixinDelegatesAria(LitElement);
  * @fires navigation-tab-rendered {Event} Dispatched when the navigation tab's
  * DOM has rendered and custom element definition has loaded. --bubbles
  * --composed
- * @fires navigation-tab-interaction {CustomEvent<{state: MdNavigationTab}>}
+ * @fires navigation-tab-interaction {CustomEvent<{state: PetalNavigationTab}>}
  * Dispatched when the navigation tab has been clicked. --bubbles --composed
  */
 export class NavigationTab
@@ -53,10 +54,10 @@ export class NavigationTab
       aria-label=${ariaLabel || nothing}
       tabindex="${this.active ? 0 : -1}"
       @click="${this.handleClick}">
-      <md-focus-ring part="focus-ring" inward></md-focus-ring>
-      <md-ripple
+      <petal-focus-ring part="focus-ring" inward></petal-focus-ring>
+      <petal-ripple
         ?disabled="${this.disabled}"
-        class="md3-navigation-tab__ripple"></md-ripple>
+        class="md3-navigation-tab__ripple"></petal-ripple>
       <span aria-hidden="true" class="md3-navigation-tab__icon-content"
         ><span class="md3-navigation-tab__active-indicator"></span
         ><span class="md3-navigation-tab__icon"
@@ -78,7 +79,7 @@ export class NavigationTab
 
   private renderBadge() {
     return this.showBadge
-      ? html`<md-badge .value="${this.badgeValue}"></md-badge>`
+      ? html`<petal-badge .value="${this.badgeValue}"></petal-badge>`
       : nothing;
   }
 

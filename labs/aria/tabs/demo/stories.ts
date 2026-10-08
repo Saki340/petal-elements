@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '@material/web/labs/aria/tabs/md-aria-tab.js';
@@ -27,17 +28,17 @@ const styles = [
       margin: 16px;
     }
 
-    .container:has(md-aria-tablist[orientation='vertical']) {
+    .container:has(petal-aria-tablist[orientation='vertical']) {
       flex-direction: row;
     }
 
     /* Horizontal tablist & tabs (default) */
-    md-aria-tablist {
+    petal-aria-tablist {
       gap: 4px;
       border-bottom: 2px solid #ccc;
     }
 
-    md-aria-tab {
+    petal-aria-tab {
       padding: 8px 16px;
       font-weight: 500;
       border: 1px solid transparent;
@@ -48,7 +49,7 @@ const styles = [
       user-select: none;
     }
 
-    md-aria-tab:state(selected) {
+    petal-aria-tab:state(selected) {
       background: #ffffff;
       border-color: #ccc;
       color: #1a73e8;
@@ -56,18 +57,18 @@ const styles = [
     }
 
     /* Vertical tablist & tabs */
-    md-aria-tablist[orientation='vertical'] {
+    petal-aria-tablist[orientation='vertical'] {
       border-bottom: none;
       border-right: 2px solid #ccc;
     }
 
-    md-aria-tablist[orientation='vertical'] md-aria-tab {
+    petal-aria-tablist[orientation='vertical'] petal-aria-tab {
       border-bottom: 1px solid transparent;
       border-right: none;
       border-radius: 4px 0 0 4px;
     }
 
-    md-aria-tablist[orientation='vertical'] md-aria-tab:state(selected) {
+    petal-aria-tablist[orientation='vertical'] petal-aria-tab:state(selected) {
       background: #ffffff;
       border-color: #ccc;
       color: #1a73e8;
@@ -76,13 +77,13 @@ const styles = [
     }
 
     /* Focus indicators */
-    md-aria-tab:focus-visible {
+    petal-aria-tab:focus-visible {
       outline: 2px solid #1a73e8;
       outline-offset: -2px;
     }
 
     /* Tabpanel */
-    md-aria-tabpanel {
+    petal-aria-tabpanel {
       flex: 1;
       padding: 16px;
       border: 1px solid #ccc;
@@ -91,12 +92,12 @@ const styles = [
       min-height: 100px;
     }
 
-    .container:has(md-aria-tablist[orientation='vertical']) md-aria-tabpanel {
+    .container:has(petal-aria-tablist[orientation='vertical']) petal-aria-tabpanel {
       border-top: 1px solid #ccc;
       border-left: none;
     }
 
-    md-aria-tabpanel:focus-visible {
+    petal-aria-tabpanel:focus-visible {
       outline: 2px dashed #1a73e8;
       outline-offset: -2px;
     }
@@ -109,23 +110,23 @@ const tabs: MaterialStoryInit<StoryKnobs> = {
   render(knobs) {
     return html`
       <div class="container">
-        <md-aria-tablist
+        <petal-aria-tablist
           ?autoselect=${knobs.autoSelect}
           .orientation=${knobs.orientation}>
-          <md-aria-tab id="tab-1" tabpanel="panel-1">First Tab</md-aria-tab>
-          <md-aria-tab id="tab-2" tabpanel="panel-2">Second Tab</md-aria-tab>
-          <md-aria-tab id="tab-3" tabpanel="panel-3">Third Tab</md-aria-tab>
-        </md-aria-tablist>
+          <petal-aria-tab id="tab-1" tabpanel="panel-1">First Tab</petal-aria-tab>
+          <petal-aria-tab id="tab-2" tabpanel="panel-2">Second Tab</petal-aria-tab>
+          <petal-aria-tab id="tab-3" tabpanel="panel-3">Third Tab</petal-aria-tab>
+        </petal-aria-tablist>
 
-        <md-aria-tabpanel id="panel-1" tab="tab-1">
+        <petal-aria-tabpanel id="panel-1" tab="tab-1">
           <p>Content for the first panel.</p>
-        </md-aria-tabpanel>
-        <md-aria-tabpanel id="panel-2" tab="tab-2">
+        </petal-aria-tabpanel>
+        <petal-aria-tabpanel id="panel-2" tab="tab-2">
           <p>Content for the second panel.</p>
-        </md-aria-tabpanel>
-        <md-aria-tabpanel id="panel-3" tab="tab-3">
+        </petal-aria-tabpanel>
+        <petal-aria-tabpanel id="panel-3" tab="tab-3">
           <p>Content for the third panel.</p>
-        </md-aria-tabpanel>
+        </petal-aria-tabpanel>
       </div>
     `;
   },

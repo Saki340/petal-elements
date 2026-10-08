@@ -2,6 +2,7 @@
  * @license
  * Copyright 2024 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '@material/web/checkbox/checkbox.js';
@@ -16,7 +17,7 @@ describe('query-selector-aria', () => {
   it('is needed when querying by aria attribute selectors fails', () => {
     // Arrange
     const root = env.render(
-      html`<md-checkbox aria-label="Agree"></md-checkbox>`,
+      html`<petal-checkbox aria-label="Agree"></petal-checkbox>`,
     );
 
     // Act
@@ -32,7 +33,7 @@ describe('query-selector-aria', () => {
     it('returns the element with an aria attribute query', () => {
       // Arrange
       const root = env.render(
-        html`<md-checkbox aria-label="Agree"></md-checkbox>`,
+        html`<petal-checkbox aria-label="Agree"></petal-checkbox>`,
       );
 
       // Act
@@ -44,7 +45,7 @@ describe('query-selector-aria', () => {
 
     it('returns the element with a role attribute query', () => {
       // Arrange
-      const root = env.render(html`<md-checkbox role="radio"></md-checkbox>`);
+      const root = env.render(html`<petal-checkbox role="radio"></petal-checkbox>`);
 
       // Act
       const element = root.querySelector(ariaSelector('[role="radio"]'));
@@ -56,10 +57,10 @@ describe('query-selector-aria', () => {
     it('returns the element when combined with other selectors', () => {
       // Arrange
       const root = env.render(html`
-        <md-checkbox
+        <petal-checkbox
           class="checkbox"
           aria-label="Agree"
-          aria-haspopup="true"></md-checkbox>
+          aria-haspopup="true"></petal-checkbox>
       `);
 
       // Act
@@ -74,7 +75,7 @@ describe('query-selector-aria', () => {
     it('returns expected elements when not using aria attribute selectors', () => {
       // Arrange
       const root = env.render(html`
-        <md-checkbox class="checkbox"></md-checkbox>
+        <petal-checkbox class="checkbox"></petal-checkbox>
       `);
 
       // Act

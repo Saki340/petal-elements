@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {type ClassInfo} from 'lit/directives/class-map.js';
@@ -117,11 +118,11 @@ export function setupFab(
  * ```ts
  * html`
  *   <button class="${fab()}">
- *     <md-icon>add</md-icon>
+ *     <petal-icon>add</petal-icon>
  *   </button>
  *
  *   <button class="${fab()}">
- *     <md-icon>add</md-icon>
+ *     <petal-icon>add</petal-icon>
  *     Extended
  *   </button>
  * `;

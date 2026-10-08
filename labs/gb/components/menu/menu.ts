@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {createContext} from '@lit/context';
@@ -70,7 +71,7 @@ export function setupMenu(
   menu: HTMLElement,
   opts?: {signal?: AbortSignal},
 ): void {
-  // TODO: add event listeners from <md-gb-menu>
+  // TODO: add event listeners from <petal-gb-menu>
 }
 
 /**

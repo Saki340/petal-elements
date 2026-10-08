@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 // import 'jasmine'; (google3-only)
@@ -13,22 +14,22 @@ import {createFormTests} from '../testing/forms.js';
 import {createTokenTests} from '../testing/tokens.js';
 
 import {SwitchHarness} from './harness.js';
-import {MdSwitch} from './switch.js';
+import {PetalSwitch} from './switch.js';
 
-describe('<md-switch>', () => {
+describe('<petal-switch>', () => {
   const env = new Environment();
 
   describe('.styles', () => {
-    createTokenTests(MdSwitch.styles);
+    createTokenTests(PetalSwitch.styles);
   });
 
   describe('forms', () => {
     createFormTests({
-      queryControl: (root) => root.querySelector('md-switch'),
+      queryControl: (root) => root.querySelector('petal-switch'),
       valueTests: [
         {
           name: 'unnamed',
-          render: () => html`<md-switch selected></md-switch>`,
+          render: () => html`<petal-switch selected></petal-switch>`,
           assertValue(formData) {
             expect(formData)
               .withContext('should not add anything to form without a name')
@@ -37,7 +38,7 @@ describe('<md-switch>', () => {
         },
         {
           name: 'unselected',
-          render: () => html`<md-switch name="switch"></md-switch>`,
+          render: () => html`<petal-switch name="switch"></petal-switch>`,
           assertValue(formData) {
             expect(formData)
               .withContext('should not add anything to form when unselected')
@@ -46,7 +47,7 @@ describe('<md-switch>', () => {
         },
         {
           name: 'selected default value',
-          render: () => html`<md-switch name="switch" selected></md-switch>`,
+          render: () => html`<petal-switch name="switch" selected></petal-switch>`,
           assertValue(formData) {
             expect(formData.get('switch')).toBe('on');
           },
@@ -54,10 +55,10 @@ describe('<md-switch>', () => {
         {
           name: 'selected custom value',
           render: () =>
-            html`<md-switch
+            html`<petal-switch
               name="switch"
               selected
-              value="Custom value"></md-switch>`,
+              value="Custom value"></petal-switch>`,
           assertValue(formData) {
             expect(formData.get('switch')).toBe('Custom value');
           },
@@ -65,7 +66,7 @@ describe('<md-switch>', () => {
         {
           name: 'disabled',
           render: () =>
-            html`<md-switch name="switch" selected disabled></md-switch>`,
+            html`<petal-switch name="switch" selected disabled></petal-switch>`,
           assertValue(formData) {
             expect(formData)
               .withContext('should not add anything to form when disabled')
@@ -76,7 +77,7 @@ describe('<md-switch>', () => {
       resetTests: [
         {
           name: 'reset to unselected',
-          render: () => html`<md-switch name="switch"></md-switch>`,
+          render: () => html`<petal-switch name="switch"></petal-switch>`,
           change(control) {
             control.selected = true;
           },
@@ -88,7 +89,7 @@ describe('<md-switch>', () => {
         },
         {
           name: 'reset to selected',
-          render: () => html`<md-switch name="switch" selected></md-switch>`,
+          render: () => html`<petal-switch name="switch" selected></petal-switch>`,
           change(control) {
             control.selected = false;
           },
@@ -102,7 +103,7 @@ describe('<md-switch>', () => {
       restoreTests: [
         {
           name: 'restore unselected',
-          render: () => html`<md-switch name="switch"></md-switch>`,
+          render: () => html`<petal-switch name="switch"></petal-switch>`,
           assertRestored(control) {
             expect(control.selected)
               .withContext('control.selected after restore')
@@ -111,7 +112,7 @@ describe('<md-switch>', () => {
         },
         {
           name: 'restore selected',
-          render: () => html`<md-switch name="switch" selected></md-switch>`,
+          render: () => html`<petal-switch name="switch" selected></petal-switch>`,
           assertRestored(control) {
             expect(control.selected)
               .withContext('control.selected after restore')
@@ -129,8 +130,8 @@ describe('<md-switch>', () => {
 
     it('should toggle the switch on', async () => {
       // Arrange
-      const root = env.render(html`<md-switch></md-switch>`);
-      const harness = new SwitchHarness(root.querySelector('md-switch')!);
+      const root = env.render(html`<petal-switch></petal-switch>`);
+      const harness = new SwitchHarness(root.querySelector('petal-switch')!);
 
       // Act
       await harness.keypress('Enter');
@@ -144,8 +145,8 @@ describe('<md-switch>', () => {
 
     it('should toggle the switch off', async () => {
       // Arrange
-      const root = env.render(html`<md-switch selected></md-switch>`);
-      const harness = new SwitchHarness(root.querySelector('md-switch')!);
+      const root = env.render(html`<petal-switch selected></petal-switch>`);
+      const harness = new SwitchHarness(root.querySelector('petal-switch')!);
 
       // Act
       await harness.keypress('Enter');
@@ -159,8 +160,8 @@ describe('<md-switch>', () => {
 
     it('should not toggle the switch when disabled', async () => {
       // Arrange
-      const root = env.render(html`<md-switch disabled></md-switch>`);
-      const harness = new SwitchHarness(root.querySelector('md-switch')!);
+      const root = env.render(html`<petal-switch disabled></petal-switch>`);
+      const harness = new SwitchHarness(root.querySelector('petal-switch')!);
 
       // Act
       await harness.keypress('Enter');
@@ -174,8 +175,8 @@ describe('<md-switch>', () => {
 
     it('should not toggle the switch when keydown event is canceled', async () => {
       // Arrange
-      const root = env.render(html`<md-switch></md-switch>`);
-      const harness = new SwitchHarness(root.querySelector('md-switch')!);
+      const root = env.render(html`<petal-switch></petal-switch>`);
+      const harness = new SwitchHarness(root.querySelector('petal-switch')!);
       harness.element.addEventListener('keydown', (event) => {
         event.preventDefault();
       });

@@ -1,6 +1,7 @@
 //
 // Copyright 2021 Google LLC
 // SPDX-License-Identifier: Apache-2.0
+// Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
 //
 
 // stylelint-disable selector-class-pattern --
@@ -74,7 +75,7 @@ $_reference: (
       visibility $default $curve $transition-duration;
   }
 
-  md-elevation {
+  petal-elevation {
     z-index: 0;
   }
 

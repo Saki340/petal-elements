@@ -1,6 +1,7 @@
 //
 // Copyright 2022 Google LLC
 // SPDX-License-Identifier: Apache-2.0
+// Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
 //
 
 // go/keep-sorted start
@@ -149,7 +150,7 @@
       border-end-end-radius: var(--_small-container-shape-end-end);
     }
 
-    md-focus-ring {
+    petal-focus-ring {
       @include focus-ring.theme(
         (
           'shape-start-start': var(--_small-container-shape-start-start),

@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {LitElement} from 'lit';
@@ -49,7 +50,7 @@ export class SelectHarness extends Harness<Select> {
   }
 
   async clickOption(index: number) {
-    const menu = this.element.renderRoot.querySelector('md-menu')!;
+    const menu = this.element.renderRoot.querySelector('petal-menu')!;
     if (!menu.open) {
       console.warn(
         'Internal menu is not open. Try calling SelectHarness.prototype.click()',
@@ -59,10 +60,10 @@ export class SelectHarness extends Harness<Select> {
   }
 
   get isOpen() {
-    const menu = this.element.renderRoot.querySelector('md-menu')!;
+    const menu = this.element.renderRoot.querySelector('petal-menu')!;
     if (!menu) {
       throw new Error(
-        'Internal md-menu is not found. md-select may not have finished rendering when isOpen has been checked',
+        'Internal petal-menu is not found. md-select may not have finished rendering when isOpen has been checked',
       );
     }
     return menu.open;

@@ -59,13 +59,13 @@ choices on a temporary surface.
 ## Usage
 
 When opened, menus position themselves to an anchor. Thus, either `anchor` or
-`anchorElement` must be supplied to `md-menu` before opening. Additionally, a
+`anchorElement` must be supplied to `petal-menu` before opening. Additionally, a
 shared parent of `position:relative` should be present around the menu and it's
 anchor, because the default menu is positioned relative to the anchor element.
 
-Menus also render menu items such as `md-menu-item` and handle keyboard
-navigation between `md-menu-item`s as well as typeahead functionality.
-Additionally, `md-menu` interacts with `md-menu-item`s to help you determine how
+Menus also render menu items such as `petal-menu-item` and handle keyboard
+navigation between `petal-menu-item`s as well as typeahead functionality.
+Additionally, `petal-menu` interacts with `petal-menu-item`s to help you determine how
 a menu was closed. Listen for and inspect the `close-menu` custom event's
 `details` to determine what action and items closed the menu.
 
@@ -82,18 +82,18 @@ Cucumber."](images/menu/usage.webp)
 ```html
 <!-- Note the position: relative style -->
 <span style="position: relative">
-  <md-filled-button id="usage-anchor">Set with idref</md-filled-button>
-  <md-menu id="usage-menu" anchor="usage-anchor">
-    <md-menu-item>
+  <petal-filled-button id="usage-anchor">Set with idref</petal-filled-button>
+  <petal-menu id="usage-menu" anchor="usage-anchor">
+    <petal-menu-item>
       <div slot="headline">Apple</div>
-    </md-menu-item>
-    <md-menu-item>
+    </petal-menu-item>
+    <petal-menu-item>
       <div slot="headline">Banana</div>
-    </md-menu-item>
-    <md-menu-item>
+    </petal-menu-item>
+    <petal-menu-item>
       <div slot="headline">Cucumber</div>
-    </md-menu-item>
-  </md-menu>
+    </petal-menu-item>
+  </petal-menu>
 </span>
 
 <script type="module">
@@ -105,22 +105,22 @@ Cucumber."](images/menu/usage.webp)
 </script>
 
 <span style="position: relative">
-  <md-filled-button id="usage-anchor-2">Set with element ref</md-filled-button>
-  <md-menu id="usage-menu-2">
-    <md-menu-item>
+  <petal-filled-button id="usage-anchor-2">Set with element ref</petal-filled-button>
+  <petal-menu id="usage-menu-2">
+    <petal-menu-item>
       <div slot="headline">Apple</div>
-    </md-menu-item>
-    <md-menu-item>
+    </petal-menu-item>
+    <petal-menu-item>
       <div slot="headline">Banana</div>
-    </md-menu-item>
-    <md-menu-item>
+    </petal-menu-item>
+    <petal-menu-item>
       <div slot="headline">Cucumber</div>
-    </md-menu-item>
-  </md-menu>
+    </petal-menu-item>
+  </petal-menu>
 </span>
 
 <script type="module">
-  // This example uses MdMenu.prototype.anchorElement to set the anchor as an
+  // This example uses PetalMenu.prototype.anchorElement to set the anchor as an
   // HTMLElement reference.
   const anchorEl = document.body.querySelector('#usage-anchor-2');
   const menuEl = document.body.querySelector('#usage-menu-2');
@@ -132,8 +132,8 @@ Cucumber."](images/menu/usage.webp)
 
 ### Submenus
 
-You can compose `<md-menu>`s inside of an `<md-sub-menu>`'s `menu` slot, but
-first the `has-overflow` attribute must be set on the root `<md-menu>` to
+You can compose `<petal-menu>`s inside of an `<petal-sub-menu>`'s `menu` slot, but
+first the `has-overflow` attribute must be set on the root `<petal-menu>` to
 disable overflow scrolling and display the nested submenus.
 
 <!-- no-catalog-start -->
@@ -151,60 +151,60 @@ Granny Smith, and Red Delicious."](images/menu/usage-submenu.webp)
 ```html
 <!-- Note the position: relative style -->
 <span style="position: relative">
-  <md-filled-button id="usage-submenu-anchor">
+  <petal-filled-button id="usage-submenu-anchor">
     Menu with Submenus
-  </md-filled-button>
+  </petal-filled-button>
   <!-- Note the has-overflow attribute -->
-  <md-menu has-overflow id="usage-submenu" anchor="usage-submenu-anchor">
-    <md-sub-menu>
-      <md-menu-item slot="item">
+  <petal-menu has-overflow id="usage-submenu" anchor="usage-submenu-anchor">
+    <petal-sub-menu>
+      <petal-menu-item slot="item">
       <div slot="headline">Fruits with A</div>
         <!-- Arrow icons are helpful affordances -->
-        <md-icon slot="end">arrow_right</md-icon>
-      </md-menu-item>
+        <petal-icon slot="end">arrow_right</petal-icon>
+      </petal-menu-item>
       <!-- Submenu must be slotted into sub-menu's menu slot -->
-      <md-menu slot="menu">
-        <md-menu-item>
+      <petal-menu slot="menu">
+        <petal-menu-item>
           <div slot="headline">Apricot</div>
-        </md-menu-item>
-        <md-menu-item>
+        </petal-menu-item>
+        <petal-menu-item>
           <div slot="headline">Avocado</div>
-        </md-menu-item>
+        </petal-menu-item>
 
         <!-- Nest as many as you want and control menu anchoring -->
-        <md-sub-menu
+        <petal-sub-menu
             menu-corner="start-end"
             anchor-corner="start-start">
-          <md-menu-item slot="item">
+          <petal-menu-item slot="item">
             <div slot="headline">Apples</div>
             <!-- Arrow icons are helpful affordances -->
-            <md-icon slot="start">
+            <petal-icon slot="start">
               arrow_left
-            </md-icon>
-          </md-menu-item>
-          <md-menu slot="menu">
-            <md-menu-item>
+            </petal-icon>
+          </petal-menu-item>
+          <petal-menu slot="menu">
+            <petal-menu-item>
               <div slot="headline">Fuji</div>
-            </md-menu-item>
-            <md-menu-item>
+            </petal-menu-item>
+            <petal-menu-item>
               <div slot="headline" style="white-space: nowrap;">Granny Smith</div>
-            </md-menu-item>
-            <md-menu-item>
+            </petal-menu-item>
+            <petal-menu-item>
               <div slot="headline" style="white-space: nowrap;">Red Delicious</div>
-            </md-menu-item>
-          </md-menu>
+            </petal-menu-item>
+          </petal-menu>
 
-        </md-sub-menu>
-      </md-menu>
-    </md-sub-menu>
+        </petal-sub-menu>
+      </petal-menu>
+    </petal-sub-menu>
 
-    <md-menu-item>
+    <petal-menu-item>
       <div slot="headline">Banana</div>
-    </md-menu-item>
-    <md-menu-item>
+    </petal-menu-item>
+    <petal-menu-item>
       <div slot="headline">Cucumber</div>
-    </md-menu-item>
-  </md-menu>
+    </petal-menu-item>
+  </petal-menu>
 </span>
 
 <script type="module">
@@ -233,7 +233,7 @@ rendering into the
 > time of writing, Firefox does not support the Popover API
 > ([see latest browser compatibility](https://developer.mozilla.org/en-US/docs/Web/API/Popover_API#browser_compatibility)<!-- {.external} -->).
 >
-> For browsers that do not support the Popover API, `md-menu` will fall back to
+> For browsers that do not support the Popover API, `petal-menu` will fall back to
 > using [fixed-positioned menus](#fixed-positioned-menus).
 
 <!-- no-catalog-start -->
@@ -248,21 +248,21 @@ Cucumber."](images/menu/usage-popover.webp)
 ```html
 <!-- Note the lack of position: relative parent. -->
 <div style="margin: 16px;">
-  <md-filled-button id="usage-popover-anchor">Open popover menu</md-filled-button>
+  <petal-filled-button id="usage-popover-anchor">Open popover menu</petal-filled-button>
 </div>
 
 <!-- popover menus do not require a common ancestor with the anchor. -->
-<md-menu positioning="popover" id="usage-popover" anchor="usage-popover-anchor">
-  <md-menu-item>
+<petal-menu positioning="popover" id="usage-popover" anchor="usage-popover-anchor">
+  <petal-menu-item>
     <div slot="headline">Apple</div>
-  </md-menu-item>
-  <md-menu-item>
+  </petal-menu-item>
+  <petal-menu-item>
     <div slot="headline">Banana</div>
-  </md-menu-item>
-  <md-menu-item>
+  </petal-menu-item>
+  <petal-menu-item>
     <div slot="headline">Cucumber</div>
-  </md-menu-item>
-</md-menu>
+  </petal-menu-item>
+</petal-menu>
 
 <script type="module">
   const anchorEl = document.body.querySelector('#usage-popover-anchor');
@@ -295,21 +295,21 @@ Cucumber."](images/menu/usage-fixed.webp)
 ```html
 <!-- Note the lack of position: relative parent. -->
 <div style="margin: 16px;">
-  <md-filled-button id="usage-fixed-anchor">Open fixed menu</md-filled-button>
+  <petal-filled-button id="usage-fixed-anchor">Open fixed menu</petal-filled-button>
 </div>
 
 <!-- Fixed menus do not require a common ancestor with the anchor. -->
-<md-menu positioning="fixed" id="usage-fixed" anchor="usage-fixed-anchor">
-  <md-menu-item>
+<petal-menu positioning="fixed" id="usage-fixed" anchor="usage-fixed-anchor">
+  <petal-menu-item>
     <div slot="headline">Apple</div>
-  </md-menu-item>
-  <md-menu-item>
+  </petal-menu-item>
+  <petal-menu-item>
     <div slot="headline">Banana</div>
-  </md-menu-item>
-  <md-menu-item>
+  </petal-menu-item>
+  <petal-menu-item>
     <div slot="headline">Cucumber</div>
-  </md-menu-item>
-</md-menu>
+  </petal-menu-item>
+</petal-menu>
 
 <script type="module">
   const anchorEl = document.body.querySelector('#usage-fixed-anchor');
@@ -321,7 +321,7 @@ Cucumber."](images/menu/usage-fixed.webp)
 
 ### Document-positioned menus
 
-When set to `positioning="document"`, `md-menu` will position itself relative to
+When set to `positioning="document"`, `petal-menu` will position itself relative to
 the document as opposed to the element or the window from `"absolute"` and
 `"fixed"` values respectively.
 
@@ -338,7 +338,7 @@ Document level positioning is useful for the following cases:
     -   The last child of `<body>`
     -   [Top layer](https://developer.mozilla.org/en-US/docs/Glossary/Top_layer)
         <!-- {.external} -->
--   The same `md-menu` is being reused and the contents and anchors are being
+-   The same `petal-menu` is being reused and the contents and anchors are being
     dynamically changed
 
 <!-- no-catalog-start -->
@@ -353,21 +353,21 @@ Cucumber."](images/menu/usage-document.webp)
 ```html
 <!-- Note the lack of position: relative parent. -->
 <div style="margin: 16px;">
-  <md-filled-button id="usage-document-anchor">Open document menu</md-filled-button>
+  <petal-filled-button id="usage-document-anchor">Open document menu</petal-filled-button>
 </div>
 
 <!-- document menus do not require a common ancestor with the anchor. -->
-<md-menu positioning="document" id="usage-document" anchor="usage-document-anchor">
-  <md-menu-item>
+<petal-menu positioning="document" id="usage-document" anchor="usage-document-anchor">
+  <petal-menu-item>
     <div slot="headline">Apple</div>
-  </md-menu-item>
-  <md-menu-item>
+  </petal-menu-item>
+  <petal-menu-item>
     <div slot="headline">Banana</div>
-  </md-menu-item>
-  <md-menu-item>
+  </petal-menu-item>
+  <petal-menu-item>
     <div slot="headline">Cucumber</div>
-  </md-menu-item>
-</md-menu>
+  </petal-menu-item>
+</petal-menu>
 
 <script type="module">
   const anchorEl = document.body.querySelector('#usage-document-anchor');
@@ -386,17 +386,17 @@ you would need to add keyboard interactions to the button to open the menu
 
 Menu can also be adapted for other use cases.
 
-The role of the `md-list` inside the menu can be set with the `type` attribute.
-The role of each individual `md-menu-item` can also be set with the `type`
+The role of the `petal-list` inside the menu can be set with the `type` attribute.
+The role of each individual `petal-menu-item` can also be set with the `type`
 attribute. Anything else slotted into the menu that is not a list item in most
-cases should be set to `role="none"`, and `md-divider` should have
+cases should be set to `role="none"`, and `petal-divider` should have
 `role="separator"` and `tabindex="-1"`.
 
 ```html
 <!--
   A simplified example of an autocomplete component – missing javascript logic for interaction.
 -->
-<md-filled-text-field
+<petal-filled-text-field
     id="textfield"
     type="combobox"
     aria-controls="menu"
@@ -404,28 +404,28 @@ cases should be set to `role="none"`, and `md-divider` should have
     aria-expanded="true"
     aria-activedescendant="1"
     value="Ala">
-</md-filled-text-field>
-<md-menu
+</petal-filled-text-field>
+<petal-menu
     id="menu"
     anchor="textfield"
     role="listbox"
     aria-label="states"
     open>
-  <md-menu-item type="option" id="0">
+  <petal-menu-item type="option" id="0">
     <div slot="headline">Alabama</div>
-  </md-menu-item>
-  <md-divider role="separator" tabindex="-1"></md-divider>
-  <md-menu-item type="option" id="1" selected aria-selected="true">
+  </petal-menu-item>
+  <petal-divider role="separator" tabindex="-1"></petal-divider>
+  <petal-menu-item type="option" id="1" selected aria-selected="true">
     <div slot="headline">Alabama</div>
-  </md-menu-item>
-</md-menu>
+  </petal-menu-item>
+</petal-menu>
 ```
 
 ## Theming
 
 Menus support [Material theming](../theming/README.md) and can be customized in
-terms of color. Additionally, `md-menu` composes `md-list`, and each menu item
-extends `md-list-item` ([see theming documentation](./list#theming)), so most
+terms of color. Additionally, `petal-menu` composes `petal-list`, and each menu item
+extends `petal-list-item` ([see theming documentation](./list#theming)), so most
 the tokens for those components can also be used for Menu.
 
 ### Menu Tokens
@@ -466,32 +466,32 @@ a sharp 0px border radius.](images/menu/theming.webp)
     --md-sys-color-on-surface: #161d1d;
     --md-sys-typescale-body-large-font: system-ui;
   }
-  md-menu-item {
+  petal-menu-item {
     border-radius: 28px;
   }
-  md-menu-item::part(focus-ring) {
+  petal-menu-item::part(focus-ring) {
     border-radius: 28px;
   }
   /* Styles for button and not relevant to menu */
-  md-filled-button {
+  petal-filled-button {
     --md-sys-color-primary: #006a6a;
     --md-sys-color-on-primary: #ffffff;
   }
 </style>
 
 <span style="position: relative">
-  <md-filled-button id="theming-anchor">Themed menu</md-filled-button>
-  <md-menu id="theming-menu" anchor="theming-anchor">
-    <md-menu-item>
+  <petal-filled-button id="theming-anchor">Themed menu</petal-filled-button>
+  <petal-menu id="theming-menu" anchor="theming-anchor">
+    <petal-menu-item>
       <div slot="headline">Apple</div>
-    </md-menu-item>
-    <md-menu-item>
+    </petal-menu-item>
+    <petal-menu-item>
       <div slot="headline">Banana</div>
-    </md-menu-item>
-    <md-menu-item>
+    </petal-menu-item>
+    <petal-menu-item>
       <div slot="headline">Cucumber</div>
-    </md-menu-item>
-  </md-menu>
+    </petal-menu-item>
+  </petal-menu>
 </span>
 
 <script type="module">
@@ -509,7 +509,7 @@ a sharp 0px border radius.](images/menu/theming.webp)
 ## API
 
 
-### MdMenu <code>&lt;md-menu&gt;</code>
+### PetalMenu <code>&lt;petal-menu&gt;</code>
 
 #### Properties
 
@@ -518,9 +518,9 @@ a sharp 0px border radius.](images/menu/theming.webp)
 | Property | Attribute | Type | Default | Description |
 | --- | --- | --- | --- | --- |
 | `anchor` | `anchor` | `string` | `''` | The ID of the element in the same root node in which the menu should align to. Overrides setting `anchorElement = elementReference`.<br>__NOTE__: anchor or anchorElement must either be an HTMLElement or resolve to an HTMLElement in order for menu to open. |
-| `positioning` | `positioning` | `"absolute" \| "fixed" \| "document" \| "popover"` | `'absolute'` | Whether the positioning algorithm should calculate relative to the parent of the anchor element (`absolute`), relative to the window (`fixed`), or relative to the document (`document`). `popover` will use the popover API to render the menu in the top-layer. If your browser does not support the popover API, it will fall back to `fixed`.<br>__Examples for `position = 'fixed'`:__<br>- If there is no `position:relative` in the given parent tree and the surface is `position:absolute` - If the surface is `position:fixed` - If the surface is in the "top layer" - The anchor and the surface do not share a common `position:relative` ancestor<br>When using `positioning=fixed`, in most cases, the menu should position itself above most other `position:absolute` or `position:fixed` elements when placed inside of them. e.g. using a menu inside of an `md-dialog`.<br>__NOTE__: Fixed menus will not scroll with the page and will be fixed to the window instead.<br>__Examples for `position = 'document'`:__<br>- There is no parent that creates a relative positioning context e.g. `position: relative`, `position: absolute`, `transform: translate(x, y)`, etc. - You put the effort into hoisting the menu to the top of the DOM like the end of the `<body>` to render over everything or in a top-layer. - You are reusing a single `md-menu` element that dynamically renders content.<br>__Examples for `position = 'popover'`:__<br>- Your browser supports `popover`. - Most cases. Once popover is in browsers, this will become the default. |
+| `positioning` | `positioning` | `"absolute" \| "fixed" \| "document" \| "popover"` | `'absolute'` | Whether the positioning algorithm should calculate relative to the parent of the anchor element (`absolute`), relative to the window (`fixed`), or relative to the document (`document`). `popover` will use the popover API to render the menu in the top-layer. If your browser does not support the popover API, it will fall back to `fixed`.<br>__Examples for `position = 'fixed'`:__<br>- If there is no `position:relative` in the given parent tree and the surface is `position:absolute` - If the surface is `position:fixed` - If the surface is in the "top layer" - The anchor and the surface do not share a common `position:relative` ancestor<br>When using `positioning=fixed`, in most cases, the menu should position itself above most other `position:absolute` or `position:fixed` elements when placed inside of them. e.g. using a menu inside of an `petal-dialog`.<br>__NOTE__: Fixed menus will not scroll with the page and will be fixed to the window instead.<br>__Examples for `position = 'document'`:__<br>- There is no parent that creates a relative positioning context e.g. `position: relative`, `position: absolute`, `transform: translate(x, y)`, etc. - You put the effort into hoisting the menu to the top of the DOM like the end of the `<body>` to render over everything or in a top-layer. - You are reusing a single `petal-menu` element that dynamically renders content.<br>__Examples for `position = 'popover'`:__<br>- Your browser supports `popover`. - Most cases. Once popover is in browsers, this will become the default. |
 | `quick` | `quick` | `boolean` | `false` | Skips the opening and closing animations. |
-| `hasOverflow` | `has-overflow` | `boolean` | `false` | Displays overflow content like a submenu. Not required in most cases when using `positioning="popover"`.<br>__NOTE__: This may cause adverse effects if you set `md-menu {max-height:...}` and have items overflowing items in the "y" direction. |
+| `hasOverflow` | `has-overflow` | `boolean` | `false` | Displays overflow content like a submenu. Not required in most cases when using `positioning="popover"`.<br>__NOTE__: This may cause adverse effects if you set `petal-menu {max-height:...}` and have items overflowing items in the "y" direction. |
 | `open` | `open` | `boolean` | `false` | Opens the menu and makes it visible. Alternative to the `.show()` and `.close()` methods |
 | `xOffset` | `x-offset` | `number` | `0` | Offsets the menu's inline alignment from the anchor by the given number in pixels. This value is direction aware and will follow the LTR / RTL direction.<br>e.g. LTR: positive -> right, negative -> left RTL: positive -> left, negative -> right |
 | `yOffset` | `y-offset` | `number` | `0` | Offsets the menu's block alignment from the anchor by the given number in pixels.<br>e.g. positive -> down, negative -> up |
@@ -532,7 +532,7 @@ a sharp 0px border radius.](images/menu/theming.webp)
 | `stayOpenOnOutsideClick` | `stay-open-on-outside-click` | `boolean` | `false` | Keeps the user clicks outside the menu.<br>NOTE: clicking outside may still cause focusout to close the menu so see `stayOpenOnFocusout`. |
 | `stayOpenOnFocusout` | `stay-open-on-focusout` | `boolean` | `false` | Keeps the menu open when focus leaves the menu's composed subtree.<br>NOTE: Focusout behavior will stop propagation of the focusout event. Set this property to true to opt-out of menu's focusout handling altogether. |
 | `skipRestoreFocus` | `skip-restore-focus` | `boolean` | `false` | After closing, does not restore focus to the last focused element before the menu was opened. |
-| `defaultFocus` | `default-focus` | `FocusState` | `FocusState.FIRST_ITEM` | The element that should be focused by default once opened.<br>NOTE: When setting default focus to 'LIST_ROOT', remember to change `tabindex` to `0` and change md-menu's display to something other than `display: contents` when necessary. |
+| `defaultFocus` | `default-focus` | `FocusState` | `FocusState.FIRST_ITEM` | The element that should be focused by default once opened.<br>NOTE: When setting default focus to 'LIST_ROOT', remember to change `tabindex` to `0` and change petal-menu's display to something other than `display: contents` when necessary. |
 | `noNavigationWrap` | `no-navigation-wrap` | `boolean` | `false` | Turns off navigation wrapping. By default, navigating past the end of the menu items will wrap focus back to the beginning and vice versa. Use this for ARIA patterns that do not wrap focus, like combobox. |
 | `isSubmenu` |  | `boolean` | `false` | Whether or not the current menu is a submenu and should not handle specific navigation keys. |
 | `typeaheadController` |  | `TypeaheadController` | `function { ... }` | Handles typeahead navigation through the menu. |
@@ -570,7 +570,7 @@ a sharp 0px border radius.](images/menu/theming.webp)
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 
-### MdMenuItem <code>&lt;md-menu-item&gt;</code>
+### PetalMenuItem <code>&lt;petal-menu-item&gt;</code>
 
 #### Properties
 
@@ -598,7 +598,7 @@ a sharp 0px border radius.](images/menu/theming.webp)
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 
-### MdSubMenu <code>&lt;md-sub-menu&gt;</code>
+### PetalSubMenu <code>&lt;petal-sub-menu&gt;</code>
 
 #### Properties
 
@@ -610,7 +610,7 @@ a sharp 0px border radius.](images/menu/theming.webp)
 | `menuCorner` | `menu-corner` | `Corner` | `Corner.START_START` | The menuCorner to set on the submenu. |
 | `hoverOpenDelay` | `hover-open-delay` | `number` | `400` | The delay between mouseenter and submenu opening. |
 | `hoverCloseDelay` | `hover-close-delay` | `number` | `400` | The delay between ponterleave and the submenu closing. |
-| `isSubMenu` | `md-sub-menu` | `boolean` | `true` | READONLY: self-identifies as a menu item and sets its identifying attribute |
+| `isSubMenu` | `petal-sub-menu` | `boolean` | `true` | READONLY: self-identifies as a menu item and sets its identifying attribute |
 | `item` |  | `MenuItem` | `undefined` |  |
 | `menu` |  | `Menu` | `undefined` |  |
 

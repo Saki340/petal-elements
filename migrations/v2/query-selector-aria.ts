@@ -2,6 +2,7 @@
  * @license
  * Copyright 2024 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 const HAS_ARIA_ATTRIBUTE_REGEX = /\[(aria-|role)/g;
@@ -14,7 +15,7 @@ const HAS_ARIA_ATTRIBUTE_REGEX = /\[(aria-|role)/g;
  * @example
  * ```ts
  * const agreeCheckbox = document.querySelector(
- *   ariaSelector('md-checkbox[aria-label="Agree"]')
+ *   ariaSelector('petal-checkbox[aria-label="Agree"]')
  * );
  * ```
  *

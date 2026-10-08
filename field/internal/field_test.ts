@@ -2,6 +2,7 @@
  * @license
  * Copyright 2022 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 // import 'jasmine'; (google3-only)
@@ -16,11 +17,11 @@ import {Field} from './field.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-test-field': TestField;
+    'petal-test-field': TestField;
   }
 }
 
-@customElement('md-test-field')
+@customElement('petal-test-field')
 class TestField extends Field {
   get labelText() {
     return this.renderRoot.querySelector('.label')?.textContent ?? '';
@@ -50,7 +51,7 @@ describe('Field', () => {
   async function setupTest(props: Partial<Field> = {}) {
     // Variant type does not matter for shared tests
     const template = html`
-      <md-test-field
+      <petal-test-field
         .label=${props.label ?? ''}
         ?no-asterisk=${props.noAsterisk ?? false}
         ?disabled=${props.disabled ?? false}
@@ -60,12 +61,12 @@ describe('Field', () => {
         .supportingText=${props.supportingText ?? ''}
         .errorText=${props.errorText ?? ''}>
         <input />
-      </md-test-field>
+      </petal-test-field>
     `;
     const root = env.render(template);
-    const instance = root.querySelector('md-test-field');
+    const instance = root.querySelector('petal-test-field');
     if (!instance) {
-      throw new Error('Could not query rendered <md-test-field>.');
+      throw new Error('Could not query rendered <petal-test-field>.');
     }
 
     await env.waitForStability();

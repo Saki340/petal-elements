@@ -1,6 +1,7 @@
 //
 // Copyright 2021 Google LLC
 // SPDX-License-Identifier: Apache-2.0
+// Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
 //
 
 // go/keep-sorted start
@@ -49,7 +50,7 @@
       margin: max(0px, (48px - map.get($tokens, 'track-height')) / 2) 0px;
     }
 
-    md-focus-ring {
+    petal-focus-ring {
       @include focus-ring.theme(
         (
           'shape-start-start': map.get($tokens, 'track-shape-start-start'),

@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {type CSSResultOrNative, type PropertyValues} from 'lit';
@@ -21,7 +22,7 @@ import {setupTabs, tabsClasses, type TabsVariant} from './tabs.js';
  * This is a reference implementation of the `.tabs` utility class. The same
  * class can be applied to any element with `role="tablist"`.
  *
- * @slot - Used to display `<md-gb-tab>` children.
+ * @slot - Used to display `<petal-gb-tab>` children.
  * @cssprop --active-indicator-color
  * @cssprop --active-indicator-height
  * @cssprop --active-indicator-inset

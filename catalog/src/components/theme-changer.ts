@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '@material/web/focus/md-focus-ring.js';
@@ -11,7 +12,7 @@ import '@material/web/labs/segmentedbuttonset/outlined-segmented-button-set.js';
 import './copy-code-button.js';
 import './hct-slider.js';
 
-import type {MdOutlinedSegmentedButton} from '@material/web/labs/segmentedbutton/outlined-segmented-button.js';
+import type {PetalOutlinedSegmentedButton} from '@material/web/labs/segmentedbutton/outlined-segmented-button.js';
 import {css, html, LitElement} from 'lit';
 import {customElement, query, queryAll, state} from 'lit/decorators.js';
 import {live} from 'lit/directives/live.js';
@@ -99,7 +100,7 @@ export class ThemeChanger extends LitElement {
               type="color"
               .value=${live(this.hexColor)} />
           </div>
-          <md-focus-ring for="color-input"></md-focus-ring>
+          <petal-focus-ring for="color-input"></petal-focus-ring>
         </span>
       </label>
     </div>`;
@@ -136,13 +137,13 @@ export class ThemeChanger extends LitElement {
    * Renders the color mode segmented button set picker.
    */
   private renderColorModePicker() {
-    return html`<md-outlined-segmented-button-set
+    return html`<petal-outlined-segmented-button-set
       @segmented-button-set-selection=${this.onColorModeSelection}
       aria-label="Color mode">
       ${this.renderModeButton('dark', 'dark_mode')}
       ${this.renderModeButton('auto', 'brightness_medium')}
       ${this.renderModeButton('light', 'light_mode')}
-    </md-outlined-segmented-button-set>`;
+    </petal-outlined-segmented-button-set>`;
   }
 
   /**
@@ -153,13 +154,13 @@ export class ThemeChanger extends LitElement {
    * @param icon The icon to display in the button.
    */
   private renderModeButton(mode: ColorMode, icon: string) {
-    return html`<md-outlined-segmented-button
+    return html`<petal-outlined-segmented-button
       data-value=${mode}
       title=${mode}
       aria-label="${mode} color scheme"
       .selected=${this.selectedColorMode === mode}>
-      <md-icon slot="icon">${icon}</md-icon>
-    </md-outlined-segmented-button>`;
+      <petal-icon slot="icon">${icon}</petal-icon>
+    </petal-outlined-segmented-button>`;
   }
 
   private onSliderInput() {
@@ -205,7 +206,7 @@ export class ThemeChanger extends LitElement {
 
   private onColorModeSelection(
     e: CustomEvent<{
-      button: MdOutlinedSegmentedButton;
+      button: PetalOutlinedSegmentedButton;
       selected: boolean;
       index: number;
     }>,
@@ -306,7 +307,7 @@ export class ThemeChanger extends LitElement {
     }
 
     #hex .input-wrapper,
-    #hex md-focus-ring {
+    #hex petal-focus-ring {
       border-radius: 50%;
     }
 

@@ -2,6 +2,7 @@
  * @license
  * Copyright 2022 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 // import 'jasmine'; (google3-only)
@@ -19,11 +20,11 @@ describe('TextFieldHarness', () => {
 
   async function setupTest() {
     const root = env.render(
-      html`<md-filled-text-field></md-filled-text-field>`,
+      html`<petal-filled-text-field></petal-filled-text-field>`,
     );
-    const instance = root.querySelector('md-filled-text-field');
+    const instance = root.querySelector('petal-filled-text-field');
     if (!instance) {
-      throw new Error('Failed to query md-filled-text-field.');
+      throw new Error('Failed to query petal-filled-text-field.');
     }
 
     await env.waitForStability();

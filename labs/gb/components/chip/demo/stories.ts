@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '@material/web/labs/gb/components/chip/md-gb-chip.js';
@@ -74,16 +75,16 @@ const playground: MaterialStoryInit<StoryKnobs> = {
   render(knobs) {
     return html`
       <div class="demo-group">
-        <md-gb-chip
+        <petal-gb-chip
           color=${knobs.color || 'elevated'}
           type=${knobs.type || 'action'}
           ?selected=${knobs.selected ?? false}
           ?removable=${knobs.removable ?? false}
           ?disabled=${knobs.disabled ?? false}
           ?soft-disabled=${knobs.softDisabled ?? false}>
-          <md-gb-icon slot="icon">star</md-gb-icon>
+          <petal-gb-icon slot="icon">star</petal-gb-icon>
           Expressive Chip
-        </md-gb-chip>
+        </petal-gb-chip>
       </div>
     `;
   },
@@ -95,22 +96,22 @@ const variants: MaterialStoryInit<StoryKnobs> = {
   render() {
     return html`
       <div class="demo-group">
-        <md-gb-chip color="elevated">
-          <md-gb-icon slot="icon">schedule</md-gb-icon>
+        <petal-gb-chip color="elevated">
+          <petal-gb-icon slot="icon">schedule</petal-gb-icon>
           Elevated Action
-        </md-gb-chip>
-        <md-gb-chip color="filled">
-          <md-gb-icon slot="icon">flight</md-gb-icon>
+        </petal-gb-chip>
+        <petal-gb-chip color="filled">
+          <petal-gb-icon slot="icon">flight</petal-gb-icon>
           Filled Action
-        </md-gb-chip>
-        <md-gb-chip color="tonal">
-          <md-gb-icon slot="icon">event</md-gb-icon>
+        </petal-gb-chip>
+        <petal-gb-chip color="tonal">
+          <petal-gb-icon slot="icon">event</petal-gb-icon>
           Tonal Action
-        </md-gb-chip>
-        <md-gb-chip color="outlined">
-          <md-gb-icon slot="icon">bookmark</md-gb-icon>
+        </petal-gb-chip>
+        <petal-gb-chip color="outlined">
+          <petal-gb-icon slot="icon">bookmark</petal-gb-icon>
           Outlined Action
-        </md-gb-chip>
+        </petal-gb-chip>
       </div>
     `;
   },
@@ -122,15 +123,15 @@ const functional: MaterialStoryInit<StoryKnobs> = {
   render() {
     return html`
       <div class="demo-group">
-        <md-gb-chip type="filter" color="elevated"
-          >Unselected Filter</md-gb-chip
+        <petal-gb-chip type="filter" color="elevated"
+          >Unselected Filter</petal-gb-chip
         >
-        <md-gb-chip type="filter" color="elevated" selected
-          >Selected Filter</md-gb-chip
+        <petal-gb-chip type="filter" color="elevated" selected
+          >Selected Filter</petal-gb-chip
         >
-        <md-gb-chip removable color="tonal">Removable Tag</md-gb-chip>
-        <md-gb-chip removable color="outlined" disabled
-          >Disabled Tag</md-gb-chip
+        <petal-gb-chip removable color="tonal">Removable Tag</petal-gb-chip>
+        <petal-gb-chip removable color="outlined" disabled
+          >Disabled Tag</petal-gb-chip
         >
       </div>
     `;
@@ -143,18 +144,18 @@ const avatarsAndIcons: MaterialStoryInit<StoryKnobs> = {
   render() {
     return html`
       <div class="demo-group">
-        <md-gb-chip color="elevated">
+        <petal-gb-chip color="elevated">
           <span slot="icon" class="chip-avatar">A</span>
           Avatar Chip
-        </md-gb-chip>
-        <md-gb-chip color="tonal" removable>
+        </petal-gb-chip>
+        <petal-gb-chip color="tonal" removable>
           <span slot="icon" class="chip-avatar">B</span>
           Removable Avatar
-        </md-gb-chip>
-        <md-gb-chip color="outlined">
-          <md-gb-icon slot="icon">face</md-gb-icon>
+        </petal-gb-chip>
+        <petal-gb-chip color="outlined">
+          <petal-gb-icon slot="icon">face</petal-gb-icon>
           Leading Icon Chip
-        </md-gb-chip>
+        </petal-gb-chip>
       </div>
     `;
   },

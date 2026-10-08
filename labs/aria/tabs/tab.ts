@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {css, CSSResultGroup, html, isServer, LitElement} from 'lit';
@@ -40,7 +41,7 @@ export class AriaTabElement extends baseClass {
   `;
 
   /**
-   * ID of the associated `md-aria-tabpanel` element.
+   * ID of the associated `petal-aria-tabpanel` element.
    */
   @property({type: String, reflect: true, noAccessor: true})
   get tabpanel(): string {

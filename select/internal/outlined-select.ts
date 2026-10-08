@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '../../field/outlined-field.js';
@@ -12,5 +13,5 @@ import {Select} from './select.js';
 
 // tslint:disable-next-line:enforce-comments-on-exported-symbols
 export abstract class OutlinedSelect extends Select {
-  protected readonly fieldTag = literal`md-outlined-field`;
+  protected readonly fieldTag = literal`petal-outlined-field`;
 }

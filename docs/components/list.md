@@ -55,7 +55,7 @@ vertical indexes of text and images
 
 ## Usage
 
-`<md-list>` is a container composed of `<md-list-item>`s of different types.
+`<petal-list>` is a container composed of `<petal-list-item>`s of different types.
 
 <!-- no-catalog-start -->
 
@@ -69,30 +69,30 @@ header which is on two lines.](images/list/usage.webp)
 <!-- catalog-include "figures/list/usage.html" -->
 
 ```html
-<md-list style="max-width: 300px;">
-  <md-list-item>
+<petal-list style="max-width: 300px;">
+  <petal-list-item>
     Fruits
-  </md-list-item>
-  <md-divider></md-divider>
-  <md-list-item>
+  </petal-list-item>
+  <petal-divider></petal-divider>
+  <petal-list-item>
     Apple
-</md-list-item>
-  <md-list-item>
+</petal-list-item>
+  <petal-list-item>
     Banana
-  </md-list-item>
-  <md-list-item>
+  </petal-list-item>
+  <petal-list-item>
     <div slot="headline">Cucumber</div>
     <div slot="supporting-text">Cucumbers are long green fruits that are just as long as this multi-line description</div>
-  </md-list-item>
-  <md-list-item
+  </petal-list-item>
+  <petal-list-item
       type="link"
       href="https://google.com/search?q=buy+kiwis&tbm=shop"
       target="_blank">
     <div slot="headline">Shop for Kiwis</div>
     <div slot="supporting-text">This will link you out in a new tab</div>
-    <md-icon slot="end">open_in_new</md-icon>
-  </md-list-item>
-</md-list>
+    <petal-icon slot="end">open_in_new</petal-icon>
+  </petal-list-item>
+</petal-list>
 ```
 
 ## Icon Items
@@ -110,8 +110,8 @@ Angular.](images/list/usage-icon.webp)
 <!-- catalog-include "figures/list/usage-icon.html" -->
 
 ```html
-<md-list style="max-width: 300px">
-  <md-list-item>
+<petal-list style="max-width: 300px">
+  <petal-list-item>
     Lit
     <svg  slot="start" style="height: 24px" viewBox="0 0 160 200">
       <path
@@ -119,14 +119,14 @@ Angular.](images/list/usage-icon.webp)
         d="m160 80v80l-40-40zm-40 40v80l40-40zm0-80v80l-40-40zm-40 40v80l40-40zm-40-40v80l40-40zm40-40v80l-40-40zm-40 120v80l-40-40zm-40-40v80l40-40z"
       />
     </svg>
-  </md-list-item>
-  <md-divider></md-divider>
-  <md-list-item>
+  </petal-list-item>
+  <petal-divider></petal-divider>
+  <petal-list-item>
     Polymer
-    <md-icon slot="start">polymer</md-icon>
-  </md-list-item>
-  <md-divider></md-divider>
-  <md-list-item>
+    <petal-icon slot="start">polymer</petal-icon>
+  </petal-list-item>
+  <petal-divider></petal-divider>
+  <petal-list-item>
     Angular
     <svg slot="start" style="height: 24px" viewBox="0 0 250 250">
       <polygon points="108,135.4 125,135.4 125,135.4 125,135.4 142,135.4 125,94.5   " />
@@ -135,8 +135,8 @@ Angular.](images/list/usage-icon.webp)
           l-11.7-29.2H125h0h0h-24.7l-11.7,29.2h0H66.9h0L125,52.1l0,0l0,0l0,0l0,0L183.1,182.6L183.1,182.6z"
       />
     </svg>
-  </md-list-item>
-</md-list>
+  </petal-list-item>
+</petal-list>
 ```
 
 ## Image Items
@@ -154,22 +154,22 @@ Cate.](images/list/usage-image.webp)
 <!-- catalog-include "figures/list/usage-image.html" -->
 
 ```html
-<md-list style="max-width: 300px;">
-  <md-list-item>
+<petal-list style="max-width: 300px;">
+  <petal-list-item>
     Cat
     <img slot="start" style="width: 56px" src="https://placekitten.com/112/112">
-  </md-list-item>
-  <md-divider></md-divider>
-  <md-list-item>
+  </petal-list-item>
+  <petal-divider></petal-divider>
+  <petal-list-item>
     Kitty Cat
     <img slot="start" style="width: 56px" src="https://placekitten.com/114/114">
-  </md-list-item>
-  <md-divider></md-divider>
-  <md-list-item>
+  </petal-list-item>
+  <petal-divider></petal-divider>
+  <petal-list-item>
     Cate
     <img slot="start" style="width: 56px" src="https://placekitten.com/116/116">
-  </md-list-item>
-</md-list>
+  </petal-list-item>
+</petal-list>
 ```
 
 ## Accessibility
@@ -239,23 +239,23 @@ a different theme applied](images/list/theming-list.webp)
     text-align: end;
   }
 </style>
-<md-list>
-  <md-list-item type="button">
+<petal-list>
+  <petal-list-item type="button">
     <div slot="headline">Apple</div>
     <div slot="supporting-text">In stock</div>
     <div slot="trailing-supporting-text">+100</div>
-  </md-list-item>
-  <md-list-item type="button">
+  </petal-list-item>
+  <petal-list-item type="button">
     <div slot="headline">Banana</div>
     <div slot="supporting-text">In stock</div>
     <div slot="trailing-supporting-text">56</div>
-  </md-list-item>
-  <md-list-item type="button">
+  </petal-list-item>
+  <petal-list-item type="button">
     <div slot="headline">Cucumber</div>
     <div slot="supporting-text">Low stock</div>
     <div slot="trailing-supporting-text">5</div>
-  </md-list-item>
-</md-list>
+  </petal-list-item>
+</petal-list>
 ```
 
 ### Icon List Item
@@ -291,27 +291,27 @@ applied](images/list/theming-icon.webp)
     --md-list-item-leading-icon-size: 20px;
     --md-list-item-trailing-icon-size: 20px;
   }
-  md-list-item.unhealthy {
+  petal-list-item.unhealthy {
     --md-list-item-trailing-icon-color: #ba1a1a;
   }
 </style>
-<md-list>
-  <md-list-item>
+<petal-list>
+  <petal-list-item>
     <div slot="headline">Eggs</div>
-    <md-icon slot="start">egg</md-icon>
-    <md-icon slot="end">recommend</md-icon>
-  </md-list-item>
-  <md-list-item class="unhealthy">
+    <petal-icon slot="start">egg</petal-icon>
+    <petal-icon slot="end">recommend</petal-icon>
+  </petal-list-item>
+  <petal-list-item class="unhealthy">
     <div slot="headline">Ice Cream</div>
-    <md-icon slot="start">icecream</md-icon>
-    <md-icon slot="end">dangerous</md-icon>
-  </md-list-item>
-  <md-list-item>
+    <petal-icon slot="start">icecream</petal-icon>
+    <petal-icon slot="end">dangerous</petal-icon>
+  </petal-list-item>
+  <petal-list-item>
     <div slot="headline">Orange</div>
-    <md-icon slot="start">nutrition</md-icon>
-    <md-icon slot="end">recommend</md-icon>
-  </md-list-item>
-</md-list>
+    <petal-icon slot="start">nutrition</petal-icon>
+    <petal-icon slot="end">recommend</petal-icon>
+  </petal-list-item>
+</petal-list>
 ```
 
 ### Avatar List Item
@@ -361,17 +361,17 @@ Token                                 | Default value
     width: 40px;
   }
 </style>
-<md-list>
-  <md-list-item headline="Wide Cat">
+<petal-list>
+  <petal-list-item headline="Wide Cat">
     <img slot="start" src="https://placekitten.com/200/100">
-  </md-list-item>
-  <md-list-item headline="Round kitty cat">
+  </petal-list-item>
+  <petal-list-item headline="Round kitty cat">
     <img slot="start" src="https://placekitten.com/202/101">
-  </md-list-item>
-  <md-list-item headline="Softe cate">
+  </petal-list-item>
+  <petal-list-item headline="Softe cate">
     <img slot="start" src="https://placekitten.com/212/106">
-  </md-list-item>
-</md-list>
+  </petal-list-item>
+</petal-list>
 ```
 
 <!-- auto-generated API docs start -->
@@ -379,7 +379,7 @@ Token                                 | Default value
 ## API
 
 
-### MdList <code>&lt;md-list&gt;</code>
+### PetalList <code>&lt;petal-list&gt;</code>
 
 #### Properties
 
@@ -402,7 +402,7 @@ Token                                 | Default value
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 
-### MdListItem <code>&lt;md-list-item&gt;</code>
+### PetalListItem <code>&lt;petal-list-item&gt;</code>
 
 #### Properties
 

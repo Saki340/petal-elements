@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '@material/web/field/filled-field.js';
@@ -30,12 +31,12 @@ export interface StoryKnobs {
   max: number;
 }
 
-const START_CONTENT = html`<md-icon slot="start">search</md-icon>`;
-const END_CONTENT = html`<md-icon slot="end">event</md-icon>`;
+const START_CONTENT = html`<petal-icon slot="start">search</petal-icon>`;
+const END_CONTENT = html`<petal-icon slot="end">event</petal-icon>`;
 
 const styles = css`
-  md-filled-field,
-  md-outlined-field {
+  petal-filled-field,
+  petal-outlined-field {
     width: 256px;
   }
 `;
@@ -67,7 +68,7 @@ const filled: MaterialStoryInit<StoryKnobs> = {
 
     const styles = {resize: resizable ? 'both' : null};
     return html`
-      <md-filled-field
+      <petal-filled-field
         style=${styleMap(styles)}
         .label=${label}
         ?disabled=${disabled}
@@ -84,7 +85,7 @@ const filled: MaterialStoryInit<StoryKnobs> = {
         max=${max}>
         ${hasStart ? START_CONTENT : nothing} ${content}
         ${hasEnd ? END_CONTENT : nothing}
-      </md-filled-field>
+      </petal-filled-field>
     `;
   },
 };
@@ -118,7 +119,7 @@ const outlined: MaterialStoryInit<StoryKnobs> = {
 
     const styles = {resize: resizable ? 'both' : null};
     return html`
-      <md-outlined-field
+      <petal-outlined-field
         style=${styleMap(styles)}
         .label=${label}
         ?disabled=${disabled}
@@ -136,7 +137,7 @@ const outlined: MaterialStoryInit<StoryKnobs> = {
         <div id="description" slot="aria-describedby" hidden></div>
         ${hasStart ? START_CONTENT : nothing} ${content}
         ${hasEnd ? END_CONTENT : nothing}
-      </md-outlined-field>
+      </petal-outlined-field>
     `;
   },
 };

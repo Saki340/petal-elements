@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '../../focus/md-focus-ring.js';
@@ -37,8 +38,8 @@ export function renderRemoveButton({
       tabindex=${!tabbable ? -1 : nothing}
       @click=${handleRemoveClick}
       @focus=${focusListener}>
-      <md-focus-ring part="trailing-focus-ring"></md-focus-ring>
-      <md-ripple ?disabled=${disabled}></md-ripple>
+      <petal-focus-ring part="trailing-focus-ring"></petal-focus-ring>
+      <petal-ripple ?disabled=${disabled}></petal-ripple>
       <span class="trailing icon" aria-hidden="true">
         <slot name="remove-trailing-icon">
           <svg viewBox="0 96 960 960">

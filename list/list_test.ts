@@ -2,6 +2,7 @@
  * @license
  * Copyright 2022 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 // import 'jasmine'; (google3-only)
@@ -14,28 +15,28 @@ import {Environment} from '../testing/environment.js';
 import {createTokenTests} from '../testing/tokens.js';
 
 import {ListHarness, ListItemHarness} from './harness.js';
-import {MdList} from './list.js';
-import {MdListItem} from './list-item.js';
+import {PetalList} from './list.js';
+import {PetalListItem} from './list-item.js';
 
-describe('<md-list>', () => {
+describe('<petal-list>', () => {
   const env = new Environment();
 
   describe('.styles', () => {
-    createTokenTests(MdList.styles);
+    createTokenTests(PetalList.styles);
   });
 
   describe('keyboard navigation', () => {
     it('non-nagivable key does nothing', async () => {
-      const root = env.render(html` <md-list>
-        <md-list-item type="button" tabindex="-1"></md-list-item>
-        <md-list-item type="button" tabindex="0"></md-list-item>
-        <md-list-item type="button" tabindex="-1"></md-list-item>
-      </md-list>`);
+      const root = env.render(html` <petal-list>
+        <petal-list-item type="button" tabindex="-1"></petal-list-item>
+        <petal-list-item type="button" tabindex="0"></petal-list-item>
+        <petal-list-item type="button" tabindex="-1"></petal-list-item>
+      </petal-list>`);
 
-      const listEl = root.querySelector('md-list')!;
+      const listEl = root.querySelector('petal-list')!;
       const listHarness = new ListHarness(listEl);
       const [first, second, third] = Array.from(
-        root.querySelectorAll('md-list-item'),
+        root.querySelectorAll('petal-list-item'),
       );
 
       await env.waitForStability();
@@ -53,16 +54,16 @@ describe('<md-list>', () => {
     });
 
     it('ArrowDown activates the next item', async () => {
-      const root = env.render(html` <md-list>
-        <md-list-item type="button" tabindex="-1"></md-list-item>
-        <md-list-item type="button" tabindex="0"></md-list-item>
-        <md-list-item type="button" tabindex="-1"></md-list-item>
-      </md-list>`);
+      const root = env.render(html` <petal-list>
+        <petal-list-item type="button" tabindex="-1"></petal-list-item>
+        <petal-list-item type="button" tabindex="0"></petal-list-item>
+        <petal-list-item type="button" tabindex="-1"></petal-list-item>
+      </petal-list>`);
 
-      const listEl = root.querySelector('md-list')!;
+      const listEl = root.querySelector('petal-list')!;
       const listHarness = new ListHarness(listEl);
       const [first, second, third] = Array.from(
-        root.querySelectorAll('md-list-item'),
+        root.querySelectorAll('petal-list-item'),
       );
 
       await env.waitForStability();
@@ -80,16 +81,16 @@ describe('<md-list>', () => {
     });
 
     it('ArrowRight in LTR activates the next item', async () => {
-      const root = env.render(html` <md-list>
-        <md-list-item type="button" tabindex="-1"></md-list-item>
-        <md-list-item type="button" tabindex="0"></md-list-item>
-        <md-list-item type="button" tabindex="-1"></md-list-item>
-      </md-list>`);
+      const root = env.render(html` <petal-list>
+        <petal-list-item type="button" tabindex="-1"></petal-list-item>
+        <petal-list-item type="button" tabindex="0"></petal-list-item>
+        <petal-list-item type="button" tabindex="-1"></petal-list-item>
+      </petal-list>`);
 
-      const listEl = root.querySelector('md-list')!;
+      const listEl = root.querySelector('petal-list')!;
       const listHarness = new ListHarness(listEl);
       const [first, second, third] = Array.from(
-        root.querySelectorAll('md-list-item'),
+        root.querySelectorAll('petal-list-item'),
       );
 
       await env.waitForStability();
@@ -107,16 +108,16 @@ describe('<md-list>', () => {
     });
 
     it('ArrowLeft in RTL activates the next item', async () => {
-      const root = env.render(html` <md-list dir="rtl">
-        <md-list-item type="button" tabindex="-1"></md-list-item>
-        <md-list-item type="button" tabindex="0"></md-list-item>
-        <md-list-item type="button" tabindex="-1"></md-list-item>
-      </md-list>`);
+      const root = env.render(html` <petal-list dir="rtl">
+        <petal-list-item type="button" tabindex="-1"></petal-list-item>
+        <petal-list-item type="button" tabindex="0"></petal-list-item>
+        <petal-list-item type="button" tabindex="-1"></petal-list-item>
+      </petal-list>`);
 
-      const listEl = root.querySelector('md-list')!;
+      const listEl = root.querySelector('petal-list')!;
       const listHarness = new ListHarness(listEl);
       const [first, second, third] = Array.from(
-        root.querySelectorAll('md-list-item'),
+        root.querySelectorAll('petal-list-item'),
       );
 
       await env.waitForStability();
@@ -134,15 +135,15 @@ describe('<md-list>', () => {
     });
 
     it('ArrowDown will loop around', async () => {
-      const root = env.render(html` <md-list>
-        <md-list-item type="button" tabindex="-1"></md-list-item>
-        <md-list-item type="button" tabindex="-1"></md-list-item>
-        <md-list-item type="button" tabindex="0"></md-list-item>
-      </md-list>`);
-      const listEl = root.querySelector('md-list')!;
+      const root = env.render(html` <petal-list>
+        <petal-list-item type="button" tabindex="-1"></petal-list-item>
+        <petal-list-item type="button" tabindex="-1"></petal-list-item>
+        <petal-list-item type="button" tabindex="0"></petal-list-item>
+      </petal-list>`);
+      const listEl = root.querySelector('petal-list')!;
       const listHarness = new ListHarness(listEl);
       const [first, second, third] = Array.from(
-        root.querySelectorAll('md-list-item'),
+        root.querySelectorAll('petal-list-item'),
       );
 
       await env.waitForStability();
@@ -160,13 +161,13 @@ describe('<md-list>', () => {
     });
 
     it('ArrowDown will do nothing if nothing is selectable', async () => {
-      const root = env.render(html` <md-list>
-        <md-list-item type="button" disabled></md-list-item>
-        <md-list-item type="button" disabled></md-list-item>
-      </md-list>`);
-      const listEl = root.querySelector('md-list')!;
+      const root = env.render(html` <petal-list>
+        <petal-list-item type="button" disabled></petal-list-item>
+        <petal-list-item type="button" disabled></petal-list-item>
+      </petal-list>`);
+      const listEl = root.querySelector('petal-list')!;
       const listHarness = new ListHarness(listEl);
-      const [first, second] = Array.from(root.querySelectorAll('md-list-item'));
+      const [first, second] = Array.from(root.querySelectorAll('petal-list-item'));
 
       await env.waitForStability();
 
@@ -181,15 +182,15 @@ describe('<md-list>', () => {
     });
 
     it('ArrowDown does not activate disabled items', async () => {
-      const root = env.render(html` <md-list>
-        <md-list-item type="button"></md-list-item>
-        <md-list-item type="button" disabled></md-list-item>
-        <md-list-item type="button"></md-list-item>
-      </md-list>`);
-      const listEl = root.querySelector('md-list')!;
+      const root = env.render(html` <petal-list>
+        <petal-list-item type="button"></petal-list-item>
+        <petal-list-item type="button" disabled></petal-list-item>
+        <petal-list-item type="button"></petal-list-item>
+      </petal-list>`);
+      const listEl = root.querySelector('petal-list')!;
       const listHarness = new ListHarness(listEl);
       const [first, second, third] = Array.from(
-        root.querySelectorAll('md-list-item'),
+        root.querySelectorAll('petal-list-item'),
       );
 
       await env.waitForStability();
@@ -208,12 +209,12 @@ describe('<md-list>', () => {
     });
 
     it('ArrowDown will select itself if its the only activatable', async () => {
-      const root = env.render(html` <md-list>
-        <md-list-item type="button" tabindex="0"></md-list-item>
-      </md-list>`);
-      const listEl = root.querySelector('md-list')!;
+      const root = env.render(html` <petal-list>
+        <petal-list-item type="button" tabindex="0"></petal-list-item>
+      </petal-list>`);
+      const listEl = root.querySelector('petal-list')!;
       const listHarness = new ListHarness(listEl);
-      const first = root.querySelector('md-list-item')!;
+      const first = root.querySelector('petal-list-item')!;
 
       await env.waitForStability();
 
@@ -227,15 +228,15 @@ describe('<md-list>', () => {
     });
 
     it('ArrowUp activates the previous item', async () => {
-      const root = env.render(html` <md-list>
-        <md-list-item type="button" tabindex="-1"></md-list-item>
-        <md-list-item type="button" tabindex="0"></md-list-item>
-        <md-list-item type="button" tabindex="-1"></md-list-item>
-      </md-list>`);
-      const listEl = root.querySelector('md-list')!;
+      const root = env.render(html` <petal-list>
+        <petal-list-item type="button" tabindex="-1"></petal-list-item>
+        <petal-list-item type="button" tabindex="0"></petal-list-item>
+        <petal-list-item type="button" tabindex="-1"></petal-list-item>
+      </petal-list>`);
+      const listEl = root.querySelector('petal-list')!;
       const listHarness = new ListHarness(listEl);
       const [first, second, third] = Array.from(
-        root.querySelectorAll('md-list-item'),
+        root.querySelectorAll('petal-list-item'),
       );
 
       await env.waitForStability();
@@ -254,15 +255,15 @@ describe('<md-list>', () => {
     });
 
     it('ArrowLeft in LTR activates the previous item', async () => {
-      const root = env.render(html` <md-list>
-        <md-list-item type="button" tabindex="-1"></md-list-item>
-        <md-list-item type="button" tabindex="0"></md-list-item>
-        <md-list-item type="button" tabindex="-1"></md-list-item>
-      </md-list>`);
-      const listEl = root.querySelector('md-list')!;
+      const root = env.render(html` <petal-list>
+        <petal-list-item type="button" tabindex="-1"></petal-list-item>
+        <petal-list-item type="button" tabindex="0"></petal-list-item>
+        <petal-list-item type="button" tabindex="-1"></petal-list-item>
+      </petal-list>`);
+      const listEl = root.querySelector('petal-list')!;
       const listHarness = new ListHarness(listEl);
       const [first, second, third] = Array.from(
-        root.querySelectorAll('md-list-item'),
+        root.querySelectorAll('petal-list-item'),
       );
 
       await env.waitForStability();
@@ -280,15 +281,15 @@ describe('<md-list>', () => {
     });
 
     it('ArrowRight in RTL activates the previous item', async () => {
-      const root = env.render(html` <md-list dir="rtl">
-        <md-list-item type="button" tabindex="-1"></md-list-item>
-        <md-list-item type="button" tabindex="0"></md-list-item>
-        <md-list-item type="button" tabindex="-1"></md-list-item>
-      </md-list>`);
-      const listEl = root.querySelector('md-list')!;
+      const root = env.render(html` <petal-list dir="rtl">
+        <petal-list-item type="button" tabindex="-1"></petal-list-item>
+        <petal-list-item type="button" tabindex="0"></petal-list-item>
+        <petal-list-item type="button" tabindex="-1"></petal-list-item>
+      </petal-list>`);
+      const listEl = root.querySelector('petal-list')!;
       const listHarness = new ListHarness(listEl);
       const [first, second, third] = Array.from(
-        root.querySelectorAll('md-list-item'),
+        root.querySelectorAll('petal-list-item'),
       );
 
       await env.waitForStability();
@@ -306,15 +307,15 @@ describe('<md-list>', () => {
     });
 
     it('activatePreviousItem will loop around', async () => {
-      const root = env.render(html` <md-list>
-        <md-list-item type="button"></md-list-item>
-        <md-list-item type="button"></md-list-item>
-        <md-list-item type="button"></md-list-item>
-      </md-list>`);
-      const listEl = root.querySelector('md-list')!;
+      const root = env.render(html` <petal-list>
+        <petal-list-item type="button"></petal-list-item>
+        <petal-list-item type="button"></petal-list-item>
+        <petal-list-item type="button"></petal-list-item>
+      </petal-list>`);
+      const listEl = root.querySelector('petal-list')!;
       const listHarness = new ListHarness(listEl);
       const [first, second, third] = Array.from(
-        root.querySelectorAll('md-list-item'),
+        root.querySelectorAll('petal-list-item'),
       );
 
       await env.waitForStability();
@@ -333,13 +334,13 @@ describe('<md-list>', () => {
     });
 
     it('ArrowUp will return null if nothing is selectable', async () => {
-      const root = env.render(html` <md-list>
-        <md-list-item type="button" disabled></md-list-item>
-        <md-list-item type="button" disabled></md-list-item>
-      </md-list>`);
-      const listEl = root.querySelector('md-list')!;
+      const root = env.render(html` <petal-list>
+        <petal-list-item type="button" disabled></petal-list-item>
+        <petal-list-item type="button" disabled></petal-list-item>
+      </petal-list>`);
+      const listEl = root.querySelector('petal-list')!;
       const listHarness = new ListHarness(listEl);
-      const [first, second] = Array.from(root.querySelectorAll('md-list-item'));
+      const [first, second] = Array.from(root.querySelectorAll('petal-list-item'));
 
       await env.waitForStability();
 
@@ -354,15 +355,15 @@ describe('<md-list>', () => {
     });
 
     it('ArrowUp does not activate disabled items', async () => {
-      const root = env.render(html` <md-list>
-        <md-list-item type="button" tabindex="-1"></md-list-item>
-        <md-list-item type="button" disabled></md-list-item>
-        <md-list-item type="button" tabindex="0"></md-list-item>
-      </md-list>`);
-      const listEl = root.querySelector('md-list')!;
+      const root = env.render(html` <petal-list>
+        <petal-list-item type="button" tabindex="-1"></petal-list-item>
+        <petal-list-item type="button" disabled></petal-list-item>
+        <petal-list-item type="button" tabindex="0"></petal-list-item>
+      </petal-list>`);
+      const listEl = root.querySelector('petal-list')!;
       const listHarness = new ListHarness(listEl);
       const [first, second, third] = Array.from(
-        root.querySelectorAll('md-list-item'),
+        root.querySelectorAll('petal-list-item'),
       );
 
       await env.waitForStability();
@@ -381,12 +382,12 @@ describe('<md-list>', () => {
     });
 
     it('ArrowUp will select itself if its the only activatable', async () => {
-      const root = env.render(html` <md-list>
-        <md-list-item type="button"></md-list-item>
-      </md-list>`);
-      const listEl = root.querySelector('md-list')!;
+      const root = env.render(html` <petal-list>
+        <petal-list-item type="button"></petal-list-item>
+      </petal-list>`);
+      const listEl = root.querySelector('petal-list')!;
       const listHarness = new ListHarness(listEl);
-      const first = root.querySelector('md-list-item')!;
+      const first = root.querySelector('petal-list-item')!;
 
       await env.waitForStability();
 
@@ -400,15 +401,15 @@ describe('<md-list>', () => {
     });
 
     it('Home will select the first item if something is already selected', async () => {
-      const root = env.render(html` <md-list>
-        <md-list-item type="button" tabindex="-1"></md-list-item>
-        <md-list-item type="button" tabindex="0"></md-list-item>
-        <md-list-item type="button"></md-list-item>
-      </md-list>`);
-      const listEl = root.querySelector('md-list')!;
+      const root = env.render(html` <petal-list>
+        <petal-list-item type="button" tabindex="-1"></petal-list-item>
+        <petal-list-item type="button" tabindex="0"></petal-list-item>
+        <petal-list-item type="button"></petal-list-item>
+      </petal-list>`);
+      const listEl = root.querySelector('petal-list')!;
       const listHarness = new ListHarness(listEl);
       const [first, second, third] = Array.from(
-        root.querySelectorAll('md-list-item'),
+        root.querySelectorAll('petal-list-item'),
       );
 
       await env.waitForStability();
@@ -427,15 +428,15 @@ describe('<md-list>', () => {
     });
 
     it('Home will select the first activatable item if first is non-activatable', async () => {
-      const root = env.render(html` <md-list>
-        <md-list-item type="button" disabled></md-list-item>
-        <md-list-item type="button" tabindex="-1"></md-list-item>
-        <md-list-item type="button" tabindex="0"></md-list-item>
-      </md-list>`);
-      const listEl = root.querySelector('md-list')!;
+      const root = env.render(html` <petal-list>
+        <petal-list-item type="button" disabled></petal-list-item>
+        <petal-list-item type="button" tabindex="-1"></petal-list-item>
+        <petal-list-item type="button" tabindex="0"></petal-list-item>
+      </petal-list>`);
+      const listEl = root.querySelector('petal-list')!;
       const listHarness = new ListHarness(listEl);
       const [first, second, third] = Array.from(
-        root.querySelectorAll('md-list-item'),
+        root.querySelectorAll('petal-list-item'),
       );
 
       await env.waitForStability();
@@ -454,15 +455,15 @@ describe('<md-list>', () => {
     });
 
     it('Home will select the first item if it is already selected', async () => {
-      const root = env.render(html` <md-list>
-        <md-list-item type="button" tabindex="0"></md-list-item>
-        <md-list-item type="button" tabindex="-1"></md-list-item>
-        <md-list-item type="button" tabindex="-1"></md-list-item>
-      </md-list>`);
-      const listEl = root.querySelector('md-list')!;
+      const root = env.render(html` <petal-list>
+        <petal-list-item type="button" tabindex="0"></petal-list-item>
+        <petal-list-item type="button" tabindex="-1"></petal-list-item>
+        <petal-list-item type="button" tabindex="-1"></petal-list-item>
+      </petal-list>`);
+      const listEl = root.querySelector('petal-list')!;
       const listHarness = new ListHarness(listEl);
       const [first, second, third] = Array.from(
-        root.querySelectorAll('md-list-item'),
+        root.querySelectorAll('petal-list-item'),
       );
 
       await env.waitForStability();
@@ -481,15 +482,15 @@ describe('<md-list>', () => {
     });
 
     it('End will select the last item if something is already selected', async () => {
-      const root = env.render(html` <md-list>
-        <md-list-item type="button" tabindex="-1"></md-list-item>
-        <md-list-item type="button" tabindex="0"></md-list-item>
-        <md-list-item type="button" tabindex="-1"></md-list-item>
-      </md-list>`);
-      const listEl = root.querySelector('md-list')!;
+      const root = env.render(html` <petal-list>
+        <petal-list-item type="button" tabindex="-1"></petal-list-item>
+        <petal-list-item type="button" tabindex="0"></petal-list-item>
+        <petal-list-item type="button" tabindex="-1"></petal-list-item>
+      </petal-list>`);
+      const listEl = root.querySelector('petal-list')!;
       const listHarness = new ListHarness(listEl);
       const [first, second, third] = Array.from(
-        root.querySelectorAll('md-list-item'),
+        root.querySelectorAll('petal-list-item'),
       );
 
       await env.waitForStability();
@@ -508,15 +509,15 @@ describe('<md-list>', () => {
     });
 
     it('End will select the last activatable item if last is non-activatable', async () => {
-      const root = env.render(html` <md-list>
-        <md-list-item type="button"></md-list-item>
-        <md-list-item type="button"></md-list-item>
-        <md-list-item type="button" disabled></md-list-item>
-      </md-list>`);
-      const listEl = root.querySelector('md-list')!;
+      const root = env.render(html` <petal-list>
+        <petal-list-item type="button"></petal-list-item>
+        <petal-list-item type="button"></petal-list-item>
+        <petal-list-item type="button" disabled></petal-list-item>
+      </petal-list>`);
+      const listEl = root.querySelector('petal-list')!;
       const listHarness = new ListHarness(listEl);
       const [first, second, third] = Array.from(
-        root.querySelectorAll('md-list-item'),
+        root.querySelectorAll('petal-list-item'),
       );
 
       await env.waitForStability();
@@ -535,15 +536,15 @@ describe('<md-list>', () => {
     });
 
     it('End will select the last item if it is already selected', async () => {
-      const root = env.render(html` <md-list>
-        <md-list-item type="button" tabindex="-1"></md-list-item>
-        <md-list-item type="button" tabindex="-1"></md-list-item>
-        <md-list-item type="button" tabindex="0"></md-list-item>
-      </md-list>`);
-      const listEl = root.querySelector('md-list')!;
+      const root = env.render(html` <petal-list>
+        <petal-list-item type="button" tabindex="-1"></petal-list-item>
+        <petal-list-item type="button" tabindex="-1"></petal-list-item>
+        <petal-list-item type="button" tabindex="0"></petal-list-item>
+      </petal-list>`);
+      const listEl = root.querySelector('petal-list')!;
       const listHarness = new ListHarness(listEl);
       const [first, second, third] = Array.from(
-        root.querySelectorAll('md-list-item'),
+        root.querySelectorAll('petal-list-item'),
       );
 
       await env.waitForStability();
@@ -562,13 +563,13 @@ describe('<md-list>', () => {
     });
 
     it('Clicking on an item will activate it', async () => {
-      const root = env.render(html` <md-list>
-        <md-list-item type="button" tabindex="-1"></md-list-item>
-        <md-list-item type="button" tabindex="-1"></md-list-item>
-        <md-list-item type="button" tabindex="0"></md-list-item>
-      </md-list>`);
+      const root = env.render(html` <petal-list>
+        <petal-list-item type="button" tabindex="-1"></petal-list-item>
+        <petal-list-item type="button" tabindex="-1"></petal-list-item>
+        <petal-list-item type="button" tabindex="0"></petal-list-item>
+      </petal-list>`);
       const [first, second, third] = Array.from(
-        root.querySelectorAll('md-list-item'),
+        root.querySelectorAll('petal-list-item'),
       );
 
       await env.waitForStability();
@@ -590,13 +591,13 @@ describe('<md-list>', () => {
 
   describe('activate items methods', () => {
     it('List will activate only first item by default', async () => {
-      const root = env.render(html` <md-list>
-        <md-list-item type="button"></md-list-item>
-        <md-list-item type="button"></md-list-item>
-        <md-list-item type="button"></md-list-item>
-      </md-list>`);
+      const root = env.render(html` <petal-list>
+        <petal-list-item type="button"></petal-list-item>
+        <petal-list-item type="button"></petal-list-item>
+        <petal-list-item type="button"></petal-list-item>
+      </petal-list>`);
       const [first, second, third] = Array.from(
-        root.querySelectorAll('md-list-item'),
+        root.querySelectorAll('petal-list-item'),
       );
 
       await env.waitForStability();
@@ -608,13 +609,13 @@ describe('<md-list>', () => {
     });
 
     it('List will activate only first activatable item by default', async () => {
-      const root = env.render(html` <md-list>
-        <md-list-item type="button" disabled></md-list-item>
-        <md-list-item type="button"></md-list-item>
-        <md-list-item type="button"></md-list-item>
-      </md-list>`);
+      const root = env.render(html` <petal-list>
+        <petal-list-item type="button" disabled></petal-list-item>
+        <petal-list-item type="button"></petal-list-item>
+        <petal-list-item type="button"></petal-list-item>
+      </petal-list>`);
       const [first, second, third] = Array.from(
-        root.querySelectorAll('md-list-item'),
+        root.querySelectorAll('petal-list-item'),
       );
 
       await env.waitForStability();
@@ -626,13 +627,13 @@ describe('<md-list>', () => {
     });
 
     it('List will activate first activatable item if all are tabindex -1', async () => {
-      const root = env.render(html` <md-list>
-        <md-list-item type="button" tabindex="-1"></md-list-item>
-        <md-list-item type="button" tabindex="-1"></md-list-item>
-        <md-list-item type="button" tabindex="-1"></md-list-item>
-      </md-list>`);
+      const root = env.render(html` <petal-list>
+        <petal-list-item type="button" tabindex="-1"></petal-list-item>
+        <petal-list-item type="button" tabindex="-1"></petal-list-item>
+        <petal-list-item type="button" tabindex="-1"></petal-list-item>
+      </petal-list>`);
       const [first, second, third] = Array.from(
-        root.querySelectorAll('md-list-item'),
+        root.querySelectorAll('petal-list-item'),
       );
 
       await env.waitForStability();
@@ -644,13 +645,13 @@ describe('<md-list>', () => {
     });
 
     it('List will activate first activatable item if defined by user', async () => {
-      const root = env.render(html` <md-list>
-        <md-list-item type="button" tabindex="-1"></md-list-item>
-        <md-list-item type="button" tabindex="2"></md-list-item>
-        <md-list-item type="button" tabindex="1"></md-list-item>
-      </md-list>`);
+      const root = env.render(html` <petal-list>
+        <petal-list-item type="button" tabindex="-1"></petal-list-item>
+        <petal-list-item type="button" tabindex="2"></petal-list-item>
+        <petal-list-item type="button" tabindex="1"></petal-list-item>
+      </petal-list>`);
       const [first, second, third] = Array.from(
-        root.querySelectorAll('md-list-item'),
+        root.querySelectorAll('petal-list-item'),
       );
 
       await env.waitForStability();
@@ -662,14 +663,14 @@ describe('<md-list>', () => {
     });
 
     it('activateNextItem activates the next item', async () => {
-      const root = env.render(html` <md-list>
-        <md-list-item type="button" tabindex="-1"></md-list-item>
-        <md-list-item type="button" tabindex="0"></md-list-item>
-        <md-list-item type="button" tabindex="-1"></md-list-item>
-      </md-list>`);
-      const listEl = root.querySelector('md-list')!;
+      const root = env.render(html` <petal-list>
+        <petal-list-item type="button" tabindex="-1"></petal-list-item>
+        <petal-list-item type="button" tabindex="0"></petal-list-item>
+        <petal-list-item type="button" tabindex="-1"></petal-list-item>
+      </petal-list>`);
+      const listEl = root.querySelector('petal-list')!;
       const [first, second, third] = Array.from(
-        root.querySelectorAll('md-list-item'),
+        root.querySelectorAll('petal-list-item'),
       );
 
       await env.waitForStability();
@@ -689,14 +690,14 @@ describe('<md-list>', () => {
     });
 
     it('activateNextItem will loop around', async () => {
-      const root = env.render(html` <md-list>
-        <md-list-item type="button" tabindex="-1"></md-list-item>
-        <md-list-item type="button" tabindex="-1"></md-list-item>
-        <md-list-item type="button" tabindex="0"></md-list-item>
-      </md-list>`);
-      const listEl = root.querySelector('md-list')!;
+      const root = env.render(html` <petal-list>
+        <petal-list-item type="button" tabindex="-1"></petal-list-item>
+        <petal-list-item type="button" tabindex="-1"></petal-list-item>
+        <petal-list-item type="button" tabindex="0"></petal-list-item>
+      </petal-list>`);
+      const listEl = root.querySelector('petal-list')!;
       const [first, second, third] = Array.from(
-        root.querySelectorAll('md-list-item'),
+        root.querySelectorAll('petal-list-item'),
       );
 
       await env.waitForStability();
@@ -716,8 +717,8 @@ describe('<md-list>', () => {
     });
 
     it('activateNextItem will return null if nothing is selectable', async () => {
-      const root = env.render(html` <md-list> </md-list>`);
-      const listEl = root.querySelector('md-list')!;
+      const root = env.render(html` <petal-list> </petal-list>`);
+      const listEl = root.querySelector('petal-list')!;
 
       await env.waitForStability();
 
@@ -728,14 +729,14 @@ describe('<md-list>', () => {
     });
 
     it('activateNextItem does not activate disabled items', async () => {
-      const root = env.render(html` <md-list>
-        <md-list-item type="button"></md-list-item>
-        <md-list-item type="button" disabled></md-list-item>
-        <md-list-item type="button"></md-list-item>
-      </md-list>`);
-      const listEl = root.querySelector('md-list')!;
+      const root = env.render(html` <petal-list>
+        <petal-list-item type="button"></petal-list-item>
+        <petal-list-item type="button" disabled></petal-list-item>
+        <petal-list-item type="button"></petal-list-item>
+      </petal-list>`);
+      const listEl = root.querySelector('petal-list')!;
       const [first, second, third] = Array.from(
-        root.querySelectorAll('md-list-item'),
+        root.querySelectorAll('petal-list-item'),
       );
 
       await env.waitForStability();
@@ -755,11 +756,11 @@ describe('<md-list>', () => {
     });
 
     it('activateNextItem will return itself if it is the only activatable item', async () => {
-      const root = env.render(html` <md-list>
-        <md-list-item type="button" tabindex="0"></md-list-item>
-      </md-list>`);
-      const listEl = root.querySelector('md-list')!;
-      const first = root.querySelector('md-list-item')!;
+      const root = env.render(html` <petal-list>
+        <petal-list-item type="button" tabindex="0"></petal-list-item>
+      </petal-list>`);
+      const listEl = root.querySelector('petal-list')!;
+      const first = root.querySelector('petal-list-item')!;
 
       await env.waitForStability();
 
@@ -774,14 +775,14 @@ describe('<md-list>', () => {
     });
 
     it('activatePreviousItem activates the previous item', async () => {
-      const root = env.render(html` <md-list>
-        <md-list-item type="button" tabindex="-1"></md-list-item>
-        <md-list-item type="button" tabindex="0"></md-list-item>
-        <md-list-item type="button" tabindex="-1"></md-list-item>
-      </md-list>`);
-      const listEl = root.querySelector('md-list')!;
+      const root = env.render(html` <petal-list>
+        <petal-list-item type="button" tabindex="-1"></petal-list-item>
+        <petal-list-item type="button" tabindex="0"></petal-list-item>
+        <petal-list-item type="button" tabindex="-1"></petal-list-item>
+      </petal-list>`);
+      const listEl = root.querySelector('petal-list')!;
       const [first, second, third] = Array.from(
-        root.querySelectorAll('md-list-item'),
+        root.querySelectorAll('petal-list-item'),
       );
 
       await env.waitForStability();
@@ -801,14 +802,14 @@ describe('<md-list>', () => {
     });
 
     it('activatePreviousItem will loop around', async () => {
-      const root = env.render(html` <md-list>
-        <md-list-item type="button"></md-list-item>
-        <md-list-item type="button"></md-list-item>
-        <md-list-item type="button"></md-list-item>
-      </md-list>`);
-      const listEl = root.querySelector('md-list')!;
+      const root = env.render(html` <petal-list>
+        <petal-list-item type="button"></petal-list-item>
+        <petal-list-item type="button"></petal-list-item>
+        <petal-list-item type="button"></petal-list-item>
+      </petal-list>`);
+      const listEl = root.querySelector('petal-list')!;
       const [first, second, third] = Array.from(
-        root.querySelectorAll('md-list-item'),
+        root.querySelectorAll('petal-list-item'),
       );
 
       await env.waitForStability();
@@ -828,8 +829,8 @@ describe('<md-list>', () => {
     });
 
     it('activatePreviousItem will return null if nothing is selectable', async () => {
-      const root = env.render(html` <md-list> </md-list>`);
-      const listEl = root.querySelector('md-list')!;
+      const root = env.render(html` <petal-list> </petal-list>`);
+      const listEl = root.querySelector('petal-list')!;
 
       await env.waitForStability();
 
@@ -841,14 +842,14 @@ describe('<md-list>', () => {
     });
 
     it('activatePreviousItem does not activate disabled items', async () => {
-      const root = env.render(html` <md-list>
-        <md-list-item type="button" tabindex="-1"></md-list-item>
-        <md-list-item type="button" disabled></md-list-item>
-        <md-list-item type="button" tabindex="0"></md-list-item>
-      </md-list>`);
-      const listEl = root.querySelector('md-list')!;
+      const root = env.render(html` <petal-list>
+        <petal-list-item type="button" tabindex="-1"></petal-list-item>
+        <petal-list-item type="button" disabled></petal-list-item>
+        <petal-list-item type="button" tabindex="0"></petal-list-item>
+      </petal-list>`);
+      const listEl = root.querySelector('petal-list')!;
       const [first, second, third] = Array.from(
-        root.querySelectorAll('md-list-item'),
+        root.querySelectorAll('petal-list-item'),
       );
 
       await env.waitForStability();
@@ -868,11 +869,11 @@ describe('<md-list>', () => {
     });
 
     it('activatePreviousItem will return itself if its activatable', async () => {
-      const root = env.render(html` <md-list>
-        <md-list-item type="button"></md-list-item>
-      </md-list>`);
-      const listEl = root.querySelector('md-list')!;
-      const first = root.querySelector('md-list-item')!;
+      const root = env.render(html` <petal-list>
+        <petal-list-item type="button"></petal-list-item>
+      </petal-list>`);
+      const listEl = root.querySelector('petal-list')!;
+      const first = root.querySelector('petal-list-item')!;
 
       await env.waitForStability();
 
@@ -889,8 +890,8 @@ describe('<md-list>', () => {
 
   describe('aria', () => {
     it('Sets default role to list', async () => {
-      const root = env.render(html`<md-list></md-list>`);
-      const listEl = root.querySelector('md-list')!;
+      const root = env.render(html`<petal-list></petal-list>`);
+      const listEl = root.querySelector('petal-list')!;
       await env.waitForStability();
       const internals = (
         listEl as unknown as {internals: {role: string | null}}
@@ -900,16 +901,16 @@ describe('<md-list>', () => {
     });
 
     it('Does not override user given role attribute', async () => {
-      const root = env.render(html`<md-list role="listbox"></md-list>`);
-      const listEl = root.querySelector('md-list')!;
+      const root = env.render(html`<petal-list role="listbox"></petal-list>`);
+      const listEl = root.querySelector('petal-list')!;
       await env.waitForStability();
 
       expect(listEl.getAttribute('role')).toBe('listbox');
     });
 
     it('Does not override user given role property', async () => {
-      const root = env.render(html`<md-list .role=${'listbox'}></md-list>`);
-      const listEl = root.querySelector('md-list')!;
+      const root = env.render(html`<petal-list .role=${'listbox'}></petal-list>`);
+      const listEl = root.querySelector('petal-list')!;
       await env.waitForStability();
 
       expect(listEl.role).toBe('listbox');
@@ -917,29 +918,29 @@ describe('<md-list>', () => {
   });
 });
 
-describe('<md-list-item>', () => {
+describe('<petal-list-item>', () => {
   const env = new Environment();
 
   describe('.styles', () => {
-    createTokenTests(MdListItem.styles);
+    createTokenTests(PetalListItem.styles);
   });
 
   describe('rendering', () => {
     it('self-describes as a list-item', async () => {
-      const root = env.render(html` <md-list-item> </md-list-item>`);
+      const root = env.render(html` <petal-list-item> </petal-list-item>`);
 
-      const listItemEl = root.querySelector('md-list-item')!;
+      const listItemEl = root.querySelector('petal-list-item')!;
 
       await env.waitForStability();
 
-      expect(listItemEl.hasAttribute('md-list-item')).toBeTrue();
+      expect(listItemEl.hasAttribute('petal-list-item')).toBeTrue();
     });
   });
 
   it('disabled overrides tabIndex', async () => {
-    const root = env.render(html`<md-list-item type="button"></md-list-item>`);
+    const root = env.render(html`<petal-list-item type="button"></petal-list-item>`);
 
-    const listItem = root.querySelector('md-list-item')!;
+    const listItem = root.querySelector('petal-list-item')!;
 
     await env.waitForStability();
 
@@ -958,14 +959,14 @@ describe('<md-list-item>', () => {
   });
 
   it('ripple and focus ring rendered on interactive', async () => {
-    const root = env.render(html`<md-list-item></md-list-item>`);
+    const root = env.render(html`<petal-list-item></petal-list-item>`);
 
-    const listItem = root.querySelector('md-list-item')!;
+    const listItem = root.querySelector('petal-list-item')!;
 
     await env.waitForStability();
 
-    let rippleEl = listItem.renderRoot.querySelector('md-ripple');
-    let focusRingEl = listItem.renderRoot.querySelector('md-focus-ring');
+    let rippleEl = listItem.renderRoot.querySelector('petal-ripple');
+    let focusRingEl = listItem.renderRoot.querySelector('petal-focus-ring');
 
     expect(rippleEl).toBeNull();
     expect(focusRingEl).toBeNull();
@@ -974,27 +975,27 @@ describe('<md-list-item>', () => {
 
     await env.waitForStability();
 
-    rippleEl = listItem.renderRoot.querySelector('md-ripple');
-    focusRingEl = listItem.renderRoot.querySelector('md-focus-ring');
+    rippleEl = listItem.renderRoot.querySelector('petal-ripple');
+    focusRingEl = listItem.renderRoot.querySelector('petal-focus-ring');
 
     expect(rippleEl).toBeTruthy();
     expect(focusRingEl).toBeTruthy();
   });
 });
 
-describe('<md-list-item> link', () => {
+describe('<petal-list-item> link', () => {
   const env = new Environment();
 
   describe('.styles', () => {
-    createTokenTests(MdListItem.styles);
+    createTokenTests(PetalListItem.styles);
   });
 
   it('setting href renders an anchor tag', async () => {
     const root = env.render(
-      html`<md-list-item href="https://google.com"></md-list-item>`,
+      html`<petal-list-item href="https://google.com"></petal-list-item>`,
     );
 
-    const listItem = root.querySelector('md-list-item')!;
+    const listItem = root.querySelector('petal-list-item')!;
 
     await env.waitForStability();
 
@@ -1007,10 +1008,10 @@ describe('<md-list-item> link', () => {
 
   it('setting target without href renders nothing', async () => {
     const root = env.render(
-      html`<md-list-item target="_blank"></md-list-item>`,
+      html`<petal-list-item target="_blank"></petal-list-item>`,
     );
 
-    const listItem = root.querySelector('md-list-item')!;
+    const listItem = root.querySelector('petal-list-item')!;
 
     await env.waitForStability();
 

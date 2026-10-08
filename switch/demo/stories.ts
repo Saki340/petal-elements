@@ -2,6 +2,7 @@
  * @license
  * Copyright 2021 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '@material/web/switch/switch.js';
@@ -23,12 +24,12 @@ export interface StoryKnobs {
 const standard: MaterialStoryInit<StoryKnobs> = {
   name: 'Switch',
   render(knobs) {
-    return html` <md-switch
+    return html` <petal-switch
       aria-label="An example switch"
       .disabled=${knobs.disabled}
       .selected=${knobs.selected}
       .icons=${knobs.icons}
-      .showOnlySelectedIcon=${knobs.showOnlySelectedIcon}></md-switch>`;
+      .showOnlySelectedIcon=${knobs.showOnlySelectedIcon}></petal-switch>`;
   },
 };
 
@@ -54,20 +55,20 @@ const labeled: MaterialStoryInit<StoryKnobs> = {
       <div class="column" role="group" aria-label="Settings">
         <label>
           Wi-Fi
-          <md-switch
+          <petal-switch
             aria-label="Wi-Fi"
             .disabled=${knobs.disabled}
             .icons=${knobs.icons}
-            .showOnlySelectedIcon=${knobs.showOnlySelectedIcon}></md-switch>
+            .showOnlySelectedIcon=${knobs.showOnlySelectedIcon}></petal-switch>
         </label>
         <label>
           Bluetooth
-          <md-switch
+          <petal-switch
             aria-label="Bluetooth"
             selected
             .disabled=${knobs.disabled}
             .icons=${knobs.icons}
-            .showOnlySelectedIcon=${knobs.showOnlySelectedIcon}></md-switch>
+            .showOnlySelectedIcon=${knobs.showOnlySelectedIcon}></petal-switch>
         </label>
       </div>
     `;

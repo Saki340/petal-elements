@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {css, CSSResultOrNative, html, LitElement, nothing} from 'lit';
@@ -14,7 +15,7 @@ import {chip, type ChipColor, type ChipType} from './chip.js';
 import {styles as chipStyles} from './chip.cssresult.js';
 
 /**
- * A Material Design Expressive Chip component (`md-gb-chip`).
+ * A Material Design Expressive Chip component (`petal-gb-chip`).
  *
  * @slot - Used to display the chip label text.
  * @slot icon - Used to display an optional leading icon, checkmark, or avatar.

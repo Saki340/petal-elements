@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 // import 'jasmine'; (google3-only)
@@ -27,25 +28,25 @@ describe('ButtonGroupElement', () => {
   beforeAll(() => {
     const noTransitions = new CSSStyleSheet();
     noTransitions.replaceSync(`
-      md-gb-button::part(btn),
-      md-gb-button-group {
+      petal-gb-button::part(btn),
+      petal-gb-button-group {
         transition: none !important;
       }
     `);
     adoptStyles(document, [m3Styles, noTransitions]);
   });
 
-  it('registers custom element md-gb-button-group', () => {
-    const el = document.createElement('md-gb-button-group');
+  it('registers custom element petal-gb-button-group', () => {
+    const el = document.createElement('petal-gb-button-group');
     expect(el).toBeInstanceOf(ButtonGroupElement);
-    expect(customElements.get('md-gb-button-group')).toBeDefined();
+    expect(customElements.get('petal-gb-button-group')).toBeDefined();
   });
 
   it('has expected default properties', async () => {
-    const root = env.render(html`<md-gb-button-group></md-gb-button-group>`);
+    const root = env.render(html`<petal-gb-button-group></petal-gb-button-group>`);
     await env.waitForStability();
     const group = root.querySelector(
-      'md-gb-button-group',
+      'petal-gb-button-group',
     ) as ButtonGroupElement;
 
     expect(group.variant).toBe('standard');
@@ -55,10 +56,10 @@ describe('ButtonGroupElement', () => {
   });
 
   it('sets role to toolbar via ElementInternals', async () => {
-    const root = env.render(html`<md-gb-button-group></md-gb-button-group>`);
+    const root = env.render(html`<petal-gb-button-group></petal-gb-button-group>`);
     await env.waitForStability();
     const group = root.querySelector(
-      'md-gb-button-group',
+      'petal-gb-button-group',
     ) as ButtonGroupElement;
 
     expect(group[internals].role).toBe('toolbar');
@@ -66,11 +67,11 @@ describe('ButtonGroupElement', () => {
 
   it('sprouts classes onto host', async () => {
     const root = env.render(html`
-      <md-gb-button-group id="std"></md-gb-button-group>
-      <md-gb-button-group
+      <petal-gb-button-group id="std"></petal-gb-button-group>
+      <petal-gb-button-group
         id="conn"
         variant="connected"
-        disabled></md-gb-button-group>
+        disabled></petal-gb-button-group>
     `);
     await env.waitForStability();
     const std = root.querySelector('#std') as ButtonGroupElement;
@@ -87,16 +88,16 @@ describe('ButtonGroupElement', () => {
 
   it('preserves selection event handling after disconnecting and reconnecting', async () => {
     const root = env.render(html`
-      <md-gb-button-group selection="single">
-        <md-gb-button value="a"></md-gb-button>
-      </md-gb-button-group>
+      <petal-gb-button-group selection="single">
+        <petal-gb-button value="a"></petal-gb-button>
+      </petal-gb-button-group>
     `);
     await env.waitForStability();
 
     const group = root.querySelector(
-      'md-gb-button-group',
+      'petal-gb-button-group',
     ) as ButtonGroupElement;
-    const btn = root.querySelector('md-gb-button') as ButtonElement;
+    const btn = root.querySelector('petal-gb-button') as ButtonElement;
 
     let changeCount = 0;
     group.addEventListener('change', () => {
@@ -118,10 +119,10 @@ describe('ButtonGroupElement', () => {
   });
 
   it('sets default focusgroup attribute', async () => {
-    const root = env.render(html` <md-gb-button-group></md-gb-button-group> `);
+    const root = env.render(html` <petal-gb-button-group></petal-gb-button-group> `);
     await env.waitForStability();
     const group = root.querySelector(
-      'md-gb-button-group',
+      'petal-gb-button-group',
     ) as ButtonGroupElement;
 
     expect(group.getAttribute('focusgroup')).toBe('toolbar wrap inline');
@@ -129,11 +130,11 @@ describe('ButtonGroupElement', () => {
 
   it('preserves author-specified focusgroup attribute', async () => {
     const root = env.render(html`
-      <md-gb-button-group focusgroup="toolbar wrap block"></md-gb-button-group>
+      <petal-gb-button-group focusgroup="toolbar wrap block"></petal-gb-button-group>
     `);
     await env.waitForStability();
     const group = root.querySelector(
-      'md-gb-button-group',
+      'petal-gb-button-group',
     ) as ButtonGroupElement;
 
     expect(group.getAttribute('focusgroup')).toBe('toolbar wrap block');
@@ -141,11 +142,11 @@ describe('ButtonGroupElement', () => {
 
   it('preserves aria-label on the host element', async () => {
     const root = env.render(html`
-      <md-gb-button-group aria-label="Text styling"></md-gb-button-group>
+      <petal-gb-button-group aria-label="Text styling"></petal-gb-button-group>
     `);
     await env.waitForStability();
     const group = root.querySelector(
-      'md-gb-button-group',
+      'petal-gb-button-group',
     ) as ButtonGroupElement;
 
     expect(group.getAttribute('aria-label')).toBe('Text styling');
@@ -155,15 +156,15 @@ describe('ButtonGroupElement', () => {
     it('cascades type=button when selection=none and type=toggle when selection=single or multiple', async () => {
       const root = env.render(html`
         <div>
-          <md-gb-button-group id="none-group" selection="none">
-            <md-gb-button id="none-btn">None</md-gb-button>
-          </md-gb-button-group>
-          <md-gb-button-group id="single-group" selection="single">
-            <md-gb-button id="single-btn">Single</md-gb-button>
-          </md-gb-button-group>
-          <md-gb-button-group id="multi-group" selection="multiple">
-            <md-gb-button id="multi-btn">Multi</md-gb-button>
-          </md-gb-button-group>
+          <petal-gb-button-group id="none-group" selection="none">
+            <petal-gb-button id="none-btn">None</petal-gb-button>
+          </petal-gb-button-group>
+          <petal-gb-button-group id="single-group" selection="single">
+            <petal-gb-button id="single-btn">Single</petal-gb-button>
+          </petal-gb-button-group>
+          <petal-gb-button-group id="multi-group" selection="multiple">
+            <petal-gb-button id="multi-btn">Multi</petal-gb-button>
+          </petal-gb-button-group>
         </div>
       `);
       await env.waitForStability();
@@ -178,12 +179,12 @@ describe('ButtonGroupElement', () => {
 
     it('preserves type=link on children with href', async () => {
       const root = env.render(html`
-        <md-gb-button-group selection="single">
-          <md-gb-button id="link-btn" href="https://google.com"
-            >Link</md-gb-button
+        <petal-gb-button-group selection="single">
+          <petal-gb-button id="link-btn" href="https://google.com"
+            >Link</petal-gb-button
           >
-          <md-gb-button id="action-btn">Action</md-gb-button>
-        </md-gb-button-group>
+          <petal-gb-button id="action-btn">Action</petal-gb-button>
+        </petal-gb-button-group>
       `);
       await env.waitForStability();
       const linkBtn = root.querySelector('#link-btn') as ButtonElement;
@@ -195,13 +196,13 @@ describe('ButtonGroupElement', () => {
 
     it('cascades selection type to newly appended children', async () => {
       const root = env.render(html`
-        <md-gb-button-group id="group" selection="single">
-          <md-gb-button id="btn1">One</md-gb-button>
-        </md-gb-button-group>
+        <petal-gb-button-group id="group" selection="single">
+          <petal-gb-button id="btn1">One</petal-gb-button>
+        </petal-gb-button-group>
       `);
       await env.waitForStability();
       const group = root.querySelector('#group') as ButtonGroupElement;
-      const btn2 = document.createElement('md-gb-button');
+      const btn2 = document.createElement('petal-gb-button');
       btn2.id = 'btn2';
       btn2.textContent = 'Two';
       group.appendChild(btn2);
@@ -212,10 +213,10 @@ describe('ButtonGroupElement', () => {
 
     it('disables all children on group.disabled=true and restores only group-disabled children on re-enable', async () => {
       const root = env.render(html`
-        <md-gb-button-group id="group">
-          <md-gb-button id="btn1">Enabled</md-gb-button>
-          <md-gb-button id="btn2" disabled>Pre-disabled</md-gb-button>
-        </md-gb-button-group>
+        <petal-gb-button-group id="group">
+          <petal-gb-button id="btn1">Enabled</petal-gb-button>
+          <petal-gb-button id="btn2" disabled>Pre-disabled</petal-gb-button>
+        </petal-gb-button-group>
       `);
       await env.waitForStability();
       const group = root.querySelector('#group') as ButtonGroupElement;
@@ -238,10 +239,10 @@ describe('ButtonGroupElement', () => {
 
     it('ignores non-button children', async () => {
       const root = env.render(html`
-        <md-gb-button-group selection="single">
+        <petal-gb-button-group selection="single">
           <span id="label">Label</span>
-          <md-gb-button id="btn">Button</md-gb-button>
-        </md-gb-button-group>
+          <petal-gb-button id="btn">Button</petal-gb-button>
+        </petal-gb-button-group>
       `);
       await env.waitForStability();
       const label = root.querySelector('#label') as HTMLElement;
@@ -255,14 +256,14 @@ describe('ButtonGroupElement', () => {
   describe('selection and events', () => {
     it('manages single optional selection', async () => {
       const root = env.render(html`
-        <md-gb-button-group selection="single">
-          <md-gb-button id="b1" value="one">One</md-gb-button>
-          <md-gb-button id="b2" value="two">Two</md-gb-button>
-        </md-gb-button-group>
+        <petal-gb-button-group selection="single">
+          <petal-gb-button id="b1" value="one">One</petal-gb-button>
+          <petal-gb-button id="b2" value="two">Two</petal-gb-button>
+        </petal-gb-button-group>
       `);
       await env.waitForStability();
       const group = root.querySelector(
-        'md-gb-button-group',
+        'petal-gb-button-group',
       ) as ButtonGroupElement;
       const b1 = root.querySelector('#b1') as ButtonElement;
       const b2 = root.querySelector('#b2') as ButtonElement;
@@ -294,14 +295,14 @@ describe('ButtonGroupElement', () => {
 
     it('manages single required selection and blocks deselecting active button', async () => {
       const root = env.render(html`
-        <md-gb-button-group selection="single" required>
-          <md-gb-button id="b1" value="one" selected>One</md-gb-button>
-          <md-gb-button id="b2" value="two">Two</md-gb-button>
-        </md-gb-button-group>
+        <petal-gb-button-group selection="single" required>
+          <petal-gb-button id="b1" value="one" selected>One</petal-gb-button>
+          <petal-gb-button id="b2" value="two">Two</petal-gb-button>
+        </petal-gb-button-group>
       `);
       await env.waitForStability();
       const group = root.querySelector(
-        'md-gb-button-group',
+        'petal-gb-button-group',
       ) as ButtonGroupElement;
       const b1 = root.querySelector('#b1') as ButtonElement;
       const b2 = root.querySelector('#b2') as ButtonElement;
@@ -325,16 +326,16 @@ describe('ButtonGroupElement', () => {
 
     it('auto-selects first selectable button in required single mode when none preselected', async () => {
       const root = env.render(html`
-        <md-gb-button-group selection="single" required>
-          <md-gb-button id="b1" disabled>Disabled</md-gb-button>
-          <md-gb-button id="b2" href="/link">Link</md-gb-button>
-          <md-gb-button id="b3" value="three">Three</md-gb-button>
-          <md-gb-button id="b4" value="four">Four</md-gb-button>
-        </md-gb-button-group>
+        <petal-gb-button-group selection="single" required>
+          <petal-gb-button id="b1" disabled>Disabled</petal-gb-button>
+          <petal-gb-button id="b2" href="/link">Link</petal-gb-button>
+          <petal-gb-button id="b3" value="three">Three</petal-gb-button>
+          <petal-gb-button id="b4" value="four">Four</petal-gb-button>
+        </petal-gb-button-group>
       `);
       await env.waitForStability();
       const group = root.querySelector(
-        'md-gb-button-group',
+        'petal-gb-button-group',
       ) as ButtonGroupElement;
       const b3 = root.querySelector('#b3') as ButtonElement;
 
@@ -345,15 +346,15 @@ describe('ButtonGroupElement', () => {
 
     it('normalizes multiple preselected buttons in single mode to last-wins', async () => {
       const root = env.render(html`
-        <md-gb-button-group selection="single">
-          <md-gb-button id="b1" value="one" selected>One</md-gb-button>
-          <md-gb-button id="b2" value="two" selected>Two</md-gb-button>
-          <md-gb-button id="b3" value="three" selected>Three</md-gb-button>
-        </md-gb-button-group>
+        <petal-gb-button-group selection="single">
+          <petal-gb-button id="b1" value="one" selected>One</petal-gb-button>
+          <petal-gb-button id="b2" value="two" selected>Two</petal-gb-button>
+          <petal-gb-button id="b3" value="three" selected>Three</petal-gb-button>
+        </petal-gb-button-group>
       `);
       await env.waitForStability();
       const group = root.querySelector(
-        'md-gb-button-group',
+        'petal-gb-button-group',
       ) as ButtonGroupElement;
       const b1 = root.querySelector('#b1') as ButtonElement;
       const b2 = root.querySelector('#b2') as ButtonElement;
@@ -367,15 +368,15 @@ describe('ButtonGroupElement', () => {
 
     it('manages multiple selection mode', async () => {
       const root = env.render(html`
-        <md-gb-button-group selection="multiple">
-          <md-gb-button id="b1" value="one">One</md-gb-button>
-          <md-gb-button id="b2" value="two">Two</md-gb-button>
-          <md-gb-button id="b3" value="three">Three</md-gb-button>
-        </md-gb-button-group>
+        <petal-gb-button-group selection="multiple">
+          <petal-gb-button id="b1" value="one">One</petal-gb-button>
+          <petal-gb-button id="b2" value="two">Two</petal-gb-button>
+          <petal-gb-button id="b3" value="three">Three</petal-gb-button>
+        </petal-gb-button-group>
       `);
       await env.waitForStability();
       const group = root.querySelector(
-        'md-gb-button-group',
+        'petal-gb-button-group',
       ) as ButtonGroupElement;
       const b1 = root.querySelector('#b1') as ButtonElement;
       const b2 = root.querySelector('#b2') as ButtonElement;
@@ -399,13 +400,13 @@ describe('ButtonGroupElement', () => {
 
     it('does not toggle in none mode', async () => {
       const root = env.render(html`
-        <md-gb-button-group selection="none">
-          <md-gb-button id="b1" value="one">One</md-gb-button>
-        </md-gb-button-group>
+        <petal-gb-button-group selection="none">
+          <petal-gb-button id="b1" value="one">One</petal-gb-button>
+        </petal-gb-button-group>
       `);
       await env.waitForStability();
       const group = root.querySelector(
-        'md-gb-button-group',
+        'petal-gb-button-group',
       ) as ButtonGroupElement;
       const b1 = root.querySelector('#b1') as ButtonElement;
 
@@ -417,14 +418,14 @@ describe('ButtonGroupElement', () => {
 
     it('dispatches group input and change events with target===group and updated values', async () => {
       const root = env.render(html`
-        <md-gb-button-group selection="single">
-          <md-gb-button id="b1" value="one">One</md-gb-button>
-          <md-gb-button id="b2" value="two">Two</md-gb-button>
-        </md-gb-button-group>
+        <petal-gb-button-group selection="single">
+          <petal-gb-button id="b1" value="one">One</petal-gb-button>
+          <petal-gb-button id="b2" value="two">Two</petal-gb-button>
+        </petal-gb-button-group>
       `);
       await env.waitForStability();
       const group = root.querySelector(
-        'md-gb-button-group',
+        'petal-gb-button-group',
       ) as ButtonGroupElement;
       const b1 = root.querySelector('#b1') as ButtonElement;
 
@@ -460,14 +461,14 @@ describe('ButtonGroupElement', () => {
 
     it('sets value programmatically in single mode', async () => {
       const root = env.render(html`
-        <md-gb-button-group selection="single">
-          <md-gb-button id="b1" value="one">One</md-gb-button>
-          <md-gb-button id="b2" value="two">Two</md-gb-button>
-        </md-gb-button-group>
+        <petal-gb-button-group selection="single">
+          <petal-gb-button id="b1" value="one">One</petal-gb-button>
+          <petal-gb-button id="b2" value="two">Two</petal-gb-button>
+        </petal-gb-button-group>
       `);
       await env.waitForStability();
       const group = root.querySelector(
-        'md-gb-button-group',
+        'petal-gb-button-group',
       ) as ButtonGroupElement;
       const b1 = root.querySelector('#b1') as ButtonElement;
       const b2 = root.querySelector('#b2') as ButtonElement;
@@ -481,14 +482,14 @@ describe('ButtonGroupElement', () => {
 
     it('enforces single-selection exclusivity when button.selected is set programmatically', async () => {
       const root = env.render(html`
-        <md-gb-button-group selection="single">
-          <md-gb-button id="b1" value="one" selected>One</md-gb-button>
-          <md-gb-button id="b2" value="two">Two</md-gb-button>
-        </md-gb-button-group>
+        <petal-gb-button-group selection="single">
+          <petal-gb-button id="b1" value="one" selected>One</petal-gb-button>
+          <petal-gb-button id="b2" value="two">Two</petal-gb-button>
+        </petal-gb-button-group>
       `);
       await env.waitForStability();
       const group = root.querySelector(
-        'md-gb-button-group',
+        'petal-gb-button-group',
       ) as ButtonGroupElement;
       const b1 = root.querySelector('#b1') as ButtonElement;
       const b2 = root.querySelector('#b2') as ButtonElement;
@@ -506,10 +507,10 @@ describe('ButtonGroupElement', () => {
     it('enforces exclusivity on programmatic b.selected=true after moving group in DOM', async () => {
       const root = env.render(html`
         <div id="parent-container">
-          <md-gb-button-group id="move-group" selection="single">
-            <md-gb-button id="mb1" selected>One</md-gb-button>
-            <md-gb-button id="mb2">Two</md-gb-button>
-          </md-gb-button-group>
+          <petal-gb-button-group id="move-group" selection="single">
+            <petal-gb-button id="mb1" selected>One</petal-gb-button>
+            <petal-gb-button id="mb2">Two</petal-gb-button>
+          </petal-gb-button-group>
         </div>
       `);
       await env.waitForStability();
@@ -534,10 +535,10 @@ describe('ButtonGroupElement', () => {
 
     it('normalizes to last-selected child on switch from multiple to single selection', async () => {
       const root = env.render(html`
-        <md-gb-button-group id="mode-grp" selection="multiple">
-          <md-gb-button id="m1" value="one" selected>One</md-gb-button>
-          <md-gb-button id="m2" value="two" selected>Two</md-gb-button>
-        </md-gb-button-group>
+        <petal-gb-button-group id="mode-grp" selection="multiple">
+          <petal-gb-button id="m1" value="one" selected>One</petal-gb-button>
+          <petal-gb-button id="m2" value="two" selected>Two</petal-gb-button>
+        </petal-gb-button-group>
       `);
       await env.waitForStability();
       const group = root.querySelector('#mode-grp') as ButtonGroupElement;
@@ -558,10 +559,10 @@ describe('ButtonGroupElement', () => {
 
     it('clears selection state and removes aria-pressed on switch to selection none', async () => {
       const root = env.render(html`
-        <md-gb-button-group id="mode-grp" selection="multiple">
-          <md-gb-button id="m1" value="one" selected>One</md-gb-button>
-          <md-gb-button id="m2" value="two" selected>Two</md-gb-button>
-        </md-gb-button-group>
+        <petal-gb-button-group id="mode-grp" selection="multiple">
+          <petal-gb-button id="m1" value="one" selected>One</petal-gb-button>
+          <petal-gb-button id="m2" value="two" selected>Two</petal-gb-button>
+        </petal-gb-button-group>
       `);
       await env.waitForStability();
       const group = root.querySelector('#mode-grp') as ButtonGroupElement;
@@ -580,10 +581,10 @@ describe('ButtonGroupElement', () => {
 
     it('auto-selects first selectable when required=true dynamically with zero selected', async () => {
       const root = env.render(html`
-        <md-gb-button-group id="req-dyn-grp" selection="single">
-          <md-gb-button id="rd1" disabled>Disabled</md-gb-button>
-          <md-gb-button id="rd2" value="two">Selectable</md-gb-button>
-        </md-gb-button-group>
+        <petal-gb-button-group id="req-dyn-grp" selection="single">
+          <petal-gb-button id="rd1" disabled>Disabled</petal-gb-button>
+          <petal-gb-button id="rd2" value="two">Selectable</petal-gb-button>
+        </petal-gb-button-group>
       `);
       await env.waitForStability();
       const group = root.querySelector('#req-dyn-grp') as ButtonGroupElement;
@@ -600,10 +601,10 @@ describe('ButtonGroupElement', () => {
 
     it('selects first remaining selectable button when selected child is removed in required-single', async () => {
       const root = env.render(html`
-        <md-gb-button-group selection="single" required>
-          <md-gb-button id="rem1" selected>One</md-gb-button>
-          <md-gb-button id="rem2">Two</md-gb-button>
-        </md-gb-button-group>
+        <petal-gb-button-group selection="single" required>
+          <petal-gb-button id="rem1" selected>One</petal-gb-button>
+          <petal-gb-button id="rem2">Two</petal-gb-button>
+        </petal-gb-button-group>
       `);
       await env.waitForStability();
       const rem1 = root.querySelector('#rem1') as ButtonElement;
@@ -620,9 +621,9 @@ describe('ButtonGroupElement', () => {
 
     it('prefers newly appended selected child over existing selected child', async () => {
       const root = env.render(html`
-        <md-gb-button-group id="app-grp" selection="single">
-          <md-gb-button id="app1" selected>One</md-gb-button>
-        </md-gb-button-group>
+        <petal-gb-button-group id="app-grp" selection="single">
+          <petal-gb-button id="app1" selected>One</petal-gb-button>
+        </petal-gb-button-group>
       `);
       await env.waitForStability();
       const group = root.querySelector('#app-grp') as ButtonGroupElement;
@@ -630,7 +631,7 @@ describe('ButtonGroupElement', () => {
 
       expect(app1.selected).toBeTrue();
 
-      const app2 = document.createElement('md-gb-button');
+      const app2 = document.createElement('petal-gb-button');
       app2.id = 'app2';
       app2.selected = true;
       group.appendChild(app2);
@@ -642,15 +643,15 @@ describe('ButtonGroupElement', () => {
 
     it('causes no toggle and no group events when soft-disabled child is clicked', async () => {
       const root = env.render(html`
-        <md-gb-button-group selection="single">
-          <md-gb-button id="soft-btn" soft-disabled value="soft"
-            >Soft</md-gb-button
+        <petal-gb-button-group selection="single">
+          <petal-gb-button id="soft-btn" soft-disabled value="soft"
+            >Soft</petal-gb-button
           >
-        </md-gb-button-group>
+        </petal-gb-button-group>
       `);
       await env.waitForStability();
       const group = root.querySelector(
-        'md-gb-button-group',
+        'petal-gb-button-group',
       ) as ButtonGroupElement;
       const softBtn = root.querySelector('#soft-btn') as ButtonElement;
 
@@ -677,9 +678,9 @@ describe('ButtonGroupElement', () => {
             e.preventDefault();
             formSubmitted = true;
           }}>
-          <md-gb-button-group selection="none">
-            <md-gb-button id="form-btn">Action</md-gb-button>
-          </md-gb-button-group>
+          <petal-gb-button-group selection="none">
+            <petal-gb-button id="form-btn">Action</petal-gb-button>
+          </petal-gb-button-group>
         </form>
       `);
       await env.waitForStability();
@@ -702,14 +703,14 @@ describe('ButtonGroupElement', () => {
           @change=${(e: Event) => {
             targetsReceived.push(e.target!);
           }}>
-          <md-gb-button-group selection="single">
-            <md-gb-button id="esc-btn" value="esc">Click</md-gb-button>
-          </md-gb-button-group>
+          <petal-gb-button-group selection="single">
+            <petal-gb-button id="esc-btn" value="esc">Click</petal-gb-button>
+          </petal-gb-button-group>
         </div>
       `);
       await env.waitForStability();
       const group = root.querySelector(
-        'md-gb-button-group',
+        'petal-gb-button-group',
       ) as ButtonGroupElement;
       const btn = root.querySelector('#esc-btn') as ButtonElement;
 
@@ -729,15 +730,15 @@ describe('ButtonGroupElement', () => {
           id="wrapper"
           @input=${(e: Event) => wrapperEvents.push(e)}
           @change=${(e: Event) => wrapperEvents.push(e)}>
-          <md-gb-button-group selection="single">
+          <petal-gb-button-group selection="single">
             <span id="slotted-span">Not a button</span>
-            <md-gb-button id="btn1" value="one">One</md-gb-button>
-          </md-gb-button-group>
+            <petal-gb-button id="btn1" value="one">One</petal-gb-button>
+          </petal-gb-button-group>
         </div>
       `);
       await env.waitForStability();
       const group = root.querySelector(
-        'md-gb-button-group',
+        'petal-gb-button-group',
       ) as ButtonGroupElement;
       const span = root.querySelector('#slotted-span') as HTMLElement;
 
@@ -762,13 +763,13 @@ describe('ButtonGroupElement', () => {
 
     it('fires change event once per click', async () => {
       const root = env.render(html`
-        <md-gb-button-group selection="single">
-          <md-gb-button id="rec-btn" value="rec">Recursion</md-gb-button>
-        </md-gb-button-group>
+        <petal-gb-button-group selection="single">
+          <petal-gb-button id="rec-btn" value="rec">Recursion</petal-gb-button>
+        </petal-gb-button-group>
       `);
       await env.waitForStability();
       const group = root.querySelector(
-        'md-gb-button-group',
+        'petal-gb-button-group',
       ) as ButtonGroupElement;
       const btn = root.querySelector('#rec-btn') as ButtonElement;
 
@@ -785,14 +786,14 @@ describe('ButtonGroupElement', () => {
 
     it('values is final inside input and change handlers in multiple mode', async () => {
       const root = env.render(html`
-        <md-gb-button-group selection="multiple">
-          <md-gb-button id="mul-1" value="one" selected>One</md-gb-button>
-          <md-gb-button id="mul-2" value="two">Two</md-gb-button>
-        </md-gb-button-group>
+        <petal-gb-button-group selection="multiple">
+          <petal-gb-button id="mul-1" value="one" selected>One</petal-gb-button>
+          <petal-gb-button id="mul-2" value="two">Two</petal-gb-button>
+        </petal-gb-button-group>
       `);
       await env.waitForStability();
       const group = root.querySelector(
-        'md-gb-button-group',
+        'petal-gb-button-group',
       ) as ButtonGroupElement;
       const mul2 = root.querySelector('#mul-2') as ButtonElement;
 
@@ -813,11 +814,11 @@ describe('ButtonGroupElement', () => {
       expect(valuesAtChange).toEqual(['one', 'two']);
     });
 
-    it('ensures listener attached directly to child md-gb-button receives change event', async () => {
+    it('ensures listener attached directly to child petal-gb-button receives change event', async () => {
       const root = env.render(html`
-        <md-gb-button-group selection="single">
-          <md-gb-button id="direct-btn" value="direct">Direct</md-gb-button>
-        </md-gb-button-group>
+        <petal-gb-button-group selection="single">
+          <petal-gb-button id="direct-btn" value="direct">Direct</petal-gb-button>
+        </petal-gb-button-group>
       `);
       await env.waitForStability();
       const btn = root.querySelector('#direct-btn') as ButtonElement;
@@ -838,11 +839,11 @@ describe('ButtonGroupElement', () => {
 
     it('renormalizes when programmatic selected=false is set on the only selected button in required-single', async () => {
       const root = env.render(html`
-        <md-gb-button-group selection="single" required>
-          <md-gb-button id="renorm-btn" value="renorm" selected
-            >Only</md-gb-button
+        <petal-gb-button-group selection="single" required>
+          <petal-gb-button id="renorm-btn" value="renorm" selected
+            >Only</petal-gb-button
           >
-        </md-gb-button-group>
+        </petal-gb-button-group>
       `);
       await env.waitForStability();
       const btn = root.querySelector('#renorm-btn') as ButtonElement;
@@ -859,11 +860,11 @@ describe('ButtonGroupElement', () => {
   describe('styles and tokens', () => {
     it('applies outer start and inner end radii to first child, and inner start outer end to last child', async () => {
       const root = env.render(html`
-        <md-gb-button-group variant="connected">
-          <md-gb-button id="c1" size="sm">One</md-gb-button>
-          <md-gb-button id="c2" size="sm">Two</md-gb-button>
-          <md-gb-button id="c3" size="sm">Three</md-gb-button>
-        </md-gb-button-group>
+        <petal-gb-button-group variant="connected">
+          <petal-gb-button id="c1" size="sm">One</petal-gb-button>
+          <petal-gb-button id="c2" size="sm">Two</petal-gb-button>
+          <petal-gb-button id="c3" size="sm">Three</petal-gb-button>
+        </petal-gb-button-group>
       `);
       await env.waitForStability();
       const c1 = root.querySelector('#c1') as ButtonElement;
@@ -890,11 +891,11 @@ describe('ButtonGroupElement', () => {
 
     it('morphs inner corners of selected button into a pill', async () => {
       const root = env.render(html`
-        <md-gb-button-group variant="connected" selection="single">
-          <md-gb-button id="c1" size="sm">One</md-gb-button>
-          <md-gb-button id="c2" size="sm" selected>Two</md-gb-button>
-          <md-gb-button id="c3" size="sm">Three</md-gb-button>
-        </md-gb-button-group>
+        <petal-gb-button-group variant="connected" selection="single">
+          <petal-gb-button id="c1" size="sm">One</petal-gb-button>
+          <petal-gb-button id="c2" size="sm" selected>Two</petal-gb-button>
+          <petal-gb-button id="c3" size="sm">Three</petal-gb-button>
+        </petal-gb-button-group>
       `);
       await env.waitForStability();
       const c2 = root.querySelector('#c2') as ButtonElement;
@@ -908,10 +909,10 @@ describe('ButtonGroupElement', () => {
 
     it('sets overflow: visible on the group', async () => {
       const root = env.render(html`
-        <md-gb-button-group id="focus-group">
-          <md-gb-button id="fb1">One</md-gb-button>
-          <md-gb-button id="fb2">Two</md-gb-button>
-        </md-gb-button-group>
+        <petal-gb-button-group id="focus-group">
+          <petal-gb-button id="fb1">One</petal-gb-button>
+          <petal-gb-button id="fb2">Two</petal-gb-button>
+        </petal-gb-button-group>
       `);
       await env.waitForStability();
       const group = root.querySelector('#focus-group') as ButtonGroupElement;
@@ -921,10 +922,10 @@ describe('ButtonGroupElement', () => {
 
     it('stacks focused button above siblings with z-index', async () => {
       const root = env.render(html`
-        <md-gb-button-group id="focus-group">
-          <md-gb-button id="fb1">One</md-gb-button>
-          <md-gb-button id="fb2">Two</md-gb-button>
-        </md-gb-button-group>
+        <petal-gb-button-group id="focus-group">
+          <petal-gb-button id="fb1">One</petal-gb-button>
+          <petal-gb-button id="fb2">Two</petal-gb-button>
+        </petal-gb-button-group>
       `);
       await env.waitForStability();
       const fb1 = root.querySelector('#fb1') as ButtonElement;
@@ -934,13 +935,13 @@ describe('ButtonGroupElement', () => {
       expect(getComputedStyle(fb1).zIndex).toBe('1');
     });
 
-    it('assigns md-gb-icon without slot attribute to default slot', async () => {
+    it('assigns petal-gb-icon without slot attribute to default slot', async () => {
       const root = env.render(html`
-        <md-gb-button-group selection="single">
-          <md-gb-button id="icon-btn" aria-label="Star">
-            <md-gb-icon id="test-icon">star</md-gb-icon>
-          </md-gb-button>
-        </md-gb-button-group>
+        <petal-gb-button-group selection="single">
+          <petal-gb-button id="icon-btn" aria-label="Star">
+            <petal-gb-icon id="test-icon">star</petal-gb-icon>
+          </petal-gb-button>
+        </petal-gb-button-group>
       `);
       await env.waitForStability();
       const iconBtn = root.querySelector('#icon-btn') as ButtonElement;
@@ -954,11 +955,11 @@ describe('ButtonGroupElement', () => {
 
     it('computes pill corners on selected button in square connected group in any position', async () => {
       const root = env.render(html`
-        <md-gb-button-group variant="connected" selection="single">
-          <md-gb-button id="sq-b1" size="sm" square selected>One</md-gb-button>
-          <md-gb-button id="sq-b2" size="sm" square>Two</md-gb-button>
-          <md-gb-button id="sq-b3" size="sm" square>Three</md-gb-button>
-        </md-gb-button-group>
+        <petal-gb-button-group variant="connected" selection="single">
+          <petal-gb-button id="sq-b1" size="sm" square selected>One</petal-gb-button>
+          <petal-gb-button id="sq-b2" size="sm" square>Two</petal-gb-button>
+          <petal-gb-button id="sq-b3" size="sm" square>Three</petal-gb-button>
+        </petal-gb-button-group>
       `);
       await env.waitForStability();
       const b1 = root.querySelector('#sq-b1') as ButtonElement;
@@ -994,11 +995,11 @@ describe('ButtonGroupElement', () => {
     it('real hit test for the xs/sm 48px touch target toggles button in Chrome and Firefox', async () => {
       const root = env.render(html`
         <div style="padding-top: 50px;">
-          <md-gb-button-group selection="single">
-            <md-gb-button id="hit-btn" size="xs" value="hit"
-              >Touch</md-gb-button
+          <petal-gb-button-group selection="single">
+            <petal-gb-button id="hit-btn" size="xs" value="hit"
+              >Touch</petal-gb-button
             >
-          </md-gb-button-group>
+          </petal-gb-button-group>
         </div>
       `);
       await env.waitForStability();
@@ -1021,11 +1022,11 @@ describe('ButtonGroupElement', () => {
     it('flips connected corner radii in RTL', async () => {
       const root = env.render(html`
         <div dir="rtl">
-          <md-gb-button-group variant="connected">
-            <md-gb-button id="rtl-c1" size="sm">One</md-gb-button>
-            <md-gb-button id="rtl-c2" size="sm">Two</md-gb-button>
-            <md-gb-button id="rtl-c3" size="sm">Three</md-gb-button>
-          </md-gb-button-group>
+          <petal-gb-button-group variant="connected">
+            <petal-gb-button id="rtl-c1" size="sm">One</petal-gb-button>
+            <petal-gb-button id="rtl-c2" size="sm">Two</petal-gb-button>
+            <petal-gb-button id="rtl-c3" size="sm">Three</petal-gb-button>
+          </petal-gb-button-group>
         </div>
       `);
       await env.waitForStability();
@@ -1051,21 +1052,21 @@ describe('ButtonGroupElement', () => {
     it('computes square outer corners on all four corners per size', async () => {
       const root = env.render(html`
         <div>
-          <md-gb-button-group id="sq-xs-grp" variant="connected">
-            <md-gb-button id="sq-xs-b" size="xs" square>XS</md-gb-button>
-          </md-gb-button-group>
-          <md-gb-button-group id="sq-sm-grp" variant="connected">
-            <md-gb-button id="sq-sm-b" size="sm" square>SM</md-gb-button>
-          </md-gb-button-group>
-          <md-gb-button-group id="sq-md-grp" variant="connected">
-            <md-gb-button id="sq-md-b" size="md" square>MD</md-gb-button>
-          </md-gb-button-group>
-          <md-gb-button-group id="sq-lg-grp" variant="connected">
-            <md-gb-button id="sq-lg-b" size="lg" square>LG</md-gb-button>
-          </md-gb-button-group>
-          <md-gb-button-group id="sq-xl-grp" variant="connected">
-            <md-gb-button id="sq-xl-b" size="xl" square>XL</md-gb-button>
-          </md-gb-button-group>
+          <petal-gb-button-group id="sq-xs-grp" variant="connected">
+            <petal-gb-button id="sq-xs-b" size="xs" square>XS</petal-gb-button>
+          </petal-gb-button-group>
+          <petal-gb-button-group id="sq-sm-grp" variant="connected">
+            <petal-gb-button id="sq-sm-b" size="sm" square>SM</petal-gb-button>
+          </petal-gb-button-group>
+          <petal-gb-button-group id="sq-md-grp" variant="connected">
+            <petal-gb-button id="sq-md-b" size="md" square>MD</petal-gb-button>
+          </petal-gb-button-group>
+          <petal-gb-button-group id="sq-lg-grp" variant="connected">
+            <petal-gb-button id="sq-lg-b" size="lg" square>LG</petal-gb-button>
+          </petal-gb-button-group>
+          <petal-gb-button-group id="sq-xl-grp" variant="connected">
+            <petal-gb-button id="sq-xl-b" size="xl" square>XL</petal-gb-button>
+          </petal-gb-button-group>
         </div>
       `);
       await env.waitForStability();
@@ -1091,9 +1092,9 @@ describe('ButtonGroupElement', () => {
 
     it('computes round outer corners on all four corners for single child connected group', async () => {
       const root = env.render(html`
-        <md-gb-button-group variant="connected">
-          <md-gb-button id="round-only-b" size="sm">Single</md-gb-button>
-        </md-gb-button-group>
+        <petal-gb-button-group variant="connected">
+          <petal-gb-button id="round-only-b" size="sm">Single</petal-gb-button>
+        </petal-gb-button-group>
       `);
       await env.waitForStability();
       const btn = root.querySelector('#round-only-b') as ButtonElement;
@@ -1108,34 +1109,34 @@ describe('ButtonGroupElement', () => {
     it('renders correct physical distance gap between buttons across variants and sizes', async () => {
       const root = env.render(html`
         <div>
-          <md-gb-button-group id="gap-xs" variant="standard">
-            <md-gb-button id="b-xs-1" size="xs">1</md-gb-button>
-            <md-gb-button id="b-xs-2" size="xs">2</md-gb-button>
-          </md-gb-button-group>
-          <md-gb-button-group id="gap-sm" variant="standard">
-            <md-gb-button id="b-sm-1" size="sm">1</md-gb-button>
-            <md-gb-button id="b-sm-2" size="sm">2</md-gb-button>
-          </md-gb-button-group>
-          <md-gb-button-group id="gap-md" variant="standard">
-            <md-gb-button id="b-md-1" size="md">1</md-gb-button>
-            <md-gb-button id="b-md-2" size="md">2</md-gb-button>
-          </md-gb-button-group>
-          <md-gb-button-group id="gap-lg" variant="standard">
-            <md-gb-button id="b-lg-1" size="lg">1</md-gb-button>
-            <md-gb-button id="b-lg-2" size="lg">2</md-gb-button>
-          </md-gb-button-group>
-          <md-gb-button-group id="gap-xl" variant="standard">
-            <md-gb-button id="b-xl-1" size="xl">1</md-gb-button>
-            <md-gb-button id="b-xl-2" size="xl">2</md-gb-button>
-          </md-gb-button-group>
-          <md-gb-button-group id="gap-con" variant="connected">
-            <md-gb-button id="b-con-1" size="sm">1</md-gb-button>
-            <md-gb-button id="b-con-2" size="sm">2</md-gb-button>
-          </md-gb-button-group>
-          <md-gb-button-group id="gap-default">
-            <md-gb-button id="b-def-1">1</md-gb-button>
-            <md-gb-button id="b-def-2">2</md-gb-button>
-          </md-gb-button-group>
+          <petal-gb-button-group id="gap-xs" variant="standard">
+            <petal-gb-button id="b-xs-1" size="xs">1</petal-gb-button>
+            <petal-gb-button id="b-xs-2" size="xs">2</petal-gb-button>
+          </petal-gb-button-group>
+          <petal-gb-button-group id="gap-sm" variant="standard">
+            <petal-gb-button id="b-sm-1" size="sm">1</petal-gb-button>
+            <petal-gb-button id="b-sm-2" size="sm">2</petal-gb-button>
+          </petal-gb-button-group>
+          <petal-gb-button-group id="gap-md" variant="standard">
+            <petal-gb-button id="b-md-1" size="md">1</petal-gb-button>
+            <petal-gb-button id="b-md-2" size="md">2</petal-gb-button>
+          </petal-gb-button-group>
+          <petal-gb-button-group id="gap-lg" variant="standard">
+            <petal-gb-button id="b-lg-1" size="lg">1</petal-gb-button>
+            <petal-gb-button id="b-lg-2" size="lg">2</petal-gb-button>
+          </petal-gb-button-group>
+          <petal-gb-button-group id="gap-xl" variant="standard">
+            <petal-gb-button id="b-xl-1" size="xl">1</petal-gb-button>
+            <petal-gb-button id="b-xl-2" size="xl">2</petal-gb-button>
+          </petal-gb-button-group>
+          <petal-gb-button-group id="gap-con" variant="connected">
+            <petal-gb-button id="b-con-1" size="sm">1</petal-gb-button>
+            <petal-gb-button id="b-con-2" size="sm">2</petal-gb-button>
+          </petal-gb-button-group>
+          <petal-gb-button-group id="gap-default">
+            <petal-gb-button id="b-def-1">1</petal-gb-button>
+            <petal-gb-button id="b-def-2">2</petal-gb-button>
+          </petal-gb-button-group>
         </div>
       `);
       await env.waitForStability();
@@ -1160,26 +1161,26 @@ describe('ButtonGroupElement', () => {
     it('computes inner corner radii per size on connected group', async () => {
       const root = env.render(html`
         <div>
-          <md-gb-button-group id="rc-xs" variant="connected">
-            <md-gb-button id="rc-xs-1" size="xs">1</md-gb-button>
-            <md-gb-button id="rc-xs-2" size="xs">2</md-gb-button>
-          </md-gb-button-group>
-          <md-gb-button-group id="rc-sm" variant="connected">
-            <md-gb-button id="rc-sm-1" size="sm">1</md-gb-button>
-            <md-gb-button id="rc-sm-2" size="sm">2</md-gb-button>
-          </md-gb-button-group>
-          <md-gb-button-group id="rc-md" variant="connected">
-            <md-gb-button id="rc-md-1" size="md">1</md-gb-button>
-            <md-gb-button id="rc-md-2" size="md">2</md-gb-button>
-          </md-gb-button-group>
-          <md-gb-button-group id="rc-lg" variant="connected">
-            <md-gb-button id="rc-lg-1" size="lg">1</md-gb-button>
-            <md-gb-button id="rc-lg-2" size="lg">2</md-gb-button>
-          </md-gb-button-group>
-          <md-gb-button-group id="rc-xl" variant="connected">
-            <md-gb-button id="rc-xl-1" size="xl">1</md-gb-button>
-            <md-gb-button id="rc-xl-2" size="xl">2</md-gb-button>
-          </md-gb-button-group>
+          <petal-gb-button-group id="rc-xs" variant="connected">
+            <petal-gb-button id="rc-xs-1" size="xs">1</petal-gb-button>
+            <petal-gb-button id="rc-xs-2" size="xs">2</petal-gb-button>
+          </petal-gb-button-group>
+          <petal-gb-button-group id="rc-sm" variant="connected">
+            <petal-gb-button id="rc-sm-1" size="sm">1</petal-gb-button>
+            <petal-gb-button id="rc-sm-2" size="sm">2</petal-gb-button>
+          </petal-gb-button-group>
+          <petal-gb-button-group id="rc-md" variant="connected">
+            <petal-gb-button id="rc-md-1" size="md">1</petal-gb-button>
+            <petal-gb-button id="rc-md-2" size="md">2</petal-gb-button>
+          </petal-gb-button-group>
+          <petal-gb-button-group id="rc-lg" variant="connected">
+            <petal-gb-button id="rc-lg-1" size="lg">1</petal-gb-button>
+            <petal-gb-button id="rc-lg-2" size="lg">2</petal-gb-button>
+          </petal-gb-button-group>
+          <petal-gb-button-group id="rc-xl" variant="connected">
+            <petal-gb-button id="rc-xl-1" size="xl">1</petal-gb-button>
+            <petal-gb-button id="rc-xl-2" size="xl">2</petal-gb-button>
+          </petal-gb-button-group>
         </div>
       `);
       await env.waitForStability();
@@ -1198,16 +1199,16 @@ describe('ButtonGroupElement', () => {
     it('ensures children in connected xs and sm have min width 48px and pass hit-test', async () => {
       const root = env.render(html`
         <div style="padding-top: 50px;">
-          <md-gb-button-group id="con-touch-xs" variant="connected">
-            <md-gb-button id="icon-xs" size="xs" aria-label="XS Icon"
-              ><md-gb-icon>star</md-gb-icon></md-gb-button
+          <petal-gb-button-group id="con-touch-xs" variant="connected">
+            <petal-gb-button id="icon-xs" size="xs" aria-label="XS Icon"
+              ><petal-gb-icon>star</petal-gb-icon></petal-gb-button
             >
-          </md-gb-button-group>
-          <md-gb-button-group id="con-touch-sm" variant="connected">
-            <md-gb-button id="icon-sm" size="sm" aria-label="SM Icon"
-              ><md-gb-icon>star</md-gb-icon></md-gb-button
+          </petal-gb-button-group>
+          <petal-gb-button-group id="con-touch-sm" variant="connected">
+            <petal-gb-button id="icon-sm" size="sm" aria-label="SM Icon"
+              ><petal-gb-icon>star</petal-gb-icon></petal-gb-button
             >
-          </md-gb-button-group>
+          </petal-gb-button-group>
         </div>
       `);
       await env.waitForStability();
@@ -1228,22 +1229,22 @@ describe('ButtonGroupElement', () => {
     it('keeps single-line and height 40 with long label in standard and connected sm groups', async () => {
       const root = env.render(html`
         <div>
-          <md-gb-button-group
+          <petal-gb-button-group
             id="long-std"
             variant="standard"
             selection="single">
-            <md-gb-button id="std-long-btn" size="sm" value="long"
-              >Click Me Long Label</md-gb-button
+            <petal-gb-button id="std-long-btn" size="sm" value="long"
+              >Click Me Long Label</petal-gb-button
             >
-          </md-gb-button-group>
-          <md-gb-button-group
+          </petal-gb-button-group>
+          <petal-gb-button-group
             id="long-con"
             variant="connected"
             selection="single">
-            <md-gb-button id="con-long-btn" size="sm" value="long"
-              >Click Me Long Label</md-gb-button
+            <petal-gb-button id="con-long-btn" size="sm" value="long"
+              >Click Me Long Label</petal-gb-button
             >
-          </md-gb-button-group>
+          </petal-gb-button-group>
         </div>
       `);
       await env.waitForStability();
@@ -1268,14 +1269,14 @@ describe('ButtonGroupElement', () => {
 
     it('computes zero visible outline and inverse-surface background on selected outlined button in standard variant', async () => {
       const root = env.render(html`
-        <md-gb-button-group variant="standard" selection="single">
-          <md-gb-button id="out-std-1" color="outlined" selected
-            >Selected</md-gb-button
+        <petal-gb-button-group variant="standard" selection="single">
+          <petal-gb-button id="out-std-1" color="outlined" selected
+            >Selected</petal-gb-button
           >
-          <md-gb-button id="out-std-2" color="outlined"
-            >Unselected</md-gb-button
+          <petal-gb-button id="out-std-2" color="outlined"
+            >Unselected</petal-gb-button
           >
-        </md-gb-button-group>
+        </petal-gb-button-group>
       `);
       await env.waitForStability();
 
@@ -1304,14 +1305,14 @@ describe('ButtonGroupElement', () => {
 
     it('computes zero visible outline and inverse-surface background on selected outlined button in connected variant', async () => {
       const root = env.render(html`
-        <md-gb-button-group variant="connected" selection="single">
-          <md-gb-button id="out-con-1" color="outlined" selected
-            >Selected</md-gb-button
+        <petal-gb-button-group variant="connected" selection="single">
+          <petal-gb-button id="out-con-1" color="outlined" selected
+            >Selected</petal-gb-button
           >
-          <md-gb-button id="out-con-2" color="outlined"
-            >Unselected</md-gb-button
+          <petal-gb-button id="out-con-2" color="outlined"
+            >Unselected</petal-gb-button
           >
-        </md-gb-button-group>
+        </petal-gb-button-group>
       `);
       await env.waitForStability();
 
@@ -1347,14 +1348,14 @@ describe('ButtonGroupElement', () => {
 
     it('preserves button dimensions and neighbour position when selecting outlined button in standard variant', async () => {
       const root = env.render(html`
-        <md-gb-button-group variant="standard" selection="single">
-          <md-gb-button id="ls-std-1" color="outlined" size="sm"
-            >Button 1</md-gb-button
+        <petal-gb-button-group variant="standard" selection="single">
+          <petal-gb-button id="ls-std-1" color="outlined" size="sm"
+            >Button 1</petal-gb-button
           >
-          <md-gb-button id="ls-std-2" color="outlined" size="sm"
-            >Button 2</md-gb-button
+          <petal-gb-button id="ls-std-2" color="outlined" size="sm"
+            >Button 2</petal-gb-button
           >
-        </md-gb-button-group>
+        </petal-gb-button-group>
       `);
       await env.waitForStability();
 
@@ -1379,14 +1380,14 @@ describe('ButtonGroupElement', () => {
 
     it('preserves button dimensions and neighbour position when selecting xl outlined button in connected variant', async () => {
       const root = env.render(html`
-        <md-gb-button-group variant="connected" selection="single">
-          <md-gb-button id="ls-con-xl-1" color="outlined" size="xl"
-            >Button 1</md-gb-button
+        <petal-gb-button-group variant="connected" selection="single">
+          <petal-gb-button id="ls-con-xl-1" color="outlined" size="xl"
+            >Button 1</petal-gb-button
           >
-          <md-gb-button id="ls-con-xl-2" color="outlined" size="xl"
-            >Button 2</md-gb-button
+          <petal-gb-button id="ls-con-xl-2" color="outlined" size="xl"
+            >Button 2</petal-gb-button
           >
-        </md-gb-button-group>
+        </petal-gb-button-group>
       `);
       await env.waitForStability();
 
@@ -1411,10 +1412,10 @@ describe('ButtonGroupElement', () => {
 
     it('computes full pill corners on selected button in connected lg group', async () => {
       const root = env.render(html`
-        <md-gb-button-group variant="connected" selection="single">
-          <md-gb-button id="lg-b1" size="lg" selected>First</md-gb-button>
-          <md-gb-button id="lg-b2" size="lg">Second</md-gb-button>
-        </md-gb-button-group>
+        <petal-gb-button-group variant="connected" selection="single">
+          <petal-gb-button id="lg-b1" size="lg" selected>First</petal-gb-button>
+          <petal-gb-button id="lg-b2" size="lg">Second</petal-gb-button>
+        </petal-gb-button-group>
       `);
       await env.waitForStability();
 
@@ -1431,17 +1432,17 @@ describe('ButtonGroupElement', () => {
     it('computes full pill corners on selected first button in connected group with RTL direction', async () => {
       const root = env.render(html`
         <div dir="rtl">
-          <md-gb-button-group
+          <petal-gb-button-group
             id="rtl-grp"
             variant="connected"
             selection="single">
-            <md-gb-button id="rtl-b1" size="sm" square selected
-              >First in DOM</md-gb-button
+            <petal-gb-button id="rtl-b1" size="sm" square selected
+              >First in DOM</petal-gb-button
             >
-            <md-gb-button id="rtl-b2" size="sm" square
-              >Second in DOM</md-gb-button
+            <petal-gb-button id="rtl-b2" size="sm" square
+              >Second in DOM</petal-gb-button
             >
-          </md-gb-button-group>
+          </petal-gb-button-group>
         </div>
       `);
       await env.waitForStability();

@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '@material/web/icon/icon.js';
@@ -48,7 +49,7 @@ const styles = css`
     flex-wrap: wrap;
   }
 
-  md-item {
+  petal-item {
     border-radius: 16px;
     outline: 1px solid var(--md-sys-color-outline);
     width: 300px;
@@ -64,22 +65,22 @@ const items: MaterialStoryInit<StoryKnobs> = {
   render(knobs) {
     return html`
       <div class="container">
-        <md-item> Single line item ${getKnobContent(knobs)} </md-item>
+        <petal-item> Single line item ${getKnobContent(knobs)} </petal-item>
 
-        <md-item>
+        <petal-item>
           Two line item
           <div slot="supporting-text">Supporting text</div>
           ${getKnobContent(knobs)}
-        </md-item>
+        </petal-item>
 
-        <md-item>
+        <petal-item>
           Three line item
           <div slot="supporting-text">
             <div>Second line text</div>
             <div>Third line text</div>
           </div>
           ${getKnobContent(knobs, /* threeLines */ true)}
-        </md-item>
+        </petal-item>
       </div>
     `;
   },
@@ -91,25 +92,25 @@ const longText: MaterialStoryInit<StoryKnobs> = {
   render(knobs) {
     return html`
       <div class="container">
-        <md-item class="nowrap">
+        <petal-item class="nowrap">
           Item with a truncated headline and supporting text.
           <div slot="supporting-text"> Supporting text. ${LOREM_IPSUM} </div>
           ${getKnobContent(knobs)}
-        </md-item>
+        </petal-item>
 
-        <md-item>
+        <petal-item>
           Item with clamped lines
           <div slot="supporting-text" class="clamp-lines">
             Supporting text that wraps up to two lines. ${LOREM_IPSUM}
           </div>
           ${getKnobContent(knobs, /* threeLines */ true)}
-        </md-item>
+        </petal-item>
 
-        <md-item>
+        <petal-item>
           Item that always shows long wrapping text.
           <div slot="supporting-text"> Supporting text. ${LOREM_IPSUM} </div>
           ${getKnobContent(knobs, /* threeLines */ true)}
-        </md-item>
+        </petal-item>
       </div>
     `;
   },
@@ -131,11 +132,11 @@ function getKnobContent(knobs: StoryKnobs, threeLines = false) {
     : nothing;
 
   const leadingIcon = knobs.leadingIcon
-    ? html`<md-icon class=${classMap(classes)} slot="start">event</md-icon>`
+    ? html`<petal-icon class=${classMap(classes)} slot="start">event</petal-icon>`
     : nothing;
 
   const trailingIcon = knobs.trailingIcon
-    ? html`<md-icon class=${classMap(classes)} slot="end">star</md-icon>`
+    ? html`<petal-icon class=${classMap(classes)} slot="end">star</petal-icon>`
     : nothing;
 
   return [overline, trailingText, leadingIcon, trailingIcon];

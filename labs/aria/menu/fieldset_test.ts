@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 // import 'jasmine'; (google3-only)
@@ -14,25 +15,25 @@ import {html} from 'lit';
 import {Environment} from '../../../testing/environment.js';
 import {internals} from '../../behaviors/element-internals.js';
 
-describe('md-aria-fieldset', () => {
+describe('petal-aria-fieldset', () => {
   const env = new Environment();
 
   async function setUpTest(
     template = html`
-      <md-aria-menulist>
-        <md-aria-fieldset>
-          <md-aria-menuitem>Item 1</md-aria-menuitem>
-          <md-aria-menuitem>Item 2</md-aria-menuitem>
-          <md-aria-menuitem disabled>Item 3</md-aria-menuitem>
-        </md-aria-fieldset>
-      </md-aria-menulist>
+      <petal-aria-menulist>
+        <petal-aria-fieldset>
+          <petal-aria-menuitem>Item 1</petal-aria-menuitem>
+          <petal-aria-menuitem>Item 2</petal-aria-menuitem>
+          <petal-aria-menuitem disabled>Item 3</petal-aria-menuitem>
+        </petal-aria-fieldset>
+      </petal-aria-menulist>
     `,
   ) {
     const root = env.render(template);
     await env.waitForStability();
-    const menulist = root.querySelector('md-aria-menulist')!;
-    const fieldset = root.querySelector('md-aria-fieldset')!;
-    const items = Array.from(root.querySelectorAll('md-aria-menuitem')!);
+    const menulist = root.querySelector('petal-aria-menulist')!;
+    const fieldset = root.querySelector('petal-aria-fieldset')!;
+    const items = Array.from(root.querySelectorAll('petal-aria-menuitem')!);
 
     await new Promise<void>((resolve) => {
       menulist.addEventListener('toggle', (event: ToggleEvent) => {

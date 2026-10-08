@@ -2,12 +2,13 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '@material/web/icon/icon.js';
 import '@material/web/iconbutton/icon-button.js';
 
-import {MdIconButton} from '@material/web/iconbutton/icon-button.js';
+import {PetalIconButton} from '@material/web/iconbutton/icon-button.js';
 import {css, html, LitElement} from 'lit';
 import {
   customElement,
@@ -31,7 +32,7 @@ export class CopyCodeButton extends LitElement {
       --_border-radius: calc(var(--catalog-code-block-border-radius) / 4);
     }
 
-    md-icon-button {
+    petal-icon-button {
       color: red;
       position: absolute;
       inset: var(
@@ -63,7 +64,7 @@ export class CopyCodeButton extends LitElement {
    */
   @property({attribute: 'button-title'}) buttonTitle = 'Copy code';
 
-  @query('md-icon-button') private copyButton!: MdIconButton;
+  @query('petal-icon-button') private copyButton!: PetalIconButton;
 
   @queryAssignedElements({flatten: true, selector: '*'})
   private slottedEls!: NodeListOf<HTMLElement>;
@@ -71,7 +72,7 @@ export class CopyCodeButton extends LitElement {
   render() {
     return html`
       <slot></slot>
-      <md-icon-button
+      <petal-icon-button
         toggle
         @click=${this.onClick}
         @input=${this.onInput}
@@ -79,9 +80,9 @@ export class CopyCodeButton extends LitElement {
         .selected=${this.showCheckmark}
         aria-label=${this.label}
         aria-label-selected=${this.successLabel}>
-        <md-icon>content_copy</md-icon>
-        <md-icon slot="selected">check</md-icon>
-      </md-icon-button>
+        <petal-icon>content_copy</petal-icon>
+        <petal-icon slot="selected">check</petal-icon>
+      </petal-icon-button>
     `;
   }
 

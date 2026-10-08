@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {CSSResultOrNative} from 'lit';
@@ -16,7 +17,7 @@ export {type FabSize} from './internal/shared.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-branded-fab': MdBrandedFab;
+    'petal-branded-fab': PetalBrandedFab;
   }
 }
 
@@ -48,8 +49,8 @@ declare global {
  * @final
  * @suppress {visibility}
  */
-@customElement('md-branded-fab')
-export class MdBrandedFab extends Fab {
+@customElement('petal-branded-fab')
+export class PetalBrandedFab extends Fab {
   /**
    * Branded FABs have no variants
    */

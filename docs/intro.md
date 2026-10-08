@@ -60,15 +60,15 @@ this library are drop-in replacements for browser elements like `<button>` and `
 
 <!-- Material elements -->
 <form>
-  <md-outlined-text-field label="Email" type="email"
-      name="email" required></md-outlined-text-field>
+  <petal-outlined-text-field label="Email" type="email"
+      name="email" required></petal-outlined-text-field>
   <label>
     Subscribe
-    <md-checkbox name="subscribe"></md-checkbox>
+    <petal-checkbox name="subscribe"></petal-checkbox>
   </label>
 
-  <md-text-button type="reset">Reset</md-text-button>
-  <md-outlined-button>Submit</md-outlined-button>
+  <petal-text-button type="reset">Reset</petal-text-button>
+  <petal-outlined-button>Submit</petal-outlined-button>
 </form>
 ```
 

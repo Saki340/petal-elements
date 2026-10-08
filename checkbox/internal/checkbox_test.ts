@@ -2,6 +2,7 @@
  * @license
  * Copyright 2019 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {html} from 'lit';
@@ -11,11 +12,11 @@ import {CheckboxHarness} from '../harness.js';
 
 import {Checkbox} from './checkbox.js';
 
-customElements.define('md-test-checkbox', Checkbox);
+customElements.define('petal-test-checkbox', Checkbox);
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-test-checkbox': Checkbox;
+    'petal-test-checkbox': Checkbox;
   }
 }
 
@@ -23,11 +24,11 @@ describe('checkbox', () => {
   const env = new Environment();
 
   async function setupTest(
-    template = html`<md-test-checkbox></md-test-checkbox>`,
+    template = html`<petal-test-checkbox></petal-test-checkbox>`,
   ) {
-    const element = env.render(template).querySelector('md-test-checkbox');
+    const element = env.render(template).querySelector('petal-test-checkbox');
     if (!element) {
-      throw new Error('Could not query rendered <md-test-checkbox>.');
+      throw new Error('Could not query rendered <petal-test-checkbox>.');
     }
 
     await env.waitForStability();
@@ -187,11 +188,11 @@ describe('checkbox', () => {
   describe('form submission', () => {
     async function setupFormTest(propsInit: Partial<Checkbox> = {}) {
       return await setupTest(html` <form>
-        <md-test-checkbox
+        <petal-test-checkbox
           .checked=${propsInit.checked === true}
           .disabled=${propsInit.disabled === true}
           .name=${propsInit.name ?? ''}
-          .value=${propsInit.value ?? ''}></md-test-checkbox>
+          .value=${propsInit.value ?? ''}></petal-test-checkbox>
       </form>`);
     }
 
@@ -233,7 +234,7 @@ describe('checkbox', () => {
     async function setupLabelTest() {
       const test = await setupTest(html`
         <label>
-          <md-test-checkbox></md-test-checkbox>
+          <petal-test-checkbox></petal-test-checkbox>
         </label>
       `);
       const label = (

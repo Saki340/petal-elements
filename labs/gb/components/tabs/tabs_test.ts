@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 // import 'jasmine'; (google3-only)
@@ -35,14 +36,14 @@ function parsePixels(value: string): number {
   return Number(value.replace('px', ''));
 }
 
-describe('md-gb-tabs', () => {
+describe('petal-gb-tabs', () => {
   const env = new Environment();
 
   describe('element mode', () => {
     it('puts the .tabs class on the host, in the light tree', async () => {
-      const root = env.render(html`<md-gb-tabs></md-gb-tabs>`);
+      const root = env.render(html`<petal-gb-tabs></petal-gb-tabs>`);
       await env.waitForStability();
-      const tabs = root.querySelector('md-gb-tabs')!;
+      const tabs = root.querySelector('petal-gb-tabs')!;
 
       expect(tabs.classList.contains('tabs')).toBeTrue();
       expect(tabs.shadowRoot!.querySelector('.tabs'))
@@ -51,9 +52,9 @@ describe('md-gb-tabs', () => {
     });
 
     it('sets the tablist role and focusgroup', async () => {
-      const root = env.render(html`<md-gb-tabs></md-gb-tabs>`);
+      const root = env.render(html`<petal-gb-tabs></petal-gb-tabs>`);
       await env.waitForStability();
-      const tabs = root.querySelector('md-gb-tabs')!;
+      const tabs = root.querySelector('petal-gb-tabs')!;
 
       expect(tabs[internals].role).toBe('tablist');
       expect(tabs.getAttribute('focusgroup')).toBe('tablist inline');
@@ -61,21 +62,21 @@ describe('md-gb-tabs', () => {
 
     it('treats vertical orientation as a visual no-op with tablist block focusgroup', async () => {
       const root = env.render(html`
-        <md-gb-tabs orientation="vertical">
-          <md-gb-tab><span slot="label">Flights</span></md-gb-tab>
-        </md-gb-tabs>
+        <petal-gb-tabs orientation="vertical">
+          <petal-gb-tab><span slot="label">Flights</span></petal-gb-tab>
+        </petal-gb-tabs>
       `);
       await env.waitForStability();
-      const tabs = root.querySelector('md-gb-tabs')!;
+      const tabs = root.querySelector('petal-gb-tabs')!;
 
       expect(getComputedStyle(tabs).flexDirection).toBe('row');
       expect(tabs.getAttribute('focusgroup')).toBe('tablist block');
     });
 
     it('toggles .tabs-secondary with the variant property', async () => {
-      const root = env.render(html`<md-gb-tabs></md-gb-tabs>`);
+      const root = env.render(html`<petal-gb-tabs></petal-gb-tabs>`);
       await env.waitForStability();
-      const tabs = root.querySelector('md-gb-tabs')!;
+      const tabs = root.querySelector('petal-gb-tabs')!;
 
       expect(tabs.variant).toBe('primary');
       expect(tabs.classList.contains('tabs-secondary')).toBeFalse();
@@ -94,7 +95,7 @@ describe('md-gb-tabs', () => {
       const host = document.createElement('div');
       const shadow = host.attachShadow({mode: 'open'});
       document.body.appendChild(host);
-      const tabs = document.createElement('md-gb-tabs');
+      const tabs = document.createElement('petal-gb-tabs');
       shadow.appendChild(tabs);
       await tabs.updateComplete;
 
@@ -111,14 +112,14 @@ describe('md-gb-tabs', () => {
 
     it('selects a clicked tab, deselects the previous one, and fires change', async () => {
       const root = env.render(html`
-        <md-gb-tabs>
-          <md-gb-tab><span slot="label">One</span></md-gb-tab>
-          <md-gb-tab><span slot="label">Two</span></md-gb-tab>
-        </md-gb-tabs>
+        <petal-gb-tabs>
+          <petal-gb-tab><span slot="label">One</span></petal-gb-tab>
+          <petal-gb-tab><span slot="label">Two</span></petal-gb-tab>
+        </petal-gb-tabs>
       `);
       await env.waitForStability();
-      const tabs = root.querySelector('md-gb-tabs')!;
-      const [first, second] = Array.from(root.querySelectorAll('md-gb-tab'));
+      const tabs = root.querySelector('petal-gb-tabs')!;
+      const [first, second] = Array.from(root.querySelectorAll('petal-gb-tab'));
       const onChange = jasmine.createSpy('change');
       tabs.addEventListener('change', onChange);
 
@@ -133,16 +134,16 @@ describe('md-gb-tabs', () => {
 
     it('hides the tabpanels of unselected tabs', async () => {
       const root = env.render(html`
-        <md-gb-tabs>
-          <md-gb-tab tabpanel="one"><span slot="label">One</span></md-gb-tab>
-          <md-gb-tab tabpanel="two"><span slot="label">Two</span></md-gb-tab>
-        </md-gb-tabs>
-        <md-aria-tabpanel id="one">One</md-aria-tabpanel>
-        <md-aria-tabpanel id="two">Two</md-aria-tabpanel>
+        <petal-gb-tabs>
+          <petal-gb-tab tabpanel="one"><span slot="label">One</span></petal-gb-tab>
+          <petal-gb-tab tabpanel="two"><span slot="label">Two</span></petal-gb-tab>
+        </petal-gb-tabs>
+        <petal-aria-tabpanel id="one">One</petal-aria-tabpanel>
+        <petal-aria-tabpanel id="two">Two</petal-aria-tabpanel>
       `);
       await env.waitForStability();
       const [panelOne, panelTwo] = Array.from(
-        root.querySelectorAll('md-aria-tabpanel'),
+        root.querySelectorAll('petal-aria-tabpanel'),
       );
 
       expect(panelOne.hidden).toBeFalse();
@@ -153,19 +154,19 @@ describe('md-gb-tabs', () => {
       const labels = ['One', 'Two', 'Three', 'Four', 'Five', 'Six'];
       const root = env.render(html`
         <div style="width: 200px;">
-          <md-gb-tabs>
+          <petal-gb-tabs>
             ${labels.map(
               (l) => html`
-                <md-gb-tab><span slot="label">${l}</span></md-gb-tab>
+                <petal-gb-tab><span slot="label">${l}</span></petal-gb-tab>
               `,
             )}
-          </md-gb-tabs>
+          </petal-gb-tabs>
         </div>
       `);
       await env.waitForStability();
-      const tabs = root.querySelector('md-gb-tabs')!;
+      const tabs = root.querySelector('petal-gb-tabs')!;
       const tabsRect = tabs.getBoundingClientRect();
-      const allTabs = Array.from(tabs.querySelectorAll('md-gb-tab'));
+      const allTabs = Array.from(tabs.querySelectorAll('petal-gb-tab'));
 
       const straddlingTab = allTabs.find((tab) => {
         const rect = tab.getBoundingClientRect();
@@ -190,19 +191,19 @@ describe('md-gb-tabs', () => {
       const labels = ['Alpha', 'Bravo', 'Charlie', 'Delta', 'Echo', 'Foxtrot'];
       const root = env.render(html`
         <div style="width: 200px;">
-          <md-gb-tabs>
+          <petal-gb-tabs>
             ${labels.map(
               (l) => html`
-                <md-gb-tab><span slot="label">${l} tab</span></md-gb-tab>
+                <petal-gb-tab><span slot="label">${l} tab</span></petal-gb-tab>
               `,
             )}
-          </md-gb-tabs>
+          </petal-gb-tabs>
         </div>
       `);
       await env.waitForStability();
-      const tabs = root.querySelector('md-gb-tabs')!;
+      const tabs = root.querySelector('petal-gb-tabs')!;
       const tabsRect = tabs.getBoundingClientRect();
-      const allTabs = Array.from(tabs.querySelectorAll('md-gb-tab'));
+      const allTabs = Array.from(tabs.querySelectorAll('petal-gb-tab'));
 
       const straddlingIndex = allTabs.findIndex((tab) => {
         const rect = tab.getBoundingClientRect();
@@ -231,18 +232,18 @@ describe('md-gb-tabs', () => {
       const labels = ['Alpha', 'Bravo', 'Charlie', 'Delta', 'Echo', 'Foxtrot'];
       const root = env.render(html`
         <div style="width: 200px;">
-          <md-gb-tabs>
+          <petal-gb-tabs>
             ${labels.map(
               (l) => html`
-                <md-gb-tab><span slot="label">${l} tab</span></md-gb-tab>
+                <petal-gb-tab><span slot="label">${l} tab</span></petal-gb-tab>
               `,
             )}
-          </md-gb-tabs>
+          </petal-gb-tabs>
         </div>
       `);
       await env.waitForStability();
-      const tabs = root.querySelector('md-gb-tabs')!;
-      const allTabs = Array.from(tabs.querySelectorAll('md-gb-tab'));
+      const tabs = root.querySelector('petal-gb-tabs')!;
+      const allTabs = Array.from(tabs.querySelectorAll('petal-gb-tab'));
 
       // Scroll tabs all the way to the end so early tabs are scrolled out past the leading edge.
       tabs.scrollLeft = tabs.scrollWidth - tabs.clientWidth;
@@ -273,14 +274,14 @@ describe('md-gb-tabs', () => {
     it('does not scroll container when tabs container itself receives focus', async () => {
       const root = env.render(html`
         <div style="width: 200px;">
-          <md-gb-tabs tabindex="0">
-            <md-gb-tab><span slot="label">One</span></md-gb-tab>
-            <md-gb-tab><span slot="label">Two</span></md-gb-tab>
-          </md-gb-tabs>
+          <petal-gb-tabs tabindex="0">
+            <petal-gb-tab><span slot="label">One</span></petal-gb-tab>
+            <petal-gb-tab><span slot="label">Two</span></petal-gb-tab>
+          </petal-gb-tabs>
         </div>
       `);
       await env.waitForStability();
-      const tabs = root.querySelector('md-gb-tabs')!;
+      const tabs = root.querySelector('petal-gb-tabs')!;
       const scrollIntoViewSpy = spyOn(tabs, 'scrollIntoView');
       tabs.focus();
       expect(scrollIntoViewSpy).not.toHaveBeenCalled();
@@ -292,13 +293,13 @@ describe('md-gb-tabs', () => {
       const labels = ['Alpha', 'Bravo', 'Charlie', 'Delta', 'Echo', 'Foxtrot'];
       const root = env.render(html`
         <div style="width: 200px;">
-          <md-gb-tabs id="element">
+          <petal-gb-tabs id="element">
             ${labels.map(
               (l) => html`
-                <md-gb-tab><span slot="label">${l} tab</span></md-gb-tab>
+                <petal-gb-tab><span slot="label">${l} tab</span></petal-gb-tab>
               `,
             )}
-          </md-gb-tabs>
+          </petal-gb-tabs>
           <div id="raw" class="tabs" role="tablist">
             ${labels.map(
               (l) => html`
@@ -555,15 +556,15 @@ describe('md-gb-tabs', () => {
 
     it('brackets label and badge in element mode', async () => {
       const root = env.render(html`
-        <md-gb-tabs>
-          <md-gb-tab selected>
+        <petal-gb-tabs>
+          <petal-gb-tab selected>
             <span slot="label">Flights</span>
             <span class="badge tab-badge" slot="badge">3</span>
-          </md-gb-tab>
-        </md-gb-tabs>
+          </petal-gb-tab>
+        </petal-gb-tabs>
       `);
       await env.waitForStability();
-      const tabs = root.querySelector('md-gb-tabs')!;
+      const tabs = root.querySelector('petal-gb-tabs')!;
       const after = getComputedStyle(tabs, '::after');
       const width = parsePixels(after.width);
 
@@ -572,15 +573,15 @@ describe('md-gb-tabs', () => {
 
     it('renders the badge after the label in flat-tree order in element mode', async () => {
       const root = env.render(html`
-        <md-gb-tabs>
-          <md-gb-tab selected>
+        <petal-gb-tabs>
+          <petal-gb-tab selected>
             <span slot="label">Flights</span>
             <span class="badge tab-badge" slot="badge">3</span>
-          </md-gb-tab>
-        </md-gb-tabs>
+          </petal-gb-tab>
+        </petal-gb-tabs>
       `);
       await env.waitForStability();
-      const tab = root.querySelector('md-gb-tab')!;
+      const tab = root.querySelector('petal-gb-tab')!;
       const label = tab.querySelector<HTMLElement>('[slot="label"]')!;
       const badge = tab.querySelector<HTMLElement>('[slot="badge"]')!;
 
@@ -614,15 +615,15 @@ describe('md-gb-tabs', () => {
       const shadow = host.attachShadow({mode: 'open'});
       document.body.appendChild(host);
 
-      const tabs = document.createElement('md-gb-tabs');
-      const tab1 = document.createElement('md-gb-tab');
+      const tabs = document.createElement('petal-gb-tabs');
+      const tab1 = document.createElement('petal-gb-tab');
       tab1.selected = true;
       const label1 = document.createElement('span');
       label1.slot = 'label';
       label1.textContent = 'Flights';
       tab1.appendChild(label1);
 
-      const tab2 = document.createElement('md-gb-tab');
+      const tab2 = document.createElement('petal-gb-tab');
       const label2 = document.createElement('span');
       label2.slot = 'label';
       label2.textContent = 'Trips';
@@ -647,17 +648,17 @@ describe('md-gb-tabs', () => {
 
     it('brackets content and respects 20px floor for icon-only tabs', async () => {
       const root = env.render(html`
-        <md-gb-tabs>
-          <md-gb-tab selected>
-            <span class="md-icon">flight</span>
-          </md-gb-tab>
-          <md-gb-tab>
-            <span class="md-icon">hotel</span>
-          </md-gb-tab>
-        </md-gb-tabs>
+        <petal-gb-tabs>
+          <petal-gb-tab selected>
+            <span class="petal-icon">flight</span>
+          </petal-gb-tab>
+          <petal-gb-tab>
+            <span class="petal-icon">hotel</span>
+          </petal-gb-tab>
+        </petal-gb-tabs>
       `);
       await env.waitForStability();
-      const tabs = root.querySelector('md-gb-tabs')!;
+      const tabs = root.querySelector('petal-gb-tabs')!;
       const after = getComputedStyle(tabs, '::after');
       const width = parsePixels(after.width);
 
@@ -667,20 +668,20 @@ describe('md-gb-tabs', () => {
 
     it('brackets only the icon and anchors badge in primary icon-only + badge tabs', async () => {
       const root = env.render(html`
-        <md-gb-tabs>
-          <md-gb-tab selected>
-            <span class="md-icon">flight</span>
+        <petal-gb-tabs>
+          <petal-gb-tab selected>
+            <span class="petal-icon">flight</span>
             <span class="badge tab-badge" slot="badge">3</span>
-          </md-gb-tab>
-          <md-gb-tab>
-            <span class="md-icon">hotel</span>
-          </md-gb-tab>
-        </md-gb-tabs>
+          </petal-gb-tab>
+          <petal-gb-tab>
+            <span class="petal-icon">hotel</span>
+          </petal-gb-tab>
+        </petal-gb-tabs>
       `);
       await env.waitForStability();
-      const tabs = root.querySelector('md-gb-tabs')!;
-      const tab = tabs.querySelector('md-gb-tab[selected]')!;
-      const icon = tab.querySelector<HTMLElement>('.md-icon')!;
+      const tabs = root.querySelector('petal-gb-tabs')!;
+      const tab = tabs.querySelector('petal-gb-tab[selected]')!;
+      const icon = tab.querySelector<HTMLElement>('.petal-icon')!;
       const badge = tab.querySelector<HTMLElement>('[slot="badge"]')!;
 
       const tabsRect = tabs.getBoundingClientRect();
@@ -703,18 +704,18 @@ describe('md-gb-tabs', () => {
       const root = env.render(html`
         <div class="tabs" role="tablist">
           <button class="tab selected" role="tab" aria-selected="true">
-            <span class="md-icon">flight</span>
+            <span class="petal-icon">flight</span>
             <span class="badge tab-badge">3</span>
           </button>
           <button class="tab" role="tab" aria-selected="false">
-            <span class="md-icon">hotel</span>
+            <span class="petal-icon">hotel</span>
           </button>
         </div>
       `);
       await env.waitForStability();
       const tabs = root.querySelector<HTMLElement>('.tabs')!;
       const tab = tabs.querySelector<HTMLElement>('.tab.selected')!;
-      const icon = tab.querySelector<HTMLElement>('.md-icon')!;
+      const icon = tab.querySelector<HTMLElement>('.petal-icon')!;
       const badge = tab.querySelector<HTMLElement>('.tab-badge')!;
 
       const tabsRect = tabs.getBoundingClientRect();
@@ -734,16 +735,16 @@ describe('md-gb-tabs', () => {
 
     it('keeps badge in flex flow after the icon with a 4px gap in secondary icon-only + badge tabs', async () => {
       const root = env.render(html`
-        <md-gb-tabs variant="secondary">
-          <md-gb-tab>
-            <span class="md-icon">flight</span>
+        <petal-gb-tabs variant="secondary">
+          <petal-gb-tab>
+            <span class="petal-icon">flight</span>
             <span class="badge tab-badge" slot="badge">3</span>
-          </md-gb-tab>
-        </md-gb-tabs>
+          </petal-gb-tab>
+        </petal-gb-tabs>
       `);
       await env.waitForStability();
-      const tab = root.querySelector('md-gb-tab')!;
-      const icon = tab.querySelector<HTMLElement>('.md-icon')!;
+      const tab = root.querySelector('petal-gb-tab')!;
+      const icon = tab.querySelector<HTMLElement>('.petal-icon')!;
       const badge = tab.querySelector<HTMLElement>('[slot="badge"]')!;
 
       const iconRect = icon.getBoundingClientRect();
@@ -793,25 +794,25 @@ describe('md-gb-tabs', () => {
   describe('stacked tabs with badges', () => {
     it('anchor-positions badge to the top-right of the icon inset by 6px in primary stacked element mode', async () => {
       const root = env.render(html`
-        <md-gb-tabs>
-          <md-gb-tab id="control">
-            <span class="md-icon">flight</span>
+        <petal-gb-tabs>
+          <petal-gb-tab id="control">
+            <span class="petal-icon">flight</span>
             <span slot="label">Flights</span>
-          </md-gb-tab>
-          <md-gb-tab id="test" selected>
-            <span class="md-icon">flight</span>
+          </petal-gb-tab>
+          <petal-gb-tab id="test" selected>
+            <span class="petal-icon">flight</span>
             <span slot="label">Flights</span>
             <span class="badge tab-badge" slot="badge">3</span>
-          </md-gb-tab>
-        </md-gb-tabs>
+          </petal-gb-tab>
+        </petal-gb-tabs>
       `);
       await env.waitForStability();
       const control = root.querySelector<HTMLElement>('#control')!;
       const test = root.querySelector<HTMLElement>('#test')!;
-      const controlIcon = control.querySelector<HTMLElement>('.md-icon')!;
+      const controlIcon = control.querySelector<HTMLElement>('.petal-icon')!;
       const controlLabel =
         control.querySelector<HTMLElement>('[slot="label"]')!;
-      const icon = test.querySelector<HTMLElement>('.md-icon')!;
+      const icon = test.querySelector<HTMLElement>('.petal-icon')!;
       const label = test.querySelector<HTMLElement>('[slot="label"]')!;
       const badge = test.querySelector<HTMLElement>('[slot="badge"]')!;
 
@@ -830,7 +831,7 @@ describe('md-gb-tabs', () => {
       expect(labelRect.top).toBeCloseTo(controlLabelRect.top, 0);
 
       // Active indicator brackets ONLY the label (labelRect.left + 2 to labelRect.right - 2)
-      const tabs = root.querySelector('md-gb-tabs')!;
+      const tabs = root.querySelector('petal-gb-tabs')!;
       const tabsRect = tabs.getBoundingClientRect();
       const after = getComputedStyle(tabs, '::after');
       const afterLeft = parsePixels(after.left);
@@ -846,7 +847,7 @@ describe('md-gb-tabs', () => {
       const root = env.render(html`
         <div class="tabs" role="tablist">
           <button id="control" class="tab" role="tab">
-            <span class="md-icon">flight</span>
+            <span class="petal-icon">flight</span>
             <span class="tab-label">Flights</span>
           </button>
           <button
@@ -854,7 +855,7 @@ describe('md-gb-tabs', () => {
             class="tab selected"
             role="tab"
             aria-selected="true">
-            <span class="md-icon">flight</span>
+            <span class="petal-icon">flight</span>
             <span class="tab-label">Flights</span>
             <span class="badge tab-badge">3</span>
           </button>
@@ -863,9 +864,9 @@ describe('md-gb-tabs', () => {
       await env.waitForStability();
       const control = root.querySelector<HTMLElement>('#control')!;
       const test = root.querySelector<HTMLElement>('#test')!;
-      const controlIcon = control.querySelector<HTMLElement>('.md-icon')!;
+      const controlIcon = control.querySelector<HTMLElement>('.petal-icon')!;
       const controlLabel = control.querySelector<HTMLElement>('.tab-label')!;
-      const icon = test.querySelector<HTMLElement>('.md-icon')!;
+      const icon = test.querySelector<HTMLElement>('.petal-icon')!;
       const label = test.querySelector<HTMLElement>('.tab-label')!;
       const badge = test.querySelector<HTMLElement>('.tab-badge')!;
 
@@ -898,25 +899,25 @@ describe('md-gb-tabs', () => {
 
     it('isolates icon anchor across multiple stacked tabs in the same bar', async () => {
       const root = env.render(html`
-        <md-gb-tabs>
-          <md-gb-tab id="tab1">
-            <span class="md-icon">flight</span>
+        <petal-gb-tabs>
+          <petal-gb-tab id="tab1">
+            <span class="petal-icon">flight</span>
             <span slot="label">Flights</span>
             <span class="badge tab-badge" slot="badge">1</span>
-          </md-gb-tab>
-          <md-gb-tab id="tab2">
-            <span class="md-icon">hotel</span>
+          </petal-gb-tab>
+          <petal-gb-tab id="tab2">
+            <span class="petal-icon">hotel</span>
             <span slot="label">Hotels</span>
             <span class="badge tab-badge" slot="badge">2</span>
-          </md-gb-tab>
-        </md-gb-tabs>
+          </petal-gb-tab>
+        </petal-gb-tabs>
       `);
       await env.waitForStability();
       const tab1 = root.querySelector<HTMLElement>('#tab1')!;
       const tab2 = root.querySelector<HTMLElement>('#tab2')!;
-      const tab1Icon = tab1.querySelector<HTMLElement>('.md-icon')!;
+      const tab1Icon = tab1.querySelector<HTMLElement>('.petal-icon')!;
       const tab1Badge = tab1.querySelector<HTMLElement>('[slot="badge"]')!;
-      const tab2Icon = tab2.querySelector<HTMLElement>('.md-icon')!;
+      const tab2Icon = tab2.querySelector<HTMLElement>('.petal-icon')!;
       const tab2Badge = tab2.querySelector<HTMLElement>('[slot="badge"]')!;
 
       const tab1IconRect = tab1Icon.getBoundingClientRect();
@@ -930,16 +931,16 @@ describe('md-gb-tabs', () => {
 
     it('keeps badge in flex flow after the label with a 4px gap in secondary tabs', async () => {
       const root = env.render(html`
-        <md-gb-tabs variant="secondary">
-          <md-gb-tab>
-            <span class="md-icon">flight</span>
+        <petal-gb-tabs variant="secondary">
+          <petal-gb-tab>
+            <span class="petal-icon">flight</span>
             <span slot="label">Flights</span>
             <span class="badge tab-badge" slot="badge">3</span>
-          </md-gb-tab>
-        </md-gb-tabs>
+          </petal-gb-tab>
+        </petal-gb-tabs>
       `);
       await env.waitForStability();
-      const tab = root.querySelector('md-gb-tab')!;
+      const tab = root.querySelector('petal-gb-tab')!;
       const label = tab.querySelector<HTMLElement>('[slot="label"]')!;
       const badge = tab.querySelector<HTMLElement>('[slot="badge"]')!;
 

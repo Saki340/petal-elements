@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '../../elevation/elevation.js';
@@ -115,7 +116,7 @@ export abstract class Menu extends LitElement {
    *
    * When using `positioning=fixed`, in most cases, the menu should position
    * itself above most other `position:absolute` or `position:fixed` elements
-   * when placed inside of them. e.g. using a menu inside of an `md-dialog`.
+   * when placed inside of them. e.g. using a menu inside of an `petal-dialog`.
    *
    * __NOTE__: Fixed menus will not scroll with the page and will be fixed to
    * the window instead.
@@ -127,7 +128,7 @@ export abstract class Menu extends LitElement {
    *   etc.
    * - You put the effort into hoisting the menu to the top of the DOM like the
    *   end of the `<body>` to render over everything or in a top-layer.
-   * - You are reusing a single `md-menu` element that dynamically renders
+   * - You are reusing a single `petal-menu` element that dynamically renders
    *   content.
    *
    * __Examples for `position = 'popover'`:__
@@ -146,7 +147,7 @@ export abstract class Menu extends LitElement {
    * using `positioning="popover"`.
    *
    * __NOTE__: This may cause adverse effects if you set
-   * `md-menu {max-height:...}`
+   * `petal-menu {max-height:...}`
    * and have items overflowing items in the "y" direction.
    */
   @property({type: Boolean, attribute: 'has-overflow'}) hasOverflow = false;
@@ -234,7 +235,7 @@ export abstract class Menu extends LitElement {
    * The element that should be focused by default once opened.
    *
    * NOTE: When setting default focus to 'LIST_ROOT', remember to change
-   * `tabindex` to `0` and change md-menu's display to something other than
+   * `tabindex` to `0` and change petal-menu's display to something other than
    * `display: contents` when necessary.
    */
   @property({attribute: 'default-focus'})
@@ -272,7 +273,7 @@ export abstract class Menu extends LitElement {
 
   private readonly listController = new ListController<MenuItem>({
     isItem: (maybeItem: HTMLElement): maybeItem is MenuItem => {
-      return maybeItem.hasAttribute('md-menu-item');
+      return maybeItem.hasAttribute('petal-menu-item');
     },
     getPossibleItems: () => this.slotItems,
     isRtl: () => getComputedStyle(this).direction === 'rtl',
@@ -410,7 +411,7 @@ export abstract class Menu extends LitElement {
 
   /**
    * The menu items associated with this menu. The items must be `MenuItem`s and
-   * have both the `md-menu-item` and `md-list-item` attributes.
+   * have both the `petal-menu-item` and `petal-list-item` attributes.
    */
   get items(): MenuItem[] {
     return this.listController.items;
@@ -531,7 +532,7 @@ export abstract class Menu extends LitElement {
    * Renders the elevation component.
    */
   private renderElevation() {
-    return html`<md-elevation part="elevation"></md-elevation>`;
+    return html`<petal-elevation part="elevation"></petal-elevation>`;
   }
 
   private getSurfaceClasses(): ClassInfo {
@@ -557,7 +558,7 @@ export abstract class Menu extends LitElement {
 
     if (event.relatedTarget) {
       // Don't close the menu if we are switching focus between menu,
-      // md-menu-item, and md-list or if the anchor was click focused, but check
+      // petal-menu-item, and petal-list or if the anchor was click focused, but check
       // if length of pointerPath is 0 because that means something was at least
       // clicked (shift+tab case).
       if (
@@ -965,14 +966,14 @@ export abstract class Menu extends LitElement {
 
   private handleDeactivateTypeahead(event: DeactivateTypeaheadEvent) {
     // stopPropagation so that this does not deactivate any typeaheads in menus
-    // nested above it e.g. md-sub-menu
+    // nested above it e.g. petal-sub-menu
     event.stopPropagation();
     this.typeaheadActive = false;
   }
 
   private handleActivateTypeahead(event: ActivateTypeaheadEvent) {
     // stopPropagation so that this does not activate any typeaheads in menus
-    // nested above it e.g. md-sub-menu
+    // nested above it e.g. petal-sub-menu
     event.stopPropagation();
     this.typeaheadActive = true;
   }

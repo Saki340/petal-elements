@@ -2,6 +2,7 @@
  * @license
  * Copyright 2022 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 // import 'jasmine'; (google3-only)
@@ -20,13 +21,13 @@ import {TextField} from './text-field.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-test-text-field': TestTextField;
+    'petal-test-text-field': TestTextField;
   }
 }
 
-@customElement('md-test-text-field')
+@customElement('petal-test-text-field')
 class TestTextField extends TextField {
-  protected override readonly fieldTag = literal`md-filled-field`;
+  protected override readonly fieldTag = literal`petal-filled-field`;
 
   async getHasError() {
     await this.updateComplete;
@@ -38,7 +39,7 @@ class TestTextField extends TextField {
 
   async getErrorTextValue() {
     await this.updateComplete;
-    return this.renderRoot.querySelector('md-filled-field')?.errorText || '';
+    return this.renderRoot.querySelector('petal-filled-field')?.errorText || '';
   }
 }
 
@@ -46,12 +47,12 @@ describe('TextField', () => {
   const env = new Environment();
 
   async function setupTest(
-    template = html`<md-test-text-field></md-test-text-field>`,
+    template = html`<petal-test-text-field></petal-test-text-field>`,
   ) {
     // Variant type does not matter for shared tests
-    const element = env.render(template).querySelector('md-test-text-field');
+    const element = env.render(template).querySelector('petal-test-text-field');
     if (!element) {
-      throw new Error('Could not query rendered <md-test-text-field>.');
+      throw new Error('Could not query rendered <petal-test-text-field>.');
     }
 
     await env.waitForStability();
@@ -603,12 +604,12 @@ describe('TextField', () => {
 
   describe('forms', () => {
     createFormTests({
-      queryControl: (root) => root.querySelector('md-test-text-field'),
+      queryControl: (root) => root.querySelector('petal-test-text-field'),
       valueTests: [
         {
           name: 'unnamed',
           render: () =>
-            html`<md-test-text-field value="Value"></md-test-text-field>`,
+            html`<petal-test-text-field value="Value"></petal-test-text-field>`,
           assertValue(formData) {
             expect(formData)
               .withContext('should not add anything to form without a name')
@@ -618,7 +619,7 @@ describe('TextField', () => {
         {
           name: 'should add empty value',
           render: () =>
-            html`<md-test-text-field name="input"></md-test-text-field>`,
+            html`<petal-test-text-field name="input"></petal-test-text-field>`,
           assertValue(formData) {
             expect(formData.get('input')).toBe('');
           },
@@ -626,9 +627,9 @@ describe('TextField', () => {
         {
           name: 'with value',
           render: () =>
-            html`<md-test-text-field
+            html`<petal-test-text-field
               name="input"
-              value="Value"></md-test-text-field>`,
+              value="Value"></petal-test-text-field>`,
           assertValue(formData) {
             expect(formData.get('input')).toBe('Value');
           },
@@ -636,10 +637,10 @@ describe('TextField', () => {
         {
           name: 'disabled',
           render: () =>
-            html`<md-test-text-field
+            html`<petal-test-text-field
               name="input"
               value="Value"
-              disabled></md-test-text-field>`,
+              disabled></petal-test-text-field>`,
           assertValue(formData) {
             expect(formData)
               .withContext('should not add anything to form when disabled')
@@ -651,7 +652,7 @@ describe('TextField', () => {
         {
           name: 'reset to empty value',
           render: () =>
-            html`<md-test-text-field name="input"></md-test-text-field>`,
+            html`<petal-test-text-field name="input"></petal-test-text-field>`,
           change(textField) {
             textField.value = 'Value';
           },
@@ -664,9 +665,9 @@ describe('TextField', () => {
         {
           name: 'reset value',
           render: () =>
-            html`<md-test-text-field
+            html`<petal-test-text-field
               name="input"
-              value="First"></md-test-text-field>`,
+              value="First"></petal-test-text-field>`,
           change(textField) {
             textField.value = 'Second';
           },
@@ -681,9 +682,9 @@ describe('TextField', () => {
         {
           name: 'restore value',
           render: () =>
-            html`<md-test-text-field
+            html`<petal-test-text-field
               name="input"
-              value="Value"></md-test-text-field>`,
+              value="Value"></petal-test-text-field>`,
           assertRestored(textField) {
             expect(textField.value)
               .withContext('textField.value after restore')

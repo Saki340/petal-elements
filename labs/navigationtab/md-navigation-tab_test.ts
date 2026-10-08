@@ -2,6 +2,7 @@
  * @license
  * Copyright 2022 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {html, render} from 'lit';
@@ -10,14 +11,14 @@ import {customElement} from 'lit/decorators.js';
 import {Environment} from '../../testing/environment.js';
 
 import {NavigationTabHarness} from './harness.js';
-import {MdNavigationTab} from './navigation-tab.js';
+import {PetalNavigationTab} from './navigation-tab.js';
 
-@customElement('md-test-navigation-tab')
-class TestNavigationTab extends MdNavigationTab {}
+@customElement('petal-test-navigation-tab')
+class TestNavigationTab extends PetalNavigationTab {}
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-test-navigation-tab': TestNavigationTab;
+    'petal-test-navigation-tab': TestNavigationTab;
   }
 }
 
@@ -27,10 +28,10 @@ describe('mwc-navigation-tab', () => {
   async function setupTest() {
     // Variant type does not matter for shared tests
     const element = env
-      .render(html`<md-test-navigation-tab></md-test-navigation-tab>`)
-      .querySelector('md-test-navigation-tab');
+      .render(html`<petal-test-navigation-tab></petal-test-navigation-tab>`)
+      .querySelector('petal-test-navigation-tab');
     if (!element) {
-      throw new Error('Could not query rendered <md-test-navigation-tab>.');
+      throw new Error('Could not query rendered <petal-test-navigation-tab>.');
     }
 
     await env.waitForStability();
@@ -52,9 +53,9 @@ describe('mwc-navigation-tab', () => {
   }
 
   describe('basic', () => {
-    it('initializes as an md-navigation-tab', async () => {
+    it('initializes as an petal-navigation-tab', async () => {
       const {harness} = await setupTest();
-      expect(harness.element).toBeInstanceOf(MdNavigationTab);
+      expect(harness.element).toBeInstanceOf(PetalNavigationTab);
       expect(harness.element.active).toBeFalse();
       expect(harness.element.hideInactiveLabel).toBeFalse();
       expect(harness.element.label).toBeUndefined();
@@ -81,7 +82,7 @@ describe('mwc-navigation-tab', () => {
   });
 
   it('on render navigation-tab-rendered event fires', async () => {
-    const element = document.createElement('md-test-navigation-tab');
+    const element = document.createElement('petal-test-navigation-tab');
     const renderedHandler = jasmine.createSpy();
     element.addEventListener('navigation-tab-rendered', renderedHandler);
     env.render(html`${element}`);
@@ -167,7 +168,7 @@ describe('mwc-navigation-tab', () => {
       harness.element.showBadge = true;
       await env.waitForStability();
 
-      const badge = harness.element.renderRoot.querySelector('md-badge');
+      const badge = harness.element.renderRoot.querySelector('petal-badge');
       expect(badge).toBeDefined();
     });
 
@@ -176,7 +177,7 @@ describe('mwc-navigation-tab', () => {
       harness.element.showBadge = false;
       await env.waitForStability();
 
-      const badge = harness.element.renderRoot.querySelector('md-badge');
+      const badge = harness.element.renderRoot.querySelector('petal-badge');
       expect(badge).toEqual(null);
     });
   });
@@ -188,7 +189,7 @@ describe('mwc-navigation-tab', () => {
       harness.element.badgeValue = '9';
       await env.waitForStability();
 
-      const badge = harness.element.renderRoot.querySelector('md-badge');
+      const badge = harness.element.renderRoot.querySelector('petal-badge');
       expect(badge?.value).toEqual('9');
     });
   });

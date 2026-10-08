@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '@material/web/ripple/ripple.js';
@@ -57,7 +58,7 @@ const ripples: MaterialStoryInit<StoryKnobs> = {
       position: relative;
     }
 
-    md-ripple.unbounded {
+    petal-ripple.unbounded {
       height: 64px;
       width: 64px;
 
@@ -70,12 +71,12 @@ const ripples: MaterialStoryInit<StoryKnobs> = {
     return html`
       <div class="row">
         <div class="container">
-          <md-ripple></md-ripple>
+          <petal-ripple></petal-ripple>
         </div>
 
         <div class="container" id="touch">
           <div class="anchor">
-            <md-ripple for="touch" class="unbounded"></md-ripple>
+            <petal-ripple for="touch" class="unbounded"></petal-ripple>
           </div>
         </div>
       </div>

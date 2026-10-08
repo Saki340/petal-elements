@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '@material/web/labs/gb/components/appbar/md-gb-app-bar.js';
@@ -55,19 +56,19 @@ const playground: MaterialStoryInit<StoryKnobs> = {
     if (variant === 'search') {
       return html`
         <div class="demo-container">
-          <md-gb-app-bar variant="search" ?scrolled=${scrolled}>
-            <md-gb-icon-button slot="leading" color="standard">
-              <md-gb-icon>menu</md-gb-icon>
-            </md-gb-icon-button>
+          <petal-gb-app-bar variant="search" ?scrolled=${scrolled}>
+            <petal-gb-icon-button slot="leading" color="standard">
+              <petal-gb-icon>menu</petal-gb-icon>
+            </petal-gb-icon-button>
             <input
               slot="search"
               type="text"
               placeholder="Search Expressive App Bar..."
               style="width: 100%; border: none; background: transparent; font: inherit; color: var(--md-sys-color-on-surface); outline: none; padding: 8px;" />
-            <md-gb-icon-button slot="trailing" color="standard">
-              <md-gb-icon>account_circle</md-gb-icon>
-            </md-gb-icon-button>
-          </md-gb-app-bar>
+            <petal-gb-icon-button slot="trailing" color="standard">
+              <petal-gb-icon>account_circle</petal-gb-icon>
+            </petal-gb-icon-button>
+          </petal-gb-app-bar>
         </div>
       `;
     }
@@ -76,23 +77,23 @@ const playground: MaterialStoryInit<StoryKnobs> = {
 
     return html`
       <div class="demo-container">
-        <md-gb-app-bar size=${size} ?scrolled=${scrolled}>
-          <md-gb-icon-button slot="leading" color="standard">
-            <md-gb-icon>menu</md-gb-icon>
-          </md-gb-icon-button>
+        <petal-gb-app-bar size=${size} ?scrolled=${scrolled}>
+          <petal-gb-icon-button slot="leading" color="standard">
+            <petal-gb-icon>menu</petal-gb-icon>
+          </petal-gb-icon-button>
           Expressive App Bar (${size})
           ${showSubtitle
             ? html`<span slot="subtitle"
                 >Two-tier expressive hierarchy (${size})</span
               >`
             : nothing}
-          <md-gb-icon-button slot="trailing" color="standard">
-            <md-gb-icon>search</md-gb-icon>
-          </md-gb-icon-button>
-          <md-gb-icon-button slot="trailing" color="standard">
-            <md-gb-icon>more_vert</md-gb-icon>
-          </md-gb-icon-button>
-        </md-gb-app-bar>
+          <petal-gb-icon-button slot="trailing" color="standard">
+            <petal-gb-icon>search</petal-gb-icon>
+          </petal-gb-icon-button>
+          <petal-gb-icon-button slot="trailing" color="standard">
+            <petal-gb-icon>more_vert</petal-gb-icon>
+          </petal-gb-icon-button>
+        </petal-gb-app-bar>
       </div>
     `;
   },
@@ -105,97 +106,97 @@ const allSizes: MaterialStoryInit<StoryKnobs> = {
     return html`
       <div style="display: flex; flex-direction: column; gap: 24px;">
         <div class="demo-container">
-          <md-gb-app-bar size="sm">
-            <md-gb-icon-button slot="leading" color="standard">
-              <md-gb-icon>menu</md-gb-icon>
-            </md-gb-icon-button>
+          <petal-gb-app-bar size="sm">
+            <petal-gb-icon-button slot="leading" color="standard">
+              <petal-gb-icon>menu</petal-gb-icon>
+            </petal-gb-icon-button>
             Small App Bar (sm)
-            <md-gb-icon-button slot="trailing" color="standard">
-              <md-gb-icon>search</md-gb-icon>
-            </md-gb-icon-button>
-            <md-gb-icon-button slot="trailing" color="standard">
-              <md-gb-icon>account_circle</md-gb-icon>
-            </md-gb-icon-button>
-          </md-gb-app-bar>
+            <petal-gb-icon-button slot="trailing" color="standard">
+              <petal-gb-icon>search</petal-gb-icon>
+            </petal-gb-icon-button>
+            <petal-gb-icon-button slot="trailing" color="standard">
+              <petal-gb-icon>account_circle</petal-gb-icon>
+            </petal-gb-icon-button>
+          </petal-gb-app-bar>
         </div>
 
         <div class="demo-container">
-          <md-gb-app-bar size="md">
-            <md-gb-icon-button slot="leading" color="standard">
-              <md-gb-icon>arrow_back</md-gb-icon>
-            </md-gb-icon-button>
+          <petal-gb-app-bar size="md">
+            <petal-gb-icon-button slot="leading" color="standard">
+              <petal-gb-icon>arrow_back</petal-gb-icon>
+            </petal-gb-icon-button>
             Medium App Bar (md)
-            <md-gb-icon-button slot="trailing" color="standard">
-              <md-gb-icon>more_vert</md-gb-icon>
-            </md-gb-icon-button>
-          </md-gb-app-bar>
+            <petal-gb-icon-button slot="trailing" color="standard">
+              <petal-gb-icon>more_vert</petal-gb-icon>
+            </petal-gb-icon-button>
+          </petal-gb-app-bar>
         </div>
 
         <div class="demo-container">
-          <md-gb-app-bar size="md">
-            <md-gb-icon-button slot="leading" color="standard">
-              <md-gb-icon>menu</md-gb-icon>
-            </md-gb-icon-button>
+          <petal-gb-app-bar size="md">
+            <petal-gb-icon-button slot="leading" color="standard">
+              <petal-gb-icon>menu</petal-gb-icon>
+            </petal-gb-icon-button>
             Medium App Bar with Subtitle
             <span slot="subtitle">Two-tier expressive hierarchy</span>
-            <md-gb-icon-button slot="trailing" color="standard">
-              <md-gb-icon>edit</md-gb-icon>
-            </md-gb-icon-button>
-          </md-gb-app-bar>
+            <petal-gb-icon-button slot="trailing" color="standard">
+              <petal-gb-icon>edit</petal-gb-icon>
+            </petal-gb-icon-button>
+          </petal-gb-app-bar>
         </div>
 
         <div class="demo-container">
-          <md-gb-app-bar size="lg">
-            <md-gb-icon-button slot="leading" color="standard">
-              <md-gb-icon>menu</md-gb-icon>
-            </md-gb-icon-button>
+          <petal-gb-app-bar size="lg">
+            <petal-gb-icon-button slot="leading" color="standard">
+              <petal-gb-icon>menu</petal-gb-icon>
+            </petal-gb-icon-button>
             Large App Bar (lg)
-            <md-gb-icon-button slot="trailing" color="standard">
-              <md-gb-icon>settings</md-gb-icon>
-            </md-gb-icon-button>
-          </md-gb-app-bar>
+            <petal-gb-icon-button slot="trailing" color="standard">
+              <petal-gb-icon>settings</petal-gb-icon>
+            </petal-gb-icon-button>
+          </petal-gb-app-bar>
         </div>
 
         <div class="demo-container">
-          <md-gb-app-bar size="lg">
-            <md-gb-icon-button slot="leading" color="standard">
-              <md-gb-icon>menu</md-gb-icon>
-            </md-gb-icon-button>
+          <petal-gb-app-bar size="lg">
+            <petal-gb-icon-button slot="leading" color="standard">
+              <petal-gb-icon>menu</petal-gb-icon>
+            </petal-gb-icon-button>
             Large App Bar with Subtitle
             <span slot="subtitle">Dynamic headline layout</span>
-            <md-gb-icon-button slot="trailing" color="standard">
-              <md-gb-icon>account_circle</md-gb-icon>
-            </md-gb-icon-button>
-          </md-gb-app-bar>
+            <petal-gb-icon-button slot="trailing" color="standard">
+              <petal-gb-icon>account_circle</petal-gb-icon>
+            </petal-gb-icon-button>
+          </petal-gb-app-bar>
         </div>
 
         <div class="demo-container">
-          <md-gb-app-bar variant="search">
-            <md-gb-icon-button slot="leading" color="standard">
-              <md-gb-icon>search</md-gb-icon>
-            </md-gb-icon-button>
+          <petal-gb-app-bar variant="search">
+            <petal-gb-icon-button slot="leading" color="standard">
+              <petal-gb-icon>search</petal-gb-icon>
+            </petal-gb-icon-button>
             <input
               slot="search"
               type="text"
               placeholder="Search variant..."
               style="width:100%; border:none; background:transparent; font:inherit; color: var(--md-sys-color-on-surface); outline:none;" />
-            <md-gb-icon-button slot="trailing" color="standard">
-              <md-gb-icon>close</md-gb-icon>
-            </md-gb-icon-button>
-          </md-gb-app-bar>
+            <petal-gb-icon-button slot="trailing" color="standard">
+              <petal-gb-icon>close</petal-gb-icon>
+            </petal-gb-icon-button>
+          </petal-gb-app-bar>
         </div>
 
         <div class="demo-container">
-          <md-gb-app-bar size="md" scrolled>
-            <md-gb-icon-button slot="leading" color="standard">
-              <md-gb-icon>menu</md-gb-icon>
-            </md-gb-icon-button>
+          <petal-gb-app-bar size="md" scrolled>
+            <petal-gb-icon-button slot="leading" color="standard">
+              <petal-gb-icon>menu</petal-gb-icon>
+            </petal-gb-icon-button>
             Scrolled App Bar (Declarative property)
             <span slot="subtitle">Demonstrating elevated scrolled style</span>
-            <md-gb-icon-button slot="trailing" color="standard">
-              <md-gb-icon>filter_list</md-gb-icon>
-            </md-gb-icon-button>
-          </md-gb-app-bar>
+            <petal-gb-icon-button slot="trailing" color="standard">
+              <petal-gb-icon>filter_list</petal-gb-icon>
+            </petal-gb-icon-button>
+          </petal-gb-app-bar>
         </div>
       </div>
     `;

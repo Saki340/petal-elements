@@ -2,6 +2,7 @@
  * @license
  * Copyright 2018 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {CSSResultOrNative} from 'lit';
@@ -12,7 +13,7 @@ import {styles} from './internal/checkbox-styles.cssresult.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-checkbox': MdCheckbox;
+    'petal-checkbox': PetalCheckbox;
   }
 }
 
@@ -29,7 +30,7 @@ declare global {
  * @final
  * @suppress {visibility}
  */
-@customElement('md-checkbox')
-export class MdCheckbox extends Checkbox {
+@customElement('petal-checkbox')
+export class PetalCheckbox extends Checkbox {
   static override styles: CSSResultOrNative[] = [styles];
 }

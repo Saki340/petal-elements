@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {LitElement} from 'lit';
@@ -10,7 +11,7 @@ import {MenuItem} from './menuItemController.js';
 import type {Corner, SurfacePositionTarget} from './surfacePositionController.js';
 
 /**
- * The interface needed for a Menu to work with other md-menu elements.
+ * The interface needed for a Menu to work with other petal-menu elements.
  */
 export interface MenuSelf {
   /**
@@ -25,7 +26,7 @@ export interface MenuSelf {
    * Displays overflow content like a submenu.
    *
    * __NOTE__: This may cause adverse effects if you set
-   * `md-menu {max-height:...}`
+   * `petal-menu {max-height:...}`
    * and have items overflowing items in the "y" direction.
    */
   hasOverflow: boolean;
@@ -78,8 +79,8 @@ export interface MenuSelf {
 }
 
 /**
- * The interface needed for a Menu to work with other md-menu elements. Useful
- * for keeping your types safe when wrapping `md-menu`.
+ * The interface needed for a Menu to work with other petal-menu elements. Useful
+ * for keeping your types safe when wrapping `petal-menu`.
  */
 export type Menu = MenuSelf & LitElement;
 
@@ -101,7 +102,7 @@ export interface ClickReason extends Reason {
 /**
  * The keydown reason for the `close-menu` event. The menu was closed
  * because a specific key was pressed. The default closing keys for
- * `md-menu-item` are, Space, Enter or Escape.
+ * `petal-menu-item` are, Space, Enter or Escape.
  */
 export interface KeydownReason extends Reason {
   kind: typeof CloseReason.KEYDOWN;
@@ -109,7 +110,7 @@ export interface KeydownReason extends Reason {
 }
 
 /**
- * The default menu closing reasons for the material md-menu package.
+ * The default menu closing reasons for the material petal-menu package.
  */
 export type DefaultReasons = ClickReason | KeydownReason;
 
@@ -148,12 +149,12 @@ export function createCloseOnFocusoutEvent() {
 }
 
 /**
- * Creates a default close menu event used by md-menu.
+ * Creates a default close menu event used by petal-menu.
  */
 export const createDefaultCloseMenuEvent = createCloseMenuEvent<DefaultReasons>;
 
 /**
- * The type of the default close menu event used by md-menu.
+ * The type of the default close menu event used by petal-menu.
  */
 // tslint:disable-next-line
 export type CloseMenuEvent<T extends Reason = DefaultReasons> = ReturnType<

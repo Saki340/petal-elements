@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 // import 'jasmine'; (google3-only)
@@ -20,19 +21,19 @@ import snackbarStyles from './snackbar.cssresult.js';
 // Element mode adopts the same sheet in its shadow root.
 adoptStyles(document, snackbarStyles);
 
-describe('<md-gb-snackbar>', () => {
+describe('<petal-gb-snackbar>', () => {
   const env = new Environment();
 
   async function setupTest(
-    template = html`<md-gb-snackbar
+    template = html`<petal-gb-snackbar
       label-text="Test message"
-      quick></md-gb-snackbar>`,
+      quick></petal-gb-snackbar>`,
   ) {
     const root = env.render(template);
     await env.waitForStability();
-    const snackbar = root.querySelector('md-gb-snackbar');
+    const snackbar = root.querySelector('petal-gb-snackbar');
     if (!snackbar) {
-      throw new Error('Failed to query rendered <md-gb-snackbar>');
+      throw new Error('Failed to query rendered <petal-gb-snackbar>');
     }
     const harness = new SnackbarHarness(snackbar);
     return {harness, root, snackbar};
@@ -62,10 +63,10 @@ describe('<md-gb-snackbar>', () => {
   describe('open attribute', () => {
     it('renders open with visible text when instantiated with open attribute', async () => {
       const {snackbar, harness} = await setupTest(
-        html`<md-gb-snackbar
+        html`<petal-gb-snackbar
           open
           label-text="Initial open message"
-          quick></md-gb-snackbar>`,
+          quick></petal-gb-snackbar>`,
       );
       await env.waitForStability();
       expect(snackbar.open).toBeTrue();
@@ -180,7 +181,7 @@ describe('<md-gb-snackbar>', () => {
   describe('animation timing', () => {
     it('waits for OPEN_DURATION_MS on show and CLOSE_DURATION_MS on close when quick is false', async () => {
       const {snackbar} = await setupTest(
-        html`<md-gb-snackbar label-text="Animation test"></md-gb-snackbar>`,
+        html`<petal-gb-snackbar label-text="Animation test"></petal-gb-snackbar>`,
       );
       let opened = false;
       snackbar.addEventListener('opened', () => {
@@ -223,7 +224,7 @@ describe('<md-gb-snackbar>', () => {
       );
 
       const {snackbar} = await setupTest(
-        html`<md-gb-snackbar label-text="Reduced motion"></md-gb-snackbar>`,
+        html`<petal-gb-snackbar label-text="Reduced motion"></petal-gb-snackbar>`,
       );
       let opened = false;
       snackbar.addEventListener('opened', () => {
@@ -235,9 +236,9 @@ describe('<md-gb-snackbar>', () => {
 
     it('supersedes opening when close() is called during open animation', async () => {
       const {snackbar} = await setupTest(
-        html`<md-gb-snackbar
+        html`<petal-gb-snackbar
           label-text="Interrupted open"
-          timeout-ms="1000"></md-gb-snackbar>`,
+          timeout-ms="1000"></petal-gb-snackbar>`,
       );
       const openedSpy = jasmine.createSpy('opened');
       const closedSpy = jasmine.createSpy('closed');
@@ -266,9 +267,9 @@ describe('<md-gb-snackbar>', () => {
 
     it('supersedes closing when show() is called during close animation', async () => {
       const {snackbar} = await setupTest(
-        html`<md-gb-snackbar
+        html`<petal-gb-snackbar
           label-text="Interrupted close"
-          quick></md-gb-snackbar>`,
+          quick></petal-gb-snackbar>`,
       );
       await snackbar.show();
       expect(snackbar.open).toBeTrue();
@@ -296,10 +297,10 @@ describe('<md-gb-snackbar>', () => {
   describe('auto-dismiss and pause', () => {
     it('auto-dismisses after timeoutMs', async () => {
       const {snackbar} = await setupTest(
-        html`<md-gb-snackbar
+        html`<petal-gb-snackbar
           label-text="Auto-dismiss test"
           timeout-ms="1000"
-          quick></md-gb-snackbar>`,
+          quick></petal-gb-snackbar>`,
       );
       await snackbar.show();
       expect(snackbar.open).toBeTrue();
@@ -314,10 +315,10 @@ describe('<md-gb-snackbar>', () => {
 
     it('triggers auto-dismiss when opened via open property', async () => {
       const {snackbar} = await setupTest(
-        html`<md-gb-snackbar
+        html`<petal-gb-snackbar
           label-text="Prop auto-dismiss"
           timeout-ms="1000"
-          quick></md-gb-snackbar>`,
+          quick></petal-gb-snackbar>`,
       );
       snackbar.open = true;
       await env.waitForStability();
@@ -330,10 +331,10 @@ describe('<md-gb-snackbar>', () => {
 
     it('does not auto-dismiss when timeoutMs is -1', async () => {
       const {snackbar} = await setupTest(
-        html`<md-gb-snackbar
+        html`<petal-gb-snackbar
           label-text="Indeterminate test"
           timeout-ms="-1"
-          quick></md-gb-snackbar>`,
+          quick></petal-gb-snackbar>`,
       );
       await snackbar.show();
       expect(snackbar.open).toBeTrue();
@@ -345,10 +346,10 @@ describe('<md-gb-snackbar>', () => {
 
     it('pauses auto-dismiss on mouseenter and resumes on mouseleave', async () => {
       const {snackbar} = await setupTest(
-        html`<md-gb-snackbar
+        html`<petal-gb-snackbar
           label-text="Pause test"
           timeout-ms="1000"
-          quick></md-gb-snackbar>`,
+          quick></petal-gb-snackbar>`,
       );
       await snackbar.show();
       expect(snackbar.open).toBeTrue();
@@ -367,10 +368,10 @@ describe('<md-gb-snackbar>', () => {
 
     it('resets pause state and auto-dismisses when reopened after closing while hovered', async () => {
       const {snackbar} = await setupTest(
-        html`<md-gb-snackbar
+        html`<petal-gb-snackbar
           label-text="Hover reset test"
           timeout-ms="1000"
-          quick></md-gb-snackbar>`,
+          quick></petal-gb-snackbar>`,
       );
       await snackbar.show();
       expect(snackbar.open).toBeTrue();
@@ -390,10 +391,10 @@ describe('<md-gb-snackbar>', () => {
 
     it('closes immediately on resume if remaining time is expired', async () => {
       const {snackbar} = await setupTest(
-        html`<md-gb-snackbar
+        html`<petal-gb-snackbar
           label-text="Expired resume test"
           timeout-ms="1000"
-          quick></md-gb-snackbar>`,
+          quick></petal-gb-snackbar>`,
       );
       await snackbar.show();
 
@@ -413,9 +414,9 @@ describe('<md-gb-snackbar>', () => {
 
     it('pauses auto-dismiss if mouseenter occurs during open animation window', async () => {
       const {snackbar} = await setupTest(
-        html`<md-gb-snackbar
+        html`<petal-gb-snackbar
           label-text="Open animation pause test"
-          timeout-ms="1000"></md-gb-snackbar>`,
+          timeout-ms="1000"></petal-gb-snackbar>`,
       );
       const showPromise = snackbar.show();
       await snackbar.updateComplete;
@@ -448,10 +449,10 @@ describe('<md-gb-snackbar>', () => {
   describe('focus pause and resume', () => {
     it('pauses auto-dismiss on focusin and resumes on focusout', async () => {
       const {snackbar} = await setupTest(
-        html`<md-gb-snackbar
+        html`<petal-gb-snackbar
           label-text="Focus pause test"
           timeout-ms="1000"
-          quick></md-gb-snackbar>`,
+          quick></petal-gb-snackbar>`,
       );
       await snackbar.show();
       expect(snackbar.open).toBeTrue();
@@ -470,10 +471,10 @@ describe('<md-gb-snackbar>', () => {
 
     it('does not resume auto-dismiss on mouseleave while still focused', async () => {
       const {snackbar} = await setupTest(
-        html`<md-gb-snackbar
+        html`<petal-gb-snackbar
           label-text="Focus hover test"
           timeout-ms="1000"
-          quick></md-gb-snackbar>`,
+          quick></petal-gb-snackbar>`,
       );
       await snackbar.show();
       expect(snackbar.open).toBeTrue();
@@ -518,10 +519,10 @@ describe('<md-gb-snackbar>', () => {
   describe('built-in action', () => {
     it('renders a button from action-label, and nothing when empty', async () => {
       const {snackbar, harness} = await setupTest(
-        html`<md-gb-snackbar
+        html`<petal-gb-snackbar
           label-text="Built-in action"
           action-label="Undo"
-          quick></md-gb-snackbar>`,
+          quick></petal-gb-snackbar>`,
       );
       const action = harness.getActionButton();
       expect(action).withContext('built-in action').not.toBeNull();
@@ -534,12 +535,12 @@ describe('<md-gb-snackbar>', () => {
 
     it('is replaced by a slotted action', async () => {
       const {snackbar, harness} = await setupTest(
-        html`<md-gb-snackbar
+        html`<petal-gb-snackbar
           label-text="Slotted action"
           action-label="Built-in"
           quick>
           <button slot="action" id="slotted">Slotted</button>
-        </md-gb-snackbar>`,
+        </petal-gb-snackbar>`,
       );
       await snackbar.show();
       const slotted = snackbar.querySelector('#slotted');
@@ -548,10 +549,10 @@ describe('<md-gb-snackbar>', () => {
 
     it('closes with reason "action" when clicked', async () => {
       const {snackbar, harness} = await setupTest(
-        html`<md-gb-snackbar
+        html`<petal-gb-snackbar
           label-text="Built-in action"
           action-label="Undo"
-          quick></md-gb-snackbar>`,
+          quick></petal-gb-snackbar>`,
       );
       await snackbar.show();
       const closeSpy = jasmine.createSpy('close');
@@ -571,10 +572,10 @@ describe('<md-gb-snackbar>', () => {
 
     it('does not render for a whitespace-only action-label', async () => {
       const {harness} = await setupTest(
-        html`<md-gb-snackbar
+        html`<petal-gb-snackbar
           label-text="Whitespace"
           action-label="  "
-          quick></md-gb-snackbar>`,
+          quick></petal-gb-snackbar>`,
       );
       expect(harness.getActionButton()).toBeNull();
     });
@@ -583,9 +584,9 @@ describe('<md-gb-snackbar>', () => {
   describe('slotted action', () => {
     it('closes with reason "action" when a slotted <button slot="action"> is clicked', async () => {
       const {snackbar, harness} = await setupTest(
-        html`<md-gb-snackbar label-text="Action test" quick>
+        html`<petal-gb-snackbar label-text="Action test" quick>
           <button slot="action" id="action-btn">Undo</button>
-        </md-gb-snackbar>`,
+        </petal-gb-snackbar>`,
       );
       await snackbar.show();
 
@@ -601,11 +602,11 @@ describe('<md-gb-snackbar>', () => {
       expect(closedReason).toBe(CLOSE_REASONS.ACTION);
     });
 
-    it('closes with reason "action" when a slotted md-gb-button host is clicked', async () => {
+    it('closes with reason "action" when a slotted petal-gb-button host is clicked', async () => {
       const {snackbar, harness} = await setupTest(
-        html`<md-gb-snackbar label-text="gb action" quick>
-          <md-gb-button slot="action">Undo</md-gb-button>
-        </md-gb-snackbar>`,
+        html`<petal-gb-snackbar label-text="gb action" quick>
+          <petal-gb-button slot="action">Undo</petal-gb-button>
+        </petal-gb-snackbar>`,
       );
       await snackbar.show();
       const closedSpy = jasmine.createSpy('closed');
@@ -624,10 +625,10 @@ describe('<md-gb-snackbar>', () => {
   describe('dismiss button', () => {
     it('renders close button when hasCloseButton is true and closes on click with reason "dismiss"', async () => {
       const {snackbar, harness} = await setupTest(
-        html`<md-gb-snackbar
+        html`<petal-gb-snackbar
           label-text="Close button test"
           has-close-button
-          quick></md-gb-snackbar>`,
+          quick></petal-gb-snackbar>`,
       );
       await snackbar.show();
 
@@ -649,9 +650,9 @@ describe('<md-gb-snackbar>', () => {
 
     it('closes with reason "dismiss" when a slotted dismiss element is clicked', async () => {
       const {snackbar, harness} = await setupTest(
-        html`<md-gb-snackbar label-text="Custom dismiss" quick>
+        html`<petal-gb-snackbar label-text="Custom dismiss" quick>
           <button slot="dismiss" aria-label="Dismiss">x</button>
-        </md-gb-snackbar>`,
+        </petal-gb-snackbar>`,
       );
       await snackbar.show();
       const closedSpy = jasmine.createSpy('closed');
@@ -670,9 +671,9 @@ describe('<md-gb-snackbar>', () => {
   describe('slots', () => {
     it('renders both labelText and default slot content', async () => {
       const {snackbar, harness} = await setupTest(
-        html`<md-gb-snackbar label-text="Label text" quick>
+        html`<petal-gb-snackbar label-text="Label text" quick>
           <span id="custom-content">Custom slotted text</span>
-        </md-gb-snackbar>`,
+        </petal-gb-snackbar>`,
       );
       await snackbar.show();
       const labelEl = harness.getLabelElement();
@@ -689,9 +690,9 @@ describe('<md-gb-snackbar>', () => {
 
     it('renders label visibly when open and has whitespace plus a slotted action child', async () => {
       const {snackbar, harness} = await setupTest(
-        html`<md-gb-snackbar label-text="Test message" quick>
+        html`<petal-gb-snackbar label-text="Test message" quick>
           <button slot="action">Action</button>
-        </md-gb-snackbar>`,
+        </petal-gb-snackbar>`,
       );
       await snackbar.show();
       const labelEl = harness.getLabelElement();
@@ -703,7 +704,7 @@ describe('<md-gb-snackbar>', () => {
   describe('fixed property', () => {
     it('adds fixed class when fixed is true', async () => {
       const {snackbar} = await setupTest(
-        html`<md-gb-snackbar label-text="Fixed" fixed quick></md-gb-snackbar>`,
+        html`<petal-gb-snackbar label-text="Fixed" fixed quick></petal-gb-snackbar>`,
       );
       const rootEl = snackbar.shadowRoot?.querySelector('.snackbar');
       expect(rootEl?.classList.contains(SNACKBAR_CLASSES.fixed)).toBeTrue();
@@ -713,9 +714,9 @@ describe('<md-gb-snackbar>', () => {
   describe('disconnect and reconnect semantics', () => {
     it('cleans up mid-open transition on disconnect, does not leave isOpening stuck true, and restarts timeout on reconnect', async () => {
       const {snackbar, root} = await setupTest(
-        html`<md-gb-snackbar
+        html`<petal-gb-snackbar
           label-text="Disconnect test"
-          timeout-ms="1000"></md-gb-snackbar>`,
+          timeout-ms="1000"></petal-gb-snackbar>`,
       );
       const closedSpy = jasmine.createSpy('closed');
       snackbar.addEventListener('closed', closedSpy);
@@ -748,9 +749,9 @@ describe('<md-gb-snackbar>', () => {
 
     it('still finishes in closed state and dispatches closed event when disconnected mid-close', async () => {
       const {snackbar} = await setupTest(
-        html`<md-gb-snackbar
+        html`<petal-gb-snackbar
           label-text="Disconnect mid-close test"
-          quick></md-gb-snackbar>`,
+          quick></petal-gb-snackbar>`,
       );
       await snackbar.show();
       expect(snackbar.open).toBeTrue();
@@ -779,15 +780,15 @@ describe('<md-gb-snackbar>', () => {
   describe('harness getDismissButton', () => {
     it('returns slotted light-DOM dismiss element when present, falling back to shadow dismiss button', async () => {
       const t1 = await setupTest(
-        html`<md-gb-snackbar quick>
+        html`<petal-gb-snackbar quick>
           <button slot="dismiss" id="custom-dismiss">Custom</button>
-        </md-gb-snackbar>`,
+        </petal-gb-snackbar>`,
       );
       const customDismiss = t1.harness.getDismissButton();
       expect(customDismiss?.id).toBe('custom-dismiss');
 
       const t2 = await setupTest(
-        html`<md-gb-snackbar has-close-button quick></md-gb-snackbar>`,
+        html`<petal-gb-snackbar has-close-button quick></petal-gb-snackbar>`,
       );
       const shadowDismiss = t2.harness.getDismissButton();
       expect(shadowDismiss?.classList.contains('snackbar-dismiss')).toBeTrue();
@@ -829,13 +830,13 @@ describe('<md-gb-snackbar>', () => {
   describe('attributes', () => {
     it('sets properties from the kebab-case attributes', async () => {
       const {snackbar, harness} = await setupTest(
-        html`<md-gb-snackbar
+        html`<petal-gb-snackbar
           label-text="Kebab label"
           timeout-ms="1234"
           action-label="Undo"
           close-label="Dismiss"
           has-close-button
-          quick></md-gb-snackbar>`,
+          quick></petal-gb-snackbar>`,
       );
       expect(snackbar.labelText).toBe('Kebab label');
       expect(snackbar.timeoutMs).toBe(1234);
@@ -847,7 +848,7 @@ describe('<md-gb-snackbar>', () => {
 
     it('ignores the lowercase labeltext and timeoutms attributes', async () => {
       const {snackbar} = await setupTest(
-        html`<md-gb-snackbar quick></md-gb-snackbar>`,
+        html`<petal-gb-snackbar quick></petal-gb-snackbar>`,
       );
       snackbar.setAttribute('labeltext', 'Old label');
       snackbar.setAttribute('timeoutms', '1234');

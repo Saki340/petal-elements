@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '@material/web/slider/slider.js';
@@ -10,7 +11,7 @@ import {
   labelStyles,
   MaterialStoryInit,
 } from './material-collection.js';
-import {MdSlider} from '@material/web/slider/slider.js';
+import {PetalSlider} from '@material/web/slider/slider.js';
 import {css, html} from 'lit';
 
 /** Knob types for slider stories. */
@@ -34,27 +35,27 @@ const single: MaterialStoryInit<StoryKnobs> = {
     return html`
       <label>
         Continuous
-        <md-slider
+        <petal-slider
           ?disabled=${disabled ?? false}
-          aria-label="An example continuous slider"></md-slider>
+          aria-label="An example continuous slider"></petal-slider>
       </label>
 
       <label>
         Labeled
-        <md-slider
+        <petal-slider
           labeled
           ?disabled=${disabled ?? false}
-          aria-label="An example slider with a label"></md-slider>
+          aria-label="An example slider with a label"></petal-slider>
       </label>
 
       <label>
         Tick marks
-        <md-slider
+        <petal-slider
           labeled
           step="10"
           ticks
           ?disabled=${disabled ?? false}
-          aria-label="An example slider with tick marks"></md-slider>
+          aria-label="An example slider with tick marks"></petal-slider>
       </label>
     `;
   },
@@ -67,24 +68,24 @@ const range: MaterialStoryInit<StoryKnobs> = {
     return html`
       <label>
         Range
-        <md-slider
+        <petal-slider
           range
           ?disabled=${disabled ?? false}
-          aria-label="An example range slider"></md-slider>
+          aria-label="An example range slider"></petal-slider>
       </label>
 
       <label>
         Labeled
-        <md-slider
+        <petal-slider
           labeled
           range
           ?disabled=${disabled ?? false}
-          aria-label="An example range slider with labels"></md-slider>
+          aria-label="An example range slider with labels"></petal-slider>
       </label>
 
       <label>
         Tick marks
-        <md-slider
+        <petal-slider
           labeled
           range
           step="10"
@@ -92,7 +93,7 @@ const range: MaterialStoryInit<StoryKnobs> = {
           ?disabled=${disabled ?? false}
           value-start="30"
           value-end="70"
-          aria-label="An example range slider with tick marks"></md-slider>
+          aria-label="An example range slider with tick marks"></petal-slider>
       </label>
     `;
   },
@@ -104,7 +105,7 @@ const customStyling: MaterialStoryInit<StoryKnobs> = {
     labelStyles,
     sharedStyles,
     css`
-      md-slider {
+      petal-slider {
         --myColor: hsl(180, 15%, 25%);
         --myInactiveColor: hsl(180, 15%, 75%);
 
@@ -145,7 +146,7 @@ const customStyling: MaterialStoryInit<StoryKnobs> = {
       return labels[Math.round(value * (labels.length - 1))];
     }
     function updateLabel(event: Event) {
-      const target = event.target as MdSlider;
+      const target = event.target as PetalSlider;
       const {min, max, valueStart, valueEnd} = target;
       const range = max - min;
       const fractionStart = valueStart! / range;
@@ -156,7 +157,7 @@ const customStyling: MaterialStoryInit<StoryKnobs> = {
     return html`
       <label>
         Custom styles
-        <md-slider
+        <petal-slider
           aria-label="An example slider with custom styles"
           range
           value-start="2"
@@ -170,7 +171,7 @@ const customStyling: MaterialStoryInit<StoryKnobs> = {
           step="1"
           .disabled=${disabled ?? false}
           @pointerdown=${updateLabel}
-          @input=${updateLabel}></md-slider>
+          @input=${updateLabel}></petal-slider>
       </label>
     `;
   },

@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '@material/web/labs/gb/components/radio/md-gb-radio.js';
@@ -31,9 +32,9 @@ const playground: MaterialStoryInit<StoryKnobs> = {
   name: 'Playground',
   render(knobs) {
     return html`
-      <md-gb-radio name="group" ?disabled=${knobs.disabled}></md-gb-radio>
-      <md-gb-radio name="group" ?disabled=${knobs.disabled}></md-gb-radio>
-      <md-gb-radio name="group" ?disabled=${knobs.disabled}></md-gb-radio>
+      <petal-gb-radio name="group" ?disabled=${knobs.disabled}></petal-gb-radio>
+      <petal-gb-radio name="group" ?disabled=${knobs.disabled}></petal-gb-radio>
+      <petal-gb-radio name="group" ?disabled=${knobs.disabled}></petal-gb-radio>
     `;
   },
 };

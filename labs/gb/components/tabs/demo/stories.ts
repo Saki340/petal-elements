@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '@material/web/labs/aria/tabs/md-aria-tabpanel.js';
@@ -54,15 +55,15 @@ const playground: MaterialStoryInit<StoryKnobs> = {
     const labels = ['Flights', 'Trips', 'Explore', 'Buy'];
     return html`
       <div class="container">
-        <md-gb-tabs
+        <petal-gb-tabs
           variant="${variant ?? 'primary'}"
           .selectedTabIndex="${selectedIndex}">
           ${labels.map(
             (label) => html`
-              <md-gb-tab><span slot="label">${label}</span></md-gb-tab>
+              <petal-gb-tab><span slot="label">${label}</span></petal-gb-tab>
             `,
           )}
-        </md-gb-tabs>
+        </petal-gb-tabs>
       </div>
     `;
   },
@@ -79,18 +80,18 @@ const withIcons: MaterialStoryInit<StoryKnobs> = {
     ];
     return html`
       <div class="container">
-        <md-gb-tabs
+        <petal-gb-tabs
           variant="${variant ?? 'primary'}"
           .selectedTabIndex="${selectedIndex}">
           ${items.map(
             ({icon, label}) => html`
-              <md-gb-tab>
-                <md-gb-icon>${icon}</md-gb-icon>
+              <petal-gb-tab>
+                <petal-gb-icon>${icon}</petal-gb-icon>
                 <span slot="label">${label}</span>
-              </md-gb-tab>
+              </petal-gb-tab>
             `,
           )}
-        </md-gb-tabs>
+        </petal-gb-tabs>
       </div>
     `;
   },
@@ -103,17 +104,17 @@ const iconOnly: MaterialStoryInit<StoryKnobs> = {
     const icons = ['flight', 'luggage', 'explore'];
     return html`
       <div class="container">
-        <md-gb-tabs
+        <petal-gb-tabs
           variant="${variant ?? 'primary'}"
           .selectedTabIndex="${selectedIndex}">
           ${icons.map(
             (icon) => html`
-              <md-gb-tab>
-                <md-gb-icon>${icon}</md-gb-icon>
-              </md-gb-tab>
+              <petal-gb-tab>
+                <petal-gb-icon>${icon}</petal-gb-icon>
+              </petal-gb-tab>
             `,
           )}
-        </md-gb-tabs>
+        </petal-gb-tabs>
       </div>
     `;
   },
@@ -130,22 +131,22 @@ const iconOnlyWithBadge: MaterialStoryInit<StoryKnobs> = {
     ];
     return html`
       <div class="container">
-        <md-gb-tabs
+        <petal-gb-tabs
           variant="${variant ?? 'primary'}"
           .selectedTabIndex="${selectedIndex}">
           ${items.map(
             ({icon, badge: count}) => html`
-              <md-gb-tab>
-                <md-gb-icon>${icon}</md-gb-icon>
+              <petal-gb-tab>
+                <petal-gb-icon>${icon}</petal-gb-icon>
                 ${count
                   ? html`<span class="badge badge-large tab-badge" slot="badge"
                       >${count}</span
                     >`
                   : ''}
-              </md-gb-tab>
+              </petal-gb-tab>
             `,
           )}
-        </md-gb-tabs>
+        </petal-gb-tabs>
       </div>
     `;
   },
@@ -162,22 +163,22 @@ const withBadges: MaterialStoryInit<StoryKnobs> = {
     ];
     return html`
       <div class="container">
-        <md-gb-tabs
+        <petal-gb-tabs
           variant="${variant ?? 'primary'}"
           .selectedTabIndex="${selectedIndex}">
           ${items.map(
             ({label, badge: count}) => html`
-              <md-gb-tab>
+              <petal-gb-tab>
                 <span slot="label">${label}</span>
                 ${count
                   ? html`<span class="badge badge-large tab-badge" slot="badge"
                       >${count}</span
                     >`
                   : ''}
-              </md-gb-tab>
+              </petal-gb-tab>
             `,
           )}
-        </md-gb-tabs>
+        </petal-gb-tabs>
       </div>
     `;
   },
@@ -194,23 +195,23 @@ const iconsWithBadges: MaterialStoryInit<StoryKnobs> = {
     ];
     return html`
       <div class="container">
-        <md-gb-tabs
+        <petal-gb-tabs
           variant="${variant ?? 'primary'}"
           .selectedTabIndex="${selectedIndex}">
           ${items.map(
             ({icon, label, badge: count}) => html`
-              <md-gb-tab>
-                <md-gb-icon>${icon}</md-gb-icon>
+              <petal-gb-tab>
+                <petal-gb-icon>${icon}</petal-gb-icon>
                 <span slot="label">${label}</span>
                 ${count
                   ? html`<span class="badge badge-large tab-badge" slot="badge"
                       >${count}</span
                     >`
                   : ''}
-              </md-gb-tab>
+              </petal-gb-tab>
             `,
           )}
-        </md-gb-tabs>
+        </petal-gb-tabs>
       </div>
     `;
   },
@@ -232,15 +233,15 @@ const overflow: MaterialStoryInit<StoryKnobs> = {
     ];
     return html`
       <div class="container" style="inline-size: 320px;">
-        <md-gb-tabs
+        <petal-gb-tabs
           variant="${variant ?? 'primary'}"
           .selectedTabIndex="${selectedIndex}">
           ${labels.map(
             (label) => html`
-              <md-gb-tab><span slot="label">${label}</span></md-gb-tab>
+              <petal-gb-tab><span slot="label">${label}</span></petal-gb-tab>
             `,
           )}
-        </md-gb-tabs>
+        </petal-gb-tabs>
       </div>
     `;
   },
@@ -252,16 +253,16 @@ const withPanels: MaterialStoryInit<StoryKnobs> = {
   render({variant}) {
     return html`
       <div class="container">
-        <md-gb-tabs variant="${variant ?? 'primary'}">
-          <md-gb-tab tabpanel="panel-flights">
+        <petal-gb-tabs variant="${variant ?? 'primary'}">
+          <petal-gb-tab tabpanel="panel-flights">
             <span slot="label">Flights</span>
-          </md-gb-tab>
-          <md-gb-tab tabpanel="panel-trips">
+          </petal-gb-tab>
+          <petal-gb-tab tabpanel="panel-trips">
             <span slot="label">Trips</span>
-          </md-gb-tab>
-        </md-gb-tabs>
-        <md-aria-tabpanel id="panel-flights">Flights content</md-aria-tabpanel>
-        <md-aria-tabpanel id="panel-trips">Trips content</md-aria-tabpanel>
+          </petal-gb-tab>
+        </petal-gb-tabs>
+        <petal-aria-tabpanel id="panel-flights">Flights content</petal-aria-tabpanel>
+        <petal-aria-tabpanel id="panel-trips">Trips content</petal-aria-tabpanel>
       </div>
     `;
   },

@@ -2,14 +2,15 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {createTokenTests} from '../testing/tokens.js';
 
-import {MdLinearProgress} from './linear-progress.js';
+import {PetalLinearProgress} from './linear-progress.js';
 
-describe('<md-linear-progress>', () => {
+describe('<petal-linear-progress>', () => {
   describe('.styles', () => {
-    createTokenTests(MdLinearProgress.styles);
+    createTokenTests(PetalLinearProgress.styles);
   });
 });

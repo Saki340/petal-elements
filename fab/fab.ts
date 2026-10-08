@@ -2,6 +2,7 @@
  * @license
  * Copyright 2022 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {CSSResultOrNative} from 'lit';
@@ -17,7 +18,7 @@ export {type FabSize} from './internal/shared.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-fab': MdFab;
+    'petal-fab': PetalFab;
   }
 }
 
@@ -48,8 +49,8 @@ declare global {
  * @final
  * @suppress {visibility}
  */
-@customElement('md-fab')
-export class MdFab extends Fab {
+@customElement('petal-fab')
+export class PetalFab extends Fab {
   static override styles: CSSResultOrNative[] = [
     sharedStyles,
     styles,

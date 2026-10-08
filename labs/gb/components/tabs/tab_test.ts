@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 // import 'jasmine'; (google3-only)
@@ -25,14 +26,14 @@ adoptStyles(document, [m3Styles, focusRingStyles, rippleStyles, tabsStyles]);
 const SELECTED_SELECTOR =
   ':is(.selected, [aria-selected="true"], :state(selected))';
 
-describe('md-gb-tab', () => {
+describe('petal-gb-tab', () => {
   const env = new Environment();
 
   describe('element mode', () => {
     it('puts the .tab class on the host, in the light tree', async () => {
-      const root = env.render(html`<md-gb-tab></md-gb-tab>`);
+      const root = env.render(html`<petal-gb-tab></petal-gb-tab>`);
       await env.waitForStability();
-      const tab = root.querySelector('md-gb-tab')!;
+      const tab = root.querySelector('petal-gb-tab')!;
 
       expect(tab.classList.contains('tab')).toBeTrue();
       expect(tab.classList.contains('focus-ring-inner')).toBeTrue();
@@ -43,16 +44,16 @@ describe('md-gb-tab', () => {
     });
 
     it('sets the tab role', async () => {
-      const root = env.render(html`<md-gb-tab></md-gb-tab>`);
+      const root = env.render(html`<petal-gb-tab></petal-gb-tab>`);
       await env.waitForStability();
 
-      expect(root.querySelector('md-gb-tab')![internals].role).toBe('tab');
+      expect(root.querySelector('petal-gb-tab')![internals].role).toBe('tab');
     });
 
     it('drives the selected-state selector through AOM and :state()', async () => {
-      const root = env.render(html`<md-gb-tab selected></md-gb-tab>`);
+      const root = env.render(html`<petal-gb-tab selected></petal-gb-tab>`);
       await env.waitForStability();
-      const tab = root.querySelector('md-gb-tab')!;
+      const tab = root.querySelector('petal-gb-tab')!;
 
       expect(tab[internals].ariaSelected).toBe('true');
       expect(tab[hasState]('selected')).toBeTrue();
@@ -67,9 +68,9 @@ describe('md-gb-tab', () => {
     });
 
     it('reflects the selected property to its attribute', async () => {
-      const root = env.render(html`<md-gb-tab></md-gb-tab>`);
+      const root = env.render(html`<petal-gb-tab></petal-gb-tab>`);
       await env.waitForStability();
-      const tab = root.querySelector('md-gb-tab')!;
+      const tab = root.querySelector('petal-gb-tab')!;
 
       tab.selected = true;
       await env.waitForStability();
@@ -77,9 +78,9 @@ describe('md-gb-tab', () => {
     });
 
     it('renders a default slot, a tab-label slot, and a badge slot', async () => {
-      const root = env.render(html`<md-gb-tab></md-gb-tab>`);
+      const root = env.render(html`<petal-gb-tab></petal-gb-tab>`);
       await env.waitForStability();
-      const shadow = root.querySelector('md-gb-tab')!.shadowRoot!;
+      const shadow = root.querySelector('petal-gb-tab')!.shadowRoot!;
       const slots = Array.from(shadow.querySelectorAll('slot'));
 
       expect(slots.length).toBe(3);
@@ -91,10 +92,10 @@ describe('md-gb-tab', () => {
 
     it('accepts slot="label" as the label', async () => {
       const root = env.render(html`
-        <md-gb-tab><span slot="label">Flights</span></md-gb-tab>
+        <petal-gb-tab><span slot="label">Flights</span></petal-gb-tab>
       `);
       await env.waitForStability();
-      const tab = root.querySelector('md-gb-tab')!;
+      const tab = root.querySelector('petal-gb-tab')!;
       const label = tab.querySelector('span')!;
       const labelSlot =
         tab.shadowRoot!.querySelector<HTMLSlotElement>('slot[name="label"]')!;
@@ -104,10 +105,10 @@ describe('md-gb-tab', () => {
 
     it('accepts class="tab-label" in the default slot as the label', async () => {
       const root = env.render(html`
-        <md-gb-tab><span class="tab-label">Flights</span></md-gb-tab>
+        <petal-gb-tab><span class="tab-label">Flights</span></petal-gb-tab>
       `);
       await env.waitForStability();
-      const tab = root.querySelector('md-gb-tab')!;
+      const tab = root.querySelector('petal-gb-tab')!;
       const label = tab.querySelector('span')!;
       const defaultSlot =
         tab.shadowRoot!.querySelector<HTMLSlotElement>('slot:not([name])')!;
@@ -120,9 +121,9 @@ describe('md-gb-tab', () => {
     it('defines the --tab anchor name on raw .tab identically to the element', async () => {
       const root = env.render(html`
         <div class="tabs" role="tablist">
-          <md-gb-tab id="element" selected>
+          <petal-gb-tab id="element" selected>
             <span slot="label">Flights</span>
-          </md-gb-tab>
+          </petal-gb-tab>
           <button
             id="raw"
             class="tab focus-ring-inner ripple selected"

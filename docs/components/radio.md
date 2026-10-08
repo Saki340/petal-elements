@@ -71,9 +71,9 @@ Add a `value` to identify which radio is selected in a form.
 
 ```html
 <form>
-  <md-radio name="animals" value="cats"></md-radio>
-  <md-radio name="animals" value="dogs"></md-radio>
-  <md-radio name="animals" value="birds" checked></md-radio>
+  <petal-radio name="animals" value="cats"></petal-radio>
+  <petal-radio name="animals" value="dogs"></petal-radio>
+  <petal-radio name="animals" value="birds" checked></petal-radio>
 </form>
 ```
 
@@ -87,10 +87,10 @@ Associate a label with a radio using the `<label>` element.
 <!-- Need to add catalog-include "figures/<component>/usage.html" -->
 
 ```html
-<md-radio id="cats-radio" name="animals" value="cats"></md-radio>
+<petal-radio id="cats-radio" name="animals" value="cats"></petal-radio>
 <label for="cats-radio">Cats</label>
 
-<md-radio id="dogs-radio" name="animals" value="dogs"></md-radio>
+<petal-radio id="dogs-radio" name="animals" value="dogs"></petal-radio>
 <label for="dogs-radio">Dogs</label>
 ```
 
@@ -113,13 +113,13 @@ Radio groups must display a label, either with `aria-label` or
 <div role="radiogroup" aria-labelledby="group-title">
   <h3 id="group-title">Starting position</h3>
   <div>
-    <md-radio id="first-radio" name="group" value="1"
-        aria-label="First"></md-radio>
+    <petal-radio id="first-radio" name="group" value="1"
+        aria-label="First"></petal-radio>
     <label for="first-radio">1st</label>
   </div>
   <div>
-    <md-radio id="second-radio" name="group" value="2"
-        aria-label="Second"></md-radio>
+    <petal-radio id="second-radio" name="group" value="2"
+        aria-label="Second"></petal-radio>
     <label for="second-radio">2nd</label>
   </div>
 </div>
@@ -159,9 +159,9 @@ Token                            | Default value
 }
 </style>
 
-<md-radio name="group"></md-radio>
-<md-radio name="group" checked></md-radio>
-<md-radio name="group"></md-radio>
+<petal-radio name="group"></petal-radio>
+<petal-radio name="group" checked></petal-radio>
+<petal-radio name="group"></petal-radio>
 ```
 
 <!-- auto-generated API docs start -->
@@ -169,7 +169,7 @@ Token                            | Default value
 ## API
 
 
-### MdRadio <code>&lt;md-radio&gt;</code>
+### PetalRadio <code>&lt;petal-radio&gt;</code>
 
 #### Properties
 

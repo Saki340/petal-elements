@@ -2,6 +2,7 @@
  * @license
  * Copyright 2021 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '../../../focus/md-focus-ring.js';
@@ -82,12 +83,12 @@ export class SegmentedButton extends segmentedButtonBaseClass {
         ?disabled=${this.disabled}
         @click="${this.handleClick}"
         class="md3-segmented-button ${classMap(this.getRenderClasses())}">
-        <md-focus-ring
+        <petal-focus-ring
           class="md3-segmented-button__focus-ring"
-          part="focus-ring"></md-focus-ring>
-        <md-ripple
+          part="focus-ring"></petal-focus-ring>
+        <petal-ripple
           ?disabled="${this.disabled}"
-          class="md3-segmented-button__ripple"></md-ripple>
+          class="md3-segmented-button__ripple"></petal-ripple>
         ${this.renderOutline()} ${this.renderLeading()} ${this.renderLabel()}
         ${this.renderTouchTarget()}
       </button>

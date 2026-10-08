@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {
@@ -33,7 +34,7 @@ const baseClass = mixinDelegatesAria(LitElement);
 /**
  * A Material Design card.
  *
- * @slot - Used to display the card's content. Note: add padding to content, not the host <md-gb-card> element.
+ * @slot - Used to display the card's content. Note: add padding to content, not the host <petal-gb-card> element.
  * @slot container - Used to set a custom background container for the card.
  * @csspart card - The card's root element.
  * @csspart card-btn - The card's main action button, when interactive.

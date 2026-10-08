@@ -2,6 +2,7 @@
  * @license
  * Copyright 2021 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '../../focus/md-focus-ring.js';
@@ -134,7 +135,7 @@ export class Switch extends switchBaseClass {
           @input=${this.handleInput}
           @change=${this.handleChange} />
 
-        <md-focus-ring part="focus-ring" for="switch"></md-focus-ring>
+        <petal-focus-ring part="focus-ring" for="switch"></petal-focus-ring>
         <span class="track"> ${this.renderHandle()} </span>
       </div>
     `;
@@ -155,7 +156,7 @@ export class Switch extends switchBaseClass {
     return html`
       ${this.renderTouchTarget()}
       <span class="handle-container">
-        <md-ripple for="switch" ?disabled="${this.disabled}"></md-ripple>
+        <petal-ripple for="switch" ?disabled="${this.disabled}"></petal-ripple>
         <span class="handle ${classMap(classes)}">
           ${this.shouldShowIcons() ? this.renderIcons() : html``}
         </span>

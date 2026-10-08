@@ -2,6 +2,7 @@
  * @license
  * Copyright 2022 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '../icon/icon.js';
@@ -13,23 +14,23 @@ import {Environment} from '../testing/environment.js';
 import {createTokenTests} from '../testing/tokens.js';
 
 import {IconButtonHarness} from './harness.js';
-import {MdIconButton} from './icon-button.js';
+import {PetalIconButton} from './icon-button.js';
 
 const ICON_BUTTON_TEMPLATE = html`
-  <md-icon-button aria-label="Star">
-    <md-icon>star</md-icon>
-  </md-icon-button>
+  <petal-icon-button aria-label="Star">
+    <petal-icon>star</petal-icon>
+  </petal-icon-button>
 `;
 const LINK_ICON_BUTTON_TEMPLATE = html`
-  <md-icon-button aria-label="Star" href="https://google.com">
-    <md-icon>star</md-icon>
-  </md-icon-button>
+  <petal-icon-button aria-label="Star" href="https://google.com">
+    <petal-icon>star</petal-icon>
+  </petal-icon-button>
 `;
 const ICON_BUTTON_TOGGLE_TEMPLATE = html`
-  <md-icon-button toggle aria-label="Star">
-    <md-icon slot="onIcon">star</md-icon>
-    <md-icon slot="offIcon">star_border</md-icon>
-  </md-icon-button>
+  <petal-icon-button toggle aria-label="Star">
+    <petal-icon slot="onIcon">star</petal-icon>
+    <petal-icon slot="offIcon">star_border</petal-icon>
+  </petal-icon-button>
 `;
 
 interface IconButtonInternals {
@@ -40,10 +41,10 @@ describe('icon button tests', () => {
   const env = new Environment();
 
   describe('.styles', () => {
-    createTokenTests(MdIconButton.styles);
+    createTokenTests(PetalIconButton.styles);
   });
 
-  describe('md-icon-button', () => {
+  describe('petal-icon-button', () => {
     it(
       'setting `disabled` updates the disabled attribute on the native ' +
         'button element',
@@ -122,7 +123,7 @@ describe('icon button tests', () => {
     });
 
     it('should not execute pre-bound click listeners when soft-disabled', async () => {
-      const button = document.createElement('md-icon-button');
+      const button = document.createElement('petal-icon-button');
       let clicked = false;
       button.addEventListener('click', () => {
         clicked = true;
@@ -150,7 +151,7 @@ describe('icon button tests', () => {
     );
   });
 
-  describe('md-icon-button link', () => {
+  describe('petal-icon-button link', () => {
     it(
       'setting `ariaLabel` updates the aria-label attribute on the anchor' +
         'tag',
@@ -166,7 +167,7 @@ describe('icon button tests', () => {
     );
   });
 
-  describe('md-icon-button toggle', () => {
+  describe('petal-icon-button toggle', () => {
     it(
       'setting `disabled` updates the disabled attribute on the native ' +
         'button element',
@@ -252,11 +253,11 @@ describe('icon button tests', () => {
 
     it('if `flipsIconInRtl=true`, flips icon in an RTL context', async () => {
       const template = html` <div dir="rtl">
-        <md-icon-button aria-label="Star" .flipIconInRtl="${true}">
+        <petal-icon-button aria-label="Star" .flipIconInRtl="${true}">
           star
-        </md-icon-button>
+        </petal-icon-button>
       </div>`;
-      const element = env.render(template).querySelector('md-icon-button')!;
+      const element = env.render(template).querySelector('petal-icon-button')!;
       await env.waitForStability();
 
       expect((element as unknown as IconButtonInternals).flipIcon).toBeTrue();
@@ -264,11 +265,11 @@ describe('icon button tests', () => {
 
     it('if `flipsIconInRtl=true`, does not flip icon in an LTR context', async () => {
       const template = html` <div dir="ltr">
-        <md-icon-button aria-label="Star" .flipIconInRtl="${true}">
+        <petal-icon-button aria-label="Star" .flipIconInRtl="${true}">
           star
-        </md-icon-button>
+        </petal-icon-button>
       </div>`;
-      const element = env.render(template).querySelector('md-icon-button')!;
+      const element = env.render(template).querySelector('petal-icon-button')!;
       await env.waitForStability();
 
       expect((element as unknown as IconButtonInternals).flipIcon).toBeFalse();
@@ -362,7 +363,7 @@ describe('icon button tests', () => {
         throw new Error('Invalid tag name: ' + type);
     }
 
-    const element = env.render(template).querySelector('md-icon-button')!;
+    const element = env.render(template).querySelector('petal-icon-button')!;
     await env.waitForStability();
     return {
       element,

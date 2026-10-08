@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {css, CSSResultOrNative, html, LitElement} from 'lit';
@@ -11,7 +12,7 @@ import {appBar, type AppBarSize, type AppBarVariant} from './app-bar.js';
 import {styles as appBarStyles} from './app-bar.cssresult.js';
 
 /**
- * A Material Design Expressive App Bar component (`md-gb-app-bar`).
+ * A Material Design Expressive App Bar component (`petal-gb-app-bar`).
  *
  * @slot - Used to display the primary title text of the app bar.
  * @slot subtitle - Used to display an optional subtitle below the title in medium/large bars.

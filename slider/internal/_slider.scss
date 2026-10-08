@@ -1,6 +1,7 @@
 //
 // Copyright 2023 Google LLC
 // SPDX-License-Identifier: Apache-2.0
+// Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
 //
 
 // go/keep-sorted start
@@ -81,13 +82,13 @@ $_md-sys-shape: tokens.md-sys-shape-values();
     );
   }
 
-  md-focus-ring {
+  petal-focus-ring {
     height: 48px;
     inset: unset;
     width: 48px;
   }
 
-  md-elevation {
+  petal-elevation {
     transition-duration: map.get($_md-sys-motion, 'duration-medium1');
     transition-timing-function: map.get($_md-sys-motion, 'emphasized-easing');
   }
@@ -469,7 +470,7 @@ $_md-sys-shape: tokens.md-sys-shape-values();
     );
   }
 
-  md-ripple {
+  petal-ripple {
     border-radius: 50%;
     height: var(--_state-layer-size);
     width: var(--_state-layer-size);

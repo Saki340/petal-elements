@@ -32,7 +32,7 @@ Use full width dividers to separate larger sections of unrelated content.
 ```html
 <section>
   <p>Lorem ipsum...</p>
-  <md-divider></md-divider>
+  <petal-divider></petal-divider>
   <p>Lorem ipsum...</p>
 </section>
 ```
@@ -46,7 +46,7 @@ Use inset dividers to separate related content within a section.
 ```html
 <section>
   <p>Material 2</p>
-  <md-divider inset></md-divider>
+  <petal-divider inset></petal-divider>
   <p>Material 3</p>
 </section>
 ```
@@ -59,7 +59,7 @@ Use `inset-start` or `inset-end` to change this.
 ```html
 <section>
   <p>Material 2</p>
-  <md-divider inset-start></md-divider>
+  <petal-divider inset-start></petal-divider>
   <p>Material 3</p>
 </section>
 ```
@@ -75,11 +75,11 @@ attribute to non-decorative dividers that should be announced.
 ```html
 <ul>
   <li>Item one</li>
-  <md-divider inset></md-divider>
+  <petal-divider inset></petal-divider>
   <li>Item two</li>
-  <md-divider role="separator"></md-divider>
+  <petal-divider role="separator"></petal-divider>
   <li>Item three</li>
-  <md-divider inset></md-divider>
+  <petal-divider inset></petal-divider>
   <li>Item four</li>
 </ul>
 ```
@@ -113,7 +113,7 @@ Token                    | Default value
 
 <section>
   <p>Lorem ipsum...</p>
-  <md-divider></md-divider>
+  <petal-divider></petal-divider>
   <p>Lorem ipsum...</p>
 </section>
 ```
@@ -123,7 +123,7 @@ Token                    | Default value
 ## API
 
 
-### MdDivider <code>&lt;md-divider&gt;</code>
+### PetalDivider <code>&lt;petal-divider&gt;</code>
 
 #### Properties
 

@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 /// <reference types="../../../types/popover.d.ts" />
@@ -17,17 +18,17 @@ import {internals} from '../../behaviors/element-internals.js';
 
 import {AriaMenulistElement} from './menulist.js';
 
-describe('md-aria-menulist', () => {
+describe('petal-aria-menulist', () => {
   const env = new Environment();
 
   async function setUpTest(
     template = html`
       <button id="openButton" popovertarget="menu">Open</button>
-      <md-aria-menulist id="menu">
-        <md-aria-menuitem id="item1" autofocus>Item 1</md-aria-menuitem>
-        <md-aria-menuitem id="item2">Item 2</md-aria-menuitem>
-        <md-aria-menuitem id="item3" disabled>Item 3</md-aria-menuitem>
-      </md-aria-menulist>
+      <petal-aria-menulist id="menu">
+        <petal-aria-menuitem id="item1" autofocus>Item 1</petal-aria-menuitem>
+        <petal-aria-menuitem id="item2">Item 2</petal-aria-menuitem>
+        <petal-aria-menuitem id="item3" disabled>Item 3</petal-aria-menuitem>
+      </petal-aria-menulist>
       <button id="otherButton">Other button</button>
     `,
   ) {
@@ -36,7 +37,7 @@ describe('md-aria-menulist', () => {
 
     const openButton = root.querySelector('#openButton') as HTMLButtonElement;
     const menulist = root.querySelector(
-      'md-aria-menulist',
+      'petal-aria-menulist',
     ) as AriaMenulistElement;
     const otherButton = root.querySelector('#otherButton') as HTMLButtonElement;
 

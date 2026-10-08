@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '../../divider/divider.js';
@@ -82,10 +83,10 @@ export class Tabs extends LitElement {
       //
       // ```ts
       // html`
-      //   <md-tabs .activeTabIndex=${1}>
+      //   <petal-tabs .activeTabIndex=${1}>
       //     <md-tab>First</md-tab>
       //     <md-tab>Second</md-tab>
-      //   </md-tabs>
+      //   </petal-tabs>
       // `;
       // ```
       //
@@ -172,7 +173,7 @@ export class Tabs extends LitElement {
           @slotchange=${this.handleSlotChange}
           @click=${this.handleTabClick}></slot>
       </div>
-      <md-divider part="divider"></md-divider>
+      <petal-divider part="divider"></petal-divider>
     `;
   }
 
@@ -201,7 +202,7 @@ export class Tabs extends LitElement {
 
     if (previousTab) {
       // Don't dispatch a change event if activating a tab when no previous tabs
-      // were selected, such as when md-tabs auto-selects the first tab.
+      // were selected, such as when petal-tabs auto-selects the first tab.
       const defaultPrevented = !this.dispatchEvent(
         new Event('change', {bubbles: true, cancelable: true}),
       );

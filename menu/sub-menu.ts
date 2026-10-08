@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {CSSResultOrNative} from 'lit';
@@ -12,7 +13,7 @@ import {styles} from './internal/submenu/sub-menu-styles.cssresult.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-sub-menu': MdSubMenu;
+    'petal-sub-menu': PetalSubMenu;
   }
 }
 
@@ -21,9 +22,9 @@ declare global {
  *
  * @description
  * Menu items are the selectable choices within the menu. Menu items must
- * implement the `Menu` interface and also have the `md-menu`
+ * implement the `Menu` interface and also have the `petal-menu`
  * attribute. Additionally menu items are list items so they must also have the
- * `md-list-item` attribute.
+ * `petal-list-item` attribute.
  *
  * Menu items can control a menu by selectively firing the `close-menu` and
  * `deselect-items` events.
@@ -45,26 +46,26 @@ declare global {
  *     `has-overflow` is required when using a submenu which overflows the
  *     menu's contents
  *   -->
- *   <md-menu anchor="anchor" has-overflow ${ref(menuRef)}>
- *     <md-menu-item headline="This is a headline"></md-menu-item>
- *     <md-sub-menu>
- *       <md-menu-item
+ *   <petal-menu anchor="anchor" has-overflow ${ref(menuRef)}>
+ *     <petal-menu-item headline="This is a headline"></petal-menu-item>
+ *     <petal-sub-menu>
+ *       <petal-menu-item
  *           slot="item"
  *           headline="this is a submenu item">
- *       </md-menu-item>
- *       <md-menu slot="menu">
- *         <md-menu-item headline="This is an item inside a submenu">
- *         </md-menu-item>
- *       </md-menu>
- *     </md-sub-menu>
- *   </md-menu>
+ *       </petal-menu-item>
+ *       <petal-menu slot="menu">
+ *         <petal-menu-item headline="This is an item inside a submenu">
+ *         </petal-menu-item>
+ *       </petal-menu>
+ *     </petal-sub-menu>
+ *   </petal-menu>
  * </div>
  * ```
  *
  * @final
  * @suppress {visibility}
  */
-@customElement('md-sub-menu')
-export class MdSubMenu extends SubMenu {
+@customElement('petal-sub-menu')
+export class PetalSubMenu extends SubMenu {
   static override styles: CSSResultOrNative[] = [styles];
 }

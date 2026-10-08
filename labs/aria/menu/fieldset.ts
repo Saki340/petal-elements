@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {CSSResultOrNative, LitElement, css, html} from 'lit';
@@ -48,7 +49,7 @@ export class AriaFieldsetElement extends baseClass {
   private get items(): Iterable<AriaMenuitemElement> {
     // This naively queries for these elements because this element doesn't need
     // to support nested fieldsets yet.
-    return this.querySelectorAll('md-aria-menuitem');
+    return this.querySelectorAll('petal-aria-menuitem');
   }
 
   @property({type: Boolean, reflect: true})
@@ -59,7 +60,7 @@ export class AriaFieldsetElement extends baseClass {
     this.internalDisabled = value;
     for (const item of this.items) {
       // If this component is upgraded with `disabled` set in HTML,
-      // `<md-aria-menuitem>` children will not be upgraded at this point.
+      // `<petal-aria-menuitem>` children will not be upgraded at this point.
       // These children will update themselves during `connectedCallback`.
       item[updateUsedValues]?.();
     }
@@ -90,7 +91,7 @@ export class AriaFieldsetElement extends baseClass {
 
     for (const item of this.items) {
       // If this component is upgraded with `checkable` set in HTML,
-      // `<md-aria-menuitem>` children will not be upgraded at this point.
+      // `<petal-aria-menuitem>` children will not be upgraded at this point.
       // These children will update themselves during `connectedCallback`.
       item[updateUsedValues]?.();
     }
@@ -108,7 +109,7 @@ export class AriaFieldsetElement extends baseClass {
   /**
    * Unchecks every menuitem in this fieldset apart from the given one.
    *
-   * `<md-aria-menuitem>` calls this on its cached ancestor fieldset when it
+   * `<petal-aria-menuitem>` calls this on its cached ancestor fieldset when it
    * becomes checked in a single-checkable fieldset.
    *
    * @param checkedItem The item to leave as-is, or null to uncheck every item.

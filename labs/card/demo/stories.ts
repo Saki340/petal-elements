@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '@material/web/button/filled-button.js';
@@ -57,20 +58,20 @@ const cards: MaterialStoryInit<StoryKnobs> = {
   render() {
     return html`
       <div class="container md-typescale-body-medium">
-        <md-elevated-card class="card">
+        <petal-elevated-card class="card">
           <img src=${MEDIA_IMAGE} alt="Placeholder image" />
           <div class="content">A static elevated card</div>
-        </md-elevated-card>
+        </petal-elevated-card>
 
-        <md-filled-card class="card">
+        <petal-filled-card class="card">
           <img src=${MEDIA_IMAGE} alt="Placeholder image" />
           <div class="content">A static filled card</div>
-        </md-filled-card>
+        </petal-filled-card>
 
-        <md-outlined-card class="card">
+        <petal-outlined-card class="card">
           <img src=${MEDIA_IMAGE} alt="Placeholder image" />
           <div class="content">A static outlined card</div>
-        </md-outlined-card>
+        </petal-outlined-card>
       </div>
     `;
   },
@@ -82,29 +83,29 @@ const withActions: MaterialStoryInit<StoryKnobs> = {
   render() {
     return html`
       <div class="container md-typescale-body-medium">
-        <md-elevated-card class="card">
+        <petal-elevated-card class="card">
           <img src=${MEDIA_IMAGE} alt="Placeholder image" />
           <div class="content">
             An elevated card with actions
-            <md-filled-button>Card action</md-filled-button>
+            <petal-filled-button>Card action</petal-filled-button>
           </div>
-        </md-elevated-card>
+        </petal-elevated-card>
 
-        <md-filled-card class="card">
+        <petal-filled-card class="card">
           <img src=${MEDIA_IMAGE} alt="Placeholder image" />
           <div class="content">
             A filled card with actions
-            <md-filled-button>Card action</md-filled-button>
+            <petal-filled-button>Card action</petal-filled-button>
           </div>
-        </md-filled-card>
+        </petal-filled-card>
 
-        <md-outlined-card class="card">
+        <petal-outlined-card class="card">
           <img src=${MEDIA_IMAGE} alt="Placeholder image" />
           <div class="content">
             An outlined card with actions
-            <md-filled-button>Card action</md-filled-button>
+            <petal-filled-button>Card action</petal-filled-button>
           </div>
-        </md-outlined-card>
+        </petal-outlined-card>
       </div>
     `;
   },

@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 /**
@@ -47,10 +48,10 @@ function playgroundExample(eleventyConfig) {
     return `
       <details>
         <summary>
-          <md-outlined-icon-button toggle tabindex="-1" aria-hidden="true">
-            <md-icon aria-hidden="true">expand_more</md-icon>
-            <md-icon aria-hidden="true" slot="selected">expand_less</md-icon>
-          </md-outlined-icon-button>
+          <petal-outlined-icon-button toggle tabindex="-1" aria-hidden="true">
+            <petal-icon aria-hidden="true">expand_more</petal-icon>
+            <petal-icon aria-hidden="true" slot="selected">expand_less</petal-icon>
+          </petal-outlined-icon-button>
           View interactive demo inline.
         </summary>
         <lit-island on:visible import="/js/hydration-entrypoints/playground-elements.js" class="example" aria-hidden="true">
@@ -59,13 +60,13 @@ function playgroundExample(eleventyConfig) {
           <playground-preview
               style="${previewHeight}"
               project="${id}"
-          ><md-circular-progress indeterminate></md-circular-progress></playground-preview>
+          ><petal-circular-progress indeterminate></petal-circular-progress></playground-preview>
           <playground-file-editor
             style="${editorHeight}"
             project="${id}"
             filename="stories.ts"
             line-numbers
-          ><md-circular-progress indeterminate></md-circular-progress></playground-file-editor>
+          ><petal-circular-progress indeterminate></petal-circular-progress></playground-file-editor>
         </lit-island>
       </details>
       <p><a href="./stories/" target="_blank">Open interactive demo in new tab.</a></p>

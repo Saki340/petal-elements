@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {
@@ -79,7 +80,7 @@ async function updateDocFileApiSection(
 ) {
   const elementEntrypoints = docsToElementMapping[docFileName];
   // This is a data structure that describes an element and its associated API
-  // tables. e.g. a single section for MdFilledButton represents MdFilledButton
+  // tables. e.g. a single section for PetalFilledButton represents PetalFilledButton
   // and it's associated Property, Methods, and Events tables.
   const elementTableSections: ElementTableSection[] = [];
 
@@ -112,7 +113,7 @@ async function updateDocFileApiSection(
  * @param analyzer An instance of the package analyzer from which to pull module
  *     information.
  *
- * @returns The table section of an element. e.g. MdFilledButton's table section
+ * @returns The table section of an element. e.g. PetalFilledButton's table section
  * would be the element class name, summary, description, and the API tables
  * associated with this element's section e.g. Properties, Methods, and Events.
  */

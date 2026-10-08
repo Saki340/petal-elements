@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {Harness} from '../../../../testing/harness.js';
@@ -75,7 +76,7 @@ export class SnackbarHarness extends Harness<SnackbarElement> {
     init: PointerEventInit,
   ) {
     if (!element) {
-      throw new Error(`<md-gb-snackbar> has no ${name} button to click`);
+      throw new Error(`<petal-gb-snackbar> has no ${name} button to click`);
     }
     this.simulateStartHover(element, init);
     this.simulateMousePress(element, init);

@@ -67,8 +67,8 @@ Switches are similar to checkboxes, and can be unselected or selected.
 <!-- Need to add catalog-include "figures/<component>/usage.html" -->
 
 ```html
-<md-switch></md-switch>
-<md-switch selected></md-switch>
+<petal-switch></petal-switch>
+<petal-switch selected></petal-switch>
 ```
 
 ### Icons
@@ -82,11 +82,11 @@ can choose to display both icons or only selected icons.
 <!-- Need to add catalog-include "figures/<component>/usage.html" -->
 
 ```html
-<md-switch icons></md-switch>
-<md-switch icons selected></md-switch>
+<petal-switch icons></petal-switch>
+<petal-switch icons selected></petal-switch>
 
-<md-switch icons show-only-selected-icon></md-switch>
-<md-switch icons show-only-selected-icon selected></md-switch>
+<petal-switch icons show-only-selected-icon></petal-switch>
+<petal-switch icons show-only-selected-icon selected></petal-switch>
 ```
 
 ### Label
@@ -101,11 +101,11 @@ Associate a label with a switch using the `<label>` element.
 ```html
 <label>
   Wi-Fi
-  <md-switch selected></md-switch>
+  <petal-switch selected></petal-switch>
 </label>
 
 <label for="switch">Bluetooth</label>
-<md-switch id="switch"></md-switch>
+<petal-switch id="switch"></petal-switch>
 ```
 
 ## Accessibility
@@ -116,11 +116,11 @@ attribute to switches without labels or switches whose labels need to be more
 descriptive.
 
 ```html
-<md-switch aria-label="Lights"></md-switch>
+<petal-switch aria-label="Lights"></petal-switch>
 
 <label>
   All
-  <md-switch aria-label="All notifications"></md-switch>
+  <petal-switch aria-label="All notifications"></petal-switch>
 </label>
 ```
 
@@ -168,8 +168,8 @@ Token                               | Default value
   }
 </style>
 
-<md-switch></md-switch>
-<md-switch selected></md-switch>
+<petal-switch></petal-switch>
+<petal-switch selected></petal-switch>
 ```
 
 <!-- auto-generated API docs start -->
@@ -177,7 +177,7 @@ Token                               | Default value
 ## API
 
 
-### MdSwitch <code>&lt;md-switch&gt;</code>
+### PetalSwitch <code>&lt;petal-switch&gt;</code>
 
 #### Properties
 

@@ -75,9 +75,9 @@ Checkboxes may be standalone, pre-checked, or indeterminate.
 <!-- catalog-include "figures/checkbox/usage.html" -->
 
 ```html
-<md-checkbox touch-target="wrapper"></md-checkbox>
-<md-checkbox touch-target="wrapper" checked></md-checkbox>
-<md-checkbox touch-target="wrapper" indeterminate></md-checkbox>
+<petal-checkbox touch-target="wrapper"></petal-checkbox>
+<petal-checkbox touch-target="wrapper" checked></petal-checkbox>
+<petal-checkbox touch-target="wrapper" indeterminate></petal-checkbox>
 ```
 
 ### Label
@@ -93,11 +93,11 @@ Associate a label with a checkbox using the `<label>` element.
 
 ```html
 <label>
-  <md-checkbox touch-target="wrapper"></md-checkbox>
+  <petal-checkbox touch-target="wrapper"></petal-checkbox>
   Checkbox one
 </label>
 
-<md-checkbox id="checkbox-two" touch-target="wrapper"></md-checkbox>
+<petal-checkbox id="checkbox-two" touch-target="wrapper"></petal-checkbox>
 <label for="checkbox-two">Checkbox two</label>
 ```
 
@@ -109,10 +109,10 @@ attribute to checkboxes without labels or checkboxes whose labels need to be
 more descriptive.
 
 ```html
-<md-checkbox aria-label="Select all checkboxes"></md-checkbox>
+<petal-checkbox aria-label="Select all checkboxes"></petal-checkbox>
 
 <label>
-  <md-checkbox aria-label="Agree to terms and conditions"></md-checkbox>
+  <petal-checkbox aria-label="Agree to terms and conditions"></petal-checkbox>
   Agree
 </label>
 ```
@@ -159,8 +159,8 @@ Token                                    | Default value
   }
 </style>
 
-<md-checkbox touch-target="wrapper"></md-checkbox>
-<md-checkbox touch-target="wrapper" checked></md-checkbox>
+<petal-checkbox touch-target="wrapper"></petal-checkbox>
+<petal-checkbox touch-target="wrapper" checked></petal-checkbox>
 ```
 
 <!-- auto-generated API docs start -->
@@ -168,7 +168,7 @@ Token                                    | Default value
 ## API
 
 
-### MdCheckbox <code>&lt;md-checkbox&gt;</code>
+### PetalCheckbox <code>&lt;petal-checkbox&gt;</code>
 
 #### Properties
 

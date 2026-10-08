@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {MenuItem} from './menuItemController.js';
@@ -50,7 +51,7 @@ export const TYPEAHEAD_RECORD = {
  * ```ts
  * const typeaheadController = new TypeaheadController(() => ({
  *   typeaheadBufferTime: 50,
- *   getItems: () => Array.from(document.querySelectorAll('md-menu-item'))
+ *   getItems: () => Array.from(document.querySelectorAll('petal-menu-item'))
  * }));
  * html`
  *   <div
@@ -61,11 +62,11 @@ export const TYPEAHEAD_RECORD = {
  *     Apple
  *   </div>
  *   <div>
- *     <md-menu-item active header="Apple"></md-menu-item>
- *     <md-menu-item header="Apricot"></md-menu-item>
- *     <md-menu-item header="Banana"></md-menu-item>
- *     <md-menu-item header="Olive"></md-menu-item>
- *     <md-menu-item header="Orange"></md-menu-item>
+ *     <petal-menu-item active header="Apple"></petal-menu-item>
+ *     <petal-menu-item header="Apricot"></petal-menu-item>
+ *     <petal-menu-item header="Banana"></petal-menu-item>
+ *     <petal-menu-item header="Olive"></petal-menu-item>
+ *     <petal-menu-item header="Orange"></petal-menu-item>
  *   </div>
  * `;
  * ```

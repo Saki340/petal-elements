@@ -2,6 +2,7 @@
  * @license
  * Copyright 2021 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '@material/web/icon/icon.js';
@@ -50,42 +51,42 @@ const buttons: MaterialStoryInit<StoryKnobs> = {
       <div class="row md-typescale-body-medium">
         <div class="column">
           <p>Standard</p>
-          <md-icon-button
+          <petal-icon-button
             aria-label="Open settings"
             ?disabled=${disabled}
             ?soft-disabled=${softDisabled}>
-            <md-icon>${icon || 'settings'}</md-icon>
-          </md-icon-button>
+            <petal-icon>${icon || 'settings'}</petal-icon>
+          </petal-icon-button>
         </div>
 
         <div class="column">
           <p>Outlined</p>
-          <md-outlined-icon-button
+          <petal-outlined-icon-button
             aria-label="Search"
             ?disabled=${disabled}
             ?soft-disabled=${softDisabled}>
-            <md-icon>${icon || 'search'}</md-icon>
-          </md-outlined-icon-button>
+            <petal-icon>${icon || 'search'}</petal-icon>
+          </petal-outlined-icon-button>
         </div>
 
         <div class="column">
           <p>Filled</p>
-          <md-filled-icon-button
+          <petal-filled-icon-button
             aria-label="Complete"
             ?disabled=${disabled}
             ?soft-disabled=${softDisabled}>
-            <md-icon>${icon || 'done'}</md-icon>
-          </md-filled-icon-button>
+            <petal-icon>${icon || 'done'}</petal-icon>
+          </petal-filled-icon-button>
         </div>
 
         <div class="column">
           <p>Filled tonal</p>
-          <md-filled-tonal-icon-button
+          <petal-filled-tonal-icon-button
             aria-label="Add new"
             ?disabled=${disabled}
             ?soft-disabled=${softDisabled}>
-            <md-icon>${icon || 'add'}</md-icon>
-          </md-filled-tonal-icon-button>
+            <petal-icon>${icon || 'add'}</petal-icon>
+          </petal-filled-tonal-icon-button>
         </div>
       </div>
     `;
@@ -100,56 +101,56 @@ const toggles: MaterialStoryInit<StoryKnobs> = {
       <div class="row">
         <div class="column">
           <p>Standard</p>
-          <md-icon-button
+          <petal-icon-button
             aria-label="Show password"
             aria-label-selected="Hide password"
             toggle
             ?disabled=${disabled}
             ?soft-disabled=${softDisabled}>
-            <md-icon>${icon || 'visibility'}</md-icon>
-            <md-icon slot="selected">
+            <petal-icon>${icon || 'visibility'}</petal-icon>
+            <petal-icon slot="selected">
               ${selectedIcon || 'visibility_off'}
-            </md-icon>
-          </md-icon-button>
+            </petal-icon>
+          </petal-icon-button>
         </div>
 
         <div class="column">
           <p>Outlined</p>
-          <md-outlined-icon-button
+          <petal-outlined-icon-button
             aria-label="Play"
             aria-label-selected="Pause"
             toggle
             ?disabled=${disabled}
             ?soft-disabled=${softDisabled}>
-            <md-icon>${icon || 'play_arrow'}</md-icon>
-            <md-icon slot="selected">${selectedIcon || 'pause'}</md-icon>
-          </md-outlined-icon-button>
+            <petal-icon>${icon || 'play_arrow'}</petal-icon>
+            <petal-icon slot="selected">${selectedIcon || 'pause'}</petal-icon>
+          </petal-outlined-icon-button>
         </div>
 
         <div class="column">
           <p>Filled</p>
-          <md-filled-icon-button
+          <petal-filled-icon-button
             aria-label="Show more"
             aria-label-selected="Show less"
             toggle
             ?disabled=${disabled}
             ?soft-disabled=${softDisabled}>
-            <md-icon>${icon || 'expand_more'}</md-icon>
-            <md-icon slot="selected">${selectedIcon || 'expand_less'}</md-icon>
-          </md-filled-icon-button>
+            <petal-icon>${icon || 'expand_more'}</petal-icon>
+            <petal-icon slot="selected">${selectedIcon || 'expand_less'}</petal-icon>
+          </petal-filled-icon-button>
         </div>
 
         <div class="column">
           <p>Filled tonal</p>
-          <md-filled-tonal-icon-button
+          <petal-filled-tonal-icon-button
             aria-label="Open menu"
             aria-label-selected="Close menu"
             toggle
             ?disabled=${disabled}
             ?soft-disabled=${softDisabled}>
-            <md-icon>${icon || 'menu'}</md-icon>
-            <md-icon slot="selected">${selectedIcon || 'close'}</md-icon>
-          </md-filled-tonal-icon-button>
+            <petal-icon>${icon || 'menu'}</petal-icon>
+            <petal-icon slot="selected">${selectedIcon || 'close'}</petal-icon>
+          </petal-filled-tonal-icon-button>
         </div>
       </div>
     `;
@@ -164,42 +165,42 @@ const links: MaterialStoryInit<StoryKnobs> = {
       <div class="row">
         <div class="column">
           <p>Standard</p>
-          <md-icon-button
+          <petal-icon-button
             aria-label="Go home"
             href="https://google.com"
             target="_blank">
-            <md-icon>${icon || 'home'}</md-icon>
-          </md-icon-button>
+            <petal-icon>${icon || 'home'}</petal-icon>
+          </petal-icon-button>
         </div>
 
         <div class="column">
           <p>Outlined</p>
-          <md-outlined-icon-button
+          <petal-outlined-icon-button
             aria-label="Open new tab"
             href="https://google.com"
             target="_blank">
-            <md-icon>${icon || 'open_in_new'}</md-icon>
-          </md-outlined-icon-button>
+            <petal-icon>${icon || 'open_in_new'}</petal-icon>
+          </petal-outlined-icon-button>
         </div>
 
         <div class="column">
           <p>Filled</p>
-          <md-filled-icon-button
+          <petal-filled-icon-button
             aria-label="Download Google"
             href="https://google.com"
             target="_blank">
-            <md-icon>${icon || 'download'}</md-icon>
-          </md-filled-icon-button>
+            <petal-icon>${icon || 'download'}</petal-icon>
+          </petal-filled-icon-button>
         </div>
 
         <div class="column">
           <p>Filled tonal</p>
-          <md-filled-tonal-icon-button
+          <petal-filled-tonal-icon-button
             aria-label="Logout"
             href="https://google.com"
             target="_blank">
-            <md-icon>${icon || 'logout'}</md-icon>
-          </md-filled-tonal-icon-button>
+            <petal-icon>${icon || 'logout'}</petal-icon>
+          </petal-filled-tonal-icon-button>
         </div>
       </div>
     `;

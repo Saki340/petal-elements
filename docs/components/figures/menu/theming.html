@@ -8,36 +8,36 @@
       .styled-example {
         background-color: #f4fbfa;
       }
-      .styled-example md-filled-button {
+      .styled-example petal-filled-button {
         --md-sys-color-primary: #006a6a;
         --md-sys-color-on-primary: #ffffff;
       }
-      .styled-example.menu md-menu {
+      .styled-example.menu petal-menu {
         --md-menu-container-color: #f4fbfa;
         --md-menu-container-shape: 0px;
         --md-sys-color-on-surface: #161d1d;
         --md-sys-typescale-body-large-font: system-ui;
       }
-      .styled-example.menu md-menu-item {
+      .styled-example.menu petal-menu-item {
         border-radius: 28px;
       }
-      .styled-example.menu md-menu-item::part(focus-ring) {
+      .styled-example.menu petal-menu-item::part(focus-ring) {
         border-radius: 28px;
       }
     </style>
     <span style="position: relative">
-      <md-filled-button id="theming-anchor">Themed menu</md-filled-button>
-      <md-menu id="theming-menu" anchor="theming-anchor">
-        <md-menu-item>
+      <petal-filled-button id="theming-anchor">Themed menu</petal-filled-button>
+      <petal-menu id="theming-menu" anchor="theming-anchor">
+        <petal-menu-item>
           <div slot="headline">Apple</div>
-        </md-menu-item>
-        <md-menu-item>
+        </petal-menu-item>
+        <petal-menu-item>
           <div slot="headline">Banana</div>
-        </md-menu-item>
-        <md-menu-item>
+        </petal-menu-item>
+        <petal-menu-item>
           <div slot="headline">Cucumber</div>
-        </md-menu-item>
-      </md-menu>
+        </petal-menu-item>
+      </petal-menu>
     </span>
     <script type="module">
       const anchorEl = document.body.querySelector("#theming-anchor");

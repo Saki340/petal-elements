@@ -64,7 +64,7 @@ Dialogs have three optional sections: the headline title, the main content, and
 action buttons.
 
 ```html
-<md-dialog>
+<petal-dialog>
   <div slot="headline">
     Dialog title
   </div>
@@ -72,9 +72,9 @@ action buttons.
     A simple dialog with free-form content.
   </form>
   <div slot="actions">
-    <md-text-button form="form-id">Ok</md-text-button>
+    <petal-text-button form="form-id">Ok</petal-text-button>
   </div>
-</md-dialog>
+</petal-dialog>
 ```
 
 <!-- no-catalog-start -->
@@ -90,11 +90,11 @@ action buttons.
 Dialogs are opened and closed by setting the `open` attribute or property.
 
 ```html
-<md-dialog open>
+<petal-dialog open>
   <div slot="content">
     A dialog that is opened by default.
   </div>
-</md-dialog>
+</petal-dialog>
 ```
 
 Dialogs are also opened and closed by calling `dialog.show()` and
@@ -114,13 +114,13 @@ A button's value attribute will set the dialog's `returnValue` property to
 identify which button closed it.
 
 ```html
-<md-dialog open>
+<petal-dialog open>
   <form slot="content" id="form-id" method="dialog">...</form>
   <div slot="actions">
-    <md-text-button form="form-id" value="cancel">Cancel</md-text-button>
-    <md-text-button form="form-id" value="ok">Ok</md-text-button>
+    <petal-text-button form="form-id" value="cancel">Cancel</petal-text-button>
+    <petal-text-button form="form-id" value="ok">Ok</petal-text-button>
   </div>
-</md-dialog>
+</petal-dialog>
 ```
 
 ```ts
@@ -137,9 +137,9 @@ Dialogs are labelled by their headlines. Add an
 attribute to dialogs without a headline.
 
 ```html
-<md-dialog aria-label="Error message">
+<petal-dialog aria-label="Error message">
   <div slot="content">An error occurred, details ...</div>
-</md-dialog>
+</petal-dialog>
 ```
 
 ### Alerts
@@ -153,16 +153,16 @@ Common examples include error messages that require confirmation and other
 action confirmation prompts.
 
 ```html
-<md-dialog type="alert">
+<petal-dialog type="alert">
   <div slot="headline">Confirm deletion</div>
   <form slot="content" id="form-id" method="dialog">
     Are you sure you wish to delete this item?
   </form>
   <div slot="actions">
-    <md-text-button form="form-id" value="cancel">Cancel</md-text-button>
-    <md-text-button form="form-id" value="delete">Delete</md-text-button>
+    <petal-text-button form="form-id" value="cancel">Cancel</petal-text-button>
+    <petal-text-button form="form-id" value="delete">Delete</petal-text-button>
   </div>
-</md-dialog>
+</petal-dialog>
 ```
 
 ## Theming
@@ -205,10 +205,10 @@ Token                               | Default value
 }
 </style>
 
-<md-dialog>
+<petal-dialog>
   <div slot="headline">Title</div>
   <div slot="content">Dialog content</div>
-</md-dialog>
+</petal-dialog>
 ```
 
 <!-- auto-generated API docs start -->
@@ -216,7 +216,7 @@ Token                               | Default value
 ## API
 
 
-### MdDialog <code>&lt;md-dialog&gt;</code>
+### PetalDialog <code>&lt;petal-dialog&gt;</code>
 
 #### Properties
 

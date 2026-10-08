@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '@material/web/divider/divider.js';
@@ -42,17 +43,17 @@ const standard: MaterialStoryInit<StoryKnobs> = {
         aria-label="A list of items with decorative and non-decorative separators"
         class="md-typescale-body-medium">
         <li>List item one</li>
-        <md-divider
+        <petal-divider
           ?inset=${knobs.inset}
           ?inset-start=${knobs['inset (start)']}
-          ?inset-end=${knobs['inset (end)']}></md-divider>
+          ?inset-end=${knobs['inset (end)']}></petal-divider>
         <li>List item two</li>
-        <md-divider role="separator"></md-divider>
+        <petal-divider role="separator"></petal-divider>
         <li>List item three</li>
-        <md-divider
+        <petal-divider
           ?inset=${knobs.inset}
           ?inset-start=${knobs['inset (start)']}
-          ?inset-end=${knobs['inset (end)']}></md-divider>
+          ?inset-end=${knobs['inset (end)']}></petal-divider>
         <li>List item four</li>
       </ul>
     `;

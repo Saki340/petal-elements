@@ -2,6 +2,7 @@
  * @license
  * Copyright 2021 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '../../../elevation/elevation.js';
@@ -39,7 +40,7 @@ export class NavigationDrawer extends navigationDrawerBaseClass {
         aria-modal="${ariaModal || nothing}"
         class="md3-navigation-drawer ${this.getRenderClasses()}"
         role="dialog">
-        <md-elevation part="elevation"></md-elevation>
+        <petal-elevation part="elevation"></petal-elevation>
         <div class="md3-navigation-drawer__slot-content">
           <slot></slot>
         </div>

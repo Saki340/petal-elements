@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '../../elevation/elevation.js';
@@ -26,7 +27,7 @@ import {
   getFormValue,
   mixinFormAssociated,
 } from '../../labs/behaviors/form-associated.js';
-import {MdRipple} from '../../ripple/ripple.js';
+import {PetalRipple} from '../../ripple/ripple.js';
 
 // Disable warning for classMap with destructuring
 // tslint:disable:no-implicit-dictionary-conversion
@@ -169,13 +170,13 @@ export class Slider extends sliderBaseClass {
 
   @query('input.start') private readonly inputStart!: HTMLInputElement | null;
   @query('.handle.start') private readonly handleStart!: HTMLDivElement | null;
-  @queryAsync('md-ripple.start')
-  private readonly rippleStart!: Promise<MdRipple | null>;
+  @queryAsync('petal-ripple.start')
+  private readonly rippleStart!: Promise<PetalRipple | null>;
 
   @query('input.end') private readonly inputEnd!: HTMLInputElement | null;
   @query('.handle.end') private readonly handleEnd!: HTMLDivElement | null;
-  @queryAsync('md-ripple.end')
-  private readonly rippleEnd!: Promise<MdRipple | null>;
+  @queryAsync('petal-ripple.end')
+  private readonly rippleEnd!: Promise<PetalRipple | null>;
 
   // handle hover/pressed states are set manually since the handle
   // does not receive pointer events so that the native inputs are
@@ -433,13 +434,13 @@ export class Slider extends sliderBaseClass {
         onTop,
         isOverlapping,
       })}">
-      <md-focus-ring part="focus-ring" for=${name}></md-focus-ring>
-      <md-ripple
+      <petal-focus-ring part="focus-ring" for=${name}></petal-focus-ring>
+      <petal-ripple
         for=${name}
         class=${name}
-        ?disabled=${this.disabled}></md-ripple>
+        ?disabled=${this.disabled}></petal-ripple>
       <div class="handleNub">
-        <md-elevation part="elevation"></md-elevation>
+        <petal-elevation part="elevation"></petal-elevation>
       </div>
       ${when(this.labeled, () => this.renderLabel(label))}
     </div>`;
@@ -494,7 +495,7 @@ export class Slider extends sliderBaseClass {
   }
 
   private async toggleRippleHover(
-    ripple: Promise<MdRipple | null>,
+    ripple: Promise<PetalRipple | null>,
     hovering: boolean,
   ) {
     const rippleEl = await ripple;

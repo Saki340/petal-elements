@@ -81,7 +81,7 @@ a control in one of three ways.
       }
     </style>
     <button class="container">
-      <md-ripple></md-ripple>
+      <petal-ripple></petal-ripple>
     </button>
     ```
 
@@ -94,7 +94,7 @@ a control in one of three ways.
       }
     </style>
     <div class="container">
-      <md-ripple for="control"></md-ripple>
+      <petal-ripple for="control"></petal-ripple>
       <input id="control">
     </div>
     ```
@@ -108,7 +108,7 @@ a control in one of three ways.
       }
     </style>
     <div class="container">
-      <md-ripple id="ripple"></md-ripple>
+      <petal-ripple id="ripple"></petal-ripple>
       <button id="ripple-control"></button>
     </div>
     <script>
@@ -132,7 +132,7 @@ To create an unbounded circular ripple centered on an element, use the following
   position: relative;
 }
 
-md-ripple.unbounded {
+petal-ripple.unbounded {
   border-radius: 50%;
   inset: unset;
   height: var(--state-layer-size);
@@ -161,7 +161,7 @@ md-ripple.unbounded {
     position: relative;
   }
 
-  md-ripple.unbounded {
+  petal-ripple.unbounded {
     /* Needed for unbounded ripple */
     border-radius: 50%;
     inset: unset;
@@ -170,7 +170,7 @@ md-ripple.unbounded {
   }
 </style>
 <button class="container">
-  <md-ripple class="unbounded"></md-ripple>
+  <petal-ripple class="unbounded"></petal-ripple>
 </button>
 ```
 
@@ -215,7 +215,7 @@ Token                    | Default value
 }
 </style>
 <button class="container">
-  <md-ripple></md-ripple>
+  <petal-ripple></petal-ripple>
 </button>
 ```
 
@@ -224,7 +224,7 @@ Token                    | Default value
 ## API
 
 
-### MdRipple <code>&lt;md-ripple&gt;</code>
+### PetalRipple <code>&lt;petal-ripple&gt;</code>
 
 #### Properties
 

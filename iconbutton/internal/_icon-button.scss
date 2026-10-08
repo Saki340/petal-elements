@@ -1,6 +1,7 @@
 //
 // Copyright 2022 Google LLC
 // SPDX-License-Identifier: Apache-2.0
+// Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
 //
 
 // go/keep-sorted start
@@ -36,7 +37,7 @@
     }
 
     // These custom properties are not used, so set defaults so token tests pass
-    // for <md-icon-button>.
+    // for <petal-icon-button>.
     --_container-shape-start-start: 0;
     --_container-shape-start-end: 0;
     --_container-shape-end-end: 0;
@@ -53,7 +54,7 @@
       max(0px, (48px - var(--_state-layer-width))/2);
   }
 
-  md-focus-ring {
+  petal-focus-ring {
     @include focus-ring.theme(
       (
         'shape-start-start': var(--_state-layer-shape),
@@ -94,7 +95,7 @@
     }
   }
 
-  md-ripple {
+  petal-ripple {
     border-radius: var(--_state-layer-shape);
   }
 

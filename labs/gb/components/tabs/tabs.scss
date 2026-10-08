@@ -1,6 +1,7 @@
 /*!
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 // go/keep-sorted start by_regex='(.+) prefix_order=sass:
@@ -15,12 +16,12 @@
 $selected: ':is(.selected, [aria-selected="true"], :state(selected))';
 
 // A tab stacks its icon above its label when it has both. Every gb icon host
-// carries `.md-icon` — IconElement.connectedCallback adds it
+// carries `.petal-icon` — IconElement.connectedCallback adds it
 // (styles/icon/icon-element.ts:25) — so the structure can be read directly and
 // no `.tab-icon` class is needed. Primary tabs with icon + label are always
 // stacked and secondary tabs are always inline, so structure is sufficient and
 // no modifier class is required.
-$stacked: ':has(> .md-icon):has(> :is(.tab-label, [slot="label"]))';
+$stacked: ':has(> .petal-icon):has(> :is(.tab-label, [slot="label"]))';
 
 @layer md.sys, md.comp.ripple, md.comp.focus-ring, md.comp.badge;
 @layer md.comp.tabs {
@@ -36,7 +37,7 @@ $stacked: ':has(> .md-icon):has(> :is(.tab-label, [slot="label"]))';
     }
 
     display: flex;
-    // Horizontal only, always. `orientation="vertical"` on md-gb-tabs is an
+    // Horizontal only, always. `orientation="vertical"` on petal-gb-tabs is an
     // anti-pattern; the API is not blocked, but it must produce no visual
     // difference, so there is deliberately no `[orientation='vertical']`
     // rule anywhere in this file. Stating the direction rather than relying
@@ -124,9 +125,9 @@ $stacked: ':has(> .md-icon):has(> :is(.tab-label, [slot="label"]))';
     }
   }
 
-  .tab:has(> .md-icon) {
+  .tab:has(> .petal-icon) {
     @container not style(--tabs-secondary: true) {
-      > .md-icon {
+      > .petal-icon {
         anchor-name: --tab-icon;
       }
 
@@ -221,24 +222,24 @@ $stacked: ':has(> .md-icon):has(> :is(.tab-label, [slot="label"]))';
   // content: the first child opens it, the last child closes it.
   //
   // NOTE: This assumes child elements are in visual order (icon, label, badge).
-  // In raw HTML, light-DOM child order must match visual order. In `<md-gb-tab>`,
+  // In raw HTML, light-DOM child order must match visual order. In `<petal-gb-tab>`,
   // named slots pin the flat-tree render order to `<slot>` (icon),
   // `<slot name="label">`, and `<slot name="badge">`.
-  .tab#{$selected}:not(:has(> .md-icon)) > :first-child {
+  .tab#{$selected}:not(:has(> .petal-icon)) > :first-child {
     anchor-name: --tab-content-start;
   }
-  .tab#{$selected}:not(:has(> .md-icon)) > :last-child {
+  .tab#{$selected}:not(:has(> .petal-icon)) > :last-child {
     anchor-name: --tab-content-end;
   }
 
   // `anchor-name` is one property, so a lone child matched by both rules above
   // would keep only the last declaration and lose the start anchor — measured:
   // the indicator collapsed to 0px wide for every single-child tab.
-  .tab#{$selected}:not(:has(> .md-icon)) > :only-child {
+  .tab#{$selected}:not(:has(> .petal-icon)) > :only-child {
     anchor-name: --tab-content-start, --tab-content-end;
   }
 
-  .tab#{$selected}:not(#{$stacked}) > .md-icon {
+  .tab#{$selected}:not(#{$stacked}) > .petal-icon {
     anchor-name: --tab-icon, --tab-content-start, --tab-content-end;
   }
 

@@ -85,18 +85,18 @@ the icon font.
 <!-- catalog-include "figures/iconbutton/usage.html" -->
 
 ```html
-<md-icon-button>
-  <md-icon>check</md-icon>
-</md-icon-button>
-<md-filled-icon-button>
-  <md-icon>check</md-icon>
-</md-filled-icon-button>
-<md-filled-tonal-icon-button>
-  <md-icon>check</md-icon>
-</md-filled-tonal-icon-button>
-<md-outlined-icon-button>
-  <md-icon>check</md-icon>
-</md-outlined-icon-button>
+<petal-icon-button>
+  <petal-icon>check</petal-icon>
+</petal-icon-button>
+<petal-filled-icon-button>
+  <petal-icon>check</petal-icon>
+</petal-filled-icon-button>
+<petal-filled-tonal-icon-button>
+  <petal-icon>check</petal-icon>
+</petal-filled-tonal-icon-button>
+<petal-outlined-icon-button>
+  <petal-icon>check</petal-icon>
+</petal-outlined-icon-button>
 ```
 
 ### Links
@@ -108,9 +108,9 @@ and optionally a
 attribute to turn the icon button into a link.
 
 ```html
-<md-icon-button href="https://google.com">
-  <md-icon>check</md-icon>
-</md-icon-button>
+<petal-icon-button href="https://google.com">
+  <petal-icon>check</petal-icon>
+</petal-icon-button>
 ```
 
 ### Toggle
@@ -133,40 +133,40 @@ attribute.
 
 ```html
 <div>
-  <md-icon-button toggle>
-    <md-icon>close</md-icon>
-    <md-icon slot="selected">check</md-icon>
-  </md-icon-button>
-  <md-filled-icon-button toggle>
-    <md-icon>close</md-icon>
-    <md-icon slot="selected">check</md-icon>
-  </md-filled-icon-button>
-  <md-filled-tonal-icon-button toggle>
-    <md-icon>close</md-icon>
-    <md-icon slot="selected">check</md-icon>
-  </md-filled-tonal-icon-button>
-  <md-outlined-icon-button toggle>
-    <md-icon>close</md-icon>
-    <md-icon slot="selected">check</md-icon>
-  </md-outlined-icon-button>
+  <petal-icon-button toggle>
+    <petal-icon>close</petal-icon>
+    <petal-icon slot="selected">check</petal-icon>
+  </petal-icon-button>
+  <petal-filled-icon-button toggle>
+    <petal-icon>close</petal-icon>
+    <petal-icon slot="selected">check</petal-icon>
+  </petal-filled-icon-button>
+  <petal-filled-tonal-icon-button toggle>
+    <petal-icon>close</petal-icon>
+    <petal-icon slot="selected">check</petal-icon>
+  </petal-filled-tonal-icon-button>
+  <petal-outlined-icon-button toggle>
+    <petal-icon>close</petal-icon>
+    <petal-icon slot="selected">check</petal-icon>
+  </petal-outlined-icon-button>
 </div>
 <div>
-  <md-icon-button toggle selected>
-    <md-icon>close</md-icon>
-    <md-icon slot="selected">check</md-icon>
-  </md-icon-button>
-  <md-filled-icon-button toggle selected>
-    <md-icon>close</md-icon>
-    <md-icon slot="selected">check</md-icon>
-  </md-filled-icon-button>
-  <md-filled-tonal-icon-button toggle selected>
-    <md-icon>close</md-icon>
-    <md-icon slot="selected">check</md-icon>
-  </md-filled-tonal-icon-button>
-  <md-outlined-icon-button toggle selected>
-    <md-icon>close</md-icon>
-    <md-icon slot="selected">check</md-icon>
-  </md-outlined-icon-button>
+  <petal-icon-button toggle selected>
+    <petal-icon>close</petal-icon>
+    <petal-icon slot="selected">check</petal-icon>
+  </petal-icon-button>
+  <petal-filled-icon-button toggle selected>
+    <petal-icon>close</petal-icon>
+    <petal-icon slot="selected">check</petal-icon>
+  </petal-filled-icon-button>
+  <petal-filled-tonal-icon-button toggle selected>
+    <petal-icon>close</petal-icon>
+    <petal-icon slot="selected">check</petal-icon>
+  </petal-filled-tonal-icon-button>
+  <petal-outlined-icon-button toggle selected>
+    <petal-icon>close</petal-icon>
+    <petal-icon slot="selected">check</petal-icon>
+  </petal-outlined-icon-button>
 </div>
 ```
 
@@ -177,9 +177,9 @@ Add an
 attribute to icon buttons whose labels need a more descriptive label.
 
 ```html
-<md-icon-button aria-label="Search for Contact">
-  <md-icon>search</md-icon>
-</md-icon-button>
+<petal-icon-button aria-label="Search for Contact">
+  <petal-icon>search</petal-icon>
+</petal-icon-button>
 ```
 
 ### Toggle
@@ -188,12 +188,12 @@ Add an `aria-label-selected` attribute to toggle buttons whose labels need a
 more descriptive label when selected.
 
 ```html
-<md-icon-button toggle
+<petal-icon-button toggle
   aria-label="Unselected"
   aria-label-selected="Selected">
-  <md-icon>close</md-icon>
-  <md-icon slot="selected">check</md-icon>
-</md-icon-button>
+  <petal-icon>close</petal-icon>
+  <petal-icon slot="selected">check</petal-icon>
+</petal-icon-button>
 ```
 
 ### Focusable and disabled
@@ -208,19 +208,19 @@ for guidance on when this is recommended.
 
 ```html
 <div role="toolbar">
-  <md-icon-button aria-label="Copy">
-    <md-icon>copy</md-icon>
-  </md-icon-button>
-  <md-icon-button aria-label="Cut">
-    <md-icon>cut</md-icon>
-  </md-icon-button>
+  <petal-icon-button aria-label="Copy">
+    <petal-icon>copy</petal-icon>
+  </petal-icon-button>
+  <petal-icon-button aria-label="Cut">
+    <petal-icon>cut</petal-icon>
+  </petal-icon-button>
   <!--
     This icon button is disabled but kept focusable to improve its
     discoverability in the toolbar.
   -->
-  <md-icon-button aria-label="Paste" soft-disabled>
-    <md-icon>paste</md-icon>
-  </md-icon-button>
+  <petal-icon-button aria-label="Paste" soft-disabled>
+    <petal-icon>paste</petal-icon>
+  </petal-icon-button>
 </div>
 ```
 
@@ -237,9 +237,9 @@ emphasis of the icon buttons.
 <!-- catalog-include "figures/iconbutton/usage-standard.html" -->
 
 ```html
-<md-icon-button>
-  <md-icon>check</md-icon>
-</md-icon-button>
+<petal-icon-button>
+  <petal-icon>check</petal-icon>
+</petal-icon-button>
 ```
 
 ## Filled Icon Button
@@ -257,9 +257,9 @@ Filled icon buttons have higher visual impact and are best for high emphasis
 actions.
 
 ```html
-<md-filled-icon-button>
-  <md-icon>check</md-icon>
-</md-filled-icon-button>
+<petal-filled-icon-button>
+  <petal-icon>check</petal-icon>
+</petal-filled-icon-button>
 ```
 
 ## Filled Tonal Icon Button
@@ -279,9 +279,9 @@ emphasis than an outline would give, such as a secondary action paired with a
 high emphasis action.
 
 ```html
-<md-filled-tonal-icon-button>
-  <md-icon>check</md-icon>
-</md-filled-tonal-icon-button>
+<petal-filled-tonal-icon-button>
+  <petal-icon>check</petal-icon>
+</petal-filled-tonal-icon-button>
 ```
 
 ## Outlined Icon Button
@@ -300,9 +300,9 @@ button needs more emphasis than a standard icon button but less than a filled or
 filled tonal icon button.
 
 ```html
-<md-outlined-icon-button>
-  <md-icon>check</md-icon>
-</md-outlined-icon-button>
+<petal-outlined-icon-button>
+  <petal-icon>check</petal-icon>
+</petal-outlined-icon-button>
 ```
 
 ## Theming
@@ -339,9 +339,9 @@ Token                                | Default value
 }
 </style>
 
-<md-icon-button>
-  <md-icon>check</md-icon>
-</md-icon-button>
+<petal-icon-button>
+  <petal-icon>check</petal-icon>
+</petal-icon-button>
 ```
 
 ### Filled Icon Button tokens
@@ -377,9 +377,9 @@ Token                                              | Default value
   background-color: #fff8f6;
 }
 </style>
-<md-filled-icon-button>
-  <md-icon>check</md-icon>
-</md-filled-icon-button>
+<petal-filled-icon-button>
+  <petal-icon>check</petal-icon>
+</petal-filled-icon-button>
 ```
 
 ### Filled Tonal Icon Button tokens
@@ -411,9 +411,9 @@ Token                                                    | Default value
   --md-sys-color-secondary-container: #006A6A;
 }
 </style>
-<md-filled-tonal-icon-button>
-  <md-icon>check</md-icon>
-</md-filled-tonal-icon-button>
+<petal-filled-tonal-icon-button>
+  <petal-icon>check</petal-icon>
+</petal-filled-tonal-icon-button>
 ```
 
 ### Outlined Icon Button tokens
@@ -447,9 +447,9 @@ Token                                        | Default value
   --md-sys-color-outline: #006A6A;
 }
 </style>
-<md-outlined-icon-button>
-  <md-icon>check</md-icon>
-</md-outlined-icon-button>
+<petal-outlined-icon-button>
+  <petal-icon>check</petal-icon>
+</petal-outlined-icon-button>
 ```
 
 <!-- auto-generated API docs start -->
@@ -457,7 +457,7 @@ Token                                        | Default value
 ## API
 
 
-### MdIconButton <code>&lt;md-icon-button&gt;</code>
+### PetalIconButton <code>&lt;petal-icon-button&gt;</code>
 
 #### Properties
 
@@ -493,7 +493,7 @@ Token                                        | Default value
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 
-### MdFilledIconButton <code>&lt;md-filled-icon-button&gt;</code>
+### PetalFilledIconButton <code>&lt;petal-filled-icon-button&gt;</code>
 
 #### Properties
 
@@ -529,7 +529,7 @@ Token                                        | Default value
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 
-### MdFilledTonalIconButton <code>&lt;md-filled-tonal-icon-button&gt;</code>
+### PetalFilledTonalIconButton <code>&lt;petal-filled-tonal-icon-button&gt;</code>
 
 #### Properties
 
@@ -565,7 +565,7 @@ Token                                        | Default value
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 
-### MdOutlinedIconButton <code>&lt;md-outlined-icon-button&gt;</code>
+### PetalOutlinedIconButton <code>&lt;petal-outlined-icon-button&gt;</code>
 
 #### Properties
 

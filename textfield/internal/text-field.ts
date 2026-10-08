@@ -2,6 +2,7 @@
  * @license
  * Copyright 2021 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {LitElement, PropertyValues, html, nothing} from 'lit';
@@ -733,7 +734,7 @@ export abstract class TextField extends textFieldBaseClass {
     if (!this.inputOrTextarea) {
       // If the input is not yet defined, synchronously render.
       // e.g.
-      // const textField = document.createElement('md-outlined-text-field');
+      // const textField = document.createElement('petal-outlined-text-field');
       // document.body.appendChild(textField);
       // textField.focus(); // synchronously render
       this.connectedCallback();

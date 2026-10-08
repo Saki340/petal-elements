@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '@material/web/labs/gb/components/checkbox/md-gb-checkbox.js';
@@ -33,12 +34,12 @@ const playground: MaterialStoryInit<StoryKnobs> = {
   name: 'Playground',
   render(knobs) {
     return html`
-      <md-gb-checkbox></md-gb-checkbox>
-      <md-gb-checkbox checked></md-gb-checkbox>
-      <md-gb-checkbox
+      <petal-gb-checkbox></petal-gb-checkbox>
+      <petal-gb-checkbox checked></petal-gb-checkbox>
+      <petal-gb-checkbox
         .checked=${knobs.checked}
         .indeterminate=${knobs.indeterminate}
-        .error=${knobs.error}></md-gb-checkbox>
+        .error=${knobs.error}></petal-gb-checkbox>
     `;
   },
 };

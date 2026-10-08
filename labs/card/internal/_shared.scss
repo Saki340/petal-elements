@@ -1,6 +1,7 @@
 //
 // Copyright 2023 Google LLC
 // SPDX-License-Identifier: Apache-2.0
+// Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
 //
 
 // go/keep-sorted start
@@ -18,7 +19,7 @@
     z-index: 0;
   }
 
-  md-elevation,
+  petal-elevation,
   .background,
   .outline {
     border-radius: inherit;
@@ -43,7 +44,7 @@
     z-index: 1;
   }
 
-  md-elevation {
+  petal-elevation {
     // Place behind content.
     z-index: -1;
 

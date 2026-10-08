@@ -2,6 +2,7 @@
  * @license
  * Copyright 2021 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {CSSResultOrNative} from 'lit';
@@ -14,7 +15,7 @@ export {type TestTableTemplate} from './internal/test-table.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-test-table': MdTestTable;
+    'petal-test-table': PetalTestTable;
   }
 }
 
@@ -22,7 +23,7 @@ declare global {
  * @final
  * @suppress {visibility}
  */
-@customElement('md-test-table')
-export class MdTestTable<S extends string = string> extends TestTable<S> {
+@customElement('petal-test-table')
+export class PetalTestTable<S extends string = string> extends TestTable<S> {
   static override styles: CSSResultOrNative[] = [testTableStyles];
 }

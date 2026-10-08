@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {css, CSSResultOrNative, html, nothing, type PropertyValues} from 'lit';
@@ -24,7 +25,7 @@ import {navBarItem, type NavBarItemLayout} from './nav-bar.js';
  * A Material Design gBreeze navigation bar item component.
  *
  * @slot - Used to display the item's label text.
- * @slot icon - Used to display the item's icon (`md-gb-icon`).
+ * @slot icon - Used to display the item's icon (`petal-gb-icon`).
  * @slot badge - Used to display a custom badge on the item's icon.
  * @csspart nav-bar-item - The navigation bar item's presentational container.
  * @csspart indicator - The active indicator / icon container element.
@@ -139,7 +140,7 @@ export class NavBarItemElement extends AriaTabElement {
   }
 
   private syncSlottedIcons() {
-    const icons = this.querySelectorAll('md-gb-icon:not([slot])');
+    const icons = this.querySelectorAll('petal-gb-icon:not([slot])');
     for (const icon of Array.from(icons)) {
       icon.setAttribute('slot', 'icon');
     }

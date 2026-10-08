@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {CSSResultOrNative} from 'lit';
@@ -12,7 +13,7 @@ import {styles} from './internal/dialog-styles.cssresult.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-dialog': MdDialog;
+    'petal-dialog': PetalDialog;
   }
 }
 
@@ -43,7 +44,7 @@ declare global {
  * @final
  * @suppress {visibility}
  */
-@customElement('md-dialog')
-export class MdDialog extends Dialog {
+@customElement('petal-dialog')
+export class PetalDialog extends Dialog {
   static override styles: CSSResultOrNative[] = [styles];
 }

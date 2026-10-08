@@ -1,6 +1,7 @@
 //
 // Copyright 2022 Google LLC
 // SPDX-License-Identifier: Apache-2.0
+// Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
 //
 
 // go/keep-sorted start
@@ -132,14 +133,14 @@ $_easing-standard: map.get($_md-sys-motion, 'easing-standard');
       opacity: map.get($tokens, 'disabled-handle-opacity');
     }
 
-    md-ripple {
+    petal-ripple {
       border-radius: map.get($tokens, 'state-layer-shape');
       height: map.get($tokens, 'state-layer-size');
       inset: unset;
       width: map.get($tokens, 'state-layer-size');
     }
 
-    .selected md-ripple {
+    .selected petal-ripple {
       @include ripple.theme(
         (
           'hover-color': map.get($tokens, 'selected-hover-state-layer-color'),
@@ -153,7 +154,7 @@ $_easing-standard: map.get($_md-sys-motion, 'easing-standard');
       );
     }
 
-    .unselected md-ripple {
+    .unselected petal-ripple {
       @include ripple.theme(
         (
           'hover-color': map.get($tokens, 'hover-state-layer-color'),

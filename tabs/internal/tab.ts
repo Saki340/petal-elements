@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '../../elevation/elevation.js';
@@ -36,7 +37,7 @@ const tabBaseClass = mixinFocusable(LitElement);
 export class Tab extends tabBaseClass {
   /**
    * The attribute `md-tab` indicates that the element is a tab for the parent
-   * element, `<md-tabs>`. Make sure if you're implementing your own `md-tab`
+   * element, `<petal-tabs>`. Make sure if you're implementing your own `md-tab`
    * component that you have an `md-tab` attribute set.
    */
   @property({type: Boolean, reflect: true, attribute: 'md-tab'})
@@ -92,9 +93,9 @@ export class Tab extends tabBaseClass {
       class="button"
       role="presentation"
       @click=${this.handleContentClick}>
-      <md-focus-ring part="focus-ring" inward .control=${this}></md-focus-ring>
-      <md-elevation part="elevation"></md-elevation>
-      <md-ripple .control=${this}></md-ripple>
+      <petal-focus-ring part="focus-ring" inward .control=${this}></petal-focus-ring>
+      <petal-elevation part="elevation"></petal-elevation>
+      <petal-ripple .control=${this}></petal-ripple>
       <div
         class="content ${classMap(this.getContentClasses())}"
         role="presentation">

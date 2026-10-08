@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '../../focus/md-focus-ring.js';
@@ -130,10 +131,10 @@ export abstract class Chip extends chipBaseClass {
   protected renderContainerContent() {
     return html`
       ${this.renderOutline()}
-      <md-focus-ring part="focus-ring" for=${this.primaryId}></md-focus-ring>
-      <md-ripple
+      <petal-focus-ring part="focus-ring" for=${this.primaryId}></petal-focus-ring>
+      <petal-ripple
         for=${this.primaryId}
-        ?disabled=${this.rippleDisabled}></md-ripple>
+        ?disabled=${this.rippleDisabled}></petal-ripple>
       ${this.renderPrimaryAction(this.renderPrimaryContent())}
     `;
   }

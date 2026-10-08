@@ -2,6 +2,7 @@
  * @license
  * Copyright 2018 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '../../focus/md-focus-ring.js';
@@ -100,11 +101,11 @@ export class Radio extends radioBaseClass {
     const classes = {'checked': this.checked};
     return html`
       <div class="container ${classMap(classes)}" aria-hidden="true">
-        <md-ripple
+        <petal-ripple
           part="ripple"
           .control=${this}
-          ?disabled=${this.disabled}></md-ripple>
-        <md-focus-ring part="focus-ring" .control=${this}></md-focus-ring>
+          ?disabled=${this.disabled}></petal-ripple>
+        <petal-focus-ring part="focus-ring" .control=${this}></petal-focus-ring>
         <svg class="icon" viewBox="0 0 20 20">
           <mask id="${this.maskId}">
             <rect width="100%" height="100%" fill="white" />

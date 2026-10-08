@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {CSSResultOrNative} from 'lit';
@@ -13,7 +14,7 @@ import {styles} from './internal/slider-styles.cssresult.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-slider': MdSlider;
+    'petal-slider': PetalSlider;
   }
 }
 
@@ -34,7 +35,7 @@ declare global {
  * @final
  * @suppress {visibility}
  */
-@customElement('md-slider')
-export class MdSlider extends Slider {
+@customElement('petal-slider')
+export class PetalSlider extends Slider {
   static override styles: CSSResultOrNative[] = [styles, forcedColorsStyles];
 }

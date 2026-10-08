@@ -2,6 +2,7 @@
  * @license
  * Copyright 2022 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '../../../elevation/elevation.js';
@@ -50,7 +51,7 @@ export class NavigationBar
       @keydown="${this.handleKeydown}"
       @navigation-tab-interaction="${this.handleNavigationTabInteraction}"
       @navigation-tab-rendered=${this.handleNavigationTabConnected}
-      ><md-elevation part="elevation"></md-elevation
+      ><petal-elevation part="elevation"></petal-elevation
       ><div class="md3-navigation-bar__tabs-slot-container"><slot></slot></div
     ></div>`;
   }

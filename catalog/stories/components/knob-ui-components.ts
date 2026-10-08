@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 // These imports are resolved by Lit playground's unpkg loader
@@ -32,13 +33,13 @@ export function boolInput(): KnobUi<boolean> {
       return html`
         <div>
           <label>
-            <md-checkbox
+            <petal-checkbox
               touch-target="none"
               style="margin-inline-end: 16px;"
               .checked=${!!knob.latestValue}
               @change="${valueChanged}"
             >
-            </md-checkbox>
+            </petal-checkbox>
             ${knob.name}
           </label>
         </div>
@@ -60,7 +61,7 @@ export class KnobColorSelector extends LitElement {
       --md-outlined-button-leading-space: 8px;
       --md-outlined-button-trailing-space: 8px;
       --md-outlined-button-container-height: 32px;
-      /* md-checkbox sizes */
+      /* petal-checkbox sizes */
       --_component-size: 40px;
       --_color-picker-size: 14px;
       --_color-picker-border-width: 2px;
@@ -97,7 +98,7 @@ export class KnobColorSelector extends LitElement {
       display: inline-block;
     }
 
-    md-ripple {
+    petal-ripple {
       inset: unset;
       width: var(--_component-size);
       height: var(--_component-size);
@@ -130,23 +131,23 @@ export class KnobColorSelector extends LitElement {
       <span>
         ${this.hasAlpha ? this.renderTextInput() : this.renderColorInput()}
       </span>
-      <md-outlined-button
+      <petal-outlined-button
         @click=${() => {
           this.hasAlpha = !this.hasAlpha;
         }}
       >
         ${this.hasAlpha ? 'rgba' : 'rgb'}
-      </md-outlined-button>
+      </petal-outlined-button>
     </span>`;
   }
 
   private renderTextInput() {
-    return html`<md-filled-text-field
+    return html`<petal-filled-text-field
       style=${styleMap(sharedTextFieldStyles)}
       .value=${this.value}
       @change=${this.propagateEvt}
       @input=${this.onInput}
-    ></md-filled-text-field>`;
+    ></petal-filled-text-field>`;
   }
 
   private renderColorInput() {
@@ -155,7 +156,7 @@ export class KnobColorSelector extends LitElement {
     });
 
     return html`
-      <md-ripple for="color-picker" style=${rippleStyles}></md-ripple>
+      <petal-ripple for="color-picker" style=${rippleStyles}></petal-ripple>
       <input
         type="color"
         id="color-picker"
@@ -182,7 +183,7 @@ export class KnobColorSelector extends LitElement {
 
   click() {
     const input = this.renderRoot!.querySelector(
-      'input,md-filled-text-field'
+      'input,petal-filled-text-field'
     ) as HTMLElement;
     input.click();
     input.focus();
@@ -190,7 +191,7 @@ export class KnobColorSelector extends LitElement {
 
   focus() {
     const input = this.renderRoot!.querySelector(
-      'input,md-filled-text-field'
+      'input,petal-filled-text-field'
     ) as HTMLElement;
     input.focus();
   }
@@ -274,11 +275,11 @@ export function textInput<T>(options?: TextInputOptions<T>): KnobUi<T> {
       return html`
         <div>
           <label>
-            <md-filled-text-field
+            <petal-filled-text-field
               style=${styleMap(sharedTextFieldStyles)}
               .value="${(knob.latestValue ?? '') as unknown as string}"
               @input="${valueChanged}"
-            ></md-filled-text-field>
+            ></petal-filled-text-field>
             ${knob.name}
           </label>
         </div>
@@ -314,13 +315,13 @@ export function numberInput(opts?: NumberInputOpts): KnobUi<number> {
       return html`
         <div>
           <label>
-            <md-filled-text-field
+            <petal-filled-text-field
               style=${styleMap(sharedTextFieldStyles)}
               type="number"
               step="${config.step}"
               .value="${knob.latestValue ? knob.latestValue.toString() : '0'}"
               @input="${valueChanged}"
-            ></md-filled-text-field>
+            ></petal-filled-text-field>
             ${knob.name}
           </label>
         </div>
@@ -342,9 +343,9 @@ export function button(): KnobUi<number> {
       };
       const styles = styleMap({ display: 'inline-block' });
       return html`
-        <md-outlined-button outlined @click=${onClick} style=${styles}>
+        <petal-outlined-button outlined @click=${onClick} style=${styles}>
           ${knob.name}
-        </md-outlined-button>
+        </petal-outlined-button>
       `;
     },
   };
@@ -371,12 +372,12 @@ export function radioSelector<T extends string>({
       const radioOptions = options.map((option, index) => {
         const value: string = option.value;
         return html` <label>
-          <md-radio
+          <petal-radio
             name="${name}"
             value="${value}"
             @change="${valueChanged}"
             ?checked="${knob.latestValue === option.value}"
-          ></md-radio>
+          ></petal-radio>
           ${option.label}
         </label>`;
       });
@@ -402,22 +403,22 @@ export function selectDropdown<T extends string>({
         onChange((e.target as HTMLInputElement).value as T);
       };
       const listItems = options.map((option, index) => {
-        return html`<md-select-option
+        return html`<petal-select-option
           ?selected="${knob.latestValue === option.value}"
           .value="${option.value}"
         >
           <div slot="headline">${option.label}</div>
-        </md-select-option>`;
+        </petal-select-option>`;
       });
       return html`
         <label>
-          <md-filled-select
+          <petal-filled-select
             @change="${valueChanged}"
             menu-positioning="fixed"
             style=${styleMap(sharedTextFieldStyles)}
           >
             ${listItems}
-          </md-filled-select>
+          </petal-filled-select>
           ${knob.name}
         </label>
       `;

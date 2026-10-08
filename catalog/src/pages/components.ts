@@ -2,11 +2,12 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '@material/web/iconbutton/outlined-icon-button.js';
 
-import {MdOutlinedIconButton} from '@material/web/iconbutton/outlined-icon-button.js';
+import {PetalOutlinedIconButton} from '@material/web/iconbutton/outlined-icon-button.js';
 import type {PlaygroundPreview} from 'playground-elements/playground-preview.js';
 import {PostDoc} from 'postdoc-lib';
 
@@ -70,7 +71,7 @@ async function syncPlaygroundThemeWithPage() {
 
 /**
  * Synchronizes the state of the native <details> for the demo dropdown with the
- * slotted <md-outlined-icon-button>. Also deals with some quicks of buttons in
+ * slotted <petal-outlined-icon-button>. Also deals with some quicks of buttons in
  * <summary> elements
  */
 function demoDropdown() {
@@ -79,8 +80,8 @@ function demoDropdown() {
   // tslint:disable:no-unnecessary-type-assertion TSC externally seems to differ
   // from internal here and needs these type assertions
   const expandButton = detailsEl?.querySelector(
-    'summary md-outlined-icon-button',
-  ) as MdOutlinedIconButton;
+    'summary petal-outlined-icon-button',
+  ) as PetalOutlinedIconButton;
   // tslint:enable:no-unnecessary-type-assertion
 
   // Synchronize details open state with toggle button

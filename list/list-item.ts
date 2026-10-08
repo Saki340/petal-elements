@@ -2,6 +2,7 @@
  * @license
  * Copyright 2022 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {CSSResultOrNative} from 'lit';
@@ -14,7 +15,7 @@ export {type ListItemType} from './internal/listitem/list-item.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-list-item': MdListItem;
+    'petal-list-item': PetalListItem;
   }
 }
 
@@ -43,12 +44,12 @@ declare global {
  *
  *  @example
  * ```html
- * <md-list-item
+ * <petal-list-item
  *     headline="User Name"
  *     supportingText="user@name.com">
- *   <md-icon slot="start">account_circle</md-icon>
- *   <md-icon slot="end">check</md-icon>
- * </md-list-item>
+ *   <petal-icon slot="start">account_circle</petal-icon>
+ *   <petal-icon slot="end">check</petal-icon>
+ * </petal-list-item>
  * ```
  *
  * @example
@@ -56,7 +57,7 @@ declare global {
  * @final
  * @suppress {visibility}
  */
-@customElement('md-list-item')
-export class MdListItem extends ListItem {
+@customElement('petal-list-item')
+export class PetalListItem extends ListItem {
   static override styles: CSSResultOrNative[] = [styles];
 }

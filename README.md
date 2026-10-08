@@ -61,16 +61,16 @@ for production.
   <h1 class="md-typescale-display-medium">Hello Material!</h1>
   <form>
     <p class="md-typescale-body-medium">Check out these controls in a form!</p>
-    <md-checkbox></md-checkbox>
+    <petal-checkbox></petal-checkbox>
     <div>
-      <md-radio name="group"></md-radio>
-      <md-radio name="group"></md-radio>
-      <md-radio name="group"></md-radio>
+      <petal-radio name="group"></petal-radio>
+      <petal-radio name="group"></petal-radio>
+      <petal-radio name="group"></petal-radio>
     </div>
 
-    <md-outlined-text-field label="Favorite color" value="Purple"></md-outlined-text-field>
+    <petal-outlined-text-field label="Favorite color" value="Purple"></petal-outlined-text-field>
 
-    <md-outlined-button type="reset">Reset</md-outlined-button>
+    <petal-outlined-button type="reset">Reset</petal-outlined-button>
   </form>
   <style>
     form {

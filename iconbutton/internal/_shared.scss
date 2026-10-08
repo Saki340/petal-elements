@@ -1,6 +1,7 @@
 //
 // Copyright 2022 Google LLC
 // SPDX-License-Identifier: Apache-2.0
+// Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
 //
 
 // This file contains common static styles that are shared across icon button
@@ -30,7 +31,7 @@
       max(0px, (48px - var(--_container-width)) / 2);
   }
 
-  md-focus-ring {
+  petal-focus-ring {
     @include focus-ring.theme(
       (
         'shape-start-start': var(--_container-shape-start-start),
@@ -75,7 +76,7 @@
     }
   }
 
-  md-ripple {
+  petal-ripple {
     z-index: -1; // Place behind content
     border-start-start-radius: var(--_container-shape-start-start);
     border-start-end-radius: var(--_container-shape-start-end);

@@ -1,6 +1,7 @@
 /*!
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 @property --md-icon-font {
@@ -40,8 +41,8 @@
 }
 
 @layer md.sys.icon {
-  .md-icon,
-  :host(.md-icon) {
+  .petal-icon,
+  :host(.petal-icon) {
     display: inline-flex;
     place-items: center;
     place-content: center;

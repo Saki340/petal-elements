@@ -83,12 +83,12 @@ Choose the type of chip based on its purpose and author.
 <!-- Need to add catalog-include "figures/<component>/usage.html" -->
 
 ```html
-<md-chip-set>
-  <md-assist-chip label="Assist"></md-assist-chip>
-  <md-filter-chip label="Filter"></md-filter-chip>
-  <md-input-chip label="Input"></md-input-chip>
-  <md-suggestion-chip label="Suggestion"></md-suggestion-chip>
-</md-chip-set>
+<petal-chip-set>
+  <petal-assist-chip label="Assist"></petal-assist-chip>
+  <petal-filter-chip label="Filter"></petal-filter-chip>
+  <petal-input-chip label="Input"></petal-input-chip>
+  <petal-suggestion-chip label="Suggestion"></petal-suggestion-chip>
+</petal-chip-set>
 ```
 
 ### Chip sets
@@ -106,11 +106,11 @@ that can display any type of chip or other toolbar items.
 
 ```html
 <h3>New event</h3>
-<md-chip-set>
-  <md-filter-chip label="All day"></md-filter-chip>
-  <md-assist-chip label="Add to calendar"></md-assist-chip>
-  <md-assist-chip label="Set a reminder"></md-assist-chip>
-</md-chip-set>
+<petal-chip-set>
+  <petal-filter-chip label="All day"></petal-filter-chip>
+  <petal-assist-chip label="Add to calendar"></petal-assist-chip>
+  <petal-assist-chip label="Set a reminder"></petal-assist-chip>
+</petal-chip-set>
 ```
 
 ### Icons
@@ -125,15 +125,15 @@ picture is displayed.
 <!-- catalog-only-end -->
 
 ```html
-<md-chip-set>
-  <md-assist-chip label="Add to calendar">
-    <md-icon slot="icon">event</md-icon>
-  </md-assist-chip>
+<petal-chip-set>
+  <petal-assist-chip label="Add to calendar">
+    <petal-icon slot="icon">event</petal-icon>
+  </petal-assist-chip>
 
-  <md-input-chip label="Ping Qiang" avatar>
+  <petal-input-chip label="Ping Qiang" avatar>
     <img slot="icon" src="...">
-  </md-input-chip>
-</md-chip-set>
+  </petal-input-chip>
+</petal-chip-set>
 ```
 
 ### Elevated
@@ -150,10 +150,10 @@ protection, such as on top of an image.
 ```html
 <div>
   <img src="...">
-  <md-chip-set>
-    <md-suggestion-chip label="Share" elevated></md-suggestion-chip>
-    <md-suggestion-chip label="Favorite" elevated></md-suggestion-chip>
-  </md-chip-set>
+  <petal-chip-set>
+    <petal-suggestion-chip label="Share" elevated></petal-suggestion-chip>
+    <petal-suggestion-chip label="Favorite" elevated></petal-suggestion-chip>
+  </petal-chip-set>
 </div>
 ```
 
@@ -167,11 +167,11 @@ Add an `aria-label` to chips whose labels need to be more descriptive.
 
 ```html
 <h3 id="dates-label">Dates</h3>
-<md-chip-set aria-labelledby="dates-label">
-  <md-filter-chip label="Mon" aria-label="Monday"></md-filter-chip>
-  <md-filter-chip label="Tue" aria-label="Tuesday"></md-filter-chip>
-  <md-filter-chip label="Wed" aria-label="Wednesday"></md-filter-chip>
-</md-chip-set>
+<petal-chip-set aria-labelledby="dates-label">
+  <petal-filter-chip label="Mon" aria-label="Monday"></petal-filter-chip>
+  <petal-filter-chip label="Tue" aria-label="Tuesday"></petal-filter-chip>
+  <petal-filter-chip label="Wed" aria-label="Wednesday"></petal-filter-chip>
+</petal-chip-set>
 ```
 
 ### Focusable and disabled
@@ -185,15 +185,15 @@ See the
 for guidance on when this is recommended.
 
 ```html
-<md-chip-set aria-label="Actions">
+<petal-chip-set aria-label="Actions">
   <!--
     Disabled until text is selected. Since both are disabled by default, keep
     them focusable so that screen readers can discover the actions available.
   -->
-  <md-assist-chip label="Copy" soft-disabled></md-assist-chip>
-  <md-assist-chip label="Paste" soft-disabled></md-assist-chip>
-</md-chip-set>
-<md-outlined-text-field type="textarea"></md-outlined-text-field>
+  <petal-assist-chip label="Copy" soft-disabled></petal-assist-chip>
+  <petal-assist-chip label="Paste" soft-disabled></petal-assist-chip>
+</petal-chip-set>
+<petal-outlined-text-field type="textarea"></petal-outlined-text-field>
 ```
 
 ## Assist chip
@@ -215,14 +215,14 @@ action. They should appear dynamically and contextually in a UI.
 
 ```html
 <h3>A restaraunt location</h3>
-<md-chip-set>
-  <md-assist-chip label="Add to my itinerary">
-    <md-icon slot="icon">calendar</md-icon>
-  </md-assist-chip>
-  <md-assist-chip label="12 mins from hotel">
-    <md-icon slot="icon">map</md-icon>
-  </md-assist-chip>
-</md-chip-set>
+<petal-chip-set>
+  <petal-assist-chip label="Add to my itinerary">
+    <petal-icon slot="icon">calendar</petal-icon>
+  </petal-assist-chip>
+  <petal-assist-chip label="12 mins from hotel">
+    <petal-icon slot="icon">map</petal-icon>
+  </petal-assist-chip>
+</petal-chip-set>
 ```
 
 ## Filter chip
@@ -241,12 +241,12 @@ to toggle buttons or checkboxes.
 
 ```html
 <h3>Choose where to share</h3>
-<md-chip-set>
-  <md-filter-chip label="Docs"></md-filter-chip>
-  <md-filter-chip label="Slides" selected></md-filter-chip>
-  <md-filter-chip label="Sheets" selected></md-filter-chip>
-  <md-filter-chip label="Images"></md-filter-chip>
-</md-chip-set>
+<petal-chip-set>
+  <petal-filter-chip label="Docs"></petal-filter-chip>
+  <petal-filter-chip label="Slides" selected></petal-filter-chip>
+  <petal-filter-chip label="Sheets" selected></petal-filter-chip>
+  <petal-filter-chip label="Images"></petal-filter-chip>
+</petal-chip-set>
 ```
 
 ### Removable
@@ -262,12 +262,12 @@ a trailing remove icon.
 
 ```html
 <h3>Colors</h3>
-<md-chip-set>
-  <md-filter-chip label="Red" removable selected></md-filter-chip>
-  <md-filter-chip label="Yellow" removable></md-filter-chip>
-  <md-filter-chip label="Blue" removable></md-filter-chip>
-  <md-filter-chip label="Green" removable></md-filter-chip>
-</md-chip-set>
+<petal-chip-set>
+  <petal-filter-chip label="Red" removable selected></petal-filter-chip>
+  <petal-filter-chip label="Yellow" removable></petal-filter-chip>
+  <petal-filter-chip label="Blue" removable></petal-filter-chip>
+  <petal-filter-chip label="Green" removable></petal-filter-chip>
+</petal-chip-set>
 ```
 
 ## Input chip
@@ -288,16 +288,16 @@ display the image in a larger circle.
 <!-- catalog-only-end -->
 
 ```html
-<md-outlined-text-field label="Attendees" type="email"></md-outlined-text-field>
+<petal-outlined-text-field label="Attendees" type="email"></petal-outlined-text-field>
 
-<md-chip-set>
-  <md-input-chip label="Ping Qiang" avatar>
+<petal-chip-set>
+  <petal-input-chip label="Ping Qiang" avatar>
     <img slot="icon" src="...">
-  </md-input-chip>
-  <md-input-chip label="Thea Schröder" avatar>
+  </petal-input-chip>
+  <petal-input-chip label="Thea Schröder" avatar>
     <img slot="icon" src="...">
-  </md-input-chip>
-</md-chip-set>
+  </petal-input-chip>
+</petal-chip-set>
 ```
 
 ### Remove-only
@@ -313,10 +313,10 @@ associated with clicking on it, it may be marked as `remove-only`.
 
 ```html
 <h3>Favorite movies</h3>
-<md-chip-set>
-  <md-input-chip label="Star Wars" remove-only></md-input-chip>
-  <md-input-chip label="Star Trek" remove-only></md-input-chip>
-</md-chip-set>
+<petal-chip-set>
+  <petal-input-chip label="Star Wars" remove-only></petal-input-chip>
+  <petal-input-chip label="Star Trek" remove-only></petal-input-chip>
+</petal-chip-set>
 ```
 
 ## Suggestion chip
@@ -335,11 +335,11 @@ such as possible responses or search filters.
 
 ```html
 <h3>Suggested reply</h3>
-<md-chip-set>
-  <md-suggestion-chip label="I agree"></md-suggestion-chip>
-  <md-suggestion-chip label="Looks good to me"></md-suggestion-chip>
-  <md-suggestion-chip label="Thank you"></md-suggestion-chip>
-</md-chip-set>
+<petal-chip-set>
+  <petal-suggestion-chip label="I agree"></petal-suggestion-chip>
+  <petal-suggestion-chip label="Looks good to me"></petal-suggestion-chip>
+  <petal-suggestion-chip label="Thank you"></petal-suggestion-chip>
+</petal-chip-set>
 ```
 
 ## Theming
@@ -377,7 +377,7 @@ Token                               | Default value
 }
 </style>
 
-<md-assist-chip label="Assist"></md-assist-chip>
+<petal-assist-chip label="Assist"></petal-assist-chip>
 ```
 
 ### Filter chip tokens
@@ -412,7 +412,7 @@ Token                                       | Default value
 }
 </style>
 
-<md-filter-chip label="Filter"></md-filter-chip>
+<petal-filter-chip label="Filter"></petal-filter-chip>
 ```
 
 ### Input chip tokens
@@ -445,7 +445,7 @@ Token                              | Default value
 }
 </style>
 
-<md-input-chip label="Input"></md-input-chip>
+<petal-input-chip label="Input"></petal-input-chip>
 ```
 
 ### Suggestion chip tokens
@@ -478,7 +478,7 @@ Token                                   | Default value
 }
 </style>
 
-<md-suggestion-chip label="Suggestion"></md-suggestion-chip>
+<petal-suggestion-chip label="Suggestion"></petal-suggestion-chip>
 ```
 
 <!-- auto-generated API docs start -->
@@ -486,7 +486,7 @@ Token                                   | Default value
 ## API
 
 
-### MdChipSet <code>&lt;md-chip-set&gt;</code>
+### PetalChipSet <code>&lt;petal-chip-set&gt;</code>
 
 #### Properties
 
@@ -498,7 +498,7 @@ Token                                   | Default value
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 
-### MdAssistChip <code>&lt;md-assist-chip&gt;</code>
+### PetalAssistChip <code>&lt;petal-assist-chip&gt;</code>
 
 #### Properties
 
@@ -528,7 +528,7 @@ Token                                   | Default value
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 
-### MdFilterChip <code>&lt;md-filter-chip&gt;</code>
+### PetalFilterChip <code>&lt;petal-filter-chip&gt;</code>
 
 #### Properties
 
@@ -561,7 +561,7 @@ Token                                   | Default value
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 
-### MdInputChip <code>&lt;md-input-chip&gt;</code>
+### PetalInputChip <code>&lt;petal-input-chip&gt;</code>
 
 #### Properties
 
@@ -595,7 +595,7 @@ Token                                   | Default value
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 
-### MdSuggestionChip <code>&lt;md-suggestion-chip&gt;</code>
+### PetalSuggestionChip <code>&lt;petal-suggestion-chip&gt;</code>
 
 #### Properties
 

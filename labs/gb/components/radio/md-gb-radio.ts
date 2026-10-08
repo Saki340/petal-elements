@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {RadioElement} from './radio-element.js';
@@ -9,8 +10,8 @@ import {RadioElement} from './radio-element.js';
 declare global {
   interface HTMLElementTagNameMap {
     /** A Material Design component. */
-    'md-gb-radio': RadioElement;
+    'petal-gb-radio': RadioElement;
   }
 }
 
-customElements.define('md-gb-radio', RadioElement);
+customElements.define('petal-gb-radio', RadioElement);

@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '@material/web/labs/gb/components/navbar/md-gb-nav-bar.js';
@@ -66,26 +67,26 @@ const playground: MaterialStoryInit<StoryKnobs> = {
 
     return html`
       <div class="demo-container">
-        <md-gb-nav-bar
+        <petal-gb-nav-bar
           item-layout=${itemLayout}
           aria-label="Primary navigation">
-          <md-gb-nav-bar-item active badge=${showBadges ? 'dot' : ''}>
-            <md-gb-icon slot="icon">home</md-gb-icon>
+          <petal-gb-nav-bar-item active badge=${showBadges ? 'dot' : ''}>
+            <petal-gb-icon slot="icon">home</petal-gb-icon>
             Home
-          </md-gb-nav-bar-item>
-          <md-gb-nav-bar-item badge=${showBadges ? '3' : ''}>
-            <md-gb-icon slot="icon">explore</md-gb-icon>
+          </petal-gb-nav-bar-item>
+          <petal-gb-nav-bar-item badge=${showBadges ? '3' : ''}>
+            <petal-gb-icon slot="icon">explore</petal-gb-icon>
             Explore
-          </md-gb-nav-bar-item>
-          <md-gb-nav-bar-item badge=${showBadges ? '99+' : ''}>
-            <md-gb-icon slot="icon">library_music</md-gb-icon>
+          </petal-gb-nav-bar-item>
+          <petal-gb-nav-bar-item badge=${showBadges ? '99+' : ''}>
+            <petal-gb-icon slot="icon">library_music</petal-gb-icon>
             Library
-          </md-gb-nav-bar-item>
-          <md-gb-nav-bar-item>
-            <md-gb-icon slot="icon">person</md-gb-icon>
+          </petal-gb-nav-bar-item>
+          <petal-gb-nav-bar-item>
+            <petal-gb-icon slot="icon">person</petal-gb-icon>
             Profile
-          </md-gb-nav-bar-item>
-        </md-gb-nav-bar>
+          </petal-gb-nav-bar-item>
+        </petal-gb-nav-bar>
       </div>
     `;
   },
@@ -98,45 +99,45 @@ const allVariants: MaterialStoryInit<StoryKnobs> = {
     return html`
       <div class="demo-stack">
         <div class="demo-container">
-          <md-gb-nav-bar
+          <petal-gb-nav-bar
             item-layout="vertical"
             aria-label="Vertical item navigation bar">
-            <md-gb-nav-bar-item active>
-              <md-gb-icon slot="icon">home</md-gb-icon>
+            <petal-gb-nav-bar-item active>
+              <petal-gb-icon slot="icon">home</petal-gb-icon>
               Home
-            </md-gb-nav-bar-item>
-            <md-gb-nav-bar-item badge="4">
-              <md-gb-icon slot="icon">mail</md-gb-icon>
+            </petal-gb-nav-bar-item>
+            <petal-gb-nav-bar-item badge="4">
+              <petal-gb-icon slot="icon">mail</petal-gb-icon>
               Inbox
-            </md-gb-nav-bar-item>
-            <md-gb-nav-bar-item badge="dot">
-              <md-gb-icon slot="icon">chat_bubble</md-gb-icon>
+            </petal-gb-nav-bar-item>
+            <petal-gb-nav-bar-item badge="dot">
+              <petal-gb-icon slot="icon">chat_bubble</petal-gb-icon>
               Chat
-            </md-gb-nav-bar-item>
-            <md-gb-nav-bar-item>
-              <md-gb-icon slot="icon">videocam</md-gb-icon>
+            </petal-gb-nav-bar-item>
+            <petal-gb-nav-bar-item>
+              <petal-gb-icon slot="icon">videocam</petal-gb-icon>
               Meet
-            </md-gb-nav-bar-item>
-          </md-gb-nav-bar>
+            </petal-gb-nav-bar-item>
+          </petal-gb-nav-bar>
         </div>
 
         <div class="demo-container">
-          <md-gb-nav-bar
+          <petal-gb-nav-bar
             item-layout="horizontal"
             aria-label="Horizontal item navigation bar">
-            <md-gb-nav-bar-item active>
-              <md-gb-icon slot="icon">auto_awesome</md-gb-icon>
+            <petal-gb-nav-bar-item active>
+              <petal-gb-icon slot="icon">auto_awesome</petal-gb-icon>
               For You
-            </md-gb-nav-bar-item>
-            <md-gb-nav-bar-item>
-              <md-gb-icon slot="icon">bookmark</md-gb-icon>
+            </petal-gb-nav-bar-item>
+            <petal-gb-nav-bar-item>
+              <petal-gb-icon slot="icon">bookmark</petal-gb-icon>
               Saved
-            </md-gb-nav-bar-item>
-            <md-gb-nav-bar-item>
-              <md-gb-icon slot="icon">settings</md-gb-icon>
+            </petal-gb-nav-bar-item>
+            <petal-gb-nav-bar-item>
+              <petal-gb-icon slot="icon">settings</petal-gb-icon>
               Settings
-            </md-gb-nav-bar-item>
-          </md-gb-nav-bar>
+            </petal-gb-nav-bar-item>
+          </petal-gb-nav-bar>
         </div>
       </div>
     `;

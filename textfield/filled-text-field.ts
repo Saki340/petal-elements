@@ -2,6 +2,7 @@
  * @license
  * Copyright 2021 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '../field/filled-field.js';
@@ -18,7 +19,7 @@ export {type TextFieldType} from './internal/text-field.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-filled-text-field': MdFilledTextField;
+    'petal-filled-text-field': PetalFilledTextField;
   }
 }
 
@@ -27,9 +28,9 @@ declare global {
  * @final
  * @suppress {visibility}
  */
-@customElement('md-filled-text-field')
-export class MdFilledTextField extends FilledTextField {
+@customElement('petal-filled-text-field')
+export class PetalFilledTextField extends FilledTextField {
   static override styles: CSSResultOrNative[] = [sharedStyles, filledStyles];
 
-  protected override readonly fieldTag = literal`md-filled-field`;
+  protected override readonly fieldTag = literal`petal-filled-field`;
 }

@@ -52,12 +52,12 @@ Use `--md-sys-color-*` tokens to change the key color that the component uses.
 
 ```css
 /* Buttons use the `primary` key color */
-md-filled-button.spooky {
+petal-filled-button.spooky {
   --md-sys-color-primary: black;
   --md-sys-color-on-primary: yellow;
 }
 
-md-filled-button.error {
+petal-filled-button.error {
   --md-sys-color-primary: var(--md-sys-color-error);
   --md-sys-color-on-primary: var(--md-sys-color-on-error);
 }
@@ -129,7 +129,7 @@ to access sub-components. The part name is the sub-component's tag name without
 the "md-" prefix.
 
 ```css
-md-checkbox::part(focus-ring) {
+petal-checkbox::part(focus-ring) {
   width: 32px;
   height: 32px;
 }

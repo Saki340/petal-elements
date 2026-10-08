@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {css, CSSResultGroup} from 'lit';
@@ -12,15 +13,15 @@ import {AriaToggleElement, isToggleDisabled, isTogglePressed} from './toggle.js'
 declare global {
   interface HTMLElementTagNameMap {
     /** An ARIA toggle button element. */
-    'md-aria-toggle': MdAriaToggleElement;
+    'petal-aria-toggle': PetalAriaToggleElement;
   }
 }
 
 /**
  * An ARIA toggle button element with default properties and styles.
  */
-@customElement('md-aria-toggle')
-export class MdAriaToggleElement extends AriaToggleElement {
+@customElement('petal-aria-toggle')
+export class PetalAriaToggleElement extends AriaToggleElement {
   static override styles: CSSResultGroup = [
     AriaToggleElement.styles,
     css`

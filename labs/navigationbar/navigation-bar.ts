@@ -2,6 +2,7 @@
  * @license
  * Copyright 2021 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {CSSResultOrNative} from 'lit';
@@ -12,7 +13,7 @@ import {styles} from './internal/navigation-bar-styles.cssresult.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-navigation-bar': MdNavigationBar;
+    'petal-navigation-bar': PetalNavigationBar;
   }
 }
 
@@ -20,7 +21,7 @@ declare global {
  * @final
  * @suppress {visibility}
  */
-@customElement('md-navigation-bar')
-export class MdNavigationBar extends NavigationBar {
+@customElement('petal-navigation-bar')
+export class PetalNavigationBar extends NavigationBar {
   static override styles: CSSResultOrNative[] = [styles];
 }

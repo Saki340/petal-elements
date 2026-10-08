@@ -2,6 +2,7 @@
  * @license
  * Copyright 2018 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '../../focus/md-focus-ring.js';
@@ -228,17 +229,17 @@ export class IconButton extends iconButtonBaseClass {
 
   private renderFocusRing() {
     // TODO(b/310046938): use the same id for both elements
-    return html`<md-focus-ring
+    return html`<petal-focus-ring
       part="focus-ring"
-      for=${this.href ? 'link' : 'button'}></md-focus-ring>`;
+      for=${this.href ? 'link' : 'button'}></petal-focus-ring>`;
   }
 
   private renderRipple() {
     const isRippleDisabled = !this.href && (this.disabled || this.softDisabled);
     // TODO(b/310046938): use the same id for both elements
-    return html`<md-ripple
+    return html`<petal-ripple
       for=${this.href ? 'link' : nothing}
-      ?disabled="${isRippleDisabled}"></md-ripple>`;
+      ?disabled="${isRippleDisabled}"></petal-ripple>`;
   }
 
   override connectedCallback() {

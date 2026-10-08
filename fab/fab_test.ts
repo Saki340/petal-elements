@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 // import 'jasmine'; (google3-only)
@@ -11,17 +12,17 @@ import {html, render} from 'lit';
 import {Environment} from '../testing/environment.js';
 import {createTokenTests} from '../testing/tokens.js';
 
-import {MdBrandedFab} from './branded-fab.js';
-import {MdFab} from './fab.js';
+import {PetalBrandedFab} from './branded-fab.js';
+import {PetalFab} from './fab.js';
 import {FabHarness} from './harness.js';
 
-describe('<md-fab>', () => {
+describe('<petal-fab>', () => {
   const env = new Environment();
 
   async function setupTest() {
-    const element = env.render(html`<md-fab></md-fab>`).querySelector('md-fab');
+    const element = env.render(html`<petal-fab></petal-fab>`).querySelector('petal-fab');
     if (!element) {
-      throw new Error('Could not query rendered <md-fab>.');
+      throw new Error('Could not query rendered <petal-fab>.');
     }
 
     await env.waitForStability();
@@ -37,13 +38,13 @@ describe('<md-fab>', () => {
   }
 
   describe('.styles', () => {
-    createTokenTests(MdFab.styles);
+    createTokenTests(PetalFab.styles);
   });
 
   describe('basic', () => {
-    it('initializes as an md-fab', async () => {
+    it('initializes as an petal-fab', async () => {
       const {harness} = await setupTest();
-      expect(harness.element).toBeInstanceOf(MdFab);
+      expect(harness.element).toBeInstanceOf(PetalFab);
       expect(harness.element.lowered).toEqual(false);
       expect(harness.element.label).toEqual('');
       expect(harness.element.variant).toEqual('surface');
@@ -152,15 +153,15 @@ describe('<md-fab>', () => {
   });
 });
 
-describe('<md-branded-fab>', () => {
+describe('<petal-branded-fab>', () => {
   const env = new Environment();
 
   async function setupTest() {
     const element = env
-      .render(html`<md-branded-fab></md-branded-fab>`)
-      .querySelector('md-branded-fab');
+      .render(html`<petal-branded-fab></petal-branded-fab>`)
+      .querySelector('petal-branded-fab');
     if (!element) {
-      throw new Error('Could not query rendered <md-branded-fab>.');
+      throw new Error('Could not query rendered <petal-branded-fab>.');
     }
 
     await env.waitForStability();
@@ -176,7 +177,7 @@ describe('<md-branded-fab>', () => {
   }
 
   describe('.styles', () => {
-    createTokenTests(MdBrandedFab.styles);
+    createTokenTests(PetalBrandedFab.styles);
   });
 
   describe('variants', () => {

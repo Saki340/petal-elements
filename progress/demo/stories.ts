@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '@material/web/button/filled-tonal-button.js';
@@ -11,7 +12,7 @@ import '@material/web/progress/circular-progress.js';
 import '@material/web/progress/linear-progress.js';
 
 import {MaterialStoryInit} from './material-collection.js';
-import {MdCircularProgress} from '@material/web/progress/circular-progress.js';
+import {PetalCircularProgress} from '@material/web/progress/circular-progress.js';
 import {css, html} from 'lit';
 import {classMap} from 'lit/directives/class-map.js';
 
@@ -31,7 +32,7 @@ export interface StoryKnobs {
 const linear: MaterialStoryInit<StoryKnobs> = {
   name: 'Linear progress',
   styles: css`
-    md-linear-progress {
+    petal-linear-progress {
       inline-size: 50vw;
     }
 
@@ -51,14 +52,14 @@ const linear: MaterialStoryInit<StoryKnobs> = {
     const buffer = knobs['buffer (linear)'];
     const classes = {'custom': knobs['custom theme (linear)']};
 
-    return html` <md-linear-progress
+    return html` <petal-linear-progress
       aria-label="An example linear progress bar"
       class=${classMap(classes)}
       .value=${value}
       .max=${max}
       .buffer=${buffer}
       .indeterminate=${indeterminate}
-      .fourColor=${fourColor}></md-linear-progress>`;
+      .fourColor=${fourColor}></petal-linear-progress>`;
   },
 };
 
@@ -66,12 +67,12 @@ const circular: MaterialStoryInit<StoryKnobs> = {
   name: 'Circular progress',
   render({value, max, indeterminate, fourColor}) {
     return html`
-      <md-circular-progress
+      <petal-circular-progress
         aria-label="An example circular progress"
         value=${value}
         max=${max}
         ?indeterminate=${indeterminate}
-        ?four-color=${fourColor}></md-circular-progress>
+        ?four-color=${fourColor}></petal-circular-progress>
     `;
   },
 };
@@ -86,11 +87,11 @@ const components: MaterialStoryInit<StoryKnobs> = {
       gap: 32px;
     }
 
-    md-filled-tonal-button {
+    petal-filled-tonal-button {
       width: 80px;
     }
 
-    md-filled-tonal-button md-circular-progress {
+    petal-filled-tonal-button petal-circular-progress {
       --md-circular-progress-size: 36px;
       --md-circular-progress-active-indicator-width: ${(4 / 36) * 100};
       --md-filled-tonal-button-with-leading-icon-trailing-space: 8px;
@@ -102,7 +103,7 @@ const components: MaterialStoryInit<StoryKnobs> = {
       width: 48px;
     }
 
-    .around-icon md-icon-button {
+    .around-icon petal-icon-button {
       inset: 0;
       margin: auto;
       position: absolute;
@@ -111,7 +112,7 @@ const components: MaterialStoryInit<StoryKnobs> = {
   render({value, max}) {
     const toggleIndeterminate = ({target}: Event) => {
       const spinner = (target as HTMLElement).parentElement?.querySelector(
-        'md-circular-progress',
+        'petal-circular-progress',
       );
       if (!spinner) {
         return;
@@ -122,7 +123,7 @@ const components: MaterialStoryInit<StoryKnobs> = {
     const loadTime = 2500;
     let loadTimeout = -1;
     const toggleLoad = ({target}: {target: HTMLElement}) => {
-      const spinner = target.firstElementChild as MdCircularProgress;
+      const spinner = target.firstElementChild as PetalCircularProgress;
       const label = target.lastElementChild as HTMLElement;
       const shouldLoad = spinner.style.display === 'none';
       label.style.display = shouldLoad ? 'none' : '';
@@ -137,26 +138,26 @@ const components: MaterialStoryInit<StoryKnobs> = {
 
     return html`
       <div class="components">
-        <md-filled-tonal-button @click=${toggleLoad}>
-          <md-circular-progress
+        <petal-filled-tonal-button @click=${toggleLoad}>
+          <petal-circular-progress
             style="display: none"
             indeterminate
-            aria-label="Loading, please wait"></md-circular-progress>
+            aria-label="Loading, please wait"></petal-circular-progress>
           <span>Load</span>
-        </md-filled-tonal-button>
+        </petal-filled-tonal-button>
 
         <div class="around-icon">
-          <md-circular-progress
+          <petal-circular-progress
             value=${value}
             max=${max}
-            aria-label="Playback progress"></md-circular-progress>
-          <md-icon-button
+            aria-label="Playback progress"></petal-circular-progress>
+          <petal-icon-button
             toggle
             aria-label="Play or pause music"
             @change=${toggleIndeterminate}>
-            <md-icon>play_arrow</md-icon>
-            <md-icon slot="selected">pause</md-icon>
-          </md-icon-button>
+            <petal-icon>play_arrow</petal-icon>
+            <petal-icon slot="selected">pause</petal-icon>
+          </petal-icon-button>
         </div>
       </div>
     `;

@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {CSSResultOrNative} from 'lit';
@@ -13,7 +14,7 @@ import {styles as sharedStyles} from './internal/tab-styles.cssresult.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-primary-tab': MdPrimaryTab;
+    'petal-primary-tab': PetalPrimaryTab;
   }
 }
 
@@ -24,7 +25,7 @@ declare global {
  * @final
  * @suppress {visibility}
  */
-@customElement('md-primary-tab')
-export class MdPrimaryTab extends PrimaryTab {
+@customElement('petal-primary-tab')
+export class PetalPrimaryTab extends PrimaryTab {
   static override styles: CSSResultOrNative[] = [sharedStyles, primaryStyles];
 }

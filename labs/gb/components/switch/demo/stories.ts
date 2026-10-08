@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '@material/web/labs/gb/components/switch/md-gb-switch.js';
@@ -33,14 +34,14 @@ const playground: MaterialStoryInit<StoryKnobs> = {
   name: 'Playground',
   render(knobs) {
     return html`
-      <md-gb-switch .selected=${knobs.selected} ?disabled=${knobs.disabled}>
+      <petal-gb-switch .selected=${knobs.selected} ?disabled=${knobs.disabled}>
         ${knobs.offIcon
-          ? html`<md-gb-icon slot="off-icon">${knobs.offIcon}</md-gb-icon>`
+          ? html`<petal-gb-icon slot="off-icon">${knobs.offIcon}</petal-gb-icon>`
           : nothing}
         ${knobs.onIcon
-          ? html`<md-gb-icon slot="on-icon">${knobs.onIcon}</md-gb-icon>`
+          ? html`<petal-gb-icon slot="on-icon">${knobs.onIcon}</petal-gb-icon>`
           : nothing}
-      </md-gb-switch>
+      </petal-gb-switch>
     `;
   },
 };
@@ -57,11 +58,11 @@ const withIcons: MaterialStoryInit<StoryKnobs> = {
   `,
   render(knobs) {
     return html`
-      <md-gb-switch
+      <petal-gb-switch
         class="css-icons"
         .selected=${knobs.selected}
         ?disabled=${knobs.disabled}>
-      </md-gb-switch>
+      </petal-gb-switch>
     `;
   },
 };

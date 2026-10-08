@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {css, CSSResultOrNative, html, LitElement, nothing} from 'lit';
@@ -41,7 +42,7 @@ export const CLOSE_DURATION_MS = 75;
  * @fires {CustomEvent<{reason: string}>} close - Fired when the snackbar begins closing.
  * @fires {CustomEvent<{reason: string}>} closed - Fired when the snackbar has closed.
  * @slot - Default slot for rich content (rendered after `label-text`). If both `label-text` and slotted content are provided, both render.
- * @slot action - Slot for a custom action button; replaces the built-in action rendered from `action-label`. Prefer the `action-label` attribute, which renders a text button matching the spec. A slotted plain `<button>` is styled by the snackbar, with hover, focus and pressed states. A slotted text `<md-gb-button>` gets the `--action-label-text*` colors and typography, but keeps its own 16px padding and pressed shape, because its component tokens can't be set from outside its shadow root.
+ * @slot action - Slot for a custom action button; replaces the built-in action rendered from `action-label`. Prefer the `action-label` attribute, which renders a text button matching the spec. A slotted plain `<button>` is styled by the snackbar, with hover, focus and pressed states. A slotted text `<petal-gb-button>` gets the `--action-label-text*` colors and typography, but keeps its own 16px padding and pressed shape, because its component tokens can't be set from outside its shadow root.
  * @slot dismiss - Slot for dismiss button (falls back to close icon button when `has-close-button` is set).
  * @csspart surface - The surface container of the snackbar.
  * @csspart label - The container wrapping the label content.

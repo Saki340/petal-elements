@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '@material/web/labs/gb/components/menu/md-gb-menu.js';
@@ -38,7 +39,7 @@ const playground: MaterialStoryInit<StoryKnobs> = {
   styles,
   render(knobs) {
     return html`
-      <md-gb-split-button
+      <petal-gb-split-button
         color=${knobs.color || nothing}
         size=${knobs.size || nothing}>
         <button slot="leading">Label</button>
@@ -47,11 +48,11 @@ const playground: MaterialStoryInit<StoryKnobs> = {
           aria-label="More actions"
           popovertarget="menu-2">
         </button>
-        <md-gb-menu id="menu-2">
-          <md-gb-menu-item>Option 1</md-gb-menu-item>
-          <md-gb-menu-item>Option 2</md-gb-menu-item>
-        </md-gb-menu>
-      </md-gb-split-button>
+        <petal-gb-menu id="menu-2">
+          <petal-gb-menu-item>Option 1</petal-gb-menu-item>
+          <petal-gb-menu-item>Option 2</petal-gb-menu-item>
+        </petal-gb-menu>
+      </petal-gb-split-button>
     `;
   },
 };

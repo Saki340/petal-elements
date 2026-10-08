@@ -22,7 +22,7 @@ Child elements within a tab must be authored in visual order (`icon`, `label`,
 
 | Element | Baseline DOM | Reference element | Notes |
 |---|---|---|---|
-| Icon | `<md-gb-icon>` | `<md-gb-icon>` (default slot) | Unclassed child. `.tab` sets `--md-icon-*` metrics and color. |
+| Icon | `<petal-gb-icon>` | `<petal-gb-icon>` (default slot) | Unclassed child. `.tab` sets `--md-icon-*` metrics and color. |
 | Label | `<span class="tab-label">` | `slot="label"` | Required. Bare text is not supported. |
 | Badge | `<span class="badge tab-badge">` | `slot="badge"` | Optional badge inside a tab. |
 
@@ -35,7 +35,7 @@ widget.
 ```html
 <div class="tabs" role="tablist" focusgroup="tablist inline">
   <button class="tab focus-ring-inner ripple selected" role="tab" aria-selected="true">
-    <md-gb-icon>flight</md-gb-icon>
+    <petal-gb-icon>flight</petal-gb-icon>
     <span class="tab-label">Flights</span>
     <span class="badge tab-badge">3</span>
   </button>
@@ -66,25 +66,25 @@ automatically.
 
 ## Reference implementation
 
-`<md-gb-tabs>` and `<md-gb-tab>` provide a reference custom element
+`<petal-gb-tabs>` and `<petal-gb-tab>` provide a reference custom element
 implementation of the tabs contract.
 
 ```html
-<md-gb-tabs variant="secondary">
-  <md-gb-tab selected tabpanel="flights">
-    <md-gb-icon>flight</md-gb-icon>
+<petal-gb-tabs variant="secondary">
+  <petal-gb-tab selected tabpanel="flights">
+    <petal-gb-icon>flight</petal-gb-icon>
     <span slot="label">Flights</span>
     <span class="badge tab-badge" slot="badge">3</span>
-  </md-gb-tab>
-  <md-gb-tab tabpanel="trips">
+  </petal-gb-tab>
+  <petal-gb-tab tabpanel="trips">
     <span slot="label">Trips</span>
-  </md-gb-tab>
-</md-gb-tabs>
-<md-aria-tabpanel id="flights">...</md-aria-tabpanel>
-<md-aria-tabpanel id="trips">...</md-aria-tabpanel>
+  </petal-gb-tab>
+</petal-gb-tabs>
+<petal-aria-tabpanel id="flights">...</petal-aria-tabpanel>
+<petal-aria-tabpanel id="trips">...</petal-aria-tabpanel>
 ```
 
-### `<md-gb-tabs>`
+### `<petal-gb-tabs>`
 
 | API | Type | Description |
 |---|---|---|
@@ -94,7 +94,7 @@ implementation of the tabs contract.
 | `selectedtabindex` / `.selectedTabIndex` | `number` | Index of the currently selected tab. |
 | `.tabs` | `HTMLElement[]` | Read-only. Array of child tab elements. |
 | `@change` | `Event` | Fired when tab selection changes. |
-| `[default]` | Slot | Children container for `<md-gb-tab>` elements. |
+| `[default]` | Slot | Children container for `<petal-gb-tab>` elements. |
 
 #### CSS custom properties
 
@@ -111,14 +111,14 @@ implementation of the tabs contract.
 | `--divider-color` | Color of the bottom divider. |
 | `--divider-thickness` | Thickness of the bottom divider. |
 
-### `<md-gb-tab>`
+### `<petal-gb-tab>`
 
 | API | Type | Description |
 |---|---|---|
 | `selected` / `.selected` | `boolean` | Default `false`. Whether the tab is selected. |
-| `tabpanel` / `.tabpanel` | `string` | Default `''`. ID of the associated `md-aria-tabpanel`. |
+| `tabpanel` / `.tabpanel` | `string` | Default `''`. ID of the associated `petal-aria-tabpanel`. |
 | `:state(selected)` | CSS state | Applied when the tab is selected. |
-| `[default]` | Slot | Leading icon (e.g. `<md-gb-icon>`). |
+| `[default]` | Slot | Leading icon (e.g. `<petal-gb-icon>`). |
 | `label` | Slot | Tab label element. |
 | `badge` | Slot | Optional badge (e.g. `<span class="badge tab-badge">`). |
 

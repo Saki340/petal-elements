@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '@material/web/labs/gb/components/divider/md-gb-divider.js';
@@ -40,13 +41,13 @@ const playground: MaterialStoryInit<StoryKnobs> = {
     return html`
       <div class="column">
         <div>Vertical</div>
-        <md-gb-divider></md-gb-divider>
+        <petal-gb-divider></petal-gb-divider>
         <div>Items</div>
       </div>
 
       <div class="row">
         <div>Horizontal</div>
-        <md-gb-divider vertical></md-gb-divider>
+        <petal-gb-divider vertical></petal-gb-divider>
         <div>Items</div>
       </div>
     `;

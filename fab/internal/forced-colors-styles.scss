@@ -1,6 +1,7 @@
 //
 // Copyright 2023 Google LLC
 // SPDX-License-Identifier: Apache-2.0
+// Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
 //
 
 // go/keep-sorted start
@@ -18,7 +19,7 @@
     }
   }
 
-  md-focus-ring {
+  petal-focus-ring {
     // Adjust the focus ring padding to account for the 1px border in HCM.
     @include focus-ring.theme(
       (

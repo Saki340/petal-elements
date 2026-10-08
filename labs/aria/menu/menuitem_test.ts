@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 // import 'jasmine'; (google3-only)
@@ -57,15 +58,15 @@ function getCheckmark(menuitem: AriaMenuitemElement) {
   return menuitem.shadowRoot!.querySelector<HTMLElement>('[part="checkmark"]')!;
 }
 
-describe('md-aria-menuitem', () => {
+describe('petal-aria-menuitem', () => {
   const env = new Environment();
 
   async function setUpTest(
-    template = html`<md-aria-menuitem>Menu Item</md-aria-menuitem>`,
+    template = html`<petal-aria-menuitem>Menu Item</petal-aria-menuitem>`,
   ) {
     const root = env.render(template);
     await env.waitForStability();
-    const menuitem = root.querySelector('md-aria-menuitem')!;
+    const menuitem = root.querySelector('petal-aria-menuitem')!;
     return {root, menuitem};
   }
 
@@ -111,7 +112,7 @@ describe('md-aria-menuitem', () => {
 
     it('initializes correctly when disabled attribute is set in HTML', async () => {
       const {menuitem} = await setUpTest(
-        html`<md-aria-menuitem disabled>Disabled Item</md-aria-menuitem>`,
+        html`<petal-aria-menuitem disabled>Disabled Item</petal-aria-menuitem>`,
       );
 
       expectDisabled(menuitem);
@@ -121,11 +122,11 @@ describe('md-aria-menuitem', () => {
   describe('Click behavior and command invocation', () => {
     it('opens an associated popover when popovertarget action is show', async () => {
       const {root, menuitem} = await setUpTest(html`
-        <md-aria-menuitem
+        <petal-aria-menuitem
           popovertarget="test-popover"
           popovertargetaction="show">
           Open popover
-        </md-aria-menuitem>
+        </petal-aria-menuitem>
         <div id="test-popover" popover="manual">Popover content</div>
       `);
       const popover = root.querySelector('#test-popover')!;
@@ -139,11 +140,11 @@ describe('md-aria-menuitem', () => {
 
     it('closes an associated popover when popovertarget action is hide', async () => {
       const {root, menuitem} = await setUpTest(html`
-        <md-aria-menuitem
+        <petal-aria-menuitem
           popovertarget="test-popover"
           popovertargetaction="hide">
           Hide popover
-        </md-aria-menuitem>
+        </petal-aria-menuitem>
         <div id="test-popover" popover="manual">Popover content</div>
       `);
       const popover = root.querySelector('#test-popover') as HTMLElement;
@@ -158,9 +159,9 @@ describe('md-aria-menuitem', () => {
 
     it('invokes command on associated target using commandfor and command attributes', async () => {
       const {root, menuitem} = await setUpTest(html`
-        <md-aria-menuitem commandfor="test-popover" command="show-popover">
+        <petal-aria-menuitem commandfor="test-popover" command="show-popover">
           Show popover
-        </md-aria-menuitem>
+        </petal-aria-menuitem>
         <div id="test-popover" popover="manual">Popover content</div>
       `);
       const popover = root.querySelector('#test-popover')!;
@@ -174,11 +175,11 @@ describe('md-aria-menuitem', () => {
 
     it('does not execute command steps when click event default is prevented', async () => {
       const {root, menuitem} = await setUpTest(html`
-        <md-aria-menuitem
+        <petal-aria-menuitem
           popovertarget="test-popover"
           popovertargetaction="show">
           Open popover
-        </md-aria-menuitem>
+        </petal-aria-menuitem>
         <div id="test-popover" popover="manual">Popover content</div>
       `);
       const popover = root.querySelector('#test-popover')!;
@@ -194,12 +195,12 @@ describe('md-aria-menuitem', () => {
 
     it('does not execute command steps when the item is disabled', async () => {
       const {root, menuitem} = await setUpTest(html`
-        <md-aria-menuitem
+        <petal-aria-menuitem
           popovertarget="test-popover"
           popovertargetaction="show"
           disabled>
           Open popover
-        </md-aria-menuitem>
+        </petal-aria-menuitem>
         <div id="test-popover" popover="manual">Popover content</div>
       `);
       const popover = root.querySelector('#test-popover')!;
@@ -212,9 +213,9 @@ describe('md-aria-menuitem', () => {
 
     it('closes containing menu when an enabled menuitem is clicked', async () => {
       const {root} = await setUpTest(html`
-        <md-aria-menulist id="menu">
-          <md-aria-menuitem id="item1">Item 1</md-aria-menuitem>
-        </md-aria-menulist>
+        <petal-aria-menulist id="menu">
+          <petal-aria-menuitem id="item1">Item 1</petal-aria-menuitem>
+        </petal-aria-menulist>
       `);
       const menulist = root.querySelector('#menu') as AriaMenulistElement;
       const menuitem = root.querySelector('#item1') as AriaMenuitemElement;
@@ -229,9 +230,9 @@ describe('md-aria-menuitem', () => {
 
     it('does not close containing menu when a disabled menuitem is clicked', async () => {
       const {root} = await setUpTest(html`
-        <md-aria-menulist id="menu">
-          <md-aria-menuitem id="item1" disabled>Disabled Item</md-aria-menuitem>
-        </md-aria-menulist>
+        <petal-aria-menulist id="menu">
+          <petal-aria-menuitem id="item1" disabled>Disabled Item</petal-aria-menuitem>
+        </petal-aria-menulist>
       `);
       const menulist = root.querySelector('#menu') as AriaMenulistElement;
       const menuitem = root.querySelector('#item1') as AriaMenuitemElement;
@@ -252,15 +253,15 @@ describe('md-aria-menuitem', () => {
       checkable: 'single' | 'multiple' = 'multiple',
     ) {
       const {root} = await setUpTest(html`
-        <md-aria-menulist>
-          <md-aria-fieldset checkable="${checkable}">
-            <md-aria-menuitem>Item 1</md-aria-menuitem>
-          </md-aria-fieldset>
-        </md-aria-menulist>
+        <petal-aria-menulist>
+          <petal-aria-fieldset checkable="${checkable}">
+            <petal-aria-menuitem>Item 1</petal-aria-menuitem>
+          </petal-aria-fieldset>
+        </petal-aria-menulist>
       `);
-      const menulist = root.querySelector('md-aria-menulist')!;
-      const fieldset = root.querySelector('md-aria-fieldset')!;
-      const menuitem = root.querySelector('md-aria-menuitem')!;
+      const menulist = root.querySelector('petal-aria-menulist')!;
+      const fieldset = root.querySelector('petal-aria-fieldset')!;
+      const menuitem = root.querySelector('petal-aria-menuitem')!;
 
       menulist.showPopover();
       await env.waitForStability();
@@ -415,17 +416,17 @@ describe('md-aria-menuitem', () => {
 
     it('items with `defaultchecked` are checked by default', async () => {
       const {root} = await setUpTest(html`
-        <md-aria-menulist>
-          <md-aria-fieldset checkable="single">
-            <md-aria-menuitem defaultchecked
-              >Default checked item</md-aria-menuitem
+        <petal-aria-menulist>
+          <petal-aria-fieldset checkable="single">
+            <petal-aria-menuitem defaultchecked
+              >Default checked item</petal-aria-menuitem
             >
-            <md-aria-menuitem>Other item</md-aria-menuitem>
-          </md-aria-fieldset>
-        </md-aria-menulist>
+            <petal-aria-menuitem>Other item</petal-aria-menuitem>
+          </petal-aria-fieldset>
+        </petal-aria-menulist>
       `);
-      const menulist = root.querySelector('md-aria-menulist')!;
-      const menuitems = Array.from(root.querySelectorAll('md-aria-menuitem')!);
+      const menulist = root.querySelector('petal-aria-menulist')!;
+      const menuitems = Array.from(root.querySelectorAll('petal-aria-menuitem')!);
 
       menulist.showPopover();
       await env.waitForStability();
@@ -435,16 +436,16 @@ describe('md-aria-menuitem', () => {
 
     it('the last item in a single-checkable fieldset with `defaultchecked` is checked by default', async () => {
       const {root} = await setUpTest(html`
-        <md-aria-menulist>
-          <md-aria-fieldset checkable="single">
-            <md-aria-menuitem defaultchecked>Item 1</md-aria-menuitem>
-            <md-aria-menuitem defaultchecked>Item 2</md-aria-menuitem>
-            <md-aria-menuitem defaultchecked>Item 3</md-aria-menuitem>
-          </md-aria-fieldset>
-        </md-aria-menulist>
+        <petal-aria-menulist>
+          <petal-aria-fieldset checkable="single">
+            <petal-aria-menuitem defaultchecked>Item 1</petal-aria-menuitem>
+            <petal-aria-menuitem defaultchecked>Item 2</petal-aria-menuitem>
+            <petal-aria-menuitem defaultchecked>Item 3</petal-aria-menuitem>
+          </petal-aria-fieldset>
+        </petal-aria-menulist>
       `);
-      const menulist = root.querySelector('md-aria-menulist')!;
-      const menuitems = Array.from(root.querySelectorAll('md-aria-menuitem')!);
+      const menulist = root.querySelector('petal-aria-menulist')!;
+      const menuitems = Array.from(root.querySelectorAll('petal-aria-menuitem')!);
 
       menulist.showPopover();
       await env.waitForStability();
@@ -454,16 +455,16 @@ describe('md-aria-menuitem', () => {
 
     it('multiple items in a muliple-checkable fieldset with `defaultchecked` are checked by default', async () => {
       const {root} = await setUpTest(html`
-        <md-aria-menulist>
-          <md-aria-fieldset checkable="multiple">
-            <md-aria-menuitem defaultchecked>Item 1</md-aria-menuitem>
-            <md-aria-menuitem defaultchecked>Item 2</md-aria-menuitem>
-            <md-aria-menuitem defaultchecked>Item 3</md-aria-menuitem>
-          </md-aria-fieldset>
-        </md-aria-menulist>
+        <petal-aria-menulist>
+          <petal-aria-fieldset checkable="multiple">
+            <petal-aria-menuitem defaultchecked>Item 1</petal-aria-menuitem>
+            <petal-aria-menuitem defaultchecked>Item 2</petal-aria-menuitem>
+            <petal-aria-menuitem defaultchecked>Item 3</petal-aria-menuitem>
+          </petal-aria-fieldset>
+        </petal-aria-menulist>
       `);
-      const menulist = root.querySelector('md-aria-menulist')!;
-      const menuitems = Array.from(root.querySelectorAll('md-aria-menuitem')!);
+      const menulist = root.querySelector('petal-aria-menulist')!;
+      const menuitems = Array.from(root.querySelectorAll('petal-aria-menuitem')!);
 
       menulist.showPopover();
       await env.waitForStability();

@@ -2,6 +2,7 @@
  * @license
  * Copyright 2019 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '../../focus/md-focus-ring.js';
@@ -156,8 +157,8 @@ export class Checkbox extends checkboxBaseClass {
 
         <div class="outline"></div>
         <div class="background"></div>
-        <md-focus-ring part="focus-ring" for="input"></md-focus-ring>
-        <md-ripple for="input" ?disabled=${this.disabled}></md-ripple>
+        <petal-focus-ring part="focus-ring" for="input"></petal-focus-ring>
+        <petal-ripple for="input" ?disabled=${this.disabled}></petal-ripple>
         <svg class="icon" viewBox="0 0 18 18" aria-hidden="true">
           <rect class="mark short" />
           <rect class="mark long" />

@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '@material/web/icon/icon.js';
@@ -11,7 +12,7 @@ import '@material/web/tabs/secondary-tab.js';
 import '@material/web/tabs/tabs.js';
 
 import {MaterialStoryInit} from './material-collection.js';
-import {MdTabs} from '@material/web/tabs/tabs.js';
+import {PetalTabs} from '@material/web/tabs/tabs.js';
 import {styles as typescaleStyles} from '@material/web/typography/md-typescale-styles.cssresult.js';
 import {css, html, nothing} from 'lit';
 import {ref} from 'lit/directives/ref.js';
@@ -31,12 +32,12 @@ const styles = [
       padding: 16px;
     }
 
-    md-tabs {
+    petal-tabs {
       --inline-size: 50vw;
       min-inline-size: var(--inline-size);
     }
 
-    md-tabs.scrolling {
+    petal-tabs.scrolling {
       inline-size: var(--inline-size);
     }
 
@@ -54,42 +55,42 @@ const primary: MaterialStoryInit<StoryKnobs> = {
     const inlineIcon = knobs.inlineIcon;
 
     return html`
-      <md-tabs
+      <petal-tabs
         aria-label="Primary tabs"
         active-tab-index=${knobs.activeTabIndex}
         .autoActivate=${knobs.autoActivate}
         ${setupTabPanels()}>
-        <md-primary-tab
+        <petal-primary-tab
           id="tab-one"
           aria-controls="panel-one"
           .inlineIcon=${inlineIcon}>
           ${tabContent('piano', 'Keyboard')}
-        </md-primary-tab>
-        <md-primary-tab
+        </petal-primary-tab>
+        <petal-primary-tab
           id="tab-two"
           aria-controls="panel-two"
           .inlineIcon=${inlineIcon}>
           ${tabContent('tune', 'Guitar')}
-        </md-primary-tab>
-        <md-primary-tab
+        </petal-primary-tab>
+        <petal-primary-tab
           id="tab-three"
           aria-controls="panel-three"
           .inlineIcon=${inlineIcon}>
           ${tabContent('graphic_eq', 'Drums')}
-        </md-primary-tab>
-        <md-primary-tab
+        </petal-primary-tab>
+        <petal-primary-tab
           id="tab-four"
           aria-controls="panel-four"
           .inlineIcon=${inlineIcon}>
           ${tabContent('speaker', 'Bass')}
-        </md-primary-tab>
-        <md-primary-tab
+        </petal-primary-tab>
+        <petal-primary-tab
           id="tab-five"
           aria-controls="panel-five"
           .inlineIcon=${inlineIcon}>
           ${tabContent('nightlife', 'Saxophone')}
-        </md-primary-tab>
-      </md-tabs>
+        </petal-primary-tab>
+      </petal-tabs>
 
       <div
         role="tabpanel"
@@ -141,24 +142,24 @@ const secondary: MaterialStoryInit<StoryKnobs> = {
     const tabContent = getTabContentGenerator(knobs);
 
     return html`
-      <md-tabs
+      <petal-tabs
         aria-label="Secondary tabs"
         active-tab-index=${knobs.activeTabIndex}
         .autoActivate=${knobs.autoActivate}
         ${setupTabPanels()}>
-        <md-secondary-tab id="tab-one" aria-controls="panel-one">
+        <petal-secondary-tab id="tab-one" aria-controls="panel-one">
           ${tabContent('flight', 'Travel')}
-        </md-secondary-tab>
-        <md-secondary-tab id="tab-two" aria-controls="panel-two">
+        </petal-secondary-tab>
+        <petal-secondary-tab id="tab-two" aria-controls="panel-two">
           ${tabContent('hotel', 'Hotel')}
-        </md-secondary-tab>
-        <md-secondary-tab id="tab-three" aria-controls="panel-three">
+        </petal-secondary-tab>
+        <petal-secondary-tab id="tab-three" aria-controls="panel-three">
           ${tabContent('hiking', 'Activities')}
-        </md-secondary-tab>
-        <md-secondary-tab id="tab-four" aria-controls="panel-four">
+        </petal-secondary-tab>
+        <petal-secondary-tab id="tab-four" aria-controls="panel-four">
           ${tabContent('restaurant', 'Food')}
-        </md-secondary-tab>
-      </md-tabs>
+        </petal-secondary-tab>
+      </petal-tabs>
 
       <div
         role="tabpanel"
@@ -202,29 +203,29 @@ const scrolling: MaterialStoryInit<StoryKnobs> = {
     const tabContent = getTabContentGenerator(knobs);
     const inlineIcon = knobs.inlineIcon;
 
-    return html` <md-tabs
+    return html` <petal-tabs
       aria-label="A tab bar that scrolls"
       class="scrolling"
       active-tab-index=${knobs.activeTabIndex}
       .autoActivate=${knobs.autoActivate}>
       ${new Array(10).fill(html`
-        <md-primary-tab .inlineIcon=${inlineIcon}>
+        <petal-primary-tab .inlineIcon=${inlineIcon}>
           ${tabContent('piano', 'Keyboard')}
-        </md-primary-tab>
-        <md-primary-tab .inlineIcon=${inlineIcon}>
+        </petal-primary-tab>
+        <petal-primary-tab .inlineIcon=${inlineIcon}>
           ${tabContent('tune', 'Guitar')}
-        </md-primary-tab>
-        <md-primary-tab .inlineIcon=${inlineIcon}>
+        </petal-primary-tab>
+        <petal-primary-tab .inlineIcon=${inlineIcon}>
           ${tabContent('graphic_eq', 'Drums')}
-        </md-primary-tab>
-        <md-primary-tab .inlineIcon=${inlineIcon}>
+        </petal-primary-tab>
+        <petal-primary-tab .inlineIcon=${inlineIcon}>
           ${tabContent('speaker', 'Bass')}
-        </md-primary-tab>
-        <md-primary-tab .inlineIcon=${inlineIcon}>
+        </petal-primary-tab>
+        <petal-primary-tab .inlineIcon=${inlineIcon}>
           ${tabContent('nightlife', 'Saxophone')}
-        </md-primary-tab>
+        </petal-primary-tab>
       `)}
-    </md-tabs>`;
+    </petal-tabs>`;
   },
 };
 
@@ -254,25 +255,25 @@ const custom: MaterialStoryInit<StoryKnobs> = {
     const tabContent = getTabContentGenerator(knobs);
 
     return html`
-      <md-tabs
+      <petal-tabs
         aria-label="A custom themed tab bar"
         class="custom"
         active-tab-index=${knobs.activeTabIndex}
         .autoActivate=${knobs.autoActivate}
         ${setupTabPanels()}>
-        <md-primary-tab id="tab-one" aria-controls="panel-one">
+        <petal-primary-tab id="tab-one" aria-controls="panel-one">
           ${tabContent('flight', 'Travel')}
-        </md-primary-tab>
-        <md-primary-tab id="tab-two" aria-controls="panel-two">
+        </petal-primary-tab>
+        <petal-primary-tab id="tab-two" aria-controls="panel-two">
           ${tabContent('hotel', 'Hotel')}
-        </md-primary-tab>
-        <md-primary-tab id="tab-three" aria-controls="panel-three">
+        </petal-primary-tab>
+        <petal-primary-tab id="tab-three" aria-controls="panel-three">
           ${tabContent('hiking', 'Activities')}
-        </md-primary-tab>
-        <md-primary-tab id="tab-four" aria-controls="panel-four">
+        </petal-primary-tab>
+        <petal-primary-tab id="tab-four" aria-controls="panel-four">
           ${tabContent('restaurant', 'Food')}
-        </md-primary-tab>
-      </md-tabs>
+        </petal-primary-tab>
+      </petal-tabs>
 
       <div
         role="tabpanel"
@@ -317,21 +318,21 @@ const primaryAndSecondary: MaterialStoryInit<StoryKnobs> = {
     const inlineIcon = knobs.inlineIcon;
 
     return html`
-      <md-tabs
+      <petal-tabs
         aria-label="Primary tabs"
         active-tab-index=${knobs.activeTabIndex}
         .autoActivate=${knobs.autoActivate}
         ${setupTabPanels()}>
-        <md-primary-tab .inlineIcon=${inlineIcon} aria-controls="movies">
+        <petal-primary-tab .inlineIcon=${inlineIcon} aria-controls="movies">
           ${tabContent('videocam', 'Movies')}
-        </md-primary-tab>
-        <md-primary-tab .inlineIcon=${inlineIcon} aria-controls="photos">
+        </petal-primary-tab>
+        <petal-primary-tab .inlineIcon=${inlineIcon} aria-controls="photos">
           ${tabContent('photo', 'Photos')}
-        </md-primary-tab>
-        <md-primary-tab .inlineIcon=${inlineIcon} aria-controls="music">
+        </petal-primary-tab>
+        <petal-primary-tab .inlineIcon=${inlineIcon} aria-controls="music">
           ${tabContent('audiotrack', 'Music')}
-        </md-primary-tab>
-      </md-tabs>
+        </petal-primary-tab>
+      </petal-tabs>
 
       <div
         role="tabpanel"
@@ -339,20 +340,20 @@ const primaryAndSecondary: MaterialStoryInit<StoryKnobs> = {
         id="movies"
         class="subtabs"
         aria-label="Movies">
-        <md-tabs
+        <petal-tabs
           aria-label="Secondary tabs for movies"
           active-tab-index=${knobs.activeTabIndex}
           .autoActivate=${knobs.autoActivate}
           ${setupTabPanels()}>
-          <md-secondary-tab aria-controls="star-wars">
+          <petal-secondary-tab aria-controls="star-wars">
             Star Wars
-          </md-secondary-tab>
-          <md-secondary-tab aria-controls="avengers">
+          </petal-secondary-tab>
+          <petal-secondary-tab aria-controls="avengers">
             Avengers
-          </md-secondary-tab>
-          <md-secondary-tab aria-controls="jaws">Jaws </md-secondary-tab>
-          <md-secondary-tab aria-controls="forzen">Frozen </md-secondary-tab>
-        </md-tabs>
+          </petal-secondary-tab>
+          <petal-secondary-tab aria-controls="jaws">Jaws </petal-secondary-tab>
+          <petal-secondary-tab aria-controls="forzen">Frozen </petal-secondary-tab>
+        </petal-tabs>
 
         <div
           role="tabpanel"
@@ -394,23 +395,23 @@ const primaryAndSecondary: MaterialStoryInit<StoryKnobs> = {
         class="subtabs"
         aria-label="Photos"
         hidden>
-        <md-tabs
+        <petal-tabs
           aria-label="Secondary tabs for photos"
           active-tab-index=${knobs.activeTabIndex}
           .autoActivate=${knobs.autoActivate}>
-          <md-secondary-tab aria-controls="yosemite">
+          <petal-secondary-tab aria-controls="yosemite">
             Yosemite
-          </md-secondary-tab>
-          <md-secondary-tab aria-controls="mona-lisa">
+          </petal-secondary-tab>
+          <petal-secondary-tab aria-controls="mona-lisa">
             Mona Lisa
-          </md-secondary-tab>
-          <md-secondary-tab aria-controls="swiss-alps">
+          </petal-secondary-tab>
+          <petal-secondary-tab aria-controls="swiss-alps">
             Swiss Alps
-          </md-secondary-tab>
-          <md-secondary-tab aria-controls="niagra-falls">
+          </petal-secondary-tab>
+          <petal-secondary-tab aria-controls="niagra-falls">
             Niagra Falls
-          </md-secondary-tab>
-        </md-tabs>
+          </petal-secondary-tab>
+        </petal-tabs>
 
         <div
           role="tabpanel"
@@ -452,20 +453,20 @@ const primaryAndSecondary: MaterialStoryInit<StoryKnobs> = {
         class="subtabs"
         aria-label="Music"
         hidden>
-        <md-tabs
+        <petal-tabs
           aria-label="Secondary tabs for music"
           active-tab-index=${knobs.activeTabIndex}
           .autoActivate=${knobs.autoActivate}
           ${setupTabPanels()}>
-          <md-secondary-tab aria-controls="rock">Rock </md-secondary-tab>
-          <md-secondary-tab aria-controls="ambient">Ambient </md-secondary-tab>
-          <md-secondary-tab aria-controls="sounds">
+          <petal-secondary-tab aria-controls="rock">Rock </petal-secondary-tab>
+          <petal-secondary-tab aria-controls="ambient">Ambient </petal-secondary-tab>
+          <petal-secondary-tab aria-controls="sounds">
             Soundscapes
-          </md-secondary-tab>
-          <md-secondary-tab aria-controls="noise">
+          </petal-secondary-tab>
+          <petal-secondary-tab aria-controls="noise">
             White Noise
-          </md-secondary-tab>
-        </md-tabs>
+          </petal-secondary-tab>
+        </petal-tabs>
 
         <div
           role="tabpanel"
@@ -512,13 +513,13 @@ const dynamic: MaterialStoryInit<StoryKnobs> = {
     function getTabs(event: Event) {
       return (
         (event.target! as Element).getRootNode() as ShadowRoot
-      ).querySelector('md-tabs')!;
+      ).querySelector('petal-tabs')!;
     }
 
     function addTab(event: Event) {
       const tabs = getTabs(event);
       const count = tabs.childElementCount;
-      const tab = document.createElement('md-primary-tab');
+      const tab = document.createElement('petal-primary-tab');
       tab.textContent = `Tab ${count + 1}`;
       tabs.append(tab);
     }
@@ -550,27 +551,27 @@ const dynamic: MaterialStoryInit<StoryKnobs> = {
     }
 
     return html` <div class="controls">
-        <md-icon-button @click=${addTab}>
-          <md-icon>add</md-icon>
-        </md-icon-button>
-        <md-icon-button @click=${removeTab}>
-          <md-icon>remove</md-icon>
-        </md-icon-button>
-        <md-icon-button @click=${moveTabTowardsStart}>
-          <md-icon>chevron_left</md-icon>
-        </md-icon-button>
-        <md-icon-button @click=${moveTabTowardsEnd}>
-          <md-icon>chevron_right</md-icon>
-        </md-icon-button>
+        <petal-icon-button @click=${addTab}>
+          <petal-icon>add</petal-icon>
+        </petal-icon-button>
+        <petal-icon-button @click=${removeTab}>
+          <petal-icon>remove</petal-icon>
+        </petal-icon-button>
+        <petal-icon-button @click=${moveTabTowardsStart}>
+          <petal-icon>chevron_left</petal-icon>
+        </petal-icon-button>
+        <petal-icon-button @click=${moveTabTowardsEnd}>
+          <petal-icon>chevron_right</petal-icon>
+        </petal-icon-button>
       </div>
-      <md-tabs
+      <petal-tabs
         class="scrolling"
         active-tab-index=${knobs.activeTabIndex}
         .autoActivate=${knobs.autoActivate}>
-        <md-primary-tab .inlineIcon=${inlineIcon}> Tab 1 </md-primary-tab>
-        <md-primary-tab .inlineIcon=${inlineIcon}> Tab 2 </md-primary-tab>
-        <md-primary-tab .inlineIcon=${inlineIcon}> Tab 3 </md-primary-tab>
-      </md-tabs>`;
+        <petal-primary-tab .inlineIcon=${inlineIcon}> Tab 1 </petal-primary-tab>
+        <petal-primary-tab .inlineIcon=${inlineIcon}> Tab 2 </petal-primary-tab>
+        <petal-primary-tab .inlineIcon=${inlineIcon}> Tab 3 </petal-primary-tab>
+      </petal-tabs>`;
   },
 };
 
@@ -579,7 +580,7 @@ function getTabContentGenerator(knobs: StoryKnobs) {
   const useIcon = contentKnob !== 'label';
   const useLabel = contentKnob !== 'icon';
   return (icon: string, label: string) => {
-    const iconTemplate = html`<md-icon slot="icon">${icon}</md-icon>`;
+    const iconTemplate = html`<petal-icon slot="icon">${icon}</petal-icon>`;
     return html`
       ${useIcon ? iconTemplate : nothing} ${useLabel ? html`${label}` : nothing}
     `;
@@ -592,7 +593,7 @@ function setupTabPanels() {
       return;
     }
 
-    const tabs = instance as MdTabs;
+    const tabs = instance as PetalTabs;
     let currentPanel: HTMLElement | null = null;
     tabs.addEventListener('change', () => {
       if (currentPanel) {

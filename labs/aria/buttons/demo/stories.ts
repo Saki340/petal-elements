@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '@material/web/labs/aria/buttons/md-aria-toggle.js';
@@ -17,7 +18,7 @@ export interface StoryKnobs {
 
 const styles = [
   css`
-    md-aria-toggle {
+    petal-aria-toggle {
       padding: 8px 16px;
       font-family: sans-serif;
       border-radius: 8px;
@@ -30,13 +31,13 @@ const toggles: MaterialStoryInit<StoryKnobs> = {
   styles,
   render(knobs) {
     return html`
-      <md-aria-toggle ?selected=${knobs.selected} ?disabled=${knobs.disabled}>
+      <petal-aria-toggle ?selected=${knobs.selected} ?disabled=${knobs.disabled}>
         Bluetooth
-      </md-aria-toggle>
-      <md-aria-toggle selected ?disabled=${knobs.disabled}>
+      </petal-aria-toggle>
+      <petal-aria-toggle selected ?disabled=${knobs.disabled}>
         Wi-Fi
-      </md-aria-toggle>
-      <md-aria-toggle disabled>AI</md-aria-toggle>
+      </petal-aria-toggle>
+      <petal-aria-toggle disabled>AI</petal-aria-toggle>
     `;
   },
 };

@@ -2,16 +2,17 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 // import 'jasmine'; (google3-only)
 
 import {createTokenTests} from '../testing/tokens.js';
 
-import {MdFilterChip} from './filter-chip.js';
+import {PetalFilterChip} from './filter-chip.js';
 
-describe('<md-filter-chip>', () => {
+describe('<petal-filter-chip>', () => {
   describe('.styles', () => {
-    createTokenTests(MdFilterChip.styles);
+    createTokenTests(PetalFilterChip.styles);
   });
 });

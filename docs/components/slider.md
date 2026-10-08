@@ -64,9 +64,9 @@ Sliders can use icons or labels to represent a numeric or relative scale.
 Sliders may be continuous or discrete, and may also represent a range.
 
 ```html
-<md-slider></md-slider>
-<md-slider ticks value="50"></md-slider>
-<md-slider range value-start="25" value-end="75"></md-slider>
+<petal-slider></petal-slider>
+<petal-slider ticks value="50"></petal-slider>
+<petal-slider range value-start="25" value-end="75"></petal-slider>
 ```
 
 ### Continuous
@@ -74,7 +74,7 @@ Sliders may be continuous or discrete, and may also represent a range.
 Allows users to select a value along a subjective range.
 
 ```html
-<md-slider min="0" max="100" value="50"></md-slider>
+<petal-slider min="0" max="100" value="50"></petal-slider>
 ```
 
 ### Discrete
@@ -83,7 +83,7 @@ Allows users to select a specific value from a predetermined range. Tick marks
 may be used to indicate available values.
 
 ```html
-<md-slider step="5" ticks min="0" max="20"></md-slider>
+<petal-slider step="5" ticks min="0" max="20"></petal-slider>
 ```
 
 ### Range
@@ -92,7 +92,7 @@ A range slider has two handles, and indicates a minimum and maximum value in a
 range.
 
 ```html
-<md-slider range value-start="25" value-end="50"></md-slider>
+<petal-slider range value-start="25" value-end="50"></petal-slider>
 ```
 
 ### Value label
@@ -104,7 +104,7 @@ The label appears when the handle is selected. For range sliders, labels appear
 when either handle is selected.
 
 ```html
-<md-slider labeled></md-slider>
+<petal-slider labeled></petal-slider>
 ```
 
 <!-- TODO(b/318567101): ## Accessibility -->
@@ -147,13 +147,13 @@ Token                              | Default value
 }
 </style>
 
-<md-slider
+<petal-slider
   range
   value-start="25"
   value-end="75"
   ticks
   step="5"
-></md-slider>
+></petal-slider>
 ```
 
 <!-- auto-generated API docs start -->
@@ -161,7 +161,7 @@ Token                              | Default value
 ## API
 
 
-### MdSlider <code>&lt;md-slider&gt;</code>
+### PetalSlider <code>&lt;petal-slider&gt;</code>
 
 #### Properties
 

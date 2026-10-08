@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {CSSResultOrNative} from 'lit';
@@ -15,7 +16,7 @@ import {styles as trailingIconStyles} from './internal/trailing-icon-styles.cssr
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-input-chip': MdInputChip;
+    'petal-input-chip': PetalInputChip;
   }
 }
 
@@ -25,8 +26,8 @@ declare global {
  * @final
  * @suppress {visibility}
  */
-@customElement('md-input-chip')
-export class MdInputChip extends InputChip {
+@customElement('petal-input-chip')
+export class PetalInputChip extends InputChip {
   static override styles: CSSResultOrNative[] = [
     sharedStyles,
     trailingIconStyles,

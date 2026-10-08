@@ -2,6 +2,7 @@
  * @license
  * Copyright 2021 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {html} from 'lit';
@@ -13,22 +14,22 @@ import {Harness} from '../../testing/harness.js';
 
 import {Switch} from './switch.js';
 
-@customElement('md-test-switch')
+@customElement('petal-test-switch')
 class TestSwitch extends Switch {}
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-test-switch': TestSwitch;
+    'petal-test-switch': TestSwitch;
   }
 }
 
 function renderSwitch(propsInit: Partial<TestSwitch> = {}) {
   return html`
-    <md-test-switch
+    <petal-test-switch
       ?selected=${propsInit.selected === true}
       ?disabled=${propsInit.disabled === true}
       .name=${propsInit.name ?? ''}
-      value=${ifDefined(propsInit.value)}></md-test-switch>
+      value=${ifDefined(propsInit.value)}></petal-test-switch>
   `;
 }
 
@@ -40,7 +41,7 @@ function renderSwitchInLabel(propsInit: Partial<TestSwitch> = {}) {
   return html` <label>${renderSwitch(propsInit)}</label> `;
 }
 
-describe('md-switch', () => {
+describe('petal-switch', () => {
   const env = new Environment();
 
   async function switchElement(
@@ -49,9 +50,9 @@ describe('md-switch', () => {
   ) {
     const root = env.render(html`<div>${template(propsInit)}</div>`);
     await env.waitForStability();
-    const element = root.querySelector('md-test-switch');
+    const element = root.querySelector('petal-test-switch');
     if (!element) {
-      throw new Error('Could not query rendered <md-test-switch>.');
+      throw new Error('Could not query rendered <petal-test-switch>.');
     }
     return element;
   }

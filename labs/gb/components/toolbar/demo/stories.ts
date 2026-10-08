@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '@material/web/labs/gb/components/button/md-gb-button.js';
@@ -68,26 +69,26 @@ const playground: MaterialStoryInit<StoryKnobs> = {
 
     return html`
       <div class="demo-container">
-        <md-gb-toolbar
+        <petal-gb-toolbar
           color=${color}
           orientation=${orientation}
           ?docked=${docked}
           aria-label="Formatting toolbar">
-          <md-gb-button square type="toggle" selected>
-            <md-gb-icon>edit</md-gb-icon>
+          <petal-gb-button square type="toggle" selected>
+            <petal-gb-icon>edit</petal-gb-icon>
             Edit
-          </md-gb-button>
-          <md-gb-button square type="toggle">
-            <md-gb-icon>palette</md-gb-icon>
+          </petal-gb-button>
+          <petal-gb-button square type="toggle">
+            <petal-gb-icon>palette</petal-gb-icon>
             Style
-          </md-gb-button>
-          <md-gb-icon-button square aria-label="Favorite" type="toggle">
-            <md-gb-icon>favorite</md-gb-icon>
-          </md-gb-icon-button>
-          <md-gb-icon-button square aria-label="Settings" type="toggle">
-            <md-gb-icon>settings</md-gb-icon>
-          </md-gb-icon-button>
-        </md-gb-toolbar>
+          </petal-gb-button>
+          <petal-gb-icon-button square aria-label="Favorite" type="toggle">
+            <petal-gb-icon>favorite</petal-gb-icon>
+          </petal-gb-icon-button>
+          <petal-gb-icon-button square aria-label="Settings" type="toggle">
+            <petal-gb-icon>settings</petal-gb-icon>
+          </petal-gb-icon-button>
+        </petal-gb-toolbar>
       </div>
     `;
   },
@@ -100,54 +101,54 @@ const allVariants: MaterialStoryInit<StoryKnobs> = {
     return html`
       <div class="demo-stack">
         <div class="demo-container">
-          <md-gb-toolbar color="standard" aria-label="Standard floating">
-            <md-gb-button square type="toggle" selected>
-              <md-gb-icon>star</md-gb-icon>
+          <petal-gb-toolbar color="standard" aria-label="Standard floating">
+            <petal-gb-button square type="toggle" selected>
+              <petal-gb-icon>star</petal-gb-icon>
               Starred
-            </md-gb-button>
-            <md-gb-button square type="toggle">
-              <md-gb-icon>visibility</md-gb-icon>
+            </petal-gb-button>
+            <petal-gb-button square type="toggle">
+              <petal-gb-icon>visibility</petal-gb-icon>
               Preview
-            </md-gb-button>
-            <md-gb-icon-button square aria-label="Favorite" type="toggle">
-              <md-gb-icon>favorite</md-gb-icon>
-            </md-gb-icon-button>
-          </md-gb-toolbar>
+            </petal-gb-button>
+            <petal-gb-icon-button square aria-label="Favorite" type="toggle">
+              <petal-gb-icon>favorite</petal-gb-icon>
+            </petal-gb-icon-button>
+          </petal-gb-toolbar>
         </div>
 
         <div class="demo-container">
-          <md-gb-toolbar color="vibrant" aria-label="Vibrant floating">
-            <md-gb-button square type="toggle" selected>
-              <md-gb-icon>auto_awesome</md-gb-icon>
+          <petal-gb-toolbar color="vibrant" aria-label="Vibrant floating">
+            <petal-gb-button square type="toggle" selected>
+              <petal-gb-icon>auto_awesome</petal-gb-icon>
               Generate
-            </md-gb-button>
-            <md-gb-button square type="toggle">
-              <md-gb-icon>palette</md-gb-icon>
+            </petal-gb-button>
+            <petal-gb-button square type="toggle">
+              <petal-gb-icon>palette</petal-gb-icon>
               Theme
-            </md-gb-button>
-            <md-gb-icon-button
+            </petal-gb-button>
+            <petal-gb-icon-button
               square
               aria-label="Bookmark"
               type="toggle"
               selected>
-              <md-gb-icon>bookmark</md-gb-icon>
-            </md-gb-icon-button>
-          </md-gb-toolbar>
+              <petal-gb-icon>bookmark</petal-gb-icon>
+            </petal-gb-icon-button>
+          </petal-gb-toolbar>
         </div>
 
         <div class="demo-container">
-          <md-gb-toolbar color="standard" docked aria-label="Standard docked">
-            <md-gb-icon-button square aria-label="Home" type="toggle">
-              <md-gb-icon>home</md-gb-icon>
-            </md-gb-icon-button>
-            <md-gb-button square type="toggle" selected>
-              <md-gb-icon>folder</md-gb-icon>
+          <petal-gb-toolbar color="standard" docked aria-label="Standard docked">
+            <petal-gb-icon-button square aria-label="Home" type="toggle">
+              <petal-gb-icon>home</petal-gb-icon>
+            </petal-gb-icon-button>
+            <petal-gb-button square type="toggle" selected>
+              <petal-gb-icon>folder</petal-gb-icon>
               Files
-            </md-gb-button>
-            <md-gb-icon-button square aria-label="Image" type="toggle">
-              <md-gb-icon>image</md-gb-icon>
-            </md-gb-icon-button>
-          </md-gb-toolbar>
+            </petal-gb-button>
+            <petal-gb-icon-button square aria-label="Image" type="toggle">
+              <petal-gb-icon>image</petal-gb-icon>
+            </petal-gb-icon-button>
+          </petal-gb-toolbar>
         </div>
       </div>
     `;

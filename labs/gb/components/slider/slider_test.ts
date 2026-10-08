@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 // import 'jasmine'; (google3-only)
@@ -23,14 +24,14 @@ import {
   sliderClasses,
 } from './slider.js';
 
-describe('md-gb-slider', () => {
+describe('petal-gb-slider', () => {
   const env = new Environment();
 
   describe('element mode', () => {
     it('renders with default properties and classes', async () => {
-      const root = env.render(html`<md-gb-slider></md-gb-slider>`);
+      const root = env.render(html`<petal-gb-slider></petal-gb-slider>`);
       await env.waitForStability();
-      const el = root.querySelector('md-gb-slider')!;
+      const el = root.querySelector('petal-gb-slider')!;
 
       expect(el.min).toBe(0);
       expect(el.max).toBe(100);
@@ -66,15 +67,15 @@ describe('md-gb-slider', () => {
 
     it('reflects size, orientation, range, centered, and disabled attributes', async () => {
       const root = env.render(html`
-        <md-gb-slider
+        <petal-gb-slider
           size="lg"
           orientation="vertical"
           range
           centered
-          disabled></md-gb-slider>
+          disabled></petal-gb-slider>
       `);
       await env.waitForStability();
-      const el = root.querySelector('md-gb-slider')!;
+      const el = root.querySelector('petal-gb-slider')!;
 
       expect(el.getAttribute('size')).toBe('lg');
       expect(el.getAttribute('orientation')).toBe('vertical');
@@ -94,10 +95,10 @@ describe('md-gb-slider', () => {
 
     it('updates value and dispatches input and change events on interaction', async () => {
       const root = env.render(
-        html`<md-gb-slider min="0" max="100" value="25"></md-gb-slider>`,
+        html`<petal-gb-slider min="0" max="100" value="25"></petal-gb-slider>`,
       );
       await env.waitForStability();
-      const el = root.querySelector('md-gb-slider')!;
+      const el = root.querySelector('petal-gb-slider')!;
 
       let inputCount = 0;
       let changeCount = 0;
@@ -124,10 +125,10 @@ describe('md-gb-slider', () => {
 
     it('clamps single value within min and max boundaries', async () => {
       const root = env.render(
-        html`<md-gb-slider min="10" max="50" value="0"></md-gb-slider>`,
+        html`<petal-gb-slider min="10" max="50" value="0"></petal-gb-slider>`,
       );
       await env.waitForStability();
-      const el = root.querySelector('md-gb-slider')!;
+      const el = root.querySelector('petal-gb-slider')!;
       const inputEnd =
         el.shadowRoot!.querySelector<HTMLInputElement>('input.slider-end')!;
       expect(inputEnd.valueAsNumber).toBe(10);
@@ -139,14 +140,14 @@ describe('md-gb-slider', () => {
 
     it('renders centered slider track properties and elements', async () => {
       const root = env.render(
-        html`<md-gb-slider
+        html`<petal-gb-slider
           centered
           min="-50"
           max="50"
-          value="25"></md-gb-slider>`,
+          value="25"></petal-gb-slider>`,
       );
       await env.waitForStability();
-      const el = root.querySelector('md-gb-slider')!;
+      const el = root.querySelector('petal-gb-slider')!;
       const sliderRoot = el.shadowRoot!.querySelector<HTMLElement>('.slider')!;
 
       expect(sliderRoot.classList.contains('slider-centered')).toBeTrue();
@@ -168,15 +169,15 @@ describe('md-gb-slider', () => {
 
     it('supports range mode with valueStart and valueEnd', async () => {
       const root = env.render(html`
-        <md-gb-slider
+        <petal-gb-slider
           range
           min="0"
           max="100"
           value-start="20"
-          value-end="80"></md-gb-slider>
+          value-end="80"></petal-gb-slider>
       `);
       await env.waitForStability();
-      const el = root.querySelector('md-gb-slider')!;
+      const el = root.querySelector('petal-gb-slider')!;
 
       expect(el.valueStart).toBe(20);
       expect(el.valueEnd).toBe(80);
@@ -202,15 +203,15 @@ describe('md-gb-slider', () => {
 
     it('clamps range valueStart so it does not exceed valueEnd', async () => {
       const root = env.render(html`
-        <md-gb-slider
+        <petal-gb-slider
           range
           min="0"
           max="100"
           value-start="30"
-          value-end="60"></md-gb-slider>
+          value-end="60"></petal-gb-slider>
       `);
       await env.waitForStability();
-      const el = root.querySelector('md-gb-slider')!;
+      const el = root.querySelector('petal-gb-slider')!;
 
       const inputStart =
         el.shadowRoot!.querySelector<HTMLInputElement>('input.slider-start')!;
@@ -229,15 +230,15 @@ describe('md-gb-slider', () => {
 
     it('marks coincident range handles with slider-is-coincident class', async () => {
       const root = env.render(html`
-        <md-gb-slider
+        <petal-gb-slider
           range
           min="0"
           max="100"
           value-start="50"
-          value-end="50"></md-gb-slider>
+          value-end="50"></petal-gb-slider>
       `);
       await env.waitForStability();
-      const el = root.querySelector('md-gb-slider')!;
+      const el = root.querySelector('petal-gb-slider')!;
 
       const handleStart = el.shadowRoot!.querySelector(
         '.slider-handle.slider-start',
@@ -252,14 +253,14 @@ describe('md-gb-slider', () => {
 
     it('handles keyboard navigation with arrow keys', async () => {
       const root = env.render(
-        html`<md-gb-slider
+        html`<petal-gb-slider
           min="0"
           max="100"
           value="50"
-          step="5"></md-gb-slider>`,
+          step="5"></petal-gb-slider>`,
       );
       await env.waitForStability();
-      const el = root.querySelector('md-gb-slider')!;
+      const el = root.querySelector('petal-gb-slider')!;
       const inputEnd =
         el.shadowRoot!.querySelector<HTMLInputElement>('input.slider-end')!;
 
@@ -276,15 +277,15 @@ describe('md-gb-slider', () => {
 
     it('navigates vertical sliders with arrow keys', async () => {
       const root = env.render(html`
-        <md-gb-slider
+        <petal-gb-slider
           orientation="vertical"
           min="0"
           max="100"
           value="50"
-          step="10"></md-gb-slider>
+          step="10"></petal-gb-slider>
       `);
       await env.waitForStability();
-      const el = root.querySelector('md-gb-slider')!;
+      const el = root.querySelector('petal-gb-slider')!;
       const inputEnd =
         el.shadowRoot!.querySelector<HTMLInputElement>('input.slider-end')!;
 
@@ -305,14 +306,14 @@ describe('md-gb-slider', () => {
 
     it('ignores Tab keydown and does not latch active state', async () => {
       const root = env.render(
-        html`<md-gb-slider
+        html`<petal-gb-slider
           min="0"
           max="100"
           value="50"
-          labeled></md-gb-slider>`,
+          labeled></petal-gb-slider>`,
       );
       await env.waitForStability();
-      const el = root.querySelector('md-gb-slider')!;
+      const el = root.querySelector('petal-gb-slider')!;
       const inputEnd =
         el.shadowRoot!.querySelector<HTMLInputElement>('input.slider-end')!;
 
@@ -330,14 +331,14 @@ describe('md-gb-slider', () => {
 
     it('hides value indicator label immediately on blur', async () => {
       const root = env.render(
-        html`<md-gb-slider
+        html`<petal-gb-slider
           min="0"
           max="100"
           value="50"
-          labeled></md-gb-slider>`,
+          labeled></petal-gb-slider>`,
       );
       await env.waitForStability();
-      const el = root.querySelector('md-gb-slider')!;
+      const el = root.querySelector('petal-gb-slider')!;
       const inputEnd =
         el.shadowRoot!.querySelector<HTMLInputElement>('input.slider-end')!;
 
@@ -358,10 +359,10 @@ describe('md-gb-slider', () => {
 
     it('attaches focus-ring classes to slider-handle-nub', async () => {
       const root = env.render(
-        html`<md-gb-slider min="0" max="100" value="50"></md-gb-slider>`,
+        html`<petal-gb-slider min="0" max="100" value="50"></petal-gb-slider>`,
       );
       await env.waitForStability();
-      const el = root.querySelector('md-gb-slider')!;
+      const el = root.querySelector('petal-gb-slider')!;
       const nub = el.shadowRoot!.querySelector('.slider-handle-nub')!;
 
       expect(nub.classList.contains('slider-handle-nub')).toBeTrue();
@@ -370,15 +371,15 @@ describe('md-gb-slider', () => {
 
     it('displays formatted and custom value indicator labels', async () => {
       const root = env.render(html`
-        <md-gb-slider
+        <petal-gb-slider
           labeled
           min="0"
           max="100"
           value="45.678"
-          value-label="Custom 45"></md-gb-slider>
+          value-label="Custom 45"></petal-gb-slider>
       `);
       await env.waitForStability();
-      const el = root.querySelector('md-gb-slider')!;
+      const el = root.querySelector('petal-gb-slider')!;
       const labelContent = el.shadowRoot!.querySelector(
         '.slider-label-content',
       )!;
@@ -386,14 +387,14 @@ describe('md-gb-slider', () => {
       expect(labelContent.textContent?.trim()).toBe('Custom 45');
     });
 
-    it('renders slotted md-gb-icon on md, lg, and xl horizontal sliders', async () => {
+    it('renders slotted petal-gb-icon on md, lg, and xl horizontal sliders', async () => {
       const root = env.render(html`
-        <md-gb-slider min="0" max="100" value="30" size="md">
-          <md-gb-icon slot="icon">volume_up</md-gb-icon>
-        </md-gb-slider>
+        <petal-gb-slider min="0" max="100" value="30" size="md">
+          <petal-gb-icon slot="icon">volume_up</petal-gb-icon>
+        </petal-gb-slider>
       `);
       await env.waitForStability();
-      const el = root.querySelector('md-gb-slider')!;
+      const el = root.querySelector('petal-gb-slider')!;
 
       const iconSlot = el.shadowRoot!.querySelector('.slider-icon slot')!;
       expect(iconSlot).not.toBeNull();
@@ -402,24 +403,24 @@ describe('md-gb-slider', () => {
 
     it('does not render slotted icon on xs, vertical, or range sliders', async () => {
       const root = env.render(html`
-        <md-gb-slider min="0" max="100" value="30" size="xs">
-          <md-gb-icon slot="icon">volume_up</md-gb-icon>
-        </md-gb-slider>
+        <petal-gb-slider min="0" max="100" value="30" size="xs">
+          <petal-gb-icon slot="icon">volume_up</petal-gb-icon>
+        </petal-gb-slider>
       `);
       await env.waitForStability();
-      const el = root.querySelector('md-gb-slider')!;
+      const el = root.querySelector('petal-gb-slider')!;
 
       expect(el.shadowRoot!.querySelector('.slider-icon')).toBeNull();
     });
 
     it('toggles slider-over-active class on icon when active track crosses icon crossover distance', async () => {
       const root = env.render(html`
-        <md-gb-slider min="0" max="100" value="90" size="lg">
-          <md-gb-icon slot="icon">volume_up</md-gb-icon>
-        </md-gb-slider>
+        <petal-gb-slider min="0" max="100" value="90" size="lg">
+          <petal-gb-icon slot="icon">volume_up</petal-gb-icon>
+        </petal-gb-slider>
       `);
       await env.waitForStability();
-      const el = root.querySelector('md-gb-slider')!;
+      const el = root.querySelector('petal-gb-slider')!;
       const iconEl = el.shadowRoot!.querySelector('.slider-icon')!;
 
       expect(iconEl.classList.contains('slider-over-active')).toBeTrue();
@@ -427,7 +428,7 @@ describe('md-gb-slider', () => {
 
     it('delegates ARIA attributes to native input elements', async () => {
       const root = env.render(html`
-        <md-gb-slider
+        <petal-gb-slider
           range
           aria-label-start="Minimum temperature"
           aria-label-end="Maximum temperature"
@@ -436,10 +437,10 @@ describe('md-gb-slider', () => {
           min="0"
           max="100"
           value-start="20"
-          value-end="80"></md-gb-slider>
+          value-end="80"></petal-gb-slider>
       `);
       await env.waitForStability();
-      const el = root.querySelector('md-gb-slider')!;
+      const el = root.querySelector('petal-gb-slider')!;
 
       const inputStart = el.shadowRoot!.querySelector('input.slider-start')!;
       const inputEnd = el.shadowRoot!.querySelector('input.slider-end')!;
@@ -453,12 +454,12 @@ describe('md-gb-slider', () => {
     it('supports form association and reset callbacks', async () => {
       const root = env.render(html`
         <form id="test-form">
-          <md-gb-slider name="volume" value="70"></md-gb-slider>
+          <petal-gb-slider name="volume" value="70"></petal-gb-slider>
         </form>
       `);
       await env.waitForStability();
       const form = root.querySelector<HTMLFormElement>('#test-form')!;
-      const el = root.querySelector('md-gb-slider')!;
+      const el = root.querySelector('petal-gb-slider')!;
 
       const formData = new FormData(form);
       expect(formData.get('volume')).toBe('70');
@@ -475,13 +476,13 @@ describe('md-gb-slider', () => {
     it('supports form association in range mode with FormData', async () => {
       const root = env.render(html`
         <form id="range-form">
-          <md-gb-slider
+          <petal-gb-slider
             range
             name="price"
             name-start="min_price"
             name-end="max_price"
             value-start="15"
-            value-end="85"></md-gb-slider>
+            value-end="85"></petal-gb-slider>
         </form>
       `);
       await env.waitForStability();

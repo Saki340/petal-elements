@@ -1,6 +1,7 @@
 /*!
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 // go/keep-sorted start by_regex='(.+) prefix_order=sass:
@@ -43,7 +44,7 @@ $pressed-opacity: math.percentage(md-sys-state.$pressed-state-layer-opacity);
 @layer md.sys, md.comp.ripple, md.comp.focus-ring, md.comp.icon-btn,
   md.comp.button;
 @layer md.comp.snackbar {
-  // The token and positioning root: the `md-gb-snackbar` host, or a
+  // The token and positioning root: the `petal-gb-snackbar` host, or a
   // `.snackbar` used in Light DOM without the element.
   :host,
   .snackbar {
@@ -290,14 +291,14 @@ $pressed-opacity: math.percentage(md-sys-state.$pressed-state-layer-opacity);
     --container-shape: calc(var(--container-height) / 2);
   }
 
-  // Slotted text `<md-gb-button>`: best effort. Its shadow DOM owns the
+  // Slotted text `<petal-gb-button>`: best effort. Its shadow DOM owns the
   // container, ripple and focus ring, and it redefines `--container-*` and
   // `--icon-*` on its inner button, so the snackbar's values don't leak in,
   // and its padding and pressed shape can't be set from here. The text
   // variant colors its label, icon and state layer with
   // `--md-sys-color-primary` and uses the label-lg typescale; point those at
   // the snackbar's action tokens.
-  .snackbar-actions ::slotted(md-gb-button[slot='action']) {
+  .snackbar-actions ::slotted(petal-gb-button[slot='action']) {
     --md-sys-color-primary: var(--action-label-text-color);
     --md-sys-typescale-label-lg: var(--action-label-text);
     --md-sys-typescale-label-lg-axes: var(--action-label-text-axes);
@@ -306,7 +307,7 @@ $pressed-opacity: math.percentage(md-sys-state.$pressed-state-layer-opacity);
 
   // Slotted plain element such as `<button>`. It is light DOM, so it can't
   // use the shared ripple or focus ring; draw the Figma states here.
-  .snackbar-actions ::slotted([slot='action']:not(md-gb-button)) {
+  .snackbar-actions ::slotted([slot='action']:not(petal-gb-button)) {
     color: var(--action-label-text-color);
     background: transparent;
     border: none;
@@ -326,12 +327,12 @@ $pressed-opacity: math.percentage(md-sys-state.$pressed-state-layer-opacity);
     white-space: nowrap;
   }
 
-  .snackbar-actions ::slotted([slot='action']:not(md-gb-button):disabled) {
+  .snackbar-actions ::slotted([slot='action']:not(petal-gb-button):disabled) {
     cursor: default;
   }
 
   .snackbar-actions
-    ::slotted([slot='action']:not(md-gb-button):not(:disabled):hover) {
+    ::slotted([slot='action']:not(petal-gb-button):not(:disabled):hover) {
     background-color: hsl(
       from var(--action-label-text-color) h s l / #{$hover-opacity}
     );
@@ -339,14 +340,14 @@ $pressed-opacity: math.percentage(md-sys-state.$pressed-state-layer-opacity);
 
   // Figma 44:43651 draws a focus ring and no focus state layer. Matches the
   // shared `.focus-ring-outer` color and geometry.
-  .snackbar-actions ::slotted([slot='action']:not(md-gb-button):focus-visible) {
+  .snackbar-actions ::slotted([slot='action']:not(petal-gb-button):focus-visible) {
     outline: md-sys-state-focus-indicator.$thickness solid
       var(--md-sys-color-secondary);
     outline-offset: md-sys-state-focus-indicator.$outer-offset;
   }
 
   .snackbar-actions
-    ::slotted([slot='action']:not(md-gb-button):not(:disabled):active) {
+    ::slotted([slot='action']:not(petal-gb-button):not(:disabled):active) {
     background-color: hsl(
       from var(--action-label-text-color) h s l / #{$pressed-opacity}
     );
@@ -370,7 +371,7 @@ $pressed-opacity: math.percentage(md-sys-state.$pressed-state-layer-opacity);
   }
 
   // Extends the touch target to the full 48px close slot, like
-  // md-icon-button's touch target.
+  // petal-icon-button's touch target.
   .snackbar-dismiss::after {
     content: '';
     position: absolute;

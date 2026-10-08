@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import './material-collection.js';
@@ -13,7 +14,7 @@ import {
   materialInitsToStoryInits,
   setUpDemo,
 } from './material-collection.js';
-import {MdTabs} from '@material/web/tabs/tabs.js';
+import {PetalTabs} from '@material/web/tabs/tabs.js';
 import {
   boolInput,
   Knob,
@@ -32,7 +33,7 @@ const collection = new MaterialCollection<KnobTypesToKnobs<StoryKnobs>>(
       // fire a change event manually to sync tabbed content
       wiring: async (knob, value, container) => {
         await new Promise(requestAnimationFrame);
-        const tabs = Array.from(container.querySelectorAll<MdTabs>('md-tabs'));
+        const tabs = Array.from(container.querySelectorAll<PetalTabs>('petal-tabs'));
         for (const tab of tabs) {
           const event = new Event('change', {bubbles: true, composed: true});
           tab.dispatchEvent(event);

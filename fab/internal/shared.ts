@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '../../elevation/elevation.js';
@@ -56,9 +57,9 @@ export abstract class SharedFab extends fabBaseClass {
       <button
         class="fab ${classMap(this.getRenderClasses())}"
         aria-label=${ariaLabel || nothing}>
-        <md-elevation part="elevation"></md-elevation>
-        <md-focus-ring part="focus-ring"></md-focus-ring>
-        <md-ripple class="ripple"></md-ripple>
+        <petal-elevation part="elevation"></petal-elevation>
+        <petal-focus-ring part="focus-ring"></petal-focus-ring>
+        <petal-ripple class="ripple"></petal-ripple>
         ${this.renderTouchTarget()} ${this.renderIcon()} ${this.renderLabel()}
       </button>
     `;

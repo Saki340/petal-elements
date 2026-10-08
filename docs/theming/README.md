@@ -43,7 +43,7 @@ and can be scoped with CSS selectors.
 
 ```css
 .square-buttons {
-  /* Changes all <md-filled-button> instances matching the selector */
+  /* Changes all <petal-filled-button> instances matching the selector */
   --md-filled-button-container-shape: 0px;
 }
 ```
@@ -126,7 +126,7 @@ tokens or concrete values.
   --md-filled-button-container-shape: 0px;
 }
 
-md-filled-button.error {
+petal-filled-button.error {
   --md-filled-button-container-color: var(--md-sys-color-error);
   --md-filled-button-label-text-color: var(--md-sys-color-on-error);
 }

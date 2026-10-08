@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {CSSResultOrNative} from 'lit';
@@ -15,7 +16,7 @@ export {type SelectOption} from './internal/selectoption/select-option.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-select-option': MdSelectOption;
+    'petal-select-option': PetalSelectOption;
   }
 }
 
@@ -30,26 +31,26 @@ declare global {
  * analogous to the native HTML `<select>` element. This is the option that
  * can be placed inside of an md-select.
  *
- * This component is a subclass of `md-menu-item` and can accept the same slots,
- * properties, and events as `md-menu-item`.
+ * This component is a subclass of `petal-menu-item` and can accept the same slots,
+ * properties, and events as `petal-menu-item`.
  *
  * @example
  * ```html
- * <md-outlined-select label="fruits">
+ * <petal-outlined-select label="fruits">
  *   <!-- An empty selected option will give select an "un-filled" state -->
- *   <md-select-option selected></md-select-option>
- *   <md-select-option value="apple" headline="Apple"></md-select-option>
- *   <md-select-option value="banana" headline="Banana"></md-select-option>
- *   <md-select-option value="kiwi" headline="Kiwi"></md-select-option>
- *   <md-select-option value="orange" headline="Orange"></md-select-option>
- *   <md-select-option value="tomato" headline="Tomato"></md-select-option>
- * </md-outlined-select>
+ *   <petal-select-option selected></petal-select-option>
+ *   <petal-select-option value="apple" headline="Apple"></petal-select-option>
+ *   <petal-select-option value="banana" headline="Banana"></petal-select-option>
+ *   <petal-select-option value="kiwi" headline="Kiwi"></petal-select-option>
+ *   <petal-select-option value="orange" headline="Orange"></petal-select-option>
+ *   <petal-select-option value="tomato" headline="Tomato"></petal-select-option>
+ * </petal-outlined-select>
  * ```
  *
  * @final
  * @suppress {visibility}
  */
-@customElement('md-select-option')
-export class MdSelectOption extends SelectOptionEl {
+@customElement('petal-select-option')
+export class PetalSelectOption extends SelectOptionEl {
   static override styles: CSSResultOrNative[] = [styles];
 }

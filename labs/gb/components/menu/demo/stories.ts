@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '@material/web/labs/gb/components/menu/md-gb-menu.js';
@@ -50,26 +51,26 @@ const playground: MaterialStoryInit<StoryKnobs> = {
       <button popovertarget="menu" class=${button({color: 'filled'})}>
         Open Menu
       </button>
-      <md-gb-menu id="menu" color=${knobs.vibrant ? 'vibrant' : 'standard'}>
-        <md-gb-menu-item>Standard Item 1</md-gb-menu-item>
-        <md-gb-menu-item>
+      <petal-gb-menu id="menu" color=${knobs.vibrant ? 'vibrant' : 'standard'}>
+        <petal-gb-menu-item>Standard Item 1</petal-gb-menu-item>
+        <petal-gb-menu-item>
           Standard Item 2
           <span slot="supporting-text">Supporting text</span>
-        </md-gb-menu-item>
-        <md-gb-menu-item disabled>Standard Item 3</md-gb-menu-item>
+        </petal-gb-menu-item>
+        <petal-gb-menu-item disabled>Standard Item 3</petal-gb-menu-item>
         <hr class=${divider()} />
-        <md-gb-menu-group checkable="single">
-          <md-gb-menu-item checked>Radio 1</md-gb-menu-item>
-          <md-gb-menu-item>Radio 2</md-gb-menu-item>
-          <md-gb-menu-item disabled>Radio 3</md-gb-menu-item>
-        </md-gb-menu-group>
+        <petal-gb-menu-group checkable="single">
+          <petal-gb-menu-item checked>Radio 1</petal-gb-menu-item>
+          <petal-gb-menu-item>Radio 2</petal-gb-menu-item>
+          <petal-gb-menu-item disabled>Radio 3</petal-gb-menu-item>
+        </petal-gb-menu-group>
         <hr class=${divider()} />
-        <md-gb-menu-group checkable="multiple">
-          <md-gb-menu-item checked>Checkbox 1</md-gb-menu-item>
-          <md-gb-menu-item>Checkbox 2</md-gb-menu-item>
-          <md-gb-menu-item disabled checked>Checkbox 3</md-gb-menu-item>
-        </md-gb-menu-group>
-      </md-gb-menu>
+        <petal-gb-menu-group checkable="multiple">
+          <petal-gb-menu-item checked>Checkbox 1</petal-gb-menu-item>
+          <petal-gb-menu-item>Checkbox 2</petal-gb-menu-item>
+          <petal-gb-menu-item disabled checked>Checkbox 3</petal-gb-menu-item>
+        </petal-gb-menu-group>
+      </petal-gb-menu>
     `;
   },
 };

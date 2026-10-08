@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '../../divider/divider.js';
@@ -311,7 +312,7 @@ export class Dialog extends dialogBaseClass {
                 name="headline"
                 @slotchange=${this.handleHeadlineChange}></slot>
             </h2>
-            <md-divider></md-divider>
+            <petal-divider></petal-divider>
           </div>
           <div class="scroller">
             <div class="content">
@@ -321,7 +322,7 @@ export class Dialog extends dialogBaseClass {
             </div>
           </div>
           <div class="actions">
-            <md-divider></md-divider>
+            <petal-divider></petal-divider>
             <slot name="actions" @slotchange=${this.handleActionsChange}></slot>
           </div>
         </div>

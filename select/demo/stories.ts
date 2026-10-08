@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '@material/web/icon/icon.js';
@@ -38,7 +39,7 @@ const selects: MaterialStoryInit<StoryKnobs> = {
   render(knobs) {
     return html`
       <div style="display: flex; gap: 16px;">
-        <md-filled-select
+        <petal-filled-select
           .label=${knobs.label}
           .quick=${knobs.quick}
           .required=${knobs.required}
@@ -54,9 +55,9 @@ const selects: MaterialStoryInit<StoryKnobs> = {
           ${renderIcon(knobs['slot=leading-icon'], 'leading-icon')}
           ${renderIcon(knobs['slot=trailing-icon'], 'trailing-icon')}
           ${renderItems()}
-        </md-filled-select>
+        </petal-filled-select>
 
-        <md-outlined-select
+        <petal-outlined-select
           .label=${knobs.label}
           .quick=${knobs.quick}
           .required=${knobs.required}
@@ -72,7 +73,7 @@ const selects: MaterialStoryInit<StoryKnobs> = {
           ${renderIcon(knobs['slot=leading-icon'], 'leading-icon')}
           ${renderIcon(knobs['slot=trailing-icon'], 'trailing-icon')}
           ${renderItems()}
-        </md-outlined-select>
+        </petal-outlined-select>
       </div>
     `;
   },
@@ -80,36 +81,36 @@ const selects: MaterialStoryInit<StoryKnobs> = {
 
 function renderIcon(iconName: string, slot: 'leading-icon' | 'trailing-icon') {
   return iconName
-    ? html`<md-icon slot=${slot}><span>${iconName}</span></md-icon>`
+    ? html`<petal-icon slot=${slot}><span>${iconName}</span></petal-icon>`
     : nothing;
 }
 
 function renderItems() {
-  return html` <md-select-option aria-label="blank" value=""></md-select-option>
-    <md-select-option selected value="apple">
+  return html` <petal-select-option aria-label="blank" value=""></petal-select-option>
+    <petal-select-option selected value="apple">
       <div slot="headline">Apple</div>
-    </md-select-option>
-    <md-select-option value="apricot">
+    </petal-select-option>
+    <petal-select-option value="apricot">
       <div slot="headline">Apricot</div>
-    </md-select-option>
-    <md-select-option value="apricot">
+    </petal-select-option>
+    <petal-select-option value="apricot">
       <div slot="headline">Apricots</div>
-    </md-select-option>
-    <md-select-option value="avocado">
+    </petal-select-option>
+    <petal-select-option value="avocado">
       <div slot="headline">Avocado</div>
-    </md-select-option>
-    <md-select-option value="green_apple">
+    </petal-select-option>
+    <petal-select-option value="green_apple">
       <div slot="headline">Green Apple</div>
-    </md-select-option>
-    <md-select-option value="green_grapes">
+    </petal-select-option>
+    <petal-select-option value="green_grapes">
       <div slot="headline">Green Grapes</div>
-    </md-select-option>
-    <md-select-option value="olive">
+    </petal-select-option>
+    <petal-select-option value="olive">
       <div slot="headline">Olive</div>
-    </md-select-option>
-    <md-select-option value="orange">
+    </petal-select-option>
+    <petal-select-option value="orange">
       <div slot="headline">Orange</div>
-    </md-select-option>`;
+    </petal-select-option>`;
 }
 
 /** Select stories. */

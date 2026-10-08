@@ -2,6 +2,7 @@
  * @license
  * Copyright 2022 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {CSSResultOrNative} from 'lit';
@@ -13,17 +14,17 @@ import {styles as sharedStyles} from './internal/shared-styles.cssresult.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-outlined-segmented-button-set': MdOutlinedSegmentedButtonSet;
+    'petal-outlined-segmented-button-set': PetalOutlinedSegmentedButtonSet;
   }
 }
 
 /**
- * MdOutlinedSegmentedButtonSet is the custom element for the Material
+ * PetalOutlinedSegmentedButtonSet is the custom element for the Material
  * Design outlined segmented button set component.
  * @final
  * @suppress {visibility}
  */
-@customElement('md-outlined-segmented-button-set')
-export class MdOutlinedSegmentedButtonSet extends OutlinedSegmentedButtonSet {
+@customElement('petal-outlined-segmented-button-set')
+export class PetalOutlinedSegmentedButtonSet extends OutlinedSegmentedButtonSet {
   static override styles: CSSResultOrNative[] = [sharedStyles, outlinedStyles];
 }

@@ -2,6 +2,7 @@
  * @license
  * Copyright 2021 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '@material/web/button/elevated-button.js';
@@ -43,74 +44,74 @@ const buttons: MaterialStoryInit<StoryKnobs> = {
     return html`
       <div class="column">
         <div class="row">
-          <md-filled-button
+          <petal-filled-button
             ?disabled=${disabled}
             ?soft-disabled=${softDisabled}>
             ${label || 'Filled'}
-          </md-filled-button>
+          </petal-filled-button>
 
-          <md-outlined-button
+          <petal-outlined-button
             ?disabled=${disabled}
             ?soft-disabled=${softDisabled}>
             ${label || 'Outlined'}
-          </md-outlined-button>
+          </petal-outlined-button>
 
-          <md-elevated-button
+          <petal-elevated-button
             ?disabled=${disabled}
             ?soft-disabled=${softDisabled}>
             ${label || 'Elevated'}
-          </md-elevated-button>
+          </petal-elevated-button>
 
-          <md-filled-tonal-button
+          <petal-filled-tonal-button
             ?disabled=${disabled}
             ?soft-disabled=${softDisabled}>
             ${label || 'Tonal'}
-          </md-filled-tonal-button>
+          </petal-filled-tonal-button>
 
-          <md-text-button ?disabled=${disabled} ?soft-disabled=${softDisabled}>
+          <petal-text-button ?disabled=${disabled} ?soft-disabled=${softDisabled}>
             ${label || 'Text'}
-          </md-text-button>
+          </petal-text-button>
         </div>
         <div class="row">
-          <md-filled-button
+          <petal-filled-button
             ?disabled=${disabled}
             ?soft-disabled=${softDisabled}
             aria-label="${label || 'Filled'} button with icon">
-            <md-icon slot="icon">upload</md-icon>
+            <petal-icon slot="icon">upload</petal-icon>
             ${label || 'Filled'}
-          </md-filled-button>
+          </petal-filled-button>
 
-          <md-outlined-button
+          <petal-outlined-button
             ?disabled=${disabled}
             ?soft-disabled=${softDisabled}
             aria-label="${label || 'Outlined'} button with icon">
-            <md-icon slot="icon">upload</md-icon>
+            <petal-icon slot="icon">upload</petal-icon>
             ${label || 'Outlined'}
-          </md-outlined-button>
+          </petal-outlined-button>
 
-          <md-elevated-button
+          <petal-elevated-button
             ?disabled=${disabled}
             ?soft-disabled=${softDisabled}
             aria-label="${label || 'Elevated'} button with icon">
-            <md-icon slot="icon">upload</md-icon>
+            <petal-icon slot="icon">upload</petal-icon>
             ${label || 'Elevated'}
-          </md-elevated-button>
+          </petal-elevated-button>
 
-          <md-filled-tonal-button
+          <petal-filled-tonal-button
             ?disabled=${disabled}
             ?soft-disabled=${softDisabled}
             aria-label="${label || 'Tonal'} button with icon">
-            <md-icon slot="icon">upload</md-icon>
+            <petal-icon slot="icon">upload</petal-icon>
             ${label || 'Tonal'}
-          </md-filled-tonal-button>
+          </petal-filled-tonal-button>
 
-          <md-text-button
+          <petal-text-button
             ?disabled=${disabled}
             ?soft-disabled=${softDisabled}
             aria-label="${label || 'Text'} button with icon">
-            <md-icon slot="icon">upload</md-icon>
+            <petal-icon slot="icon">upload</petal-icon>
             ${label || 'Text'}
-          </md-text-button>
+          </petal-text-button>
         </div>
       </div>
     `;
@@ -124,106 +125,106 @@ const links: MaterialStoryInit<StoryKnobs> = {
     return html`
       <div class="column">
         <div class="row">
-          <md-filled-button
+          <petal-filled-button
             ?disabled=${disabled}
             ?soft-disabled=${softDisabled}
             href="https://google.com"
             target="_blank"
             trailing-icon>
             ${label || 'Filled'}
-          </md-filled-button>
+          </petal-filled-button>
 
-          <md-outlined-button
+          <petal-outlined-button
             ?disabled=${disabled}
             ?soft-disabled=${softDisabled}
             href="https://google.com"
             target="_blank"
             trailing-icon>
             ${label || 'Outlined'}
-          </md-outlined-button>
+          </petal-outlined-button>
 
-          <md-elevated-button
+          <petal-elevated-button
             ?disabled=${disabled}
             ?soft-disabled=${softDisabled}
             href="https://google.com"
             target="_blank"
             trailing-icon>
             ${label || 'Elevated'}
-          </md-elevated-button>
+          </petal-elevated-button>
 
-          <md-filled-tonal-button
+          <petal-filled-tonal-button
             ?disabled=${disabled}
             ?soft-disabled=${softDisabled}
             href="https://google.com"
             target="_blank"
             trailing-icon>
             ${label || 'Tonal'}
-          </md-filled-tonal-button>
+          </petal-filled-tonal-button>
 
-          <md-text-button
+          <petal-text-button
             ?disabled=${disabled}
             ?soft-disabled=${softDisabled}
             href="https://google.com"
             target="_blank"
             trailing-icon>
             ${label || 'Text'}
-          </md-text-button>
+          </petal-text-button>
         </div>
         <div class="row">
-          <md-filled-button
+          <petal-filled-button
             aria-label="${label || 'Filled'} link with trailing icon"
             ?disabled=${disabled}
             ?soft-disabled=${softDisabled}
             href="https://google.com"
             target="_blank"
             trailing-icon>
-            <md-icon slot="icon">open_in_new</md-icon>
+            <petal-icon slot="icon">open_in_new</petal-icon>
             ${label || 'Filled'}
-          </md-filled-button>
+          </petal-filled-button>
 
-          <md-outlined-button
+          <petal-outlined-button
             aria-label="${label || 'Outlined'} link with trailing icon"
             ?disabled=${disabled}
             ?soft-disabled=${softDisabled}
             href="https://google.com"
             target="_blank"
             trailing-icon>
-            <md-icon slot="icon">open_in_new</md-icon>
+            <petal-icon slot="icon">open_in_new</petal-icon>
             ${label || 'Outlined'}
-          </md-outlined-button>
+          </petal-outlined-button>
 
-          <md-elevated-button
+          <petal-elevated-button
             aria-label="${label || 'Elevated'} link with trailing icon"
             ?disabled=${disabled}
             ?soft-disabled=${softDisabled}
             href="https://google.com"
             target="_blank"
             trailing-icon>
-            <md-icon slot="icon">open_in_new</md-icon>
+            <petal-icon slot="icon">open_in_new</petal-icon>
             ${label || 'Elevated'}
-          </md-elevated-button>
+          </petal-elevated-button>
 
-          <md-filled-tonal-button
+          <petal-filled-tonal-button
             aria-label="${label || 'Tonal'} link with trailing icon"
             ?disabled=${disabled}
             ?soft-disabled=${softDisabled}
             href="https://google.com"
             target="_blank"
             trailing-icon>
-            <md-icon slot="icon">open_in_new</md-icon>
+            <petal-icon slot="icon">open_in_new</petal-icon>
             ${label || 'Tonal'}
-          </md-filled-tonal-button>
+          </petal-filled-tonal-button>
 
-          <md-text-button
+          <petal-text-button
             aria-label="${label || 'Text'} link with trailing icon"
             ?disabled=${disabled}
             ?soft-disabled=${softDisabled}
             href="https://google.com"
             target="_blank"
             trailing-icon>
-            <md-icon slot="icon">open_in_new</md-icon>
+            <petal-icon slot="icon">open_in_new</petal-icon>
             ${label || 'Text'}
-          </md-text-button>
+          </petal-text-button>
         </div>
       </div>
     `;

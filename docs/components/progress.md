@@ -85,11 +85,11 @@ unspecified amount of progress.
       aria-label="Two circular and linear progress indicator examples, one with three quarters of the track full
 and the other
 indeterminate.">
-    <md-circular-progress value="0.75"></md-circular-progress>
-    <md-circular-progress indeterminate></md-circular-progress>
+    <petal-circular-progress value="0.75"></petal-circular-progress>
+    <petal-circular-progress indeterminate></petal-circular-progress>
     <div style="display: flex; flex-direction: column; align-self: stretch; justify-content: space-evenly;">
-      <md-linear-progress value="0.75"></md-linear-progress>
-      <md-linear-progress indeterminate></md-linear-progress>
+      <petal-linear-progress value="0.75"></petal-linear-progress>
+      <petal-linear-progress indeterminate></petal-linear-progress>
     </div>
   </figure>
 </div>
@@ -99,11 +99,11 @@ indeterminate.">
 <!-- catalog-only-end -->
 
 ```html
-<md-circular-progress value="0.75"></md-circular-progress>
-<md-circular-progress indeterminate></md-circular-progress>
+<petal-circular-progress value="0.75"></petal-circular-progress>
+<petal-circular-progress indeterminate></petal-circular-progress>
 
-<md-linear-progress indeterminate></md-linear-progress>
-<md-linear-progress value="0.5"></md-linear-progress>
+<petal-linear-progress indeterminate></petal-linear-progress>
+<petal-linear-progress value="0.5"></petal-linear-progress>
 ```
 
 ### Four colors
@@ -123,8 +123,8 @@ primary container, tertiary, and tertiary container by default).
       style="justify-content:center; gap: 16px;"
       title="A four-color indeterminate circular and linear progress indicator"
       aria-label="Indeterminate progress indicators that cycles between four colors.">
-    <md-circular-progress four-color indeterminate></md-circular-progress>
-    <md-linear-progress four-color indeterminate></md-linear-progress>
+    <petal-circular-progress four-color indeterminate></petal-circular-progress>
+    <petal-linear-progress four-color indeterminate></petal-linear-progress>
   </figure>
 </div>
 
@@ -133,8 +133,8 @@ primary container, tertiary, and tertiary container by default).
 <!-- catalog-only-end -->
 
 ```html
-<md-circular-progress four-color indeterminate></md-circular-progress>
-<md-linear-progress four-color indeterminate></md-linear-progress>
+<petal-circular-progress four-color indeterminate></petal-circular-progress>
+<petal-linear-progress four-color indeterminate></petal-linear-progress>
 ```
 
 ## Accessibility
@@ -144,9 +144,9 @@ Add an
 attribute to progress indicators to give them a descriptive name.
 
 ```html
-<md-circular-progress value="0.5" aria-label="Page refresh progress"></md-circular-progress>
+<petal-circular-progress value="0.5" aria-label="Page refresh progress"></petal-circular-progress>
 
-<md-linear-progress value="0.5" aria-label="Download progress"></md-linear-progress>
+<petal-linear-progress value="0.5" aria-label="Download progress"></petal-linear-progress>
 ```
 
 ## Circular progress
@@ -168,8 +168,8 @@ circular track in a clockwise direction.
       style="justify-content:center; gap: 16px;"
       title="Circular progress indicators"
       aria-label="An indeterminate and determinate circular progress indicator.">
-    <md-circular-progress indeterminate></md-circular-progress>
-    <md-circular-progress value="0.6"></md-circular-progress>
+    <petal-circular-progress indeterminate></petal-circular-progress>
+    <petal-circular-progress value="0.6"></petal-circular-progress>
   </figure>
 </div>
 
@@ -178,8 +178,8 @@ circular track in a clockwise direction.
 <!-- catalog-only-end -->
 
 ```html
-<md-circular-progress indeterminate></md-circular-progress>
-<md-circular-progress value="0.6"></md-circular-progress>
+<petal-circular-progress indeterminate></petal-circular-progress>
+<petal-circular-progress value="0.6"></petal-circular-progress>
 ```
 
 ## Linear progress
@@ -201,8 +201,8 @@ fixed, visible track.
       style="justify-content:center; gap: 16px;"
       title="Linear progress indicators"
       aria-label="An indeterminate and determinate linear progress indicator.">
-    <md-linear-progress indeterminate></md-linear-progress>
-    <md-linear-progress value="0.6"></md-linear-progress>
+    <petal-linear-progress indeterminate></petal-linear-progress>
+    <petal-linear-progress value="0.6"></petal-linear-progress>
   </figure>
 </div>
 
@@ -211,8 +211,8 @@ fixed, visible track.
 <!-- catalog-only-end -->
 
 ```html
-<md-linear-progress indeterminate></md-linear-progress>
-<md-linear-progress value="0.6"></md-linear-progress>
+<petal-linear-progress indeterminate></petal-linear-progress>
+<petal-linear-progress value="0.6"></petal-linear-progress>
 ```
 
 ### Buffer
@@ -233,7 +233,7 @@ while the buffer dots represent unknown progress.
       style="justify-content:center;"
       title="Progress and buffer"
       aria-label="A linear progress indicator with partial progress and an indeterminate buffer.">
-    <md-linear-progress value="0.5" buffer="0.8"></md-linear-progress>
+    <petal-linear-progress value="0.5" buffer="0.8"></petal-linear-progress>
   </figure>
 </div>
 
@@ -242,7 +242,7 @@ while the buffer dots represent unknown progress.
 <!-- catalog-only-end -->
 
 ```html
-<md-linear-progress value="0.5" buffer="0.8"></md-linear-progress>
+<petal-linear-progress value="0.5" buffer="0.8"></petal-linear-progress>
 ```
 
 ## Theming
@@ -290,7 +290,7 @@ Token                                           | Default value
       }
     </style>
 
-    <md-circular-progress value="0.5"></md-circular-progress>
+    <petal-circular-progress value="0.5"></petal-circular-progress>
   </figure>
 </div>
 
@@ -307,7 +307,7 @@ Token                                           | Default value
 }
 </style>
 
-<md-circular-progress value="0.5"></md-circular-progress>
+<petal-circular-progress value="0.5"></petal-circular-progress>
 ```
 
 ### Linear progress tokens
@@ -349,11 +349,11 @@ Token                                          | Default value
       --md-sys-color-primary: #006A6A;
       --md-sys-color-surface-container-highest: #DDE4E3;
     }
-    .styled-example md-linear-progress {
+    .styled-example petal-linear-progress {
       flex-grow: 1;
     }
   </style>
-  <md-linear-progress value="0.5"></md-linear-progress>
+  <petal-linear-progress value="0.5"></petal-linear-progress>
   </figure>
 </div>
 
@@ -372,7 +372,7 @@ Token                                          | Default value
 }
 </style>
 
-<md-linear-progress value="0.5"></md-linear-progress>
+<petal-linear-progress value="0.5"></petal-linear-progress>
 ```
 
 <!-- auto-generated API docs start -->
@@ -380,7 +380,7 @@ Token                                          | Default value
 ## API
 
 
-### MdLinearProgress <code>&lt;md-linear-progress&gt;</code>
+### PetalLinearProgress <code>&lt;petal-linear-progress&gt;</code>
 
 #### Properties
 
@@ -396,7 +396,7 @@ Token                                          | Default value
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 
-### MdCircularProgress <code>&lt;md-circular-progress&gt;</code>
+### PetalCircularProgress <code>&lt;petal-circular-progress&gt;</code>
 
 #### Properties
 

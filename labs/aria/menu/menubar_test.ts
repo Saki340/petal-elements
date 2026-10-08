@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 /// <reference types="../../../types/popover.d.ts" />
@@ -17,22 +18,22 @@ import {internals} from '../../behaviors/element-internals.js';
 
 import {AriaMenubarElement} from './menubar.js';
 
-describe('md-aria-menubar', () => {
+describe('petal-aria-menubar', () => {
   const env = new Environment();
 
   async function setUpTest(
     template = html`
-      <md-aria-menubar>
-        <md-aria-menuitem id="item1" autofocus>Item 1</md-aria-menuitem>
-        <md-aria-menuitem id="item2">Item 2</md-aria-menuitem>
-        <md-aria-menuitem id="item3" disabled>Item 3</md-aria-menuitem>
-      </md-aria-menubar>
+      <petal-aria-menubar>
+        <petal-aria-menuitem id="item1" autofocus>Item 1</petal-aria-menuitem>
+        <petal-aria-menuitem id="item2">Item 2</petal-aria-menuitem>
+        <petal-aria-menuitem id="item3" disabled>Item 3</petal-aria-menuitem>
+      </petal-aria-menubar>
     `,
   ) {
     const root = env.render(template);
     await env.waitForStability();
 
-    const menubar = root.querySelector('md-aria-menubar') as AriaMenubarElement;
+    const menubar = root.querySelector('petal-aria-menubar') as AriaMenubarElement;
 
     return {root, menubar};
   }

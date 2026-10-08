@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 // import 'jasmine'; (google3-only)
@@ -287,16 +288,16 @@ describe('command', () => {
         expect(popover.matches(':popover-open')).toBeFalse();
       });
 
-      it('recognizes md-aria-menulist as a popover target', async () => {
+      it('recognizes petal-aria-menulist as a popover target', async () => {
         const root = env.render(html`
           <button commandfor="test-menu" command="show-popover">Open</button>
-          <md-aria-menulist id="test-menu">
-            <md-aria-menuitem>Item 1</md-aria-menuitem>
-          </md-aria-menulist>
+          <petal-aria-menulist id="test-menu">
+            <petal-aria-menuitem>Item 1</petal-aria-menuitem>
+          </petal-aria-menulist>
         `);
         await env.waitForStability();
         const button = root.querySelector('button')!;
-        const menulist = root.querySelector('md-aria-menulist')!;
+        const menulist = root.querySelector('petal-aria-menulist')!;
 
         sharedCommandInvokerActivationSteps(
           button,

@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {CSSResultOrNative} from 'lit';
@@ -12,7 +13,7 @@ import {styles} from './internal/linear-progress-styles.cssresult.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-linear-progress': MdLinearProgress;
+    'petal-linear-progress': PetalLinearProgress;
   }
 }
 
@@ -28,7 +29,7 @@ declare global {
  * @final
  * @suppress {visibility}
  */
-@customElement('md-linear-progress')
-export class MdLinearProgress extends LinearProgress {
+@customElement('petal-linear-progress')
+export class PetalLinearProgress extends LinearProgress {
   static override styles: CSSResultOrNative[] = [styles];
 }

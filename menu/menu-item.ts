@@ -2,6 +2,7 @@
  * @license
  * Copyright 2022 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {CSSResultOrNative} from 'lit';
@@ -15,7 +16,7 @@ export {type CloseMenuEvent} from './internal/controllers/shared.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-menu-item': MdMenuItem;
+    'petal-menu-item': PetalMenuItem;
   }
 }
 
@@ -24,9 +25,9 @@ declare global {
  *
  * @description
  * Menu items are the selectable choices within the menu. Menu items must
- * implement the `MenuItem` interface and also have the `md-menu-item`
+ * implement the `MenuItem` interface and also have the `petal-menu-item`
  * attribute. Additionally menu items are list items so they must also have the
- * `md-list-item` attribute.
+ * `petal-list-item` attribute.
  *
  * Menu items can control a menu by selectively firing the `close-menu` and
  * `deselect-items` events.
@@ -34,7 +35,7 @@ declare global {
  * @final
  * @suppress {visibility}
  */
-@customElement('md-menu-item')
-export class MdMenuItem extends MenuItemEl {
+@customElement('petal-menu-item')
+export class PetalMenuItem extends MenuItemEl {
   static override styles: CSSResultOrNative[] = [styles];
 }

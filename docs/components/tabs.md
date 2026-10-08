@@ -72,17 +72,17 @@ tab in a tab bar.
 <!-- Need to add catalog-include "figures/<component>/usage.html" -->
 
 ```html
-<md-tabs>
-  <md-primary-tab>Video</md-primary-tab>
-  <md-primary-tab>Photos</md-primary-tab>
-  <md-primary-tab>Audio</md-primary-tab>
-</md-tabs>
+<petal-tabs>
+  <petal-primary-tab>Video</petal-primary-tab>
+  <petal-primary-tab>Photos</petal-primary-tab>
+  <petal-primary-tab>Audio</petal-primary-tab>
+</petal-tabs>
 
-<md-tabs>
-  <md-secondary-tab>Birds</md-secondary-tab>
-  <md-secondary-tab>Cats</md-secondary-tab>
-  <md-secondary-tab>Dogs</md-secondary-tab>
-</md-tabs>
+<petal-tabs>
+  <petal-secondary-tab>Birds</petal-secondary-tab>
+  <petal-secondary-tab>Cats</petal-secondary-tab>
+  <petal-secondary-tab>Dogs</petal-secondary-tab>
+</petal-tabs>
 ```
 
 ### Selection
@@ -90,14 +90,14 @@ tab in a tab bar.
 Add an `active` attribute to change which tab is selected.
 
 ```html
-<md-tabs>
-  <md-primary-tab>Video</md-primary-tab>
-  <md-primary-tab active>Photos</md-primary-tab>
-  <md-primary-tab>Audio</md-primary-tab>
-</md-tabs>
+<petal-tabs>
+  <petal-primary-tab>Video</petal-primary-tab>
+  <petal-primary-tab active>Photos</petal-primary-tab>
+  <petal-primary-tab>Audio</petal-primary-tab>
+</petal-tabs>
 ```
 
-To observe changes to tab selections, add an event listener to `<md-tabs>`,
+To observe changes to tab selections, add an event listener to `<petal-tabs>`,
 listening for the `change` event.
 
 ```ts
@@ -121,16 +121,16 @@ recognizable.
 <!-- Need to add catalog-include "figures/<component>/usage.html" -->
 
 ```html
-<md-tabs>
-  <md-primary-tab>
-    <md-icon slot="icon">piano</md-icon>
+<petal-tabs>
+  <petal-primary-tab>
+    <petal-icon slot="icon">piano</petal-icon>
     Keyboard
-  </md-primary-tab>
-  <md-primary-tab>
-    <md-icon slot="icon">tune</md-icon>
+  </petal-primary-tab>
+  <petal-primary-tab>
+    <petal-icon slot="icon">tune</petal-icon>
     Guitar
-  </md-primary-tab>
-</md-tabs>
+  </petal-primary-tab>
+</petal-tabs>
 ```
 
 Tabs may optionally show icons without a label.
@@ -141,14 +141,14 @@ Tabs may optionally show icons without a label.
 <!-- Need to add catalog-include "figures/<component>/usage.html" -->
 
 ```html
-<md-tabs>
-  <md-primary-tab>
-    <md-icon slot="icon">piano</md-icon>
-  </md-primary-tab>
-  <md-primary-tab>
-    <md-icon slot="icon">tune</md-icon>
-  </md-primary-tab>
-</md-tabs>
+<petal-tabs>
+  <petal-primary-tab>
+    <petal-icon slot="icon">piano</petal-icon>
+  </petal-primary-tab>
+  <petal-primary-tab>
+    <petal-icon slot="icon">tune</petal-icon>
+  </petal-primary-tab>
+</petal-tabs>
 ```
 
 ## Primary tabs
@@ -164,16 +164,16 @@ display the main content destinations.
 <!-- Need to add catalog-include "figures/<component>/usage.html" -->
 
 ```html
-<md-tabs>
-  <md-primary-tab>
-    <md-icon slot="icon">piano</md-icon>
+<petal-tabs>
+  <petal-primary-tab>
+    <petal-icon slot="icon">piano</petal-icon>
     Keyboard
-  </md-primary-tab>
-  <md-primary-tab>
-    <md-icon slot="icon">tune</md-icon>
+  </petal-primary-tab>
+  <petal-primary-tab>
+    <petal-icon slot="icon">tune</petal-icon>
     Guitar
-  </md-primary-tab>
-</md-tabs>
+  </petal-primary-tab>
+</petal-tabs>
 ```
 
 ### Inline icons
@@ -186,16 +186,16 @@ Primary tabs can show their icons inline, like secondary tabs.
 <!-- Need to add catalog-include "figures/<component>/usage.html" -->
 
 ```html
-<md-tabs>
-  <md-primary-tab inline-icon>
-    <md-icon slot="icon">piano</md-icon>
+<petal-tabs>
+  <petal-primary-tab inline-icon>
+    <petal-icon slot="icon">piano</petal-icon>
     Keyboard
-  </md-primary-tab>
-  <md-primary-tab inline-icon>
-    <md-icon slot="icon">tune</md-icon>
+  </petal-primary-tab>
+  <petal-primary-tab inline-icon>
+    <petal-icon slot="icon">tune</petal-icon>
     Guitar
-  </md-primary-tab>
-</md-tabs>
+  </petal-primary-tab>
+</petal-tabs>
 ```
 
 ## Secondary tabs
@@ -211,41 +211,41 @@ content and establish hierarchy.
 <!-- Need to add catalog-include "figures/<component>/usage.html" -->
 
 ```html
-<md-tabs>
-  <md-secondary-tab>
-    <md-icon slot="icon">flight</md-icon>
+<petal-tabs>
+  <petal-secondary-tab>
+    <petal-icon slot="icon">flight</petal-icon>
     Travel
-  </md-secondary-tab>
-  <md-secondary-tab>
-    <md-icon slot="icon">hotel</md-icon>
+  </petal-secondary-tab>
+  <petal-secondary-tab>
+    <petal-icon slot="icon">hotel</petal-icon>
     Hotel
-  </md-secondary-tab>
-  <md-secondary-tab>
-    <md-icon slot="icon">hiking</md-icon>
+  </petal-secondary-tab>
+  <petal-secondary-tab>
+    <petal-icon slot="icon">hiking</petal-icon>
     Activities
-  </md-secondary-tab>
-</md-tabs>
+  </petal-secondary-tab>
+</petal-tabs>
 ```
 
 ## Accessibility
 
 Add an
 [`aria-label`](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-label)<!-- {.external} -->
-attribute to `<md-tabs>` and any individual tab whose label needs to be more
+attribute to `<petal-tabs>` and any individual tab whose label needs to be more
 descriptive, such as icon-only tabs.
 
 ```html
-<md-tabs aria-label="Content to view">
-  <md-primary-tab aria-label="Photos">
-    <md-icon slot="icon">photo</md-icon>
-  </md-primary-tab>
-  <md-primary-tab aria-label="Videos">
-    <md-icon slot="icon">videocam</md-icon>
-  </md-primary-tab>
-  <md-primary-tab aria-label="Music">
-    <md-icon slot="icon">audiotrack</md-icon>
-  </md-primary-tab>
-</md-tabs>
+<petal-tabs aria-label="Content to view">
+  <petal-primary-tab aria-label="Photos">
+    <petal-icon slot="icon">photo</petal-icon>
+  </petal-primary-tab>
+  <petal-primary-tab aria-label="Videos">
+    <petal-icon slot="icon">videocam</petal-icon>
+  </petal-primary-tab>
+  <petal-primary-tab aria-label="Music">
+    <petal-icon slot="icon">audiotrack</petal-icon>
+  </petal-primary-tab>
+</petal-tabs>
 ```
 
 ### Tab panels
@@ -258,17 +258,17 @@ element with `aria-controls`. Tab panels must be labelled with `aria-label` or
 It's common to reference the panel's tab with `aria-labelledby`.
 
 ```html
-<md-tabs aria-label="Content to view">
-  <md-primary-tab id="photos-tab" aria-controls="photos-panel">
+<petal-tabs aria-label="Content to view">
+  <petal-primary-tab id="photos-tab" aria-controls="photos-panel">
     Photos
-  </md-primary-tab>
-  <md-primary-tab id="videos-tab" aria-controls="videos-panel">
+  </petal-primary-tab>
+  <petal-primary-tab id="videos-tab" aria-controls="videos-panel">
     Videos
-  </md-primary-tab>
-  <md-primary-tab id="music-tab" aria-controls="music-panel">
+  </petal-primary-tab>
+  <petal-primary-tab id="music-tab" aria-controls="music-panel">
     Music
-  </md-primary-tab>
-</md-tabs>
+  </petal-primary-tab>
+</petal-tabs>
 
 <div id="photos-panel" role="tabpanel" aria-labelledby="photos-tab">
   ...
@@ -320,11 +320,11 @@ Token                                     | Default value
 }
 </style>
 
-<md-tabs>
-  <md-primary-tab>Tab 1</md-primary-tab>
-  <md-primary-tab>Tab 2</md-primary-tab>
-  <md-primary-tab>Tab 3</md-primary-tab>
-</md-tabs>
+<petal-tabs>
+  <petal-primary-tab>Tab 1</petal-primary-tab>
+  <petal-primary-tab>Tab 2</petal-primary-tab>
+  <petal-primary-tab>Tab 3</petal-primary-tab>
+</petal-tabs>
 ```
 
 ### Secondary tab tokens
@@ -359,11 +359,11 @@ Token                                       | Default value
 }
 </style>
 
-<md-tabs>
-  <md-secondary-tab>Tab 1</md-secondary-tab>
-  <md-secondary-tab>Tab 2</md-secondary-tab>
-  <md-secondary-tab>Tab 3</md-secondary-tab>
-</md-tabs>
+<petal-tabs>
+  <petal-secondary-tab>Tab 1</petal-secondary-tab>
+  <petal-secondary-tab>Tab 2</petal-secondary-tab>
+  <petal-secondary-tab>Tab 3</petal-secondary-tab>
+</petal-tabs>
 ```
 
 <!-- auto-generated API docs start -->
@@ -371,7 +371,7 @@ Token                                       | Default value
 ## API
 
 
-### MdTabs <code>&lt;md-tabs&gt;</code>
+### PetalTabs <code>&lt;petal-tabs&gt;</code>
 
 #### Properties
 
@@ -406,7 +406,7 @@ Token                                       | Default value
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 
-### MdPrimaryTab <code>&lt;md-primary-tab&gt;</code>
+### PetalPrimaryTab <code>&lt;petal-primary-tab&gt;</code>
 
 #### Properties
 
@@ -415,7 +415,7 @@ Token                                       | Default value
 | Property | Attribute | Type | Default | Description |
 | --- | --- | --- | --- | --- |
 | `inlineIcon` | `inline-icon` | `boolean` | `false` | Whether or not the icon renders inline with label or stacked vertically. |
-| `isTab` | `md-tab` | `boolean` | `true` | The attribute `md-tab` indicates that the element is a tab for the parent element, `<md-tabs>`. Make sure if you're implementing your own `md-tab` component that you have an `md-tab` attribute set. |
+| `isTab` | `md-tab` | `boolean` | `true` | The attribute `md-tab` indicates that the element is a tab for the parent element, `<petal-tabs>`. Make sure if you're implementing your own `md-tab` component that you have an `md-tab` attribute set. |
 | `active` | `active` | `boolean` | `false` | Whether or not the tab is selected. |
 | `hasIcon` | `has-icon` | `boolean` | `false` | In SSR, set this to true when an icon is present. |
 | `iconOnly` | `icon-only` | `boolean` | `false` | In SSR, set this to true when there is no label and only an icon. |
@@ -423,7 +423,7 @@ Token                                       | Default value
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 
-### MdSecondaryTab <code>&lt;md-secondary-tab&gt;</code>
+### PetalSecondaryTab <code>&lt;petal-secondary-tab&gt;</code>
 
 #### Properties
 
@@ -431,7 +431,7 @@ Token                                       | Default value
 
 | Property | Attribute | Type | Default | Description |
 | --- | --- | --- | --- | --- |
-| `isTab` | `md-tab` | `boolean` | `true` | The attribute `md-tab` indicates that the element is a tab for the parent element, `<md-tabs>`. Make sure if you're implementing your own `md-tab` component that you have an `md-tab` attribute set. |
+| `isTab` | `md-tab` | `boolean` | `true` | The attribute `md-tab` indicates that the element is a tab for the parent element, `<petal-tabs>`. Make sure if you're implementing your own `md-tab` component that you have an `md-tab` attribute set. |
 | `active` | `active` | `boolean` | `false` | Whether or not the tab is selected. |
 | `hasIcon` | `has-icon` | `boolean` | `false` | In SSR, set this to true when an icon is present. |
 | `iconOnly` | `icon-only` | `boolean` | `false` | In SSR, set this to true when there is no label and only an icon. |

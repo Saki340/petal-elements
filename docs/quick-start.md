@@ -45,14 +45,14 @@ from NPM.
   <h1 class="md-typescale-display-medium">Hello Material!</h1>
   <form>
     <p class="md-typescale-body-medium">Check out these controls in a form!</p>
-    <md-checkbox></md-checkbox>
+    <petal-checkbox></petal-checkbox>
     <div>
-      <md-radio name="group"></md-radio>
-      <md-radio name="group"></md-radio>
-      <md-radio name="group"></md-radio>
+      <petal-radio name="group"></petal-radio>
+      <petal-radio name="group"></petal-radio>
+      <petal-radio name="group"></petal-radio>
     </div>
-    <md-outlined-text-field label="Favorite color" value="Purple"></md-outlined-text-field>
-    <md-outlined-button type="reset">Reset</md-outlined-button>
+    <petal-outlined-text-field label="Favorite color" value="Purple"></petal-outlined-text-field>
+    <petal-outlined-button type="reset">Reset</petal-outlined-button>
   </form>
   <style>
     form {
@@ -107,11 +107,11 @@ Use the `<component-name>` tag in HTML markup. Refer to the
 
 <label>
   Material 3
-  <md-checkbox checked></md-checkbox>
+  <petal-checkbox checked></petal-checkbox>
 </label>
 
-<md-outlined-button>Back</md-outlined-button>
-<md-filled-button>Next</md-filled-button>
+<petal-outlined-button>Back</petal-outlined-button>
+<petal-filled-button>Next</petal-filled-button>
 ```
 
 ## Building

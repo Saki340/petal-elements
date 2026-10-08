@@ -56,25 +56,25 @@ fixed list of available options. It is analogous to the native HTML
 <!-- catalog-include "figures/select/usage.html" -->
 
 ```html
-<md-outlined-select>
-  <md-select-option aria-label="blank"></md-select-option>
-  <md-select-option selected value="apple">
+<petal-outlined-select>
+  <petal-select-option aria-label="blank"></petal-select-option>
+  <petal-select-option selected value="apple">
     <div slot="headline">Apple</div>
-  </md-select-option>
-  <md-select-option value="apricot">
+  </petal-select-option>
+  <petal-select-option value="apricot">
     <div slot="headline">Apricot</div>
-  </md-select-option>
-</md-outlined-select>
+  </petal-select-option>
+</petal-outlined-select>
 
-<md-filled-select>
-  <md-select-option aria-label="blank"></md-select-option>
-  <md-select-option value="apple">
+<petal-filled-select>
+  <petal-select-option aria-label="blank"></petal-select-option>
+  <petal-select-option value="apple">
     <div slot="headline">Apple</div>
-  </md-select-option>
-  <md-select-option value="apricot">
+  </petal-select-option>
+  <petal-select-option value="apricot">
     <div slot="headline">Apricot</div>
-  </md-select-option>
-</md-filled-select>
+  </petal-select-option>
+</petal-filled-select>
 ```
 
 ### Required select
@@ -82,14 +82,14 @@ fixed list of available options. It is analogous to the native HTML
 Indicate that a selection is mandatory by adding the `required` attribute.
 
 ```html
-<md-filled-select required>
-  <md-select-option value="one">
+<petal-filled-select required>
+  <petal-select-option value="one">
     <div slot="headline">One</div>
-  </md-select-option>
-  <md-select-option value="two">
+  </petal-select-option>
+  <petal-select-option value="two">
     <div slot="headline">Two</div>
-  </md-select-option>
-</md-filled-select>
+  </petal-select-option>
+</petal-filled-select>
 ```
 
 <!--
@@ -123,7 +123,7 @@ Token                                            | Default value
 *   [Filled Select tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-filled-select.scss)
     <!-- {.external} -->
 
-To theme the select's dropdown menu, use the `md-menu` component tokens on the
+To theme the select's dropdown menu, use the `petal-menu` component tokens on the
 `::part(menu)` selector.
 
 ### Filled Select example
@@ -144,20 +144,20 @@ To theme the select's dropdown menu, use the `md-menu` component tokens on the
   --md-filled-select-text-field-input-text-font: system-ui;
 }
 
-md-filled-select::part(menu) {
+petal-filled-select::part(menu) {
   --md-menu-container-color: #f4fbfa;
   --md-menu-container-shape: 0px;
 }
 </style>
 
-<md-filled-select>
-  <md-select-option selected value="apple">
+<petal-filled-select>
+  <petal-select-option selected value="apple">
     <div slot="headline">Apple</div>
-  </md-select-option>
-  <md-select-option value="tomato">
+  </petal-select-option>
+  <petal-select-option value="tomato">
     <div slot="headline">Tomato</div>
-  </md-select-option>
-</md-filled-select>
+  </petal-select-option>
+</petal-filled-select>
 ```
 
 ### Outlined Select tokens
@@ -190,20 +190,20 @@ Token                                              | Default value
   --md-outlined-select-text-field-input-text-font: system-ui;
 }
 
-md-outlined-select::part(menu) {
+petal-outlined-select::part(menu) {
   --md-menu-container-color: #f4fbfa;
   --md-menu-container-shape: 0px;
 }
 </style>
 
-<md-outlined-select>
-  <md-select-option selected value="apple">
+<petal-outlined-select>
+  <petal-select-option selected value="apple">
     <div slot="headline">Apple</div>
-  </md-select-option>
-  <md-select-option value="tomato">
+  </petal-select-option>
+  <petal-select-option value="tomato">
     <div slot="headline">Tomato</div>
-  </md-select-option>
-</md-outlined-select>
+  </petal-select-option>
+</petal-outlined-select>
 ```
 
 <!-- auto-generated API docs start -->
@@ -211,7 +211,7 @@ md-outlined-select::part(menu) {
 ## API
 
 
-### MdFilledSelect <code>&lt;md-filled-select&gt;</code>
+### PetalFilledSelect <code>&lt;petal-filled-select&gt;</code>
 
 #### Properties
 
@@ -226,7 +226,7 @@ md-outlined-select::part(menu) {
 | `noAsterisk` | `no-asterisk` | `boolean` | `false` | Disables the asterisk on the floating label, when the select is required. |
 | `supportingText` | `supporting-text` | `string` | `''` | Conveys additional information below the select, such as how it should be used. |
 | `error` | `error` | `boolean` | `false` | Gets or sets whether or not the select is in a visually invalid state.<br>This error state overrides the error state controlled by `reportValidity()`. |
-| `menuPositioning` | `menu-positioning` | `"absolute" \| "fixed" \| "popover"` | `'popover'` | Whether or not the underlying md-menu should be position: fixed to display in a top-level manner, or position: absolute.<br>position:fixed is useful for cases where select is inside of another element with stacking context and hidden overflows such as `md-dialog`. |
+| `menuPositioning` | `menu-positioning` | `"absolute" \| "fixed" \| "popover"` | `'popover'` | Whether or not the underlying petal-menu should be position: fixed to display in a top-level manner, or position: absolute.<br>position:fixed is useful for cases where select is inside of another element with stacking context and hidden overflows such as `petal-dialog`. |
 | `clampMenuWidth` | `clamp-menu-width` | `boolean` | `false` | Clamps the menu-width to the width of the select. |
 | `typeaheadDelay` | `typeahead-delay` | `number` | `DEFAULT_TYPEAHEAD_BUFFER_TIME` | The max time between the keystrokes of the typeahead select / menu behavior before it clears the typeahead buffer. |
 | `hasLeadingIcon` | `has-leading-icon` | `boolean` | `false` | Whether or not the text field has a leading icon. Used for SSR. |
@@ -281,7 +281,7 @@ md-outlined-select::part(menu) {
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 
-### MdOutlinedSelect <code>&lt;md-outlined-select&gt;</code>
+### PetalOutlinedSelect <code>&lt;petal-outlined-select&gt;</code>
 
 #### Properties
 
@@ -296,7 +296,7 @@ md-outlined-select::part(menu) {
 | `noAsterisk` | `no-asterisk` | `boolean` | `false` | Disables the asterisk on the floating label, when the select is required. |
 | `supportingText` | `supporting-text` | `string` | `''` | Conveys additional information below the select, such as how it should be used. |
 | `error` | `error` | `boolean` | `false` | Gets or sets whether or not the select is in a visually invalid state.<br>This error state overrides the error state controlled by `reportValidity()`. |
-| `menuPositioning` | `menu-positioning` | `"absolute" \| "fixed" \| "popover"` | `'popover'` | Whether or not the underlying md-menu should be position: fixed to display in a top-level manner, or position: absolute.<br>position:fixed is useful for cases where select is inside of another element with stacking context and hidden overflows such as `md-dialog`. |
+| `menuPositioning` | `menu-positioning` | `"absolute" \| "fixed" \| "popover"` | `'popover'` | Whether or not the underlying petal-menu should be position: fixed to display in a top-level manner, or position: absolute.<br>position:fixed is useful for cases where select is inside of another element with stacking context and hidden overflows such as `petal-dialog`. |
 | `clampMenuWidth` | `clamp-menu-width` | `boolean` | `false` | Clamps the menu-width to the width of the select. |
 | `typeaheadDelay` | `typeahead-delay` | `number` | `DEFAULT_TYPEAHEAD_BUFFER_TIME` | The max time between the keystrokes of the typeahead select / menu behavior before it clears the typeahead buffer. |
 | `hasLeadingIcon` | `has-leading-icon` | `boolean` | `false` | Whether or not the text field has a leading icon. Used for SSR. |
@@ -351,7 +351,7 @@ md-outlined-select::part(menu) {
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 
-### MdSelectOption <code>&lt;md-select-option&gt;</code>
+### PetalSelectOption <code>&lt;petal-select-option&gt;</code>
 
 #### Properties
 

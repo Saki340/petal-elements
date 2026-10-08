@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 const cheerio = require('cheerio');
@@ -96,7 +97,7 @@ function blockquote($) {
     }
 
     $blockquote.wrapInner('<div class="content"></div>');
-    $blockquote.prepend(`<div class="icon"><md-icon>${icon}</md-icon></div>`);
+    $blockquote.prepend(`<div class="icon"><petal-icon>${icon}</petal-icon></div>`);
   }
 }
 

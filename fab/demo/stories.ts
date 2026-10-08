@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '@material/web/fab/branded-fab.js';
@@ -44,55 +45,55 @@ const standard: MaterialStoryInit<StoryKnobs> = {
       <div class="row">
         <label>
           <span aria-hidden="true">Surface</span>
-          <md-fab
+          <petal-fab
             aria-label=${label ? nothing : 'An example surface FAB'}
             variant="surface"
             .lowered=${lowered}
             .label=${label}
             .size=${size!}>
-            <md-icon slot="icon">${icon}</md-icon>
-          </md-fab>
+            <petal-icon slot="icon">${icon}</petal-icon>
+          </petal-fab>
         </label>
 
         <label>
           <span aria-hidden="true">Primary</span>
-          <md-fab
+          <petal-fab
             aria-label=${label ? nothing : 'An example primary FAB'}
             variant="primary"
             .lowered=${lowered}
             .label=${label}
             .size=${size!}>
-            <md-icon slot="icon">${icon}</md-icon>
-          </md-fab>
+            <petal-icon slot="icon">${icon}</petal-icon>
+          </petal-fab>
         </label>
 
         <label>
           <span aria-hidden="true">Secondary</span>
-          <md-fab
+          <petal-fab
             aria-label=${label ? nothing : 'An example secondary FAB'}
             variant="secondary"
             .lowered=${lowered}
             .label=${label}
             .size=${size!}>
-            <md-icon slot="icon">${icon}</md-icon>
-          </md-fab>
+            <petal-icon slot="icon">${icon}</petal-icon>
+          </petal-fab>
         </label>
 
         <label>
           <span aria-hidden="true">Tertiary</span>
-          <md-fab
+          <petal-fab
             aria-label=${label ? nothing : 'An example tertiary FAB'}
             variant="tertiary"
             .lowered=${lowered}
             .label=${label}
             .size=${size!}>
-            <md-icon slot="icon">${icon}</md-icon>
-          </md-fab>
+            <petal-icon slot="icon">${icon}</petal-icon>
+          </petal-fab>
         </label>
 
         <label>
           <span aria-hidden="true">Branded</span>
-          <md-branded-fab
+          <petal-branded-fab
             aria-label=${label ? nothing : 'An example branded FAB'}
             .lowered=${lowered}
             .label=${label}
@@ -104,7 +105,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
               <path fill="#EA4335" d="M20 16V6h-4v14z"></path>
               <path fill="none" d="M0 0h36v36H0z"></path>
             </svg>
-          </md-branded-fab>
+          </petal-branded-fab>
         </label>
       </div>
     `;

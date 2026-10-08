@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {html} from 'lit';
@@ -10,37 +11,37 @@ import {Environment} from '../testing/environment.js';
 import {createTokenTests} from '../testing/tokens.js';
 
 import {TabsHarness} from './harness.js';
-import {MdPrimaryTab} from './primary-tab.js';
-import {MdSecondaryTab} from './secondary-tab.js';
-import {MdTabs} from './tabs.js';
+import {PetalPrimaryTab} from './primary-tab.js';
+import {PetalSecondaryTab} from './secondary-tab.js';
+import {PetalTabs} from './tabs.js';
 
 interface TabsTestProps {
   activeTabIndex?: number;
 }
 
 function getTabsTemplate(props?: TabsTestProps) {
-  return html` <md-tabs .activeTabIndex=${props?.activeTabIndex ?? 0}>
-    <md-primary-tab>A</md-primary-tab>
-    <md-primary-tab>B</md-primary-tab>
-    <md-primary-tab>C</md-primary-tab>
-  </md-tabs>`;
+  return html` <petal-tabs .activeTabIndex=${props?.activeTabIndex ?? 0}>
+    <petal-primary-tab>A</petal-primary-tab>
+    <petal-primary-tab>B</petal-primary-tab>
+    <petal-primary-tab>C</petal-primary-tab>
+  </petal-tabs>`;
 }
 
-describe('<md-tabs>', () => {
+describe('<petal-tabs>', () => {
   const env = new Environment();
 
   async function setupTest(props?: TabsTestProps, template = getTabsTemplate) {
     const root = env.render(template(props));
     await env.waitForStability();
-    const tab = root.querySelector<MdTabs>('md-tabs')!;
+    const tab = root.querySelector<PetalTabs>('petal-tabs')!;
     const harness = new TabsHarness(tab);
     return {harness, root};
   }
 
   describe('.styles', () => {
-    createTokenTests(MdTabs.styles);
-    createTokenTests(MdPrimaryTab.styles);
-    createTokenTests(MdSecondaryTab.styles);
+    createTokenTests(PetalTabs.styles);
+    createTokenTests(PetalPrimaryTab.styles);
+    createTokenTests(PetalSecondaryTab.styles);
   });
 
   describe('properties', () => {
@@ -79,7 +80,7 @@ describe('<md-tabs>', () => {
       const {harness} = await setupTest({activeTabIndex: 1});
       const [, second] = harness.element.tabs;
       expect(harness.element.activeTab).toBe(second);
-      const tab = document.createElement('md-primary-tab');
+      const tab = document.createElement('petal-primary-tab');
       tab.textContent = 'tab';
       // add before selected
       harness.element.prepend(tab);
@@ -112,7 +113,7 @@ describe('<md-tabs>', () => {
       const {harness} = await setupTest();
       const [firstTab] = harness.element.tabs;
       expect(harness.element.activeTab).toBe(firstTab);
-      const unrelatedTab = document.createElement('md-primary-tab');
+      const unrelatedTab = document.createElement('petal-primary-tab');
       harness.element.activeTab = unrelatedTab;
       await env.waitForStability();
       expect(harness.element.activeTab).toBe(firstTab);
@@ -120,14 +121,14 @@ describe('<md-tabs>', () => {
 
     it('should allow setting activeTabIndex in a lit property binding', async () => {
       const root = env.render(html`
-        <md-tabs .activeTabIndex=${1}>
-          <md-primary-tab>A</md-primary-tab>
-          <md-primary-tab>B</md-primary-tab>
-        </md-tabs>
+        <petal-tabs .activeTabIndex=${1}>
+          <petal-primary-tab>A</petal-primary-tab>
+          <petal-primary-tab>B</petal-primary-tab>
+        </petal-tabs>
       `);
 
       await env.waitForStability();
-      const tabs = root.querySelector('md-tabs')!;
+      const tabs = root.querySelector('petal-tabs')!;
       expect(tabs.activeTabIndex).withContext('activeTabIndex').toBe(1);
       expect(tabs.activeTab?.textContent)
         .withContext('activeTab')
@@ -136,14 +137,14 @@ describe('<md-tabs>', () => {
 
     it('should allow setting active-tab-index as an attribute', async () => {
       const root = env.render(html`
-        <md-tabs active-tab-index=${1}>
-          <md-primary-tab>A</md-primary-tab>
-          <md-primary-tab>B</md-primary-tab>
-        </md-tabs>
+        <petal-tabs active-tab-index=${1}>
+          <petal-primary-tab>A</petal-primary-tab>
+          <petal-primary-tab>B</petal-primary-tab>
+        </petal-tabs>
       `);
 
       await env.waitForStability();
-      const tabs = root.querySelector('md-tabs')!;
+      const tabs = root.querySelector('petal-tabs')!;
       expect(tabs.activeTabIndex).withContext('activeTabIndex').toBe(1);
       expect(tabs.activeTab?.textContent)
         .withContext('activeTab')
@@ -165,7 +166,7 @@ describe('<md-tabs>', () => {
     const changeListener = jasmine.createSpy('changeListener');
     harness.element.addEventListener('change', changeListener);
 
-    harness.element.activeTab = document.createElement('md-primary-tab');
+    harness.element.activeTab = document.createElement('petal-primary-tab');
     await env.waitForStability();
     expect(changeListener).not.toHaveBeenCalled();
   });

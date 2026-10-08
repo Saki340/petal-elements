@@ -2,6 +2,7 @@
  * @license
  * Copyright 2022 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {CSSResultOrNative} from 'lit';
@@ -12,7 +13,7 @@ import {styles} from './internal/badge-styles.cssresult.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-badge': MdBadge;
+    'petal-badge': PetalBadge;
   }
 }
 
@@ -20,7 +21,7 @@ declare global {
  * @final
  * @suppress {visibility}
  */
-@customElement('md-badge')
-export class MdBadge extends Badge {
+@customElement('petal-badge')
+export class PetalBadge extends Badge {
   static override styles: CSSResultOrNative[] = [styles];
 }

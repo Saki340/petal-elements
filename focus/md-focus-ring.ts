@@ -2,6 +2,7 @@
  * @license
  * Copyright 2021 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {CSSResultOrNative} from 'lit';
@@ -12,7 +13,7 @@ import {styles} from './internal/focus-ring-styles.cssresult.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-focus-ring': MdFocusRing;
+    'petal-focus-ring': PetalFocusRing;
   }
 }
 
@@ -22,7 +23,7 @@ declare global {
  * @final
  * @suppress {visibility}
  */
-@customElement('md-focus-ring')
-export class MdFocusRing extends FocusRing {
+@customElement('petal-focus-ring')
+export class PetalFocusRing extends FocusRing {
   static override styles: CSSResultOrNative[] = [styles];
 }

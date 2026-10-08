@@ -1,6 +1,7 @@
 //
 // Copyright 2023 Google LLC
 // SPDX-License-Identifier: Apache-2.0
+// Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
 //
 
 // go/keep-sorted start
@@ -49,7 +50,7 @@
     );
   }
 
-  md-focus-ring {
+  petal-focus-ring {
     @include focus-ring.theme(
       (
         'shape': 8px,
@@ -57,7 +58,7 @@
     );
   }
 
-  :host([active]) md-focus-ring {
+  :host([active]) petal-focus-ring {
     margin-bottom: calc(var(--_active-indicator-height) + 1px);
   }
 
@@ -70,8 +71,8 @@
   }
 
   .button::before,
-  md-ripple,
-  md-elevation {
+  petal-ripple,
+  petal-elevation {
     border-start-start-radius: var(--_container-shape-start-start);
     border-start-end-radius: var(--_container-shape-start-end);
     border-end-end-radius: var(--_container-shape-end-end);

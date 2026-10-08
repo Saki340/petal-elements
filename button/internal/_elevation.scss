@@ -1,6 +1,7 @@
 //
 // Copyright 2021 Google LLC
 // SPDX-License-Identifier: Apache-2.0
+// Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
 //
 
 // go/keep-sorted start
@@ -14,17 +15,17 @@
 $_md-sys-motion: tokens.md-sys-motion-values();
 
 @mixin styles() {
-  md-elevation {
+  petal-elevation {
     // TODO: replace duration with animation tokens
     transition-duration: 280ms;
     transition-timing-function: map.get($_md-sys-motion, 'emphasized-easing');
   }
 
-  :host(:is([disabled], [soft-disabled])) md-elevation {
+  :host(:is([disabled], [soft-disabled])) petal-elevation {
     transition: none;
   }
 
-  md-elevation {
+  petal-elevation {
     @include elevation.theme(
       (
         'level': var(--_container-elevation),
@@ -35,7 +36,7 @@ $_md-sys-motion: tokens.md-sys-motion-values();
 
   // apply elevation in order of focused, hovered, pressed, disabled
   // this ensures a button will have hover elevation after being focused
-  :host(:focus-within) md-elevation {
+  :host(:focus-within) petal-elevation {
     @include elevation.theme(
       (
         'level': var(--_focus-container-elevation),
@@ -43,7 +44,7 @@ $_md-sys-motion: tokens.md-sys-motion-values();
     );
   }
 
-  :host(:hover) md-elevation {
+  :host(:hover) petal-elevation {
     @include elevation.theme(
       (
         'level': var(--_hover-container-elevation),
@@ -51,7 +52,7 @@ $_md-sys-motion: tokens.md-sys-motion-values();
     );
   }
 
-  :host(:active) md-elevation {
+  :host(:active) petal-elevation {
     @include elevation.theme(
       (
         'level': var(--_pressed-container-elevation),
@@ -59,7 +60,7 @@ $_md-sys-motion: tokens.md-sys-motion-values();
     );
   }
 
-  :host(:is([disabled], [soft-disabled])) md-elevation {
+  :host(:is([disabled], [soft-disabled])) petal-elevation {
     @include elevation.theme(
       (
         'level': var(--_disabled-container-elevation),

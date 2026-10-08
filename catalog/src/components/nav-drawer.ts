@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {animate, fadeIn, fadeOut} from '@lit-labs/motion';
@@ -151,7 +152,7 @@ export class NavDrawer extends SignalElement(LitElement) {
     ) {
       (
         this.querySelector(
-          'md-list.nav md-list-item[tabindex="0"]',
+          'petal-list.nav petal-list-item[tabindex="0"]',
         ) as HTMLElement
       )?.focus();
     }

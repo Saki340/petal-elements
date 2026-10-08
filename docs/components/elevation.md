@@ -44,7 +44,7 @@ element's size and shape.
   }
 </style>
 <div class="surface">
-  <md-elevation></md-elevation>
+  <petal-elevation></petal-elevation>
   <!-- Content -->
 </div>
 ```
@@ -73,7 +73,7 @@ repeats.](images/elevation/usage-animation.gif "Animating between elevations.")
   }
 </style>
 <div class="surface">
-  <md-elevation></md-elevation>
+  <petal-elevation></petal-elevation>
   <!-- Content -->
 </div>
 ```
@@ -116,7 +116,7 @@ Token                         | Default value
   }
 </style>
 <div class="surface">
-  <md-elevation></md-elevation>
+  <petal-elevation></petal-elevation>
   <!-- Content -->
 </div>
 ```

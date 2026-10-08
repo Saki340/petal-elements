@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {CSSResultOrNative} from 'lit';
@@ -12,7 +13,7 @@ import {styles} from './internal/circular-progress-styles.cssresult.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-circular-progress': MdCircularProgress;
+    'petal-circular-progress': PetalCircularProgress;
   }
 }
 
@@ -29,7 +30,7 @@ declare global {
  * @final
  * @suppress {visibility}
  */
-@customElement('md-circular-progress')
-export class MdCircularProgress extends CircularProgress {
+@customElement('petal-circular-progress')
+export class PetalCircularProgress extends CircularProgress {
   static override styles: CSSResultOrNative[] = [styles];
 }

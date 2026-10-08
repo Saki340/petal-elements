@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {html} from 'lit';
@@ -9,15 +10,15 @@ import {html} from 'lit';
 import {Environment} from '../testing/environment.js';
 import {createTokenTests} from '../testing/tokens.js';
 
-import {MdDialog} from './dialog.js';
+import {PetalDialog} from './dialog.js';
 import {DialogHarness} from './harness.js';
 
-describe('<md-dialog>', () => {
+describe('<petal-dialog>', () => {
   const env = new Environment();
 
   async function setupTest() {
     const root = env.render(html`
-      <md-dialog>
+      <petal-dialog>
         <form id="form" method="dialog" slot="content">
           Content
           <input autofocus />
@@ -25,13 +26,13 @@ describe('<md-dialog>', () => {
         <div slot="actions">
           <button form="form" value="button">Close</button>
         </div>
-      </md-dialog>
+      </petal-dialog>
     `);
 
     await env.waitForStability();
-    const dialog = root.querySelector('md-dialog');
+    const dialog = root.querySelector('petal-dialog');
     if (!dialog) {
-      throw new Error('Failed to query rendered <md-dialog>');
+      throw new Error('Failed to query rendered <petal-dialog>');
     }
 
     disableDialogAnimations(dialog);
@@ -55,7 +56,7 @@ describe('<md-dialog>', () => {
   }
 
   describe('.styles', () => {
-    createTokenTests(MdDialog.styles);
+    createTokenTests(PetalDialog.styles);
   });
 
   describe('basic', () => {
@@ -184,7 +185,7 @@ describe('<md-dialog>', () => {
 
   it('should open on connected if opened before connected to DOM', async () => {
     const openListener = jasmine.createSpy('openListener');
-    const dialog = document.createElement('md-dialog');
+    const dialog = document.createElement('petal-dialog');
     disableDialogAnimations(dialog);
     dialog.addEventListener('open', openListener);
     dialog.open = true;
@@ -202,7 +203,7 @@ describe('<md-dialog>', () => {
 
   it('should not open on connected if opened, but closed before connected to DOM', async () => {
     const openListener = jasmine.createSpy('openListener');
-    const dialog = document.createElement('md-dialog');
+    const dialog = document.createElement('petal-dialog');
     disableDialogAnimations(dialog);
     dialog.addEventListener('open', openListener);
     dialog.open = true;
@@ -218,7 +219,7 @@ describe('<md-dialog>', () => {
 
   it('should not open on connected if opened before connection but closed after', async () => {
     const openListener = jasmine.createSpy('openListener');
-    const dialog = document.createElement('md-dialog');
+    const dialog = document.createElement('petal-dialog');
     disableDialogAnimations(dialog);
     dialog.addEventListener('open', openListener);
     dialog.open = true;
@@ -259,7 +260,7 @@ describe('<md-dialog>', () => {
   });
 });
 
-function disableDialogAnimations(dialog: MdDialog) {
+function disableDialogAnimations(dialog: PetalDialog) {
   dialog.getOpenAnimation = () => {
     return {};
   };

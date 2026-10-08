@@ -1,6 +1,7 @@
 //
 // Copyright 2023 Google LLC
 // SPDX-License-Identifier: Apache-2.0
+// Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
 //
 
 // go/keep-sorted start
@@ -44,7 +45,7 @@ $_default: (
 );
 
 @function values($deps: $_default, $exclude-hardcoded-values: false) {
-  // Note: <md-item> does not provide `--md-item-*` custom properties.
+  // Note: <petal-item> does not provide `--md-item-*` custom properties.
   $list-tokens: md-comp-list.values($deps, $exclude-hardcoded-values);
 
   $tokens: (

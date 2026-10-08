@@ -2,6 +2,7 @@
  * @license
  * Copyright 2019 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {html} from 'lit';
@@ -11,29 +12,29 @@ import {createFormTests} from '../testing/forms.js';
 import {createTokenTests} from '../testing/tokens.js';
 
 import {RadioHarness} from './harness.js';
-import {MdRadio} from './radio.js';
+import {PetalRadio} from './radio.js';
 
-const defaultRadio = html`<md-radio></md-radio>`;
+const defaultRadio = html`<petal-radio></petal-radio>`;
 
 const radioGroup = html`
-  <md-radio id="a1" name="a"></md-radio>
-  <md-radio id="a2" name="a"></md-radio>
-  <md-radio id="b1" name="b"></md-radio>
+  <petal-radio id="a1" name="a"></petal-radio>
+  <petal-radio id="a2" name="a"></petal-radio>
+  <petal-radio id="b1" name="b"></petal-radio>
 `;
 
 const radioGroupDisabled = html`
-  <md-radio id="a1" name="a" disabled></md-radio>
-  <md-radio id="a2" name="a" disabled checked></md-radio>
+  <petal-radio id="a1" name="a" disabled></petal-radio>
+  <petal-radio id="a2" name="a" disabled checked></petal-radio>
 `;
 
 const radioGroupPreSelected = html`
-  <md-radio id="a1" name="a"></md-radio>
-  <md-radio id="a2" name="a" checked></md-radio>
-  <md-radio id="a3" name="a"></md-radio>
-  <md-radio id="b1" name="b"></md-radio>
+  <petal-radio id="a1" name="a"></petal-radio>
+  <petal-radio id="a2" name="a" checked></petal-radio>
+  <petal-radio id="a3" name="a"></petal-radio>
+  <petal-radio id="b1" name="b"></petal-radio>
 `;
 
-describe('<md-radio>', () => {
+describe('<petal-radio>', () => {
   const env = new Environment();
 
   // Note, this would be better in the harness, but waiting in the test setup
@@ -49,19 +50,19 @@ describe('<md-radio>', () => {
   async function setupTest(template = defaultRadio) {
     const root = env.render(template);
     await env.waitForStability();
-    const radios = Array.from(root.querySelectorAll('md-radio'));
+    const radios = Array.from(root.querySelectorAll('petal-radio'));
     const harnesses = radios.map((radio) => new RadioHarness(radio));
     return {harnesses, root};
   }
 
   describe('.styles', () => {
-    createTokenTests(MdRadio.styles);
+    createTokenTests(PetalRadio.styles);
   });
 
   describe('basic', () => {
-    it('initializes as an md-radio', async () => {
+    it('initializes as an petal-radio', async () => {
       const {harnesses} = await setupTest();
-      expect(harnesses[0].element).toBeInstanceOf(MdRadio);
+      expect(harnesses[0].element).toBeInstanceOf(PetalRadio);
     });
 
     it('clicking a radio should select it', async () => {
@@ -200,7 +201,7 @@ describe('<md-radio>', () => {
     });
 
     it('terminates safely when dispatching an arrow keydown on a disconnected radio', async () => {
-      const radio = document.createElement('md-radio');
+      const radio = document.createElement('petal-radio');
       radio.name = 'a';
       expect(() => {
         radio.dispatchEvent(
@@ -375,11 +376,11 @@ describe('<md-radio>', () => {
       const root = env.render(html`<main></main>`);
       const container = root.querySelector('main')!;
 
-      const r1 = document.createElement('md-radio');
+      const r1 = document.createElement('petal-radio');
       r1.setAttribute('name', 'a');
-      const r2 = document.createElement('md-radio');
+      const r2 = document.createElement('petal-radio');
       r2.setAttribute('name', 'a');
-      const r3 = document.createElement('md-radio');
+      const r3 = document.createElement('petal-radio');
       r3.setAttribute('name', 'a');
 
       // r1 and r2 should both be checked, because even though they have the
@@ -425,11 +426,11 @@ describe('<md-radio>', () => {
     it('in a lit repeat', async () => {
       const values = ['a1', 'a2'];
       const repeated = values.map(
-        (value) => html`<md-radio value=${value} name="a"></md-radio>`,
+        (value) => html`<petal-radio value=${value} name="a"></petal-radio>`,
       );
       const root = env.render(html`${repeated}`);
       await env.waitForStability();
-      const [a1, a2] = root.querySelectorAll('md-radio');
+      const [a1, a2] = root.querySelectorAll('petal-radio');
 
       expect(a1.checked).toBeFalse();
       expect(a2.checked).toBeFalse();
@@ -452,9 +453,9 @@ describe('<md-radio>', () => {
     it('escapes special characters in name attribute', async () => {
       const hostileName = 'a"], [disabled="';
       const template = html`
-        <md-radio id="r1" name=${hostileName}></md-radio>
-        <md-radio id="r2" name=${hostileName}></md-radio>
-        <md-radio id="r3" disabled></md-radio>
+        <petal-radio id="r1" name=${hostileName}></petal-radio>
+        <petal-radio id="r2" name=${hostileName}></petal-radio>
+        <petal-radio id="r3" disabled></petal-radio>
       `;
       const {harnesses} = await setupTest(template);
       const [r1, r2, r3] = harnesses;
@@ -474,13 +475,13 @@ describe('<md-radio>', () => {
   describe('label activation', () => {
     async function setupLabelTest() {
       const root = env.render(html`
-        <label> <md-radio name="a"></md-radio></label>
-        <label> <md-radio name="a"></md-radio></label>
+        <label> <petal-radio name="a"></petal-radio></label>
+        <label> <petal-radio name="a"></petal-radio></label>
       `);
       await env.waitForStability();
       // [[label, radio]]
       return Array.from(root.querySelectorAll('label')).map(
-        (el) => [el, el.firstElementChild as MdRadio] as const,
+        (el) => [el, el.firstElementChild as PetalRadio] as const,
       );
     }
 
@@ -501,13 +502,13 @@ describe('<md-radio>', () => {
 
   describe('forms', () => {
     createFormTests({
-      queryControl: (root) => root.querySelector('md-radio'),
+      queryControl: (root) => root.querySelector('petal-radio'),
       valueTests: [
         {
           name: 'unnamed',
           render: () => html`
-            <md-radio value="One" checked></md-radio>
-            <md-radio value="Two"></md-radio>
+            <petal-radio value="One" checked></petal-radio>
+            <petal-radio value="Two"></petal-radio>
           `,
           assertValue(formData) {
             expect(formData)
@@ -518,8 +519,8 @@ describe('<md-radio>', () => {
         {
           name: 'unchecked',
           render: () => html`
-            <md-radio name="radio" value="One"></md-radio>
-            <md-radio name="radio" value="Two"></md-radio>
+            <petal-radio name="radio" value="One"></petal-radio>
+            <petal-radio name="radio" value="Two"></petal-radio>
           `,
           assertValue(formData) {
             expect(formData)
@@ -530,8 +531,8 @@ describe('<md-radio>', () => {
         {
           name: 'checked first value',
           render: () => html`
-            <md-radio name="radio" value="One" checked></md-radio>
-            <md-radio name="radio" value="Two"></md-radio>
+            <petal-radio name="radio" value="One" checked></petal-radio>
+            <petal-radio name="radio" value="Two"></petal-radio>
           `,
           assertValue(formData) {
             expect(formData.get('radio')).toBe('One');
@@ -540,8 +541,8 @@ describe('<md-radio>', () => {
         {
           name: 'checked second value',
           render: () => html`
-            <md-radio name="radio" value="One"></md-radio>
-            <md-radio name="radio" value="Two" checked></md-radio>
+            <petal-radio name="radio" value="One"></petal-radio>
+            <petal-radio name="radio" value="Two" checked></petal-radio>
           `,
           assertValue(formData) {
             expect(formData.get('radio')).toBe('Two');
@@ -550,8 +551,8 @@ describe('<md-radio>', () => {
         {
           name: 'disabled',
           render: () => html`
-            <md-radio name="radio" value="One" checked disabled></md-radio>
-            <md-radio name="radio" value="Two" disabled></md-radio>
+            <petal-radio name="radio" value="One" checked disabled></petal-radio>
+            <petal-radio name="radio" value="Two" disabled></petal-radio>
           `,
           assertValue(formData) {
             expect(formData)
@@ -564,8 +565,8 @@ describe('<md-radio>', () => {
         {
           name: 'reset to unchecked',
           render: () => html`
-            <md-radio name="radio" value="One"></md-radio>
-            <md-radio name="radio" value="Two"></md-radio>
+            <petal-radio name="radio" value="One"></petal-radio>
+            <petal-radio name="radio" value="Two"></petal-radio>
           `,
           change(radio) {
             radio.checked = true;
@@ -579,8 +580,8 @@ describe('<md-radio>', () => {
         {
           name: 'reset to checked',
           render: () => html`
-            <md-radio name="radio" value="One" checked></md-radio>
-            <md-radio name="radio" value="Two"></md-radio>
+            <petal-radio name="radio" value="One" checked></petal-radio>
+            <petal-radio name="radio" value="Two"></petal-radio>
           `,
           change(radio) {
             radio.checked = false;
@@ -596,8 +597,8 @@ describe('<md-radio>', () => {
         {
           name: 'restore unchecked',
           render: () => html`
-            <md-radio name="radio" value="One"></md-radio>
-            <md-radio name="radio" value="Two"></md-radio>
+            <petal-radio name="radio" value="One"></petal-radio>
+            <petal-radio name="radio" value="Two"></petal-radio>
           `,
           assertRestored(radio) {
             expect(radio.checked)
@@ -608,8 +609,8 @@ describe('<md-radio>', () => {
         {
           name: 'restore checked',
           render: () => html`
-            <md-radio name="radio" value="One" checked></md-radio>
-            <md-radio name="radio" value="Two"></md-radio>
+            <petal-radio name="radio" value="One" checked></petal-radio>
+            <petal-radio name="radio" value="Two"></petal-radio>
           `,
           assertRestored(radio) {
             expect(radio.checked)

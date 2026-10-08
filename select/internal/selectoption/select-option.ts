@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '../../../focus/md-focus-ring.js';
@@ -45,7 +46,7 @@ interface SelectOptionSelf {
 
 /**
  * The interface to implement for a select option. Additionally, the element
- * must have `md-list-item` and `md-menu-item` attributes on the host.
+ * must have `petal-list-item` and `petal-menu-item` attributes on the host.
  */
 export type SelectOption = SelectOptionSelf & MenuItem;
 
@@ -79,7 +80,7 @@ export class SelectOptionEl
   /**
    * READONLY: self-identifies as a menu item and sets its identifying attribute
    */
-  @property({type: Boolean, attribute: 'md-menu-item', reflect: true})
+  @property({type: Boolean, attribute: 'petal-menu-item', reflect: true})
   isMenuItem = true;
 
   /**
@@ -143,14 +144,14 @@ export class SelectOptionEl
 
   protected override render() {
     return this.renderListItem(html`
-      <md-item>
+      <petal-item>
         <div slot="container">
           ${this.renderRipple()} ${this.renderFocusRing()}
         </div>
         <slot name="start" slot="start"></slot>
         <slot name="end" slot="end"></slot>
         ${this.renderBody()}
-      </md-item>
+      </petal-item>
     `);
   }
 
@@ -182,20 +183,20 @@ export class SelectOptionEl
    * Handles rendering of the ripple element.
    */
   protected renderRipple() {
-    return html` <md-ripple
+    return html` <petal-ripple
       part="ripple"
       for="item"
-      ?disabled=${this.disabled}></md-ripple>`;
+      ?disabled=${this.disabled}></petal-ripple>`;
   }
 
   /**
    * Handles rendering of the focus ring.
    */
   protected renderFocusRing() {
-    return html` <md-focus-ring
+    return html` <petal-focus-ring
       part="focus-ring"
       for="item"
-      inward></md-focus-ring>`;
+      inward></petal-focus-ring>`;
   }
 
   /**

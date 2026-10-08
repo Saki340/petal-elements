@@ -2,6 +2,7 @@
  * @license
  * Copyright 2022 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {CSSResultOrNative} from 'lit';
@@ -22,7 +23,7 @@ export {Corner} from './internal/menu.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-menu': MdMenu;
+    'petal-menu': PetalMenu;
   }
 }
 
@@ -35,7 +36,7 @@ declare global {
  * They can be opened from a variety of elements, most commonly icon buttons,
  * buttons, and text fields.
  *
- * md-menu listens for the `close-menu` and `deselect-items` events.
+ * petal-menu listens for the `close-menu` and `deselect-items` events.
  *
  * - `close-menu` closes the menu when dispatched from a child element.
  * - `deselect-items` deselects all of its immediate menu-item children.
@@ -56,26 +57,26 @@ declare global {
  *     roots. You can also set `.anchorElement` to an element reference if
  *     necessary.
  *   -->
- *   <md-menu anchor="anchor" has-overflow ${ref(menuRef)}>
- *     <md-menu-item headline="This is a headline"></md-menu-item>
- *     <md-sub-menu>
- *       <md-menu-item
+ *   <petal-menu anchor="anchor" has-overflow ${ref(menuRef)}>
+ *     <petal-menu-item headline="This is a headline"></petal-menu-item>
+ *     <petal-sub-menu>
+ *       <petal-menu-item
  *           slot="item"
  *           headline="this is a submenu item">
- *       </md-menu-item>
- *       <md-menu slot="menu">
- *         <md-menu-item headline="This is an item inside a submenu">
- *         </md-menu-item>
- *       </md-menu>
- *     </md-sub-menu>
- *   </md-menu>
+ *       </petal-menu-item>
+ *       <petal-menu slot="menu">
+ *         <petal-menu-item headline="This is an item inside a submenu">
+ *         </petal-menu-item>
+ *       </petal-menu>
+ *     </petal-sub-menu>
+ *   </petal-menu>
  * </div>
  * ```
  *
  * @final
  * @suppress {visibility}
  */
-@customElement('md-menu')
-export class MdMenu extends Menu {
+@customElement('petal-menu')
+export class PetalMenu extends Menu {
   static override styles: CSSResultOrNative[] = [styles];
 }

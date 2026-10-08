@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '@material/web/labs/gb/components/button/md-gb-button.js';
@@ -70,7 +71,7 @@ const playground: MaterialStoryInit<StoryKnobs> = {
   render(knobs) {
     const renderIcon = (show?: boolean) =>
       show && knobs.icon
-        ? html`<md-gb-icon>${knobs.icon}</md-gb-icon>`
+        ? html`<petal-gb-icon>${knobs.icon}</petal-gb-icon>`
         : nothing;
 
     const size = knobs.size ?? 'sm';
@@ -79,40 +80,40 @@ const playground: MaterialStoryInit<StoryKnobs> = {
 
     return html`
       <div class="story-column">
-        <md-gb-button-group
+        <petal-gb-button-group
           aria-label="Playground button group"
           variant=${knobs.variant ?? 'standard'}
           selection=${knobs.selection ?? 'none'}
           ?disabled=${knobs.disabled ?? false}>
-          <md-gb-button
+          <petal-gb-button
             value="btn1"
             size=${size}
             color=${color}
             ?square=${square}>
             ${renderIcon(knobs.showIcon1)}Option 1
-          </md-gb-button>
-          <md-gb-button
+          </petal-gb-button>
+          <petal-gb-button
             value="btn2"
             size=${size}
             color=${color}
             ?square=${square}>
             ${renderIcon(knobs.showIcon2)}Option 2
-          </md-gb-button>
-          <md-gb-button
+          </petal-gb-button>
+          <petal-gb-button
             value="btn3"
             size=${size}
             color=${color}
             ?square=${square}>
             ${renderIcon(knobs.showIcon3)}Option 3
-          </md-gb-button>
-          <md-gb-button
+          </petal-gb-button>
+          <petal-gb-button
             value="btn4"
             size=${size}
             color=${color}
             ?square=${square}>
             ${renderIcon(knobs.showIcon4)}Option 4
-          </md-gb-button>
-        </md-gb-button-group>
+          </petal-gb-button>
+        </petal-gb-button-group>
       </div>
     `;
   },
@@ -127,57 +128,57 @@ const icons: MaterialStoryInit<StoryKnobs> = {
     return html`
       <div class="story-column">
         <h3>Icon-only</h3>
-        <md-gb-button-group
+        <petal-gb-button-group
           aria-label="Text alignment buttons"
           variant="connected"
           selection="single"
           ?disabled=${disabled}>
-          <md-gb-button value="left" aria-label="Align left" size="sm" selected>
-            <md-gb-icon>format_align_left</md-gb-icon>
-          </md-gb-button>
-          <md-gb-button value="center" aria-label="Align center" size="sm">
-            <md-gb-icon>format_align_center</md-gb-icon>
-          </md-gb-button>
-          <md-gb-button value="right" aria-label="Align right" size="sm">
-            <md-gb-icon>format_align_right</md-gb-icon>
-          </md-gb-button>
-        </md-gb-button-group>
+          <petal-gb-button value="left" aria-label="Align left" size="sm" selected>
+            <petal-gb-icon>format_align_left</petal-gb-icon>
+          </petal-gb-button>
+          <petal-gb-button value="center" aria-label="Align center" size="sm">
+            <petal-gb-icon>format_align_center</petal-gb-icon>
+          </petal-gb-button>
+          <petal-gb-button value="right" aria-label="Align right" size="sm">
+            <petal-gb-icon>format_align_right</petal-gb-icon>
+          </petal-gb-button>
+        </petal-gb-button-group>
 
         <h3>Icon and label</h3>
-        <md-gb-button-group
+        <petal-gb-button-group
           aria-label="Media controls"
           variant="connected"
           selection="single"
           ?disabled=${disabled}>
-          <md-gb-button value="play" size="sm">
-            <md-gb-icon>play_arrow</md-gb-icon>
+          <petal-gb-button value="play" size="sm">
+            <petal-gb-icon>play_arrow</petal-gb-icon>
             Play
-          </md-gb-button>
-          <md-gb-button value="pause" size="sm">
-            <md-gb-icon>pause</md-gb-icon>
+          </petal-gb-button>
+          <petal-gb-button value="pause" size="sm">
+            <petal-gb-icon>pause</petal-gb-icon>
             Pause
-          </md-gb-button>
-          <md-gb-button value="stop" size="sm">
-            <md-gb-icon>stop</md-gb-icon>
+          </petal-gb-button>
+          <petal-gb-button value="stop" size="sm">
+            <petal-gb-icon>stop</petal-gb-icon>
             Stop
-          </md-gb-button>
-        </md-gb-button-group>
+          </petal-gb-button>
+        </petal-gb-button-group>
 
         <h3>Mixed set</h3>
-        <md-gb-button-group
+        <petal-gb-button-group
           aria-label="Mixed icon and text actions"
           variant="connected"
           ?disabled=${disabled}>
-          <md-gb-button value="starred" size="sm">
-            <md-gb-icon>star</md-gb-icon>
+          <petal-gb-button value="starred" size="sm">
+            <petal-gb-icon>star</petal-gb-icon>
             Starred
-          </md-gb-button>
-          <md-gb-button value="all" size="sm">All</md-gb-button>
-          <md-gb-button value="archive" size="sm">
-            <md-gb-icon>archive</md-gb-icon>
+          </petal-gb-button>
+          <petal-gb-button value="all" size="sm">All</petal-gb-button>
+          <petal-gb-button value="archive" size="sm">
+            <petal-gb-icon>archive</petal-gb-icon>
             Archive
-          </md-gb-button>
-        </md-gb-button-group>
+          </petal-gb-button>
+        </petal-gb-button-group>
       </div>
     `;
   },

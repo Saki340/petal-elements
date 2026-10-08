@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 
@@ -130,7 +131,7 @@ export class DragPlayground extends LitElement {
           isDragging: this.isDragging,
         })}
       >
-        <md-icon>drag_handle</md-icon>
+        <petal-icon>drag_handle</petal-icon>
       </div>
       <slot name="editor"></slot>
     </div>`;

@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {html, isServer, LitElement} from 'lit';
@@ -63,7 +64,7 @@ export class SubMenu extends LitElement {
   /**
    * READONLY: self-identifies as a menu item and sets its identifying attribute
    */
-  @property({type: Boolean, reflect: true, attribute: 'md-sub-menu'})
+  @property({type: Boolean, reflect: true, attribute: 'petal-sub-menu'})
   isSubMenu = true;
 
   get item() {
@@ -143,8 +144,8 @@ export class SubMenu extends LitElement {
 
     // Parent menu is `position: absolute` – this creates a new CSS relative
     // positioning context (similar to doing `position: relative`), so the
-    // submenu's `<md-menu slot="submenu" positioning="document">` would be
-    // wrong even if we change `md-sub-menu` from `position: relative` to
+    // submenu's `<petal-menu slot="submenu" positioning="document">` would be
+    // wrong even if we change `petal-sub-menu` from `position: relative` to
     // `position: static` because the submenu it would still be positioning
     // itself relative to the parent menu.
     if (menu.positioning === 'document') {
@@ -162,7 +163,7 @@ export class SubMenu extends LitElement {
     // menu. Remove it here since we are about to show and focus it.
     menu.removeAttribute('aria-hidden');
     // This is required in the case where we have a leaf menu open and and the
-    // user hovers a parent menu's item which is not an md-sub-menu item.
+    // user hovers a parent menu's item which is not an petal-sub-menu item.
     // If this were set to true, then the menu would close and focus would be
     // lost. That means the focusout event would have a `relatedTarget` of
     // `null` since nothing in the menu would be focused anymore due to the
@@ -180,7 +181,7 @@ export class SubMenu extends LitElement {
     }
 
     // Deactivate other items. This can be the case if the user has tabbed
-    // around the menu and then mouses over an md-sub-menu.
+    // around the menu and then mouses over an petal-sub-menu.
     this.dispatchEvent(createDeactivateItemsEvent());
     this.dispatchEvent(createDeactivateTypeaheadEvent());
     this.item.selected = true;

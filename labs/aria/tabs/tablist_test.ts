@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 // import 'jasmine'; (google3-only)
@@ -15,38 +16,38 @@ import {Environment} from '../../../testing/environment.js';
 import {hasState} from '../../behaviors/custom-state-set.js';
 import {internals} from '../../behaviors/element-internals.js';
 
-describe('md-aria-tablist', () => {
+describe('petal-aria-tablist', () => {
   const env = new Environment();
 
   async function setupTest(
     template = html`
-      <md-aria-tablist>
-        <md-aria-tab id="tabone" tabpanel="panelone">Tab one</md-aria-tab>
-        <md-aria-tab id="tabtwo" tabpanel="paneltwo">Tab two</md-aria-tab>
-        <md-aria-tab id="tabthree" tabpanel="panelthree">Tab three</md-aria-tab>
-      </md-aria-tablist>
-      <md-aria-tabpanel id="panelone" tab="tabone">
+      <petal-aria-tablist>
+        <petal-aria-tab id="tabone" tabpanel="panelone">Tab one</petal-aria-tab>
+        <petal-aria-tab id="tabtwo" tabpanel="paneltwo">Tab two</petal-aria-tab>
+        <petal-aria-tab id="tabthree" tabpanel="panelthree">Tab three</petal-aria-tab>
+      </petal-aria-tablist>
+      <petal-aria-tabpanel id="panelone" tab="tabone">
         Panel Content 1
-      </md-aria-tabpanel>
-      <md-aria-tabpanel id="paneltwo" tab="tabtwo">
+      </petal-aria-tabpanel>
+      <petal-aria-tabpanel id="paneltwo" tab="tabtwo">
         Panel Content 2
-      </md-aria-tabpanel>
-      <md-aria-tabpanel id="panelthree" tab="tabthree">
+      </petal-aria-tabpanel>
+      <petal-aria-tabpanel id="panelthree" tab="tabthree">
         Panel Content 3
-      </md-aria-tabpanel>
+      </petal-aria-tabpanel>
     `,
   ) {
     const root = env.render(template);
     await env.waitForStability();
-    const tablist = root.querySelector('md-aria-tablist')!;
-    const tabs = Array.from(root.querySelectorAll('md-aria-tab'));
-    const panels = Array.from(root.querySelectorAll('md-aria-tabpanel'));
+    const tablist = root.querySelector('petal-aria-tablist')!;
+    const tabs = Array.from(root.querySelectorAll('petal-aria-tab'));
+    const panels = Array.from(root.querySelectorAll('petal-aria-tabpanel'));
     return {root, tablist, tabs, panels};
   }
 
   describe('ARIA roles and internals', () => {
     it('can be instantiated via document.createElement without throwing', () => {
-      expect(() => document.createElement('md-aria-tablist')).not.toThrow();
+      expect(() => document.createElement('petal-aria-tablist')).not.toThrow();
     });
 
     it('sets element role to "tablist"', async () => {
@@ -85,12 +86,12 @@ describe('md-aria-tablist', () => {
 
     it('selects pre-selected tab specified via selectedTabIndex attribute', async () => {
       const {tabs, panels} = await setupTest(html`
-        <md-aria-tablist .selectedTabIndex=${1}>
-          <md-aria-tab id="tabone" tabpanel="panelone">Tab one</md-aria-tab>
-          <md-aria-tab id="tabtwo" tabpanel="paneltwo">Tab two</md-aria-tab>
-        </md-aria-tablist>
-        <md-aria-tabpanel id="panelone" tab="tabone">Panel 1</md-aria-tabpanel>
-        <md-aria-tabpanel id="paneltwo" tab="tabtwo">Panel 2</md-aria-tabpanel>
+        <petal-aria-tablist .selectedTabIndex=${1}>
+          <petal-aria-tab id="tabone" tabpanel="panelone">Tab one</petal-aria-tab>
+          <petal-aria-tab id="tabtwo" tabpanel="paneltwo">Tab two</petal-aria-tab>
+        </petal-aria-tablist>
+        <petal-aria-tabpanel id="panelone" tab="tabone">Panel 1</petal-aria-tabpanel>
+        <petal-aria-tabpanel id="paneltwo" tab="tabtwo">Panel 2</petal-aria-tabpanel>
       `);
 
       expect(tabs[0].selected).toBeFalse();
@@ -134,7 +135,7 @@ describe('md-aria-tablist', () => {
 
     it('ignores setting selectedTab to an unattached tab', async () => {
       const {tablist, tabs} = await setupTest();
-      const outsideTab = document.createElement('md-aria-tab');
+      const outsideTab = document.createElement('petal-aria-tab');
 
       tablist.selectedTab = outsideTab;
       await env.waitForStability();
@@ -181,12 +182,12 @@ describe('md-aria-tablist', () => {
 
     it('initializes selected tab via lit property binding for selectedTabIndex', async () => {
       const {tablist, tabs, panels} = await setupTest(html`
-        <md-aria-tablist .selectedTabIndex=${1}>
-          <md-aria-tab id="tabone" tabpanel="panelone">Tab 1</md-aria-tab>
-          <md-aria-tab id="tabtwo" tabpanel="paneltwo">Tab 2</md-aria-tab>
-        </md-aria-tablist>
-        <md-aria-tabpanel id="panelone" tab="tabone">Panel 1</md-aria-tabpanel>
-        <md-aria-tabpanel id="paneltwo" tab="tabtwo">Panel 2</md-aria-tabpanel>
+        <petal-aria-tablist .selectedTabIndex=${1}>
+          <petal-aria-tab id="tabone" tabpanel="panelone">Tab 1</petal-aria-tab>
+          <petal-aria-tab id="tabtwo" tabpanel="paneltwo">Tab 2</petal-aria-tab>
+        </petal-aria-tablist>
+        <petal-aria-tabpanel id="panelone" tab="tabone">Panel 1</petal-aria-tabpanel>
+        <petal-aria-tabpanel id="paneltwo" tab="tabtwo">Panel 2</petal-aria-tabpanel>
       `);
 
       expect(tablist.selectedTabIndex).toBe(1);
@@ -198,14 +199,14 @@ describe('md-aria-tablist', () => {
 
     it('excludes non-tab elements when resolving tabs property', async () => {
       const {tablist, tabs} = await setupTest(html`
-        <md-aria-tablist>
+        <petal-aria-tablist>
           <div>Header Text</div>
-          <md-aria-tab id="tabone" tabpanel="panelone">Tab 1</md-aria-tab>
+          <petal-aria-tab id="tabone" tabpanel="panelone">Tab 1</petal-aria-tab>
           <span>Separator</span>
-          <md-aria-tab id="tabtwo" tabpanel="paneltwo">Tab 2</md-aria-tab>
-        </md-aria-tablist>
-        <md-aria-tabpanel id="panelone" tab="tabone">Panel 1</md-aria-tabpanel>
-        <md-aria-tabpanel id="paneltwo" tab="tabtwo">Panel 2</md-aria-tabpanel>
+          <petal-aria-tab id="tabtwo" tabpanel="paneltwo">Tab 2</petal-aria-tab>
+        </petal-aria-tablist>
+        <petal-aria-tabpanel id="panelone" tab="tabone">Panel 1</petal-aria-tabpanel>
+        <petal-aria-tabpanel id="paneltwo" tab="tabtwo">Panel 2</petal-aria-tabpanel>
       `);
 
       expect(tablist.tabs.length).toBe(2);
@@ -306,12 +307,12 @@ describe('md-aria-tablist', () => {
 
     it('dispatches "change" event on tablist when tab selection changes via focus in automatic selection mode', async () => {
       const {tablist, tabs} = await setupTest(html`
-        <md-aria-tablist autoSelect>
-          <md-aria-tab id="tabone" tabpanel="panelone">Tab 1</md-aria-tab>
-          <md-aria-tab id="tabtwo" tabpanel="paneltwo">Tab 2</md-aria-tab>
-        </md-aria-tablist>
-        <md-aria-tabpanel id="panelone" tab="tabone">Panel 1</md-aria-tabpanel>
-        <md-aria-tabpanel id="paneltwo" tab="tabtwo">Panel 2</md-aria-tabpanel>
+        <petal-aria-tablist autoSelect>
+          <petal-aria-tab id="tabone" tabpanel="panelone">Tab 1</petal-aria-tab>
+          <petal-aria-tab id="tabtwo" tabpanel="paneltwo">Tab 2</petal-aria-tab>
+        </petal-aria-tablist>
+        <petal-aria-tabpanel id="panelone" tab="tabone">Panel 1</petal-aria-tabpanel>
+        <petal-aria-tabpanel id="paneltwo" tab="tabtwo">Panel 2</petal-aria-tabpanel>
       `);
       const changeListener = jasmine.createSpy('changeListener');
       tablist.addEventListener('change', changeListener);
@@ -348,16 +349,16 @@ describe('md-aria-tablist', () => {
   describe('Focus activation - Automatic activation (autoSelect = true)', () => {
     it('selects tab on focus in automatic selection mode', async () => {
       const {tabs, panels} = await setupTest(html`
-        <md-aria-tablist autoSelect>
-          <md-aria-tab id="tabone" tabpanel="panelone">Tab 1</md-aria-tab>
-          <md-aria-tab id="tabtwo" tabpanel="paneltwo">Tab 2</md-aria-tab>
-          <md-aria-tab id="tabthree" tabpanel="panelthree">Tab 3</md-aria-tab>
-        </md-aria-tablist>
-        <md-aria-tabpanel id="panelone" tab="tabone">Panel 1</md-aria-tabpanel>
-        <md-aria-tabpanel id="paneltwo" tab="tabtwo">Panel 2</md-aria-tabpanel>
-        <md-aria-tabpanel id="panelthree" tab="tabthree">
+        <petal-aria-tablist autoSelect>
+          <petal-aria-tab id="tabone" tabpanel="panelone">Tab 1</petal-aria-tab>
+          <petal-aria-tab id="tabtwo" tabpanel="paneltwo">Tab 2</petal-aria-tab>
+          <petal-aria-tab id="tabthree" tabpanel="panelthree">Tab 3</petal-aria-tab>
+        </petal-aria-tablist>
+        <petal-aria-tabpanel id="panelone" tab="tabone">Panel 1</petal-aria-tabpanel>
+        <petal-aria-tabpanel id="paneltwo" tab="tabtwo">Panel 2</petal-aria-tabpanel>
+        <petal-aria-tabpanel id="panelthree" tab="tabthree">
           Panel 3
-        </md-aria-tabpanel>
+        </petal-aria-tabpanel>
       `);
       tabs[1].focus();
       await env.waitForStability();
@@ -426,12 +427,12 @@ describe('md-aria-tablist', () => {
     });
 
     it('automatically selects tab added to an empty tablist', async () => {
-      const {root} = await setupTest(html`<md-aria-tablist></md-aria-tablist>`);
-      const tablist = root.querySelector('md-aria-tablist')!;
+      const {root} = await setupTest(html`<petal-aria-tablist></petal-aria-tablist>`);
+      const tablist = root.querySelector('petal-aria-tablist')!;
 
       expect(tablist.selectedTab).toBeNull();
 
-      const newTab = document.createElement('md-aria-tab');
+      const newTab = document.createElement('petal-aria-tab');
       newTab.id = 'newtab';
       newTab.textContent = 'New Tab';
       tablist.appendChild(newTab);
@@ -446,7 +447,7 @@ describe('md-aria-tablist', () => {
 
       expect(tabs[0].selected).toBeTrue();
 
-      const newTab = document.createElement('md-aria-tab');
+      const newTab = document.createElement('petal-aria-tab');
       newTab.id = 'newtab';
       newTab.textContent = 'New Tab';
       newTab.selected = true;

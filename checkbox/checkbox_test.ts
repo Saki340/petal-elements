@@ -2,6 +2,7 @@
  * @license
  * Copyright 2022 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 // import 'jasmine'; (google3-only)
@@ -11,20 +12,20 @@ import {html} from 'lit';
 import {createFormTests} from '../testing/forms.js';
 import {createTokenTests} from '../testing/tokens.js';
 
-import {MdCheckbox} from './checkbox.js';
+import {PetalCheckbox} from './checkbox.js';
 
-describe('<md-checkbox>', () => {
+describe('<petal-checkbox>', () => {
   describe('.styles', () => {
-    createTokenTests(MdCheckbox.styles);
+    createTokenTests(PetalCheckbox.styles);
   });
 
   describe('forms', () => {
     createFormTests({
-      queryControl: (root) => root.querySelector('md-checkbox'),
+      queryControl: (root) => root.querySelector('petal-checkbox'),
       valueTests: [
         {
           name: 'unnamed',
-          render: () => html`<md-checkbox checked></md-checkbox>`,
+          render: () => html`<petal-checkbox checked></petal-checkbox>`,
           assertValue(formData) {
             expect(formData)
               .withContext('should not add anything to form without a name')
@@ -33,7 +34,7 @@ describe('<md-checkbox>', () => {
         },
         {
           name: 'unchecked',
-          render: () => html`<md-checkbox name="checkbox"></md-checkbox>`,
+          render: () => html`<petal-checkbox name="checkbox"></petal-checkbox>`,
           assertValue(formData) {
             expect(formData)
               .withContext('should not add anything to form when unchecked')
@@ -43,7 +44,7 @@ describe('<md-checkbox>', () => {
         {
           name: 'checked default value',
           render: () =>
-            html`<md-checkbox name="checkbox" checked></md-checkbox>`,
+            html`<petal-checkbox name="checkbox" checked></petal-checkbox>`,
           assertValue(formData) {
             expect(formData.get('checkbox')).toBe('on');
           },
@@ -51,10 +52,10 @@ describe('<md-checkbox>', () => {
         {
           name: 'checked custom value',
           render: () =>
-            html`<md-checkbox
+            html`<petal-checkbox
               name="checkbox"
               checked
-              value="Custom value"></md-checkbox>`,
+              value="Custom value"></petal-checkbox>`,
           assertValue(formData) {
             expect(formData.get('checkbox')).toBe('Custom value');
           },
@@ -62,10 +63,10 @@ describe('<md-checkbox>', () => {
         {
           name: 'indeterminate',
           render: () =>
-            html`<md-checkbox
+            html`<petal-checkbox
               name="checkbox"
               checked
-              indeterminate></md-checkbox>`,
+              indeterminate></petal-checkbox>`,
           assertValue(formData) {
             expect(formData)
               .withContext('should not add anything to form when indeterminate')
@@ -75,7 +76,7 @@ describe('<md-checkbox>', () => {
         {
           name: 'disabled',
           render: () =>
-            html`<md-checkbox name="checkbox" checked disabled></md-checkbox>`,
+            html`<petal-checkbox name="checkbox" checked disabled></petal-checkbox>`,
           assertValue(formData) {
             expect(formData)
               .withContext('should not add anything to form when disabled')
@@ -86,7 +87,7 @@ describe('<md-checkbox>', () => {
       resetTests: [
         {
           name: 'reset to unchecked',
-          render: () => html`<md-checkbox name="checkbox"></md-checkbox>`,
+          render: () => html`<petal-checkbox name="checkbox"></petal-checkbox>`,
           change(checkbox) {
             checkbox.checked = true;
           },
@@ -99,7 +100,7 @@ describe('<md-checkbox>', () => {
         {
           name: 'reset to checked',
           render: () =>
-            html`<md-checkbox name="checkbox" checked></md-checkbox>`,
+            html`<petal-checkbox name="checkbox" checked></petal-checkbox>`,
           change(checkbox) {
             checkbox.checked = false;
           },
@@ -112,7 +113,7 @@ describe('<md-checkbox>', () => {
         {
           name: 'reset to indeterminate',
           render: () =>
-            html`<md-checkbox name="checkbox" indeterminate></md-checkbox>`,
+            html`<petal-checkbox name="checkbox" indeterminate></petal-checkbox>`,
           change(checkbox) {
             checkbox.indeterminate = false;
           },
@@ -126,7 +127,7 @@ describe('<md-checkbox>', () => {
       restoreTests: [
         {
           name: 'restore unchecked',
-          render: () => html`<md-checkbox name="checkbox"></md-checkbox>`,
+          render: () => html`<petal-checkbox name="checkbox"></petal-checkbox>`,
           assertRestored(checkbox) {
             expect(checkbox.checked)
               .withContext('checkbox.checked after restore')
@@ -136,7 +137,7 @@ describe('<md-checkbox>', () => {
         {
           name: 'restore checked',
           render: () =>
-            html`<md-checkbox name="checkbox" checked></md-checkbox>`,
+            html`<petal-checkbox name="checkbox" checked></petal-checkbox>`,
           assertRestored(checkbox) {
             expect(checkbox.checked)
               .withContext('checkbox.checked after restore')
@@ -146,7 +147,7 @@ describe('<md-checkbox>', () => {
         {
           name: 'restore indeterminate',
           render: () =>
-            html`<md-checkbox name="checkbox" indeterminate></md-checkbox>`,
+            html`<petal-checkbox name="checkbox" indeterminate></petal-checkbox>`,
           assertRestored(checkbox) {
             expect(checkbox.indeterminate)
               .withContext('checkbox.indeterminate should not be restored')

@@ -2,6 +2,7 @@
  * @license
  * Copyright 2021 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {CSSResultOrNative} from 'lit';
@@ -12,7 +13,7 @@ import {styles} from './internal/switch-styles.cssresult.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-switch': MdSwitch;
+    'petal-switch': PetalSwitch;
   }
 }
 
@@ -26,7 +27,7 @@ declare global {
  * @final
  * @suppress {visibility}
  */
-@customElement('md-switch')
-export class MdSwitch extends Switch {
+@customElement('petal-switch')
+export class PetalSwitch extends Switch {
   static override styles: CSSResultOrNative[] = [styles];
 }

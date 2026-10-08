@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {MaterialStoryInit} from './material-collection.js';
@@ -46,7 +47,7 @@ const storyStyles = css`
   }
 
   .story-column.vertical,
-  .story-column:has(md-gb-slider[orientation='vertical']) {
+  .story-column:has(petal-gb-slider[orientation='vertical']) {
     padding-left: 72px;
   }
 `;
@@ -70,7 +71,7 @@ const playground: MaterialStoryInit<StoryKnobs> = {
       <div
         class="story-column ${isVertical ? 'vertical' : ''}"
         style="${isVertical ? 'padding-left: 72px;' : ''}">
-        <md-gb-slider
+        <petal-gb-slider
           .value=${knobs.value}
           .valueStart=${knobs.valueStart}
           .valueEnd=${knobs.valueEnd}
@@ -85,7 +86,7 @@ const playground: MaterialStoryInit<StoryKnobs> = {
           ?disabled=${knobs.disabled}
           .valueLabel=${knobs.valueLabel}
           .orientation=${knobs.orientation ?? 'horizontal'}>
-        </md-gb-slider>
+        </petal-gb-slider>
       </div>
     `;
   },
@@ -97,14 +98,14 @@ const continuous: MaterialStoryInit<StoryKnobs> = {
   render() {
     return html`
       <div class="story-column">
-        <md-gb-slider min="0" max="100" value="50" labeled></md-gb-slider>
-        <md-gb-slider
+        <petal-gb-slider min="0" max="100" value="50" labeled></petal-gb-slider>
+        <petal-gb-slider
           min="0"
           max="100"
           step="10"
           value="50"
           ticks
-          labeled></md-gb-slider>
+          labeled></petal-gb-slider>
       </div>
     `;
   },
@@ -116,19 +117,19 @@ const discrete: MaterialStoryInit<StoryKnobs> = {
   render() {
     return html`
       <div class="story-column">
-        <md-gb-slider
+        <petal-gb-slider
           min="0"
           max="100"
           step="10"
           value="50"
-          labeled></md-gb-slider>
-        <md-gb-slider
+          labeled></petal-gb-slider>
+        <petal-gb-slider
           min="0"
           max="100"
           step="10"
           value="50"
           ticks
-          labeled></md-gb-slider>
+          labeled></petal-gb-slider>
       </div>
     `;
   },
@@ -140,20 +141,20 @@ const centered: MaterialStoryInit<StoryKnobs> = {
   render() {
     return html`
       <div class="story-column">
-        <md-gb-slider
+        <petal-gb-slider
           centered
           min="-50"
           max="50"
           value="0"
-          labeled></md-gb-slider>
-        <md-gb-slider
+          labeled></petal-gb-slider>
+        <petal-gb-slider
           centered
           min="-50"
           max="50"
           step="10"
           value="0"
           ticks
-          labeled></md-gb-slider>
+          labeled></petal-gb-slider>
       </div>
     `;
   },
@@ -165,14 +166,14 @@ const rangeStory: MaterialStoryInit<StoryKnobs> = {
   render() {
     return html`
       <div class="story-column">
-        <md-gb-slider
+        <petal-gb-slider
           range
           min="0"
           max="100"
           value-start="25"
           value-end="75"
-          labeled></md-gb-slider>
-        <md-gb-slider
+          labeled></petal-gb-slider>
+        <petal-gb-slider
           range
           min="0"
           max="100"
@@ -180,7 +181,7 @@ const rangeStory: MaterialStoryInit<StoryKnobs> = {
           value-start="20"
           value-end="80"
           ticks
-          labeled></md-gb-slider>
+          labeled></petal-gb-slider>
       </div>
     `;
   },
@@ -192,15 +193,15 @@ const withIcons: MaterialStoryInit<StoryKnobs> = {
   render() {
     return html`
       <div class="story-column">
-        <md-gb-slider min="0" max="100" value="30" size="md" labeled>
-          <md-gb-icon slot="icon">volume_up</md-gb-icon>
-        </md-gb-slider>
-        <md-gb-slider min="0" max="100" value="60" size="lg" labeled>
-          <md-gb-icon slot="icon">volume_up</md-gb-icon>
-        </md-gb-slider>
-        <md-gb-slider min="0" max="100" value="80" size="xl" labeled>
-          <md-gb-icon slot="icon">volume_up</md-gb-icon>
-        </md-gb-slider>
+        <petal-gb-slider min="0" max="100" value="30" size="md" labeled>
+          <petal-gb-icon slot="icon">volume_up</petal-gb-icon>
+        </petal-gb-slider>
+        <petal-gb-slider min="0" max="100" value="60" size="lg" labeled>
+          <petal-gb-icon slot="icon">volume_up</petal-gb-icon>
+        </petal-gb-slider>
+        <petal-gb-slider min="0" max="100" value="80" size="xl" labeled>
+          <petal-gb-icon slot="icon">volume_up</petal-gb-icon>
+        </petal-gb-slider>
       </div>
     `;
   },

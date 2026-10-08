@@ -2,6 +2,7 @@
  * @license
  * Copyright 2022 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {CSSResultOrNative} from 'lit';
@@ -12,7 +13,7 @@ import {styles} from './internal/ripple-styles.cssresult.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-ripple': MdRipple;
+    'petal-ripple': PetalRipple;
   }
 }
 
@@ -29,7 +30,7 @@ declare global {
  * @final
  * @suppress {visibility}
  */
-@customElement('md-ripple')
-export class MdRipple extends Ripple {
+@customElement('petal-ripple')
+export class PetalRipple extends Ripple {
   static override styles: CSSResultOrNative[] = [styles];
 }

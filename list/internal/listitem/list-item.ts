@@ -2,6 +2,7 @@
  * @license
  * Copyright 2022 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '../../../focus/md-focus-ring.js';
@@ -55,9 +56,9 @@ export class ListItemEl extends listItemBaseClass implements ListItem {
   @property({reflect: true}) type: ListItemType = 'text';
 
   /**
-   * READONLY. Sets the `md-list-item` attribute on the element.
+   * READONLY. Sets the `petal-list-item` attribute on the element.
    */
-  @property({type: Boolean, attribute: 'md-list-item', reflect: true})
+  @property({type: Boolean, attribute: 'petal-list-item', reflect: true})
   isListItem = true;
 
   /**
@@ -99,14 +100,14 @@ export class ListItemEl extends listItemBaseClass implements ListItem {
 
   protected override render() {
     return this.renderListItem(html`
-      <md-item>
+      <petal-item>
         <div slot="container">
           ${this.renderRipple()} ${this.renderFocusRing()}
         </div>
         <slot name="start" slot="start"></slot>
         <slot name="end" slot="end"></slot>
         ${this.renderBody()}
-      </md-item>
+      </petal-item>
     `);
   }
 
@@ -163,10 +164,10 @@ export class ListItemEl extends listItemBaseClass implements ListItem {
       return nothing;
     }
 
-    return html` <md-ripple
+    return html` <petal-ripple
       part="ripple"
       for="item"
-      ?disabled=${this.isDisabled}></md-ripple>`;
+      ?disabled=${this.isDisabled}></petal-ripple>`;
   }
 
   /**
@@ -177,11 +178,11 @@ export class ListItemEl extends listItemBaseClass implements ListItem {
       return nothing;
     }
 
-    return html` <md-focus-ring
+    return html` <petal-focus-ring
       @visibility-changed=${this.onFocusRingVisibilityChanged}
       part="focus-ring"
       for="item"
-      inward></md-focus-ring>`;
+      inward></petal-focus-ring>`;
   }
 
   protected onFocusRingVisibilityChanged(e: Event) {}

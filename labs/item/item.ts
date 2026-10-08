@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {CSSResultOrNative} from 'lit';
@@ -12,7 +13,7 @@ import {styles} from './internal/item-styles.cssresult.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-item': MdItem;
+    'petal-item': PetalItem;
   }
 }
 
@@ -20,7 +21,7 @@ declare global {
  * An item layout component that can be used inside list items to give them
  * their customizable structure.
  *
- * `<md-item>` does not have any functionality, which must be added by the
+ * `<petal-item>` does not have any functionality, which must be added by the
  * component using it.
  *
  * All text will wrap unless `white-space: nowrap` is set on the item or any of
@@ -38,29 +39,29 @@ declare global {
  *
  * @example
  * ```html
- * <md-item>Single line</md-item>
+ * <petal-item>Single line</petal-item>
  *
- * <md-item>
+ * <petal-item>
  *   <div class="custom-content">...</div>
- * </md-item>
+ * </petal-item>
  *
  * <!-- Classic 1 to 3+ line list items -->
- * <md-item>
- *   <md-icon slot="start">image</md-icon>
+ * <petal-item>
+ *   <petal-icon slot="start">image</petal-icon>
  *   <div slot="overline">Overline</div>
  *   <div slot="headline">Headline</div>
  *   <div="supporting-text">Supporting text</div>
  *   <div="trailing-supporting-text">Trailing</div>
- *   <md-icon slot="end">image</md-icon>
- * </md-item>
+ *   <petal-icon slot="end">image</petal-icon>
+ * </petal-item>
  * ```
  *
- * When wrapping `<md-item>`, forward the available slots to use the same slot
- * structure for the wrapping component (this is what `<md-list-item>` does).
+ * When wrapping `<petal-item>`, forward the available slots to use the same slot
+ * structure for the wrapping component (this is what `<petal-list-item>` does).
  *
  * @example
  * ```html
- * <md-item>
+ * <petal-item>
  *   <slot></slot>
  *   <slot name="overline" slot="overline"></slot>
  *   <slot name="headline" slot="headline"></slot>
@@ -69,13 +70,13 @@ declare global {
  *       slot="trailing-supporting-text"></slot>
  *   <slot name="start" slot="start"></slot>
  *   <slot name="end" slot="end"></slot>
- * </md-item>
+ * </petal-item>
  * ```
  *
  * @final
  * @suppress {visibility}
  */
-@customElement('md-item')
-export class MdItem extends Item {
+@customElement('petal-item')
+export class PetalItem extends Item {
   static override styles: CSSResultOrNative[] = [styles];
 }

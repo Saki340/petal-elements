@@ -1,6 +1,7 @@
 //
 // Copyright 2022 Google LLC
 // SPDX-License-Identifier: Apache-2.0
+// Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
 //
 
 // go/keep-sorted start
@@ -11,7 +12,7 @@
 // go/keep-sorted start
 @use '../../elevation/elevation';
 @use '../../focus/focus-ring';
-@use '../../list/list' as md-list;
+@use '../../list/list' as petal-list;
 @use '../../list/list-item';
 @use '../../tokens';
 // go/keep-sorted end
@@ -46,7 +47,7 @@
     display: contents;
   }
 
-  md-focus-ring {
+  petal-focus-ring {
     @include focus-ring.theme(
       (
         'shape': map.get($tokens, 'container-shape'),
@@ -130,7 +131,7 @@
     max-height: inherit;
   }
 
-  ::slotted(:is(md-divider, [role='separator'])) {
+  ::slotted(:is(petal-divider, [role='separator'])) {
     margin: 8px 0;
   }
 

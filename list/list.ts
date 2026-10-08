@@ -2,6 +2,7 @@
  * @license
  * Copyright 2021 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {CSSResultOrNative} from 'lit';
@@ -12,7 +13,7 @@ import {styles} from './internal/list-styles.cssresult.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-list': MdList;
+    'petal-list': PetalList;
   }
 }
 
@@ -35,7 +36,7 @@ declare global {
  * @final
  * @suppress {visibility}
  */
-@customElement('md-list')
-export class MdList extends List {
+@customElement('petal-list')
+export class PetalList extends List {
   static override styles: CSSResultOrNative[] = [styles];
 }

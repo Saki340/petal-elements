@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '@material/web/elevation/elevation.js';
@@ -69,7 +70,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
     return html`
       <div class="box level${clampedLevel}">
         ${clampedLevel}
-        <md-elevation></md-elevation>
+        <petal-elevation></petal-elevation>
       </div>
     `;
   },
@@ -83,27 +84,27 @@ const all: MaterialStoryInit<StoryKnobs> = {
       <div class="row">
         <div class="box level0">
           0
-          <md-elevation></md-elevation>
+          <petal-elevation></petal-elevation>
         </div>
         <div class="box level1">
           1
-          <md-elevation></md-elevation>
+          <petal-elevation></petal-elevation>
         </div>
         <div class="box level2">
           2
-          <md-elevation></md-elevation>
+          <petal-elevation></petal-elevation>
         </div>
         <div class="box level3">
           3
-          <md-elevation></md-elevation>
+          <petal-elevation></petal-elevation>
         </div>
         <div class="box level4">
           4
-          <md-elevation></md-elevation>
+          <petal-elevation></petal-elevation>
         </div>
         <div class="box level5">
           5
-          <md-elevation></md-elevation>
+          <petal-elevation></petal-elevation>
         </div>
       </div>
     `;

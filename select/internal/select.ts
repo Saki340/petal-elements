@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '../../menu/menu.js';
@@ -125,11 +126,11 @@ export abstract class Select extends selectBaseClass {
   @property({type: Boolean, reflect: true}) error = false;
 
   /**
-   * Whether or not the underlying md-menu should be position: fixed to display
+   * Whether or not the underlying petal-menu should be position: fixed to display
    * in a top-level manner, or position: absolute.
    *
    * position:fixed is useful for cases where select is inside of another
-   * element with stacking context and hidden overflows such as `md-dialog`.
+   * element with stacking context and hidden overflows such as `petal-dialog`.
    */
   @property({attribute: 'menu-positioning'})
   menuPositioning: 'absolute' | 'fixed' | 'popover' = 'popover';
@@ -255,7 +256,7 @@ export abstract class Select extends selectBaseClass {
   @state() private open = false;
   @state() private defaultFocus: FocusState = FocusState.NONE;
   @query('.field') private readonly field!: Field | null;
-  @query('md-menu') private readonly menu!: Menu | null;
+  @query('petal-menu') private readonly menu!: Menu | null;
   @query('#label') private readonly labelEl!: HTMLElement;
   @queryAssignedElements({slot: 'leading-icon', flatten: true})
   private readonly leadingIcons!: Element[];
@@ -468,7 +469,7 @@ export abstract class Select extends selectBaseClass {
   private renderMenu() {
     const ariaLabel = this.label || (this as ARIAMixinStrict).ariaLabel;
     return html`<div class="menu-wrapper">
-      <md-menu
+      <petal-menu
         id="listbox"
         .defaultFocus=${this.defaultFocus}
         role="listbox"
@@ -499,7 +500,7 @@ export abstract class Select extends selectBaseClass {
         @request-selection=${this.handleRequestSelection}
         @request-deselection=${this.handleRequestDeselection}>
         ${this.renderMenuContent()}
-      </md-menu>
+      </petal-menu>
     </div>`;
   }
 

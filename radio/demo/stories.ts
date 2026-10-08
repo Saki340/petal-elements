@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '@material/web/radio/radio.js';
@@ -22,24 +23,24 @@ const radio: MaterialStoryInit<StoryKnobs> = {
   render({disabled}) {
     return html`
       <div role="radiogroup" aria-label="An example group of radio buttons">
-        <md-radio
+        <petal-radio
           aria-label="First radio"
           name="group"
           touch-target="wrapper"
           ?disabled=${disabled}>
-        </md-radio>
-        <md-radio
+        </petal-radio>
+        <petal-radio
           aria-label="Second radio"
           name="group"
           touch-target="wrapper"
           ?disabled=${disabled}>
-        </md-radio>
-        <md-radio
+        </petal-radio>
+        <petal-radio
           aria-label="Third radio"
           name="group"
           touch-target="wrapper"
           ?disabled=${disabled}>
-        </md-radio>
+        </petal-radio>
       </div>
     `;
   },
@@ -65,33 +66,33 @@ const withLabels: MaterialStoryInit<StoryKnobs> = {
     return html`
       <div class="column" role="radiogroup" aria-label="Animals">
         <div class="radio-label">
-          <md-radio
+          <petal-radio
             aria-label="Birds"
             id="birds-radio"
             name="with-labels"
             touch-target="wrapper"
             ?disabled=${disabled}>
-          </md-radio>
+          </petal-radio>
           <label for="birds-radio">Birds</label>
         </div>
         <div class="radio-label">
-          <md-radio
+          <petal-radio
             aria-label="Cats"
             id="cats-radio"
             name="with-labels"
             touch-target="wrapper"
             ?disabled=${disabled}>
-          </md-radio>
+          </petal-radio>
           <label for="cats-radio">Cats</label>
         </div>
         <div class="radio-label">
-          <md-radio
+          <petal-radio
             aria-label="Dogs"
             id="dogs-radio"
             name="with-labels"
             touch-target="wrapper"
             ?disabled=${disabled}>
-          </md-radio>
+          </petal-radio>
           <label for="dogs-radio">Dogs</label>
         </div>
       </div>

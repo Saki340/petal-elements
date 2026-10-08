@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {CSSResultOrNative, LitElement, css, html} from 'lit';
@@ -89,7 +90,7 @@ export class AriaMenuitemElement extends baseClass {
    * Recomputes this element's used `disabled` and `checkable` values and
    * projects them onto its ARIA attributes and custom states.
    *
-   * `<md-aria-fieldset>` calls this on its items when a value they inherit from
+   * `<petal-aria-fieldset>` calls this on its items when a value they inherit from
    * it changes.
    */
   [updateUsedValues]() {
@@ -135,12 +136,12 @@ export class AriaMenuitemElement extends baseClass {
       node instanceof HTMLElement;
       node = node.parentNode
     ) {
-      if (node.localName === 'md-aria-menulist') {
+      if (node.localName === 'petal-aria-menulist') {
         this.cachedAncestorMenulist = node as AriaMenulistElement;
         break;
       }
 
-      if (node.localName === 'md-aria-fieldset') {
+      if (node.localName === 'petal-aria-fieldset') {
         this.cachedAncestorFieldset = node as AriaFieldsetElement;
       }
     }
@@ -152,7 +153,7 @@ export class AriaMenuitemElement extends baseClass {
    * Sets this element's checkedness directly, without running the rest of the
    * 'check a menuitem element' steps.
    *
-   * `<md-aria-fieldset>` calls this to reset the items excluded by a newly
+   * `<petal-aria-fieldset>` calls this to reset the items excluded by a newly
    * checked item.
    *
    * @param value The new checkedness.

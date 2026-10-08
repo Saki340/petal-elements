@@ -1,6 +1,7 @@
 //
 // Copyright 2023 Google LLC
 // SPDX-License-Identifier: Apache-2.0
+// Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
 //
 
 // go/keep-sorted start
@@ -62,14 +63,14 @@
 
   .field,
   .select,
-  md-menu {
+  petal-menu {
     min-width: inherit;
     width: inherit;
     max-width: inherit;
     display: flex;
   }
 
-  md-menu {
+  petal-menu {
     // Not inherited because it is applied every time the menu opens
     min-width: var(--__menu-min-width);
     // Inherits from `.menu-wrapper` because it is applied only when
@@ -83,7 +84,7 @@
     max-width: inherit;
   }
 
-  md-menu ::slotted(:not[disabled]) {
+  petal-menu ::slotted(:not[disabled]) {
     cursor: pointer;
   }
 

@@ -2,6 +2,7 @@
  * @license
  * Copyright 2022 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {html} from 'lit';
@@ -10,20 +11,20 @@ import {ifDefined} from 'lit/directives/if-defined.js';
 
 import {Environment} from '../../testing/environment.js';
 import {NavigationTabHarness} from '../navigationtab/harness.js';
-import {MdNavigationTab} from '../navigationtab/navigation-tab.js';
+import {PetalNavigationTab} from '../navigationtab/navigation-tab.js';
 
 import {NavigationBarHarness} from './harness.js';
-import {MdNavigationBar} from './navigation-bar.js';
+import {PetalNavigationBar} from './navigation-bar.js';
 
-@customElement('md-test-navigation-bar')
-class TestMdNavigationBar extends MdNavigationBar {}
-@customElement('md-test-navigation-bar-tab')
-class TestMdNavigationTab extends MdNavigationTab {}
+@customElement('petal-test-navigation-bar')
+class TestMdNavigationBar extends PetalNavigationBar {}
+@customElement('petal-test-navigation-bar-tab')
+class TestMdNavigationTab extends PetalNavigationTab {}
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-test-navigation-bar': TestMdNavigationBar;
-    'md-test-navigation-bar-tab': TestMdNavigationTab;
+    'petal-test-navigation-bar': TestMdNavigationBar;
+    'petal-test-navigation-bar-tab': TestMdNavigationTab;
   }
 }
 
@@ -34,41 +35,41 @@ interface NavigationBarProps {
 }
 
 const defaultNavBar = html`
-  <md-test-navigation-bar>
-    <md-test-navigation-bar-tab label="One"></md-test-navigation-bar-tab>
-  </md-test-navigation-bar>
+  <petal-test-navigation-bar>
+    <petal-test-navigation-bar-tab label="One"></petal-test-navigation-bar-tab>
+  </petal-test-navigation-bar>
 `;
 
 const navBarWithNavTabsElement = (propsInit: Partial<NavigationBarProps>) => {
   return html`
-    <md-test-navigation-bar
+    <petal-test-navigation-bar
       .activeIndex="${propsInit.activeIndex ?? 0}"
       .hideInactiveLabels="${propsInit.hideInactiveLabels === true}"
       aria-label="${ifDefined(propsInit.ariaLabel)}">
-      <md-test-navigation-bar-tab label="One"></md-test-navigation-bar-tab>
-      <md-test-navigation-bar-tab label="Two"></md-test-navigation-bar-tab>
-    </md-test-navigation-bar>
+      <petal-test-navigation-bar-tab label="One"></petal-test-navigation-bar-tab>
+      <petal-test-navigation-bar-tab label="Two"></petal-test-navigation-bar-tab>
+    </petal-test-navigation-bar>
   `;
 };
 
 // The following is a Navbar with the tabs being out of sync with the bar.
-const navBarWithIncorrectTabsElement = html` <md-test-navigation-bar
+const navBarWithIncorrectTabsElement = html` <petal-test-navigation-bar
   activeIndex="0">
-  <md-test-navigation-bar-tab
+  <petal-test-navigation-bar-tab
     label="One"
-    hideInactiveLabel></md-test-navigation-bar-tab>
-  <md-test-navigation-bar-tab label="One" active></md-test-navigation-bar-tab>
-</md-test-navigation-bar>`;
+    hideInactiveLabel></petal-test-navigation-bar-tab>
+  <petal-test-navigation-bar-tab label="One" active></petal-test-navigation-bar-tab>
+</petal-test-navigation-bar>`;
 
-describe('md-navigation-bar', () => {
+describe('petal-navigation-bar', () => {
   const env = new Environment();
 
   async function setupTest(template = defaultNavBar) {
     const element = env
       .render(template)
-      .querySelector('md-test-navigation-bar');
+      .querySelector('petal-test-navigation-bar');
     if (!element) {
-      throw new Error('Could not query rendered <md-test-navigation-bar>.');
+      throw new Error('Could not query rendered <petal-test-navigation-bar>.');
     }
 
     await env.waitForStability();
@@ -79,12 +80,12 @@ describe('md-navigation-bar', () => {
   }
 
   describe('basic', () => {
-    it('initializes as a md-navigation-bar', async () => {
+    it('initializes as a petal-navigation-bar', async () => {
       const {harness} = await setupTest();
       const navBarBase = harness.element.shadowRoot!.querySelector(
         '.md3-navigation-bar',
       )!;
-      expect(harness.element).toBeInstanceOf(MdNavigationBar);
+      expect(harness.element).toBeInstanceOf(PetalNavigationBar);
       expect(harness.element.activeIndex).toEqual(0);
       expect(harness.element.hideInactiveLabels).toBeFalse();
       expect(navBarBase.getAttribute('aria-label')).toEqual(null);
@@ -224,7 +225,7 @@ describe('md-navigation-bar', () => {
   });
 
   describe('#handleKeydown', () => {
-    let element: MdNavigationBar;
+    let element: PetalNavigationBar;
     let bar: HTMLElement;
     let tab1: HTMLElement;
     let tab2: HTMLElement;

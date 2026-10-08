@@ -1,6 +1,7 @@
 /*!
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 // go/keep-sorted start by_regex='(.+) prefix_order=sass:
@@ -10,7 +11,7 @@
 @layer md.sys, md.comp.ripple, md.comp.focus-ring, md.comp.button, md.comp.icon-btn;
 
 @layer md.comp.toolbar {
-  :host(md-gb-toolbar) {
+  :host(petal-gb-toolbar) {
     @include toolbar-tokens.root;
 
     --toolbar-icon-color: var(--icon-color);
@@ -18,29 +19,29 @@
     display: inline-flex;
   }
 
-  :host(md-gb-toolbar[color='standard']) {
+  :host(petal-gb-toolbar[color='standard']) {
     @include toolbar-tokens.standard;
 
     --toolbar-icon-color: var(--icon-color);
     --toolbar-label-text-color: var(--label-text-color);
   }
 
-  :host(md-gb-toolbar[color='vibrant']) {
+  :host(petal-gb-toolbar[color='vibrant']) {
     @include toolbar-tokens.vibrant;
 
     --toolbar-icon-color: var(--icon-color);
     --toolbar-label-text-color: var(--label-text-color);
   }
 
-  :host(md-gb-toolbar[docked]) {
+  :host(petal-gb-toolbar[docked]) {
     @include toolbar-tokens.docked;
 
     display: flex;
     width: 100%;
   }
 
-  :host(md-gb-toolbar[docked]) [part='toolbar'],
-  :host(md-gb-toolbar[docked]) .toolbar {
+  :host(petal-gb-toolbar[docked]) [part='toolbar'],
+  :host(petal-gb-toolbar[docked]) .toolbar {
     gap: var(--container-spacing);
     height: var(--docked-container-height);
     justify-content: center;
@@ -49,12 +50,12 @@
     width: 100%;
   }
 
-  :host(md-gb-toolbar[orientation='vertical']:not([docked])) {
+  :host(petal-gb-toolbar[orientation='vertical']:not([docked])) {
     @include toolbar-tokens.vertical;
   }
 
-  :host(md-gb-toolbar[orientation='vertical']:not([docked])) [part='toolbar'],
-  :host(md-gb-toolbar[orientation='vertical']:not([docked])) .toolbar {
+  :host(petal-gb-toolbar[orientation='vertical']:not([docked])) [part='toolbar'],
+  :host(petal-gb-toolbar[orientation='vertical']:not([docked])) .toolbar {
     @include toolbar-tokens.vertical;
 
     flex-direction: column;
@@ -66,7 +67,7 @@
     width: fit-content;
   }
 
-  md-gb-toolbar {
+  petal-gb-toolbar {
     @include toolbar-tokens.root;
 
     --toolbar-icon-color: var(--icon-color);
@@ -194,45 +195,45 @@
     }
   }
 
-  md-gb-toolbar md-gb-button,
-  md-gb-toolbar md-gb-icon-button,
-  .toolbar md-gb-button,
-  .toolbar md-gb-icon-button {
+  petal-gb-toolbar petal-gb-button,
+  petal-gb-toolbar petal-gb-icon-button,
+  .toolbar petal-gb-button,
+  .toolbar petal-gb-icon-button {
     --md-icon-color: var(--toolbar-icon-color);
   }
 
-  md-gb-toolbar md-gb-button[selected],
-  md-gb-toolbar md-gb-icon-button[selected],
-  .toolbar md-gb-button[selected],
-  .toolbar md-gb-icon-button[selected] {
+  petal-gb-toolbar petal-gb-button[selected],
+  petal-gb-toolbar petal-gb-icon-button[selected],
+  .toolbar petal-gb-button[selected],
+  .toolbar petal-gb-icon-button[selected] {
     --md-icon-color: var(--selected-icon-color);
   }
 
-  md-gb-toolbar md-gb-button::part(btn),
-  .toolbar md-gb-button::part(btn) {
+  petal-gb-toolbar petal-gb-button::part(btn),
+  .toolbar petal-gb-button::part(btn) {
     --container-color: var(--button-container-color);
     --icon-color: var(--toolbar-icon-color);
     --label-text-color: var(--toolbar-label-text-color);
     --md-icon-color: var(--toolbar-icon-color);
   }
 
-  md-gb-toolbar md-gb-button[selected]::part(btn),
-  .toolbar md-gb-button[selected]::part(btn) {
+  petal-gb-toolbar petal-gb-button[selected]::part(btn),
+  .toolbar petal-gb-button[selected]::part(btn) {
     --container-color: var(--selected-button-container-color);
     --icon-color: var(--selected-icon-color);
     --label-text-color: var(--selected-label-text-color);
     --md-icon-color: var(--selected-icon-color);
   }
 
-  md-gb-toolbar md-gb-icon-button::part(icon-btn),
-  .toolbar md-gb-icon-button::part(icon-btn) {
+  petal-gb-toolbar petal-gb-icon-button::part(icon-btn),
+  .toolbar petal-gb-icon-button::part(icon-btn) {
     --container-color: var(--button-container-color);
     --icon-color: var(--toolbar-icon-color);
     --md-icon-color: var(--toolbar-icon-color);
   }
 
-  md-gb-toolbar md-gb-icon-button[selected]::part(icon-btn),
-  .toolbar md-gb-icon-button[selected]::part(icon-btn) {
+  petal-gb-toolbar petal-gb-icon-button[selected]::part(icon-btn),
+  .toolbar petal-gb-icon-button[selected]::part(icon-btn) {
     --container-color: var(--selected-button-container-color);
     --icon-color: var(--selected-icon-color);
     --md-icon-color: var(--selected-icon-color);

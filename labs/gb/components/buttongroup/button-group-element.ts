@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {CSSResultOrNative, html, LitElement, PropertyValues} from 'lit';
@@ -138,10 +139,10 @@ export class ButtonGroupElement extends baseClass {
     }
   });
 
-  /** Returns all child `md-gb-button` elements. */
+  /** Returns all child `petal-gb-button` elements. */
   get buttons(): ButtonElement[] {
     return this.assignedElementsList.filter(
-      (node): node is ButtonElement => node.localName === 'md-gb-button',
+      (node): node is ButtonElement => node.localName === 'petal-gb-button',
     );
   }
 

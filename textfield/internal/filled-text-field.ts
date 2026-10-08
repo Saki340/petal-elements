@@ -2,6 +2,7 @@
  * @license
  * Copyright 2021 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '../../field/filled-field.js';
@@ -14,5 +15,5 @@ import {TextField} from './text-field.js';
  * A filled text field component.
  */
 export class FilledTextField extends TextField {
-  protected readonly fieldTag = literal`md-filled-field`;
+  protected readonly fieldTag = literal`petal-filled-field`;
 }

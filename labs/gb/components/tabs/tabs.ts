@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {type ClassInfo} from 'lit/directives/class-map.js';
@@ -67,7 +68,7 @@ export function setupTabs(
  * A Lit directive that adds tabs styling to its element.
  *
  * The element is responsible for its own ARIA: add `role="tablist"` and
- * `focusgroup="tablist inline"` when not using `<md-gb-tabs>`.
+ * `focusgroup="tablist inline"` when not using `<petal-gb-tabs>`.
  *
  * @example
  * ```ts
@@ -107,7 +108,7 @@ export interface TabClassesState {
 /**
  * Returns the tab classes to apply to an element based on the given state.
  *
- * `<md-gb-tab>` does not use this function: it emits `:state(selected)`, which
+ * `<petal-gb-tab>` does not use this function: it emits `:state(selected)`, which
  * the stylesheet matches alongside `.selected` and `[aria-selected="true"]`.
  *
  * @param state The state of the tab.
@@ -128,7 +129,7 @@ export function tabClasses({
  * A Lit directive that adds tab styling to its element.
  *
  * Labels must be marked up with `class="tab-label"` (or `slot="label"` inside
- * `<md-gb-tab>`). Bare text is not a supported authoring form. Icons are
+ * `<petal-gb-tab>`). Bare text is not a supported authoring form. Icons are
  * unclassed children; the tab sets `--md-icon-*` for them.
  *
  * @example
@@ -136,7 +137,7 @@ export function tabClasses({
  * // Applies class="tab focus-ring-inner ripple [selected]"
  * html`
  *   <button class="${tab({selected})}" role="tab" aria-selected="${selected}">
- *     <md-gb-icon>flight</md-gb-icon>
+ *     <petal-gb-icon>flight</petal-gb-icon>
  *     <span class="tab-label">Flights</span>
  *   </button>
  * `;

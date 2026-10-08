@@ -2,6 +2,7 @@
  * @license
  * Copyright 2021 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {html, isServer, LitElement} from 'lit';
@@ -20,7 +21,7 @@ interface ListItem extends SharedListItem {
 export class List extends LitElement {
   /**
    * An array of activatable and disableable list items. Queries every assigned
-   * element that has the `md-list-item` attribute.
+   * element that has the `petal-list-item` attribute.
    *
    * _NOTE:_ This is a shallow, flattened query via
    * `HTMLSlotElement.queryAssignedElements` and thus will _only_ include direct
@@ -36,7 +37,7 @@ export class List extends LitElement {
 
   private readonly listController = new ListController<ListItem>({
     isItem: (item: HTMLElement): item is ListItem =>
-      item.hasAttribute('md-list-item'),
+      item.hasAttribute('petal-list-item'),
     getPossibleItems: () => this.slotItems,
     isRtl: () => getComputedStyle(this).direction === 'rtl',
     deactivateItem: (item) => {

@@ -2,6 +2,7 @@
  * @license
  * Copyright 2019 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '../../focus/md-focus-ring.js';
@@ -123,17 +124,17 @@ export abstract class Button extends buttonBaseClass {
     return html`
       ${this.renderElevationOrOutline?.()}
       <div class="background"></div>
-      <md-focus-ring part="focus-ring" for=${buttonId}></md-focus-ring>
-      <md-ripple
+      <petal-focus-ring part="focus-ring" for=${buttonId}></petal-focus-ring>
+      <petal-ripple
         part="ripple"
         for=${buttonId}
-        ?disabled="${isRippleDisabled}"></md-ripple>
+        ?disabled="${isRippleDisabled}"></petal-ripple>
       ${buttonOrLink}
     `;
   }
 
   // Buttons can override this to add elevation or an outline. Use this and
-  // return `<md-elevation>` (for elevated, filled, and tonal buttons)
+  // return `<petal-elevation>` (for elevated, filled, and tonal buttons)
   // or `<div class="outline">` (for outlined buttons).
   // Text buttons that have neither do not need to implement this.
   protected renderElevationOrOutline?(): unknown;

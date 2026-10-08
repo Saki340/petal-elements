@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 /* Fork of Lit stories story-knob-renderer with m3 components and theming */
@@ -72,9 +73,9 @@ export class StoryKnobPanel extends LitElement {
 
     if (this.showCloseIcon) {
       closeIcon = html`
-        <md-icon-button aria-label="close" @click=${this.close}>
-          <md-icon>close</md-icon>
-        </md-icon-button>
+        <petal-icon-button aria-label="close" @click=${this.close}>
+          <petal-icon>close</petal-icon>
+        </petal-icon-button>
       `;
     }
 
@@ -85,7 +86,7 @@ export class StoryKnobPanel extends LitElement {
           @pointerdown=${this.onDragStart}
           @pointermove=${this.onDrag}
           @pointerup=${this.onDragEnd}>
-          <md-icon>drag_handle</md-icon>
+          <petal-icon>drag_handle</petal-icon>
         </div>
       `;
     }
@@ -95,18 +96,18 @@ export class StoryKnobPanel extends LitElement {
       const iconLabel = this.draggable ? 'dock' : 'pop out';
 
       dragIcon = html`
-        <md-icon-button
+        <petal-icon-button
           class="dragIconButton"
           aria-label=${iconLabel}
           @click=${this.onDragIconClick}>
-          <md-icon>${iconSvg}</md-icon>
-        </md-icon-button>
+          <petal-icon>${iconSvg}</petal-icon>
+        </petal-icon-button>
       `;
     }
 
     return html`
       <aside>
-        <md-elevation></md-elevation>
+        <petal-elevation></petal-elevation>
         ${dragBar}
         <div class="content">
           <div id="title">

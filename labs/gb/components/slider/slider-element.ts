@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {
@@ -64,8 +65,8 @@ const baseClass = mixinDelegatesAria(
  * Note: An optional leading inset icon slot (`slot="icon"`) is supported on
  * the standard horizontal slider only (not range, not centered, and not
  * vertical) for sizes `md`, `lg`, and `xl`. Slotted icons should use
- * `<md-gb-icon slot="icon">` (e.g.
- * `<md-gb-icon slot="icon">volume_up</md-gb-icon>`).
+ * `<petal-gb-icon slot="icon">` (e.g.
+ * `<petal-gb-icon slot="icon">volume_up</petal-gb-icon>`).
  *
  * @fires {InputEvent} input - Fired when the slider value changes from user interaction. --bubbles --composed
  * @fires {Event} change - Fired when the slider value commit changes from user interaction. --bubbles

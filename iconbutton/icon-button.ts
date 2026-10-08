@@ -2,6 +2,7 @@
  * @license
  * Copyright 2021 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {CSSResultOrNative} from 'lit';
@@ -13,7 +14,7 @@ import {styles} from './internal/standard-styles.cssresult.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-icon-button': MdIconButton;
+    'petal-icon-button': PetalIconButton;
   }
 }
 
@@ -35,8 +36,8 @@ declare global {
  * @final
  * @suppress {visibility}
  */
-@customElement('md-icon-button')
-export class MdIconButton extends IconButton {
+@customElement('petal-icon-button')
+export class PetalIconButton extends IconButton {
   static override styles: CSSResultOrNative[] = [sharedStyles, styles];
 
   protected override getRenderClasses() {

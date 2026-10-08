@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {CSSResultOrNative} from 'lit';
@@ -14,7 +15,7 @@ import {styles as sharedStyles} from './internal/shared-styles.cssresult.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-assist-chip': MdAssistChip;
+    'petal-assist-chip': PetalAssistChip;
   }
 }
 
@@ -24,8 +25,8 @@ declare global {
  * @final
  * @suppress {visibility}
  */
-@customElement('md-assist-chip')
-export class MdAssistChip extends AssistChip {
+@customElement('petal-assist-chip')
+export class PetalAssistChip extends AssistChip {
   static override styles: CSSResultOrNative[] = [
     sharedStyles,
     elevatedStyles,

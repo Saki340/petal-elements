@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {type ClassInfo} from 'lit/directives/class-map.js';
@@ -51,10 +52,10 @@ export function splitButtonClasses({
  *   <div class="${splitButton()}">
  *     <button class="${button({color: 'filled'})}">Label</button>
  *     <button class="${button({color: 'filled'})}" popovertarget="menu"></button>
- *     <md-gb-menu id="menu">
- *       <md-gb-menu-item>Option 1</md-gb-menu-item>
- *       <md-gb-menu-item>Option 2</md-gb-menu-item>
- *     </md-gb-menu>
+ *     <petal-gb-menu id="menu">
+ *       <petal-gb-menu-item>Option 1</petal-gb-menu-item>
+ *       <petal-gb-menu-item>Option 2</petal-gb-menu-item>
+ *     </petal-gb-menu>
  *   </div>
  * `;
  * ```

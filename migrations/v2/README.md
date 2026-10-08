@@ -16,10 +16,10 @@ Using `querySelector` or `querySelectorAll` with `[role]` or `[aria-*]`
 attribute selectors.
 
 ```html
-<md-checkbox aria-label="Agree"></md-checkbox>
+<petal-checkbox aria-label="Agree"></petal-checkbox>
 <script>
   const agreeCheckbox = document.querySelector(
-    'md-checkbox[aria-label="Agree"]'
+    'petal-checkbox[aria-label="Agree"]'
   );
   // `agreeCheckbox` is null!
 </script>
@@ -33,7 +33,7 @@ Provide selector strings to `ariaSelector()` before querying.
 import {ariaSelector} from '@material/web/migrations/v2/query-selector-aria';
 
 const agreeCheckbox = document.querySelector(
-  ariaSelector('md-checkbox[aria-label="Agree"]')
+  ariaSelector('petal-checkbox[aria-label="Agree"]')
 );
 ```
 

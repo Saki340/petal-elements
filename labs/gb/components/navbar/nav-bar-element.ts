@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {css, CSSResultOrNative, html, type PropertyValues} from 'lit';
@@ -18,7 +19,7 @@ import {NavBarItemElement} from './nav-bar-item-element.js';
 /**
  * A Material Design gBreeze navigation bar component.
  *
- * @slot - Used to display navigation bar items (`md-gb-nav-bar-item`).
+ * @slot - Used to display navigation bar items (`petal-gb-nav-bar-item`).
  * @csspart nav-bar - The navigation bar's root container.
  * @fires {Event} change - Fired when the selected navigation bar item changes. --bubbles
  * @cssprop --container-color

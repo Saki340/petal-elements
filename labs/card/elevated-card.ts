@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {CSSResultOrNative} from 'lit';
@@ -13,7 +14,7 @@ import {styles as sharedStyles} from './internal/shared-styles.cssresult.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-elevated-card': MdElevatedCard;
+    'petal-elevated-card': PetalElevatedCard;
   }
 }
 
@@ -21,7 +22,7 @@ declare global {
  * @final
  * @suppress {visibility}
  */
-@customElement('md-elevated-card')
-export class MdElevatedCard extends Card {
+@customElement('petal-elevated-card')
+export class PetalElevatedCard extends Card {
   static override styles: CSSResultOrNative[] = [sharedStyles, elevatedStyles];
 }

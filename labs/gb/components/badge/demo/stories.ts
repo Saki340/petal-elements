@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '@material/web/labs/gb/components/badge/md-gb-badge.js';
@@ -23,9 +24,9 @@ const playground: MaterialStoryInit<StoryKnobs> = {
   render() {
     return html`
       <div style="display: flex; gap: 16px; align-items: center;">
-        <md-gb-badge></md-gb-badge>
-        <md-gb-badge>3</md-gb-badge>
-        <md-gb-badge>99+</md-gb-badge>
+        <petal-gb-badge></petal-gb-badge>
+        <petal-gb-badge>3</petal-gb-badge>
+        <petal-gb-badge>99+</petal-gb-badge>
       </div>
     `;
   },
@@ -41,17 +42,17 @@ const anchored: MaterialStoryInit<StoryKnobs> = {
         <div style="display: inline-block;">
           <div
             style="width: 40px; height: 40px; background: #ccc; border-radius: 8px; anchor-name: --small-badge-anchor;"></div>
-          <md-gb-badge
-            style="position: absolute; position-anchor: --small-badge-anchor; top: anchor(top); left: anchor(right); transform: translate(-50%, -50%);"></md-gb-badge>
+          <petal-gb-badge
+            style="position: absolute; position-anchor: --small-badge-anchor; top: anchor(top); left: anchor(right); transform: translate(-50%, -50%);"></petal-gb-badge>
         </div>
 
         <!-- Large badge (with text) -->
         <div style="display: inline-block;">
           <div
             style="width: 40px; height: 40px; background: #ccc; border-radius: 8px; anchor-name: --large-badge-anchor-1;"></div>
-          <md-gb-badge
+          <petal-gb-badge
             style="position: absolute; position-anchor: --large-badge-anchor-1; top: anchor(top); left: anchor(right); transform: translate(-50%, -50%);"
-            >3</md-gb-badge
+            >3</petal-gb-badge
           >
         </div>
 
@@ -59,9 +60,9 @@ const anchored: MaterialStoryInit<StoryKnobs> = {
         <div style="display: inline-block;">
           <div
             style="width: 40px; height: 40px; background: #ccc; border-radius: 8px; anchor-name: --large-badge-anchor-2;"></div>
-          <md-gb-badge
+          <petal-gb-badge
             style="position: absolute; position-anchor: --large-badge-anchor-2; top: anchor(top); left: anchor(right); transform: translate(-50%, -50%);"
-            >99+</md-gb-badge
+            >99+</petal-gb-badge
           >
         </div>
       </div>

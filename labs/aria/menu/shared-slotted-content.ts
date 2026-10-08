@@ -2,16 +2,17 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {css} from 'lit';
 
 /**
- * Shared styles used by `<md-aria-menulist>` and `<md-aria-fieldset>`, to
+ * Shared styles used by `<petal-aria-menulist>` and `<petal-aria-fieldset>`, to
  * simulate the descendant combinator in UA styles for `<menuitem>`.
  */
 export const sharedSlottedContentStyles = css`
-  ::slotted(md-aria-menuitem) {
+  ::slotted(petal-aria-menuitem) {
     display: flex;
     align-items: center;
     user-select: none;
@@ -22,15 +23,15 @@ export const sharedSlottedContentStyles = css`
     padding-inline: 0.5em;
   }
 
-  ::slotted(md-aria-menuitem:state(enabled):hover) {
+  ::slotted(petal-aria-menuitem:state(enabled):hover) {
     background-color: color-mix(in lab, currentColor 10%, transparent);
   }
 
-  ::slotted(md-aria-menuitem:state(disabled)) {
+  ::slotted(petal-aria-menuitem:state(disabled)) {
     color: color-mix(in lab, currentColor 50%, transparent);
   }
 
-  ::slotted(md-aria-fieldset) {
+  ::slotted(petal-aria-fieldset) {
     margin-inline: 0;
     border: none;
     padding-block: 0;

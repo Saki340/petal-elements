@@ -2,11 +2,12 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '@material/web/slider/slider.js';
 
-import type {MdSlider} from '@material/web/slider/slider.js';
+import type {PetalSlider} from '@material/web/slider/slider.js';
 import {css, html, LitElement} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {styleMap} from 'lit/directives/style-map.js';
@@ -61,14 +62,14 @@ export class HCTSlider extends LitElement {
 
     return html`<section>
       <span id="label" class="color-on-surface-text">${this.label}</span>
-      <md-slider
+      <petal-slider
         id="source"
         labeled
         aria-label=${this.label}
         .min=${range[0]}
         .max=${range[1]}
         .value=${this.value}
-        @input=${this.onInput}></md-slider>
+        @input=${this.onInput}></petal-slider>
       <div
         id="gradient"
         class=${this.type}
@@ -79,7 +80,7 @@ export class HCTSlider extends LitElement {
   }
 
   private onInput(e: Event) {
-    const target = e.target as MdSlider;
+    const target = e.target as PetalSlider;
     this.value = target.value as number;
 
     this.dispatchEvent(new Event('input'));

@@ -74,11 +74,11 @@ prefilled](images/textfield/usage.webp)
 <!-- catalog-include "figures/textfield/usage.html" -->
 
 ```html
-<md-filled-text-field label="Label" value="Value">
-</md-filled-text-field>
+<petal-filled-text-field label="Label" value="Value">
+</petal-filled-text-field>
 
-<md-outlined-text-field label="Label" value="Value">
-</md-outlined-text-field>
+<petal-outlined-text-field label="Label" value="Value">
+</petal-outlined-text-field>
 ```
 
 ### Input type
@@ -112,11 +112,11 @@ and the outlined one has a label of Password](images/textfield/usage-type.webp)
 <!-- catalog-include "figures/textfield/usage-type.html" -->
 
 ```html
-<md-filled-text-field label="Username" type="email">
-</md-filled-text-field>
+<petal-filled-text-field label="Username" type="email">
+</petal-filled-text-field>
 
-<md-filled-text-field label="Password" type="password">
-</md-filled-text-field>
+<petal-filled-text-field label="Password" type="password">
+</petal-filled-text-field>
 ```
 
 > Tip: use the
@@ -139,15 +139,15 @@ it](images/textfield/usage-label.webp)
 <!-- catalog-include "figures/textfield/usage-label.html" -->
 
 ```html
-<md-outlined-text-field label="Favorite food">
-</md-outlined-text-field>
+<petal-outlined-text-field label="Favorite food">
+</petal-outlined-text-field>
 
-<md-outlined-text-field placeholder="email@domain.com">
-</md-outlined-text-field>
+<petal-outlined-text-field placeholder="email@domain.com">
+</petal-outlined-text-field>
 
 <div>First name</div>
-<md-outlined-text-field aria-label="First name">
-</md-outlined-text-field>
+<petal-outlined-text-field aria-label="First name">
+</petal-outlined-text-field>
 ```
 
 > Note: text fields do not currently support `aria-labelledby`. External labels
@@ -172,15 +172,15 @@ resize](images/textfield/usage-textarea.webp)
 
 ```html
 <style>
-  md-filled-text-field {
+  petal-filled-text-field {
     resize: vertical;
   }
 </style>
-<md-filled-text-field
+<petal-filled-text-field
     type="textarea"
     label="Vertical resize"
     rows="3">
-</md-filled-text-field>
+</petal-filled-text-field>
 ```
 
 ### Icons
@@ -202,23 +202,23 @@ available](images/textfield/usage-icons.webp)
 <!-- catalog-include "figures/textfield/usage-icons.html" -->
 
 ```html
-<md-outlined-text-field placeholder="Search for messages">
-  <md-icon slot="leading-icon">search</md-icon>
-</md-outlined-text-field>
+<petal-outlined-text-field placeholder="Search for messages">
+  <petal-icon slot="leading-icon">search</petal-icon>
+</petal-outlined-text-field>
 
-<md-outlined-text-field label="Password" type="password">
-  <md-icon-button toggle slot="trailing-icon">
-    <md-icon>visibility</md-icon>
-    <md-icon slot="selected">visibility_off</md-icon>
-  </md-icon-button>
-</md-outlined-text-field>
+<petal-outlined-text-field label="Password" type="password">
+  <petal-icon-button toggle slot="trailing-icon">
+    <petal-icon>visibility</petal-icon>
+    <petal-icon slot="selected">visibility_off</petal-icon>
+  </petal-icon-button>
+</petal-outlined-text-field>
 
-<md-outlined-text-field
+<petal-outlined-text-field
     label="Username"
     error
     error-text="Username not available">
-  <md-icon slot="trailing-icon">error</md-icon>
-</md-outlined-text-field>
+  <petal-icon slot="trailing-icon">error</petal-icon>
+</petal-outlined-text-field>
 ```
 
 ### Prefix and suffix
@@ -236,13 +236,13 @@ end of the field](images/textfield/usage-prefix.webp)
 <!-- catalog-include "figures/textfield/usage-prefix.html" -->
 
 ```html
-<md-outlined-text-field
+<petal-outlined-text-field
     label="Dollar amount"
     type="number"
     value="0"
     prefix-text="$"
     suffix-text=".00">
-</md-outlined-text-field>
+</petal-outlined-text-field>
 ```
 
 ### Supporting text
@@ -263,17 +263,17 @@ required](images/textfield/usage-supporting-text.webp)
 <!-- catalog-include "figures/textfield/usage-supporting-text.html" -->
 
 ```html
-<md-filled-text-field
+<petal-filled-text-field
     label="Comments"
     supporting-text="Provide comments for the issue">
-</md-filled-text-field>
+</petal-filled-text-field>
 
-<md-filled-text-field
+<petal-filled-text-field
     label="Name"
     required
     supporting-text="*required"
     error-text="Please fill out this field">
-</md-filled-text-field>
+</petal-filled-text-field>
 ```
 
 ### Character counter
@@ -290,8 +290,8 @@ end](images/textfield/usage-char-counter.webp)
 <!-- catalog-include "figures/textfield/usage-char-counter.html" -->
 
 ```html
-<md-outlined-text-field label="Title" value="Short" maxlength="10">
-</md-outlined-text-field>
+<petal-outlined-text-field label="Title" value="Short" maxlength="10">
+</petal-outlined-text-field>
 ```
 
 ### Validation
@@ -312,17 +312,17 @@ Text fields in a `<form>` will validate on submission, or by calling
 
 ```html
 <form>
-  <md-filled-text-field
+  <petal-filled-text-field
       name="name"
       label="Name"
       required>
-  </md-filled-text-field>
-  <md-filled-text-field
+  </petal-filled-text-field>
+  <petal-filled-text-field
       name="email"
       label="Email"
       pattern="[\w\d-]+"
       suffix-text="@gmail.com">
-  </md-filled-text-field>
+  </petal-filled-text-field>
 </form>
 ```
 
@@ -347,12 +347,12 @@ message. Use manual validation if the text fields are driven by application
 state logic.
 
 ```html
-<md-outlined-text-field
+<petal-outlined-text-field
     label="Username"
     value="jdoe"
     error
     error-text="Username is not available">
-</md-outlined-text-field>
+</petal-outlined-text-field>
 ```
 
 > Tip: Prefer [constraint validation](#constraint-validation) when possible for
@@ -368,9 +368,9 @@ to be more descriptive.
 
 ```html
 <div>Username</div>
-<md-filled-text-field aria-label="Username"></md-filled-text-field>
+<petal-filled-text-field aria-label="Username"></petal-filled-text-field>
 
-<md-filled-text-field label="First" aria-label="First name"></md-filled-text-field>
+<petal-filled-text-field label="First" aria-label="First name"></petal-filled-text-field>
 ```
 
 ## Filled text field
@@ -382,7 +382,7 @@ Filled and outlined text fields are functionally identical. See
 for guidance on which one to use.
 
 ```html
-<md-filled-text-field label="Filled" value="Value"></md-filled-text-field>
+<petal-filled-text-field label="Filled" value="Value"></petal-filled-text-field>
 ```
 
 ## Outlined text field
@@ -394,7 +394,7 @@ Filled and outlined text fields are functionally identical. See
 for guidance on which one to use.
 
 ```html
-<md-outlined-text-field label="Outlined" value="Value"></md-outlined-text-field>
+<petal-outlined-text-field label="Outlined" value="Value"></petal-outlined-text-field>
 ```
 
 ## Theming
@@ -436,8 +436,8 @@ Token                                                 | Default value
 }
 </style>
 
-<md-filled-text-field label="Filled" value="Value">
-</md-filled-text-field>
+<petal-filled-text-field label="Filled" value="Value">
+</petal-filled-text-field>
 ```
 
 ### Outlined text field tokens
@@ -472,7 +472,7 @@ Token                                          | Default value
 }
 </style>
 
-<md-outlined-text-field label="Outlined" value="Value"></md-outlined-text-field>
+<petal-outlined-text-field label="Outlined" value="Value"></petal-outlined-text-field>
 ```
 
 <!-- auto-generated API docs start -->
@@ -480,7 +480,7 @@ Token                                          | Default value
 ## API
 
 
-### MdFilledTextField <code>&lt;md-filled-text-field&gt;</code>
+### PetalFilledTextField <code>&lt;petal-filled-text-field&gt;</code>
 
 #### Properties
 
@@ -563,7 +563,7 @@ Token                                          | Default value
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 
-### MdOutlinedTextField <code>&lt;md-outlined-text-field&gt;</code>
+### PetalOutlinedTextField <code>&lt;petal-outlined-text-field&gt;</code>
 
 #### Properties
 

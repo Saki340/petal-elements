@@ -2,6 +2,7 @@
  * @license
  * Copyright 2021 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {customElement} from 'lit/decorators.js';
@@ -12,7 +13,7 @@ import {styles as sharedStyles} from './internal/shared-styles.cssresult.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-navigation-drawer': MdNavigationDrawer;
+    'petal-navigation-drawer': PetalNavigationDrawer;
   }
 }
 
@@ -20,7 +21,7 @@ declare global {
  * @final
  * @suppress {visibility}
  */
-@customElement('md-navigation-drawer')
-export class MdNavigationDrawer extends NavigationDrawer {
+@customElement('petal-navigation-drawer')
+export class PetalNavigationDrawer extends NavigationDrawer {
   static override readonly styles = [sharedStyles, styles];
 }

@@ -2,14 +2,15 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {AriaMenubarElement} from './menubar.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-aria-menubar': AriaMenubarElement;
+    'petal-aria-menubar': AriaMenubarElement;
   }
 }
 
-customElements.define('md-aria-menubar', AriaMenubarElement);
+customElements.define('petal-aria-menubar', AriaMenubarElement);

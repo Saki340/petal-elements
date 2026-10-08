@@ -1,6 +1,7 @@
 //
 // Copyright 2023 Google LLC
 // SPDX-License-Identifier: Apache-2.0
+// Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
 //
 
 // go/keep-sorted start
@@ -10,15 +11,15 @@
 @use '../../../tokens';
 // go/keep-sorted end
 
-/// `<md-item>` does not provide `--md-item-*` custom properties. Instead, use
+/// `<petal-item>` does not provide `--md-item-*` custom properties. Instead, use
 /// CSS on slotted elements to change their styles.
 ///
 /// @example css
-///   md-item {
+///   petal-item {
 ///     color: var(--headline-color);
 ///     font: var(--headline-font);
 ///   }
-///   md-item [slot='supporting-text'] {
+///   petal-item [slot='supporting-text'] {
 ///     color: var(--supporting-text-color);
 ///     font: var(--supporting-text-font);
 ///   }

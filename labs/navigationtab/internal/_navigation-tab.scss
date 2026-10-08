@@ -1,6 +1,7 @@
 //
 // Copyright 2022 Google LLC
 // SPDX-License-Identifier: Apache-2.0
+// Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
 //
 
 // stylelint-disable selector-class-pattern --
@@ -45,7 +46,7 @@ $animation-duration: 100ms;
     flex-grow: 1;
   }
 
-  md-focus-ring {
+  petal-focus-ring {
     @include focus-ring.theme(
       (
         'shape': map.get(tokens.md-sys-shape-values(), 'corner-small'),

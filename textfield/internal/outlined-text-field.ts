@@ -2,6 +2,7 @@
  * @license
  * Copyright 2021 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '../../field/outlined-field.js';
@@ -14,5 +15,5 @@ import {TextField} from './text-field.js';
  * An outlined text field component
  */
 export class OutlinedTextField extends TextField {
-  protected readonly fieldTag = literal`md-outlined-field`;
+  protected readonly fieldTag = literal`petal-outlined-field`;
 }

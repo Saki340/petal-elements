@@ -2,6 +2,7 @@
  * @license
  * Copyright 2022 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 // import 'jasmine'; (google3-only)
@@ -13,12 +14,12 @@ import {html, render} from 'lit';
 import {createTokenTests} from '../testing/tokens.js';
 
 import {MenuItemHarness} from './harness.js';
-import {MdMenu} from './menu.js';
-import {MdMenuItem} from './menu-item.js';
+import {PetalMenu} from './menu.js';
+import {PetalMenuItem} from './menu-item.js';
 
-describe('<md-menu>', () => {
+describe('<petal-menu>', () => {
   describe('.styles', () => {
-    createTokenTests(MdMenu.styles);
+    createTokenTests(PetalMenu.styles);
   });
 
   let root: HTMLDivElement;
@@ -36,13 +37,13 @@ describe('<md-menu>', () => {
     render(
       html`
         <button>OpenMenu</button>
-        <md-menu quick></md-menu>
+        <petal-menu quick></petal-menu>
       `,
       root,
     );
 
     const button = root.querySelector('button')!;
-    const menu = root.querySelector('md-menu')!;
+    const menu = root.querySelector('petal-menu')!;
     menu.anchorElement = button;
     menu.show();
 
@@ -68,24 +69,24 @@ describe('<md-menu>', () => {
     render(
       html`
         <button>OpenMenu</button>
-        <md-menu quick>
-          <md-sub-menu hover-open-delay="0" hover-close-delay="0">
-            <md-menu-item id="submenu-item" slot="item">
+        <petal-menu quick>
+          <petal-sub-menu hover-open-delay="0" hover-close-delay="0">
+            <petal-menu-item id="submenu-item" slot="item">
               <div slot="headline">Link Item 1</div>
-            </md-menu-item>
-            <md-menu quick slot="menu">
-              <md-menu-item slot="item">
+            </petal-menu-item>
+            <petal-menu quick slot="menu">
+              <petal-menu-item slot="item">
                 <div slot="headline">Submenu Item 1</div>
-              </md-menu-item>
-            </md-menu>
-          </md-sub-menu>
-        </md-menu>
+              </petal-menu-item>
+            </petal-menu>
+          </petal-sub-menu>
+        </petal-menu>
       `,
       root,
     );
 
     const button = root.querySelector('button')!;
-    const menu = root.querySelector('md-menu')!;
+    const menu = root.querySelector('petal-menu')!;
     const submenuItemHarness = new MenuItemHarness(
       menu.querySelector('#submenu-item')!,
     );
@@ -111,14 +112,14 @@ describe('<md-menu>', () => {
   });
 });
 
-describe('<md-menu-item>', () => {
+describe('<petal-menu-item>', () => {
   describe('.styles', () => {
-    createTokenTests(MdMenuItem.styles);
+    createTokenTests(PetalMenuItem.styles);
   });
 
   describe('href', () => {
     it('sanitizes javascript: URLs in href', async () => {
-      const item = new MdMenuItem();
+      const item = new PetalMenuItem();
       item.href = 'javascript:alert(1)';
       document.body.appendChild(item);
       await item.updateComplete;
@@ -131,7 +132,7 @@ describe('<md-menu-item>', () => {
 
   describe('rel and referrerpolicy', () => {
     it('omits rel and referrerpolicy when unset', async () => {
-      const item = new MdMenuItem();
+      const item = new PetalMenuItem();
       item.href = 'https://example.com';
       document.body.appendChild(item);
       await item.updateComplete;
@@ -143,7 +144,7 @@ describe('<md-menu-item>', () => {
     });
 
     it('propagates rel and referrerpolicy to the anchor tag', async () => {
-      const item = new MdMenuItem();
+      const item = new PetalMenuItem();
       item.href = 'https://example.com';
       item.rel = 'noopener noreferrer';
       item.referrerPolicy = 'no-referrer';
@@ -157,7 +158,7 @@ describe('<md-menu-item>', () => {
     });
 
     it('reflects rel and referrerpolicy attributes to properties and anchor', async () => {
-      const item = new MdMenuItem();
+      const item = new PetalMenuItem();
       item.setAttribute('href', 'https://example.com');
       item.setAttribute('rel', 'noreferrer');
       item.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
@@ -176,7 +177,7 @@ describe('<md-menu-item>', () => {
     });
 
     it('does not default rel when target="_blank"', async () => {
-      const item = new MdMenuItem();
+      const item = new PetalMenuItem();
       item.href = 'https://example.com';
       item.target = '_blank';
       document.body.appendChild(item);

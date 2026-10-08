@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '@material/web/focus/md-focus-ring.js';
@@ -46,13 +47,13 @@ const standard: MaterialStoryInit<StoryKnobs> = {
   render({inward}) {
     return html`
       <button aria-label="A button with a focus ring">
-        <md-focus-ring ?inward=${inward}></md-focus-ring>
+        <petal-focus-ring ?inward=${inward}></petal-focus-ring>
       </button>
       <button aria-label="A button with a focus ring">
-        <md-focus-ring ?inward=${inward}></md-focus-ring>
+        <petal-focus-ring ?inward=${inward}></petal-focus-ring>
       </button>
       <button aria-label="A button with a focus ring">
-        <md-focus-ring ?inward=${inward}></md-focus-ring>
+        <petal-focus-ring ?inward=${inward}></petal-focus-ring>
       </button>
     `;
   },
@@ -117,7 +118,7 @@ const multiAction: MaterialStoryInit<StoryKnobs> = {
   render({inward}) {
     return html`
       <div role="list">
-        <md-focus-ring for="primary" ?inward=${inward}></md-focus-ring>
+        <petal-focus-ring for="primary" ?inward=${inward}></petal-focus-ring>
 
         <div role="listitem">
           <button
@@ -132,7 +133,7 @@ const multiAction: MaterialStoryInit<StoryKnobs> = {
             id="secondary"
             aria-label="The secondary action for a multi-action component">
             X
-            <md-focus-ring ?inward=${inward}></md-focus-ring>
+            <petal-focus-ring ?inward=${inward}></petal-focus-ring>
           </button>
         </div>
       </div>

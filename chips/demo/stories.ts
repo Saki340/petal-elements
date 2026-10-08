@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '@material/web/chips/assist-chip.js';
@@ -34,7 +35,7 @@ const GOOGLE_LOGO = svg`
 `;
 
 const styles = css`
-  md-chip-set.scrolling {
+  petal-chip-set.scrolling {
     flex-wrap: nowrap;
     max-width: 512px;
     overflow: scroll;
@@ -49,24 +50,24 @@ const assist: MaterialStoryInit<StoryKnobs> = {
   render({label, elevated, disabled, scrolling}) {
     const classes = {'scrolling': scrolling};
     return html`
-      <md-chip-set class=${classMap(classes)} aria-label="Assist chips">
-        <md-assist-chip ?disabled=${disabled} ?elevated=${elevated}>
+      <petal-chip-set class=${classMap(classes)} aria-label="Assist chips">
+        <petal-assist-chip ?disabled=${disabled} ?elevated=${elevated}>
           ${label || 'Assist chip'}
-        </md-assist-chip>
-        <md-assist-chip ?disabled=${disabled} ?elevated=${elevated}>
-          <md-icon slot="icon">local_laundry_service</md-icon>
+        </petal-assist-chip>
+        <petal-assist-chip ?disabled=${disabled} ?elevated=${elevated}>
+          <petal-icon slot="icon">local_laundry_service</petal-icon>
           ${label || 'Assist chip with icon'}
-        </md-assist-chip>
-        <md-assist-chip
+        </petal-assist-chip>
+        <petal-assist-chip
           ?elevated=${elevated}
           href="https://google.com"
           target="_blank">
           ${GOOGLE_LOGO} ${label || 'Assist link chip'}
-        </md-assist-chip>
-        <md-assist-chip soft-disabled always-focusable ?elevated=${elevated}>
+        </petal-assist-chip>
+        <petal-assist-chip soft-disabled always-focusable ?elevated=${elevated}>
           ${label || 'Soft-disabled assist chip (focusable)'}
-        </md-assist-chip>
-      </md-chip-set>
+        </petal-assist-chip>
+      </petal-chip-set>
     `;
   },
 };
@@ -77,25 +78,25 @@ const filters: MaterialStoryInit<StoryKnobs> = {
   render({label, elevated, disabled, scrolling}) {
     const classes = {'scrolling': scrolling};
     return html`
-      <md-chip-set class=${classMap(classes)} aria-label="Filter chips">
-        <md-filter-chip ?disabled=${disabled} ?elevated=${elevated}>
+      <petal-chip-set class=${classMap(classes)} aria-label="Filter chips">
+        <petal-filter-chip ?disabled=${disabled} ?elevated=${elevated}>
           ${label || 'Filter chip'}
-        </md-filter-chip>
-        <md-filter-chip ?disabled=${disabled} ?elevated=${elevated}>
-          <md-icon slot="icon">local_laundry_service</md-icon>
+        </petal-filter-chip>
+        <petal-filter-chip ?disabled=${disabled} ?elevated=${elevated}>
+          <petal-icon slot="icon">local_laundry_service</petal-icon>
           ${label || 'Filter chip with icon'}
-        </md-filter-chip>
-        <md-filter-chip ?disabled=${disabled} ?elevated=${elevated} removable>
+        </petal-filter-chip>
+        <petal-filter-chip ?disabled=${disabled} ?elevated=${elevated} removable>
           ${label || 'Removable filter chip'}
-        </md-filter-chip>
-        <md-filter-chip
+        </petal-filter-chip>
+        <petal-filter-chip
           soft-disabled
           always-focusable
           ?elevated=${elevated}
           removable>
           ${label || 'Soft-disabled filter chip (focusable)'}
-        </md-filter-chip>
-      </md-chip-set>
+        </petal-filter-chip>
+      </petal-chip-set>
     `;
   },
 };
@@ -106,30 +107,30 @@ const inputs: MaterialStoryInit<StoryKnobs> = {
   render({label, disabled, scrolling}) {
     const classes = {'scrolling': scrolling};
     return html`
-      <md-chip-set class=${classMap(classes)} aria-label="Input chips">
-        <md-input-chip ?disabled=${disabled}>
+      <petal-chip-set class=${classMap(classes)} aria-label="Input chips">
+        <petal-input-chip ?disabled=${disabled}>
           ${label || 'Input chip'}
-        </md-input-chip>
-        <md-input-chip ?disabled=${disabled}>
-          <md-icon slot="icon">local_laundry_service</md-icon>
+        </petal-input-chip>
+        <petal-input-chip ?disabled=${disabled}>
+          <petal-icon slot="icon">local_laundry_service</petal-icon>
           ${label || 'Input chip with icon'}
-        </md-input-chip>
-        <md-input-chip ?disabled=${disabled} avatar>
+        </petal-input-chip>
+        <petal-input-chip ?disabled=${disabled} avatar>
           <img
             slot="icon"
             src="https://lh3.googleusercontent.com/a/default-user=s48" />
           ${label || 'Input chip with avatar'}
-        </md-input-chip>
-        <md-input-chip href="https://google.com" target="_blank"
-          >${GOOGLE_LOGO} ${label || 'Input link chip'}</md-input-chip
+        </petal-input-chip>
+        <petal-input-chip href="https://google.com" target="_blank"
+          >${GOOGLE_LOGO} ${label || 'Input link chip'}</petal-input-chip
         >
-        <md-input-chip ?disabled=${disabled} remove-only>
+        <petal-input-chip ?disabled=${disabled} remove-only>
           ${label || 'Remove-only input chip'}
-        </md-input-chip>
-        <md-input-chip soft-disabled always-focusable>
+        </petal-input-chip>
+        <petal-input-chip soft-disabled always-focusable>
           ${label || 'Soft-disabled input chip (focusable)'}
-        </md-input-chip>
-      </md-chip-set>
+        </petal-input-chip>
+      </petal-chip-set>
     `;
   },
 };
@@ -140,27 +141,27 @@ const suggestions: MaterialStoryInit<StoryKnobs> = {
   render({label, elevated, disabled, scrolling}) {
     const classes = {'scrolling': scrolling};
     return html`
-      <md-chip-set class=${classMap(classes)} aria-label="Suggestion chips">
-        <md-suggestion-chip ?disabled=${disabled} ?elevated=${elevated}>
+      <petal-chip-set class=${classMap(classes)} aria-label="Suggestion chips">
+        <petal-suggestion-chip ?disabled=${disabled} ?elevated=${elevated}>
           ${label || 'Suggestion chip'}
-        </md-suggestion-chip>
-        <md-suggestion-chip ?disabled=${disabled} ?elevated=${elevated}>
-          <md-icon slot="icon">local_laundry_service</md-icon>
+        </petal-suggestion-chip>
+        <petal-suggestion-chip ?disabled=${disabled} ?elevated=${elevated}>
+          <petal-icon slot="icon">local_laundry_service</petal-icon>
           ${label || 'Suggestion chip with icon'}
-        </md-suggestion-chip>
-        <md-suggestion-chip
+        </petal-suggestion-chip>
+        <petal-suggestion-chip
           ?elevated=${elevated}
           href="https://google.com"
           target="_blank"
-          >${GOOGLE_LOGO} ${label || 'Suggestion link chip'}</md-suggestion-chip
+          >${GOOGLE_LOGO} ${label || 'Suggestion link chip'}</petal-suggestion-chip
         >
-        <md-suggestion-chip
+        <petal-suggestion-chip
           soft-disabled
           always-focusable
           ?elevated=${elevated}>
           ${label || 'Soft-disabled suggestion chip (focusable)'}
-        </md-suggestion-chip>
-      </md-chip-set>
+        </petal-suggestion-chip>
+      </petal-chip-set>
     `;
   },
 };

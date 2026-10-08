@@ -107,26 +107,26 @@ payment'"
     </style>
     <div class="wrapper">
       <div>
-        <md-elevated-button has-icon>
-          <md-icon slot="icon">add</md-icon>
+        <petal-elevated-button has-icon>
+          <petal-icon slot="icon">add</petal-icon>
           Elevated
-        </md-elevated-button>
+        </petal-elevated-button>
         <span>1</span>
       </div>
       <div>
-        <md-filled-button>Filled</md-filled-button>
+        <petal-filled-button>Filled</petal-filled-button>
         <span>2</span>
       </div>
       <div>
-        <md-filled-tonal-button>Tonal</md-filled-tonal-button>
+        <petal-filled-tonal-button>Tonal</petal-filled-tonal-button>
         <span>3</span>
       </div>
       <div>
-        <md-outlined-button>Outlined</md-outlined-button>
+        <petal-outlined-button>Outlined</petal-outlined-button>
         <span>4</span>
       </div>
       <div>
-        <md-text-button>Text</md-text-button>
+        <petal-text-button>Text</petal-text-button>
         <span>5</span>
       </div>
     </div>
@@ -163,8 +163,8 @@ a button.
       style="justify-content:center;gap: 8px;"
       title="Outlined and filled buttons."
       aria-label="An outlined button with the text 'Back' next to a filled button with the text 'Complete'">
-    <md-outlined-button>Back</md-outlined-button>
-    <md-filled-button>Complete</md-filled-button>
+    <petal-outlined-button>Back</petal-outlined-button>
+    <petal-filled-button>Complete</petal-filled-button>
   </figure>
 </div>
 
@@ -173,8 +173,8 @@ a button.
 <!-- catalog-only-end -->
 
 ```html
-<md-outlined-button>Back</md-outlined-button>
-<md-filled-button>Complete</md-filled-button>
+<petal-outlined-button>Back</petal-outlined-button>
+<petal-filled-button>Complete</petal-filled-button>
 ```
 
 ### Icon
@@ -198,15 +198,15 @@ box](images/button/usage-icon.webp "Slot in icons to the appropriate slots")
       style="justify-content:center;gap: 8px;"
       title="Outlined and filled buttons."
       aria-label="An outlined button with the text 'Back' next to a filled button with the text 'Complete'">
-    <md-filled-tonal-button>
+    <petal-filled-tonal-button>
       Send
       <svg slot="icon" viewBox="0 0 48 48"><path d="M6 40V8l38 16Zm3-4.65L36.2 24 9 12.5v8.4L21.1 24 9 27Zm0 0V12.5 27Z"/></svg>
-    </md-filled-tonal-button>
+    </petal-filled-tonal-button>
 
-    <md-text-button trailing-icon>
+    <petal-text-button trailing-icon>
       Open
       <svg slot="icon" viewBox="0 0 48 48"><path d="M9 42q-1.2 0-2.1-.9Q6 40.2 6 39V9q0-1.2.9-2.1Q7.8 6 9 6h13.95v3H9v30h30V25.05h3V39q0 1.2-.9 2.1-.9.9-2.1.9Zm10.1-10.95L17 28.9 36.9 9H25.95V6H42v16.05h-3v-10.9Z"/></svg>
-    </md-text-button>
+    </petal-text-button>
   </figure>
 </div>
 
@@ -215,15 +215,15 @@ box](images/button/usage-icon.webp "Slot in icons to the appropriate slots")
 <!-- catalog-only-end -->
 
 ```html
-<md-filled-tonal-button>
+<petal-filled-tonal-button>
   Send
   <svg slot="icon" viewBox="0 0 48 48"><path d="M6 40V8l38 16Zm3-4.65L36.2 24 9 12.5v8.4L21.1 24 9 27Zm0 0V12.5 27Z"/></svg>
-</md-filled-tonal-button>
+</petal-filled-tonal-button>
 
-<md-text-button trailing-icon>
+<petal-text-button trailing-icon>
   Open
   <svg slot="icon" viewBox="0 0 48 48"><path d="M9 42q-1.2 0-2.1-.9Q6 40.2 6 39V9q0-1.2.9-2.1Q7.8 6 9 6h13.95v3H9v30h30V25.05h3V39q0 1.2-.9 2.1-.9.9-2.1.9Zm10.1-10.95L17 28.9 36.9 9H25.95V6H42v16.05h-3v-10.9Z"/></svg>
-</md-text-button>
+</petal-text-button>
 ```
 
 ## Accessibility
@@ -233,7 +233,7 @@ Add an
 attribute to buttons whose labels need a more descriptive label.
 
 ```html
-<md-elevated-button aria-label="Add a new contact">Add</md-elevated-button>
+<petal-elevated-button aria-label="Add a new contact">Add</petal-elevated-button>
 ```
 
 ### Focusable and disabled
@@ -248,13 +248,13 @@ for guidance on when this is recommended.
 
 ```html
 <div role="toolbar">
-  <md-text-button>Copy</md-text-button>
-  <md-text-button>Cut</md-text-button>
+  <petal-text-button>Copy</petal-text-button>
+  <petal-text-button>Cut</petal-text-button>
   <!--
     This button is disabled but kept focusable to improve its discoverability
     in the toolbar.
   -->
-  <md-text-button soft-disabled>Paste</md-text-button>
+  <petal-text-button soft-disabled>Paste</petal-text-button>
 </div>
 ```
 
@@ -280,7 +280,7 @@ separation from a patterned background.
   <figure
       style="justify-content:center;align-items:center;"
       aria-label="An elevated button.">
-    <md-elevated-button>Elevated</md-elevated-button>
+    <petal-elevated-button>Elevated</petal-elevated-button>
   </figure>
 </div>
 
@@ -289,7 +289,7 @@ separation from a patterned background.
 <!-- catalog-only-end -->
 
 ```html
-<md-elevated-button>Elevated</md-elevated-button>
+<petal-elevated-button>Elevated</petal-elevated-button>
 ```
 
 ## Filled button
@@ -309,7 +309,7 @@ final actions that complete a flow, like Save, Join now, or Confirm.
   <figure
       style="justify-content:center;align-items:center;"
       aria-label="A filled button.">
-    <md-filled-button>Filled</md-filled-button>
+    <petal-filled-button>Filled</petal-filled-button>
   </figure>
 </div>
 
@@ -318,7 +318,7 @@ final actions that complete a flow, like Save, Join now, or Confirm.
 <!-- catalog-only-end -->
 
 ```html
-<md-filled-button>Filled</md-filled-button>
+<petal-filled-button>Filled</petal-filled-button>
 ```
 
 ## Filled tonal button
@@ -344,7 +344,7 @@ than an outline would give, such as "Next" in an onboarding flow.
   <figure
       style="justify-content:center;align-items:center;"
       aria-label="A tonal button.">
-    <md-filled-tonal-button>Tonal</md-filled-tonal-button>
+    <petal-filled-tonal-button>Tonal</petal-filled-tonal-button>
   </figure>
 </div>
 
@@ -353,7 +353,7 @@ than an outline would give, such as "Next" in an onboarding flow.
 <!-- catalog-only-end -->
 
 ```html
-<md-filled-tonal-button>Tonal</md-filled-tonal-button>
+<petal-filled-tonal-button>Tonal</petal-filled-tonal-button>
 ```
 
 ## Outlined button
@@ -377,7 +377,7 @@ the primary action in an app.
   <figure
       style="justify-content:center;align-items:center;"
       aria-label="An outlined button.">
-    <md-outlined-button>Outlined</md-outlined-button>
+    <petal-outlined-button>Outlined</petal-outlined-button>
   </figure>
 </div>
 
@@ -386,7 +386,7 @@ the primary action in an app.
 <!-- catalog-only-end -->
 
 ```html
-<md-outlined-button>Outlined</md-outlined-button>
+<petal-outlined-button>Outlined</petal-outlined-button>
 ```
 
 ## Text button
@@ -410,7 +410,7 @@ options.
   <figure
       style="justify-content:center;align-items:center;"
       aria-label="A text button.">
-    <md-text-button>Text</md-text-button>
+    <petal-text-button>Text</petal-text-button>
   </figure>
 </div>
 
@@ -419,7 +419,7 @@ options.
 <!-- catalog-only-end -->
 
 ```html
-<md-text-button>Text</md-text-button>
+<petal-text-button>Text</petal-text-button>
 ```
 
 ## Theming
@@ -466,7 +466,7 @@ Token                                   | Default value
       }
     </style>
 
-    <md-elevated-button>Elevated</md-elevated-button>
+    <petal-elevated-button>Elevated</petal-elevated-button>
   </figure>
 </div>
 
@@ -484,7 +484,7 @@ Token                                   | Default value
 }
 </style>
 
-<md-elevated-button>Elevated</md-elevated-button>
+<petal-elevated-button>Elevated</petal-elevated-button>
 ```
 
 ### Filled button tokens
@@ -526,7 +526,7 @@ Token                                 | Default value
       }
     </style>
 
-    <md-filled-button>Filled</md-filled-button>
+    <petal-filled-button>Filled</petal-filled-button>
   </figure>
 </div>
 
@@ -544,7 +544,7 @@ Token                                 | Default value
 }
 </style>
 
-<md-filled-button>Filled</md-filled-button>
+<petal-filled-button>Filled</petal-filled-button>
 ```
 
 ### Filled tonal button tokens
@@ -586,7 +586,7 @@ Token                                       | Default value
       }
     </style>
 
-    <md-filled-tonal-button>Tonal</md-filled-tonal-button>
+    <petal-filled-tonal-button>Tonal</petal-filled-tonal-button>
   </figure>
 </div>
 
@@ -604,7 +604,7 @@ Token                                       | Default value
 }
 </style>
 
-<md-filled-tonal-button>Tonal</md-filled-tonal-button>
+<petal-filled-tonal-button>Tonal</petal-filled-tonal-button>
 ```
 
 ### Outlined button tokens
@@ -646,7 +646,7 @@ Token                                   | Default value
       }
     </style>
 
-    <md-outlined-button>Outlined</md-outlined-button>
+    <petal-outlined-button>Outlined</petal-outlined-button>
   </figure>
 </div>
 
@@ -664,7 +664,7 @@ Token                                   | Default value
 }
 </style>
 
-<md-outlined-button>Outlined</md-outlined-button>
+<petal-outlined-button>Outlined</petal-outlined-button>
 ```
 
 ### Text button tokens
@@ -702,7 +702,7 @@ Token                               | Default value
       }
     </style>
 
-    <md-text-button>Text</md-text-button>
+    <petal-text-button>Text</petal-text-button>
   </figure>
 </div>
 
@@ -718,7 +718,7 @@ Token                               | Default value
 }
 </style>
 
-<md-text-button>Text</md-text-button>
+<petal-text-button>Text</petal-text-button>
 ```
 
 <!-- auto-generated API docs start -->
@@ -726,7 +726,7 @@ Token                               | Default value
 ## API
 
 
-### MdElevatedButton <code>&lt;md-elevated-button&gt;</code>
+### PetalElevatedButton <code>&lt;petal-elevated-button&gt;</code>
 
 #### Properties
 
@@ -749,7 +749,7 @@ Token                               | Default value
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 
-### MdFilledButton <code>&lt;md-filled-button&gt;</code>
+### PetalFilledButton <code>&lt;petal-filled-button&gt;</code>
 
 #### Properties
 
@@ -772,7 +772,7 @@ Token                               | Default value
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 
-### MdFilledTonalButton <code>&lt;md-filled-tonal-button&gt;</code>
+### PetalFilledTonalButton <code>&lt;petal-filled-tonal-button&gt;</code>
 
 #### Properties
 
@@ -795,7 +795,7 @@ Token                               | Default value
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 
-### MdOutlinedButton <code>&lt;md-outlined-button&gt;</code>
+### PetalOutlinedButton <code>&lt;petal-outlined-button&gt;</code>
 
 #### Properties
 
@@ -818,7 +818,7 @@ Token                               | Default value
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 
-### MdTextButton <code>&lt;md-text-button&gt;</code>
+### PetalTextButton <code>&lt;petal-text-button&gt;</code>
 
 #### Properties
 

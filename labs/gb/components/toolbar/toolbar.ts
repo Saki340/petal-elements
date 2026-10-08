@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {type ClassInfo} from 'lit/directives/class-map.js';
@@ -80,7 +81,7 @@ export function toolbarClasses({
  * @example
  * ```ts
  * html`<div class="${toolbar({color: 'vibrant'})}">
- *   <button class="icon-btn"><md-gb-icon>undo</md-gb-icon></button>
+ *   <button class="icon-btn"><petal-gb-icon>undo</petal-gb-icon></button>
  * </div>`;
  * ```
  */

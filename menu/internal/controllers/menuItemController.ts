@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {ReactiveController, ReactiveControllerHost} from 'lit';
@@ -51,8 +52,8 @@ interface MenuItemAdditions {
 
 /**
  * The interface of every menu item interactive with a menu. All menu items
- * should implement this interface to be compatible with md-menu. Additionally
- * it should have the `md-menu-item` attribute set.
+ * should implement this interface to be compatible with petal-menu. Additionally
+ * it should have the `petal-menu-item` attribute set.
  *
  * NOTE, the required properties are recommended to be reactive properties.
  */
@@ -187,7 +188,7 @@ export class MenuItemController implements ReactiveController {
   }
 
   hostConnected() {
-    this.host.toggleAttribute('md-menu-item', true);
+    this.host.toggleAttribute('petal-menu-item', true);
   }
 
   hostUpdate() {

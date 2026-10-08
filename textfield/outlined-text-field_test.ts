@@ -2,16 +2,17 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 // import 'jasmine'; (google3-only)
 
 import {createTokenTests} from '../testing/tokens.js';
 
-import {MdOutlinedTextField} from './outlined-text-field.js';
+import {PetalOutlinedTextField} from './outlined-text-field.js';
 
-describe('<md-outlined-field>', () => {
+describe('<petal-outlined-field>', () => {
   describe('.styles', () => {
-    createTokenTests(MdOutlinedTextField.styles);
+    createTokenTests(PetalOutlinedTextField.styles);
   });
 });

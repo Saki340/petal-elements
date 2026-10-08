@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {type ClassInfo} from 'lit/directives/class-map.js';
@@ -171,7 +172,7 @@ export function setupIconButton(
  * @example
  * ```ts
  * html`<button class="${iconButton({color: 'filled'})}">
- *   <md-icon>favorite</md-icon>
+ *   <petal-icon>favorite</petal-icon>
  * </button>`;
  * ```
  */

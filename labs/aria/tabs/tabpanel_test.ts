@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 // import 'jasmine'; (google3-only)
@@ -14,27 +15,27 @@ import {html} from 'lit';
 import {Environment} from '../../../testing/environment.js';
 import {internals} from '../../behaviors/element-internals.js';
 
-describe('md-aria-tabpanel', () => {
+describe('petal-aria-tabpanel', () => {
   const env = new Environment();
 
   async function setupTest(
     template = html`
-      <md-aria-tablist>
-        <md-aria-tab id="tabone" tabpanel="panelone">Tab one</md-aria-tab>
-        <md-aria-tab id="tabtwo" tabpanel="paneltwo">Tab two</md-aria-tab>
-      </md-aria-tablist>
-      <md-aria-tabpanel id="panelone" tab="tabone">
+      <petal-aria-tablist>
+        <petal-aria-tab id="tabone" tabpanel="panelone">Tab one</petal-aria-tab>
+        <petal-aria-tab id="tabtwo" tabpanel="paneltwo">Tab two</petal-aria-tab>
+      </petal-aria-tablist>
+      <petal-aria-tabpanel id="panelone" tab="tabone">
         Panel Content 1
-      </md-aria-tabpanel>
-      <md-aria-tabpanel id="paneltwo" tab="tabtwo">
+      </petal-aria-tabpanel>
+      <petal-aria-tabpanel id="paneltwo" tab="tabtwo">
         Panel Content 2
-      </md-aria-tabpanel>
+      </petal-aria-tabpanel>
     `,
   ) {
     const root = env.render(template);
     await env.waitForStability();
-    const tabs = Array.from(root.querySelectorAll('md-aria-tab'));
-    const panels = Array.from(root.querySelectorAll('md-aria-tabpanel'));
+    const tabs = Array.from(root.querySelectorAll('petal-aria-tab'));
+    const panels = Array.from(root.querySelectorAll('petal-aria-tabpanel'));
     return {root, tabs, panels};
   }
 
@@ -82,7 +83,7 @@ describe('md-aria-tabpanel', () => {
 
     it('returns null for tabElement when unlinked', async () => {
       const {panels} = await setupTest(
-        html`<md-aria-tabpanel id="panel"></md-aria-tabpanel>`,
+        html`<petal-aria-tabpanel id="panel"></petal-aria-tabpanel>`,
       );
 
       expect(panels[0].tab).toBe('');

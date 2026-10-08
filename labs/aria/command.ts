@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 /// <reference types="../../types/command-event.d.ts" />
@@ -51,7 +52,7 @@ type PopoverState = 'auto' | 'manual' | 'hint' | 'no-popover';
 
 /** Determines the popover state of an element. */
 function getPopoverState(element: HTMLElement): PopoverState {
-  if (element.localName === 'md-aria-menulist') {
+  if (element.localName === 'petal-aria-menulist') {
     return 'auto';
   }
 

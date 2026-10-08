@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {CSSResultOrNative} from 'lit';
@@ -12,7 +13,7 @@ import {styles} from './internal/divider-styles.cssresult.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-divider': MdDivider;
+    'petal-divider': PetalDivider;
   }
 }
 
@@ -26,7 +27,7 @@ declare global {
  * @final
  * @suppress {visibility}
  */
-@customElement('md-divider')
-export class MdDivider extends Divider {
+@customElement('petal-divider')
+export class PetalDivider extends Divider {
   static override styles: CSSResultOrNative[] = [styles];
 }

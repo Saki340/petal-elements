@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '@material/web/divider/divider.js';
@@ -23,7 +24,7 @@ export interface StoryKnobs {
 }
 
 const styles = css`
-  md-list {
+  petal-list {
     border-radius: 8px;
     outline: 1px solid var(--md-sys-color-outline);
     max-width: 360px;
@@ -37,26 +38,26 @@ const standard: MaterialStoryInit<StoryKnobs> = {
   styles,
   render(knobs) {
     return html`
-      <md-list aria-label="Static example">
-        <md-list-item ?disabled=${knobs.disabled}>
+      <petal-list aria-label="Static example">
+        <petal-list-item ?disabled=${knobs.disabled}>
           Single line item ${getKnobContent(knobs)}
-        </md-list-item>
+        </petal-list-item>
 
-        <md-list-item ?disabled=${knobs.disabled}>
+        <petal-list-item ?disabled=${knobs.disabled}>
           Two line item
           <div slot="supporting-text">Supporting text</div>
           ${getKnobContent(knobs)}
-        </md-list-item>
+        </petal-list-item>
 
-        <md-list-item ?disabled=${knobs.disabled}>
+        <petal-list-item ?disabled=${knobs.disabled}>
           Three line item
           <div slot="supporting-text">
             <div>Second line text</div>
             <div>Third line text</div>
           </div>
           ${getKnobContent(knobs, /* threeLines */ true)}
-        </md-list-item>
-      </md-list>
+        </petal-list-item>
+      </petal-list>
     `;
   },
 };
@@ -67,26 +68,26 @@ const interactive: MaterialStoryInit<StoryKnobs> = {
   render(knobs) {
     const knobsNoTrailing = {...knobs, trailingIcon: false};
     return html`
-      <md-list aria-label="Interactive example">
-        <md-list-item
+      <petal-list aria-label="Interactive example">
+        <petal-list-item
           ?disabled=${knobs.disabled}
           type="link"
           href="https://google.com"
           target="_blank">
           Link item
-          <md-icon slot="end">link</md-icon>
+          <petal-icon slot="end">link</petal-icon>
           ${getKnobContent(knobsNoTrailing)}
-        </md-list-item>
+        </petal-list-item>
 
-        <md-list-item type="button" ?disabled=${knobs.disabled}>
+        <petal-list-item type="button" ?disabled=${knobs.disabled}>
           Button item ${getKnobContent(knobs)}
-        </md-list-item>
+        </petal-list-item>
 
-        <md-list-item ?disabled=${knobs.disabled}>
+        <petal-list-item ?disabled=${knobs.disabled}>
           Non-interactive item ${knobs.disabled ? '(disabled)' : nothing}
           ${getKnobContent(knobs)}
-        </md-list-item>
-      </md-list>
+        </petal-list-item>
+      </petal-list>
     `;
   },
 };
@@ -107,11 +108,11 @@ function getKnobContent(knobs: StoryKnobs, threeLines = false) {
     : nothing;
 
   const leadingIcon = knobs.leadingIcon
-    ? html`<md-icon class=${classMap(classes)} slot="start">event</md-icon>`
+    ? html`<petal-icon class=${classMap(classes)} slot="start">event</petal-icon>`
     : nothing;
 
   const trailingIcon = knobs.trailingIcon
-    ? html`<md-icon class=${classMap(classes)} slot="end">star</md-icon>`
+    ? html`<petal-icon class=${classMap(classes)} slot="end">star</petal-icon>`
     : nothing;
 
   return [overline, trailingText, leadingIcon, trailingIcon];

@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {type CSSResultOrNative, html} from 'lit';
@@ -24,7 +25,7 @@ import {TAB_CLASSES} from './tabs.js';
  * This is a reference implementation of the `.tab` utility class. The same
  * class can be applied to any element with `role="tab"`.
  *
- * @slot - Used to display an optional leading icon, such as `<md-gb-icon>`.
+ * @slot - Used to display an optional leading icon, such as `<petal-gb-icon>`.
  *     Icons are unclassed; the tab sets `--md-icon-*` for them.
  * @slot label - Used to display the tab's label. `<span class="tab-label">` in
  *     the default slot is equivalent. Bare text is not supported.

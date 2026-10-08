@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {html} from 'lit';
@@ -11,7 +12,7 @@ import {createFormTests} from '../testing/forms.js';
 import {createTokenTests} from '../testing/tokens.js';
 
 import {SliderHarness} from './harness.js';
-import {MdSlider} from './slider.js';
+import {PetalSlider} from './slider.js';
 
 interface SliderTestProps {
   range?: boolean;
@@ -24,17 +25,17 @@ interface SliderTestProps {
 }
 
 function getSliderTemplate(props?: SliderTestProps) {
-  return html` <md-slider
+  return html` <petal-slider
     .range=${props?.range ?? false}
     .value=${props?.value}
     .valueStart=${props?.valueStart}
     .valueEnd=${props?.valueEnd}
     .step=${props?.step ?? 1}
     .min=${props?.min ?? 0}
-    .max=${props?.max ?? 100}></md-slider>`;
+    .max=${props?.max ?? 100}></petal-slider>`;
 }
 
-describe('<md-slider>', () => {
+describe('<petal-slider>', () => {
   const env = new Environment();
 
   async function setupTest(
@@ -43,13 +44,13 @@ describe('<md-slider>', () => {
   ) {
     const root = env.render(template(props));
     await env.waitForStability();
-    const slider = root.querySelector<MdSlider>('md-slider')!;
+    const slider = root.querySelector<PetalSlider>('petal-slider')!;
     const harness = new SliderHarness(slider);
     return {harness, root};
   }
 
   describe('.styles', () => {
-    createTokenTests(MdSlider.styles);
+    createTokenTests(PetalSlider.styles);
   });
 
   describe('rendering value', () => {
@@ -361,11 +362,11 @@ describe('<md-slider>', () => {
 
   describe('forms', () => {
     createFormTests({
-      queryControl: (root) => root.querySelector('md-slider'),
+      queryControl: (root) => root.querySelector('petal-slider'),
       valueTests: [
         {
           name: 'unnamed',
-          render: () => html`<md-slider></md-slider>`,
+          render: () => html`<petal-slider></petal-slider>`,
           assertValue(formData) {
             expect(formData)
               .withContext('should not add anything to form without a name')
@@ -374,7 +375,7 @@ describe('<md-slider>', () => {
         },
         {
           name: 'single value',
-          render: () => html`<md-slider name="slider" value="10"></md-slider>`,
+          render: () => html`<petal-slider name="slider" value="10"></petal-slider>`,
           assertValue(formData) {
             expect(formData.get('slider')).toBe('10');
           },
@@ -382,11 +383,11 @@ describe('<md-slider>', () => {
         {
           name: 'multiple values same name',
           render: () =>
-            html`<md-slider
+            html`<petal-slider
               range
               name="slider"
               value-start="0"
-              value-end="10"></md-slider>`,
+              value-end="10"></petal-slider>`,
           assertValue(formData) {
             expect(formData.getAll('slider')).toEqual(['0', '10']);
           },
@@ -394,12 +395,12 @@ describe('<md-slider>', () => {
         {
           name: 'multiple values different names',
           render: () =>
-            html`<md-slider
+            html`<petal-slider
               range
               name-start="slider-start"
               name-end="slider-end"
               value-start="0"
-              value-end="10"></md-slider>`,
+              value-end="10"></petal-slider>`,
           assertValue(formData) {
             expect(formData.get('slider-start')).toBe('0');
             expect(formData.get('slider-end')).toBe('10');
@@ -407,7 +408,7 @@ describe('<md-slider>', () => {
         },
         {
           name: 'single default value',
-          render: () => html`<md-slider name="slider"></md-slider>`,
+          render: () => html`<petal-slider name="slider"></petal-slider>`,
           assertValue(formData) {
             expect(formData.get('slider')).toBe('50');
           },
@@ -415,14 +416,14 @@ describe('<md-slider>', () => {
         {
           name: 'single default value with min/max',
           render: () =>
-            html`<md-slider name="slider" min="100" max="300"></md-slider>`,
+            html`<petal-slider name="slider" min="100" max="300"></petal-slider>`,
           assertValue(formData) {
             expect(formData.get('slider')).toBe('200');
           },
         },
         {
           name: 'multiple default values',
-          render: () => html`<md-slider range name="slider"></md-slider>`,
+          render: () => html`<petal-slider range name="slider"></petal-slider>`,
           assertValue(formData) {
             expect(formData.getAll('slider')).toEqual(['33', '67']);
           },
@@ -430,11 +431,11 @@ describe('<md-slider>', () => {
         {
           name: 'multiple default values with min/max',
           render: () =>
-            html`<md-slider
+            html`<petal-slider
               range
               name="slider"
               min="100"
-              max="300"></md-slider>`,
+              max="300"></petal-slider>`,
           assertValue(formData) {
             expect(formData.getAll('slider')).toEqual(['167', '233']);
           },
@@ -442,7 +443,7 @@ describe('<md-slider>', () => {
         {
           name: 'disabled',
           render: () =>
-            html`<md-slider name="slider" value="10" disabled></md-slider>`,
+            html`<petal-slider name="slider" value="10" disabled></petal-slider>`,
           assertValue(formData) {
             expect(formData)
               .withContext('should not add anything to form when disabled')
@@ -453,7 +454,7 @@ describe('<md-slider>', () => {
       resetTests: [
         {
           name: 'reset single value',
-          render: () => html`<md-slider name="slider" value="10"></md-slider>`,
+          render: () => html`<petal-slider name="slider" value="10"></petal-slider>`,
           change(slider) {
             slider.value = 100;
           },
@@ -466,11 +467,11 @@ describe('<md-slider>', () => {
         {
           name: 'reset multiple values same name',
           render: () =>
-            html`<md-slider
+            html`<petal-slider
               range
               name="slider"
               value-start="0"
-              value-end="10"></md-slider>`,
+              value-end="10"></petal-slider>`,
           change(slider) {
             slider.valueStart = 5;
             slider.valueEnd = 5;
@@ -487,12 +488,12 @@ describe('<md-slider>', () => {
         {
           name: 'reset multiple values different names',
           render: () =>
-            html`<md-slider
+            html`<petal-slider
               range
               name-start="slider-start"
               name-end="slider-end"
               value-start="0"
-              value-end="10"></md-slider>`,
+              value-end="10"></petal-slider>`,
           change(slider) {
             slider.valueStart = 5;
             slider.valueEnd = 5;
@@ -510,7 +511,7 @@ describe('<md-slider>', () => {
       restoreTests: [
         {
           name: 'restore single value',
-          render: () => html`<md-slider name="checkbox" value="1"></md-slider>`,
+          render: () => html`<petal-slider name="checkbox" value="1"></petal-slider>`,
           assertRestored(slider) {
             expect(slider.value)
               .withContext('slider.value after restore')
@@ -520,11 +521,11 @@ describe('<md-slider>', () => {
         {
           name: 'restore multiple values same name',
           render: () =>
-            html`<md-slider
+            html`<petal-slider
               range
               name="slider"
               value-start="0"
-              value-end="10"></md-slider>`,
+              value-end="10"></petal-slider>`,
           assertRestored(slider) {
             expect(slider.valueStart)
               .withContext('slider.valueStart after restore')
@@ -537,12 +538,12 @@ describe('<md-slider>', () => {
         {
           name: 'restore multiple values different names',
           render: () =>
-            html`<md-slider
+            html`<petal-slider
               range
               name-start="slider-start"
               name-end="slider-end"
               value-start="0"
-              value-end="10"></md-slider>`,
+              value-end="10"></petal-slider>`,
           assertRestored(slider) {
             expect(slider.valueStart)
               .withContext('slider.valueStart after restore')

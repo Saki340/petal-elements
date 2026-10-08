@@ -1,6 +1,7 @@
 /*!
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 // go/keep-sorted start by_regex='(.+) prefix_order=sass:
@@ -10,7 +11,7 @@
 @layer md.sys, md.comp.ripple, md.comp.focus-ring;
 
 @layer md.comp.nav-bar {
-  :host(md-gb-nav-bar) {
+  :host(petal-gb-nav-bar) {
     @include nav-bar-tokens.root;
 
     --nav-bar: true;
@@ -18,15 +19,15 @@
     width: 100%;
   }
 
-  :host(md-gb-nav-bar[item-layout='horizontal']) {
+  :host(petal-gb-nav-bar[item-layout='horizontal']) {
     @include nav-bar-tokens.item-horizontal;
   }
 
-  :host(md-gb-nav-bar[item-layout='vertical']) {
+  :host(petal-gb-nav-bar[item-layout='vertical']) {
     @include nav-bar-tokens.item-vertical;
   }
 
-  :host(md-gb-nav-bar-item) {
+  :host(petal-gb-nav-bar-item) {
     @include nav-bar-tokens.root;
 
     display: flex;
@@ -35,15 +36,15 @@
     outline: none;
   }
 
-  :host(md-gb-nav-bar-item[item-layout='horizontal']) {
+  :host(petal-gb-nav-bar-item[item-layout='horizontal']) {
     @include nav-bar-tokens.item-horizontal;
   }
 
-  :host(md-gb-nav-bar-item[item-layout='vertical']) {
+  :host(petal-gb-nav-bar-item[item-layout='vertical']) {
     @include nav-bar-tokens.item-vertical;
   }
 
-  md-gb-nav-bar {
+  petal-gb-nav-bar {
     @include nav-bar-tokens.root;
 
     --nav-bar: true;

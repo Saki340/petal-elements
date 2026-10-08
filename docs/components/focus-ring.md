@@ -33,7 +33,7 @@ one of three ways.
 
     ```html
     <button style="position: relative">
-      <md-focus-ring style="--md-focus-ring-shape: 8px"></md-focus-ring>
+      <petal-focus-ring style="--md-focus-ring-shape: 8px"></petal-focus-ring>
     </button>
     ```
 
@@ -41,7 +41,7 @@ one of three ways.
 
     ```html
     <div style="position: relative">
-      <md-focus-ring for="control" style="--md-focus-ring-shape: 8px"></md-focus-ring>
+      <petal-focus-ring for="control" style="--md-focus-ring-shape: 8px"></petal-focus-ring>
       <input id="control">
     </div>
     ```
@@ -50,7 +50,7 @@ one of three ways.
 
     ```html
     <div style="position: relative">
-      <md-focus-ring id="ring" style="--md-focus-ring-shape: 8px"></md-focus-ring>
+      <petal-focus-ring id="ring" style="--md-focus-ring-shape: 8px"></petal-focus-ring>
       <button id="ring-control"></button>
     </div>
     <script>
@@ -71,7 +71,7 @@ This is useful for components like list items.
 
 ```html
 <button style="position: relative">
-  <md-focus-ring inward style="--md-focus-ring-shape: 8px"></md-focus-ring>
+  <petal-focus-ring inward style="--md-focus-ring-shape: 8px"></petal-focus-ring>
 </button>
 ```
 
@@ -84,7 +84,7 @@ properties.
 
 ```html
 <style>
-  md-focus-ring {
+  petal-focus-ring {
     --md-focus-ring-duration: 0s; /* disabled animation */
   }
 </style>
@@ -117,7 +117,7 @@ Token                   | Default value
 
 ```html
 <style>
-md-focus-ring {
+petal-focus-ring {
   --md-focus-ring-shape: 0px;
   --md-focus-ring-width: 2px;
   --md-focus-ring-active-width: 4px;
@@ -126,7 +126,7 @@ md-focus-ring {
 </style>
 
 <button>
-  <md-focus-ring></md-focus-ring>
+  <petal-focus-ring></petal-focus-ring>
 </button>
 ```
 
@@ -135,7 +135,7 @@ md-focus-ring {
 ## API
 
 
-### MdFocusRing <code>&lt;md-focus-ring&gt;</code>
+### PetalFocusRing <code>&lt;petal-focus-ring&gt;</code>
 
 #### Properties
 

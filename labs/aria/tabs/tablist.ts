@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {
@@ -89,10 +90,10 @@ export class AriaTablistElement extends baseClass {
       //
       // ```ts
       // html`
-      //   <md-aria-tablist .selectedTabIndex=${1}>
-      //     <md-aria-tab>First</md-aria-tab>
-      //     <md-aria-tab>Second</md-aria-tab>
-      //   </md-aria-tablist>
+      //   <petal-aria-tablist .selectedTabIndex=${1}>
+      //     <petal-aria-tab>First</petal-aria-tab>
+      //     <petal-aria-tab>Second</petal-aria-tab>
+      //   </petal-aria-tablist>
       // `;
       // ```
       //

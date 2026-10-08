@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 export interface ListItem extends HTMLElement {
@@ -279,7 +280,7 @@ export function activatePreviousItem<Item extends ListItem>(
 }
 
 /**
- * Creates an event that requests the parent md-list to deactivate all other
+ * Creates an event that requests the parent petal-list to deactivate all other
  * items.
  */
 export function createDeactivateItemsEvent() {
@@ -287,7 +288,7 @@ export function createDeactivateItemsEvent() {
 }
 
 /**
- * The type of the event that requests the parent md-list to deactivate all
+ * The type of the event that requests the parent petal-list to deactivate all
  * other items.
  */
 export type DeactivateItemsEvent = ReturnType<

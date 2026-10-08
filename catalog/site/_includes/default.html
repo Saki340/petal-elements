@@ -68,46 +68,46 @@
           <!-- unrelated change to components -->
           {% block content %}{{ content | mdMarkdown | safe }}{% endblock %}
         </main>
-        <md-list
+        <petal-list
             aria-label="List of pages and components"
             role="menubar"
             class="nav">
           <!-- About section -->
-          <md-item><div slot="headline">About</div></md-item>
+          <petal-item><div slot="headline">About</div></petal-item>
           {% for file in collections.about|filtersort('data.order') %}
-            <md-list-item
+            <petal-list-item
               href="{{ file.url }}"
               role="menuitem"
               {% if file.url == page.url %}selected{% endif %}
               type="link"
               tabindex="{% if file.url == page.url %}0{% else %}-1{% endif %}"
-            >{{ file.data.name }}</md-list-item>
+            >{{ file.data.name }}</petal-list-item>
           {% endfor %}
-          <md-divider role="separator"></md-divider>
+          <petal-divider role="separator"></petal-divider>
           <!-- Theming section -->
-          <md-item><div slot="headline">Theming</div></md-item>
+          <petal-item><div slot="headline">Theming</div></petal-item>
           {% for file in collections.theming|filtersort('data.order') %}
-            <md-list-item
+            <petal-list-item
               href="{{ file.url }}"
               type="menuitem"
               {% if file.url == page.url %}selected{% endif %}
               type="link"
               tabindex="{% if file.url == page.url %}0{% else %}-1{% endif %}"
-            >{{ file.data.name }}</md-list-item>
+            >{{ file.data.name }}</petal-list-item>
           {% endfor %}
-          <md-divider role="separator"></md-divider>
+          <petal-divider role="separator"></petal-divider>
           <!-- Components section -->
-          <md-item><div slot="headline">Components</div></md-item>
+          <petal-item><div slot="headline">Components</div></petal-item>
           {% for file in collections.component|filtersort('data.name') %}
-            <md-list-item
+            <petal-list-item
               href="{{ file.url }}"
               role="menuitem"
               {% if file.url == page.url %}selected{% endif %}
               type="link"
               tabindex="{% if file.url == page.url %}0{% else %}-1{% endif %}"
-            >{{ file.data.name }}</md-list-item>
+            >{{ file.data.name }}</petal-list-item>
           {% endfor %}
-        </md-list>
+        </petal-list>
       </nav-drawer>
     </lit-island>
   </body>

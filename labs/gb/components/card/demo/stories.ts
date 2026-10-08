@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '@material/web/labs/gb/components/button/md-gb-button.js';
@@ -73,12 +74,12 @@ const playground: MaterialStoryInit<StoryKnobs> = {
   styles,
   render(knobs) {
     return html`
-      <md-gb-card
+      <petal-gb-card
         color=${knobs.color || nothing}
         ?disabled=${knobs.disabled}
         ?interactive=${knobs.interactive}>
         <div class="content">Card content</div>
-      </md-gb-card>
+      </petal-gb-card>
     `;
   },
 };
@@ -89,24 +90,24 @@ const colors: MaterialStoryInit<StoryKnobs> = {
   render(knobs) {
     return html`
       <div class="row">
-        <md-gb-card
+        <petal-gb-card
           color="elevated"
           ?disabled=${knobs.disabled}
           ?interactive=${knobs.interactive}>
           <div class="content">Card content</div>
-        </md-gb-card>
-        <md-gb-card
+        </petal-gb-card>
+        <petal-gb-card
           color="filled"
           ?disabled=${knobs.disabled}
           ?interactive=${knobs.interactive}>
           <div class="content">Card content</div>
-        </md-gb-card>
-        <md-gb-card
+        </petal-gb-card>
+        <petal-gb-card
           color="outlined"
           ?disabled=${knobs.disabled}
           ?interactive=${knobs.interactive}>
           <div class="content">Card content</div>
-        </md-gb-card>
+        </petal-gb-card>
       </div>
     `;
   },
@@ -117,7 +118,7 @@ const layouts: MaterialStoryInit<StoryKnobs> = {
   styles,
   render(knobs) {
     return html`
-      <md-gb-card
+      <petal-gb-card
         class="layout-card"
         color=${knobs.color || 'elevated'}
         ?disabled=${knobs.disabled}
@@ -130,11 +131,11 @@ const layouts: MaterialStoryInit<StoryKnobs> = {
             through supporting text here.
           </p>
           <div class="actions">
-            <md-gb-button color="outlined">Action</md-gb-button>
-            <md-gb-button color="filled">Action</md-gb-button>
+            <petal-gb-button color="outlined">Action</petal-gb-button>
+            <petal-gb-button color="filled">Action</petal-gb-button>
           </div>
         </div>
-      </md-gb-card>
+      </petal-gb-card>
     `;
   },
 };

@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '@material/web/checkbox/checkbox.js';
@@ -23,12 +24,12 @@ const checkbox: MaterialStoryInit<StoryKnobs> = {
   name: 'Checkbox',
   render({checked, disabled, indeterminate}) {
     return html`
-      <md-checkbox
+      <petal-checkbox
         aria-label="An example checkbox"
         ?checked=${checked}
         ?disabled=${disabled}
         ?indeterminate=${indeterminate}
-        touch-target="wrapper"></md-checkbox>
+        touch-target="wrapper"></petal-checkbox>
     `;
   },
 };
@@ -58,30 +59,30 @@ const withLabels: MaterialStoryInit<StoryKnobs> = {
       <ol aria-label="Animals">
         <li>
           <label>
-            <md-checkbox
+            <petal-checkbox
               ?disabled=${disabled}
               aria-label="Cats"
-              touch-target="wrapper"></md-checkbox>
+              touch-target="wrapper"></petal-checkbox>
             Cats
           </label>
         </li>
         <li>
           <label>
-            <md-checkbox
+            <petal-checkbox
               checked
               ?disabled=${disabled}
               aria-label="dogs"
-              touch-target="wrapper"></md-checkbox>
+              touch-target="wrapper"></petal-checkbox>
             Dogs
           </label>
         </li>
         <li>
           <label>
-            <md-checkbox
+            <petal-checkbox
               indeterminate
               ?disabled=${disabled}
               aria-label="Birds"
-              touch-target="wrapper"></md-checkbox>
+              touch-target="wrapper"></petal-checkbox>
             Birds
           </label>
         </li>

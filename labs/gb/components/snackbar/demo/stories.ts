@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '@material/web/labs/gb/components/button/md-gb-button.js';
@@ -152,30 +153,30 @@ const playground: MaterialStoryInit<StoryKnobs> = {
         <section class="demo-section">
           <h2>Interactive</h2>
           <div class="demo-controls">
-            <md-gb-button
+            <petal-gb-button
               color="filled"
               @click=${() => snackbarRef.value?.show()}>
               Show Snackbar
-            </md-gb-button>
-            <md-gb-button
+            </petal-gb-button>
+            <petal-gb-button
               color="outlined"
               @click=${() => snackbarRef.value?.close()}>
               Close Snackbar
-            </md-gb-button>
+            </petal-gb-button>
           </div>
           <div class="interactive-stage">
             <p class="demo-hint">
               Drag the corner to resize: below a 600px container width the
               snackbar uses the compact layout. Use Show/Close to replay it.
             </p>
-            <md-gb-snackbar
+            <petal-gb-snackbar
               ${ref(snackbarRef)}
               open
               .labelText=${knobs.message}
               .timeoutMs=${Number(knobs.timeoutMs)}
               .actionLabel=${knobs.action}
               ?has-close-button=${knobs.hasCloseButton}>
-            </md-gb-snackbar>
+            </petal-gb-snackbar>
           </div>
         </section>
 
@@ -185,7 +186,7 @@ const playground: MaterialStoryInit<StoryKnobs> = {
             ${staticExamples.map(
               ({label, action = '', close = false}) => html`
                 <div class="cell-stage">
-                  <md-gb-snackbar
+                  <petal-gb-snackbar
                     open
                     timeout-ms="-1"
                     ?has-close-button=${close}
@@ -196,7 +197,7 @@ const playground: MaterialStoryInit<StoryKnobs> = {
                     }}
                     >${typeof label === 'string'
                       ? nothing
-                      : label}</md-gb-snackbar
+                      : label}</petal-gb-snackbar
                   >
                 </div>
               `,

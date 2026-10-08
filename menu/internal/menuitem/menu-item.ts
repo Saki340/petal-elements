@@ -2,6 +2,7 @@
  * @license
  * Copyright 2022 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '../../../focus/md-focus-ring.js';
@@ -121,14 +122,14 @@ export class MenuItemEl extends menuItemBaseClass implements MenuItem {
 
   protected override render() {
     return this.renderListItem(html`
-      <md-item>
+      <petal-item>
         <div slot="container">
           ${this.renderRipple()} ${this.renderFocusRing()}
         </div>
         <slot name="start" slot="start"></slot>
         <slot name="end" slot="end"></slot>
         ${this.renderBody()}
-      </md-item>
+      </petal-item>
     `);
   }
 
@@ -181,20 +182,20 @@ export class MenuItemEl extends menuItemBaseClass implements MenuItem {
    * Handles rendering of the ripple element.
    */
   protected renderRipple(): TemplateResult | typeof nothing {
-    return html` <md-ripple
+    return html` <petal-ripple
       part="ripple"
       for="item"
-      ?disabled=${this.disabled}></md-ripple>`;
+      ?disabled=${this.disabled}></petal-ripple>`;
   }
 
   /**
    * Handles rendering of the focus ring.
    */
   protected renderFocusRing(): TemplateResult | typeof nothing {
-    return html` <md-focus-ring
+    return html` <petal-focus-ring
       part="focus-ring"
       for="item"
-      inward></md-focus-ring>`;
+      inward></petal-focus-ring>`;
   }
 
   /**

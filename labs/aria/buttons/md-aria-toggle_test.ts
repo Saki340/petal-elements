@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 // import 'jasmine'; (google3-only)
@@ -10,31 +11,31 @@ import './md-aria-toggle.js';
 
 import {html} from 'lit';
 import {Environment} from '../../../testing/environment.js';
-import {MdAriaToggleElement} from './md-aria-toggle.js';
+import {PetalAriaToggleElement} from './md-aria-toggle.js';
 import {AriaToggleElement, isToggleDisabled, isTogglePressed} from './toggle.js';
 
-describe('<md-aria-toggle>', () => {
+describe('<petal-aria-toggle>', () => {
   const env = new Environment();
 
   async function setUpTest(
-    template = html`<md-aria-toggle>Toggle</md-aria-toggle>`,
+    template = html`<petal-aria-toggle>Toggle</petal-aria-toggle>`,
   ) {
     const root = env.render(template);
     await env.waitForStability();
-    const toggle = root.querySelector('md-aria-toggle') as MdAriaToggleElement;
+    const toggle = root.querySelector('petal-aria-toggle') as PetalAriaToggleElement;
     return {root, toggle};
   }
 
   describe('custom element definition and inheritance', () => {
-    it('registers md-aria-toggle and inherits from AriaToggleElement', async () => {
+    it('registers petal-aria-toggle and inherits from AriaToggleElement', async () => {
       const {toggle} = await setUpTest();
-      expect(customElements.get('md-aria-toggle')).toBe(MdAriaToggleElement);
+      expect(customElements.get('petal-aria-toggle')).toBe(PetalAriaToggleElement);
       expect(toggle instanceof AriaToggleElement).toBeTrue();
-      expect(toggle instanceof MdAriaToggleElement).toBeTrue();
+      expect(toggle instanceof PetalAriaToggleElement).toBeTrue();
     });
 
     it('includes AriaToggleElement.styles in its styles', () => {
-      expect(MdAriaToggleElement.styles).toContain(AriaToggleElement.styles);
+      expect(PetalAriaToggleElement.styles).toContain(AriaToggleElement.styles);
     });
   });
 
@@ -74,7 +75,7 @@ describe('<md-aria-toggle>', () => {
 
     it('initializes selected from HTML attribute', async () => {
       const {toggle} = await setUpTest(
-        html`<md-aria-toggle selected>Toggle</md-aria-toggle>`,
+        html`<petal-aria-toggle selected>Toggle</petal-aria-toggle>`,
       );
       expect(toggle.selected).toBeTrue();
       expect(toggle.hasAttribute('selected')).toBeTrue();
@@ -142,7 +143,7 @@ describe('<md-aria-toggle>', () => {
 
     it('initializes disabled from HTML attribute', async () => {
       const {toggle} = await setUpTest(
-        html`<md-aria-toggle disabled>Toggle</md-aria-toggle>`,
+        html`<petal-aria-toggle disabled>Toggle</petal-aria-toggle>`,
       );
       expect(toggle.disabled).toBeTrue();
       expect(toggle.hasAttribute('disabled')).toBeTrue();
@@ -188,7 +189,7 @@ describe('<md-aria-toggle>', () => {
 
     it('clicking does not toggle selected property when disabled', async () => {
       const {toggle} = await setUpTest(
-        html`<md-aria-toggle disabled>Toggle</md-aria-toggle>`,
+        html`<petal-aria-toggle disabled>Toggle</petal-aria-toggle>`,
       );
       toggle.click();
       await env.waitForStability();

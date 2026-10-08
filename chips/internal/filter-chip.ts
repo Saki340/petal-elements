@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '../../elevation/elevation.js';
@@ -98,7 +99,7 @@ export class FilterChip extends MultiActionChip {
 
   protected override renderOutline() {
     if (this.elevated) {
-      return html`<md-elevation part="elevation"></md-elevation>`;
+      return html`<petal-elevation part="elevation"></petal-elevation>`;
     }
 
     return super.renderOutline();

@@ -94,7 +94,7 @@ payment'"
 
 ## Usage
 
-FABs should have an icon, such as a font `md-icon`, an `svg`, or an `img`.
+FABs should have an icon, such as a font `petal-icon`, an `svg`, or an `img`.
 
 <!-- no-catalog-start -->
 
@@ -104,9 +104,9 @@ FABs should have an icon, such as a font `md-icon`, an `svg`, or an `img`.
 <!-- catalog-include "figures/fab/usage-fab.html" -->
 
 ```html
-<md-fab aria-label="Edit">
-  <md-icon slot="icon">edit</md-icon>
-</md-fab>
+<petal-fab aria-label="Edit">
+  <petal-icon slot="icon">edit</petal-icon>
+</petal-fab>
 ```
 
 ### Lowered
@@ -121,9 +121,9 @@ FABs can be set to a lower elevation with the `lowered` attribute.
 <!-- catalog-include "figures/fab/usage-lowered.html" -->
 
 ```html
-<md-fab lowered aria-label="Edit">
-  <md-icon slot="icon">edit</md-icon>
-</md-fab>
+<petal-fab lowered aria-label="Edit">
+  <petal-icon slot="icon">edit</petal-icon>
+</petal-fab>
 ```
 
 ## Accessibility
@@ -133,9 +133,9 @@ if `aria-label` is not provided, the FAB will default to announcing its visible
 contents.
 
 ```html
-<md-fab aria-label="Edit">
-  <md-icon slot="icon">edit</md-icon>
-</md-fab>
+<petal-fab aria-label="Edit">
+  <petal-icon slot="icon">edit</petal-icon>
+</petal-fab>
 ```
 
 Extended FABs use their `label` for accessibility. Add an `aria-label` for
@@ -143,9 +143,9 @@ additional context if needed. By supplying the `label` attribute, the extended
 FAB will make sure that the icon is not announced.
 
 ```html
-<md-fab label="Edit" aria-label="Edit Comment">
-  <md-icon slot="icon">edit</md-icon>
-</md-fab>
+<petal-fab label="Edit" aria-label="Edit Comment">
+  <petal-icon slot="icon">edit</petal-icon>
+</petal-fab>
 ```
 
 ## FAB
@@ -160,9 +160,9 @@ FABs should display a clear and understandable icon.
 <!-- catalog-include "figures/fab/usage-fab.html" -->
 
 ```html
-<md-fab aria-label="Edit">
-  <md-icon slot="icon">edit</md-icon>
-</md-fab>
+<petal-fab aria-label="Edit">
+  <petal-icon slot="icon">edit</petal-icon>
+</petal-fab>
 ```
 
 ### Extended
@@ -178,9 +178,9 @@ omit their icon.
 <!-- catalog-include "figures/fab/usage-extended.html" -->
 
 ```html
-<md-fab label="Edit">
-  <md-icon slot="icon">edit</md-icon>
-</md-fab>
+<petal-fab label="Edit">
+  <petal-icon slot="icon">edit</petal-icon>
+</petal-fab>
 ```
 
 #### Without icon
@@ -195,7 +195,7 @@ Extended FABs are the only FABs that can be used without an icon.
 <!-- catalog-include "figures/fab/usage-without-icon.html" -->
 
 ```html
-<md-fab label="Reroute"></md-fab>
+<petal-fab label="Reroute"></petal-fab>
 ```
 
 ### Colors
@@ -213,15 +213,15 @@ colored.](images/fab/usage-color.webp)
 <!-- catalog-include "figures/fab/usage-color.html" -->
 
 ```html
-<md-fab variant="primary" aria-label="Edit">
-  <md-icon slot="icon">edit</md-icon>
-</md-fab>
-<md-fab variant="secondary" aria-label="Edit">
-  <md-icon slot="icon">edit</md-icon>
-</md-fab>
-<md-fab variant="tertiary" aria-label="Edit">
-  <md-icon slot="icon">edit</md-icon>
-</md-fab>
+<petal-fab variant="primary" aria-label="Edit">
+  <petal-icon slot="icon">edit</petal-icon>
+</petal-fab>
+<petal-fab variant="secondary" aria-label="Edit">
+  <petal-icon slot="icon">edit</petal-icon>
+</petal-fab>
+<petal-fab variant="tertiary" aria-label="Edit">
+  <petal-icon slot="icon">edit</petal-icon>
+</petal-fab>
 ```
 
 ### Sizes
@@ -238,18 +238,18 @@ small, medium, and large](images/fab/usage-sizes.webp)
 <!-- catalog-include "figures/fab/usage-sizes.html" -->
 
 ```html
-<md-fab size="small" touch-target="none" aria-label="Edit">
-  <md-icon slot="icon">edit</md-icon>
-</md-fab>
-<md-fab size="small" aria-label="Edit">
-  <md-icon slot="icon">edit</md-icon>
-</md-fab>
-<md-fab aria-label="Edit">
-  <md-icon slot="icon">edit</md-icon>
-</md-fab>
-<md-fab size="large" aria-label="Edit">
-  <md-icon slot="icon">edit</md-icon>
-</md-fab>
+<petal-fab size="small" touch-target="none" aria-label="Edit">
+  <petal-icon slot="icon">edit</petal-icon>
+</petal-fab>
+<petal-fab size="small" aria-label="Edit">
+  <petal-icon slot="icon">edit</petal-icon>
+</petal-fab>
+<petal-fab aria-label="Edit">
+  <petal-icon slot="icon">edit</petal-icon>
+</petal-fab>
+<petal-fab size="large" aria-label="Edit">
+  <petal-icon slot="icon">edit</petal-icon>
+</petal-fab>
 ```
 
 ## Branded FAB
@@ -271,7 +271,7 @@ branded FABs do not have color variants.
 <!-- catalog-include "figures/fab/usage-branded.html" -->
 
 ```html
-<md-branded-fab size="small" aria-label="Add">
+<petal-branded-fab size="small" aria-label="Add">
   <svg slot="icon" viewBox="0 0 36 36">
     <path fill="#34A853" d="M16 16v14h4V20z"></path>
     <path fill="#4285F4" d="M30 16H20l-4 4h14z"></path>
@@ -279,7 +279,7 @@ branded FABs do not have color variants.
     <path fill="#EA4335" d="M20 16V6h-4v14z"></path>
     <path fill="none" d="M0 0h36v36H0z"></path>
   </svg>
-</md-branded-fab>
+</petal-branded-fab>
 ```
 
 ### Extended
@@ -296,7 +296,7 @@ Add](images/fab/usage-branded-extended.webp)
 <!-- catalog-include "figures/fab/usage-branded-extended.html" -->
 
 ```html
-<md-branded-fab label="Add">
+<petal-branded-fab label="Add">
   <svg slot="icon" viewBox="0 0 36 36">
     <path fill="#34A853" d="M16 16v14h4V20z"></path>
     <path fill="#4285F4" d="M30 16H20l-4 4h14z"></path>
@@ -304,7 +304,7 @@ Add](images/fab/usage-branded-extended.webp)
     <path fill="#EA4335" d="M20 16V6h-4v14z"></path>
     <path fill="none" d="M0 0h36v36H0z"></path>
   </svg>
-</md-branded-fab>
+</petal-branded-fab>
 ```
 
 ### Sizes
@@ -320,7 +320,7 @@ sized one and a large one.](images/fab/usage-branded-sizes.webp)
 <!-- catalog-include "figures/fab/usage-branded-sizes.html" -->
 
 ```html
-<md-branded-fab aria-label="Add">
+<petal-branded-fab aria-label="Add">
   <svg slot="icon" viewBox="0 0 36 36">
     <path fill="#34A853" d="M16 16v14h4V20z"></path>
     <path fill="#4285F4" d="M30 16H20l-4 4h14z"></path>
@@ -328,8 +328,8 @@ sized one and a large one.](images/fab/usage-branded-sizes.webp)
     <path fill="#EA4335" d="M20 16V6h-4v14z"></path>
     <path fill="none" d="M0 0h36v36H0z"></path>
   </svg>
-</md-branded-fab>
-<md-branded-fab size="large" aria-label="Add">
+</petal-branded-fab>
+<petal-branded-fab size="large" aria-label="Add">
   <svg slot="icon" viewBox="0 0 36 36">
     <path fill="#34A853" d="M16 16v14h4V20z"></path>
     <path fill="#4285F4" d="M30 16H20l-4 4h14z"></path>
@@ -337,7 +337,7 @@ sized one and a large one.](images/fab/usage-branded-sizes.webp)
     <path fill="#EA4335" d="M20 16V6h-4v14z"></path>
     <path fill="none" d="M0 0h36v36H0z"></path>
   </svg>
-</md-branded-fab>
+</petal-branded-fab>
 ```
 
 ## Theming
@@ -377,9 +377,9 @@ Token                              | Default value
     background-color: #f4fbfa;
   }
 </style>
-<md-fab aria-label="Edit">
-  <md-icon slot="icon">edit</md-icon>
-</md-fab>
+<petal-fab aria-label="Edit">
+  <petal-icon slot="icon">edit</petal-icon>
+</petal-fab>
 ```
 
 #### Sizes tokens
@@ -417,9 +417,9 @@ Token                      | Default value
     background-color: #f4fbfa;
   }
 </style>
-<md-fab label="Edit">
-  <md-icon slot="icon">edit</md-icon>
-</md-fab>
+<petal-fab label="Edit">
+  <petal-icon slot="icon">edit</petal-icon>
+</petal-fab>
 ```
 
 ### Branded FAB tokens
@@ -454,7 +454,7 @@ Add with a different theme applied](images/fab/theming-branded.webp)
     background-color: #f4fbfa;
   }
 </style>
-<md-branded-fab size="small" aria-label="Add">
+<petal-branded-fab size="small" aria-label="Add">
   <svg slot="icon" viewBox="0 0 36 36">
     <path fill="#34A853" d="M16 16v14h4V20z"></path>
     <path fill="#4285F4" d="M30 16H20l-4 4h14z"></path>
@@ -462,8 +462,8 @@ Add with a different theme applied](images/fab/theming-branded.webp)
     <path fill="#EA4335" d="M20 16V6h-4v14z"></path>
     <path fill="none" d="M0 0h36v36H0z"></path>
   </svg>
-</md-branded-fab>
-<md-branded-fab size="small" label="Add">
+</petal-branded-fab>
+<petal-branded-fab size="small" label="Add">
   <svg slot="icon" viewBox="0 0 36 36">
     <path fill="#34A853" d="M16 16v14h4V20z"></path>
     <path fill="#4285F4" d="M30 16H20l-4 4h14z"></path>
@@ -471,7 +471,7 @@ Add with a different theme applied](images/fab/theming-branded.webp)
     <path fill="#EA4335" d="M20 16V6h-4v14z"></path>
     <path fill="none" d="M0 0h36v36H0z"></path>
   </svg>
-</md-branded-fab>
+</petal-branded-fab>
 ```
 
 <!-- auto-generated API docs start -->
@@ -479,7 +479,7 @@ Add with a different theme applied](images/fab/theming-branded.webp)
 ## API
 
 
-### MdFab <code>&lt;md-fab&gt;</code>
+### PetalFab <code>&lt;petal-fab&gt;</code>
 
 #### Properties
 
@@ -494,7 +494,7 @@ Add with a different theme applied](images/fab/theming-branded.webp)
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 
-### MdBrandedFab <code>&lt;md-branded-fab&gt;</code>
+### PetalBrandedFab <code>&lt;petal-branded-fab&gt;</code>
 
 #### Properties
 

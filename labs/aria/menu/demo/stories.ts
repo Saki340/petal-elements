@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '@material/web/labs/aria/menu/md-aria-fieldset.js';
@@ -19,12 +20,12 @@ const menubar: MaterialStoryInit<StoryKnobs> = {
   styles: css``,
   render(knobs) {
     return html`
-      <md-aria-menubar>
-        <md-aria-menuitem>Item 1</md-aria-menuitem>
-        <md-aria-menuitem>Item 2</md-aria-menuitem>
-        <md-aria-menuitem disabled>Item 3</md-aria-menuitem>
-        <md-aria-menuitem>Item 4</md-aria-menuitem>
-      </md-aria-menubar>
+      <petal-aria-menubar>
+        <petal-aria-menuitem>Item 1</petal-aria-menuitem>
+        <petal-aria-menuitem>Item 2</petal-aria-menuitem>
+        <petal-aria-menuitem disabled>Item 3</petal-aria-menuitem>
+        <petal-aria-menuitem>Item 4</petal-aria-menuitem>
+      </petal-aria-menubar>
     `;
   },
 };
@@ -35,13 +36,13 @@ const menu: MaterialStoryInit<StoryKnobs> = {
   render(knobs) {
     return html`
       <button popovertarget="the-menu">Menu</button>
-      <md-aria-menulist id="the-menu">
-        <md-aria-menuitem autofocus>Item 1</md-aria-menuitem>
-        <md-aria-menuitem>Item 2</md-aria-menuitem>
+      <petal-aria-menulist id="the-menu">
+        <petal-aria-menuitem autofocus>Item 1</petal-aria-menuitem>
+        <petal-aria-menuitem>Item 2</petal-aria-menuitem>
         <hr />
-        <md-aria-menuitem disabled>Item 3</md-aria-menuitem>
-        <md-aria-menuitem>Item 4</md-aria-menuitem>
-      </md-aria-menulist>
+        <petal-aria-menuitem disabled>Item 3</petal-aria-menuitem>
+        <petal-aria-menuitem>Item 4</petal-aria-menuitem>
+      </petal-aria-menulist>
     `;
   },
 };
@@ -52,24 +53,24 @@ const menuWithDialog: MaterialStoryInit<StoryKnobs> = {
   render(knobs) {
     return html`
       <button popovertarget="the-menu">Menu</button>
-      <md-aria-menulist id="the-menu">
-        <md-aria-menuitem
+      <petal-aria-menulist id="the-menu">
+        <petal-aria-menuitem
           commandfor="the-dialog"
           command="show-modal"
           autofocus>
           Open dialog...
-        </md-aria-menuitem>
-      </md-aria-menulist>
+        </petal-aria-menuitem>
+      </petal-aria-menulist>
       <dialog id="the-dialog">
         <button popovertarget="the-dialog-menu" autofocus>Menu</button>
-        <md-aria-menulist id="the-dialog-menu">
-          <md-aria-menuitem commandfor="the-dialog" command="close" autofocus>
+        <petal-aria-menulist id="the-dialog-menu">
+          <petal-aria-menuitem commandfor="the-dialog" command="close" autofocus>
             Close
-          </md-aria-menuitem>
-          <md-aria-menuitem commandfor="the-dialog" command="request-close">
+          </petal-aria-menuitem>
+          <petal-aria-menuitem commandfor="the-dialog" command="request-close">
             Request close
-          </md-aria-menuitem>
-        </md-aria-menulist>
+          </petal-aria-menuitem>
+        </petal-aria-menulist>
         <hr />
         This is a dialog.
       </dialog>
@@ -83,24 +84,24 @@ const menuWithPopover: MaterialStoryInit<StoryKnobs> = {
   render(knobs) {
     return html`
       <button popovertarget="the-menu">Menu</button>
-      <md-aria-menulist id="the-menu">
-        <md-aria-menuitem
+      <petal-aria-menulist id="the-menu">
+        <petal-aria-menuitem
           popovertarget="the-popover"
           popovertargetaction="show"
           autofocus>
           Open popover...
-        </md-aria-menuitem>
-      </md-aria-menulist>
+        </petal-aria-menuitem>
+      </petal-aria-menulist>
       <div id="the-popover" popover="manual">
         <button popovertarget="the-popover-menu" autofocus>Menu</button>
-        <md-aria-menulist id="the-popover-menu">
-          <md-aria-menuitem
+        <petal-aria-menulist id="the-popover-menu">
+          <petal-aria-menuitem
             popovertarget="the-popover"
             popovertargetaction="hide"
             autofocus>
             Hide
-          </md-aria-menuitem>
-        </md-aria-menulist>
+          </petal-aria-menuitem>
+        </petal-aria-menulist>
         <hr />
         This is a popover.
       </div>
@@ -114,13 +115,13 @@ const menuWithFieldset: MaterialStoryInit<StoryKnobs> = {
   render(knobs) {
     return html`
       <button popovertarget="the-menu">Menu</button>
-      <md-aria-menulist id="the-menu">
-        <md-aria-fieldset>
-          <md-aria-menuitem autofocus>Item 1</md-aria-menuitem>
-          <md-aria-menuitem>Item 2</md-aria-menuitem>
-          <md-aria-menuitem disabled>Item 3</md-aria-menuitem>
-        </md-aria-fieldset>
-      </md-aria-menulist>
+      <petal-aria-menulist id="the-menu">
+        <petal-aria-fieldset>
+          <petal-aria-menuitem autofocus>Item 1</petal-aria-menuitem>
+          <petal-aria-menuitem>Item 2</petal-aria-menuitem>
+          <petal-aria-menuitem disabled>Item 3</petal-aria-menuitem>
+        </petal-aria-fieldset>
+      </petal-aria-menulist>
     `;
   },
 };
@@ -131,13 +132,13 @@ const menuWithFieldsetSingleCheckable: MaterialStoryInit<StoryKnobs> = {
   render(knobs) {
     return html`
       <button popovertarget="the-menu">Menu</button>
-      <md-aria-menulist id="the-menu">
-        <md-aria-fieldset checkable="single">
-          <md-aria-menuitem autofocus>Item 1</md-aria-menuitem>
-          <md-aria-menuitem defaultchecked>Item 2</md-aria-menuitem>
-          <md-aria-menuitem disabled>Item 3</md-aria-menuitem>
-        </md-aria-fieldset>
-      </md-aria-menulist>
+      <petal-aria-menulist id="the-menu">
+        <petal-aria-fieldset checkable="single">
+          <petal-aria-menuitem autofocus>Item 1</petal-aria-menuitem>
+          <petal-aria-menuitem defaultchecked>Item 2</petal-aria-menuitem>
+          <petal-aria-menuitem disabled>Item 3</petal-aria-menuitem>
+        </petal-aria-fieldset>
+      </petal-aria-menulist>
     `;
   },
 };
@@ -148,13 +149,13 @@ const menuWithFieldsetMultipleCheckable: MaterialStoryInit<StoryKnobs> = {
   render(knobs) {
     return html`
       <button popovertarget="the-menu">Menu</button>
-      <md-aria-menulist id="the-menu">
-        <md-aria-fieldset checkable="multiple">
-          <md-aria-menuitem autofocus>Item 1</md-aria-menuitem>
-          <md-aria-menuitem defaultchecked>Item 2</md-aria-menuitem>
-          <md-aria-menuitem disabled>Item 3</md-aria-menuitem>
-        </md-aria-fieldset>
-      </md-aria-menulist>
+      <petal-aria-menulist id="the-menu">
+        <petal-aria-fieldset checkable="multiple">
+          <petal-aria-menuitem autofocus>Item 1</petal-aria-menuitem>
+          <petal-aria-menuitem defaultchecked>Item 2</petal-aria-menuitem>
+          <petal-aria-menuitem disabled>Item 3</petal-aria-menuitem>
+        </petal-aria-fieldset>
+      </petal-aria-menulist>
     `;
   },
 };
@@ -165,13 +166,13 @@ const menuWithFieldsetDisabled: MaterialStoryInit<StoryKnobs> = {
   render(knobs) {
     return html`
       <button popovertarget="the-menu">Menu</button>
-      <md-aria-menulist id="the-menu">
-        <md-aria-fieldset checkable="multiple" disabled>
-          <md-aria-menuitem autofocus>Item 1</md-aria-menuitem>
-          <md-aria-menuitem>Item 2</md-aria-menuitem>
-          <md-aria-menuitem disabled>Item 3</md-aria-menuitem>
-        </md-aria-fieldset>
-      </md-aria-menulist>
+      <petal-aria-menulist id="the-menu">
+        <petal-aria-fieldset checkable="multiple" disabled>
+          <petal-aria-menuitem autofocus>Item 1</petal-aria-menuitem>
+          <petal-aria-menuitem>Item 2</petal-aria-menuitem>
+          <petal-aria-menuitem disabled>Item 3</petal-aria-menuitem>
+        </petal-aria-fieldset>
+      </petal-aria-menulist>
     `;
   },
 };
@@ -182,19 +183,19 @@ const menuWithMultipleFieldsetsCheckable: MaterialStoryInit<StoryKnobs> = {
   render(knobs) {
     return html`
       <button popovertarget="the-menu">Menu</button>
-      <md-aria-menulist id="the-menu">
-        <md-aria-fieldset checkable="single">
-          <md-aria-menuitem autofocus>Item 1</md-aria-menuitem>
-          <md-aria-menuitem defaultchecked>Item 2</md-aria-menuitem>
-          <md-aria-menuitem disabled>Item 3</md-aria-menuitem>
-        </md-aria-fieldset>
+      <petal-aria-menulist id="the-menu">
+        <petal-aria-fieldset checkable="single">
+          <petal-aria-menuitem autofocus>Item 1</petal-aria-menuitem>
+          <petal-aria-menuitem defaultchecked>Item 2</petal-aria-menuitem>
+          <petal-aria-menuitem disabled>Item 3</petal-aria-menuitem>
+        </petal-aria-fieldset>
         <hr />
-        <md-aria-fieldset checkable="multiple">
-          <md-aria-menuitem autofocus>Item 4</md-aria-menuitem>
-          <md-aria-menuitem defaultchecked>Item 5</md-aria-menuitem>
-          <md-aria-menuitem disabled>Item 6</md-aria-menuitem>
-        </md-aria-fieldset>
-      </md-aria-menulist>
+        <petal-aria-fieldset checkable="multiple">
+          <petal-aria-menuitem autofocus>Item 4</petal-aria-menuitem>
+          <petal-aria-menuitem defaultchecked>Item 5</petal-aria-menuitem>
+          <petal-aria-menuitem disabled>Item 6</petal-aria-menuitem>
+        </petal-aria-fieldset>
+      </petal-aria-menulist>
     `;
   },
 };
@@ -202,32 +203,32 @@ const menuWithMultipleFieldsetsCheckable: MaterialStoryInit<StoryKnobs> = {
 const menuWithStyles: MaterialStoryInit<StoryKnobs> = {
   name: 'Menu with styles',
   styles: css`
-    md-aria-menuitem:state(enabled) {
+    petal-aria-menuitem:state(enabled) {
       color: blue;
     }
 
-    md-aria-menuitem:state(disabled) {
+    petal-aria-menuitem:state(disabled) {
       font-style: italic;
     }
 
-    md-aria-menuitem:state(checked) {
+    petal-aria-menuitem:state(checked) {
       color: green;
     }
 
-    md-aria-menuitem::part(checkmark)::before {
+    petal-aria-menuitem::part(checkmark)::before {
       content: '\\25B8'; /* &rtrif; */
     }
   `,
   render(knobs) {
     return html`
       <button popovertarget="the-menu">Menu</button>
-      <md-aria-menulist id="the-menu">
-        <md-aria-fieldset checkable="multiple">
-          <md-aria-menuitem autofocus>Item 1</md-aria-menuitem>
-          <md-aria-menuitem defaultchecked>Item 2</md-aria-menuitem>
-          <md-aria-menuitem disabled>Item 3</md-aria-menuitem>
-        </md-aria-fieldset>
-      </md-aria-menulist>
+      <petal-aria-menulist id="the-menu">
+        <petal-aria-fieldset checkable="multiple">
+          <petal-aria-menuitem autofocus>Item 1</petal-aria-menuitem>
+          <petal-aria-menuitem defaultchecked>Item 2</petal-aria-menuitem>
+          <petal-aria-menuitem disabled>Item 3</petal-aria-menuitem>
+        </petal-aria-fieldset>
+      </petal-aria-menulist>
     `;
   },
 };

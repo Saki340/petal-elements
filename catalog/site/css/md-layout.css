@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 :root {
@@ -22,7 +23,7 @@ details[open] summary {
   margin-block-end: 16px;
 }
 
-details summary md-outlined-icon-button {
+details summary petal-outlined-icon-button {
   margin-inline-end: 8px;
 }
 
@@ -186,7 +187,7 @@ a .offscreen {
   opacity: 1;
 }
 
-.example *:defined > md-circular-progress {
+.example *:defined > petal-circular-progress {
   display: none;
 }
 

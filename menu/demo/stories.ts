@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import '@material/web/button/filled-button.js';
@@ -13,7 +14,7 @@ import '@material/web/menu/sub-menu.js';
 
 import {MaterialStoryInit} from './material-collection.js';
 import {CloseMenuEvent} from '@material/web/menu/internal/controllers/shared.js';
-import {Corner, FocusState, MdMenu, MenuItem} from '@material/web/menu/menu.js';
+import {Corner, FocusState, PetalMenu, MenuItem} from '@material/web/menu/menu.js';
 import {css, html} from 'lit';
 
 /** Knob types for Menu stories. */
@@ -85,7 +86,7 @@ const sharedStyle = css`
     margin-top: 4px;
     font-family: sans-serif;
   }
-  [dir='rtl'] md-icon {
+  [dir='rtl'] petal-icon {
     transform: scaleX(-1);
   }
   [slot='headline'] {
@@ -103,7 +104,7 @@ const standard: MaterialStoryInit<StoryKnobs> = {
           style="${knobs.positioning === 'document'
             ? ''
             : 'position:relative;'}">
-          <md-filled-button
+          <petal-filled-button
             @click=${toggleMenu}
             @keydown=${toggleMenu}
             aria-haspopup="true"
@@ -111,8 +112,8 @@ const standard: MaterialStoryInit<StoryKnobs> = {
             aria-expanded="false"
             id="button">
             Open Menu
-          </md-filled-button>
-          <md-menu
+          </petal-filled-button>
+          <petal-menu
             id="menu"
             anchor="button"
             tabindex=${knobs.defaultFocus === 'list-root' ? '0' : '-1'}
@@ -136,14 +137,14 @@ const standard: MaterialStoryInit<StoryKnobs> = {
             @closed=${setButtonAriaExpandedFalse}>
             ${fruitNames.map(
               (name, index) =>
-                html`<md-menu-item
+                html`<petal-menu-item
                   id=${index}
                   .keepOpen=${knobs.keepOpen}
                   .disabled=${knobs.disabled}>
                   <div slot="headline">${name}</div>
-                </md-menu-item>`,
+                </petal-menu-item>`,
             )}
-          </md-menu>
+          </petal-menu>
         </div>
         <pre class="output"></pre>
       </div>
@@ -156,16 +157,16 @@ const linkable: MaterialStoryInit<StoryKnobs> = {
   styles: sharedStyle,
   render(knobs) {
     const items = fruitNames.map((name, index) => {
-      return html` <md-menu-item
+      return html` <petal-menu-item
           id=${index}
           target="_blank"
           .disabled=${knobs.disabled}
           .href=${knobs.href}>
           <div slot="headline">${name}</div>
-          <md-icon slot="end"> ${knobs['link icon']} </md-icon>
-        </md-menu-item>
+          <petal-icon slot="end"> ${knobs['link icon']} </petal-icon>
+        </petal-menu-item>
         ${index === 2
-          ? html`<md-divider role="separator" tabindex="-1"></md-divider>`
+          ? html`<petal-divider role="separator" tabindex="-1"></petal-divider>`
           : ''}`;
     });
 
@@ -175,7 +176,7 @@ const linkable: MaterialStoryInit<StoryKnobs> = {
           style="${knobs.positioning === 'document'
             ? ''
             : 'position:relative;'}">
-          <md-filled-button
+          <petal-filled-button
             @click=${toggleMenu}
             @keydown=${toggleMenu}
             aria-haspopup="true"
@@ -183,8 +184,8 @@ const linkable: MaterialStoryInit<StoryKnobs> = {
             aria-expanded="false"
             id="button">
             Open Menu
-          </md-filled-button>
-          <md-menu
+          </petal-filled-button>
+          <petal-menu
             id="menu"
             anchor="button"
             tabindex=${knobs.defaultFocus === 'list-root' ? '0' : '-1'}
@@ -207,7 +208,7 @@ const linkable: MaterialStoryInit<StoryKnobs> = {
             @close-menu=${displayCloseEvent}
             @closed=${setButtonAriaExpandedFalse}>
             ${items}
-          </md-menu>
+          </petal-menu>
         </div>
         <pre class="output"></pre>
       </div>
@@ -225,11 +226,11 @@ const submenu: MaterialStoryInit<StoryKnobs> = {
     const layer2 = fruitNames.slice(4).map((name) => {
       currentIndex++;
 
-      return html` <md-menu-item
+      return html` <petal-menu-item
         .keepOpen=${knobs.keepOpen}
         .disabled=${knobs.disabled}>
         <div slot="headline">${name}</div>
-      </md-menu-item>`;
+      </petal-menu-item>`;
     });
 
     // This is the second layer with a mix of submenu items and menu items
@@ -237,21 +238,21 @@ const submenu: MaterialStoryInit<StoryKnobs> = {
       ...fruitNames.slice(0, 2).map((name) => {
         currentIndex++;
 
-        return html` <md-sub-menu
+        return html` <petal-sub-menu
           id=${currentIndex}
           .anchorCorner=${knobs['submenu.anchorCorner']!}
           .menuCorner=${knobs['submenu.menuCorner']!}
           .hoverOpenDelay=${knobs.hoverOpenDelay}
           .hoverCloseDelay=${knobs.hoverCloseDelay}>
-          <md-menu-item
+          <petal-menu-item
             slot="item"
             id=${++currentIndex}
             .disabled=${knobs.disabled}>
             <div slot="headline">${name}</div>
-            <md-icon slot="end"> ${knobs['submenu item icon']} </md-icon>
-          </md-menu-item>
+            <petal-icon slot="end"> ${knobs['submenu item icon']} </petal-icon>
+          </petal-menu-item>
           <!-- NOTE: slot=submenu -->
-          <md-menu
+          <petal-menu
             slot="menu"
             aria-label="Second sub-menu of fruit"
             .xOffset=${knobs.xOffset}
@@ -260,18 +261,18 @@ const submenu: MaterialStoryInit<StoryKnobs> = {
             .defaultFocus=${knobs.defaultFocus!}
             .typeaheadDelay=${knobs.typeaheadDelay}>
             ${layer2}
-          </md-menu>
-        </md-sub-menu>`;
+          </petal-menu>
+        </petal-sub-menu>`;
       }),
       ...fruitNames.slice(2, 5).map((name) => {
         currentIndex++;
 
-        return html` <md-menu-item
+        return html` <petal-menu-item
           id=${currentIndex}
           .keepOpen=${knobs.keepOpen}
           .disabled=${knobs.disabled}>
           <div slot="headline">${name}</div>
-        </md-menu-item>`;
+        </petal-menu-item>`;
       }),
     ];
 
@@ -279,21 +280,21 @@ const submenu: MaterialStoryInit<StoryKnobs> = {
     const layer0 = fruitNames.map((name) => {
       currentIndex++;
 
-      return html` <md-sub-menu
+      return html` <petal-sub-menu
         id=${currentIndex}
         .anchorCorner=${knobs['submenu.anchorCorner']!}
         .menuCorner=${knobs['submenu.menuCorner']!}
         .hoverOpenDelay=${knobs.hoverOpenDelay}
         .hoverCloseDelay=${knobs.hoverCloseDelay}>
-        <md-menu-item
+        <petal-menu-item
           slot="item"
           id=${++currentIndex}
           .disabled=${knobs.disabled}>
           <div slot="headline">${name}</div>
-          <md-icon slot="end"> ${knobs['submenu item icon']} </md-icon>
-        </md-menu-item>
+          <petal-icon slot="end"> ${knobs['submenu item icon']} </petal-icon>
+        </petal-menu-item>
         <!-- NOTE: slot=submenu -->
-        <md-menu
+        <petal-menu
           slot="menu"
           aria-label="Sub-menu of fruit"
           .xOffset=${knobs.xOffset}
@@ -302,8 +303,8 @@ const submenu: MaterialStoryInit<StoryKnobs> = {
           .defaultFocus=${knobs.defaultFocus!}
           .typeaheadDelay=${knobs.typeaheadDelay}>
           ${layer1}
-        </md-menu>
-      </md-sub-menu>`;
+        </petal-menu>
+      </petal-sub-menu>`;
     });
 
     return html`
@@ -312,7 +313,7 @@ const submenu: MaterialStoryInit<StoryKnobs> = {
           style="${knobs.positioning === 'document'
             ? ''
             : 'position:relative;'}">
-          <md-filled-button
+          <petal-filled-button
             @click=${toggleMenu}
             @keydown=${toggleMenu}
             aria-haspopup="true"
@@ -320,9 +321,9 @@ const submenu: MaterialStoryInit<StoryKnobs> = {
             aria-expanded="false"
             id="button">
             Open Menu
-          </md-filled-button>
+          </petal-filled-button>
           <!-- NOTE: has-overflow -->
-          <md-menu
+          <petal-menu
             anchor="button"
             id="menu"
             tabindex=${knobs.defaultFocus === 'list-root' ? '0' : '-1'}
@@ -345,7 +346,7 @@ const submenu: MaterialStoryInit<StoryKnobs> = {
             @close-menu=${displayCloseEvent}
             @closed=${setButtonAriaExpandedFalse}>
             ${layer0}
-          </md-menu>
+          </petal-menu>
         </div>
         <pre class="output"></pre>
       </div>
@@ -377,7 +378,7 @@ const menuWithoutButton: MaterialStoryInit<StoryKnobs> = {
         class="root"
         style="${knobs.positioning === 'document' ? '' : 'position:relative;'}">
         <div id="anchor"> This is the anchor (use the "open" knob) </div>
-        <md-menu
+        <petal-menu
           slot="menu"
           anchor="anchor"
           .open=${knobs.open}
@@ -399,15 +400,15 @@ const menuWithoutButton: MaterialStoryInit<StoryKnobs> = {
           @close-menu=${displayCloseEvent}>
           ${fruitNames.map(
             (name, index) => html`
-              <md-menu-item
+              <petal-menu-item
                 id=${index}
                 .keepOpen=${knobs.keepOpen}
                 .disabled=${knobs.disabled}>
                 <div slot="headline">${name}</div>
-              </md-menu-item>
+              </petal-menu-item>
             `,
           )}
-        </md-menu>
+        </petal-menu>
         <pre class="output"></pre>
       </div>
     `;
@@ -415,7 +416,7 @@ const menuWithoutButton: MaterialStoryInit<StoryKnobs> = {
 };
 
 /**
- * Searches for an MdMenu with the id="menu" in the same shadow root and calls
+ * Searches for an PetalMenu with the id="menu" in the same shadow root and calls
  * `menu.show()` to open the menu. If it is a keyboard event, it will call show
  * only if the key is ArrowDown as is standard a11y practice. This function also
  * attempts to find a menu button with `#button` set on it and sets
@@ -424,7 +425,7 @@ const menuWithoutButton: MaterialStoryInit<StoryKnobs> = {
 function toggleMenu(event: Event | KeyboardEvent) {
   // get the menu from the event
   const root = (event.target as HTMLElement).getRootNode() as ShadowRoot;
-  const menu = root.querySelector('#menu') as MdMenu;
+  const menu = root.querySelector('#menu') as PetalMenu;
 
   // determine if is keyboard event
   const isKeyboardEvent = (

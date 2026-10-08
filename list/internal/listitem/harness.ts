@@ -2,6 +2,7 @@
  * @license
  * Copyright 2022 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {LitElement} from 'lit';
@@ -11,8 +12,8 @@ import {NavigableKeys} from '../list-controller.js';
 import {ListItem} from '../list-navigation-helpers.js';
 
 /**
- * Keys that are handled by MdList. Keys not included in this are not handled by
- * MdList and should be dispatched by yourself.
+ * Keys that are handled by PetalList. Keys not included in this are not handled by
+ * PetalList and should be dispatched by yourself.
  */
 export type HandledListKeys =
   (typeof NavigableKeys)[keyof typeof NavigableKeys];

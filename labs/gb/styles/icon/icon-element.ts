@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {type CSSResultOrNative} from 'lit';
@@ -22,6 +23,6 @@ export class IconElement extends IconBase {
     super.connectedCallback();
     // Adopt stylesheet to ensure global CSS @property variables are registered.
     adoptStyles(this, iconStyles);
-    this.classList.add('md-icon');
+    this.classList.add('petal-icon');
   }
 }

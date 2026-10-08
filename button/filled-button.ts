@@ -2,6 +2,7 @@
  * @license
  * Copyright 2021 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {CSSResultOrNative} from 'lit';
@@ -14,7 +15,7 @@ import {styles as sharedStyles} from './internal/shared-styles.cssresult.js';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'md-filled-button': MdFilledButton;
+    'petal-filled-button': PetalFilledButton;
   }
 }
 
@@ -38,8 +39,8 @@ declare global {
  * @final
  * @suppress {visibility}
  */
-@customElement('md-filled-button')
-export class MdFilledButton extends FilledButton {
+@customElement('petal-filled-button')
+export class PetalFilledButton extends FilledButton {
   static override styles: CSSResultOrNative[] = [
     sharedStyles,
     sharedElevationStyles,

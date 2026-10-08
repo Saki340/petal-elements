@@ -1,6 +1,7 @@
 //
 // Copyright 2022 Google LLC
 // SPDX-License-Identifier: Apache-2.0
+// Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
 //
 
 // go/keep-sorted start
@@ -62,7 +63,7 @@ $_checkmark-bottom-left: 7px, -14px;
     margin: max(0px, ((48px - map.get($tokens, 'container-size')) / 2));
   }
 
-  md-focus-ring {
+  petal-focus-ring {
     height: 44px;
     inset: unset;
     width: 44px;
@@ -149,7 +150,7 @@ $_checkmark-bottom-left: 7px, -14px;
 
   // Ripple
 
-  md-ripple {
+  petal-ripple {
     border-radius: map.get($tokens, 'state-layer-shape');
     height: map.get($tokens, 'state-layer-size');
     inset: unset;
@@ -165,7 +166,7 @@ $_checkmark-bottom-left: 7px, -14px;
     );
   }
 
-  .selected md-ripple {
+  .selected petal-ripple {
     @include ripple.theme(
       (
         hover-color: map.get($tokens, 'selected-hover-state-layer-color'),

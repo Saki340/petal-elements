@@ -7,7 +7,7 @@
       .styled-example {
         background-color: #f4fbfa;
       }
-      .styled-example.list md-list {
+      .styled-example.list petal-list {
         --md-list-container-color: #f4fbfa;
         --md-list-item-label-text-color: #161d1d;
         --md-list-item-supporting-text-color: #3f4948;
@@ -16,27 +16,27 @@
         --md-list-item-supporting-text-font: system-ui;
         --md-list-item-trailing-supporting-text-font: system-ui;
       }
-      .styled-example.list md-list [slot="trailing-supporting-text"] {
+      .styled-example.list petal-list [slot="trailing-supporting-text"] {
         width: 30px;
         text-align: end;
       }
     </style>
-    <md-list>
-      <md-list-item type="button">
+    <petal-list>
+      <petal-list-item type="button">
         <div slot="headline">Apple</div>
         <div slot="supporting-text">In stock</div>
         <div slot="trailing-supporting-text">+100</div>
-      </md-list-item>
-      <md-list-item type="button">
+      </petal-list-item>
+      <petal-list-item type="button">
         <div slot="headline">Banana</div>
         <div slot="supporting-text">In stock</div>
         <div slot="trailing-supporting-text">56</div>
-      </md-list-item>
-      <md-list-item type="button">
+      </petal-list-item>
+      <petal-list-item type="button">
         <div slot="headline">Cucumber</div>
         <div slot="supporting-text">Low stock</div>
         <div slot="trailing-supporting-text">5</div>
-      </md-list-item>
-    </md-list>
+      </petal-list-item>
+    </petal-list>
   </figure>
 </div>

@@ -29,9 +29,9 @@ element.
 ![Settings icon as ligature, check box icon as codepoint, and house icon as SVG](images/icon/usage.webp "Example icons")
 
 ```html
-<md-icon>settings</md-icon>
-<md-icon>&#xe834</md-icon>
-<md-icon><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M10 40V24H4L24 6l10 8.85V9h4v9.55L44 24h-6v16H26.5V28h-5v12Zm3-3h5.5V25h11v12H35V19.95l-11-10-11 10Zm5.5-12h11-11Zm1.25-5.5h8.5q0-1.65-1.275-2.725Q25.7 15.7 24 15.7q-1.7 0-2.975 1.075Q19.75 17.85 19.75 19.5Z"/></svg></md-icon>
+<petal-icon>settings</petal-icon>
+<petal-icon>&#xe834</petal-icon>
+<petal-icon><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path d="M10 40V24H4L24 6l10 8.85V9h4v9.55L44 24h-6v16H26.5V28h-5v12Zm3-3h5.5V25h11v12H35V19.95l-11-10-11 10Zm5.5-12h11-11Zm1.25-5.5h8.5q0-1.65-1.275-2.725Q25.7 15.7 24 15.7q-1.7 0-2.975 1.075Q19.75 17.85 19.75 19.5Z"/></svg></petal-icon>
 ```
 
 The full range of icons can be found on the
@@ -125,13 +125,13 @@ If using codepoints, wrap the codepoint in a `<span>` with an
 attribute.
 
 ```html
-<md-icon tabindex="-1"><span aria-label="home">&#xe88a</span></md-icon>
+<petal-icon tabindex="-1"><span aria-label="home">&#xe88a</span></petal-icon>
 ```
 
 If using SVG icons, add an `aria-label` attribute to the SVG element.
 
 ```html
-<md-icon tabindex="-1"><svg aria-label="paper airplane" viewBox="0 0 48 48"><path d="M6 40V8l38 16Zm3-4.65L36.2 24 9 12.5v8.4L21.1 24 9 27Zm0 0V12.5 27Z"/></svg></md-icon>
+<petal-icon tabindex="-1"><svg aria-label="paper airplane" viewBox="0 0 48 48"><path d="M6 40V8l38 16Zm3-4.65L36.2 24 9 12.5v8.4L21.1 24 9 27Zm0 0V12.5 27Z"/></svg></petal-icon>
 ```
 
 ## Theming
@@ -156,7 +156,7 @@ Token            | Default value
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL@20..48,100..700,0..1" rel="stylesheet">
 
 <style>
-md-icon {
+petal-icon {
   color: #006A6A;
   --md-icon-size: 48px;
 }
@@ -166,37 +166,37 @@ md-icon {
 .sharp {
   --md-icon-font: 'Material Symbols Sharp';
 }
-md-icon[filled] {
+petal-icon[filled] {
   font-variation-settings: 'FILL' 1;
 }
 </style>
 
 <h3>Outlined</h3>
 <span>
-  <md-icon>settings</md-icon>
-  <md-icon>check_box</md-icon>
-  <md-icon>house</md-icon>
-  <md-icon filled>settings</md-icon>
-  <md-icon filled>check_box</md-icon>
-  <md-icon filled>house</md-icon>
+  <petal-icon>settings</petal-icon>
+  <petal-icon>check_box</petal-icon>
+  <petal-icon>house</petal-icon>
+  <petal-icon filled>settings</petal-icon>
+  <petal-icon filled>check_box</petal-icon>
+  <petal-icon filled>house</petal-icon>
 </span>
 <h3>Rounded</h3>
 <span class="rounded">
-  <md-icon>settings</md-icon>
-  <md-icon>check_box</md-icon>
-  <md-icon>house</md-icon>
-  <md-icon filled>settings</md-icon>
-  <md-icon filled>check_box</md-icon>
-  <md-icon filled>house</md-icon>
+  <petal-icon>settings</petal-icon>
+  <petal-icon>check_box</petal-icon>
+  <petal-icon>house</petal-icon>
+  <petal-icon filled>settings</petal-icon>
+  <petal-icon filled>check_box</petal-icon>
+  <petal-icon filled>house</petal-icon>
 </span>
 <h3>Sharp</h3>
 <span class="sharp">
-  <md-icon>settings</md-icon>
-  <md-icon>check_box</md-icon>
-  <md-icon>house</md-icon>
-  <md-icon filled>settings</md-icon>
-  <md-icon filled>check_box</md-icon>
-  <md-icon filled>house</md-icon>
+  <petal-icon>settings</petal-icon>
+  <petal-icon>check_box</petal-icon>
+  <petal-icon>house</petal-icon>
+  <petal-icon filled>settings</petal-icon>
+  <petal-icon filled>check_box</petal-icon>
+  <petal-icon filled>house</petal-icon>
 </span>
 ```
 
