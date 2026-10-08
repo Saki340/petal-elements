@@ -20,8 +20,8 @@ const COMPONENTS = [
   'tabs',
 ];
 
-/** `v0_192` (default) or `sys`; see tests/visual/index.html. */
-const THEME = process.env['VISUAL_THEME'] ?? 'v0_192';
+/** `sys` (default) or `v0_192`; see tests/visual/index.html. */
+const THEME = process.env['VISUAL_THEME'] ?? 'sys';
 
 for (const component of COMPONENTS) {
   for (const scheme of ['light', 'dark']) {

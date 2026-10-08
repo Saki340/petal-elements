@@ -9,9 +9,10 @@
     <meta charset="utf-8" />
     <title>petal-elements visual tests</title>
     <script>
-      // ?theme=v0_192 (default): colors the components are built with today.
-      // ?theme=sys: the generated tokens/css/sys.css.
-      const theme = new URLSearchParams(location.search).get('theme') || 'v0_192';
+      // ?theme=sys (default): the generated tokens/css/sys.css, which matches
+      // the values compiled into the components.
+      // ?theme=v0_192: the v0.192 colors, to compare with the old look.
+      const theme = new URLSearchParams(location.search).get('theme') || 'sys';
       const href =
         theme === 'sys' ? '/tokens/css/sys.css' : '/.cache/visual/theme-v0_192.css';
       document.write(`<link rel="stylesheet" href="${href}" />`);
