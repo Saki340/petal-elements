@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 /**
@@ -18,6 +19,7 @@ import './button/filled-button.js';
 import './button/filled-tonal-button.js';
 import './button/outlined-button.js';
 import './button/text-button.js';
+import './buttongroup/button-group.js';
 import './checkbox/checkbox.js';
 import './chips/assist-chip.js';
 import './chips/chip-set.js';
@@ -66,6 +68,7 @@ export * from './button/filled-button.js';
 export * from './button/filled-tonal-button.js';
 export * from './button/outlined-button.js';
 export * from './button/text-button.js';
+export * from './buttongroup/button-group.js';
 export * from './checkbox/checkbox.js';
 export * from './chips/assist-chip.js';
 export * from './chips/chip-set.js';

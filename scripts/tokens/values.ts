@@ -35,7 +35,23 @@ export const VALUE_MODULES = [
   'md-comp-button-tonal',
   'md-comp-button-outlined',
   'md-comp-button-elevated',
+  ...['xsmall', 'small', 'medium', 'large', 'xlarge'].flatMap((size) => [
+    `md-comp-button-group-standard-${size}`,
+    `md-comp-button-group-connected-${size}`,
+  ]),
 ];
+
+/** Longest dotted prefix shared by all names, e.g. `md.comp.button.small`. */
+function commonPrefix(names: string[]) {
+  let parts = names[0].split('.');
+  for (const name of names) {
+    const other = name.split('.');
+    let i = 0;
+    while (i < parts.length && i < other.length - 1 && parts[i] === other[i]) i++;
+    parts = parts.slice(0, i);
+  }
+  return parts.join('.');
+}
 
 function header(title: string) {
   const web = SOURCES.web;
@@ -108,10 +124,9 @@ export function buildValueModules(files: WebFile[], sysCss: string): Map<string,
     const file = files.find((f) => f.module === module && !f.context);
     if (!file) throw new Error(`No v34 token file ${module}`);
     const entries: Array<[string, string]> = [];
+    // md.comp.button.small.container.height -> container-height
+    const prefix = commonPrefix([...walk(file.tokens)].map(([path]) => path));
     for (const [path, token] of walk(file.tokens)) {
-      // md.comp.button.small.container.height -> container-height
-      const prefix = module.replace(/^md-comp-/, 'md.comp.').replace(/-(xsmall|small|medium|large|xlarge|filled|tonal|outlined|elevated)$/, '.$1');
-      if (!path.startsWith(`${prefix}.`)) throw new Error(`${path} is not in ${prefix}`);
       const key = path.slice(prefix.length + 1).replace(/\./g, '-');
       const v = token.$value;
       const target = typeof v === 'string' && /^\{.*\}$/.test(v) ? v.slice(1, -1) : '';
@@ -130,7 +145,7 @@ export function buildValueModules(files: WebFile[], sysCss: string): Map<string,
     entries.sort(([a], [b]) => (a < b ? -1 : 1));
     output.set(
       `_${module}.scss`,
-      header(`Values of ${module.replace(/^md-comp-/, 'md.comp.').replace(/-/g, '.')}, see scripts/tokens/values.ts.`) +
+      header(`Values of ${prefix}.*, see scripts/tokens/values.ts.`) +
         '$values: (\n' +
         entries.map(([k, v]) => `  '${k}': ${v},`).join('\n') +
         '\n);\n',

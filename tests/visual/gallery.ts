@@ -148,6 +148,41 @@ const galleries: Record<string, Gallery> = {
     ),
   },
 
+  // The state is applied to the middle button. Pressed: in a standard group
+  // the middle button widens and its neighbors give way; in a connected group
+  // its inner corners shrink.
+  'button-group': {
+    states: ['default', 'hover', 'focus', 'pressed'],
+    harness: ButtonHarness,
+    rows: [
+      {
+        name: 'standard',
+        render: () =>
+          html`<petal-button-group><petal-filled-tonal-button>One</petal-filled-tonal-button><petal-filled-tonal-button data-subject>Two</petal-filled-tonal-button><petal-filled-tonal-button>Three</petal-filled-tonal-button></petal-button-group>`,
+      },
+      {
+        name: 'standard medium',
+        render: () =>
+          html`<petal-button-group size="medium"><petal-filled-button>One</petal-filled-button><petal-filled-button data-subject>Two</petal-filled-button><petal-filled-button>Three</petal-filled-button></petal-button-group>`,
+      },
+      {
+        name: 'connected',
+        render: () =>
+          html`<petal-button-group connected single-select><petal-filled-tonal-button toggle selected>One</petal-filled-tonal-button><petal-filled-tonal-button toggle data-subject>Two</petal-filled-tonal-button><petal-filled-tonal-button toggle>Three</petal-filled-tonal-button></petal-button-group>`,
+      },
+      {
+        name: 'connected, middle on',
+        render: () =>
+          html`<petal-button-group connected><petal-outlined-button toggle>One</petal-outlined-button><petal-outlined-button toggle selected data-subject>Two</petal-outlined-button><petal-outlined-button toggle>Three</petal-outlined-button></petal-button-group>`,
+      },
+      {
+        name: 'connected medium',
+        render: () =>
+          html`<petal-button-group connected size="medium"><petal-filled-button toggle>One</petal-filled-button><petal-filled-button toggle data-subject>Two</petal-filled-button><petal-filled-button toggle>Three</petal-filled-button></petal-button-group>`,
+      },
+    ],
+  },
+
   'icon-button': {
     states: INTERACTIVE,
     harness: IconButtonHarness,

@@ -1,0 +1,143 @@
+//
+// Copyright 2026 Saki
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// Button group: standard (spaced, pressed item widens) and connected
+// (2px apart, inner corners). Values from md.comp.button-group.* (web tokens
+// v34); shapes follow Compose's ButtonGroupDefaults.connected*ButtonShapes.
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:math';
+@use '../../tokens/versions/v34/values/md-comp-button-group-connected-large' as connected-large;
+@use '../../tokens/versions/v34/values/md-comp-button-group-connected-medium' as connected-medium;
+@use '../../tokens/versions/v34/values/md-comp-button-group-connected-small' as connected-small;
+@use '../../tokens/versions/v34/values/md-comp-button-group-connected-xlarge' as connected-xlarge;
+@use '../../tokens/versions/v34/values/md-comp-button-group-connected-xsmall' as connected-xsmall;
+@use '../../tokens/versions/v34/values/md-comp-button-group-standard-large' as standard-large;
+@use '../../tokens/versions/v34/values/md-comp-button-group-standard-medium' as standard-medium;
+@use '../../tokens/versions/v34/values/md-comp-button-group-standard-small' as standard-small;
+@use '../../tokens/versions/v34/values/md-comp-button-group-standard-xlarge' as standard-xlarge;
+@use '../../tokens/versions/v34/values/md-comp-button-group-standard-xsmall' as standard-xsmall;
+@use '../../tokens/versions/v34/values/md-sys-motion-springs' as springs;
+// go/keep-sorted end
+
+$_sizes: (
+  'xsmall': (standard-xsmall.$values, connected-xsmall.$values),
+  'small': (standard-small.$values, connected-small.$values),
+  'medium': (standard-medium.$values, connected-medium.$values),
+  'large': (standard-large.$values, connected-large.$values),
+  'xlarge': (standard-xlarge.$values, connected-xlarge.$values),
+);
+
+// `15%` -> 0.15
+@function _ratio($percent) {
+  @return math.div($percent, 100%);
+}
+
+// Corners of the slotted buttons. Set from outside the button, so they win
+// over the button's own shape. A full corner is half the button's height.
+$_outer: calc(var(--_container-height) / 2);
+
+@mixin _corners($start, $end) {
+  --_container-shape-start-start: #{$start};
+  --_container-shape-end-start: #{$start};
+  --_container-shape-start-end: #{$end};
+  --_container-shape-end-end: #{$end};
+}
+
+@mixin styles() {
+  :host {
+    align-items: center;
+    display: inline-flex;
+    flex-wrap: nowrap;
+    gap: var(--_between-space);
+    vertical-align: top;
+  }
+
+  @each $size, $values in $_sizes {
+    $standard: list.nth($values, 1);
+    $connected: list.nth($values, 2);
+
+    :host([size='#{$size}']) {
+      --_between-space: #{map.get($standard, 'between-space')};
+      --_expanded-ratio: #{_ratio(
+          map.get($standard, 'pressed-item-width-multiplier')
+        )};
+    }
+
+    :host([size='#{$size}'][connected]) {
+      --_between-space: #{map.get($connected, 'between-space')};
+      --_inner: #{map.get($connected, 'inner-corner-corner-size')};
+      --_inner-pressed: #{map.get($connected, 'pressed-inner-corner-corner-size')};
+    }
+  }
+
+  ::slotted(*) {
+    flex: none;
+  }
+
+  ::slotted(:focus-within) {
+    z-index: 1;
+  }
+
+  // While an item is pressed, button-group.ts changes the items' inline
+  // padding; it animates with the fast spatial spring
+  // (md.comp.button-group.*.pressed.item.width.motion.spring). The button's
+  // own shape transition is repeated, since this declaration replaces it.
+  $_width-duration: map.get(springs.$values, 'spring-fast-spatial-duration');
+  $_width-easing: map.get(springs.$values, 'spring-fast-spatial');
+
+  :host(:not([connected])) ::slotted(*) {
+    transition:
+      padding-inline-start #{$_width-duration} #{$_width-easing},
+      padding-inline-end #{$_width-duration} #{$_width-easing},
+      border-start-start-radius var(--_shape-duration) var(--_shape-easing),
+      border-start-end-radius var(--_shape-duration) var(--_shape-easing),
+      border-end-end-radius var(--_shape-duration) var(--_shape-easing),
+      border-end-start-radius var(--_shape-duration) var(--_shape-easing);
+  }
+
+  // Connected: outer corners full, inner corners small. Pressed inner corners
+  // are smaller; a selected (checked) item is fully rounded. Pressed wins over
+  // selected, as in Compose's ToggleButton.
+  :host([connected]) ::slotted(*) {
+    @include _corners(var(--_inner), var(--_inner));
+  }
+
+  :host([connected]) ::slotted(:first-child) {
+    @include _corners($_outer, var(--_inner));
+  }
+
+  :host([connected]) ::slotted(:last-child) {
+    @include _corners(var(--_inner), $_outer);
+  }
+
+  :host([connected]) ::slotted(:first-child:last-child) {
+    @include _corners($_outer, $_outer);
+  }
+
+  :host([connected]) ::slotted([selected]) {
+    @include _corners($_outer, $_outer);
+  }
+
+  :host([connected]) ::slotted(:active) {
+    @include _corners(var(--_inner-pressed), var(--_inner-pressed));
+  }
+
+  :host([connected]) ::slotted(:first-child:active) {
+    @include _corners($_outer, var(--_inner-pressed));
+  }
+
+  :host([connected]) ::slotted(:last-child:active) {
+    @include _corners(var(--_inner-pressed), $_outer);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    ::slotted(*) {
+      transition-duration: 0s !important;
+    }
+  }
+}

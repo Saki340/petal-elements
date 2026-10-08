@@ -142,4 +142,10 @@ $_overrides: (
   :host([size]) .outline {
     border-radius: inherit;
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    :host([size]) {
+      transition-duration: 0s;
+    }
+  }
 }

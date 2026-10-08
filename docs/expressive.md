@@ -52,3 +52,27 @@ standard motion scheme by default; load `tokens/css/motion-expressive.css`
 | Outlined selected toggle: no tokens for outline | no outline (also disabled) | `OutlinedToggleButton`: no border when checked |
 
 Toggle buttons morph with the fast spatial spring (`ToggleButton.kt`).
+
+## Button group
+
+```html
+<petal-button-group>
+  <petal-filled-tonal-button>One</petal-filled-tonal-button>
+  <petal-filled-tonal-button>Two</petal-filled-tonal-button>
+</petal-button-group>
+<petal-button-group connected single-select size="medium">…</petal-button-group>
+```
+
+| Attribute | Effect |
+|---|---|
+| `size` (default `small`) | Spacing and corners from `md.comp.button-group.{standard,connected}.<size>`; buttons without a `size` get this one. |
+| `connected` | Buttons 2px apart; outer corners full, inner corners `inner-corner.corner-size`, smaller while pressed, fully rounded when selected (pressed wins), as in Compose's `ButtonGroupDefaults.connected*ButtonShapes`. |
+| `single-select` | Selecting a toggle button deselects the others; clicking the selected one keeps it selected. |
+
+Standard groups: a pressed button widens by `pressed.item.width.multiplier`
+(15%) of its width and its neighbors give way, at most their leading padding;
+a middle button takes half from each side (Compose's `ButtonGroup` layout).
+The group's total width does not change. On the web the space moves through
+the buttons' inline padding, so labels are never cut off. The change animates
+with the fast spatial spring. `prefers-reduced-motion` turns the animations
+off, here and for sized buttons.

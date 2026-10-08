@@ -11,6 +11,7 @@ const COMPONENTS = [
   'button',
   'button-sizes',
   'toggle-button',
+  'button-group',
   'icon-button',
   'fab',
   'checkbox',
