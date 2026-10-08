@@ -341,5 +341,28 @@ export async function buildCss(
         `:root {\n${lines.join('\n')}\n}\n`,
     );
   }
+
+  // Components use the --md-sys-motion-spring-* names, which are the standard
+  // motion scheme by default. This file switches them to the expressive scheme
+  // (like Compose's MotionScheme.expressive()), for :root or any element.
+  const expressive: string[] = [];
+  for (const speed of ['fast', 'default', 'slow']) {
+    for (const kind of ['spatial', 'effects']) {
+      for (const suffix of ['', '-duration']) {
+        const name = `${speed}-${kind}${suffix}`;
+        expressive.push(
+          `  --md-sys-motion-spring-${name}: var(--md-sys-motion-expressive-spring-${name});`,
+        );
+      }
+    }
+  }
+  output.set(
+    'motion-expressive.css',
+    fileHeader('Expressive motion scheme. Load after sys.css.', [
+      'Points the --md-sys-motion-spring-* properties, which components use and',
+      'which are the standard scheme by default, at the expressive springs.',
+      'To use it for part of a page only, copy the rule to a class.',
+    ]) + `:root {\n${expressive.join('\n')}\n}\n`,
+  );
   return output;
 }

@@ -17,6 +17,7 @@
  * 3. Web DTCG, plus the Compose expressive springs the web tokens lack,
  *    -> Style Dictionary -> tokens/css/*.css
  * 4. Web DTCG -> tokens/versions/v34/*.scss (v0.192 functions, v34 values)
+ *    and tokens/versions/v34/values/*.scss (value maps for new features)
  * 5. Comparison reports -> tokens/reports/*.md
  */
 
@@ -26,6 +27,7 @@ import {buildCss} from './css.js';
 import {kebab, Output, SOURCES, stableJson} from './dtcg.js';
 import {readLegacyTokens} from './legacy.js';
 import {buildCompatSass, compatReport} from './sass.js';
+import {buildValueModules} from './values.js';
 import {readWebTokens} from './web.js';
 
 const check = process.argv.includes('--check');
@@ -49,9 +51,8 @@ outputs.push(composeOut);
 const cssOut = new Output('tokens/css', '.css');
 const expressiveMotion = compose.files.find((f) => f.object === 'ExpressiveMotionTokens');
 if (!expressiveMotion) throw new Error('ExpressiveMotionTokens not found');
-for (const [name, content] of await buildCss(web.files, expressiveMotion.tokens)) {
-  cssOut.add(name, content);
-}
+const css = await buildCss(web.files, expressiveMotion.tokens);
+for (const [name, content] of css) cssOut.add(name, content);
 outputs.push(cssOut);
 
 // 4. Sass modules for the components (v0.192 shape, v34 values).
@@ -61,6 +62,13 @@ const compat = buildCompatSass(web.files, legacyTokens);
 const sassOut = new Output('tokens/versions/v34', '.scss', /-meta\.scss$/);
 for (const [name, content] of compat.output) sassOut.add(name, content);
 outputs.push(sassOut);
+
+// Value maps for the Expressive features.
+const valuesOut = new Output('tokens/versions/v34/values', '.scss', /-meta\.scss$/);
+for (const [name, content] of buildValueModules(web.files, css.get('sys.css')!)) {
+  valuesOut.add(name, content);
+}
+outputs.push(valuesOut);
 
 // 5. Reports.
 const onlyLightDark = (flat: Flat): Flat =>
