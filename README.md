@@ -1,86 +1,72 @@
-# Material Web
+# petal-elements
 
-<img src="./docs/images/material-web.gif"
-  title="Material web components"
-  alt="A collection of Material web components"
-  style="border-radius: 32px">
+English | [简体中文](README.zh-CN.md)
 
-[![Published on npm](https://img.shields.io/npm/v/%40material%2Fweb)](https://www.npmjs.com/package/@material/web)
-[![Join our Discord](https://img.shields.io/badge/discord-join%20chat-5865F2.svg?logo=discord&logoColor=fff&label=%23material)](https://lit.dev/discord/)
-[![Test status](https://github.com/material-components/material-web/actions/workflows/test.yml/badge.svg)](https://github.com/material-components/material-web/actions/workflows/test.yml)
-[![npm Downloads](https://img.shields.io/npm/dm/%40material%2Fweb?label=npm%20downloads)](https://npm-stat.com/charts.html?package=%40material%2Fweb)
-[![jsDelivr hits (npm)](https://img.shields.io/jsdelivr/npm/hm/%40material%2Fweb)](https://www.jsdelivr.com/package/npm/@material/web?tab=stats)
+Community-maintained web components for Material 3 Expressive.
 
-`@material/web` is a library of
-[web components](https://developer.mozilla.org/en-US/docs/Web/Web_Components)<!-- {.external} -->
-that helps build beautiful and accessible web applications. It uses
-[Material 3](https://m3.material.io/)<!-- {.external} -->, the latest version of Google's
-open-source design system.
+> **petal-elements is not an official Google project and is not affiliated
+> with Google.** It is an independent, community-maintained modified version of
+> [material-components/material-web](https://github.com/material-components/material-web).
 
-**Note:
-[MWC is in maintenance mode pending new maintainers](https://github.com/material-components/material-web/discussions/5642).**
+## Status
 
-## Resources
+Early development. Nothing has been published to npm yet, and APIs may change.
 
--   [Introduction](./docs/intro.md)
--   [Roadmap](./docs/roadmap.md)
--   [Component docs](./docs/components/)
--   [Bundle size](./docs/size.md)
--   [Browser support and FAQ](./docs/support.md)
+## Background
 
-## Quick start
+Google's Material Web project
+[is in maintenance mode](https://github.com/material-components/material-web/discussions/5642).
+In that discussion, its maintainer
+[wrote](https://github.com/material-components/material-web/discussions/5642#discussioncomment-13724284):
+"Forks and different directions are always welcome in open source!"
 
-> Tip: Using Angular? We recommend using
-> [Angular Material](https://material.angular.io/)<!-- {.external} --> components
-> instead.
+petal-elements continues from the Material Web codebase, with its full git
+history, and works towards Material 3 Expressive:
 
-This code snippet is a buildless example that loads `@material/web` from a CDN.
-Check out the [quick start](./docs/quick-start.md) guide to install and build
-for production.
+- Components are built on Material Web's foundations: ripple, focus ring,
+  state layers, form association through `ElementInternals`, and accessibility.
+- Design token values come from the Material Design web tokens (v34) that ship
+  in the Material Web repository, cross-checked against the Jetpack Compose
+  Material 3 sources. Values are taken from source, never estimated by eye.
+- Missing Expressive specs and components (shape morphing, spring motion,
+  button groups, …) are added step by step and checked with visual regression
+  tests.
+- We follow upstream and merge its fixes, including its Expressive work in
+  `labs/`.
 
-<!-- LINT.IfChange -->
+## Differences from Material Web
 
-```html
-<head>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-  <script type="importmap">
-    {
-      "imports": {
-        "@material/web/": "https://esm.run/@material/web/"
-      }
-    }
-  </script>
-  <script type="module">
-    import '@material/web/all.js';
-    import {styles as typescaleStyles} from '@material/web/typography/md-typescale-styles.js';
+| | Material Web | petal-elements |
+|---|---|---|
+| Package | `@material/web` | `petal-elements` |
+| Tags | `<md-filled-button>` | `<petal-filled-button>` |
+| Classes | `MdFilledButton` | `PetalFilledButton` |
+| CSS custom properties | `--md-sys-*`, `--md-filled-button-*` | unchanged, to ease migration |
 
-    document.adoptedStyleSheets.push(typescaleStyles.styleSheet);
-  </script>
-</head>
-<body>
-  <h1 class="md-typescale-display-medium">Hello Material!</h1>
-  <form>
-    <p class="md-typescale-body-medium">Check out these controls in a form!</p>
-    <petal-checkbox></petal-checkbox>
-    <div>
-      <petal-radio name="group"></petal-radio>
-      <petal-radio name="group"></petal-radio>
-      <petal-radio name="group"></petal-radio>
-    </div>
+## Development
 
-    <petal-outlined-text-field label="Favorite color" value="Purple"></petal-outlined-text-field>
+Requires Node.js 22 or later. Works on Linux, macOS and Windows.
 
-    <petal-outlined-button type="reset">Reset</petal-outlined-button>
-  </form>
-  <style>
-    form {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 16px;
-    }
-  </style>
-</body>
+```sh
+npm ci
+npm run build
+npx playwright install chromium
+npm test
+npm run check:licenses   # licenses of all dependencies
+npm run check:rebrand    # no md-* tags left after an upstream merge
 ```
 
-<!-- LINT.ThenChange(./g3doc/docs/quick-start.md) -->
+### Merging upstream
+
+```sh
+git fetch upstream
+git merge upstream/main
+node scripts/rebrand.js   # rename new md-* tags; safe to run again
+```
+
+## License
+
+Apache License 2.0. See [LICENSE](LICENSE) and [NOTICE](NOTICE) for
+attribution and the list of modifications. Details on file headers,
+third-party assets and dependency checks are in
+[docs/licensing.md](docs/licensing.md).

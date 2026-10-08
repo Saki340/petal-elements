@@ -1,59 +1,48 @@
 # Contributing
 
-Thank you for your interest in contributing! The following sections describe
-ways to get involved.
+Thanks for your interest in petal-elements! This file describes how to get
+involved.
 
 ## Code of conduct
 
-Please review and follow our [code of conduct](CODE_OF_CONDUCT.md).
+Please follow our [code of conduct](CODE_OF_CONDUCT.md).
 
-## Feedback
+## Issues and discussions
 
-User feedback is the most valuable to us. It's a great way to start
-contributing!
-
--   [File new issues](https://github.com/material-components/material-web/issues/new/choose)
-    for bugs you run into or feature requests you have.
-
--   [Create a discussion](https://github.com/material-components/material-web/discussions/new/choose)
-    for help, feedback on changes, or feature proposals.
-
-## Discord
-
-Join the `#material` channel on [Lit's Discord](https://lit.dev/discord) to chat
-directly with the team and other users.
+- [Open an issue](https://github.com/Saki340/petal-elements/issues/new/choose)
+  for bugs or feature requests.
+- [Start a discussion](https://github.com/Saki340/petal-elements/discussions)
+  for questions and proposals.
+- If a bug also exists in Google's Material Web and is not caused by our
+  changes, consider reporting it
+  [upstream](https://github.com/material-components/material-web/issues) too.
 
 ## Pull requests
 
-Pull requests are welcome! Keep a few things in mind:
+- Open an issue or discussion first for anything bigger than a small fix.
+- Keep changes small and focused.
+- Commit messages and PR titles follow
+  [Conventional Commits](https://www.conventionalcommits.org/), for example
+  `fix(button): ...`. The description may be in English or Chinese.
+- Before pushing, run:
 
--   Create an
-    [issue](https://github.com/material-components/material-web/issues/new/choose)
-    or
-    [discussion](https://github.com/material-components/material-web/discussions/new/choose)
-    before opening a pull request.
--   Trivial changes, such as documentation, don't need an issue.
--   Create draft PRs in the `@material/web/labs` folder for new features.
--   Please be patient! It may take a while for the team to review. Keep changes
-    small and scoped to speed things up.
+  ```sh
+  npm run build
+  npm test
+  npm run check:licenses
+  npm run check:rebrand
+  ```
 
-### New components
+- Design token values must come from source (the Material Design web tokens
+  in `tokens/versions/`, or Jetpack Compose Material 3), not from screenshots or
+  memory. Mention the source in the PR.
+- Do not copy text or images from m3.material.io.
 
-Please understand that new component implementations are difficult for us to
-directly accept. They need to complete several engineer, design, and
-accessibility reviews that are not easy with our externally available workflows.
+## Licensing of contributions
 
-If you want to help build a new component, create a
-[new discussion](https://github.com/material-components/material-web/discussions/new/choose).
-Add any design docs, code samples, reference implementations in draft PRs, and
-get community feedback.
-
-### Contributor License Agreement
-
-Code contributions must
-[sign Google's CLA](https://cla.developers.google.com/clas). When you open a
-pull request, our friendly bot will check and provide help if you haven't
-signed.
-
-[Set your email in git](https://help.github.com/articles/setting-your-email-in-git/)
-to the same email used to sign the CLA.
+There is no CLA. By contributing, you agree that your contribution is licensed
+under the [Apache License 2.0](LICENSE), the license of this project. Follow the
+file header rules in [docs/licensing.md](docs/licensing.md): keep existing
+headers, add the "Modified for petal-elements" line when changing an upstream
+file, and use an Apache-2.0 SPDX header with your own copyright line in new
+files.

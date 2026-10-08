@@ -1,5 +1,5 @@
 name: ✨ Feature Request
-description: Request a feature to be added to Material Web Components.
+description: Request a feature to be added to petal-elements.
 
 body:
   - type: textarea

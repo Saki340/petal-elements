@@ -1,5 +1,5 @@
 name: 🐛 Documentation Bug
-description: Report a bug that affects Material Web documentation (https://material-web.dev/)
+description: Report a bug that affects petal-elements documentation
 
 body:
   - type: textarea

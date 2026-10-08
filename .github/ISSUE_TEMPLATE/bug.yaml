@@ -1,5 +1,5 @@
 name: 🐛 Bug Report
-description: Report a bug that affects a Material Web component
+description: Report a bug that affects a petal-elements component
 
 body:
   - type: dropdown
@@ -79,7 +79,7 @@ body:
       required: true
     attributes:
       label: Affected versions
-      description: Please specify which version of the package you are using, and if this is a known regression, what is the last known version that worked? Run e.g. `npm ls @material/web` to check your installed version.
+      description: Please specify which version of the package you are using, and if this is a known regression, what is the last known version that worked? Run e.g. `npm ls petal-elements` to check your installed version.
       placeholder: |
         Failing in X.X.X, worked in X.X.X
 
