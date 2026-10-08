@@ -1,10 +1,11 @@
 //
 // Copyright 2023 Google LLC
 // SPDX-License-Identifier: Apache-2.0
+// Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
 //
 
 // go/keep-sorted start
-@use 'versions/v0_192/md-sys-state';
+@use 'versions/v34/md-sys-state';
 // go/keep-sorted end
 
 @function values($exclude-hardcoded-values: false) {
