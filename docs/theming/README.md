@@ -20,10 +20,6 @@ tag: 'docType:concepts'
 creates unique branded products with familiar patterns and accessible
 interactions.
 
-![collage of views of a mobile UI that show a user's setting and preference for
-a green primary color flows through system UI
-harmoniously](images/theming.webp "A user-generated color scheme can flow through apps that use a custom theme.")
-
 ## Tokens
 
 Material is expressed in

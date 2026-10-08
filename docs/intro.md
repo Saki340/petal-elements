@@ -30,8 +30,6 @@ The latest version, Material 3, enables personal, adaptive, and expressive
 experiences – from dynamic color and enhanced accessibility, to foundations for
 large screen layouts and design tokens.
 
-![An example of a Material Design application.](images/what-is-material.webp "What is Material?")
-
 ## What are web components?
 
 [Web components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components)<!-- {.external} -->
