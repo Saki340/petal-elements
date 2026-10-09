@@ -16,6 +16,7 @@ material.
 |---|---|---|---|
 | [material-components/material-web](https://github.com/material-components/material-web) | Apache-2.0 | Google LLC | The whole code base, including the Material Design web tokens in `tokens/versions/` |
 | [androidx/androidx](https://github.com/androidx/androidx) (Jetpack Compose Material 3 `tokens/*Tokens.kt`, pinned commit in `tokens/sources.json`) | Apache-2.0 | The Android Open Source Project | `tokens/dtcg/compose/` (cross-check) and the expressive springs in `tokens/css/sys.css`; see [tokens.md](tokens.md) |
+| [androidx/androidx](https://github.com/androidx/androidx) graphics-shapes and Compose `MaterialShapes.kt`, `LoadingIndicator.kt` (same commit) | Apache-2.0 | The Android Open Source Project | TypeScript port in `loadingindicator/internal/shapes/` for the loading indicator |
 
 Sources added later (for example
 [material-color-utilities](https://github.com/material-foundation/material-color-utilities))

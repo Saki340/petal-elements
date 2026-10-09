@@ -384,6 +384,16 @@ const galleries: Record<string, Gallery> = {
     }),
   },
 
+  // The indeterminate indicator moves with time; the gallery shows
+  // determinate values.
+  'loading-indicator': {
+    states: ['default'],
+    rows: ['0', '0.25', '0.5', '0.75', '1'].flatMap((value) => [
+      {name: value, render: () => html`<petal-loading-indicator value=${value}></petal-loading-indicator>`},
+      {name: `${value} contained`, render: () => html`<petal-loading-indicator contained value=${value}></petal-loading-indicator>`},
+    ]),
+  },
+
   // Snackbars are fixed to the bottom of the page; here they sit in the grid.
   snackbar: {
     states: ['default'],

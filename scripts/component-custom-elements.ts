@@ -41,6 +41,7 @@ export const COMPONENT_CUSTOM_ELEMENTS = {
     'iconbutton/outlined-icon-button.ts',
   ],
   list: ['list/list.ts', 'list/list-item.ts'],
+  loadingIndicator: ['loadingindicator/loading-indicator.ts'],
   menu: ['menu/menu.ts', 'menu/menu-item.ts', 'menu/sub-menu.ts'],
   progress: ['progress/linear-progress.ts', 'progress/circular-progress.ts'],
   radio: ['radio/radio.ts'],

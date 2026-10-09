@@ -53,4 +53,21 @@ at commit df73c2438e78ba644a436dc402ede6ba2d472812 (pinned in
 tokens/sources.json) and converted to W3C Design Tokens files in
 tokens/dtcg/compose/. The expressive motion springs in tokens/css/sys.css come
 from ExpressiveMotionTokens.kt. Generated files state their source commit and
-the original copyright in their headers.
+the original copyright in their headers. tokens/versions/compose/values/ holds
+value maps generated from these tokens, used by the components that follow
+Compose (snackbar, tooltip, card, top app bar, loading indicator).
+
+-------------------------------------------------------------------------------
+AndroidX graphics-shapes and Compose Material 3 MaterialShapes
+https://github.com/androidx/androidx
+Copyright The Android Open Source Project
+Licensed under the Apache License, Version 2.0.
+
+loadingindicator/internal/shapes/ is a TypeScript port of
+graphics/graphics-shapes/src/commonMain/kotlin/androidx/graphics/shapes/
+(RoundedPolygon, CornerRounding, Cubic, Feature, FeatureMapping, FloatMapping,
+PolygonMeasure, Morph, and circle/star from Shapes.kt) and of the shapes the
+loading indicator uses from Compose Material 3's MaterialShapes.kt, at commit
+df73c2438e78ba644a436dc402ede6ba2d472812. loadingindicator/internal/animation.ts
+follows LoadingIndicator.kt and SpringEstimation.kt. The ported files keep the
+original copyright and state their source.

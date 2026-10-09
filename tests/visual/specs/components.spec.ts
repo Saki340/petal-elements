@@ -22,6 +22,7 @@ const COMPONENTS = [
   'chips',
   'top-app-bar',
   'card',
+  'loading-indicator',
   'snackbar',
   'tooltip',
   'progress',

@@ -1,0 +1,57 @@
+//
+// Copyright 2026 Saki
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// Loading indicator, after Jetpack Compose Material 3 (LoadingIndicator,
+// ContainedLoadingIndicator): LoadingIndicatorTokens
+// (tokens/versions/compose/values). The shapes are drawn by
+// loading-indicator.ts into a 48x48 SVG.
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use '../../tokens/versions/compose/values/md-comp-loading-indicator' as indicator;
+// go/keep-sorted end
+
+@mixin styles() {
+  :host {
+    @each $token, $value in indicator.$values {
+      --_#{$token}: var(--md-loading-indicator-#{$token}, #{$value});
+    }
+
+    display: inline-flex;
+    flex: none;
+    width: var(--_container-width);
+    height: var(--_container-height);
+    color: var(--_active-indicator-color);
+  }
+
+  :host([contained]) {
+    color: var(--_contained-active-color);
+  }
+
+  .container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    border-radius: var(--_container-shape);
+  }
+
+  :host([contained]) .container {
+    background-color: var(--_contained-container-color);
+  }
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  path {
+    fill: currentColor;
+  }
+
+  @media (forced-colors: active) {
+    path {
+      fill: CanvasText;
+    }
+  }
+}
