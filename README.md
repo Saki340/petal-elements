@@ -10,7 +10,48 @@ Community-maintained web components for Material 3 Expressive.
 
 ## Status
 
-Early development. Nothing has been published to npm yet, and APIs may change.
+Version 0.1.0 is being prepared and has not been published to npm yet. APIs may
+change before 1.0.
+
+Documentation and live examples: the
+[petal-elements catalog](https://saki340.github.io/petal-elements/) (online
+once the repository is published) and [docs/](docs/intro.md).
+
+## Quick start
+
+```sh
+npm install petal-elements
+```
+
+```html
+<link rel="stylesheet" href="node_modules/petal-elements/tokens/css/sys.css">
+<script type="module">
+  import 'petal-elements/button/filled-button.js';
+  import 'petal-elements/buttongroup/button-group.js';
+</script>
+
+<petal-filled-button>Save</petal-filled-button>
+
+<!-- Material 3 Expressive, opt-in -->
+<petal-button-group connected single-select size="medium">
+  <petal-filled-tonal-button toggle selected>Day</petal-filled-tonal-button>
+  <petal-filled-tonal-button toggle>Week</petal-filled-tonal-button>
+</petal-button-group>
+```
+
+See [Quick start](docs/quick-start.md) for bundling and theming.
+
+## What's in 0.1
+
+- All Material Web components, renamed to `petal-*`.
+- Token values from the Material Design web tokens v34 for the core components
+  (buttons, icon buttons, FAB, checkbox, radio, switch, text fields, chips,
+  progress, tabs); see [Token update v0.192 → v34](docs/token-update-v34.md).
+- Generated token stylesheets in `tokens/css/`: system tokens with light and
+  dark colors, contrast variants, and the expressive motion scheme.
+- Material 3 Expressive, opt-in: button sizes `xsmall`–`xlarge`, round and
+  square shapes, toggle buttons, shape morphing with spring motion, button
+  groups, solid FABs. See [Material 3 Expressive features](docs/expressive.md).
 
 ## Background
 
@@ -55,7 +96,14 @@ npx playwright install chromium
 npm test
 npm run check:licenses   # licenses of all dependencies
 npm run check:rebrand    # no md-* tags left after an upstream merge
+npm run check:tokens     # generated tokens up to date
+npm run test:visual      # pixel-exact screenshots (Playwright)
+npm run docs:images      # render the images in docs/components
+npm run build:catalog    # the documentation site, in catalog/_prod
 ```
+
+See [Design tokens](docs/tokens.md) and [Visual testing](docs/visual-testing.md)
+for the token pipeline and the screenshot tests.
 
 ### Merging upstream
 

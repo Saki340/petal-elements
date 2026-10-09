@@ -10,7 +10,40 @@
 
 ## 状态
 
-早期开发中，尚未发布到 npm，API 可能变动。
+0.1.0 版本准备中，尚未发布到 npm。1.0 之前 API 可能变动。
+
+文档和在线示例：[petal-elements catalog](https://saki340.github.io/petal-elements/)（仓库公开后上线）和 [docs/](docs/intro.md)（英文）。
+
+## 快速上手
+
+```sh
+npm install petal-elements
+```
+
+```html
+<link rel="stylesheet" href="node_modules/petal-elements/tokens/css/sys.css">
+<script type="module">
+  import 'petal-elements/button/filled-button.js';
+  import 'petal-elements/buttongroup/button-group.js';
+</script>
+
+<petal-filled-button>保存</petal-filled-button>
+
+<!-- Material 3 Expressive，按需开启 -->
+<petal-button-group connected single-select size="medium">
+  <petal-filled-tonal-button toggle selected>日</petal-filled-tonal-button>
+  <petal-filled-tonal-button toggle>周</petal-filled-tonal-button>
+</petal-button-group>
+```
+
+打包和主题设置见 [Quick start](docs/quick-start.md)。
+
+## 0.1 包含的内容
+
+- Material Web 的全部组件，改名为 `petal-*`。
+- 核心组件（按钮、图标按钮、FAB、复选框、单选框、开关、文本框、chip、进度条、标签页）改用 Material Design Web 令牌 v34 的数值，见 [Token update v0.192 → v34](docs/token-update-v34.md)。
+- `tokens/css/` 下生成的令牌样式表：含浅色和深色配色的系统令牌、对比度变体、expressive 动效方案。
+- Material 3 Expressive（按需开启）：按钮尺寸 `xsmall`–`xlarge`、圆形和方形、切换按钮、带弹簧动效的形状变形、按钮组、实心 FAB。见 [Material 3 Expressive features](docs/expressive.md)。
 
 ## 背景
 
@@ -47,7 +80,13 @@ npx playwright install chromium
 npm test
 npm run check:licenses   # 检查所有依赖的许可证
 npm run check:rebrand    # 合并上游后检查是否还有 md-* 标签
+npm run check:tokens     # 检查生成的令牌是否最新
+npm run test:visual      # 逐像素截图对比（Playwright）
+npm run docs:images      # 渲染 docs/components 里的图片
+npm run build:catalog    # 构建文档站点，输出到 catalog/_prod
 ```
+
+令牌流水线和截图测试见 [Design tokens](docs/tokens.md) 与 [Visual testing](docs/visual-testing.md)。
 
 ### 合并上游
 

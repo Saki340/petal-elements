@@ -70,7 +70,7 @@ module.exports = function (eleventyConfig) {
     ],
     // Pages from docs/*.md, linked from any page.
     [
-      /^(?:\.\.\/)?(intro|quick-start|expressive|roadmap|support|size|tokens|token-update-v34|licensing|visual-testing)\.md$/,
+      /^(?:\.\.\/)?(intro|quick-start|expressive|roadmap|support|size|tokens|token-update-v34|licensing|visual-testing|releasing)\.md$/,
       '/about/$1/',
     ],
     ['../theming/README.md', '/theming/material-theming/'],

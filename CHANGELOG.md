@@ -1,9 +1,50 @@
 # Changelog
 
-## [2.5.0](https://github.com/material-components/material-web/compare/v2.4.1...v2.5.0) (2026-07-14)
+## petal-elements
+
+### 0.1.0 (unreleased)
+
+First release of petal-elements, forked from material-web 2.5.0 (upstream
+commit 47adb655b, 2026-10-07).
+
+#### Breaking changes from material-web
+
+* Package `@material/web` is now `petal-elements`; tags `md-*` are `petal-*`
+  and classes `Md*` are `Petal*`. Import paths and CSS custom properties
+  (`--md-*`) are unchanged.
+* Core components use the Material Design web tokens v34 instead of v0.192:
+  buttons, icon buttons, FAB, checkbox, radio, switch, filled and outlined text
+  fields, chips, progress indicators and tabs. Colors, shapes and type change
+  slightly; see docs/token-update-v34.md.
+
+#### Features
+
+* **tokens:** generated token files from the Material Design web tokens v34, in
+  W3C design token format (`tokens/dtcg/web/`) and as CSS (`tokens/css/`):
+  `sys.css` with light and dark colors (`light-dark()`), typography, shapes,
+  elevation and motion springs; `sys-medium-contrast.css`,
+  `sys-high-contrast.css`; `motion-expressive.css`.
+* **button:** `size` (`xsmall`–`xlarge`) and `shape` (`round`, `square`) from
+  the Material 3 Expressive tokens, with shape morphing on press.
+* **button:** `toggle` and `selected` for toggle buttons, with `input` and
+  `change` events and `aria-pressed`.
+* **buttongroup:** new `<petal-button-group>`: standard groups widen the
+  pressed button, connected groups (`connected`) join buttons with small inner
+  corners; `single-select`.
+* **fab:** solid variants `filled-primary`, `filled-secondary` and
+  `filled-tertiary`.
+* **catalog:** documentation site for GitHub Pages, with images rendered from
+  the components.
+
+## material-web
+
+Changes before the fork, from
+[material-components/material-web](https://github.com/material-components/material-web).
+
+### [2.5.0](https://github.com/material-components/material-web/compare/v2.4.1...v2.5.0) (2026-07-14)
 
 
-### Features
+#### Features
 
 * add custom-elements.json manifest ([68d3b89](https://github.com/material-components/material-web/commit/68d3b89a4b4b4ce5002e74a129b1a77b49350200))
 * export CSSStyleSheet as default from CSSResult-in-js files ([1cbfc75](https://github.com/material-components/material-web/commit/1cbfc757e98e075a3759260b3d9f5107a714db2d))
@@ -32,7 +73,7 @@
 * **sass-ext:** add `@material/web/sass/ext` helper utilities ([dd87fd2](https://github.com/material-components/material-web/commit/dd87fd2117e46b524625c929d4c0ea8d0097b542))
 
 
-### Bug Fixes
+#### Bug Fixes
 
 * **button,iconbutton:** use form-associated mixin behavior ([082faad](https://github.com/material-components/material-web/commit/082faad915fb4ded0c151ca6546027fa7f37c616))
 * **button:** touch target not covering tall container height ([fd17013](https://github.com/material-components/material-web/commit/fd1701356220fca2580923a092d6d1ff540ba1b4))
@@ -47,23 +88,23 @@
 * **tokens:** add readme for the `@material/web/tokens/versions` folder ([a7ba471](https://github.com/material-components/material-web/commit/a7ba471a627b03b0849682b1301bc4c5474baba7))
 
 
-### Reverts
+#### Reverts
 
 * "feat(labs): change form-submitter to a behavior mixin" ([38724b9](https://github.com/material-components/material-web/commit/38724b9070301bf725db7b45c9cba0898c657549))
 
-## [2.4.1](https://github.com/material-components/material-web/compare/v2.4.0...v2.4.1) (2025-10-27)
+### [2.4.1](https://github.com/material-components/material-web/compare/v2.4.0...v2.4.1) (2025-10-27)
 
 
-### Bug Fixes
+#### Bug Fixes
 
 * **radio:** also move sibling uncheck logic after root assignment ([6010e52](https://github.com/material-components/material-web/commit/6010e52c8fcd53577a8cf2cee53095033f329d2a))
 * **radio:** move root assignment to mirror hostDisconnected ([adb8d10](https://github.com/material-components/material-web/commit/adb8d104f2ebc29890b8c578e34a412e8c5c3fc2))
 * **tokens:** `@material/web/tokens/v*` moved to `@material/web/tokens/versions/v*` ([60c0cfa](https://github.com/material-components/material-web/commit/60c0cfa58ad135c189cb0fa95c5f2744499f0327))
 
-## [2.4.0](https://github.com/material-components/material-web/compare/v2.3.0...v2.4.0) (2025-08-21)
+### [2.4.0](https://github.com/material-components/material-web/compare/v2.3.0...v2.4.0) (2025-08-21)
 
 
-### Features
+#### Features
 
 * **button:** add disabled link support ([c3c4848](https://github.com/material-components/material-web/commit/c3c48485b152595c0e892383dc5ab38fdb1ac442))
 * **button:** add gradient support to container colors ([5bc1506](https://github.com/material-components/material-web/commit/5bc15069d136c51e912137dcba1b212a106bb1dd))
@@ -71,7 +112,7 @@
 * **select:** add showPicker() functionality ([8808a25](https://github.com/material-components/material-web/commit/8808a25da8cb879d120c11b6961e10ef75ca5add))
 
 
-### Bug Fixes
+#### Bug Fixes
 
 * **catalog:** hydrate CSR component pages ([0037c14](https://github.com/material-components/material-web/commit/0037c14f6ba17ae224f8377e4afcba35862c4bf4))
 * **menu:** output menu item theme values ([ca5f750](https://github.com/material-components/material-web/commit/ca5f75094b3ac2d314ccb31ec06ec653501cf801))
@@ -79,10 +120,10 @@
 * **ripple:** misaligned when using CSS zoom ([3072a9b](https://github.com/material-components/material-web/commit/3072a9bc286876be157e15d65b0d4877245e1acc))
 * **ripple:** remove pointerdown contextmenu bounds check for Chrome ([cd7512f](https://github.com/material-components/material-web/commit/cd7512ff90cf25ad98c6caa9842bf86d284146c7))
 
-## [2.3.0](https://github.com/material-components/material-web/compare/v2.2.0...v2.3.0) (2025-03-26)
+### [2.3.0](https://github.com/material-components/material-web/compare/v2.2.0...v2.3.0) (2025-03-26)
 
 
-### Features
+#### Features
 
 * **button:** add download filename support for link buttons ([4098832](https://github.com/material-components/material-web/commit/4098832b8b6fe9def9c08d551014f113e39b2546))
 * **button:** rename attribute downloadFilename to download ([8aefe19](https://github.com/material-components/material-web/commit/8aefe1983d28abcc3bc9c659ff0b328454e0547e))
@@ -92,7 +133,7 @@
 * **text-field:** add showPicker method ([bad490c](https://github.com/material-components/material-web/commit/bad490c7cb05be4898d8528569776d4e75bbb8fd))
 
 
-### Bug Fixes
+#### Bug Fixes
 
 * **catalog:** add hyphen to md-evelated-button attribute ([ac9b14a](https://github.com/material-components/material-web/commit/ac9b14a65c384d9389022f11555fb063b932ec96))
 * **iconbutton:** href will respond to touch target ([ea1134a](https://github.com/material-components/material-web/commit/ea1134a1a77c032f8b8c6c749e670fca90d8cd89))
@@ -101,15 +142,15 @@
 * **menu:** export CloseReason ([29d6763](https://github.com/material-components/material-web/commit/29d6763dc3abe4e80a6fb3ad0eaca5bb24b2d29a))
 * **select:** missing accessible label ([1bdcbd3](https://github.com/material-components/material-web/commit/1bdcbd38ab96f6a7537c36cb7d61d9e8db2144e7))
 
-## [2.2.0](https://github.com/material-components/material-web/compare/v2.1.0...v2.2.0) (2024-09-17)
+### [2.2.0](https://github.com/material-components/material-web/compare/v2.1.0...v2.2.0) (2024-09-17)
 
 
-### Features
+#### Features
 
 * **field,textfield:** add `container` slot for custom background content ([44c13cd](https://github.com/material-components/material-web/commit/44c13cdd753108137e9765bf14a6ea3ed46be18e))
 
 
-### Bug Fixes
+#### Bug Fixes
 
 * **checkbox:** add override to symbol properties ([a9ee4f5](https://github.com/material-components/material-web/commit/a9ee4f5bc1d6702e5dc352eefed13a1d849577e3))
 * remove the input entirely and replace it with a touch target ([cf84a27](https://github.com/material-components/material-web/commit/cf84a271e75b806075427f4d176b38f8884fdd7e))
@@ -117,28 +158,28 @@
 * Replace aria-hidden attribute with inert attribute in &lt;md-radio&gt; component ([192f17e](https://github.com/material-components/material-web/commit/192f17e8c1ce4a38cf76b5a81cb6c2b1ddcfbe46))
 * Set touch target to `display: none` ([a696121](https://github.com/material-components/material-web/commit/a69612162d79b63f0b82da0468201942dc82ed9e))
 
-## [2.1.0](https://github.com/material-components/material-web/compare/v2.0.0...v2.1.0) (2024-08-20)
+### [2.1.0](https://github.com/material-components/material-web/compare/v2.0.0...v2.1.0) (2024-08-20)
 
 
-### Features
+#### Features
 
 * **switch:** add touch target token ([b8f362a](https://github.com/material-components/material-web/commit/b8f362a97d8369e0f6bab834794f99bd50b5ab78))
 * **textfield,field:** add leading/trailing icon spacing tokens ([c1991c4](https://github.com/material-components/material-web/commit/c1991c4c894c48fe77abe09a2791f97dc77d438f))
 
 
-### Bug Fixes
+#### Bug Fixes
 
 * changed checkmark to check in md-icon selected slot ([2e2817b](https://github.com/material-components/material-web/commit/2e2817bab5fc51bb32363b36471cb01d1f029a46))
 
-## [2.0.0](https://github.com/material-components/material-web/compare/v1.5.1...v2.0.0) (2024-07-23)
+### [2.0.0](https://github.com/material-components/material-web/compare/v1.5.1...v2.0.0) (2024-07-23)
 
 
-### ⚠ BREAKING CHANGES
+#### ⚠ BREAKING CHANGES
 
 * **tokens:** Sass component tokens, such as `tokens.md-comp-checkbox-values()`, return `var(--md-<component>, <value>)` instead of just the CSS value. Use `$exclude-custom-properties: true` to remove them.
 * `querySelector` for `[role]` and `[aria-*]` attributes may no longer work. See `@material/web/migrations/v2/README.md` and `@material/web/migrations/v2/query-selector-aria.ts`.
 
-### Features
+#### Features
 
 * **button:** add `soft-disabled` attribute for focusable disabled buttons ([48124ba](https://github.com/material-components/material-web/commit/48124ba09f538c6264407a49e6bc0ba097991a9d))
 * check for server before creating treewalker from document ([0d50ed9](https://github.com/material-components/material-web/commit/0d50ed91f0c542b4d5b5e2c913930a52a46136e5))
@@ -147,58 +188,58 @@
 * **iconbutton:** add `soft-disabled` attribute for focusable disabled icon buttons ([281c092](https://github.com/material-components/material-web/commit/281c092d061f77b812e57f473e77cfd123016471))
 
 
-### Bug Fixes
+#### Bug Fixes
 
 * add typecast ([1482bff](https://github.com/material-components/material-web/commit/1482bfff0de55e136513861c1976776c5a4b4b93))
 * aria-labels announcing twice with "group" on components ([5df9410](https://github.com/material-components/material-web/commit/5df9410e604cf446c83bb5ada3454596c34b2c50))
 * **chips:** add truncation support ([713f0a8](https://github.com/material-components/material-web/commit/713f0a80fcfc9ef730e1c1f88e15098b9d10735b))
 * **tokens:** `tokens.md-comp-*-values()` include custom properties by default ([55b4650](https://github.com/material-components/material-web/commit/55b46500634c022c335d9c4818121a1b5d95e111))
 
-## [1.5.1](https://github.com/material-components/material-web/compare/v1.5.0...v1.5.1) (2024-06-25)
+### [1.5.1](https://github.com/material-components/material-web/compare/v1.5.0...v1.5.1) (2024-06-25)
 
 
-### Bug Fixes
+#### Bug Fixes
 
 * **checkbox:** sass theme mixin not working ([46d66ed](https://github.com/material-components/material-web/commit/46d66ed9d188243e313e6833f244a5b750aa9fdb)), closes [#5651](https://github.com/material-components/material-web/issues/5651)
 * **dialog:** have content expand to fill height ([17aa21a](https://github.com/material-components/material-web/commit/17aa21a53ecc949b3326ed0d2c2bf461a20617c6))
 * **menu:** resolve aborted animations as false rather than reject ([4f7ff4f](https://github.com/material-components/material-web/commit/4f7ff4f63adaec11cfc7e2772990a757139be01b)), closes [#5638](https://github.com/material-components/material-web/issues/5638)
 * **switch:** pressing enter toggles the switch ([99ec9e2](https://github.com/material-components/material-web/commit/99ec9e25eb0d64887a3530e494ba8683909c0e62))
 
-## [1.5.0](https://github.com/material-components/material-web/compare/v1.4.1...v1.5.0) (2024-05-23)
+### [1.5.0](https://github.com/material-components/material-web/compare/v1.4.1...v1.5.0) (2024-05-23)
 
 
-### Features
+#### Features
 
 * **menu:** allow customizing `scrollbar-width` ([1bf8b5f](https://github.com/material-components/material-web/commit/1bf8b5fbf9ff8f7c0084acee77988b1af9ad7e19))
 * **select:** make required asterisk optional ([8f194a5](https://github.com/material-components/material-web/commit/8f194a51dbc85ead2d9d8c10e0be69f183788a31))
 * **textfield:** make required asterisk optional ([be5bb43](https://github.com/material-components/material-web/commit/be5bb43100fbf0df3a7cfec4c4d4399559a23114))
 
 
-### Bug Fixes
+#### Bug Fixes
 
 * **button:** add part attribute to button ([a2b5c91](https://github.com/material-components/material-web/commit/a2b5c91a549e206603f23d84233de83a8c165d77))
 * **dialog:** focus is trapped for a11y, use `no-focus-trap` to disable ([0aea436](https://github.com/material-components/material-web/commit/0aea4364a142f3db84b77ae99eea1df6a3cd8456))
 * **docs:** progress.webp not playing ([2f0c99a](https://github.com/material-components/material-web/commit/2f0c99ad3d3320341a4ae61db5abe64c37649ddb)), closes [#5569](https://github.com/material-components/material-web/issues/5569)
 * **menu:** `getBoundingClientRect()` and `getClientRects()` not working ([e1f9cbc](https://github.com/material-components/material-web/commit/e1f9cbc59e4cbb50921304158edbb8e68706c405))
 
-## [1.4.1](https://github.com/material-components/material-web/compare/v1.4.0...v1.4.1) (2024-04-15)
+### [1.4.1](https://github.com/material-components/material-web/compare/v1.4.0...v1.4.1) (2024-04-15)
 
 
-### Bug Fixes
+#### Bug Fixes
 
 * **dialog:** update info comment with autocomplete -&gt; autofocus ([fc4c999](https://github.com/material-components/material-web/commit/fc4c9992f8827e2a07e5c0b32cc48a065356cf29))
 * **select:** select.click() opens the menu ([7a6cf16](https://github.com/material-components/material-web/commit/7a6cf16a4e37889d0497af4f1c4df8be78aefa54))
 
-## [1.4.0](https://github.com/material-components/material-web/compare/v1.3.0...v1.4.0) (2024-03-21)
+### [1.4.0](https://github.com/material-components/material-web/compare/v1.3.0...v1.4.0) (2024-03-21)
 
 
-### Features
+#### Features
 
 * **menu:** add `no-navigation-wrap` to fix select accessibility ([c6ffd70](https://github.com/material-components/material-web/commit/c6ffd70fc82060d894e4f4ef7fc43a1fb15e2a65))
 * **typography:** add `@material/web/typography/md-typescale` classes ([36dd77e](https://github.com/material-components/material-web/commit/36dd77ef97bfa9fbbd9f3a8885f010cb0741e797))
 
 
-### Bug Fixes
+#### Bug Fixes
 
 * **button,fab,chips,labs:** text-transform inherits through shadow root ([758e615](https://github.com/material-components/material-web/commit/758e61581ef30481e5dd8c1bd7707db2a2988ab8))
 * **elevation:** expose md-elevation `::part` in all components ([b74e3dd](https://github.com/material-components/material-web/commit/b74e3dd2e3f11fa20dd5a39148a6b491bacded16))
@@ -211,17 +252,17 @@
 * **typography:** rename md-typescale.js to md-typescale-styles.js ([1e47fd7](https://github.com/material-components/material-web/commit/1e47fd7383ea2818beab64e7f9f4339cc790a5ee))
 * use explicit `CSSResult[]` types for static styles ([ce41b7b](https://github.com/material-components/material-web/commit/ce41b7bfb3fc04f8e93a781eb6d92fe15b1d7fac))
 
-## [1.3.0](https://github.com/material-components/material-web/compare/v1.2.0...v1.3.0) (2024-02-22)
+### [1.3.0](https://github.com/material-components/material-web/compare/v1.2.0...v1.3.0) (2024-02-22)
 
 
-### Features
+#### Features
 
 * add `--md-sys-shape-*` tokens for all components ([41bac9e](https://github.com/material-components/material-web/commit/41bac9e44d0afef2a9cba08cb855572556e61342))
 * **tabs:** expose activeTabIndex ([4bce86d](https://github.com/material-components/material-web/commit/4bce86d18b8d553607b8d2ee909faff0c095096b)), closes [#5297](https://github.com/material-components/material-web/issues/5297)
 * **tokens:** add component custom properties to Sass values ([feff721](https://github.com/material-components/material-web/commit/feff7214a753559bc5ed5da5ed50ad508b4417e7))
 
 
-### Bug Fixes
+#### Bug Fixes
 
 * **icon:** fix uncentered icons when using WCAG text spacing overrides ([b23e321](https://github.com/material-components/material-web/commit/b23e3218eebc293dc99a7343a6ecddebe585e89e))
 * **labs:** hasConstructed and constructor deprecated, changing tabIndex update in connectedCallback ([fb086bb](https://github.com/material-components/material-web/commit/fb086bbd355d69a99dc9e6c38c2b8ebb7d7ce9ad))
@@ -230,10 +271,10 @@
 * **menu:** left arrow in submenu closes submenu in closure ([2049323](https://github.com/material-components/material-web/commit/2049323dde3eec643f14a03f12f0b449e4432aeb))
 * remove `:host-context` rtl selectors ([f2ff867](https://github.com/material-components/material-web/commit/f2ff86725ccb96347af1881657428e4de1fe0bae))
 
-## [1.2.0](https://github.com/material-components/material-web/compare/v1.1.1...v1.2.0) (2024-01-24)
+### [1.2.0](https://github.com/material-components/material-web/compare/v1.1.1...v1.2.0) (2024-01-24)
 
 
-### Features
+#### Features
 
 * **select:** add keyboard support for arrow end and home ([8912019](https://github.com/material-components/material-web/commit/8912019b902803a018a1d92fb7caaa39369f6cf6))
 * **select:** add menuAlign to allow end-aligning the select menu ([50a9ffa](https://github.com/material-components/material-web/commit/50a9ffae46499ec575a38887b5dcce8f5506e576))
@@ -241,7 +282,7 @@
 * **textfield:** add `no-spinner` to remove number spin buttons ([3c6e550](https://github.com/material-components/material-web/commit/3c6e55006b3a7bad0d7fa782fab3141e1961e686))
 
 
-### Bug Fixes
+#### Bug Fixes
 
 * **button:** add missing sass imports ([37fad06](https://github.com/material-components/material-web/commit/37fad0660dd96cf565062075e056a6288fea5290))
 * **chips:** filter's `click.preventDefault()` not working when also updating `selected` ([5dc870b](https://github.com/material-components/material-web/commit/5dc870bfe1609a50702ef078a3da1b01620f7ef8))
@@ -270,21 +311,21 @@
 * **tokens:** moved '_values.scss' to 'internal/_values.scss' ([b986b1e](https://github.com/material-components/material-web/commit/b986b1eb7cac5a5feef90478406247cebe7e690e))
 
 
-### Performance Improvements
+#### Performance Improvements
 
 * **ripple:** don't process events in high contrast mode ([839667d](https://github.com/material-components/material-web/commit/839667dcf6becda087015edcb5468b8b2107d8c7))
 
-## [1.1.1](https://github.com/material-components/material-web/compare/v1.1.0...v1.1.1) (2023-12-13)
+### [1.1.1](https://github.com/material-components/material-web/compare/v1.1.0...v1.1.1) (2023-12-13)
 
 
-### Bug Fixes
+#### Bug Fixes
 
 * formAssociated disabled attribute not working ([ab04299](https://github.com/material-components/material-web/commit/ab042992acd6702f11fd8f1d64bb1597cb701815))
 
-## [1.1.0](https://github.com/material-components/material-web/compare/v1.0.1...v1.1.0) (2023-12-12)
+### [1.1.0](https://github.com/material-components/material-web/compare/v1.0.1...v1.1.0) (2023-12-12)
 
 
-### Features
+#### Features
 
 * **chips:** add filter chip `selected-icon` slot to customize checkmark ([89b4c2e](https://github.com/material-components/material-web/commit/89b4c2e752fd7055f35f8b743cad6861376f3d95))
 * **chips:** add tokens to customize padding ([c9e8de0](https://github.com/material-components/material-web/commit/c9e8de0207f158791d79629599682edf21d26498))
@@ -299,7 +340,7 @@
 * **switch:** add slot icons ([9255be1](https://github.com/material-components/material-web/commit/9255be1be587cdbb29d6cd99efefc512de4882db))
 
 
-### Bug Fixes
+#### Bug Fixes
 
 * 5182: dialog icon padding error ([257e9c6](https://github.com/material-components/material-web/commit/257e9c6f6f47bb61155fd21729bbd8326a7156e2))
 * add `@material/web@nightly` publishes ([91c1221](https://github.com/material-components/material-web/commit/91c1221cef63b82e134949c7ff14b99653897602))
@@ -336,10 +377,10 @@
 * **tabs:** fields intended to be accessed from templates must be exported ([b7be1cb](https://github.com/material-components/material-web/commit/b7be1cbbb4e7b08421d293ba89f364632822d113))
 * **text-field:** wrap text in textarea ([4fce487](https://github.com/material-components/material-web/commit/4fce487c812954da816c0bdb4ba5165902c2f3e9))
 
-## [1.0.1](https://github.com/material-components/material-web/compare/v1.0.0...v1.0.1) (2023-10-18)
+### [1.0.1](https://github.com/material-components/material-web/compare/v1.0.0...v1.0.1) (2023-10-18)
 
 
-### Bug Fixes
+#### Bug Fixes
 
 * **catalog:** align one liners to center ([fbc1fa6](https://github.com/material-components/material-web/commit/fbc1fa626a92299c627004efa9d41151b44febb0))
 * **catalog:** center items in blockquotes ([5235b3e](https://github.com/material-components/material-web/commit/5235b3ea52b7aa5a27c2b00a49712a3ce0e22378))
@@ -367,15 +408,15 @@
 * **tabs:** use `md-tab` attribute to brand individual tab children
 
 
-### Reverts
+#### Reverts
 
 * fix(tabs)!: use md-tab attribute to brand individual tab children ([d1f3887](https://github.com/material-components/material-web/commit/d1f3887613bf9eda7a148b8c3cebd1f370b4cc26))
 * pardon the mess, "use `md-tab` attribute to brand individual tab children" is not a breaking change ([43af3ba](https://github.com/material-components/material-web/commit/43af3baa7f599c0d9cf3f5562e2a772e229d95c2))
 
-## [1.0.0](https://github.com/material-components/material-web/compare/v1.0.0-pre.17...v1.0.0) (2023-09-26)
+### [1.0.0](https://github.com/material-components/material-web/compare/v1.0.0-pre.17...v1.0.0) (2023-09-26)
 
 
-### ⚠ BREAKING CHANGES
+#### ⚠ BREAKING CHANGES
 
 * **list:** the new ListController behavior no longer waits for event.preventDefault asynchronously because it was causing keyboard navigations to scroll the page.
 * **list:** `<md-list-item>` now uses slots instead of properties and has removed many prescriptive items (such as avatar, image, and video items). The default slot can be used for any custom content. ```html <md-list-item>   <div slot="overline">OVERLINE</div>   <div slot="headline">First line</div>   <div slot="supporting-text">Second+ lines</div>   <div slot="trailing-supporting-text">Trailing</div>   <md-icon slot="start">star</md-icon>   <md-icon slot="end">star</md-icon> </md-list-item> ``` Add `type="button"` or `type="link"` for interactive list items.
@@ -410,7 +451,7 @@
 * **select:** replace `leadingicon` and `trailingicon` slot names with `leading-icon` and `trailing-icon`
 * **navigationtab:** change slot names activeIcon and inactiveIcon to active-icon and inactive-icon
 
-### Features
+#### Features
 
 * **chips:** swap to toolbar a11y pattern ([16bfac1](https://github.com/material-components/material-web/commit/16bfac1343128f641b34e74e21c69a05a28a9185))
 * **iconbutton:** update tokens to v0.192 ([e8b5b29](https://github.com/material-components/material-web/commit/e8b5b29d1eb18566126b77fcdc01c5f7f8899e25))
@@ -427,7 +468,7 @@
 * **typography:** add typography Sass APIs ([8e480de](https://github.com/material-components/material-web/commit/8e480deae3501eaec7d8d5f5b959bff10ab699d7))
 
 
-### Bug Fixes
+#### Bug Fixes
 
 * aria polyfill overrides user values and user values override internals values ([8aa4faf](https://github.com/material-components/material-web/commit/8aa4faf14ac8207c9a39f783f971bfbf5933bfa5))
 * **catalog:** remove TODO from home page ([af27ff8](https://github.com/material-components/material-web/commit/af27ff8374e1814e7f1a3b303a28ab1c49b115a7))
@@ -474,12 +515,12 @@
 * **tokens:** update components to v0.192 ([cfd053c](https://github.com/material-components/material-web/commit/cfd053c39701aa0b8d8e33a9e0392a68ec842a83))
 
 
-### Miscellaneous Chores
+#### Miscellaneous Chores
 
 * prep release version ([df508ef](https://github.com/material-components/material-web/commit/df508ef5fdd1494bf6a3c567d9ac82da978fb8e0))
 
 
-### Code Refactoring
+#### Code Refactoring
 
 * **list,menu,select:** remove active concept and now parent controls tabIndex and focus ([d446315](https://github.com/material-components/material-web/commit/d4463154cc1f5831aac79cf2894146289d9a56be))
 * **list,menu,select:** remove data-variant slotted variant selectors ([1f31df8](https://github.com/material-components/material-web/commit/1f31df818be4140640bc1b12a8401a9f202b7914))
@@ -493,10 +534,10 @@
 * **menu:** rename corner and focus state values lowercase with dashes ([6e54048](https://github.com/material-components/material-web/commit/6e54048f1eadb8234c3681009a5b8193f14f7c14))
 * **menu:** update menu to use host-aria ([0384507](https://github.com/material-components/material-web/commit/03845074479894e3e609b7c5ec6e37d4f6cdaf88))
 
-## [1.0.0-pre.17](https://github.com/material-components/material-web/compare/v1.0.0-pre.16...v1.0.0-pre.17) (2023-09-06)
+### [1.0.0-pre.17](https://github.com/material-components/material-web/compare/v1.0.0-pre.16...v1.0.0-pre.17) (2023-09-06)
 
 
-### ⚠ BREAKING CHANGES
+#### ⚠ BREAKING CHANGES
 
 * **slider:** replace `label-text-type` tokens with `-font`, `-size`, `-line-height`, and `-weight`. Additionally, rename `label-label-*` tokens to a single `label-*`
 * **list:** replace `*-type` font tokens with `-font`, `-size`, `-line-height`, and `-weight`
@@ -517,7 +558,7 @@
 * **tabs:** tabs cannot be disabled per spec. If disabled tabs are required, use `pointer-events: none` and CSS to style them.
 * **iconbutton:** change visibility of `willUpdate` to protected
 
-### Features
+#### Features
 
 * **color:** add color folder for md-sys-color theming APIs ([cdd9b26](https://github.com/material-components/material-web/commit/cdd9b264cb18dd9c43c4691b32fd47b65a90dab9))
 * **color:** add color folder for md-sys-color theming APIs ([87af9aa](https://github.com/material-components/material-web/commit/87af9aa13022ed69dbe20961293e67b2bf5914c4))
@@ -527,7 +568,7 @@
 * **switch:** add required and form validity ([9694191](https://github.com/material-components/material-web/commit/9694191ec02bb37575df8d74af6e530f3e4e45e9))
 
 
-### Bug Fixes
+#### Bug Fixes
 
 * add aria-hidden="true" to ripple, focus ring, and elevation ([2295f12](https://github.com/material-components/material-web/commit/2295f12e711f563b05a19d1d354e37a986027d5d))
 * **badge:** center align value text ([cc195a9](https://github.com/material-components/material-web/commit/cc195a947656b2f4765be77ba2fa3cbfe680ba76))
@@ -574,28 +615,28 @@
 * **tokens:** rename token override files ([59c44fc](https://github.com/material-components/material-web/commit/59c44fc2f9266b60d22e9bd5ff5d39e7d0ee8dff))
 
 
-### Reverts
+#### Reverts
 
 * feat(color): add color folder for md-sys-color theming APIs ([a528393](https://github.com/material-components/material-web/commit/a5283936fedd8da92af994fa0d721e07bc2686c4))
 
 
-### Miscellaneous Chores
+#### Miscellaneous Chores
 
 * update next version ([f41c816](https://github.com/material-components/material-web/commit/f41c8165f47e6a212b6c8ca104951187c8020622))
 
 
-### Tests
+#### Tests
 
 * **list,menu,select:** clean up internal testing patterns from harnesses ([fcfc696](https://github.com/material-components/material-web/commit/fcfc696c4628fd2f41b09c060e6af4cd8e7658c2))
 
-## [1.0.0-pre.16](https://github.com/material-components/material-web/compare/v1.0.0-pre.15...v1.0.0-pre.16) (2023-08-21)
+### [1.0.0-pre.16](https://github.com/material-components/material-web/compare/v1.0.0-pre.15...v1.0.0-pre.16) (2023-08-21)
 
 
-### ⚠ BREAKING CHANGES
+#### ⚠ BREAKING CHANGES
 
 * **list-item:** remove duplicate list-item menu-item from custom prop names
 
-### Features
+#### Features
 
 * **fab:** do not require has-icon ([156ca3c](https://github.com/material-components/material-web/commit/156ca3cbe7fc03290892a1b20c8b5036b996d2ed))
 * **iconbutton:** add touch target configs ([0862c58](https://github.com/material-components/material-web/commit/0862c58d24054a496b452d22fd56726e38057669))
@@ -605,7 +646,7 @@
 * **textfield:** support inputmode attribute ([5d0cbf5](https://github.com/material-components/material-web/commit/5d0cbf5e9758e07d2d580fd2a47bc6bc74289856))
 
 
-### Bug Fixes
+#### Bug Fixes
 
 * **button:** `href` and `target` default value is now an empty string ([d665864](https://github.com/material-components/material-web/commit/d665864cba14e06aa050a1c77d8b5db914355113))
 * **button:** add value to form when submitting ([f23fac1](https://github.com/material-components/material-web/commit/f23fac1465d7e0f6a6fa029f7395c91bd5b765c6)), closes [#4526](https://github.com/material-components/material-web/issues/4526)
@@ -628,19 +669,19 @@
 * **textfield:** focus indicator and outline are 3px ([bbb7840](https://github.com/material-components/material-web/commit/bbb784012a3d29aa594e2051e1763f745e29d666))
 
 
-### Miscellaneous Chores
+#### Miscellaneous Chores
 
 * update next version ([1675fd0](https://github.com/material-components/material-web/commit/1675fd0062e8378897dbc8de4b2869dda3079987))
 
 
-### Code Refactoring
+#### Code Refactoring
 
 * **list-item:** remove duplicate list-item menu-item from custom prop names ([2d9352e](https://github.com/material-components/material-web/commit/2d9352e3f4ec0fef3d5ffca5d34f07bf38345a92))
 
-## [1.0.0-pre.15](https://github.com/material-components/material-web/compare/v1.0.0-pre.14...v1.0.0-pre.15) (2023-08-10)
+### [1.0.0-pre.15](https://github.com/material-components/material-web/compare/v1.0.0-pre.14...v1.0.0-pre.15) (2023-08-10)
 
 
-### ⚠ BREAKING CHANGES
+#### ⚠ BREAKING CHANGES
 
 * **dialog:** See https://github.com/material-components/material-web/discussions/4675 for more details.
 * **fab:** Replace `reduced-touch-target` with `touch-target="none"`
@@ -669,7 +710,7 @@
 * **dialog:** remove fullscreen tokens
 * **radio:** Rename `--md-radio-unselected-<token>` to `--md-radio-<token>`
 
-### Features
+#### Features
 
 * **button:** add touch target configs ([1f46179](https://github.com/material-components/material-web/commit/1f46179e831537b4470548e09e1574c1c4c5a90c))
 * **checkbox:** add required and form validity ([5606eef](https://github.com/material-components/material-web/commit/5606eefc38b08ebeb5f63d54b4b82631ea67936a))
@@ -682,7 +723,7 @@
 * **radio:** add touch target configurations ([7c461ca](https://github.com/material-components/material-web/commit/7c461cad75c58eb28c3b02321197ebcf9d3b93cd))
 
 
-### Bug Fixes
+#### Bug Fixes
 
 * **button:** rename `&lt;md-tonal-button&gt;` to `<md-filled-tonal-button>` ([cc26ef6](https://github.com/material-components/material-web/commit/cc26ef6c02dabf9e853b4aee08f5cb3af5e29f8f))
 * **button:** rename spacing tokens ([2329d2b](https://github.com/material-components/material-web/commit/2329d2b419d2963d8050dc4cda1607f165f3d2fd))
@@ -712,22 +753,22 @@
 * **switch:** remove unselected token prefix ([3681b58](https://github.com/material-components/material-web/commit/3681b588e02a43a4c72d4be703206348eea943a7))
 
 
-### Miscellaneous Chores
+#### Miscellaneous Chores
 
 * update next version ([432e660](https://github.com/material-components/material-web/commit/432e660d0cf65d94e390d9d1f0043d03c1381061))
 
 
-### Code Refactoring
+#### Code Refactoring
 
 * **dialog:** match native `&lt;dialog&gt;` and fix spacing ([2996a8b](https://github.com/material-components/material-web/commit/2996a8b8266ac721e66d88fce9b1097e23f8ff49))
 * **icon:** remove css custom props from icon and apply values directly on host ([ff60a88](https://github.com/material-components/material-web/commit/ff60a88843f901eb553e271fb5a786d6439935c8))
 * **list,menu:** add href to (list|menu)-item and remove (menu|list)-item-link ([09cb6da](https://github.com/material-components/material-web/commit/09cb6da8fb0335494df04f8310242d3248507b40))
 * **menu:** events no longer subclass Event but rather use CustomEvent ([043d548](https://github.com/material-components/material-web/commit/043d5482702620fe36f87255c74b17bb76d10554))
 
-## [1.0.0-pre.14](https://github.com/material-components/material-web/compare/v1.0.0-pre.13...v1.0.0-pre.14) (2023-07-24)
+### [1.0.0-pre.14](https://github.com/material-components/material-web/compare/v1.0.0-pre.13...v1.0.0-pre.14) (2023-07-24)
 
 
-### ⚠ BREAKING CHANGES
+#### ⚠ BREAKING CHANGES
 
 * Rename `@material/web/<component>/lib` to `@material/web/<component>/internal`. Prefer not using internal files.
 * **focus:** Change `@material/web/focus/focus-ring.js` to `@material/web/focus/md-focus-ring.js`.
@@ -756,7 +797,7 @@
 * **textfield:** Rename `--md-*-field-supporting-text-padding` to `--md-*-field-supporting-text-leading-space` and `--md-*-field-supporting-text-trailing-space`. Rename `--md-*-field-supporting-text-padding-top` to `--md-*-field-supporting-text-top-space`
 * **textfield:** Rename `--md-*-text-field-input-text-prefix-padding` and `--md-*-text-field-input-text-suffix-padding` to `--md-*-text-field-input-text-prefix-trailing-space` and `--md-*-text-field-input-text-suffix-leading-space`
 
-### Features
+#### Features
 
 * add component convenience bundles ([ae407b0](https://github.com/material-components/material-web/commit/ae407b0874760cb6a3d5a8db55c72f6cd4dc3d3c))
 * **all:** expose `focus-ring` parts ([243e231](https://github.com/material-components/material-web/commit/243e231a1370c06d6ecd34b81be5f7c091cee6a7))
@@ -766,7 +807,7 @@
 * **textfield:** add textarea type ([ff2e089](https://github.com/material-components/material-web/commit/ff2e0896800faeca0942dbd0fc4e0e159974d6a4))
 
 
-### Bug Fixes
+#### Bug Fixes
 
 * **button:** remove md3-* class prefixes ([2dabbdc](https://github.com/material-components/material-web/commit/2dabbdc142c88e4c94bcbcbaa333811e7126ba97))
 * **button:** rename "lib" directory to "internal" ([601ebb6](https://github.com/material-components/material-web/commit/601ebb669cc02b9a50c25950210bf6142550d546))
@@ -810,26 +851,26 @@
 * **textfield:** rename supporting-text-padding tokens ([4f37b44](https://github.com/material-components/material-web/commit/4f37b4474fbca2b8aa6b2ce1f06f832bf9e11fd9))
 
 
-### Miscellaneous Chores
+#### Miscellaneous Chores
 
 * update next version ([4596c4a](https://github.com/material-components/material-web/commit/4596c4a2bcb098093afed3cfcfd56dd23c73c35a))
 
-## [1.0.0-pre.13](https://github.com/material-components/material-web/compare/v1.0.0-pre.12...v1.0.0-pre.13) (2023-07-10)
+### [1.0.0-pre.13](https://github.com/material-components/material-web/compare/v1.0.0-pre.12...v1.0.0-pre.13) (2023-07-10)
 
 
-### ⚠ BREAKING CHANGES
+#### ⚠ BREAKING CHANGES
 
 * **segmentedbutton:** remove with-* token prefixes
 * **button:** remove with-* prefix from tokens
 * **dialog:** remove with-icon prefix from with-icon-icon-color and with-icon-icon-size
 * **textfield:** remove autocomplete-specific features for now
 
-### Features
+#### Features
 
 * **field:** add supporting/error text logic ([b4b3e67](https://github.com/material-components/material-web/commit/b4b3e67ae6681210d38f5079ff876896f0c20fe2))
 
 
-### Bug Fixes
+#### Bug Fixes
 
 * **button:** remove with-* prefix from tokens ([25be982](https://github.com/material-components/material-web/commit/25be9825685df91a6fc3e66c2dd7c9537a0a7829))
 * **dialog:** fire a change event when using arrow keys. ([65d31a6](https://github.com/material-components/material-web/commit/65d31a68c1c5904ebd258f00d531b6d46f31461a))
@@ -843,14 +884,14 @@
 * **textfield:** remove autocomplete-specific features for now ([8fee0a7](https://github.com/material-components/material-web/commit/8fee0a7ebd3081730d556488ff29fc5e2d416143))
 
 
-### Miscellaneous Chores
+#### Miscellaneous Chores
 
 * update next version ([b1077d8](https://github.com/material-components/material-web/commit/b1077d856bf8ec710b19c3027a030f9c63d75f37))
 
-## [1.0.0-pre.12](https://github.com/material-components/material-web/compare/v1.0.0-pre.11...v1.0.0-pre.12) (2023-06-28)
+### [1.0.0-pre.12](https://github.com/material-components/material-web/compare/v1.0.0-pre.11...v1.0.0-pre.12) (2023-06-28)
 
 
-### ⚠ BREAKING CHANGES
+#### ⚠ BREAKING CHANGES
 
 * **button:** remove unnecessary property preventClickDefault
 * **slider:** change compound attribute names to kebab-case
@@ -865,7 +906,7 @@
 * **tabs:** change compound attribute names to kebab case
 * **switch:** change showonlyselectedicon to show-only-selected-icon
 
-### Features
+#### Features
 
 * **chips:** add high contrast support ([950cd4f](https://github.com/material-components/material-web/commit/950cd4ffc3efcb3a9e4a0d0c16ea97324d8ac69f))
 * **dialog:** redispatch the native cancel event ([826262f](https://github.com/material-components/material-web/commit/826262fb727c65f787a913ae41adb8c0612af542)), closes [#1583](https://github.com/material-components/material-web/issues/1583)
@@ -874,7 +915,7 @@
 * **list,menu:** expose activate next and prev items ([30937ac](https://github.com/material-components/material-web/commit/30937acd18cba9376ea2745b6dfc4099ddbaeae3))
 
 
-### Bug Fixes
+#### Bug Fixes
 
 * **button:** normalize compound properties to have kebab-cased attributes ([1a6fc29](https://github.com/material-components/material-web/commit/1a6fc291745f827dd055c9ac84ec432b09bcc071))
 * **button:** remove unnecessary property preventClickDefault ([9244524](https://github.com/material-components/material-web/commit/9244524471093a9727750a964d1ad1436737d22f))
@@ -898,15 +939,15 @@
 * wireit sass watch memory leak ([8b1507e](https://github.com/material-components/material-web/commit/8b1507e0b73298b02a8ce6d2023d8a82d305d25d))
 
 
-### Miscellaneous Chores
+#### Miscellaneous Chores
 
 * update next version ([399fa07](https://github.com/material-components/material-web/commit/399fa07eacc80678d522896cdc7161dffbe4e214))
 * update next version ([7dd2f3d](https://github.com/material-components/material-web/commit/7dd2f3d91ca548b2f5819c4b02fe24aded147a1b))
 
-## [1.0.0-pre.11](https://github.com/material-components/material-web/compare/v1.0.0-pre.10...v1.0.0-pre.11) (2023-06-16)
+### [1.0.0-pre.11](https://github.com/material-components/material-web/compare/v1.0.0-pre.10...v1.0.0-pre.11) (2023-06-16)
 
 
-### Features
+#### Features
 
 * **chips:** add basic chip set component ([919a9d3](https://github.com/material-components/material-web/commit/919a9d3e9152dcdbb9be09c7f898dcc5168da543))
 * **chips:** add multi-action chip navigation ([2444734](https://github.com/material-components/material-web/commit/24447343a5fa240967ea32a53f625da173cb9557))
@@ -915,7 +956,7 @@
 * **list:** expose list item role ([2be1b78](https://github.com/material-components/material-web/commit/2be1b7824159760c91f577cea68905b3791a2831))
 
 
-### Bug Fixes
+#### Bug Fixes
 
 * **chips:** add aria grid/listbox models to chip set ([fcdb126](https://github.com/material-components/material-web/commit/fcdb126f2fcccf696e199e617c5df3f696e79c4b))
 * **chips:** misaligned trailing action ripple ([9c0336a](https://github.com/material-components/material-web/commit/9c0336aa12405bd3a926109d2ae29a418bb97e03))
@@ -925,20 +966,20 @@
 * **testing:** use sys-color-* theming for dark mode tests ([b1172d8](https://github.com/material-components/material-web/commit/b1172d8470c33124556b71c93ba84b7b3b906dcf))
 
 
-### Miscellaneous Chores
+#### Miscellaneous Chores
 
 * update next version ([3d7612e](https://github.com/material-components/material-web/commit/3d7612e7617e1496641ada9ce7a97d03ac5a1842))
 
-## [1.0.0-pre.10](https://github.com/material-components/material-web/compare/v1.0.0-pre.9...v1.0.0-pre.10) (2023-06-05)
+### [1.0.0-pre.10](https://github.com/material-components/material-web/compare/v1.0.0-pre.9...v1.0.0-pre.10) (2023-06-05)
 
 
-### ⚠ BREAKING CHANGES
+#### ⚠ BREAKING CHANGES
 
 * **ripple:** Remove ripple directives and attach like focus rings (parent, `for` attribute, or with `.attach()`
 * **all:** Remove any *-focus-state-layer-* custom properties (they don't do anything)
 * **ripple:** Set `border-radius: 50%` and remove `unbounded` attribute
 
-### Features
+#### Features
 
 * add labs and internal folders for non-client code ([4b0c98c](https://github.com/material-components/material-web/commit/4b0c98c1aaf1166c1d12734097812b123e48da4e))
 * **button:** adds `type` property to support form submit and reset ([545ce0d](https://github.com/material-components/material-web/commit/545ce0d8959ae408dd3d84ae459d7e994532cee7))
@@ -947,7 +988,7 @@
 * **textfield:** add form association support ([e842f79](https://github.com/material-components/material-web/commit/e842f793115b3b65a650d9cb49caf02575a69a91))
 
 
-### Bug Fixes
+#### Bug Fixes
 
 * **all:** remove focus state layer tokens ([933fc2e](https://github.com/material-components/material-web/commit/933fc2e0131393e96883ff21fb7475ecd7e45ed7))
 * **focus:** split attachable logic into separate controller ([fbd680a](https://github.com/material-components/material-web/commit/fbd680a9fe7d6021f668716f746a080b6e2e8f30))
@@ -963,21 +1004,21 @@
 * **ssr:** make "for" attribute watcher SSR compatible ([f47bdc3](https://github.com/material-components/material-web/commit/f47bdc39258fe4ba38a4cdebe1810e2385f72811))
 
 
-### Miscellaneous Chores
+#### Miscellaneous Chores
 
 * update next version ([25ee94b](https://github.com/material-components/material-web/commit/25ee94b1a7f95374ec5e27dfcf9da85a0ffb71e9))
 
-## [1.0.0-pre.9](https://github.com/material-components/material-web/compare/v1.0.0-pre.8...v1.0.0-pre.9) (2023-05-25)
+### [1.0.0-pre.9](https://github.com/material-components/material-web/compare/v1.0.0-pre.8...v1.0.0-pre.9) (2023-05-25)
 
 
-### ⚠ BREAKING CHANGES
+#### ⚠ BREAKING CHANGES
 
 * **ripple:** Use `border-radius` instead of `--md-ripple-shape`
 * **focus:** inward focus rings must be specified with `inward` rather than a negative offset.
 * **textfield:** Explicit "defaultValue" has been removed. Set the 'value' attribute to communicate a default value for resetting (similar to native <input>)
 * **iconbutton:** font icons require using <md-icon> directly
 
-### Features
+#### Features
 
 * **checkbox:** add full form association support ([a61f79c](https://github.com/material-components/material-web/commit/a61f79ceb2a169ea8397132505a1ad61ffd84bc8))
 * **chips:** add input chips ([d029b63](https://github.com/material-components/material-web/commit/d029b634c7392947f4edfa27f6218be486447de5))
@@ -995,7 +1036,7 @@
 * **tabs:** improves support for dynamically adding/removing tabs ([dd5f3f0](https://github.com/material-components/material-web/commit/dd5f3f07a4dc1bb963495fe2197933dc7185c3a1))
 
 
-### Bug Fixes
+#### Bug Fixes
 
 * **button:** theme mixin not validating ([c566a64](https://github.com/material-components/material-web/commit/c566a64ef79daec2e6de64fdc91aa1962834b322))
 * **chips:** add touch target ([55c9701](https://github.com/material-components/material-web/commit/55c9701d8c8428f846e75b70bdaa379cc3dfdf5d))
@@ -1010,24 +1051,24 @@
 * **textfield:** remove defaultValue ([2317c5a](https://github.com/material-components/material-web/commit/2317c5af63c56ccdc4aaf5b3f4ea94860e50e987))
 
 
-### Miscellaneous Chores
+#### Miscellaneous Chores
 
 * update next version ([8d31bd9](https://github.com/material-components/material-web/commit/8d31bd9bb95f68784bc7e6a47832df18bd8052ab))
 
 
-### Code Refactoring
+#### Code Refactoring
 
 * **iconbutton:** remove &lt;md-icon&gt; ([ec47f9b](https://github.com/material-components/material-web/commit/ec47f9bcc4898fb1af783c61c4d810222dadc0a4))
 
-## [1.0.0-pre.8](https://github.com/material-components/material-web/compare/v1.0.0-pre.7...v1.0.0-pre.8) (2023-05-08)
+### [1.0.0-pre.8](https://github.com/material-components/material-web/compare/v1.0.0-pre.7...v1.0.0-pre.8) (2023-05-08)
 
 
-### Features
+#### Features
 
 * **focus:** improve usability ([34d8db0](https://github.com/material-components/material-web/commit/34d8db09aa196507fca73c452b0bedc864bc2ccd))
 
 
-### Bug Fixes
+#### Bug Fixes
 
 * **checkbox:** incorrect logical shape var names ([c2ca4f8](https://github.com/material-components/material-web/commit/c2ca4f8795b1a3f7f489bed02431a66ba13ea3ba))
 * **checkbox:** support logical shapes ([e62b16b](https://github.com/material-components/material-web/commit/e62b16b9a60402c92f732fa4d744fe3602c380cc))
@@ -1042,20 +1083,20 @@
 * **tokens:** bugs with component values() functions ([beb5f81](https://github.com/material-components/material-web/commit/beb5f816eaa5fe364d7563596f9bd82006d7c1d1))
 
 
-### Miscellaneous Chores
+#### Miscellaneous Chores
 
 * update next version ([2b961f3](https://github.com/material-components/material-web/commit/2b961f363ec91e3437a1a6a03285814460b53f95))
 * update next version ([a27290a](https://github.com/material-components/material-web/commit/a27290addc3078fef008addcc6951a4616a4a981))
 * update next version ([60afab6](https://github.com/material-components/material-web/commit/60afab619ed9a8dff567b9ae21261501ab9998e9))
 
-## [1.0.0-pre.7](https://github.com/material-components/material-web/compare/v1.0.0-pre.6...v1.0.0-pre.7) (2023-04-24)
+### [1.0.0-pre.7](https://github.com/material-components/material-web/compare/v1.0.0-pre.6...v1.0.0-pre.7) (2023-04-24)
 
 
-### ⚠ BREAKING CHANGES
+#### ⚠ BREAKING CHANGES
 
 * **button:** remove label property
 
-### Features
+#### Features
 
 * **aria:** add aria delegation ([e0bbe38](https://github.com/material-components/material-web/commit/e0bbe3850cd5c0d03c8da5697ffc0f723f238e6a))
 * **chips:** add filter chips ([ae91366](https://github.com/material-components/material-web/commit/ae913666011ff1f885e9c044a6e842f60b2f906b))
@@ -1065,7 +1106,7 @@
 * **select:** implement select ([9c202f5](https://github.com/material-components/material-web/commit/9c202f5546deac424d164cd1f657626e6741a350))
 
 
-### Bug Fixes
+#### Bug Fixes
 
 * **actionelement:** remove actionelement ([b7af8ec](https://github.com/material-components/material-web/commit/b7af8ecda1ba6ecb248652250c299fc42a0de1bb))
 * **button:** closure conformance issue ([9e23477](https://github.com/material-components/material-web/commit/9e234770b55e2e6901a1fa6e3ef2822f130c7083))
@@ -1090,14 +1131,14 @@
 * **testing:** remove unnecessary type def ([5553da3](https://github.com/material-components/material-web/commit/5553da3a8bc79d93c1041c2ce074f7617d534dc3))
 
 
-### Miscellaneous Chores
+#### Miscellaneous Chores
 
 * update next version ([c9f2f7d](https://github.com/material-components/material-web/commit/c9f2f7ddd418345c2fdbeb07e9e33620524049ef))
 
-## [1.0.0-pre.6](https://github.com/material-components/material-web/compare/v1.0.0-pre.5...v1.0.0-pre.6) (2023-04-10)
+### [1.0.0-pre.6](https://github.com/material-components/material-web/compare/v1.0.0-pre.5...v1.0.0-pre.6) (2023-04-10)
 
 
-### ⚠ BREAKING CHANGES
+#### ⚠ BREAKING CHANGES
 
 * **elevation:** remove elevation surfaces
 * **iconbutton:** rename selected aria label property, add documentation
@@ -1105,7 +1146,7 @@
 * **iconbutton:** combine button, link, and toggle variants into single components
 * **button:** merge standard and link buttons
 
-### Features
+#### Features
 
 * **all:** use system typography tokens in components ([1bc73d2](https://github.com/material-components/material-web/commit/1bc73d2e489f12d5822f779733a2ff086ddaf778))
 * **circular-progress:** adds circular-progress element ([3adab6a](https://github.com/material-components/material-web/commit/3adab6ae192489db5d5eb1dfd54552f69a0f0ad7))
@@ -1119,7 +1160,7 @@
 * **typography:** add system custom properties for typography ([bcfed09](https://github.com/material-components/material-web/commit/bcfed098f3a1f430fb9b2489390731fadd26e183))
 
 
-### Bug Fixes
+#### Bug Fixes
 
 * **button:** incorrect theme custom properties ([2c1c80d](https://github.com/material-components/material-web/commit/2c1c80d3d65905da1071e240d352baa42508faa4)), closes [#4095](https://github.com/material-components/material-web/issues/4095)
 * **button:** merge standard and link buttons ([acfdbb4](https://github.com/material-components/material-web/commit/acfdbb4f9273fe1a62430ec7a8857cca391674cb))
@@ -1145,24 +1186,24 @@
 * **textfield:** tonal surface update ([f15d8ca](https://github.com/material-components/material-web/commit/f15d8ca2faf132a3ab1bf5b67efc9653ffa7ce1a))
 
 
-### Miscellaneous Chores
+#### Miscellaneous Chores
 
 * **elevation:** remove surface for tonal surface update ([d12ed3e](https://github.com/material-components/material-web/commit/d12ed3e4e3352b4dc548c4e2a34cdaee85b4cb14))
 * update next version ([fba9672](https://github.com/material-components/material-web/commit/fba9672fd997c08de6ee64d1386e049c16d99438))
 * update next version ([58b4df3](https://github.com/material-components/material-web/commit/58b4df3c4f611db6123eb2e6d087012ccddb1afd))
 * update next version ([a878783](https://github.com/material-components/material-web/commit/a878783d8d61dff6293556e67ee3e6cbd435b73f))
 
-## [1.0.0-pre.5](https://github.com/material-components/material-web/compare/v1.0.0-pre.4...v1.0.0-pre.5) (2023-03-21)
+### [1.0.0-pre.5](https://github.com/material-components/material-web/compare/v1.0.0-pre.4...v1.0.0-pre.5) (2023-03-21)
 
 
-### ⚠ BREAKING CHANGES
+#### ⚠ BREAKING CHANGES
 
 * remove old menusurface, autocomplete, and tokens v0.160
 * **fab:** remove disabled state
 * **iconbutton:** properly size iconbutton to 40x40
 * **focus:** refactor focus ring to better match component shape
 
-### Features
+#### Features
 
 * **button:** add label slot ([24298e6](https://github.com/material-components/material-web/commit/24298e696cb76c58a1482e770cc5548fc7c78cbd))
 * **chips:** add basic assist chip ([27762d8](https://github.com/material-components/material-web/commit/27762d855ce88bf2400082ed4c1f1d2c7d03580a))
@@ -1179,7 +1220,7 @@
 * **menu:** prepare menu to support md-select ([193b220](https://github.com/material-components/material-web/commit/193b220a73718226ec15171197a393008f040caa))
 
 
-### Bug Fixes
+#### Bug Fixes
 
 * **button:** enable separate color and opacity tokens ([f90aab2](https://github.com/material-components/material-web/commit/f90aab27b4fa497ab6d320b7caa4c1e569d7d00b))
 * **button:** text button background not transparent ([6700947](https://github.com/material-components/material-web/commit/67009478065f7ac61ad83df12bbcce60bebfa7b6))
@@ -1195,25 +1236,25 @@
 * **tokens:** add override files for all tokens ([2623c1d](https://github.com/material-components/material-web/commit/2623c1dd4e5d7a557195edfa33709b7db8993451))
 
 
-### Miscellaneous Chores
+#### Miscellaneous Chores
 
 * remove old menusurface, autocomplete, and tokens v0.160 ([878b914](https://github.com/material-components/material-web/commit/878b9143e790702a524b7e07b81262748e2d3818))
 * update next version ([405ec53](https://github.com/material-components/material-web/commit/405ec5399ccf2f34f956a7df06a2f39e806621a6))
 
-## [1.0.0-pre.4](https://github.com/material-components/material-web/compare/v1.0.0-pre.3...v1.0.0-pre.4) (2023-03-08)
+### [1.0.0-pre.4](https://github.com/material-components/material-web/compare/v1.0.0-pre.3...v1.0.0-pre.4) (2023-03-08)
 
 
-### ⚠ BREAKING CHANGES
+#### ⚠ BREAKING CHANGES
 
 * **icon,iconbutton,list:** use material symbols for icons
 
-### Features
+#### Features
 
 * **field:** add resizability ([fd605d5](https://github.com/material-components/material-web/commit/fd605d537ce3584c97ffca375e019615c26b748b))
 * **tokens:** generate tokens v0.161 ([e2cd832](https://github.com/material-components/material-web/commit/e2cd8327b60691f093fd389f7a259d217f1d9b89))
 
 
-### Bug Fixes
+#### Bug Fixes
 
 * **all:** update non-menu components to v0.161 ([828d7ae](https://github.com/material-components/material-web/commit/828d7aeb4d3144e3a0229cc4fa81e7c7135c4760))
 * **icon,iconbutton,list:** use material symbols for icons ([232982e](https://github.com/material-components/material-web/commit/232982ef034872968924dbb5620f59352c4028c2))
@@ -1224,16 +1265,16 @@
 * update license year and holder ([510a867](https://github.com/material-components/material-web/commit/510a867f0d4e95663a6e311b368bc879fecb8361)), closes [#3073](https://github.com/material-components/material-web/issues/3073)
 
 
-### Miscellaneous Chores
+#### Miscellaneous Chores
 
 * update next version ([a6176de](https://github.com/material-components/material-web/commit/a6176de68460c3e37aa74e1ffac5457eb093bba3))
 * update next version ([367e76a](https://github.com/material-components/material-web/commit/367e76aecfae9e6e3cd99094fa021e77f2d7b80a))
 * update next version ([9a36b3a](https://github.com/material-components/material-web/commit/9a36b3a9ae0c7d3181b66e36e6f27907c8565656))
 
-## [1.0.0-pre.3](https://github.com/material-components/material-web/compare/v1.0.0-pre.2...v1.0.0-pre.3) (2023-02-22)
+### [1.0.0-pre.3](https://github.com/material-components/material-web/compare/v1.0.0-pre.2...v1.0.0-pre.3) (2023-02-22)
 
 
-### ⚠ BREAKING CHANGES
+#### ⚠ BREAKING CHANGES
 
 * **slider:** fix ripple end hover state when leaving handle
 * **controller:** fix label activation utility on slotted elements
@@ -1252,7 +1293,7 @@
 * **ripple:** remove "state-layer" from token names
 * **all:** use shape.resolve-tokens and remove shape.resolve-theme
 
-### Features
+#### Features
 
 * **shape, string-ext:** Allow shape corners to fall back to a single custom property ([1afd925](https://github.com/material-components/material-web/commit/1afd9259adacf4cdf429dd0648b82bd23b3cdad6))
 * **slider:** adds slider element ([f0f5ae5](https://github.com/material-components/material-web/commit/f0f5ae57abee9ee5324bf628b31af091c0751b17))
@@ -1260,7 +1301,7 @@
 * **typography:** implement resolve-tokens function to use `-text-type` ([1550e8e](https://github.com/material-components/material-web/commit/1550e8e60833687ea7cb059e25aa677e783f14a1))
 
 
-### Bug Fixes
+#### Bug Fixes
 
 * **all:** update tokens to 0.160 ([9025af3](https://github.com/material-components/material-web/commit/9025af316a0cee7c710e01cedbc8ce58cdd8bcef))
 * **all:** use shape.resolve-tokens and remove shape.resolve-theme ([44a8d74](https://github.com/material-components/material-web/commit/44a8d74f56bfe31a422b93675b4085e0dd4b8876))
@@ -1285,54 +1326,54 @@
 * **typograph:** remove typography resolver ([2a8ba18](https://github.com/material-components/material-web/commit/2a8ba183607035cceb8776dab030ec311471ebcc))
 
 
-### Miscellaneous Chores
+#### Miscellaneous Chores
 
 * update next version ([77b4864](https://github.com/material-components/material-web/commit/77b48640e5d53a04ba414de77af0ca22316cccd4))
 
-## [1.0.0-pre.2](https://github.com/material-components/material-web/compare/v1.0.0-pre.1...v1.0.0-pre.2) (2023-02-06)
+### [1.0.0-pre.2](https://github.com/material-components/material-web/compare/v1.0.0-pre.1...v1.0.0-pre.2) (2023-02-06)
 
 
-### ⚠ BREAKING CHANGES
+#### ⚠ BREAKING CHANGES
 
 * **iconbutton:** Make a few API improvements
 * **textfield:** remove container-height token
 * **iconbutton:** normalize toggle variant API with regular icon button
 * **iconbutton:** remove icon properties, use slots instead
 
-### Features
+#### Features
 
 * **divider:** add divider component ([9431c16](https://github.com/material-components/material-web/commit/9431c1643140969e52ca3a065a9ec1c4fb299b3b))
 * **menu,list:** expose menu theme mixins and remove divider ([e15c4b8](https://github.com/material-components/material-web/commit/e15c4b86d584cfda5dc850cb697bc9b9552e9536))
 * **tokens:** generate tokens v0.152 ([c61f46c](https://github.com/material-components/material-web/commit/c61f46c618c38d45c49e85f809330d40e5de40d3))
 
 
-### Bug Fixes
+#### Bug Fixes
 
 * **all:** remove `[@requirecss](https://github.com/requirecss)` comments ([80590ae](https://github.com/material-components/material-web/commit/80590ae88dab9944335e78862da048ff92fee99f))
 * **forms:** fix form association for switch, checkbox, and radio, including label activation ([1ddba0c](https://github.com/material-components/material-web/commit/1ddba0ca3cfa7d9964ffd24a0e5aab488a83179e))
 * **switch:** update to latest animations, and implement sizing tokens ([9e9bf84](https://github.com/material-components/material-web/commit/9e9bf845be82ce1753ffb0d3bf7fec7947f09428))
 
 
-### Miscellaneous Chores
+#### Miscellaneous Chores
 
 * update next version ([a539286](https://github.com/material-components/material-web/commit/a539286c3f5f34b7c2969b963b3859ed633a74ef))
 
 
-### Code Refactoring
+#### Code Refactoring
 
 * **iconbutton:** Make a few API improvements ([c72e7fd](https://github.com/material-components/material-web/commit/c72e7fd6f74ecd257d9542f9ef1ec2a64e02b1bf))
 * **iconbutton:** normalize toggle variant API with regular icon button ([31391eb](https://github.com/material-components/material-web/commit/31391eb610f987a3f66ca07722a8ebca6a0b0a78))
 * **iconbutton:** remove icon properties, use slots instead ([36f1a1a](https://github.com/material-components/material-web/commit/36f1a1a0b34dba43d4a859a19d30070b9998ca9a))
 * **textfield:** remove container-height token ([1d81416](https://github.com/material-components/material-web/commit/1d81416863a2682fc123b6219c155998db574da7))
 
-## [1.0.0-pre.1](https://github.com/material-components/material-web/compare/v1.0.0-pre.0...v1.0.0-pre.1) (2023-01-09)
+### [1.0.0-pre.1](https://github.com/material-components/material-web/compare/v1.0.0-pre.0...v1.0.0-pre.1) (2023-01-09)
 
 
-### ⚠ BREAKING CHANGES
+#### ⚠ BREAKING CHANGES
 
 * **button:** Remove icon property from Button, require slotted icons
 
-### Bug Fixes
+#### Bug Fixes
 
 * **button:** remove icon property from Button, require slotted icons ([d3b517a](https://github.com/material-components/material-web/commit/d3b517ad0054b8d12ca7bc27e19ad40db987ba4b))
 * **icon, iconbutton:** Cleanup styling ([12c9364](https://github.com/material-components/material-web/commit/12c93641a550c594561883943fa5556d1cc40ca7))
@@ -1340,20 +1381,20 @@
 * **radio:** update motion to current spec ([95897b3](https://github.com/material-components/material-web/commit/95897b3e25ef3915c6047239b1794172822b1b35))
 
 
-### Miscellaneous Chores
+#### Miscellaneous Chores
 
 * update next version ([ea33cb8](https://github.com/material-components/material-web/commit/ea33cb81224eb46cde33201e331d59e07046f29a))
 
-## [1.0.0-pre.0](https://github.com/material-components/material-web/compare/v0.1.0-alpha.2...v1.0.0-pre.0) (2023-01-09)
+### [1.0.0-pre.0](https://github.com/material-components/material-web/compare/v0.1.0-alpha.2...v1.0.0-pre.0) (2023-01-09)
 
 
-### ⚠ BREAKING CHANGES
+#### ⚠ BREAKING CHANGES
 
 * **focus-ring, button:** Button shape properties are now of the form `--md-text-button-container-shape-start-start`
 * **formfield:** Removed Formfield. The <label> element can now be used, e.g. `<label>Checkbox <md-checkbox></md-checkbox></label>`.
 * **checkbox:** Removed reducedTouchTarget. Instead, set the width and height on the checkbox.
 
-### Features
+#### Features
 
 * add _focus-ring.scss partial to expose theming the focus ring ([c47f800](https://github.com/material-components/material-web/commit/c47f8004ac14ac15b19a61e3fe373300c5312f5c))
 * add filled-tonal-icon-button sass partial ([30d9c33](https://github.com/material-components/material-web/commit/30d9c33162b08a769ae452079b4911c9080c5c1a))
@@ -1437,7 +1478,7 @@
 * **theming:** add theming by color-scheme mixin. ([6ea69ec](https://github.com/material-components/material-web/commit/6ea69ecb0c94598c8a1d35d08e1af3165f20ce95))
 
 
-### Bug Fixes
+#### Bug Fixes
 
 * **button, fab:** Ensure elevation is correct when focused and hovering ([6e0775d](https://github.com/material-components/material-web/commit/6e0775ded3e90aa56f6e38903b2e15f68b7a4de4))
 * **button:** Move event listeners to anchor to fix focus ring ([e8ba229](https://github.com/material-components/material-web/commit/e8ba229dd09d98a3ab68d667bf8c7f0df69daa53))
@@ -1480,6 +1521,6 @@
 * **text-field:** rename readonly to readOnly ([4e6f01d](https://github.com/material-components/material-web/commit/4e6f01d422d9d1a612eeabd0ad649de1a8f7b0fa))
 
 
-### Miscellaneous Chores
+#### Miscellaneous Chores
 
 * update release-please ([0b5283d](https://github.com/material-components/material-web/commit/0b5283dadf5889846132d97e86fd21adb72209ed))
