@@ -13,8 +13,9 @@ Community-maintained web components for Material 3 Expressive.
 Version 0.1.0 is being prepared and has not been published to npm yet. APIs may
 change before 1.0.
 
-Documentation and live examples: the
-[petal-elements catalog](https://petal.anontokyo.vip/) and [docs/](docs/intro.md).
+Website: [petal.anontokyo.vip](https://petal.anontokyo.vip/). Documentation and
+live examples: the [catalog](https://petal.anontokyo.vip/catalog/) and
+[docs/](docs/intro.md).
 
 ## Quick start
 

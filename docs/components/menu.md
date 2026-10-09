@@ -14,7 +14,7 @@ dirname: menu
 
 <!-- external-only-start -->
 **This documentation is fully rendered on the
-[petal-elements catalog](https://petal.anontokyo.vip/components/menu/).**
+[petal-elements catalog](https://petal.anontokyo.vip/catalog/components/menu/).**
 <!-- external-only-end -->
 
 <!-- no-catalog-end -->

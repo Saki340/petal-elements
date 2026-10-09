@@ -41,6 +41,9 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - run: npm test
       - run: npm run build:catalog
+        env:
+          CATALOG_BASE: /catalog/
+      - run: npm run build:site
 
   # Visual regression tests run on Linux only, in Playwright's container, so
   # rendering matches the Linux baseline. Generate that baseline with the

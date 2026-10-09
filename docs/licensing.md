@@ -79,8 +79,8 @@ project.
 | Google logos in docs and demos (four-color plus in the branded FAB examples, "G" logo in the chip demo), Lit / Polymer / Angular logos in the list docs, `placekitten.com` images | Third-party brand marks and an external image service. | Replaced (2026-10-09) with our own flower logo, Material Symbols icons and inline placeholder images. |
 | `catalog/site/images/favicon.svg`, `catalog/src/svg/material-design-logo.ts` | Upstream catalog icon and the Material Design logo in the catalog's top bar. | Replaced (2026-10-09) with our own flower logo (`catalog/src/svg/logo.ts`). |
 | Google Sans / Google Sans Mono in catalog CSS | Font names left after the font files were removed. | Removed (2026-10-09); the catalog uses Roboto / system fonts. |
-| Web fonts loaded from fonts.googleapis.com (Roboto, Open Sans, Google Sans, Material Symbols) in demos and the catalog | Loaded at runtime, not redistributed. | No action. We do not bundle fonts. |
-| Catalog bundle (`catalog/_prod`, published to GitHub Pages) | Bundles npm packages such as lit (BSD-3-Clause), playground-elements (BSD-3-Clause) and @material/material-color-utilities (Apache-2.0). | esbuild writes their license comments to `*.LEGAL.txt` files next to the bundles, which are published with the site. |
+| Web fonts loaded from fonts.googleapis.com (Roboto, Open Sans, Google Sans, Material Symbols) in demos, the catalog and the landing page | Loaded at runtime, not redistributed. | No action. We do not bundle fonts. |
+| Site bundles (`landing/`, `catalog/`, published to GitHub Pages) | Bundles npm packages such as lit (BSD-3-Clause), playground-elements (BSD-3-Clause) and @material/material-color-utilities (Apache-2.0). | esbuild writes their license comments to `*.LEGAL.txt` files next to the bundles, which are published with the site. |
 | `@fontsource/roboto` (OFL-1.1), `material-symbols` (Apache-2.0) | Dev dependencies used to render test screenshots and doc images. | Not in the npm package. Only the rendered images are committed. |
 
 The removed files still exist in the upstream git history, which this

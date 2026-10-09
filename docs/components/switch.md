@@ -14,7 +14,7 @@ dirname: switch
 
 <!-- external-only-start -->
 **This documentation is fully rendered on the
-[petal-elements catalog](https://petal.anontokyo.vip/components/switch/).**
+[petal-elements catalog](https://petal.anontokyo.vip/catalog/components/switch/).**
 <!-- external-only-end -->
 
 <!-- no-catalog-end -->

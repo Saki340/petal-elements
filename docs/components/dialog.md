@@ -14,7 +14,7 @@ dirname: dialog
 
 <!-- external-only-start -->
 **This documentation is fully rendered on the
-[petal-elements catalog](https://petal.anontokyo.vip/components/dialog/)**
+[petal-elements catalog](https://petal.anontokyo.vip/catalog/components/dialog/)**
 <!-- external-only-end -->
 
 <!-- no-catalog-end -->

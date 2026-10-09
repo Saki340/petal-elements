@@ -1,0 +1,287 @@
+<!doctype html>
+<!--
+  @license
+  Copyright 2026 Saki
+  SPDX-License-Identifier: Apache-2.0
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>petal-elements · Material 3 Expressive web components</title>
+    <meta
+      name="description"
+      content="Community-maintained Material 3 Expressive web components: button sizes, shape morphing, spring motion and button groups. Works with any framework." />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0..1,0&display=block" />
+    <link rel="stylesheet" href="assets/sys.css" />
+    <link rel="stylesheet" href="assets/styles.css" />
+    <script type="module" src="assets/main.js"></script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+
+    <header class="top-bar">
+      <a class="brand" href="./" aria-label="petal-elements home">
+        <svg viewBox="0 0 36 36" aria-hidden="true">
+          <ellipse cx="18" cy="10" rx="5" ry="8" fill="#F48FB1" />
+          <ellipse cx="26" cy="18" rx="8" ry="5" fill="#EC407A" />
+          <ellipse cx="18" cy="26" rx="5" ry="8" fill="#F06292" />
+          <ellipse cx="10" cy="18" rx="8" ry="5" fill="#F8BBD0" />
+          <circle cx="18" cy="18" r="4" fill="#FFD54F" />
+        </svg>
+        <span>petal-elements</span>
+      </a>
+      <nav aria-label="Main">
+        <a href="catalog/about/intro/">Docs</a>
+        <a href="catalog/components/button/">Components</a>
+        <a href="https://github.com/Saki340/petal-elements">GitHub</a>
+        <a href="https://www.npmjs.com/package/petal-elements">npm</a>
+      </nav>
+      <petal-icon-button id="scheme-toggle" aria-label="Switch to dark mode" title="Switch to dark mode">
+        <petal-icon>dark_mode</petal-icon>
+      </petal-icon-button>
+    </header>
+
+    <main id="main">
+      <section class="hero">
+        <div class="hero-text">
+          <p class="eyebrow">Web components · Material 3 Expressive</p>
+          <h1>Expressive Material&nbsp;3, for&nbsp;the&nbsp;web.</h1>
+          <p class="lead">
+            petal-elements brings Material 3 Expressive to plain HTML and any
+            framework: sized buttons that morph when pressed, spring motion,
+            button groups, and the accessible, form-ready components you know
+            from material-web.
+          </p>
+          <div class="actions">
+            <petal-filled-button size="medium" href="#start">Get started</petal-filled-button>
+            <petal-outlined-button size="medium" href="catalog/components/button/">Browse components</petal-outlined-button>
+          </div>
+          <p class="fine">
+            Open source, Apache-2.0. A community-maintained continuation of
+            material-web. Not an official Google project.
+          </p>
+        </div>
+
+        <div class="hero-demo surface" aria-label="Live components">
+          <petal-button-group connected single-select size="medium" aria-label="Calendar view">
+            <petal-filled-tonal-button toggle>Day</petal-filled-tonal-button>
+            <petal-filled-tonal-button toggle selected>Week</petal-filled-tonal-button>
+            <petal-filled-tonal-button toggle>Month</petal-filled-tonal-button>
+          </petal-button-group>
+          <div class="row">
+            <petal-filled-button size="large">Press me</petal-filled-button>
+            <petal-fab variant="filled-tertiary" size="large" aria-label="Add">
+              <petal-icon slot="icon">add</petal-icon>
+            </petal-fab>
+          </div>
+          <div class="row">
+            <petal-outlined-button size="small" toggle>Follow</petal-outlined-button>
+            <petal-switch selected icons aria-label="Notifications"></petal-switch>
+            <petal-filled-icon-button toggle aria-label="Favorite">
+              <petal-icon>favorite</petal-icon>
+              <petal-icon slot="selected">favorite</petal-icon>
+            </petal-filled-icon-button>
+          </div>
+          <p class="hint">These are the real components. Press, toggle, tab through them.</p>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="expressive-title">
+        <h2 id="expressive-title">Material 3 Expressive, built in</h2>
+        <p class="section-lead">
+          Opt-in additions on top of the classic components. Without them, your
+          buttons look exactly as before.
+        </p>
+
+        <div class="features">
+          <article class="feature surface">
+            <h3>Five button sizes</h3>
+            <p>From <code>xsmall</code> to <code>xlarge</code>, round or square. Pressed corners morph with a spring.</p>
+            <div class="demo sizes">
+              <petal-filled-button size="xsmall">XS</petal-filled-button>
+              <petal-filled-button size="small">S</petal-filled-button>
+              <petal-filled-button size="medium">M</petal-filled-button>
+              <petal-filled-button size="large">L</petal-filled-button>
+            </div>
+          </article>
+
+          <article class="feature surface">
+            <h3>Toggle buttons and groups</h3>
+            <p>Buttons that stay selected and change shape. Standard groups make room for the pressed button.</p>
+            <div class="demo">
+              <petal-button-group size="small" aria-label="Text style">
+                <petal-filled-tonal-button toggle>Bold</petal-filled-tonal-button>
+                <petal-filled-tonal-button toggle selected>Italic</petal-filled-tonal-button>
+                <petal-filled-tonal-button toggle>Underline</petal-filled-tonal-button>
+              </petal-button-group>
+            </div>
+          </article>
+
+          <article class="feature surface">
+            <h3>Spring motion</h3>
+            <p>Standard and expressive motion schemes as CSS <code>linear()</code> springs. Switch the whole page with one stylesheet.</p>
+            <div class="demo springs" id="springs">
+              <div class="track"><span class="dot standard"></span><span class="label">Standard</span></div>
+              <div class="track"><span class="dot expressive"></span><span class="label">Expressive</span></div>
+              <petal-text-button id="spring-play" size="small">
+                <petal-icon slot="icon">play_arrow</petal-icon>
+                Play
+              </petal-text-button>
+            </div>
+          </article>
+
+          <article class="feature surface">
+            <h3>Solid FABs</h3>
+            <p>Filled primary, secondary and tertiary FABs next to the container colors.</p>
+            <div class="demo">
+              <petal-fab variant="filled-primary" aria-label="Edit"><petal-icon slot="icon">edit</petal-icon></petal-fab>
+              <petal-fab variant="filled-secondary" aria-label="Share"><petal-icon slot="icon">share</petal-icon></petal-fab>
+              <petal-fab variant="filled-tertiary" label="Compose"><petal-icon slot="icon">edit_square</petal-icon></petal-fab>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="why-title">
+        <h2 id="why-title">Why petal-elements</h2>
+        <div class="reasons">
+          <article class="reason">
+            <petal-icon>code</petal-icon>
+            <h3>Works anywhere</h3>
+            <p>Standard custom elements built with Lit. Use them in plain HTML, React, Vue, Svelte, Astro or a static site.</p>
+          </article>
+          <article class="reason">
+            <petal-icon>accessibility_new</petal-icon>
+            <h3>Forms and accessibility</h3>
+            <p>Fields, checkboxes and buttons take part in native <code>&lt;form&gt;</code>s, with keyboard support and screen reader semantics.</p>
+          </article>
+          <article class="reason">
+            <petal-icon>palette</petal-icon>
+            <h3>Themed with CSS</h3>
+            <p>Every color, shape and type style is a CSS custom property. Light and dark come built in.</p>
+          </article>
+          <article class="reason">
+            <petal-icon>straighten</petal-icon>
+            <h3>Values from source</h3>
+            <p>Sizes, colors and motion come from the published Material design tokens and Jetpack Compose sources, not from eyeballing.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="theme-title">
+        <h2 id="theme-title">One color, a whole theme</h2>
+        <p class="section-lead">
+          Pick a source color. The color scheme is generated for light and dark,
+          and every component on this page follows.
+        </p>
+        <div class="theme-picker" role="radiogroup" aria-label="Source color" id="theme-picker">
+          <button class="swatch" role="radio" aria-checked="true" data-seed="" style="--swatch: #6750a4" title="Baseline">
+            <span class="sr-only">Baseline</span>
+          </button>
+          <button class="swatch" role="radio" aria-checked="false" data-seed="#c2185b" style="--swatch: #c2185b" title="Rose">
+            <span class="sr-only">Rose</span>
+          </button>
+          <button class="swatch" role="radio" aria-checked="false" data-seed="#00796b" style="--swatch: #00796b" title="Teal">
+            <span class="sr-only">Teal</span>
+          </button>
+          <button class="swatch" role="radio" aria-checked="false" data-seed="#ef6c00" style="--swatch: #ef6c00" title="Amber">
+            <span class="sr-only">Amber</span>
+          </button>
+          <button class="swatch" role="radio" aria-checked="false" data-seed="#1565c0" style="--swatch: #1565c0" title="Blue">
+            <span class="sr-only">Blue</span>
+          </button>
+          <label class="custom-color" title="Custom color">
+            <span class="sr-only">Custom color</span>
+            <input type="color" id="custom-seed" value="#7cb342" />
+          </label>
+        </div>
+        <div class="theme-preview surface" aria-label="Preview">
+          <petal-filled-button>Filled</petal-filled-button>
+          <petal-filled-tonal-button>Tonal</petal-filled-tonal-button>
+          <petal-outlined-button>Outlined</petal-outlined-button>
+          <petal-switch selected aria-label="Preview switch"></petal-switch>
+          <petal-fab variant="primary" size="small" aria-label="Add"><petal-icon slot="icon">add</petal-icon></petal-fab>
+          <petal-filled-icon-button toggle selected aria-label="Star">
+            <petal-icon>star</petal-icon>
+            <petal-icon slot="selected">star</petal-icon>
+          </petal-filled-icon-button>
+        </div>
+      </section>
+
+      <section class="section" id="start" aria-labelledby="start-title">
+        <h2 id="start-title">Get started</h2>
+        <div class="steps">
+          <div class="step">
+            <h3>1. Install</h3>
+            <div class="code surface">
+              <pre><code>npm install petal-elements</code></pre>
+              <petal-icon-button class="copy" aria-label="Copy"><petal-icon>content_copy</petal-icon></petal-icon-button>
+            </div>
+          </div>
+          <div class="step">
+            <h3>2. Load the tokens and the components you use</h3>
+            <div class="code surface">
+              <pre><code>&lt;link rel="stylesheet" href="node_modules/petal-elements/tokens/css/sys.css"&gt;
+&lt;script type="module"&gt;
+  import 'petal-elements/button/filled-button.js';
+  import 'petal-elements/buttongroup/button-group.js';
+&lt;/script&gt;
+
+&lt;petal-filled-button size="medium"&gt;Save&lt;/petal-filled-button&gt;</code></pre>
+              <petal-icon-button class="copy" aria-label="Copy"><petal-icon>content_copy</petal-icon></petal-icon-button>
+            </div>
+          </div>
+        </div>
+        <p class="more">
+          Bundling, theming and every component:
+          <a href="catalog/about/quick-start/">Quick start</a> ·
+          <a href="catalog/about/expressive/">Expressive features</a> ·
+          <a href="catalog/components/button/">Components</a>
+        </p>
+      </section>
+
+      <section class="section" aria-labelledby="migrate-title">
+        <h2 id="migrate-title">Coming from material-web</h2>
+        <p class="section-lead">Same components and CSS custom properties, new names.</p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th scope="col"></th><th scope="col">material-web</th><th scope="col">petal-elements</th></tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">Package</th><td><code>@material/web</code></td><td><code>petal-elements</code></td></tr>
+              <tr><th scope="row">Tags</th><td><code>&lt;md-filled-button&gt;</code></td><td><code>&lt;petal-filled-button&gt;</code></td></tr>
+              <tr><th scope="row">Classes</th><td><code>MdFilledButton</code></td><td><code>PetalFilledButton</code></td></tr>
+              <tr><th scope="row">CSS properties</th><td><code>--md-sys-*</code></td><td>unchanged</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>
+        petal-elements is open source under the
+        <a href="https://github.com/Saki340/petal-elements/blob/main/LICENSE">Apache License 2.0</a>.
+        It is based on
+        <a href="https://github.com/material-components/material-web">material-components/material-web</a>
+        and is not an official Google project or affiliated with Google.
+      </p>
+      <p>
+        <a href="catalog/about/intro/">Docs</a> ·
+        <a href="https://github.com/Saki340/petal-elements">GitHub</a> ·
+        <a href="https://www.npmjs.com/package/petal-elements">npm</a> ·
+        <a href="https://github.com/Saki340/petal-elements/blob/main/NOTICE">NOTICE</a>
+      </p>
+    </footer>
+  </body>
+</html>

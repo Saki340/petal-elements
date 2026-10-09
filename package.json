@@ -43,7 +43,9 @@
     "check:tokens": "wireit",
     "tokens:upstream": "wireit",
     "test:visual": "wireit",
-    "docs:images": "wireit"
+    "docs:images": "wireit",
+    "build:landing": "wireit",
+    "build:site": "wireit"
   },
   "type": "module",
   "customElements": "custom-elements.json",
@@ -64,6 +66,8 @@
     "!**/*_test.*",
     "!.wireit/**",
     "!catalog/",
+    "!landing/",
+    "!_site/",
     "!scripts/",
     "!**/testing/**",
     "testing/harness.{js,js.map,d.ts}",
@@ -84,6 +88,7 @@
     "@lit-labs/analyzer": "^0.14.0",
     "@lit-labs/gen-manifest": "^0.3.6",
     "@lit-labs/gen-utils": "^0.3.4",
+    "@material/material-color-utilities": "0.2.7",
     "@playwright/test": "1.56.1",
     "@rollup/plugin-multi-entry": "^6.0.1",
     "@rollup/plugin-node-resolve": "^15.2.3",
@@ -127,6 +132,8 @@
         "!**/*.cssresult.ts",
         "!labs/gb/**",
         "!catalog/",
+        "!landing/",
+        "!_site/",
         "!scripts/"
       ],
       "output": [
@@ -139,6 +146,8 @@
         "!types/",
         "!labs/gb/**",
         "!catalog/",
+        "!landing/",
+        "!_site/",
         "!scripts/"
       ],
       "clean": "if-file-deleted",
@@ -191,6 +200,8 @@
         "**/*.css",
         "**/*.css.map",
         "!catalog/",
+        "!landing/",
+        "!_site/",
         "!tokens/css/**"
       ],
       "dependencies": [
@@ -362,6 +373,27 @@
       "dependencies": [
         "build:ts",
         "build:scripts"
+      ],
+      "output": []
+    },
+    "build:landing": {
+      "command": "node landing/build.mjs",
+      "dependencies": [
+        "build:ts"
+      ],
+      "files": [
+        "landing/**",
+        "!landing/_site/**",
+        "tokens/css/*.css"
+      ],
+      "output": [
+        "landing/_site/**"
+      ]
+    },
+    "build:site": {
+      "command": "node landing/build.mjs --site",
+      "dependencies": [
+        "build:ts"
       ],
       "output": []
     }

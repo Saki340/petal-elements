@@ -14,7 +14,7 @@ dirname: select
 
 <!-- external-only-start -->
 **This documentation is fully rendered on the
-[petal-elements catalog](https://petal.anontokyo.vip/components/select/)**
+[petal-elements catalog](https://petal.anontokyo.vip/catalog/components/select/)**
 <!-- external-only-end -->
 
 <!-- no-catalog-end -->

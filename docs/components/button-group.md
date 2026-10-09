@@ -14,7 +14,7 @@ dirname: button-group
 
 <!-- external-only-start -->
 **This documentation is fully rendered on the
-[petal-elements catalog](https://petal.anontokyo.vip/components/button-group/).**
+[petal-elements catalog](https://petal.anontokyo.vip/catalog/components/button-group/).**
 <!-- external-only-end -->
 
 <!-- no-catalog-end -->

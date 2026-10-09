@@ -12,7 +12,7 @@
 
 0.1.0 版本准备中，尚未发布到 npm。1.0 之前 API 可能变动。
 
-文档和在线示例：[petal-elements catalog](https://petal.anontokyo.vip/) 和 [docs/](docs/intro.md)（英文）。
+官网：[petal.anontokyo.vip](https://petal.anontokyo.vip/)。文档和在线示例：[catalog](https://petal.anontokyo.vip/catalog/) 和 [docs/](docs/intro.md)（英文）。
 
 ## 快速上手
 

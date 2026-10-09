@@ -14,7 +14,7 @@ dirname: chips
 
 <!-- external-only-start -->
 **This documentation is fully rendered on the
-[petal-elements catalog](https://petal.anontokyo.vip/components/chip/)**
+[petal-elements catalog](https://petal.anontokyo.vip/catalog/components/chip/)**
 <!-- external-only-end -->
 
 <!-- no-catalog-end -->

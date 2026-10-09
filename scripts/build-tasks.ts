@@ -18,7 +18,7 @@ import {spawn} from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';
 
-const SKIP_DIRS = new Set(['node_modules', 'catalog', '.wireit', '.git']);
+const SKIP_DIRS = new Set(['node_modules', 'catalog', 'landing', '_site', '.cache', '.wireit', '.git']);
 
 /** Lists files under `dir` (relative paths, forward slashes). */
 function listFiles(dir: string): string[] {

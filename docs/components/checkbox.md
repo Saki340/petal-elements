@@ -14,7 +14,7 @@ dirname: checkbox
 
 <!-- external-only-start -->
 **This documentation is fully rendered on the
-[petal-elements catalog](https://petal.anontokyo.vip/components/checkbox/).**
+[petal-elements catalog](https://petal.anontokyo.vip/catalog/components/checkbox/).**
 <!-- external-only-end -->
 
 <!-- no-catalog-end -->

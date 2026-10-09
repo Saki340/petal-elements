@@ -2,6 +2,8 @@
   "extends": "./tsconfig.base.json",
   "exclude": [
     "catalog",
+    "landing",
+    "_site",
     "**/demo",
     "scripts/",
     "labs/gb/",

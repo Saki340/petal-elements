@@ -15,6 +15,9 @@ tokens/versions/**/*-meta.scss
 custom-elements.json
 
 !catalog/**/*.css
+!landing/**/*.css
+landing/_site
+_site/
 catalog/_dev
 catalog/_prod
 catalog/node_modules

@@ -15,7 +15,7 @@ ssrOnly: true
 
 <!-- external-only-start -->
 **This documentation is fully rendered on the
-[petal-elements catalog](https://petal.anontokyo.vip/components/progress/).**
+[petal-elements catalog](https://petal.anontokyo.vip/catalog/components/progress/).**
 <!-- external-only-end -->
 
 <!-- no-catalog-end -->

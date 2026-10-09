@@ -14,7 +14,7 @@ dirname: fab
 
 <!-- external-only-start -->
 **This documentation is fully rendered on the
-[petal-elements catalog](https://petal.anontokyo.vip/components/fab/).**
+[petal-elements catalog](https://petal.anontokyo.vip/catalog/components/fab/).**
 <!-- external-only-end -->
 
 <!-- no-catalog-end -->

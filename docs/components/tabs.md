@@ -14,7 +14,7 @@ dirname: tabs
 
 <!-- external-only-start -->
 **This documentation is fully rendered on the
-[petal-elements catalog](https://petal.anontokyo.vip/components/tabs/)**
+[petal-elements catalog](https://petal.anontokyo.vip/catalog/components/tabs/)**
 <!-- external-only-end -->
 
 <!-- no-catalog-end -->
