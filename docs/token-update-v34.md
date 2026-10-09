@@ -1,3 +1,9 @@
+<!-- catalog-only-start --><!-- ---
+name: Token update v34
+title: Token update v34
+order: 8
+-----><!-- catalog-only-end -->
+
 # Token update: v0.192 → v34
 
 The core components now take their token values from the Material Design web

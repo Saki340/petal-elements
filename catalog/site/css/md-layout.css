@@ -51,6 +51,21 @@ catalog-component-header img {
   height: var(--catalog-header-image-height, 50%);
 }
 
+/* Doc images are rendered at twice their size (npm run docs:images); show
+   them at their CSS size, and the header image whole. */
+catalog-component-header img,
+main img[src*='images/'] {
+  zoom: 0.5;
+}
+
+catalog-component-header img {
+  align-self: center;
+  height: auto;
+  max-width: 200%;
+  object-fit: contain;
+  width: auto;
+}
+
 .figure-wrapper {
   display: flex;
   justify-content: center;

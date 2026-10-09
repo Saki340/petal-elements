@@ -1,3 +1,9 @@
+<!-- catalog-only-start --><!-- ---
+name: Material 3 Expressive
+title: Material 3 Expressive
+order: 3
+-----><!-- catalog-only-end -->
+
 # Material 3 Expressive features
 
 Additions on top of the components inherited from material-web. Values come from the

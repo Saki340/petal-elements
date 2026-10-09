@@ -40,6 +40,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: npx playwright install --with-deps chromium
       - run: npm test
+      - run: npm run build:catalog
 
   # Visual regression tests run on Linux only, in Playwright's container, so
   # rendering matches the Linux baseline. Generate that baseline with the

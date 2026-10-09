@@ -1,3 +1,9 @@
+<!-- catalog-only-start --><!-- ---
+name: Design tokens
+title: Design tokens
+order: 7
+-----><!-- catalog-only-end -->
+
 # Design tokens
 
 petal-elements generates its design tokens from source, never from screenshots

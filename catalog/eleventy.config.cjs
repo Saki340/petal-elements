@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 const litPlugin = require('@lit-labs/eleventy-plugin-lit');
@@ -17,7 +18,7 @@ const filterSort = require('./eleventy-helpers/filters/filter-sort.cjs');
 const mdMarkdown = require('./eleventy-helpers/filters/md-markdown.cjs');
 const copyCodeButtonPlugin = require('./eleventy-helpers/plugins/copy-code-button.cjs');
 const markdownIt = require('markdown-it');
-const { compress } = require('eleventy-plugin-compress');
+const fs = require('fs/promises');
 
 // dev mode build
 const DEV = process.env.NODE_ENV === 'DEV';
@@ -25,6 +26,8 @@ const DEV = process.env.NODE_ENV === 'DEV';
 const jsDir = DEV ? 'lib' : 'build';
 // where to output 11ty output
 const outputFolder = DEV ? '_dev' : '_prod';
+// Base path of the site, e.g. `/petal-elements/` on GitHub Pages.
+const BASE = process.env.CATALOG_BASE || '/';
 
 module.exports = function (eleventyConfig) {
   // copy folders to the 11ty output folder
@@ -60,6 +63,16 @@ module.exports = function (eleventyConfig) {
   filterToc(eleventyConfig);
   // list of our transforms that we want to apply to markdown links.
   mdMarkdown(eleventyConfig, [
+    // Files in the repository, such as ../scripts/tokens or ../NOTICE.
+    [
+      /^\.\.\/((?:scripts|tokens|tests)(?:\/.*)?|NOTICE|LICENSE)$/,
+      'https://github.com/Saki340/petal-elements/blob/main/$1',
+    ],
+    // Pages from docs/*.md, linked from any page.
+    [
+      /^(?:\.\.\/)?(intro|quick-start|expressive|roadmap|support|size|tokens|token-update-v34|licensing|visual-testing)\.md$/,
+      '/about/$1/',
+    ],
     ['../theming/README.md', '/theming/material-theming/'],
     ['./list', '/components/list'],
     [/theming\/README/, '/theming/'],
@@ -67,7 +80,28 @@ module.exports = function (eleventyConfig) {
     [/^color\.md/, '/theming/color/'],
     [/^color\.md/, '/theming/color/'],
     [/^components\//, '/components/button/'],
+    // A sibling page, e.g. button-group.md from button.md.
+    [/^([\w-]+)\.md$/, '../$1.md'],
   ]);
+
+  // On a base path (GitHub Pages), prefix every root-relative URL in the
+  // output, including those in custom elements and server-rendered shadow
+  // roots.
+  if (BASE !== '/') {
+    eleventyConfig.on('eleventy.after', async ({ results }) => {
+      for (const { outputPath } of results) {
+        if (!outputPath || !outputPath.endsWith('.html')) continue;
+        const html = await fs.readFile(outputPath, 'utf8');
+        await fs.writeFile(
+          outputPath,
+          html.replace(
+            /(\s(?:href|src|import|project-src)=)("?)\/(?!\/)/g,
+            `$1$2${BASE}`,
+          ),
+        );
+      }
+    });
+  }
 
   // install transforms
   minifyHTML(eleventyConfig, DEV);
@@ -95,13 +129,10 @@ module.exports = function (eleventyConfig) {
     wrapper: 'div',
   });
 
-  eleventyConfig.addPlugin(compress, {
-    enabled: !DEV,
-  });
-
   // set output folders and use nunjucks for html templating engine. see
   // nunjucks docs and 11ty docs for more info on nunjucks templating
   return {
+    pathPrefix: BASE,
     htmlTemplateEngine: 'njk',
     markdownTemplateEngine: 'njk',
     dir: {

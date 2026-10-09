@@ -36,6 +36,11 @@ function fixLinks($, redirects) {
       const regex = new RegExp(pattern);
       path = path.replace(regex, replacement);
     }
+    // Redirected to an external URL (a file in the repository).
+    if (path.startsWith('http')) {
+      $(anchor).attr('href', path + (hash ? `#${hash}` : ''));
+      continue;
+    }
     const endsWithMd = path.endsWith('.md');
 
     if (endsWithMd) {

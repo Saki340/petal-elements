@@ -1,7 +1,7 @@
 <!-- catalog-only-start --><!-- ---
 name: Support
 title: Support
-order: 4
+order: 5
 -----><!-- catalog-only-end -->
 
 # Support

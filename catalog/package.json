@@ -1,10 +1,10 @@
 {
   "name": "petal-elements-catalog",
   "version": "0.0.1",
-  "description": "The Material Web Catalog.",
+  "description": "The petal-elements catalog.",
   "main": "_prod/index.html",
   "engines": {
-    "node": "20.x.x"
+    "node": ">=20"
   },
   "scripts": {
     "start": "npm run serve",
@@ -30,7 +30,7 @@
       ]
     },
     "build:dev:eleventy": {
-      "command": "NODE_ENV=DEV eleventy",
+      "command": "node scripts/env.mjs DEV eleventy",
       "files": [
         "site",
         "lib",
@@ -45,10 +45,15 @@
         "build:dev:ts",
         "build:copy-docs",
         "build:copy-stories"
-      ]
+      ],
+      "env": {
+        "CATALOG_BASE": {
+          "external": true
+        }
+      }
     },
     "build:dev:ts": {
-      "command": "NODE_ENV=DEV node esbuild.config.mjs",
+      "command": "node scripts/env.mjs DEV node esbuild.config.mjs",
       "files": [
         "src",
         "tsconfig.json",
@@ -83,7 +88,7 @@
       ]
     },
     "build:prod:eleventy": {
-      "command": "NODE_ENV=PROD eleventy",
+      "command": "node scripts/env.mjs PROD eleventy",
       "files": [
         "site",
         "build",
@@ -98,10 +103,15 @@
         "build:prod:ts",
         "build:copy-docs",
         "build:copy-stories"
-      ]
+      ],
+      "env": {
+        "CATALOG_BASE": {
+          "external": true
+        }
+      }
     },
     "build:prod:ts": {
-      "command": "NODE_ENV=PROD node esbuild.config.mjs",
+      "command": "node scripts/env.mjs PROD node esbuild.config.mjs",
       "files": [
         "src",
         "tsconfig.json",
@@ -171,10 +181,9 @@
     "@11ty/is-land": "^3.0.0",
     "@lit-labs/ssr-client": "^1.1.1",
     "@material/material-color-utilities": "^0.2.7",
-    "@material/mwc-drawer": "^0.27.0",
-    "petal-elements": "*",
     "@preact/signals-core": "^1.3.0",
     "lit": "^2.8.0",
+    "petal-elements": "*",
     "playground-elements": "^0.17.0",
     "postdoc-lib": "^1.0.3"
   },
@@ -188,7 +197,6 @@
     "@webcomponents/template-shadowroot": "^0.2.1",
     "cheerio": "^1.0.0-rc.12",
     "clean-css": "^5.3.1",
-    "eleventy-plugin-compress": "^1.0.5",
     "eleventy-plugin-nesting-toc": "^1.3.0",
     "esbuild": "^0.25.0",
     "esbuild-plugin-minify-html-literals": "^1.0.1",

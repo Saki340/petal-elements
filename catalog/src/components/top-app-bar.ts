@@ -17,7 +17,7 @@ import {live} from 'lit/directives/live.js';
 import {drawerOpenSignal} from '../signals/drawer-open-state.js';
 import {inertContentSignal, inertSidebarSignal} from '../signals/inert.js';
 import {SignalElement} from '../signals/signal-element.js';
-import {materialDesign} from '../svg/material-design-logo.js';
+import {logo} from '../svg/logo.js';
 
 /**
  * Top app bar of the catalog.
@@ -54,12 +54,12 @@ export class TopAppBar extends SignalElement(LitElement) {
               class="home-button"
               title="Home"
               aria-label="Home">
-              ${materialDesign}
+              ${logo}
             </petal-icon-button>
           </section>
 
           <a href="/" id="home-link">
-            Material Web
+            petal-elements
             <petal-focus-ring for="home-link"></petal-focus-ring>
           </a>
 
@@ -75,7 +75,7 @@ export class TopAppBar extends SignalElement(LitElement) {
               <petal-icon-button
                 title="GitHub repository"
                 aria-label="GitHub repository"
-                href="https://github.com/material-components/material-web"
+                href="https://github.com/Saki340/petal-elements"
                 target="_blank">
                 <petal-icon>
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 98 96">
