@@ -2,10 +2,11 @@
 # SPDX-License-Identifier: Apache-2.0
 
 # Builds the catalog (catalog/) and publishes it to GitHub Pages at
-# https://saki340.github.io/petal-elements/.
+# https://petal.anontokyo.vip/.
 #
 # Setup: in the repository settings, Pages > Build and deployment > Source,
-# choose "GitHub Actions".
+# choose "GitHub Actions"; custom domain petal.anontokyo.vip (DNS: CNAME to
+# saki340.github.io).
 
 name: Catalog
 
@@ -31,9 +32,10 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      # The site is at the root of its domain. On a project URL such as
+      # https://<user>.github.io/petal-elements/, set CATALOG_BASE:
+      # /petal-elements/ here.
       - run: npm run build:catalog
-        env:
-          CATALOG_BASE: /petal-elements/
       - uses: actions/upload-pages-artifact@v3
         with:
           path: catalog/_prod

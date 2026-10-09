@@ -14,8 +14,7 @@ Version 0.1.0 is being prepared and has not been published to npm yet. APIs may
 change before 1.0.
 
 Documentation and live examples: the
-[petal-elements catalog](https://saki340.github.io/petal-elements/) (online
-once the repository is published) and [docs/](docs/intro.md).
+[petal-elements catalog](https://petal.anontokyo.vip/) and [docs/](docs/intro.md).
 
 ## Quick start
 

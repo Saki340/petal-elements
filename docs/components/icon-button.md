@@ -12,7 +12,7 @@ dirname: iconbutton
 
 <!-- external-only-start -->
 **This documentation is fully rendered on the
-[petal-elements catalog](https://saki340.github.io/petal-elements/components/icon-button/).**
+[petal-elements catalog](https://petal.anontokyo.vip/components/icon-button/).**
 <!-- external-only-end -->
 
 [Icon buttons](https://m3.material.io/components/icon-buttons)<!-- {.external} -->
