@@ -1,0 +1,184 @@
+//
+// Copyright 2026 Saki
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// Snackbar, after Jetpack Compose Material 3 (Snackbar.kt, SnackbarHost.kt).
+// Colors, shape, type and heights: SnackbarTokens
+// (tokens/versions/compose/values). Spacing: the private constants in
+// Snackbar.kt (HorizontalSpacing 16dp, TextEndExtraSpacing 8dp,
+// SnackbarVerticalPadding 14dp, ActionButtonBottomPadding 4dp,
+// ContainerMaxWidth 600dp) and the 12dp around it in SnackbarHost.
+// Motion: FadeInFadeOutWithScale (opacity on the fast effects spring, scale
+// from 0.8 on the fast spatial spring).
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'sass:map';
+@use '../../tokens/versions/compose/values/md-comp-snackbar' as snackbar;
+@use '../../tokens/versions/v34/values/md-sys-motion-springs' as springs;
+// go/keep-sorted end
+
+// A token for the inner buttons: their own private properties (`--_icon-color`,
+// ...) would clash with ours on their host, so pass the value itself.
+@function _token($name) {
+  @return var(--md-snackbar-#{$name}, #{map.get(snackbar.$values, $name)});
+}
+
+@mixin styles() {
+  :host {
+    @each $token, $value in snackbar.$values {
+      --_#{$token}: var(--md-snackbar-#{$token}, #{$value});
+    }
+
+    position: fixed;
+    inset-inline: 0;
+    bottom: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    padding: 12px;
+    padding-bottom: max(12px, env(safe-area-inset-bottom, 0px));
+    pointer-events: none;
+  }
+
+  :host(:not([open])) .snackbar:not(.closing) {
+    display: none;
+  }
+
+  .snackbar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 600px;
+    min-height: var(--_single-line-container-height);
+    padding-inline: 16px 8px;
+    border-radius: var(--_container-shape);
+    background-color: var(--_container-color);
+    color: var(--_supporting-text-color);
+    font-family: var(--_supporting-text-font);
+    font-size: var(--_supporting-text-size);
+    font-weight: var(--_supporting-text-weight);
+    line-height: var(--_supporting-text-line-height);
+    letter-spacing: var(--_supporting-text-tracking);
+    pointer-events: auto;
+    animation:
+      fade-in map.get(springs.$values, 'spring-fast-effects-duration')
+        map.get(springs.$values, 'spring-fast-effects'),
+      grow map.get(springs.$values, 'spring-fast-spatial-duration')
+        map.get(springs.$values, 'spring-fast-spatial');
+    --md-elevation-level: var(--_container-elevation);
+  }
+
+  .snackbar.closing {
+    animation:
+      fade-out map.get(springs.$values, 'spring-fast-effects-duration')
+        map.get(springs.$values, 'spring-fast-effects') forwards,
+      shrink map.get(springs.$values, 'spring-fast-spatial-duration')
+        map.get(springs.$values, 'spring-fast-spatial') forwards;
+  }
+
+  // With a dismiss button, the button sits at the end edge.
+  .snackbar.has-dismiss {
+    padding-inline-end: 0;
+  }
+
+  .label {
+    flex: 1;
+    min-width: 0;
+    padding-block: 14px;
+    padding-inline-end: 8px;
+  }
+
+  // Compose keeps TextEndExtraSpacing between the text and the action only
+  // without a dismiss button.
+  .snackbar.has-dismiss:not(.new-line) .label {
+    padding-inline-end: 0;
+  }
+
+  .actions {
+    display: flex;
+    flex: none;
+    align-items: center;
+  }
+
+  // Action on a new line: text, then the buttons at the end.
+  .snackbar.new-line {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .snackbar.new-line .label {
+    padding-inline-end: 16px;
+  }
+
+  .snackbar.new-line .actions {
+    align-self: flex-end;
+    padding-bottom: 4px;
+  }
+
+  .snackbar.new-line.has-dismiss {
+    padding-inline-end: 0;
+  }
+
+  .action {
+    --md-text-button-label-text-color: #{_token('action-label-text-color')};
+    --md-text-button-hover-label-text-color: #{_token('action-hover-label-text-color')};
+    --md-text-button-focus-label-text-color: #{_token('action-focus-label-text-color')};
+    --md-text-button-pressed-label-text-color: #{_token('action-pressed-label-text-color')};
+    --md-text-button-hover-state-layer-color: #{_token('action-hover-label-text-color')};
+    --md-text-button-pressed-state-layer-color: #{_token('action-pressed-label-text-color')};
+    --md-text-button-label-text-font: #{_token('action-label-text-font')};
+    --md-text-button-label-text-size: #{_token('action-label-text-size')};
+    --md-text-button-label-text-weight: #{_token('action-label-text-weight')};
+    --md-text-button-label-text-line-height: #{_token('action-label-text-line-height')};
+  }
+
+  .dismiss {
+    --md-icon-button-icon-color: #{_token('icon-color')};
+    --md-icon-button-hover-icon-color: #{_token('hover-icon-color')};
+    --md-icon-button-focus-icon-color: #{_token('focus-icon-color')};
+    --md-icon-button-pressed-icon-color: #{_token('pressed-icon-color')};
+    --md-icon-button-hover-state-layer-color: #{_token('hover-icon-color')};
+    --md-icon-button-pressed-state-layer-color: #{_token('pressed-icon-color')};
+    --md-icon-button-icon-size: #{_token('icon-size')};
+  }
+
+  .dismiss svg {
+    width: #{_token('icon-size')};
+    height: #{_token('icon-size')};
+    fill: currentColor;
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+  }
+
+  @keyframes fade-out {
+    to {
+      opacity: 0;
+    }
+  }
+
+  @keyframes grow {
+    from {
+      transform: scale(0.8);
+    }
+  }
+
+  @keyframes shrink {
+    to {
+      transform: scale(0.8);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .snackbar,
+    .snackbar.closing {
+      animation-duration: 0s;
+    }
+  }
+}

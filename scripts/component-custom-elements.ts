@@ -49,6 +49,7 @@ export const COMPONENT_CUSTOM_ELEMENTS = {
     'select/select-option.ts',
   ],
   slider: ['slider/slider.ts'],
+  snackbar: ['snackbar/snackbar.ts'],
   switch: ['switch/switch.ts'],
   tabs: ['tabs/tabs.ts', 'tabs/primary-tab.ts', 'tabs/secondary-tab.ts'],
   textField: [

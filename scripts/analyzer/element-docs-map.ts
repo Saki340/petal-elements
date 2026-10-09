@@ -33,4 +33,5 @@ export const docsToElementMapping: {[key: string]: readonly string[]} = {
   'tabs.md': COMPONENT_CUSTOM_ELEMENTS.tabs,
   'text-field.md': COMPONENT_CUSTOM_ELEMENTS.textField,
   'select.md': COMPONENT_CUSTOM_ELEMENTS.select,
+  'snackbar.md': COMPONENT_CUSTOM_ELEMENTS.snackbar,
 };

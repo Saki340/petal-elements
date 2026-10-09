@@ -20,6 +20,7 @@ const COMPONENTS = [
   'switch',
   'text-field',
   'chips',
+  'snackbar',
   'progress',
   'tabs',
 ];

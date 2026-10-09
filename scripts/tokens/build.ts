@@ -27,7 +27,7 @@ import {buildCss} from './css.js';
 import {kebab, Output, SOURCES, stableJson} from './dtcg.js';
 import {readLegacyTokens} from './legacy.js';
 import {buildCompatSass, compatReport} from './sass.js';
-import {buildValueModules} from './values.js';
+import {buildComposeValueModules, buildValueModules} from './values.js';
 import {readWebTokens} from './web.js';
 
 const check = process.argv.includes('--check');
@@ -69,6 +69,13 @@ for (const [name, content] of buildValueModules(web.files, css.get('sys.css')!))
   valuesOut.add(name, content);
 }
 outputs.push(valuesOut);
+
+// Value maps from Compose, for components that follow Compose.
+const composeValuesOut = new Output('tokens/versions/compose/values', '.scss', /-meta\.scss$/);
+for (const [name, content] of buildComposeValueModules(compose.files)) {
+  composeValuesOut.add(name, content);
+}
+outputs.push(composeValuesOut);
 
 // 5. Reports.
 const onlyLightDark = (flat: Flat): Flat =>

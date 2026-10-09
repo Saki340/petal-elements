@@ -333,6 +333,32 @@ const galleries: Record<string, Gallery> = {
     ],
   },
 
+  // Snackbars are fixed to the bottom of the page; here they sit in the grid.
+  snackbar: {
+    states: ['default'],
+    rows: [
+      ['message', ''],
+      ['action', 'action="Undo"'],
+      ['dismiss', 'dismissible'],
+      ['action and dismiss', 'action="Undo" dismissible'],
+      ['two lines', 'action="Undo"', 'Photo saved to the album. It will be backed up the next time the device is charging.'],
+      ['action on new line', 'action="Open settings" action-on-new-line dismissible', 'Storage is almost full.'],
+    ].map(([name, attributes, text = 'Message sent']) => ({
+      name,
+      render: () => {
+        const snackbar = document.createElement('petal-snackbar');
+        snackbar.innerHTML = text;
+        for (const attribute of attributes.match(/[\w-]+(="[^"]*")?/g) ?? []) {
+          const [key, value = ''] = attribute.split('=');
+          snackbar.setAttribute(key, value.replace(/"/g, ''));
+        }
+        snackbar.setAttribute('open', '');
+        snackbar.style.cssText = 'position: static; display: block; width: 480px; padding: 0';
+        return html`${snackbar}`;
+      },
+    })),
+  },
+
   progress: {
     states: ['default'],
     rows: [

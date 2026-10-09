@@ -1,0 +1,28 @@
+<!--
+  @license
+  Copyright 2026 Saki
+  SPDX-License-Identifier: Apache-2.0
+-->
+<div class="figure-wrapper">
+  <figure
+      class="snackbar-figure"
+      style="justify-content: center; padding-block: 24px"
+      title="Snackbar theming example"
+      aria-label="A snackbar with square corners and a teal action.">
+    <style>
+      .snackbar-figure petal-snackbar {
+        position: static;
+        display: block;
+        width: 420px;
+        padding: 0;
+      }
+    </style>
+    <style>
+      .snackbar-theming {
+        --md-snackbar-container-shape: 0px;
+        --md-snackbar-action-label-text-color: #80d5d4;
+      }
+    </style>
+    <petal-snackbar class="snackbar-theming" open action="Undo">Message sent</petal-snackbar>
+  </figure>
+</div>
