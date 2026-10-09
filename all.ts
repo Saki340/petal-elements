@@ -59,6 +59,7 @@ import './tabs/secondary-tab.js';
 import './tabs/tabs.js';
 import './textfield/filled-text-field.js';
 import './textfield/outlined-text-field.js';
+import './tooltip/tooltip.js';
 // go/keep-sorted end
 // LINT.ThenChange(:exports)
 
@@ -109,5 +110,6 @@ export * from './tabs/secondary-tab.js';
 export * from './tabs/tabs.js';
 export * from './textfield/filled-text-field.js';
 export * from './textfield/outlined-text-field.js';
+export * from './tooltip/tooltip.js';
 // go/keep-sorted end
 // LINT.ThenChange(:imports)

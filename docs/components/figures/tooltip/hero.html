@@ -1,0 +1,37 @@
+<!--
+  @license
+  Copyright 2026 Saki
+  SPDX-License-Identifier: Apache-2.0
+-->
+<div class="figure-wrapper">
+  <figure
+      class="tooltip-figure"
+      style="justify-content: center; gap: 32px; padding-block: 24px"
+      title="Plain tooltips"
+      aria-label="Tooltips above three icon buttons: Share, Bookmark and More options.">
+    <style>
+      .tooltip-figure .stack {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+      }
+      .tooltip-figure petal-tooltip {
+        display: block;
+        position: static;
+      }
+    </style>
+    <div class="stack">
+      <petal-tooltip>Share</petal-tooltip>
+      <petal-icon-button aria-label="Share"><petal-icon>share</petal-icon></petal-icon-button>
+    </div>
+    <div class="stack">
+      <petal-tooltip>Bookmark</petal-tooltip>
+      <petal-icon-button aria-label="Bookmark"><petal-icon>bookmark</petal-icon></petal-icon-button>
+    </div>
+    <div class="stack">
+      <petal-tooltip>More options</petal-tooltip>
+      <petal-icon-button aria-label="More options"><petal-icon>more_vert</petal-icon></petal-icon-button>
+    </div>
+  </figure>
+</div>

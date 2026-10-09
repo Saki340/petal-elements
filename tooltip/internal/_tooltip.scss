@@ -1,0 +1,100 @@
+//
+// Copyright 2026 Saki
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// Plain tooltip, after Jetpack Compose Material 3 (Tooltip.kt): colors, shape
+// and type from PlainTooltipTokens (tokens/versions/compose/values); 40dp x
+// 24dp minimum, 200dp maximum width (TooltipDefaults.plainTooltipMaxWidth),
+// 8dp x 4dp padding (PlainTooltipContentPadding). Opacity on the fast effects
+// spring and scale from 0.8 on the fast spatial spring.
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'sass:map';
+@use '../../tokens/versions/compose/values/md-comp-plain-tooltip' as tooltip;
+@use '../../tokens/versions/v34/values/md-sys-motion-springs' as springs;
+// go/keep-sorted end
+
+@mixin styles() {
+  :host {
+    @each $token, $value in tooltip.$values {
+      --_#{$token}: var(--md-tooltip-#{$token}, #{$value});
+    }
+
+    // A manual popover in the top layer; tooltip.ts sets left and top.
+    position: fixed;
+    inset: auto;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    overflow: visible;
+    color: inherit;
+    pointer-events: none;
+  }
+
+  :host(:not(:popover-open)) {
+    display: none;
+  }
+
+  .tooltip {
+    box-sizing: border-box;
+    min-width: 40px;
+    max-width: 200px;
+    min-height: 24px;
+    padding: 4px 8px;
+    border-radius: var(--_container-shape);
+    background-color: var(--_container-color);
+    color: var(--_supporting-text-color);
+    font-family: var(--_supporting-text-font);
+    font-size: var(--_supporting-text-size);
+    font-weight: var(--_supporting-text-weight);
+    line-height: var(--_supporting-text-line-height);
+    letter-spacing: var(--_supporting-text-tracking);
+    transform-origin: var(--_origin, center bottom);
+    animation:
+      fade-in map.get(springs.$values, 'spring-fast-effects-duration')
+        map.get(springs.$values, 'spring-fast-effects'),
+      grow map.get(springs.$values, 'spring-fast-spatial-duration')
+        map.get(springs.$values, 'spring-fast-spatial');
+  }
+
+  .tooltip.closing {
+    animation:
+      fade-out map.get(springs.$values, 'spring-fast-effects-duration')
+        map.get(springs.$values, 'spring-fast-effects') forwards,
+      shrink map.get(springs.$values, 'spring-fast-spatial-duration')
+        map.get(springs.$values, 'spring-fast-spatial') forwards;
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+  }
+
+  @keyframes fade-out {
+    to {
+      opacity: 0;
+    }
+  }
+
+  @keyframes grow {
+    from {
+      transform: scale(0.8);
+    }
+  }
+
+  @keyframes shrink {
+    to {
+      transform: scale(0.8);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tooltip,
+    .tooltip.closing {
+      animation-duration: 0s;
+    }
+  }
+}

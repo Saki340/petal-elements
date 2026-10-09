@@ -1,0 +1,36 @@
+<!--
+  @license
+  Copyright 2026 Saki
+  SPDX-License-Identifier: Apache-2.0
+-->
+<div class="figure-wrapper">
+  <figure
+      class="tooltip-figure"
+      style="justify-content: center; gap: 32px; padding-block: 24px"
+      title="Tooltip theming example"
+      aria-label="A tooltip with square corners and a teal container.">
+    <style>
+      .tooltip-figure .stack {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+      }
+      .tooltip-figure petal-tooltip {
+        display: block;
+        position: static;
+      }
+    </style>
+    <style>
+      .tooltip-theming {
+        --md-tooltip-container-shape: 0px;
+        --md-tooltip-container-color: #006a6a;
+        --md-tooltip-supporting-text-color: #ffffff;
+      }
+    </style>
+    <div class="stack">
+      <petal-tooltip class="tooltip-theming">Bookmark</petal-tooltip>
+      <petal-icon-button aria-label="Bookmark"><petal-icon>bookmark</petal-icon></petal-icon-button>
+    </div>
+  </figure>
+</div>

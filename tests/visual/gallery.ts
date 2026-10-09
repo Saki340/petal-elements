@@ -359,6 +359,18 @@ const galleries: Record<string, Gallery> = {
     })),
   },
 
+  // Tooltips are popovers next to their anchor; here they show in place.
+  tooltip: {
+    states: ['default'],
+    rows: [
+      ['short', 'Save'],
+      ['long', 'Copies the link to this page, so you can share it in a message.'],
+    ].map(([name, text]) => ({
+      name,
+      render: () => html`<petal-tooltip style="display: block; position: static">${text}</petal-tooltip>`,
+    })),
+  },
+
   progress: {
     states: ['default'],
     rows: [

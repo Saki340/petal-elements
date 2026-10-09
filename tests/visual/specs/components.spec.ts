@@ -21,6 +21,7 @@ const COMPONENTS = [
   'text-field',
   'chips',
   'snackbar',
+  'tooltip',
   'progress',
   'tabs',
 ];
