@@ -6,25 +6,17 @@ order: 1
 
 # Theming
 
-<!-- go/mwc-theming -->
-
-<!--*
-# Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'lizmitchell' reviewed: '2026-07-31' }
-tag: 'docType:concepts'
-*-->
-
 <!-- [TOC] -->
 
 [Material Design theming](https://m3.material.io/foundations/customization)<!-- {.external} -->
-creates unique branded products with familiar patterns and accessible
-interactions.
+adapts the components to a brand with colors, typefaces and shapes, while
+keeping their behavior.
 
 ## Tokens
 
-Material is expressed in
-[design tokens](https://m3.material.io/foundations/design-tokens/overview)<!-- {.external} -->,
-which are the building blocks of all UI elements.
+Theming uses
+[design tokens](https://m3.material.io/foundations/design-tokens/overview)<!-- {.external} -->, named values such as colors and sizes that the components
+read.
 
 Each component token maps to a system token, which has a concrete reference
 value.
@@ -63,7 +55,8 @@ families and weights across all system and component tokens.
 
 #### Palette
 
-*MWC does not currently support `--md-ref-palette` tokens.*
+Palette tones (`--md-ref-palette-*`) are not custom properties. System colors
+fall back to the tone's value directly; set `--md-sys-color-*` tokens instead.
 
 ### System
 
@@ -110,7 +103,21 @@ components. See the [shape guide](shape.md) for more details.
 
 #### Motion
 
-*MWC does not currently support `--md-sys-motion` tokens.*
+`tokens/css/sys.css` defines the motion tokens: durations, easings, and springs
+as `--md-sys-motion-spring-<fast|default|slow>-<spatial|effects>` (a CSS
+`linear()` easing) with a matching `-duration`. The Expressive features use the
+springs, for example for shape morphing.
+
+```css
+:root {
+  /* Slower, softer spatial spring for every component that uses it. */
+  --md-sys-motion-spring-fast-spatial: var(--md-sys-motion-spring-default-spatial);
+  --md-sys-motion-spring-fast-spatial-duration: var(--md-sys-motion-spring-default-spatial-duration);
+}
+```
+
+Load `tokens/css/motion-expressive.css` to switch to the expressive motion
+scheme. See [Material 3 Expressive features](../expressive.md#motion).
 
 ### Component
 

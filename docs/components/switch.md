@@ -8,27 +8,19 @@ dirname: switch
 
 # Switch
 
-<!--*
-# Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'lizmitchell' reviewed: '2026-07-31' }
-tag: 'docType:reference'
-*-->
-
 <!-- no-catalog-start -->
-
-<!-- go/md-switch -->
 
 <!-- [TOC] -->
 
 <!-- external-only-start -->
 **This documentation is fully rendered on the
-[Material Web catalog](https://material-web.dev/components/switch/).**
+[petal-elements catalog](https://saki340.github.io/petal-elements/components/switch/).**
 <!-- external-only-end -->
 
 <!-- no-catalog-end -->
 
-[Switches](https://m3.material.io/components/switch)<!-- {.external} --> toggle the state
-of an item on or off.
+[Switches](https://m3.material.io/components/switch)<!-- {.external} -->
+turn a single setting on or off.
 
 </catalog-component-header-title>
 
@@ -42,7 +34,7 @@ of an item on or off.
 
 *   [Design article](https://m3.material.io/components/switch) <!-- {.external} -->
 *   [API Documentation](#api)
-*   [Source code](https://github.com/material-components/material-web/tree/main/switch)
+*   [Source code](https://github.com/Saki340/petal-elements/tree/main/switch)
     <!-- {.external} -->
 
 <!-- catalog-only-start -->
@@ -143,7 +135,7 @@ Token                               | Default value
 `--md-switch-selected-handle-color` | `--md-sys-color-on-primary`
 `--md-switch-selected-track-color`  | `--md-sys-color-primary`
 
-*   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-switch.scss)
+*   [All tokens](https://github.com/Saki340/petal-elements/blob/main/tokens/_md-comp-switch.scss)
     <!-- {.external} -->
 
 ### Example

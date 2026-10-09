@@ -1,13 +1,5 @@
 # Focus ring
 
-<!--*
-# Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'lizmitchell' reviewed: '2026-07-31' }
-tag: 'docType:reference'
-*-->
-
-<!-- go/md-focus-ring -->
-
 <!-- [TOC] -->
 
 Focus rings are accessible outlines for components to show keyboard focus.
@@ -19,7 +11,7 @@ to determine when they are visible.
 ![Three buttons; the middle one has a focus ring.](images/focus/hero.webp "A focus ring on the focused element.")
 
 *   [API Documentation](#api)
-*   [Source code](https://github.com/material-components/material-web/tree/main/focus)
+*   [Source code](https://github.com/Saki340/petal-elements/tree/main/focus)
     <!-- {.external} -->
 
 ## Usage
@@ -106,7 +98,7 @@ Token                   | Default value
 `--md-focus-ring-shape` | `--md-sys-shape-corner-full`
 `--md-focus-ring-width` | `3px`
 
-*   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-focus-ring.scss)
+*   [All tokens](https://github.com/Saki340/petal-elements/blob/main/tokens/_md-comp-focus-ring.scss)
     <!-- {.external} -->
 
 ### Example

@@ -1,6 +1,6 @@
 # Material 3 Expressive features
 
-Additions on top of the Material Web components. Values come from the
+Additions on top of the components inherited from material-web. Values come from the
 Material Design web tokens v34 (see [tokens.md](tokens.md)); behavior follows
 Jetpack Compose Material 3. Where Compose's `*Defaults` deliberately override a
 token, the components follow Compose, and this page lists each case.

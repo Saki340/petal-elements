@@ -6,18 +6,10 @@ order: 3
 
 # Typography
 
-<!-- go/mwc-typography -->
-
-<!--*
-# Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'lizmitchell' reviewed: '2026-07-31' }
-tag: 'docType:howTo'
-*-->
-
 <!-- [TOC] -->
 
-[Typography](https://m3.material.io/styles/typography)<!-- {.external} --> helps make
-writing legible and beautiful.
+[Typography](https://m3.material.io/styles/typography)<!-- {.external} -->
+covers the fonts and text styles of the components.
 
 > Tip: "typeface" and "typescale" can be confusing. "face" refers to
 > `font-family` and `font-weight`.
@@ -26,8 +18,6 @@ writing legible and beautiful.
 > `font-weight` tokens.
 
 ## Typeface
-
-<!-- go/md-ref-typeface -->
 
 A [typeface](https://m3.material.io/styles/typography/fonts)<!-- {.external} --> is a
 `font-family`. In Material there are plain and brand typefaces.
@@ -50,7 +40,7 @@ Typeface | Token
 Brand    | `--md-ref-typeface-brand`
 Plain    | `--md-ref-typeface-plain`
 
-*   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-ref-typeface.scss)
+*   [All tokens](https://github.com/Saki340/petal-elements/blob/main/tokens/_md-ref-typeface.scss)
     <!-- {.external} -->
 
 ```css
@@ -64,8 +54,6 @@ Plain    | `--md-ref-typeface-plain`
 
 ## Typescale
 
-<!-- go/md-sys-typescale -->
-
 A
 [typescale](https://m3.material.io/styles/typography/type-scale-tokens)<!-- {.external} -->
 is a collection of font styles: `font-family`, `font-size`, `line-height`, and
@@ -76,8 +64,6 @@ Material's
 explains when to use each typescale role.
 
 ### Classes
-
-<!-- go/md-typescale -->
 
 Typescales can be applied to an element using the classes from the typescale
 stylesheet.
@@ -138,7 +124,7 @@ Label     | `--md-sys-typescale-label-medium-font`
 &nbsp;    | `--md-sys-typescale-label-medium-line-height`
 &nbsp;    | `--md-sys-typescale-label-medium-weight`
 
-*   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-sys-typescale.scss)
+*   [All tokens](https://github.com/Saki340/petal-elements/blob/main/tokens/_md-sys-typescale.scss)
     <!-- {.external} -->
 
 ```css
@@ -171,4 +157,3 @@ Label     | `--md-sys-typescale-label-medium-font`
 > }
 > ```
 
-<!--#include file="../../googlers/theming-typography.md" -->

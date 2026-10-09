@@ -1,24 +1,16 @@
 # Icon
 
-<!--*
-# Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'dfreedm' reviewed: '2026-07-31' }
-tag: 'docType:reference'
-*-->
-
-<!-- go/md-icon -->
-
 <!-- [TOC] -->
 
-[Icons](https://m3.material.io/styles/icons/overview)<!-- {.external} --> can be used to
-represent common actions. Material Symbols are a set of variable icon fonts
-created at seven weights across three different styles.
+[Icons](https://m3.material.io/styles/icons/overview)<!-- {.external} -->
+show common actions and objects as symbols. Material Symbols is a variable icon
+font in three styles with adjustable weight, fill, grade and optical size.
 
 ![Array of icons with various stylistic attributes](images/icon/hero.webp)
 
 *   [Design article](https://m3.material.io/styles/icons) <!-- {.external} -->
 *   [API Documentation](#api)
-*   [Source code](https://github.com/material-components/material-web/tree/main/icon)
+*   [Source code](https://github.com/Saki340/petal-elements/tree/main/icon)
     <!-- {.external} -->
 
 ## Usage
@@ -143,7 +135,7 @@ Token            | Default value
 `--md-icon-font` | `'Material Symbols Outlined'`
 `--md-icon-size` | `24px`
 
-*   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-icon.scss)
+*   [All tokens](https://github.com/Saki340/petal-elements/blob/main/tokens/_md-comp-icon.scss)
     <!-- {.external} -->
 
 ### Example

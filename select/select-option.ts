@@ -21,9 +21,8 @@ declare global {
 }
 
 /**
- * @summary
- * Select menus display a list of choices on temporary surfaces and display the
- * currently selected menu item above the menu.
+ * @summary Select menus show a list of options and the selected option in a
+ * field.
  *
  * @description
  * The select component allows users to choose a value from a fixed list of

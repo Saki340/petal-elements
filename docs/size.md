@@ -7,16 +7,9 @@ hasToc: false
 
 # Sizes
 
-<!-- go/mwc-size -->
-
-<!--*
-# Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'lizmitchell' reviewed: '2026-07-31' }
-*-->
-
 <!-- [TOC] -->
 
-This doc tracks important size metrics for Material Web Components.
+This doc tracks important size metrics for petal-elements.
 
 Sizes are tracked in bundles. A bundle is a single `.js` file for one or more
 components that includes all of the JavaScript and CSS needed, minus external

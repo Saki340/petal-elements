@@ -20,7 +20,7 @@ declare global {
 
 // TODO(b/267336507): add docs
 /**
- * @summary Tab allow users to display a tab within a Tabs.
+ * @summary A secondary tab, used inside `<petal-tabs>`.
  *
  * @final
  * @suppress {visibility}

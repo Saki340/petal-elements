@@ -10,25 +10,17 @@ dirname: menu
 
 <!-- no-catalog-start -->
 
-<!--*
-# Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'lizmitchell' reviewed: '2026-07-31' }
-tag: 'docType:reference'
-*-->
-
-<!-- go/md-menu -->
-
 <!-- [TOC] -->
 
 <!-- external-only-start -->
 **This documentation is fully rendered on the
-[Material Web catalog](https://material-web.dev/components/menu/).**
+[petal-elements catalog](https://saki340.github.io/petal-elements/components/menu/).**
 <!-- external-only-end -->
 
 <!-- no-catalog-end -->
 
-[Menus](https://m3.material.io/components/menus)<!-- {.external} --> display a list of
-choices on a temporary surface.
+[Menus](https://m3.material.io/components/menus)<!-- {.external} -->
+show a list of choices on a temporary surface.
 
 </catalog-component-header-title>
 
@@ -41,7 +33,7 @@ choices on a temporary surface.
 
 *   [Design article](https://m3.material.io/components/menus) <!-- {.external} -->
 *   [API Documentation](#api)
-*   [Source code](https://github.com/material-components/material-web/tree/main/menu)
+*   [Source code](https://github.com/Saki340/petal-elements/tree/main/menu)
     <!-- {.external} -->
 
 <!-- catalog-only-start -->
@@ -437,13 +429,13 @@ Token                                     | Default value
 `--md-menu-item-container-color`          | `--md-sys-color-surface-container`
 `--md-menu-item-selected-container-color` | `--md-sys-color-secondary-container`
 
-*   [Menu tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-menu.scss)
+*   [Menu tokens](https://github.com/Saki340/petal-elements/blob/main/tokens/_md-comp-menu.scss)
     <!-- {.external} -->
-*   [Menu item tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-menu-item.scss)
+*   [Menu item tokens](https://github.com/Saki340/petal-elements/blob/main/tokens/_md-comp-menu-item.scss)
     <!-- {.external} -->
-*   [List tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-list.scss)
+*   [List tokens](https://github.com/Saki340/petal-elements/blob/main/tokens/_md-comp-list.scss)
     <!-- {.external} -->
-*   [List item tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-list-item.scss)
+*   [List item tokens](https://github.com/Saki340/petal-elements/blob/main/tokens/_md-comp-list-item.scss)
     <!-- {.external} -->
 
 ### Example
@@ -582,6 +574,8 @@ a sharp 0px border radius.](images/menu/theming.webp)
 | `type` | `type` | `MenuItemType` | `'menuitem'` | Sets the behavior and role of the menu item, defaults to "menuitem". |
 | `href` | `href` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `href` resource attribute. |
 | `target` | `target` | `"" \| "_blank" \| "_parent" \| "_self" \| "_top"` | `''` | Sets the underlying `HTMLAnchorElement`'s `target` attribute when `href` is set. |
+| `rel` | `rel` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `rel` attribute when `href` is set. |
+| `referrerPolicy` | `referrerpolicy` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `referrerpolicy` attribute when `href` is set. |
 | `keepOpen` | `keep-open` | `boolean` | `false` | Keeps the menu open if clicked or keyboard selected. |
 | `selected` | `selected` | `boolean` | `false` | Sets the item in the selected visual state when a submenu is opened. |
 | `typeaheadText` |  | `string` | `undefined` |  |

@@ -6,14 +6,6 @@ order: 2
 
 # Quick start
 
-<!--*
-# Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'lizmitchell' reviewed: '2026-07-31' }
-tag: 'docType:gettingStarted'
-*-->
-
-<!-- go/mwc-quick-start -->
-
 <!-- [TOC] -->
 
 ## CDN
@@ -22,11 +14,10 @@ For fast prototyping, we recommend using [esm.run](https://esm.run/)<!-- {.exter
 a CDN that allows you to use `petal-elements` without installing and building
 from NPM.
 
-<!-- LINT.IfChange -->
-
 ```html
 <head>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/petal-elements/tokens/css/sys.css" rel="stylesheet">
   <script type="importmap">
     {
       "imports": {
@@ -42,7 +33,7 @@ from NPM.
   </script>
 </head>
 <body>
-  <h1 class="md-typescale-display-medium">Hello Material!</h1>
+  <h1 class="md-typescale-display-medium">Hello petal-elements!</h1>
   <form>
     <p class="md-typescale-body-medium">Check out these controls in a form!</p>
     <petal-checkbox></petal-checkbox>
@@ -65,17 +56,13 @@ from NPM.
 </body>
 ```
 
-<!-- LINT.ThenChange(../../README.md) -->
-
 For production, follow the [install](#install) and [build](#building) steps
 below.
 
 ## Install
 
-<!--#include file="../googlers/quick-start-install.md" -->
-
-Install Material web components using
-[npm and node](https://nodejs.org)<!-- {.external} -->.
+Install petal-elements with
+[npm](https://nodejs.org)<!-- {.external} -->.
 
 ```shell
 npm install petal-elements
@@ -93,7 +80,31 @@ import 'petal-elements/button/outlined-button.js';
 import 'petal-elements/checkbox/checkbox.js';
 ```
 
-<!--#include file="../googlers/quick-start-import.md" -->
+## Tokens
+
+Load `tokens/css/sys.css` for the full set of system tokens: colors for light
+and dark mode, typography, shapes, elevation and motion. The components work
+without it (they fall back to the light baseline values), but dark mode and
+most theming need it.
+
+```html
+<link rel="stylesheet" href="node_modules/petal-elements/tokens/css/sys.css">
+<style>
+  :root {
+    color-scheme: light dark; /* follow the system setting */
+  }
+</style>
+```
+
+Other stylesheets in `tokens/css/`:
+
+-   `sys-medium-contrast.css`, `sys-high-contrast.css`: colors with more
+    contrast. They contain only colors; load one after `sys.css`.
+-   `motion-expressive.css`: switches the motion springs to the expressive
+    scheme (more bounce). Load it after `sys.css`.
+
+Each file is also available as a Lit `CSSResult`
+(`tokens/css/sys.cssresult.js` exports `styles`).
 
 ## Usage
 
@@ -106,7 +117,7 @@ Use the `<component-name>` tag in HTML markup. Refer to the
 <script type="module" src="./index.js"></script>
 
 <label>
-  Material 3
+  Remember me
   <petal-checkbox checked></petal-checkbox>
 </label>
 
@@ -116,9 +127,7 @@ Use the `<component-name>` tag in HTML markup. Refer to the
 
 ## Building
 
-<!--#include file="../googlers/quick-start-build.md" -->
-
-Material web components uses bare module specifiers that must be resolved with
+petal-elements uses bare module specifiers that must be resolved with
 tools until [import maps](https://github.com/WICG/import-maps)<!-- {.external} --> are
 adopted.
 

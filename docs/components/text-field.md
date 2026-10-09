@@ -8,27 +8,19 @@ dirname: textfield
 
 # Text field
 
-<!--*
-# Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'lizmitchell' reviewed: '2026-07-31' }
-tag: 'docType:reference'
-*-->
-
 <!-- no-catalog-start -->
-
-<!-- go/md-text-field -->
 
 <!-- [TOC] -->
 
 <!-- external-only-start -->
 **This documentation is fully rendered on the
-[Material Web catalog](https://material-web.dev/components/text-field/)**
+[petal-elements catalog](https://saki340.github.io/petal-elements/components/text-field/)**
 <!-- external-only-end -->
 
 <!-- no-catalog-end -->
 
-[Text fields](https://m3.material.io/components/text-fields)<!-- {.external} --> let
-users enter text into a UI.
+[Text fields](https://m3.material.io/components/text-fields)<!-- {.external} -->
+let users type text.
 
 </catalog-component-header-title>
 
@@ -41,7 +33,7 @@ users enter text into a UI.
 
 *   [Design article](https://m3.material.io/components/text-fields) <!-- {.external} -->
 *   [API Documentation](#api)
-*   [Source code](https://github.com/material-components/material-web/tree/main/textfield)
+*   [Source code](https://github.com/Saki340/petal-elements/tree/main/textfield)
     <!-- {.external} -->
 
 ## Types
@@ -377,8 +369,6 @@ to be more descriptive.
 
 ## Filled text field
 
-<!-- go/md-filled-text-field -->
-
 Filled and outlined text fields are functionally identical. See
 [choosing a text field](https://m3.material.io/components/text-fields/guidelines#83956188-4d8f-4c11-9389-aaba30b10214)<!-- {.external} -->
 for guidance on which one to use.
@@ -388,8 +378,6 @@ for guidance on which one to use.
 ```
 
 ## Outlined text field
-
-<!-- go/md-outlined-text-field -->
 
 Filled and outlined text fields are functionally identical. See
 [choosing a text field](https://m3.material.io/components/text-fields/guidelines#83956188-4d8f-4c11-9389-aaba30b10214)<!-- {.external} -->
@@ -414,7 +402,7 @@ Token                                                 | Default value
 `--md-filled-text-field-input-text-font`              | `--md-sys-typescale-body-large-font`
 `--md-filled-text-field-label-text-font`              | `--md-sys-typescale-body-large-font`
 
-*   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-filled-text-field.scss)
+*   [All tokens](https://github.com/Saki340/petal-elements/blob/main/tokens/_md-comp-filled-text-field.scss)
     <!-- {.external} -->
 
 ### Filled text field example
@@ -451,7 +439,7 @@ Token                                          | Default value
 `--md-outlined-text-field-input-text-font`     | `--md-sys-typescale-body-large-font`
 `--md-outlined-text-field-label-text-font`     | `--md-sys-typescale-body-large-font`
 
-*   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-outlined-text-field.scss)
+*   [All tokens](https://github.com/Saki340/petal-elements/blob/main/tokens/_md-comp-outlined-text-field.scss)
     <!-- {.external} -->
 
 ### Outlined text field example

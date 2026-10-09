@@ -18,14 +18,10 @@ declare global {
 }
 
 /**
- * @summary Circular progress indicators display progress by animating along an
- * invisible circular track in a clockwise direction. They can be applied
- * directly to a surface, such as a button or card.
+ * @summary A circular progress indicator.
  *
  * @description
- * Progress indicators inform users about the status of ongoing processes.
- * - Determinate indicators display how long a process will take.
- * - Indeterminate indicators express an unspecified amount of wait time.
+ * Determinate when `value` is set, indeterminate with `indeterminate`.
  *
  * @final
  * @suppress {visibility}

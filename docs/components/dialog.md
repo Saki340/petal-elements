@@ -8,27 +8,19 @@ dirname: dialog
 
 # Dialogs
 
-<!--*
-# Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'lizmitchell' reviewed: '2026-07-31' }
-tag: 'docType:reference'
-*-->
-
 <!-- no-catalog-start -->
-
-<!-- go/md-dialog -->
 
 <!-- [TOC] -->
 
 <!-- external-only-start -->
 **This documentation is fully rendered on the
-[Material Web catalog](https://material-web.dev/components/dialog/)**
+[petal-elements catalog](https://saki340.github.io/petal-elements/components/dialog/)**
 <!-- external-only-end -->
 
 <!-- no-catalog-end -->
 
-[Dialogs](https://m3.material.io/components/dialogs)<!-- {.external} --> provide
-important prompts in a user flow.
+[Dialogs](https://m3.material.io/components/dialogs)<!-- {.external} -->
+ask the user for a decision or show important information on top of the page.
 
 </catalog-component-header-title>
 
@@ -42,7 +34,7 @@ important prompts in a user flow.
 
 *   [Design article](https://m3.material.io/components/dialogs) <!-- {.external} -->
 *   [API Documentation](#api)
-*   [Source code](https://github.com/material-components/material-web/tree/main/dialog)
+*   [Source code](https://github.com/Saki340/petal-elements/tree/main/dialog)
     <!-- {.external} -->
 
 <!-- catalog-only-start -->
@@ -183,7 +175,7 @@ Token                               | Default value
 `--md-dialog-supporting-text-color` | `--md-sys-color-on-surface-variant`
 `--md-dialog-supporting-text-font`  | `--md-sys-typescale-body-medium-font`
 
-*   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-dialog.scss)
+*   [All tokens](https://github.com/Saki340/petal-elements/blob/main/tokens/_md-comp-dialog.scss)
     <!-- {.external} -->
 
 ### Example

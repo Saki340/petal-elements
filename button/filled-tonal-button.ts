@@ -20,22 +20,10 @@ declare global {
 }
 
 /**
- * @summary Buttons help people take action, such as sending an email, sharing a
- * document, or liking a comment.
+ * @summary Buttons start an action, such as sending a message or saving a form.
  *
  * @description
- * __Emphasis:__ Medium emphasis – For important actions that don’t distract
- * from other onscreen elements.
- *
- * __Rationale:__ Filled tonal buttons have a lighter background color and
- * darker label color, making them less visually prominent than a regular,
- * filled button. They’re still used for final or unblocking actions in a flow,
- * but do so with less emphasis.
- *
- * __Example usages:__
- * - Save
- * - Confirm
- * - Done
+ * A filled tonal button: between filled and outlined.
  *
  * @final
  * @suppress {visibility}

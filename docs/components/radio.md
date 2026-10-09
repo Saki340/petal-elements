@@ -9,22 +9,14 @@ ssrOnly: true
 
 # Radio button
 
-<!--*
-# Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'lizmitchell' reviewed: '2026-07-31' }
-tag: 'docType:reference'
-*-->
-
 <!-- github-only-start -->
-
-<!-- go/md-radio -->
 
 <!-- [TOC] -->
 
 <!-- github-only-end -->
 
-[Radio buttons](https://m3.material.io/components/radio-button)<!-- {.external} --> let
-people select one option from a set of options.
+[Radio buttons](https://m3.material.io/components/radio-button)<!-- {.external} -->
+select exactly one option from a set.
 
 </catalog-component-header-title>
 
@@ -38,7 +30,7 @@ people select one option from a set of options.
 
 *   [Design article](https://m3.material.io/components/radio-button) <!-- {.external} -->
 *   [API Documentation](#api)
-*   [Source code](https://github.com/material-components/material-web/tree/main/radio)
+*   [Source code](https://github.com/Saki340/petal-elements/tree/main/radio)
     <!-- {.external} -->
 
 <!-- catalog-only-start -->
@@ -141,7 +133,7 @@ Token                            | Default value
 `--md-radio-selected-icon-color` | `--md-sys-color-primary`
 `--md-radio-icon-size`           | `20px`
 
-*   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-radio.scss)
+*   [All tokens](https://github.com/Saki340/petal-elements/blob/main/tokens/_md-comp-radio.scss)
     <!-- {.external} -->
 
 ### Example

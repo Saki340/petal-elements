@@ -6,39 +6,29 @@ order: 4
 
 # Support
 
-<!-- go/mwc-support -->
-
-<!--*
-# Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'lizmitchell' reviewed: '2026-07-31' }
-*-->
-
 <!-- [TOC] -->
-
-<!--#include file="../googlers/support.md" -->
 
 ## Browsers
 
-<!-- go/mwc-browsers -->
-
-MWC aims to support the latest two major versions of browsers at the time of
-each release.
-
-Current browsers and versions supported:
+petal-elements supports the latest two major versions of browsers at the time
+of each release.
 
 Browser | Version
 ------- | -------
-Chrome  | 120 +
-Edge    | 120 +
-Firefox | 119 +
-Safari* | 16.4 +
+Chrome  | 123 +
+Edge    | 123 +
+Firefox | 120 +
+Safari* | 17.5 +
+
+These are the versions with CSS `light-dark()`, which `tokens/css/sys.css`
+uses for dark mode. The components themselves also run in older browsers
+(Chrome 120, Safari 16.4); there, spring animations that use CSS `linear()`
+are skipped.
 
 *\* previous versions of Safari may be supported with an
 [`ElementInternals` polyfill](https://www.npmjs.com/package/element-internals-polyfill).*
 
 ## FAQ
-
-<!-- go/mwc-faq -->
 
 *If you have a question that isn't listed here, consider asking it so we can
 include it!*
@@ -71,13 +61,23 @@ states.
 Rather than setting all of them, or use the `--md-sys-color-*` token that the
 component maps to (see the previous question).
 
-### Why doesn't `prefers-color-scheme: dark` work?
+### How do I turn on dark mode?
 
-It's up to the app to decide when and how dark mode is applied. Any selector can
-be used with `--md-sys-color-*` dark theme tokens to scope how the changes
-apply.
+With `tokens/css/sys.css` loaded, set `color-scheme`. The colors use
+`light-dark()`, so they follow it.
 
-For example, using Sass:
+```css
+:root {
+  color-scheme: light dark; /* follow the system setting */
+}
+
+.always-dark {
+  color-scheme: dark;
+}
+```
+
+Without `sys.css`, it's up to the app to apply dark theme tokens. For example,
+using Sass:
 
 ```scss
 @use 'petal-elements/color/color';
@@ -88,9 +88,6 @@ For example, using Sass:
   }
 }
 ```
-
-> **Why not automatically?** Not all apps need dark mode, and the CSS size for
-> automatically supporting it is much higher and not as flexible.
 
 See
 [How do I use `--md-sys-*` custom properties in my styles?](#how-do-i-use-md-sys-custom-properties-in-my-styles)
@@ -122,11 +119,11 @@ for more info on how to generate a set of dark theme tokens.
     [`material-color-utilities` library](https://www.npmjs.com/package/@material/material-color-utilities)<!-- {.external} -->
     to generate color schemes at runtime.
 
-### How do I customize an `<md-*>` element that is inside another component?
+### How do I customize a `<petal-*>` element that is inside another component?
 
 Use [CSS `::part()`s](https://developer.mozilla.org/en-US/docs/Web/CSS/::part)
 to access sub-components. The part name is the sub-component's tag name without
-the "md-" prefix.
+the "petal-" prefix.
 
 ```css
 petal-checkbox::part(focus-ring) {

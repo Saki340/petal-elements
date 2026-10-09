@@ -18,13 +18,11 @@ declare global {
 }
 
 /**
- * @summary Linear progress indicators display progress by animating along the
- * length of a fixed, visible track.
+ * @summary A linear progress indicator.
  *
  * @description
- * Progress indicators inform users about the status of ongoing processes.
- * - Determinate indicators display how long a process will take.
- * - Indeterminate indicators express an unspecified amount of wait time.
+ * Determinate when `value` is set, indeterminate with `indeterminate`.
+ * `buffer` shows a second, lighter bar.
  *
  * @final
  * @suppress {visibility}

@@ -10,26 +10,17 @@ dirname: select
 
 <!-- no-catalog-start -->
 
-<!--*
-# Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'material-web-team' reviewed: '2026-07-31' }
-tag: 'docType:reference'
-*-->
-
-<!-- go/md-select -->
-
 <!-- [TOC] -->
 
 <!-- external-only-start -->
 **This documentation is fully rendered on the
-[Material Web catalog](https://material-web.dev/components/select/)**
+[petal-elements catalog](https://saki340.github.io/petal-elements/components/select/)**
 <!-- external-only-end -->
 
 <!-- no-catalog-end -->
 
 [Select menus](https://m3.material.io/components/menus/overview#b1704de4-94b7-4177-9e96-b677ae767cb4)<!-- {.external} -->
-display a list of choices on temporary surfaces and display the currently
-selected menu item above the menu.
+open a list of options and show the selected option in a field.
 
 </catalog-component-header-title>
 
@@ -43,7 +34,7 @@ selected menu item above the menu.
 
 *   Design article (*coming soon*)
 *   [API Documentation](#api)
-*   [Source code](https://github.com/material-components/material-web/tree/main/select)
+*   [Source code](https://github.com/Saki340/petal-elements/tree/main/select)
     <!-- {.external} -->
 
 ## Usage
@@ -112,7 +103,7 @@ accessible.* -->
 ## Theming
 
 Select supports
-[Material theming](https://github.com/material-components/material-web/blob/main/docs/theming/README.md)<!-- {.external} -->
+[Material theming](https://github.com/Saki340/petal-elements/blob/main/docs/theming/README.md)<!-- {.external} -->
 and can be customized in terms of color, typography, and shape.
 
 ### Filled Select tokens
@@ -124,7 +115,7 @@ Token                                            | Default value
 `--md-filled-select-text-field-input-text-color` | `--md-sys-color-on-surface`
 `--md-filled-select-text-field-input-text-font`  | `--md-sys-typescale-body-large-font`
 
-*   [Filled Select tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-filled-select.scss)
+*   [Filled Select tokens](https://github.com/Saki340/petal-elements/blob/main/tokens/_md-comp-filled-select.scss)
     <!-- {.external} -->
 
 To theme the select's dropdown menu, use the `petal-menu` component tokens on the
@@ -173,7 +164,7 @@ Token                                              | Default value
 `--md-outlined-select-text-field-input-text-color` | `--md-sys-color-on-surface`
 `--md-outlined-select-text-field-input-text-font`  | `--md-sys-typescale-body-large-font`
 
-*   [Outlined Select tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-outlined-select.scss)
+*   [Outlined Select tokens](https://github.com/Saki340/petal-elements/blob/main/tokens/_md-comp-outlined-select.scss)
     <!-- {.external} -->
 
 ### Outlined Select example

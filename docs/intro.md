@@ -4,41 +4,35 @@ title: Introduction
 order: 1
 -----><!-- catalog-only-end -->
 
-# Intro to Material Web Components
+# Introduction
 
-<!-- go/mwc-intro -->
-
-<!--*
-# Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'lizmitchell' reviewed: '2026-07-31' }
-*-->
-
-Material web, also known as Material Web Components or MWC, is a library of
+petal-elements is a library of
 [web components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components)<!-- {.external} -->
-that follows Google's [Material Design](https://material.io/)<!-- {.external} -->
-guidelines.
+that implement Material 3, including the Material 3 Expressive additions
+(button sizes, shape morphing, spring motion, button groups).
+
+It is a community-maintained continuation of
+[material-components/material-web](https://github.com/material-components/material-web)<!-- {.external} -->,
+which is in maintenance mode. It is not an official Google project and is not
+affiliated with Google.
 
 <!-- [TOC] -->
 
-## What is Material?
+## Material 3
 
-Material Design is a design system built and supported by Google designers and
-developers. Guidelines for building Material apps and components are published
-on [material.io](https://material.io)<!-- {.external} -->.
+Material 3 is Google's open-source design system. Its guidelines are published
+at [m3.material.io](https://m3.material.io)<!-- {.external} -->. This library
+follows them for the look and behavior of its components. The values (colors,
+sizes, typography, motion) come from the published Material Design tokens, not
+from screenshots; see [Design tokens](tokens.md).
 
-The latest version, Material 3, enables personal, adaptive, and expressive
-experiences – from dynamic color and enhanced accessibility, to foundations for
-large screen layouts and design tokens.
+## Web components
 
-## What are web components?
+Web components are custom HTML elements with their own styles and behavior.
+They work in plain HTML and with any framework (Lit, React, Vue, Svelte, ...).
 
-[Web components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components)<!-- {.external} -->
-are custom HTML elements with encapsulated styles and behavior. They work across
-many different frameworks (such as Lit, React, Vue, and Svelte) as well as web
-environments (such as Eleventy, Wordpress, and Ruby on Rails).
-
-Many components in
-this library are drop-in replacements for browser elements like `<button>` and `<input>`.
+Many components in this library can replace browser elements such as `<button>`
+and `<input>`, including in forms.
 
 ```html
 <!-- Browser elements -->
@@ -56,7 +50,7 @@ this library are drop-in replacements for browser elements like `<button>` and `
   <button>Submit</button>
 </form>
 
-<!-- Material elements -->
+<!-- petal-elements -->
 <form>
   <petal-outlined-text-field label="Email" type="email"
       name="email" required></petal-outlined-text-field>
@@ -70,12 +64,13 @@ this library are drop-in replacements for browser elements like `<button>` and `
 </form>
 ```
 
-## What are tokens?
+## Tokens
 
-[Design tokens](https://m3.material.io/foundations/design-tokens/overview)<!-- {.external} -->
-are the building blocks of all UI elements. In MWC, tokens are
-[CSS custom properties](https://developer.mozilla.org/en-US/docs/Web/CSS/--*)
-that can be used to style components.
+Design tokens are named design values, such as a color role or a corner size.
+In petal-elements they are
+[CSS custom properties](https://developer.mozilla.org/en-US/docs/Web/CSS/--*)<!-- {.external} -->
+that you can set to style the components. They keep the `--md-` names of
+material-web, so existing themes keep working.
 
 ```css
 :root {
@@ -86,4 +81,16 @@ that can be used to style components.
 }
 ```
 
-<!--#include file="../googlers/intro-who-should-use-mwc.md" -->
+See [Theming](theming/README.md) for details.
+
+## Coming from material-web
+
+-   Tags start with `petal-` instead of `md-` (`<petal-filled-button>`), and
+    classes with `Petal` instead of `Md` (`PetalFilledButton`).
+-   Imports come from `petal-elements/...` instead of `@material/web/...`. The
+    file paths are the same.
+-   CSS custom properties keep their `--md-` names.
+-   The default token values are from the Material Design tokens v34 instead of
+    v0.192. Most components look slightly different; see
+    [Token update v0.192 → v34](token-update-v34.md).
+-   New, opt-in features: [Material 3 Expressive features](expressive.md).

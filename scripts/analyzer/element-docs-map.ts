@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {COMPONENT_CUSTOM_ELEMENTS} from '../component-custom-elements.js';
@@ -12,6 +13,7 @@ import {COMPONENT_CUSTOM_ELEMENTS} from '../component-custom-elements.js';
  */
 export const docsToElementMapping: {[key: string]: readonly string[]} = {
   'button.md': COMPONENT_CUSTOM_ELEMENTS.button,
+  'button-group.md': COMPONENT_CUSTOM_ELEMENTS.buttonGroup,
   'checkbox.md': COMPONENT_CUSTOM_ELEMENTS.checkbox,
   'chip.md': COMPONENT_CUSTOM_ELEMENTS.chips,
   'dialog.md': COMPONENT_CUSTOM_ELEMENTS.dialog,

@@ -8,23 +8,15 @@ dirname: iconbutton
 
 # Icon Buttons
 
-<!--*
-# Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'lizmitchell' reviewed: '2026-07-31' }
-tag: 'docType:reference'
-*-->
-
-<!-- go/md-icon-button -->
-
 <!-- [TOC] -->
 
 <!-- external-only-start -->
 **This documentation is fully rendered on the
-[Material Web catalog](https://material-web.dev/components/icon-button/).**
+[petal-elements catalog](https://saki340.github.io/petal-elements/components/icon-button/).**
 <!-- external-only-end -->
 
-[Icon buttons](https://m3.material.io/components/icon-buttons)<!-- {.external} --> help
-people take supplementary actions with a single tap.
+[Icon buttons](https://m3.material.io/components/icon-buttons)<!-- {.external} -->
+start secondary actions with a single icon.
 
 </catalog-component-header-title>
 <img
@@ -37,7 +29,7 @@ people take supplementary actions with a single tap.
 
 *   [Design article](https://m3.material.io/components/icon-buttons) <!-- {.external} -->
 *   [API Documentation](#api)
-*   [Source code](https://github.com/material-components/material-web/tree/main/iconbutton)
+*   [Source code](https://github.com/Saki340/petal-elements/tree/main/iconbutton)
     <!-- {.external} -->
 
 <!-- catalog-only-start -->
@@ -245,8 +237,6 @@ emphasis of the icon buttons.
 
 ## Filled Icon Button
 
-<!-- go/md-filled-icon-button -->
-
 <!-- no-catalog-start -->
 
 ![A circular button with a check icon](images/iconbutton/usage-filled.webp "Filled Icon Button")
@@ -264,8 +254,6 @@ actions.
 ```
 
 ## Filled Tonal Icon Button
-
-<!-- go/md-filled-tonal-icon-button -->
 
 <!-- no-catalog-start -->
 
@@ -286,8 +274,6 @@ high emphasis action.
 ```
 
 ## Outlined Icon Button
-
-<!-- go/md-outlined-icon-button -->
 
 <!-- no-catalog-start -->
 
@@ -319,7 +305,7 @@ Token                                | Default value
 `--md-icon-button-state-layer-shape` | `--md-sys-shape-corner-full`
 `--md-icon-button-icon-size`         | `24px`
 
-*   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-icon-button.scss)
+*   [All tokens](https://github.com/Saki340/petal-elements/blob/main/tokens/_md-comp-icon-button.scss)
     <!-- {.external} -->
 
 ### Icon Button example
@@ -355,7 +341,7 @@ Token                                              | Default value
 `--md-filled-icon-button-container-height`         | `40px`
 `--md-filled-icon-button-icon-size`                | `24px`
 
-*   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-filled-icon-button.scss)
+*   [All tokens](https://github.com/Saki340/petal-elements/blob/main/tokens/_md-comp-filled-icon-button.scss)
     <!-- {.external} -->
 
 ### Filled Icon Button example
@@ -471,6 +457,8 @@ Token                                        | Default value
 | `href` | `href` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `href` resource attribute. |
 | `download` | `download` | `string` | `''` | The filename to use when downloading the linked resource. If not specified, the browser will determine a filename. This is only applicable when the icon button is used as a link (`href` is set). |
 | `target` | `target` | `"" \| LinkTarget` | `''` | Sets the underlying `HTMLAnchorElement`'s `target` attribute. |
+| `rel` | `rel` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `rel` attribute when `href` is set. |
+| `referrerPolicy` | `referrerpolicy` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `referrerpolicy` attribute when `href` is set. |
 | `ariaLabelSelected` | `aria-label-selected` | `string` | `''` | The `aria-label` of the button when the button is toggleable and selected. |
 | `toggle` | `toggle` | `boolean` | `false` | When true, the button will toggle between selected and unselected states |
 | `selected` | `selected` | `boolean` | `false` | Sets the selected state. When false, displays the default icon. When true, displays the selected icon, or the default icon If no `slot="selected"` icon is provided. |
@@ -507,6 +495,8 @@ Token                                        | Default value
 | `href` | `href` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `href` resource attribute. |
 | `download` | `download` | `string` | `''` | The filename to use when downloading the linked resource. If not specified, the browser will determine a filename. This is only applicable when the icon button is used as a link (`href` is set). |
 | `target` | `target` | `"" \| LinkTarget` | `''` | Sets the underlying `HTMLAnchorElement`'s `target` attribute. |
+| `rel` | `rel` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `rel` attribute when `href` is set. |
+| `referrerPolicy` | `referrerpolicy` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `referrerpolicy` attribute when `href` is set. |
 | `ariaLabelSelected` | `aria-label-selected` | `string` | `''` | The `aria-label` of the button when the button is toggleable and selected. |
 | `toggle` | `toggle` | `boolean` | `false` | When true, the button will toggle between selected and unselected states |
 | `selected` | `selected` | `boolean` | `false` | Sets the selected state. When false, displays the default icon. When true, displays the selected icon, or the default icon If no `slot="selected"` icon is provided. |
@@ -543,6 +533,8 @@ Token                                        | Default value
 | `href` | `href` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `href` resource attribute. |
 | `download` | `download` | `string` | `''` | The filename to use when downloading the linked resource. If not specified, the browser will determine a filename. This is only applicable when the icon button is used as a link (`href` is set). |
 | `target` | `target` | `"" \| LinkTarget` | `''` | Sets the underlying `HTMLAnchorElement`'s `target` attribute. |
+| `rel` | `rel` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `rel` attribute when `href` is set. |
+| `referrerPolicy` | `referrerpolicy` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `referrerpolicy` attribute when `href` is set. |
 | `ariaLabelSelected` | `aria-label-selected` | `string` | `''` | The `aria-label` of the button when the button is toggleable and selected. |
 | `toggle` | `toggle` | `boolean` | `false` | When true, the button will toggle between selected and unselected states |
 | `selected` | `selected` | `boolean` | `false` | Sets the selected state. When false, displays the default icon. When true, displays the selected icon, or the default icon If no `slot="selected"` icon is provided. |
@@ -579,6 +571,8 @@ Token                                        | Default value
 | `href` | `href` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `href` resource attribute. |
 | `download` | `download` | `string` | `''` | The filename to use when downloading the linked resource. If not specified, the browser will determine a filename. This is only applicable when the icon button is used as a link (`href` is set). |
 | `target` | `target` | `"" \| LinkTarget` | `''` | Sets the underlying `HTMLAnchorElement`'s `target` attribute. |
+| `rel` | `rel` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `rel` attribute when `href` is set. |
+| `referrerPolicy` | `referrerpolicy` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `referrerpolicy` attribute when `href` is set. |
 | `ariaLabelSelected` | `aria-label-selected` | `string` | `''` | The `aria-label` of the button when the button is toggleable and selected. |
 | `toggle` | `toggle` | `boolean` | `false` | When true, the button will toggle between selected and unselected states |
 | `selected` | `selected` | `boolean` | `false` | Sets the selected state. When false, displays the default icon. When true, displays the selected icon, or the default icon If no `slot="selected"` icon is provided. |

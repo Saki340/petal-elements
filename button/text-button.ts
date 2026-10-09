@@ -19,21 +19,10 @@ declare global {
 }
 
 /**
- * @summary Buttons help people take action, such as sending an email, sharing a
- * document, or liking a comment.
+ * @summary Buttons start an action, such as sending a message or saving a form.
  *
  * @description
- * __Emphasis:__ Low emphasis – For optional or supplementary actions with the
- * least amount of prominence
- *
- * __Rationale:__ Text buttons have less visual prominence, so should be used
- * for low emphasis actions, such as an alternative option.
- *
- * __Example usages:__
- * - Learn more
- * - View all
- * - Change account
- * - Turn on
+ * A text button: the least emphasis.
  *
  * @final
  * @suppress {visibility}

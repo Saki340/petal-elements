@@ -1,17 +1,9 @@
 # Elevation
 
-<!--*
-# Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'lizmitchell' reviewed: '2026-07-31' }
-tag: 'docType:reference'
-*-->
-
-<!-- go/md-elevation -->
-
 <!-- [TOC] -->
 
-[Elevation](https://m3.material.io/styles/elevation)<!-- {.external} --> is the relative
-distance between two surfaces along the z-axis.
+[Elevation](https://m3.material.io/styles/elevation)<!-- {.external} -->
+shows how far a surface sits above another, as a shadow.
 
 Material's elevation system is deliberately limited to just a handful of levels.
 This creative constraint means you need to make thoughtful decisions about your
@@ -21,7 +13,7 @@ UI’s elevation story.
 
 *   [Design article](https://m3.material.io/styles/elevation) <!-- {.external} -->
 *   [API Documentation](#api)
-*   [Source code](https://github.com/material-components/material-web/tree/main/elevation)
+*   [Source code](https://github.com/Saki340/petal-elements/tree/main/elevation)
     <!-- {.external} -->
 
 ## Usage
@@ -90,7 +82,7 @@ Token                         | Default value
 `--md-elevation-level`        | `0`
 `--md-elevation-shadow-color` | `--md-sys-color-shadow`
 
-*   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-elevation.scss)
+*   [All tokens](https://github.com/Saki340/petal-elements/blob/main/tokens/_md-comp-elevation.scss)
     <!-- {.external} -->
 
 ### Example

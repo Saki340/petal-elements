@@ -6,138 +6,44 @@ order: 3
 
 # Roadmap
 
-<!-- go/mwc-roadmap -->
-
-<!--*
-# Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'lizmitchell' reviewed: '2026-07-31' }
-*-->
-
 <!-- [TOC] -->
 
-This roadmap describes current, future, and past goals for Material Web
-Components.
+This page lists what petal-elements has done and what it plans to do. Plans
+can change; open a discussion on
+[GitHub](https://github.com/Saki340/petal-elements)<!-- {.external} --> if you
+need something that is not here.
 
-<!--#include file="../googlers/roadmap.md" -->
+## Done
 
-## Current
+### 0.1
 
-**MWC is currently in maintenance mode,
-[see this announcement](https://github.com/material-components/material-web/discussions/5642)
-for more details.**
+*   Fork of material-web (2026-10) with `petal-` tags and the `petal-elements`
+    package. CSS custom properties keep their `--md-` names.
+*   Token pipeline: Material Design web tokens v34 → W3C design token (DTCG)
+    files → CSS (`tokens/css/`), checked against Jetpack Compose Material 3.
+    See [Design tokens](tokens.md).
+*   Core components on the v34 token values: buttons, icon buttons, FAB,
+    checkbox, radio, switch, text fields, chips, progress indicators and tabs.
+    See [Token update v0.192 → v34](token-update-v34.md).
+*   Material 3 Expressive, opt-in: button sizes (`xsmall` to `xlarge`), round
+    and square shapes, toggle buttons, shape morphing with spring motion, the
+    expressive motion scheme, button groups and solid FABs. See
+    [Material 3 Expressive features](expressive.md).
+*   Pixel-exact visual regression tests (Playwright) and doc images rendered
+    from the components.
 
-There is no current work planned for new features or components. Bug fixes or
-other contributions may be added on a case-by-case basis.
+## Next
 
-## Future
+Roughly in this order:
 
-**Note: No future work is planned while MWC is in
-[maintenance mode](https://github.com/material-components/material-web/discussions/5642).**
-These roadmap items represent what used to be planned.
+*   Move the remaining components (dialog, list, menu, select, slider, ...) to
+    the v34 token values.
+*   More Expressive components and features, checked against Compose:
+    split button, toolbar, loading indicator, FAB menu, the new FAB sizes,
+    shape morphing for icon buttons.
+*   Components that are missing, for example navigation bar and rail, top app
+    bar, snackbar, card, badge, tooltip, search, date and time pickers.
+*   Comparing the renderings with Jetpack Compose Material 3 screenshots.
 
-### New components
-
-These are components we have not built yet.
-
-*   Autocomplete
-*   Badge
-*   Banner
-*   Bottom app bar
-*   Bottom sheet
-*   Card
-*   Data table
-*   Date picker
-*   Navigation bar
-*   Navigation drawer
-*   Navigation rail
-*   Search
-*   Segmented button
-*   Snackbar
-*   Time picker
-*   Top app bar
-*   Tooltip
-
-### Expand Material Design tokens
-
-We are adding shape and motion system tokens to support building expressive
-Material experiences.
-
-We also want to make it easier to use Material Design tokens, such as applying
-Material typescale, shape, and color to your own components.
-
-### Density and spacing tokens
-
-Density allows components to take up less vertical space for larger displays.
-While we have some spacing tokens already, we need a comprehensive spacing
-system to fully support density across components.
-
-### Create TSX components
-
-[TSX](https://www.typescriptlang.org/docs/handbook/jsx.html) is a popular
-language extension for frameworks like [React](https://reactjs.org/). We want to
-make it easier and more seamless to use Material Web Components in TSX.
-
-### Explore Material Design layouts
-
-Components are only part of the story to build fully expressive Material Design
-applications. We want to explore ways to support building applications that
-follow
-[Material's layout patterns](https://m3.material.io/foundations/layout/understanding-layout/overview).
-
-## Past
-
-### Follow accessibility best practices
-
-*Completed in Q1 2024*
-
-Everyone should be able to access and enjoy the web. We want our components to
-help others build accessible experiences. The following screen readers are fully
-supported:
-
-*   VoiceOver
-*   Talkback
-*   ChromeVox
-*   JAWS
-*   NVDA
-
-### Cards and more
-
-*Completed in Q4 2023*
-
-*   Components
-    *   ✅
-        [Card preview](https://github.com/material-components/material-web/tree/c9360e2310dee2896592649f8a8f9b03e2737bf2/labs/card)
-*   Features
-    *   🟡 Prevent event default behavior
-        *   *We fixed lots of bugs, but there's still ways we can improve.*
-    *   ✅
-        [Size tracking](https://github.com/material-components/material-web/blob/c9360e2310dee2896592649f8a8f9b03e2737bf2/docs/size.md)
-    *   ✅ [Docs and examples](https://material-web.dev/)
-
-### Material 1.0
-
-*Completed in Q3 2023*
-
-*   Features
-    *   ✅ Color theming
-    *   ✅ Typography theming
-*   Components
-    *   ✅ Button
-    *   ✅ FAB
-    *   ✅ Icon button
-    *   ✅ Checkbox
-    *   ✅ Chips
-    *   ✅ Dialog
-    *   ✅ Divider
-    *   ✅ Elevation
-    *   ✅ Focus ring
-    *   ✅ List
-    *   ✅ Menu
-    *   ✅ Progress indicators
-    *   ✅ Radio
-    *   ✅ Ripple
-    *   ✅ Select
-    *   ✅ Slider
-    *   ✅ Switch
-    *   ✅ Tabs
-    *   ✅ Text field
+Expressive components that upstream builds in `labs/gb` are a reference for
+this work; we follow upstream and do not duplicate it where it can be reused.

@@ -10,26 +10,18 @@ dirname: slider
 
 <!-- no-catalog-start -->
 
-<!--*
-# Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'material-web-team' reviewed: '2026-07-31' }
-tag: 'docType:reference'
-*-->
-
-<!-- go/md-slider -->
-
 <!-- [TOC] -->
 
 <!-- external-only-start -->
 **This documentation is fully rendered on the
-[Material Web catalog](https://material-web.dev/components/slider/)**
+[petal-elements catalog](https://saki340.github.io/petal-elements/components/slider/)**
 <!-- external-only-end -->
 
 <!-- no-catalog-end -->
 
-[Sliders](https://m3.material.io/components/sliders)<!-- {.external} --> allow users to
-view and select a value (or range) along a track. They're ideal for adjusting
-settings such as volume and brightness, or for applying image filters.
+[Sliders](https://m3.material.io/components/sliders)<!-- {.external} -->
+pick a value, or a range of values, along a track. Volume and brightness
+controls are typical uses.
 
 Sliders can use icons or labels to represent a numeric or relative scale.
 
@@ -45,7 +37,7 @@ Sliders can use icons or labels to represent a numeric or relative scale.
 
 *   [Design article](https://m3.material.io/components/sliders) <!-- {.external} -->
 *   [API Documentation](#api)
-*   [Source code](https://github.com/material-components/material-web/tree/main/slider)
+*   [Source code](https://github.com/Saki340/petal-elements/tree/main/slider)
     <!-- {.external} -->
 
 <!-- catalog-only-start -->
@@ -126,7 +118,7 @@ Token                              | Default value
 `--md-slider-handle-color`         | `--md-sys-color-primary`
 `--md-slider-handle-shape`         | `--md-sys-shape-corner-full`
 
-*   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-slider.scss)
+*   [All tokens](https://github.com/Saki340/petal-elements/blob/main/tokens/_md-comp-slider.scss)
     <!-- {.external} -->
 
 ### Example

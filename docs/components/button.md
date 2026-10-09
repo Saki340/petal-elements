@@ -10,26 +10,17 @@ dirname: button
 
 <!-- no-catalog-start -->
 
-<!--*
-# Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'lizmitchell' reviewed: '2026-07-31' }
-tag: 'docType:reference'
-*-->
-
-<!-- go/md-button -->
-
 <!-- [TOC] -->
 
 <!-- external-only-start -->
 **This documentation is fully rendered on the
-[Material Web catalog](https://material-web.dev/components/button/).**
+[petal-elements catalog](https://saki340.github.io/petal-elements/components/button/).**
 <!-- external-only-end -->
 
 <!-- no-catalog-end -->
 
-[Buttons](https://m3.material.io/components/buttons)<!-- {.external} --> help people
-initiate actions, from sending an email, to sharing a document, to liking a
-post.
+[Buttons](https://m3.material.io/components/buttons)<!-- {.external} -->
+start an action, such as sending a message or saving a form.
 
 There are five types of common buttons: elevated, filled, filled tonal,
 outlined, and text.
@@ -46,7 +37,7 @@ outlined, and text.
 
 *   [Design article](https://m3.material.io/components/buttons) <!-- {.external} -->
 *   [API Documentation](#api)
-*   [Source code](https://github.com/material-components/material-web/tree/main/button)
+*   [Source code](https://github.com/Saki340/petal-elements/tree/main/button)
     <!-- {.external} -->
 
 <!-- catalog-only-start -->
@@ -225,6 +216,80 @@ box](images/button/usage-icon.webp "Slot in icons to the appropriate slots")
 </petal-text-button>
 ```
 
+### Sizes
+
+Buttons come in five sizes from the Material 3 Expressive button tokens:
+`xsmall` (32px), `small` (40px), `medium` (56px), `large` (96px) and `xlarge`
+(136px). Set the `size` attribute; without it, a button keeps the original
+40px look.
+
+<!-- no-catalog-start -->
+
+![Filled buttons in the sizes extra small, small, medium, large and extra
+large](images/button/usage-sizes.webp)
+
+<!-- no-catalog-end -->
+<!-- catalog-include "figures/button/usage-sizes.html" -->
+
+```html
+<petal-filled-button size="xsmall">Extra small</petal-filled-button>
+<petal-filled-button size="small">Small</petal-filled-button>
+<petal-filled-button size="medium">Medium</petal-filled-button>
+<petal-filled-button size="large">Large</petal-filled-button>
+<petal-filled-button size="xlarge">XL</petal-filled-button>
+```
+
+### Shapes
+
+Sized buttons are round by default. Set `shape="square"` for rounded square
+corners. While pressed, the corners morph to a smaller radius with a spring
+animation.
+
+<!-- no-catalog-start -->
+
+![A round and a square filled tonal button](images/button/usage-shapes.webp)
+
+<!-- no-catalog-end -->
+<!-- catalog-include "figures/button/usage-shapes.html" -->
+
+```html
+<petal-filled-tonal-button size="medium">Round</petal-filled-tonal-button>
+<petal-filled-tonal-button size="medium" shape="square">Square</petal-filled-tonal-button>
+```
+
+### Toggle buttons
+
+Add `toggle` to make a button switch between unselected and selected on
+click, like Compose's `ToggleButton`. `selected` holds the state; the button
+fires `input` and `change` events when the user toggles it and sets
+`aria-pressed`. A selected round button becomes square and the other way
+round. Text buttons cannot be toggle buttons.
+
+<!-- no-catalog-start -->
+
+![Unselected and selected toggle buttons: filled, filled tonal, outlined and
+elevated](images/button/usage-toggle.webp)
+
+<!-- no-catalog-end -->
+<!-- catalog-include "figures/button/usage-toggle.html" -->
+
+```html
+<div style="display: grid; grid-template-columns: repeat(4, auto); gap: 8px">
+  <petal-filled-button size="small" toggle>Filled</petal-filled-button>
+  <petal-filled-tonal-button size="small" toggle>Tonal</petal-filled-tonal-button>
+  <petal-outlined-button size="small" toggle>Outlined</petal-outlined-button>
+  <petal-elevated-button size="small" toggle>Elevated</petal-elevated-button>
+  <petal-filled-button size="small" toggle selected>Filled</petal-filled-button>
+  <petal-filled-tonal-button size="small" toggle selected>Tonal</petal-filled-tonal-button>
+  <petal-outlined-button size="small" toggle selected>Outlined</petal-outlined-button>
+  <petal-elevated-button size="small" toggle selected>Elevated</petal-elevated-button>
+</div>
+```
+
+See [Material 3 Expressive features](../expressive.md) for the values, the
+motion and where they follow Compose rather than the tokens. Several buttons
+can be put in a [button group](button-group.md).
+
 ## Accessibility
 
 Add an
@@ -259,12 +324,9 @@ for guidance on when this is recommended.
 
 ## Elevated button
 
-<!-- go/md-elevated-button -->
-
 [Elevated buttons](https://m3.material.io/components/buttons/guidelines#4e89da4d-a8fa-4e20-bb8d-b8a93eff3e3e)<!-- {.external} -->
-are essentially filled tonal buttons with a shadow. To prevent shadow creep,
-only use them when absolutely necessary, such as when the button requires visual
-separation from a patterned background.
+are tonal buttons with a shadow. Use them sparingly, for example when a button
+sits on a busy background and needs to stand out.
 
 <!-- no-catalog-start -->
 
@@ -293,11 +355,9 @@ separation from a patterned background.
 
 ## Filled button
 
-<!-- go/md-filled-button -->
-
 [Filled buttons](https://m3.material.io/components/buttons/guidelines#9ecffdb3-ef29-47e7-8d5d-f78b404fcafe)<!-- {.external} -->
-have the most visual impact after the FAB, and should be used for important,
-final actions that complete a flow, like Save, Join now, or Confirm.
+have the strongest emphasis of the common buttons. Use them for the main action
+of a screen or flow, such as Save or Confirm.
 
 <!-- no-catalog-end -->
 <!-- catalog-only-start -->
@@ -322,13 +382,10 @@ final actions that complete a flow, like Save, Join now, or Confirm.
 
 ## Filled tonal button
 
-<!-- go/md-filled-tonal-button -->
-
 A
 [filled tonal button](https://m3.material.io/components/buttons/guidelines#07a1577b-aaf5-4824-a698-03526421058b)<!-- {.external} -->
-is an alternative middle ground between filled and outlined buttons. They're
-useful in contexts where a lower-priority button requires slightly more emphasis
-than an outline would give, such as "Next" in an onboarding flow.
+sits between filled and outlined buttons: more emphasis than an outline, less
+than a solid fill. "Next" in a multi-step form is a typical use.
 
 <!-- no-catalog-start -->
 
@@ -357,11 +414,9 @@ than an outline would give, such as "Next" in an onboarding flow.
 
 ## Outlined button
 
-<!-- go/md-outlined-button -->
-
 [Outlined buttons](https://m3.material.io/components/buttons/guidelines#3742b09f-c224-43e0-a83e-541bd29d0f05)<!-- {.external} -->
-are medium-emphasis buttons. They contain actions that are important, but aren’t
-the primary action in an app.
+have medium emphasis, for actions that matter but are not the main one on the
+screen.
 
 <!-- no-catalog-start -->
 
@@ -390,11 +445,9 @@ the primary action in an app.
 
 ## Text button
 
-<!-- go/md-text-button -->
-
 [Text buttons](https://m3.material.io/components/buttons/guidelines#c9bcbc0b-ee05-45ad-8e80-e814ae919fbb)<!-- {.external} -->
-are used for the lowest priority actions, especially when presenting multiple
-options.
+have the least emphasis. They suit secondary actions, especially when several
+options are shown together.
 
 <!-- no-catalog-start -->
 
@@ -435,7 +488,7 @@ Token                                   | Default value
 `--md-elevated-button-label-text-color` | `--md-sys-color-on-surface`
 `--md-elevated-button-label-text-font`  | `--md-sys-typescale-label-large-font`
 
-*   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-elevated-button.scss)
+*   [All tokens](https://github.com/Saki340/petal-elements/blob/main/tokens/_md-comp-elevated-button.scss)
     <!-- {.external} -->
 
 ### Elevated button example
@@ -495,7 +548,7 @@ Token                                 | Default value
 `--md-filled-button-label-text-color` | `--md-sys-color-on-primary`
 `--md-filled-button-label-text-font`  | `--md-sys-typescale-label-large-font`
 
-*   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-filled-button.scss)
+*   [All tokens](https://github.com/Saki340/petal-elements/blob/main/tokens/_md-comp-filled-button.scss)
     <!-- {.external} -->
 
 ### Filled button example
@@ -555,7 +608,7 @@ Token                                       | Default value
 `--md-filled-tonal-button-label-text-color` | `--md-sys-color-on-secondary-container`
 `--md-filled-tonal-button-label-text-font`  | `--md-sys-typescale-label-large-font`
 
-*   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-filled-tonal-button.scss)
+*   [All tokens](https://github.com/Saki340/petal-elements/blob/main/tokens/_md-comp-filled-tonal-button.scss)
     <!-- {.external} -->
 
 ### Filled tonal button example
@@ -615,7 +668,7 @@ Token                                   | Default value
 `--md-outlined-button-label-text-color` | `--md-sys-color-primary`
 `--md-outlined-button-label-text-font`  | `--md-sys-typescale-label-large-font`
 
-*   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-outlined-button.scss)
+*   [All tokens](https://github.com/Saki340/petal-elements/blob/main/tokens/_md-comp-outlined-button.scss)
     <!-- {.external} -->
 
 ### Outlined button example
@@ -673,7 +726,7 @@ Token                               | Default value
 `--md-text-button-label-text-color` | `--md-sys-color-primary`
 `--md-text-button-label-text-font`  | `--md-sys-typescale-label-large-font`
 
-*   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-text-button.scss)
+*   [All tokens](https://github.com/Saki340/petal-elements/blob/main/tokens/_md-comp-text-button.scss)
     <!-- {.external} -->
 
 ### Text button example
@@ -737,14 +790,31 @@ Token                               | Default value
 | `href` | `href` | `string` | `''` | The URL that the link button points to. |
 | `download` | `download` | `string` | `''` | The filename to use when downloading the linked resource. If not specified, the browser will determine a filename. This is only applicable when the button is used as a link (`href` is set). |
 | `target` | `target` | `"" \| "_blank" \| "_parent" \| "_self" \| "_top"` | `''` | Where to display the linked `href` URL for a link button. Common options include `_blank` to open in a new tab. |
+| `rel` | `rel` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `rel` attribute when `href` is set. |
+| `referrerPolicy` | `referrerpolicy` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `referrerpolicy` attribute when `href` is set. |
 | `trailingIcon` | `trailing-icon` | `boolean` | `false` | Whether to render the icon at the inline end of the label rather than the inline start.<br>_Note:_ Link buttons cannot have trailing icons. |
 | `hasIcon` | `has-icon` | `boolean` | `false` | Whether to display the icon or not. |
+| `size` | `size` | `ButtonSize` | `undefined` | Material 3 Expressive size. Sets the height, padding, icon size, label typescale and shapes, and makes the shape morph while pressed. Without a size, the button keeps its original metrics. |
+| `shape` | `shape` | `ButtonShape` | `undefined` | Container shape of a sized button: `round` (default) or `square`. |
+| `toggle` | `toggle` | `boolean` | `false` | When true, the button toggles between selected and unselected on click and exposes `aria-pressed`. Not available for text buttons or links. |
+| `selected` | `selected` | `boolean` | `false` | Whether a toggle button is selected. |
 | `name` | `name` | `string` | `undefined` | The HTML name to use in form submission. |
 | `disabled` | `disabled` | `boolean` | `undefined` | Whether or not the element is disabled. |
 | `type` | `type` | `string` | `'submit'` | A string indicating the form submission behavior of the element.<br>- submit: The element submits the form. This is the default value if the attribute is not specified, or if it is dynamically changed to an empty or invalid value. - reset: The element resets the form. - button: The element does nothing. |
 | `value` | `value` | `string` | `''` | The value of the button. When combined with a `name`, the submitting button's name/value will be added to the form. |
 | `form` |  | `HTMLFormElement` | `undefined` | The associated form element with which this element's value will submit. |
 | `labels` |  | `NodeList` | `undefined` | The labels this element is associated with. |
+
+<!-- mdformat on(autogenerated might break rendering in catalog) -->
+
+#### Events
+
+<!-- mdformat off(autogenerated might break rendering in catalog) -->
+
+| Event | Type | [Bubbles](https://developer.mozilla.org/en-US/docs/Web/API/Event/bubbles) | [Composed](https://developer.mozilla.org/en-US/docs/Web/API/Event/composed) | Description |
+| --- | --- | --- | --- | --- |
+| `input` | `InputEvent` | Yes | Yes | Dispatched when a toggle button toggles |
+| `change` | `Event` | Yes | No | Dispatched when a toggle button toggles |
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 
@@ -760,14 +830,31 @@ Token                               | Default value
 | `href` | `href` | `string` | `''` | The URL that the link button points to. |
 | `download` | `download` | `string` | `''` | The filename to use when downloading the linked resource. If not specified, the browser will determine a filename. This is only applicable when the button is used as a link (`href` is set). |
 | `target` | `target` | `"" \| "_blank" \| "_parent" \| "_self" \| "_top"` | `''` | Where to display the linked `href` URL for a link button. Common options include `_blank` to open in a new tab. |
+| `rel` | `rel` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `rel` attribute when `href` is set. |
+| `referrerPolicy` | `referrerpolicy` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `referrerpolicy` attribute when `href` is set. |
 | `trailingIcon` | `trailing-icon` | `boolean` | `false` | Whether to render the icon at the inline end of the label rather than the inline start.<br>_Note:_ Link buttons cannot have trailing icons. |
 | `hasIcon` | `has-icon` | `boolean` | `false` | Whether to display the icon or not. |
+| `size` | `size` | `ButtonSize` | `undefined` | Material 3 Expressive size. Sets the height, padding, icon size, label typescale and shapes, and makes the shape morph while pressed. Without a size, the button keeps its original metrics. |
+| `shape` | `shape` | `ButtonShape` | `undefined` | Container shape of a sized button: `round` (default) or `square`. |
+| `toggle` | `toggle` | `boolean` | `false` | When true, the button toggles between selected and unselected on click and exposes `aria-pressed`. Not available for text buttons or links. |
+| `selected` | `selected` | `boolean` | `false` | Whether a toggle button is selected. |
 | `name` | `name` | `string` | `undefined` | The HTML name to use in form submission. |
 | `disabled` | `disabled` | `boolean` | `undefined` | Whether or not the element is disabled. |
 | `type` | `type` | `string` | `'submit'` | A string indicating the form submission behavior of the element.<br>- submit: The element submits the form. This is the default value if the attribute is not specified, or if it is dynamically changed to an empty or invalid value. - reset: The element resets the form. - button: The element does nothing. |
 | `value` | `value` | `string` | `''` | The value of the button. When combined with a `name`, the submitting button's name/value will be added to the form. |
 | `form` |  | `HTMLFormElement` | `undefined` | The associated form element with which this element's value will submit. |
 | `labels` |  | `NodeList` | `undefined` | The labels this element is associated with. |
+
+<!-- mdformat on(autogenerated might break rendering in catalog) -->
+
+#### Events
+
+<!-- mdformat off(autogenerated might break rendering in catalog) -->
+
+| Event | Type | [Bubbles](https://developer.mozilla.org/en-US/docs/Web/API/Event/bubbles) | [Composed](https://developer.mozilla.org/en-US/docs/Web/API/Event/composed) | Description |
+| --- | --- | --- | --- | --- |
+| `input` | `InputEvent` | Yes | Yes | Dispatched when a toggle button toggles |
+| `change` | `Event` | Yes | No | Dispatched when a toggle button toggles |
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 
@@ -783,14 +870,31 @@ Token                               | Default value
 | `href` | `href` | `string` | `''` | The URL that the link button points to. |
 | `download` | `download` | `string` | `''` | The filename to use when downloading the linked resource. If not specified, the browser will determine a filename. This is only applicable when the button is used as a link (`href` is set). |
 | `target` | `target` | `"" \| "_blank" \| "_parent" \| "_self" \| "_top"` | `''` | Where to display the linked `href` URL for a link button. Common options include `_blank` to open in a new tab. |
+| `rel` | `rel` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `rel` attribute when `href` is set. |
+| `referrerPolicy` | `referrerpolicy` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `referrerpolicy` attribute when `href` is set. |
 | `trailingIcon` | `trailing-icon` | `boolean` | `false` | Whether to render the icon at the inline end of the label rather than the inline start.<br>_Note:_ Link buttons cannot have trailing icons. |
 | `hasIcon` | `has-icon` | `boolean` | `false` | Whether to display the icon or not. |
+| `size` | `size` | `ButtonSize` | `undefined` | Material 3 Expressive size. Sets the height, padding, icon size, label typescale and shapes, and makes the shape morph while pressed. Without a size, the button keeps its original metrics. |
+| `shape` | `shape` | `ButtonShape` | `undefined` | Container shape of a sized button: `round` (default) or `square`. |
+| `toggle` | `toggle` | `boolean` | `false` | When true, the button toggles between selected and unselected on click and exposes `aria-pressed`. Not available for text buttons or links. |
+| `selected` | `selected` | `boolean` | `false` | Whether a toggle button is selected. |
 | `name` | `name` | `string` | `undefined` | The HTML name to use in form submission. |
 | `disabled` | `disabled` | `boolean` | `undefined` | Whether or not the element is disabled. |
 | `type` | `type` | `string` | `'submit'` | A string indicating the form submission behavior of the element.<br>- submit: The element submits the form. This is the default value if the attribute is not specified, or if it is dynamically changed to an empty or invalid value. - reset: The element resets the form. - button: The element does nothing. |
 | `value` | `value` | `string` | `''` | The value of the button. When combined with a `name`, the submitting button's name/value will be added to the form. |
 | `form` |  | `HTMLFormElement` | `undefined` | The associated form element with which this element's value will submit. |
 | `labels` |  | `NodeList` | `undefined` | The labels this element is associated with. |
+
+<!-- mdformat on(autogenerated might break rendering in catalog) -->
+
+#### Events
+
+<!-- mdformat off(autogenerated might break rendering in catalog) -->
+
+| Event | Type | [Bubbles](https://developer.mozilla.org/en-US/docs/Web/API/Event/bubbles) | [Composed](https://developer.mozilla.org/en-US/docs/Web/API/Event/composed) | Description |
+| --- | --- | --- | --- | --- |
+| `input` | `InputEvent` | Yes | Yes | Dispatched when a toggle button toggles |
+| `change` | `Event` | Yes | No | Dispatched when a toggle button toggles |
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 
@@ -806,14 +910,31 @@ Token                               | Default value
 | `href` | `href` | `string` | `''` | The URL that the link button points to. |
 | `download` | `download` | `string` | `''` | The filename to use when downloading the linked resource. If not specified, the browser will determine a filename. This is only applicable when the button is used as a link (`href` is set). |
 | `target` | `target` | `"" \| "_blank" \| "_parent" \| "_self" \| "_top"` | `''` | Where to display the linked `href` URL for a link button. Common options include `_blank` to open in a new tab. |
+| `rel` | `rel` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `rel` attribute when `href` is set. |
+| `referrerPolicy` | `referrerpolicy` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `referrerpolicy` attribute when `href` is set. |
 | `trailingIcon` | `trailing-icon` | `boolean` | `false` | Whether to render the icon at the inline end of the label rather than the inline start.<br>_Note:_ Link buttons cannot have trailing icons. |
 | `hasIcon` | `has-icon` | `boolean` | `false` | Whether to display the icon or not. |
+| `size` | `size` | `ButtonSize` | `undefined` | Material 3 Expressive size. Sets the height, padding, icon size, label typescale and shapes, and makes the shape morph while pressed. Without a size, the button keeps its original metrics. |
+| `shape` | `shape` | `ButtonShape` | `undefined` | Container shape of a sized button: `round` (default) or `square`. |
+| `toggle` | `toggle` | `boolean` | `false` | When true, the button toggles between selected and unselected on click and exposes `aria-pressed`. Not available for text buttons or links. |
+| `selected` | `selected` | `boolean` | `false` | Whether a toggle button is selected. |
 | `name` | `name` | `string` | `undefined` | The HTML name to use in form submission. |
 | `disabled` | `disabled` | `boolean` | `undefined` | Whether or not the element is disabled. |
 | `type` | `type` | `string` | `'submit'` | A string indicating the form submission behavior of the element.<br>- submit: The element submits the form. This is the default value if the attribute is not specified, or if it is dynamically changed to an empty or invalid value. - reset: The element resets the form. - button: The element does nothing. |
 | `value` | `value` | `string` | `''` | The value of the button. When combined with a `name`, the submitting button's name/value will be added to the form. |
 | `form` |  | `HTMLFormElement` | `undefined` | The associated form element with which this element's value will submit. |
 | `labels` |  | `NodeList` | `undefined` | The labels this element is associated with. |
+
+<!-- mdformat on(autogenerated might break rendering in catalog) -->
+
+#### Events
+
+<!-- mdformat off(autogenerated might break rendering in catalog) -->
+
+| Event | Type | [Bubbles](https://developer.mozilla.org/en-US/docs/Web/API/Event/bubbles) | [Composed](https://developer.mozilla.org/en-US/docs/Web/API/Event/composed) | Description |
+| --- | --- | --- | --- | --- |
+| `input` | `InputEvent` | Yes | Yes | Dispatched when a toggle button toggles |
+| `change` | `Event` | Yes | No | Dispatched when a toggle button toggles |
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 
@@ -829,14 +950,31 @@ Token                               | Default value
 | `href` | `href` | `string` | `''` | The URL that the link button points to. |
 | `download` | `download` | `string` | `''` | The filename to use when downloading the linked resource. If not specified, the browser will determine a filename. This is only applicable when the button is used as a link (`href` is set). |
 | `target` | `target` | `"" \| "_blank" \| "_parent" \| "_self" \| "_top"` | `''` | Where to display the linked `href` URL for a link button. Common options include `_blank` to open in a new tab. |
+| `rel` | `rel` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `rel` attribute when `href` is set. |
+| `referrerPolicy` | `referrerpolicy` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `referrerpolicy` attribute when `href` is set. |
 | `trailingIcon` | `trailing-icon` | `boolean` | `false` | Whether to render the icon at the inline end of the label rather than the inline start.<br>_Note:_ Link buttons cannot have trailing icons. |
 | `hasIcon` | `has-icon` | `boolean` | `false` | Whether to display the icon or not. |
+| `size` | `size` | `ButtonSize` | `undefined` | Material 3 Expressive size. Sets the height, padding, icon size, label typescale and shapes, and makes the shape morph while pressed. Without a size, the button keeps its original metrics. |
+| `shape` | `shape` | `ButtonShape` | `undefined` | Container shape of a sized button: `round` (default) or `square`. |
+| `toggle` | `toggle` | `boolean` | `false` | When true, the button toggles between selected and unselected on click and exposes `aria-pressed`. Not available for text buttons or links. |
+| `selected` | `selected` | `boolean` | `false` | Whether a toggle button is selected. |
 | `name` | `name` | `string` | `undefined` | The HTML name to use in form submission. |
 | `disabled` | `disabled` | `boolean` | `undefined` | Whether or not the element is disabled. |
 | `type` | `type` | `string` | `'submit'` | A string indicating the form submission behavior of the element.<br>- submit: The element submits the form. This is the default value if the attribute is not specified, or if it is dynamically changed to an empty or invalid value. - reset: The element resets the form. - button: The element does nothing. |
 | `value` | `value` | `string` | `''` | The value of the button. When combined with a `name`, the submitting button's name/value will be added to the form. |
 | `form` |  | `HTMLFormElement` | `undefined` | The associated form element with which this element's value will submit. |
 | `labels` |  | `NodeList` | `undefined` | The labels this element is associated with. |
+
+<!-- mdformat on(autogenerated might break rendering in catalog) -->
+
+#### Events
+
+<!-- mdformat off(autogenerated might break rendering in catalog) -->
+
+| Event | Type | [Bubbles](https://developer.mozilla.org/en-US/docs/Web/API/Event/bubbles) | [Composed](https://developer.mozilla.org/en-US/docs/Web/API/Event/composed) | Description |
+| --- | --- | --- | --- | --- |
+| `input` | `InputEvent` | Yes | Yes | Dispatched when a toggle button toggles |
+| `change` | `Event` | Yes | No | Dispatched when a toggle button toggles |
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 

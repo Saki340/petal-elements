@@ -19,23 +19,10 @@ declare global {
 }
 
 /**
- * @summary Buttons help people take action, such as sending an email, sharing a
- * document, or liking a comment.
+ * @summary Buttons start an action, such as sending a message or saving a form.
  *
  * @description
- * __Emphasis:__ Medium emphasis – For important actions that don’t distract
- * from other onscreen elements.
- *
- * __Rationale:__ Use an outlined button for actions that need attention but
- * aren’t the primary action, such as “See all” or “Add to cart.” This is also
- * the button to use for giving someone the opportunity to change their mind or
- * escape a flow.
- *
- * __Example usages:__
- * - Reply
- * - View all
- * - Add to cart
- * - Take out of trash
+ * An outlined button: medium emphasis.
  *
  * @final
  * @suppress {visibility}

@@ -28,14 +28,9 @@ declare global {
 }
 
 /**
- * @summary Menus display a list of choices on a temporary surface.
+ * @summary Menus show a list of choices on a temporary surface.
  *
  * @description
- * Menus appear when users interact with a button, action, or other control.
- *
- * They can be opened from a variety of elements, most commonly icon buttons,
- * buttons, and text fields.
- *
  * petal-menu listens for the `close-menu` and `deselect-items` events.
  *
  * - `close-menu` closes the menu when dispatched from a child element.

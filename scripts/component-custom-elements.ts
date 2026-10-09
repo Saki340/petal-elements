@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 /**
@@ -15,6 +16,7 @@ export const COMPONENT_CUSTOM_ELEMENTS = {
     'button/outlined-button.ts',
     'button/text-button.ts',
   ],
+  buttonGroup: ['buttongroup/button-group.ts'],
   checkbox: ['checkbox/checkbox.ts'],
   chips: [
     'chips/chip-set.ts',

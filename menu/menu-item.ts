@@ -21,7 +21,7 @@ declare global {
 }
 
 /**
- * @summary Menus display a list of choices on a temporary surface.
+ * @summary Menus show a list of choices on a temporary surface.
  *
  * @description
  * Menu items are the selectable choices within the menu. Menu items must

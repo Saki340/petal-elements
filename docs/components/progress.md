@@ -11,26 +11,18 @@ ssrOnly: true
 
 <!-- no-catalog-start -->
 
-<!--*
-# Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'lizmitchell' reviewed: '2026-07-31' }
-tag: 'docType:reference'
-*-->
-
-<!-- go/md-progress -->
-
 <!-- [TOC] -->
 
 <!-- external-only-start -->
 **This documentation is fully rendered on the
-[Material Web catalog](https://material-web.dev/components/progress/).**
+[petal-elements catalog](https://saki340.github.io/petal-elements/components/progress/).**
 <!-- external-only-end -->
 
 <!-- no-catalog-end -->
 
 [Progress indicators](https://m3.material.io/components/progress-indicators)<!-- {.external} -->
-inform users about the status of ongoing processes, such as loading an app or
-submitting a form.
+show that something is loading or being processed, and how far it has got when
+that is known.
 
 There are two types of progress indicators: linear and circular.
 
@@ -46,7 +38,7 @@ There are two types of progress indicators: linear and circular.
 *   [Design article](https://m3.material.io/components/progress-indicators)
     <!-- {.external} -->
 *   [API Documentation](#api)
-*   [Source code](https://github.com/material-components/material-web/tree/main/progress)
+*   [Source code](https://github.com/Saki340/petal-elements/tree/main/progress)
     <!-- {.external} -->
 
 ## Types
@@ -151,8 +143,6 @@ attribute to progress indicators to give them a descriptive name.
 
 ## Circular progress
 
-<!-- go/md-circular-progress -->
-
 Circular progress indicators display progress by animating along an invisible
 circular track in a clockwise direction.
 
@@ -183,8 +173,6 @@ circular track in a clockwise direction.
 ```
 
 ## Linear progress
-
-<!-- go/md-linear-progress -->
 
 Linear progress indicators display progress by animating along the length of a
 fixed, visible track.
@@ -261,7 +249,7 @@ Token                                           | Default value
 > Note: the active indicator width must be specified as a unit-less percentage
 > of the size.
 
-*   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-circular-progress.scss)
+*   [All tokens](https://github.com/Saki340/petal-elements/blob/main/tokens/_md-comp-circular-progress.scss)
     <!-- {.external} -->
 
 ### Circular progress example
@@ -320,7 +308,7 @@ Token                                          | Default value
 `--md-linear-progress-active-indicator-color`  | `--md-sys-color-primary`
 `--md-linear-progress-active-indicator-height` | `4px`
 
-*   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-linear-progress.scss)
+*   [All tokens](https://github.com/Saki340/petal-elements/blob/main/tokens/_md-comp-linear-progress.scss)
     <!-- {.external} -->
 
 ### Linear progress example

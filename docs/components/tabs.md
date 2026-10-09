@@ -10,25 +10,17 @@ dirname: tabs
 
 <!-- no-catalog-start -->
 
-<!--*
-# Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'lizmitchell' reviewed: '2026-07-31' }
-tag: 'docType:reference'
-*-->
-
-<!-- go/md-tabs -->
-
 <!-- [TOC] -->
 
 <!-- external-only-start -->
 **This documentation is fully rendered on the
-[Material Web catalog](https://material-web.dev/components/tabs/)**
+[petal-elements catalog](https://saki340.github.io/petal-elements/components/tabs/)**
 <!-- external-only-end -->
 
 <!-- no-catalog-end -->
 
-[Tabs](https://m3.material.io/components/tabs)<!-- {.external} --> organize groups of
-related content that are at the same level of hierarchy.
+[Tabs](https://m3.material.io/components/tabs)<!-- {.external} -->
+switch between related views at the same level of a page.
 
 </catalog-component-header-title>
 
@@ -42,7 +34,7 @@ related content that are at the same level of hierarchy.
 
 *   [Design article](https://m3.material.io/components/tabs) <!-- {.external} -->
 *   [API Documentation](#api)
-*   [Source code](https://github.com/material-components/material-web/tree/main/tabs)
+*   [Source code](https://github.com/Saki340/petal-elements/tree/main/tabs)
     <!-- {.external} -->
 
 ## Types
@@ -154,8 +146,6 @@ Tabs may optionally show icons without a label.
 
 ## Primary tabs
 
-<!-- go/md-primary-tab -->
-
 Primary tabs are placed at the top of the content pane under a top app bar. They
 display the main content destinations.
 
@@ -200,8 +190,6 @@ Primary tabs can show their icons inline, like secondary tabs.
 ```
 
 ## Secondary tabs
-
-<!-- go/md-secondary-tab -->
 
 Secondary tabs are used within a content area to further separate related
 content and establish hierarchy.
@@ -297,7 +285,7 @@ Token                                     | Default value
 `--md-primary-tab-icon-color`             | `--md-sys-color-on-surface-variant`
 `--md-primary-tab-container-shape`        | `--md-sys-shape-corner-none`
 
-*   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-primary-tab.scss)
+*   [All tokens](https://github.com/Saki340/petal-elements/blob/main/tokens/_md-comp-primary-tab.scss)
     <!-- {.external} -->
 
 ### Primary tab example
@@ -338,7 +326,7 @@ Token                                       | Default value
 `--md-secondary-tab-icon-color`             | `--md-sys-color-on-surface-variant`
 `--md-secondary-tab-container-shape`        | `--md-sys-shape-corner-none`
 
-*   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-secondary-tab.scss)
+*   [All tokens](https://github.com/Saki340/petal-elements/blob/main/tokens/_md-comp-secondary-tab.scss)
     <!-- {.external} -->
 
 ### Secondary tab example

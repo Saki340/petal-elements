@@ -19,7 +19,7 @@ declare global {
 
 // TODO(b/267336507): add docs
 /**
- * @summary Tabs displays a list of selectable tabs.
+ * @summary Tabs switch between related views at the same level of a page.
  *
  * @final
  * @suppress {visibility}

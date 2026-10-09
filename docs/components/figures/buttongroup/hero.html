@@ -1,0 +1,23 @@
+<!--
+  @license
+  Copyright 2026 Saki
+  SPDX-License-Identifier: Apache-2.0
+-->
+<div class="figure-wrapper">
+  <figure
+      style="justify-content: center; gap: 8px"
+      aria-label="A standard and a connected button group.">
+    <div style="display: grid; gap: 24px; justify-items: center">
+      <petal-button-group size="medium">
+        <petal-filled-button>Save</petal-filled-button>
+        <petal-filled-tonal-button>Share</petal-filled-tonal-button>
+        <petal-outlined-button>Delete</petal-outlined-button>
+      </petal-button-group>
+      <petal-button-group connected single-select size="medium">
+        <petal-filled-tonal-button toggle>Day</petal-filled-tonal-button>
+        <petal-filled-tonal-button toggle selected>Week</petal-filled-tonal-button>
+        <petal-filled-tonal-button toggle>Month</petal-filled-tonal-button>
+      </petal-button-group>
+    </div>
+  </figure>
+</div>

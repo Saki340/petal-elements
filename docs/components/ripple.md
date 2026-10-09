@@ -9,21 +9,13 @@ ssrOnly: true
 
 # Ripple
 
-<!--*
-# Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'lizmitchell' reviewed: '2026-07-31' }
-tag: 'docType:reference'
-*-->
-
 <!-- no-catalog-start -->
-
-<!-- go/md-ripple -->
 
 <!-- [TOC] -->
 
 <!-- external-only-start -->
 **This documentation is fully rendered on the
-[Material Web catalog](https://material-web.dev/components/ripple/)<!-- {.external} -->**
+[petal-elements catalog](https://saki340.github.io/petal-elements/components/ripple/)<!-- {.external} -->**
 <!-- external-only-end -->
 
 <!-- no-catalog-end -->
@@ -47,7 +39,7 @@ state. A layer can be applied to an entire element or in a circular shape.
 *   [Design article](https://m3.material.io/foundations/interaction/states/state-layers)
     <!-- {.external} -->
 *   [API Documentation](#api)
-*   [Source code](https://github.com/material-components/material-web/tree/main/ripple)
+*   [Source code](https://github.com/Saki340/petal-elements/tree/main/ripple)
     <!-- {.external} -->
 
 <!-- catalog-only-start -->
@@ -192,7 +184,7 @@ Token                    | Default value
 `--md-ripple-hover-color` | `--md-sys-color-on-surface`
 `--md-ripple-pressed-color` | `--md-sys-color-on-surface`
 
-*   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-ripple.scss)
+*   [All tokens](https://github.com/Saki340/petal-elements/blob/main/tokens/_md-comp-ripple.scss)
     <!-- {.external} -->
 
 ### Example

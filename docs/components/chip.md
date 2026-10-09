@@ -8,27 +8,20 @@ dirname: chips
 
 # Chips
 
-<!--*
-# Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'lizmitchell' reviewed: '2026-07-31' }
-tag: 'docType:reference'
-*-->
-
 <!-- no-catalog-start -->
-
-<!-- go/md-chips -->
 
 <!-- [TOC] -->
 
 <!-- external-only-start -->
 **This documentation is fully rendered on the
-[Material Web catalog](https://material-web.dev/components/chip/)**
+[petal-elements catalog](https://saki340.github.io/petal-elements/components/chip/)**
 <!-- external-only-end -->
 
 <!-- no-catalog-end -->
 
-[Chips](https://m3.material.io/components/chips)<!-- {.external} --> help people enter
-information, make selections, filter content, or trigger actions.
+[Chips](https://m3.material.io/components/chips)<!-- {.external} -->
+are compact elements for entering information, choosing options, filtering
+content or starting actions.
 
 While buttons are expected to appear consistently and with familiar calls to
 action, chips should appear dynamically as a group of multiple interactive
@@ -46,7 +39,7 @@ elements.
 
 *   [Design article](https://m3.material.io/components/chips) <!-- {.external} -->
 *   [API Documentation](#api)
-*   [Source code](https://github.com/material-components/material-web/tree/main/chips)
+*   [Source code](https://github.com/Saki340/petal-elements/tree/main/chips)
     <!-- {.external} -->
 
 ## Types
@@ -95,8 +88,6 @@ Choose the type of chip based on its purpose and author.
 ```
 
 ### Chip sets
-
-<!-- go/md-chip-set -->
 
 Chips should always appear in a set. Chip sets are
 [toolbars](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/toolbar_role)<!-- {.external} -->
@@ -201,11 +192,8 @@ for guidance on when this is recommended.
 
 ## Assist chip
 
-<!-- go/md-assist-chip -->
-
 [Assist chips](https://m3.material.io/components/chips/guidelines#5dd1928c-1476-4029-bdc5-fde66fc0dcb1)<!-- {.external} -->
-represent smart or automated actions that can span multiple apps, such as
-opening a calendar event from the home screen.
+offer a related action, such as adding an event to a calendar.
 
 Assist chips function as though the user asked an assistant to complete the
 action. They should appear dynamically and contextually in a UI.
@@ -230,11 +218,9 @@ action. They should appear dynamically and contextually in a UI.
 
 ## Filter chip
 
-<!-- go/md-filter-chip -->
-
 [Filter chips](https://m3.material.io/components/chips/guidelines#8d453d50-8d8e-43aa-9ae3-87ed134d2e64)<!-- {.external} -->
-use tags or descriptive words to filter content. They can be a good alternative
-to toggle buttons or checkboxes.
+narrow down content with tags or keywords. They can replace a row of toggle
+buttons or checkboxes.
 
 <!-- no-catalog-start -->
 <!-- Need to add image -->
@@ -275,11 +261,9 @@ a trailing remove icon.
 
 ## Input chip
 
-<!-- go/md-input-chip -->
-
 [Input chips](https://m3.material.io/components/chips/guidelines#4d2d5ef5-3fcd-46e9-99f2-067747b2393f)<!-- {.external} -->
-represent discrete pieces of information entered by a user, such as Gmail
-contacts or filter options within a search field.
+show pieces of information that the user entered, such as recipients or search
+terms.
 
 Input chips whose icons are user images may add the `avatar` attribute to
 display the image in a larger circle.
@@ -324,11 +308,8 @@ associated with clicking on it, it may be marked as `remove-only`.
 
 ## Suggestion chip
 
-<!-- go/md-suggestion-chip -->
-
 [Suggestion chips](https://m3.material.io/components/chips/guidelines#36d7bb16-a9bf-4cf6-a73d-8e05510d66a7)<!-- {.external} -->
-help narrow a user’s intent by presenting dynamically generated suggestions,
-such as possible responses or search filters.
+offer generated suggestions, such as quick replies or search refinements.
 
 <!-- no-catalog-start -->
 <!-- Need to add image -->
@@ -360,7 +341,7 @@ Token                               | Default value
 `--md-assist-chip-label-text-color` | `--md-sys-color-on-surface`
 `--md-assist-chip-label-text-font`  | `--md-sys-typescale-label-large-font`
 
-*   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-assist-chip.scss)
+*   [All tokens](https://github.com/Saki340/petal-elements/blob/main/tokens/_md-comp-assist-chip.scss)
     <!-- {.external} -->
 
 ### Assist chip example
@@ -394,7 +375,7 @@ Token                                       | Default value
 `--md-filter-chip-label-text-color`         | `--md-sys-color-on-surface`
 `--md-filter-chip-label-text-font`          | `--md-sys-typescale-label-large-font`
 
-*   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-filter-chip.scss)
+*   [All tokens](https://github.com/Saki340/petal-elements/blob/main/tokens/_md-comp-filter-chip.scss)
     <!-- {.external} -->
 
 ### Filter chip example
@@ -428,7 +409,7 @@ Token                              | Default value
 `--md-input-chip-label-text-color` | `--md-sys-color-on-surface`
 `--md-input-chip-label-text-font`  | `--md-sys-typescale-label-large-font`
 
-*   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-input-chip.scss)
+*   [All tokens](https://github.com/Saki340/petal-elements/blob/main/tokens/_md-comp-input-chip.scss)
     <!-- {.external} -->
 
 ### Input chip example
@@ -461,7 +442,7 @@ Token                                   | Default value
 `--md-suggestion-chip-label-text-color` | `--md-sys-color-on-surface`
 `--md-suggestion-chip-label-text-font`  | `--md-sys-typescale-label-large-font`
 
-*   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-suggestion-chip.scss)
+*   [All tokens](https://github.com/Saki340/petal-elements/blob/main/tokens/_md-comp-suggestion-chip.scss)
     <!-- {.external} -->
 
 ### Suggestion chip example
@@ -513,6 +494,8 @@ Token                                   | Default value
 | `href` | `href` | `string` | `''` |  |
 | `download` | `download` | `string` | `''` | The filename to use when downloading the linked resource. If not specified, the browser will determine a filename. This is only applicable when the chip is used as a link (`href` is set). |
 | `target` | `target` | `"" \| "_blank" \| "_parent" \| "_self" \| "_top"` | `''` |  |
+| `rel` | `rel` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `rel` attribute when `href` is set. |
+| `referrerPolicy` | `referrerpolicy` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `referrerpolicy` attribute when `href` is set. |
 | `disabled` | `disabled` | `boolean` | `false` | Whether or not the chip is disabled.<br>Disabled chips are not focusable, unless `always-focusable` is set. |
 | `softDisabled` | `soft-disabled` | `boolean` | `false` | Whether or not the chip is "soft-disabled" (disabled but still focusable).<br>Use this when a chip needs increased visibility when disabled. See https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_disabled_controls for more guidance on when this is needed. |
 | `alwaysFocusable` | `always-focusable` | `boolean` | `false` | When true, allow disabled chips to be focused with arrow keys.<br>Add this when a chip needs increased visibility when disabled. See https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_disabled_controls for more guidance on when this is needed. |
@@ -575,6 +558,8 @@ Token                                   | Default value
 | `avatar` | `avatar` | `boolean` | `false` |  |
 | `href` | `href` | `string` | `''` |  |
 | `target` | `target` | `"" \| "_blank" \| "_parent" \| "_self" \| "_top"` | `''` |  |
+| `rel` | `rel` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `rel` attribute when `href` is set. |
+| `referrerPolicy` | `referrerpolicy` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `referrerpolicy` attribute when `href` is set. |
 | `removeOnly` | `remove-only` | `boolean` | `false` |  |
 | `selected` | `selected` | `boolean` | `false` |  |
 | `disabled` | `disabled` | `boolean` | `false` | Whether or not the chip is disabled.<br>Disabled chips are not focusable, unless `always-focusable` is set. |
@@ -610,6 +595,8 @@ Token                                   | Default value
 | `href` | `href` | `string` | `''` |  |
 | `download` | `download` | `string` | `''` | The filename to use when downloading the linked resource. If not specified, the browser will determine a filename. This is only applicable when the chip is used as a link (`href` is set). |
 | `target` | `target` | `"" \| "_blank" \| "_parent" \| "_self" \| "_top"` | `''` |  |
+| `rel` | `rel` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `rel` attribute when `href` is set. |
+| `referrerPolicy` | `referrerpolicy` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `referrerpolicy` attribute when `href` is set. |
 | `disabled` | `disabled` | `boolean` | `false` | Whether or not the chip is disabled.<br>Disabled chips are not focusable, unless `always-focusable` is set. |
 | `softDisabled` | `soft-disabled` | `boolean` | `false` | Whether or not the chip is "soft-disabled" (disabled but still focusable).<br>Use this when a chip needs increased visibility when disabled. See https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_disabled_controls for more guidance on when this is needed. |
 | `alwaysFocusable` | `always-focusable` | `boolean` | `false` | When true, allow disabled chips to be focused with arrow keys.<br>Add this when a chip needs increased visibility when disabled. See https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_disabled_controls for more guidance on when this is needed. |

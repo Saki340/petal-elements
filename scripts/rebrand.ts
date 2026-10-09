@@ -26,7 +26,7 @@
  * What does not change: CSS custom properties (`--md-*`), Sass names,
  * file names and import paths (`md-focus-ring.js`), generated tokens in
  * tokens/versions/, CHANGELOG.md, and our own files that name the upstream
- * project on purpose (README, NOTICE, docs/licensing.md).
+ * project on purpose (README, NOTICE, docs/licensing.md, docs/intro.md).
  */
 
 import {execFileSync} from 'child_process';
@@ -44,6 +44,7 @@ const SKIP = [
   /^scripts\/rebrand\.ts$/,
   /^README(\.[\w-]+)?\.md$/,
   /^docs\/licensing\.md$/,
+  /^docs\/intro\.md$/,
 ];
 
 const check = process.argv.includes('--check');

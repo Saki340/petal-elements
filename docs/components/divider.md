@@ -1,17 +1,9 @@
 # Divider
 
-<!--*
-# Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'lizmitchell' reviewed: '2026-07-31' }
-tag: 'docType:reference'
-*-->
-
-<!-- go/md-divider -->
-
 <!-- [TOC] -->
 
-A [divider](https://m3.material.io/components/divider)<!-- {.external} --> is a thin line
-that groups content in lists and containers.
+A [divider](https://m3.material.io/components/divider)<!-- {.external} -->
+is a thin line that separates content in lists and containers.
 
 Dividers can reinforce tapability, such as when used to separate list items or
 define tappable regions in an accordion.
@@ -20,7 +12,7 @@ define tappable regions in an accordion.
 
 *   [Design article](https://m3.material.io/components/divider) <!-- {.external} -->
 *   [API Documentation](#api)
-*   [Source code](https://github.com/material-components/material-web/tree/main/divider)
+*   [Source code](https://github.com/Saki340/petal-elements/tree/main/divider)
     <!-- {.external} -->
 
 ## Usage
@@ -96,7 +88,7 @@ Token                    | Default value
 `--md-divider-color`     | `--md-sys-color-outline-variant`
 `--md-divider-thickness` | `1px`
 
-*   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-comp-divider.scss)
+*   [All tokens](https://github.com/Saki340/petal-elements/blob/main/tokens/_md-comp-divider.scss)
     <!-- {.external} -->
 
 ### Example

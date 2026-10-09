@@ -6,28 +6,18 @@ order: 2
 
 # Color
 
-<!--*
-# Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'lizmitchell' reviewed: '2026-07-31' }
-tag: 'docType:howTo'
-*-->
-
-<!-- go/mwc-color -->
-
 <!-- [TOC] -->
 
-[Color](https://m3.material.io/styles/color/overview)<!-- {.external} --> creates meaning
-and communicates hierarchy, state, and brand.
+[Color](https://m3.material.io/styles/color/overview)<!-- {.external} -->
+shows hierarchy and state, and carries a brand.
 
 ## Color scheme
 
-<!-- go/md-sys-color -->
-
 A
 [color scheme](https://m3.material.io/styles/color/the-color-system/color-roles#55d2b7d2-0202-4616-887e-f575a7946aac)<!-- {.external} -->
-is the group of
+assigns tones from the
 [key color tones](https://m3.material.io/styles/color/the-color-system/key-colors-tones#5fdf196d-1e21-4d03-ae63-e802d61ad5ee)<!-- {.external} -->
-assigned to specific roles that get mapped to components.
+to roles, and the components use those roles.
 
 ![Full palette derived from baseline colors](images/color-scheme-light.webp "From five key colors, roles are automatically assigned that map to light theme components")
 
@@ -75,7 +65,7 @@ Neutral   | `--md-sys-color-background`
 *\* all surface tokens use `--md-sys-color-on-surface` or
 `--md-sys-color-on-surface-variant` for their content.*
 
-*   [All tokens](https://github.com/material-components/material-web/blob/main/tokens/_md-sys-color.scss)
+*   [All tokens](https://github.com/Saki340/petal-elements/blob/main/tokens/_md-sys-color.scss)
     <!-- {.external} -->
 
 ```css
@@ -96,4 +86,3 @@ Neutral   | `--md-sys-color-background`
 }
 ```
 
-<!--#include file="../../googlers/theming-color.md" -->
