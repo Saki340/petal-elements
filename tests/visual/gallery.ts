@@ -333,6 +333,39 @@ const galleries: Record<string, Gallery> = {
     ],
   },
 
+  // Top app bars stick to the top of the page; here each is in its own cell.
+  'top-app-bar': {
+    states: ['default'],
+    rows: [
+      ['small', 'headline="Inbox"', ''],
+      ['small subtitle', 'headline="Inbox" subtitle="12 unread"', ''],
+      ['medium', 'size="medium" headline="Inbox"', ''],
+      ['medium subtitle', 'size="medium" headline="Inbox" subtitle="12 unread"', ''],
+      ['medium centered', 'size="medium" centered headline="Inbox" subtitle="12 unread"', ''],
+      ['large', 'size="large" headline="Inbox"', ''],
+      ['large subtitle', 'size="large" headline="Inbox" subtitle="12 unread"', ''],
+    ].map(([name, attributes, style]) => ({
+      name,
+      render: () => {
+        const bar = document.createElement('petal-top-app-bar');
+        for (const attribute of attributes.match(/[\w-]+(="[^"]*")?/g) ?? []) {
+          const [key, value = ''] = attribute.split('=');
+          bar.setAttribute(key, value.replace(/"/g, ''));
+        }
+        bar.style.cssText = `position: static; width: 400px; ${style}`;
+        const button = (slot: string, label: string) => {
+          const element = document.createElement('petal-icon-button');
+          element.slot = slot;
+          element.setAttribute('aria-label', label);
+          render(icon(undefined, square), element);
+          return element;
+        };
+        bar.append(button('navigation', 'Menu'), button('actions', 'Search'));
+        return html`${bar}`;
+      },
+    })),
+  },
+
   card: {
     states: ['default'],
     rows: (['filled', 'elevated', 'outlined'] as const).flatMap((variant) => {

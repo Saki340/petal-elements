@@ -1,0 +1,30 @@
+<!--
+  @license
+  Copyright 2026 Saki
+  SPDX-License-Identifier: Apache-2.0
+-->
+<div class="figure-wrapper">
+  <figure
+      class="app-bar-figure"
+      style="flex-direction: column; gap: 24px; padding-block: 24px"
+      title="Top app bars"
+      aria-label="A small and a medium flexible top app bar with the title Inbox.">
+    <style>
+      .app-bar-figure petal-top-app-bar {
+        position: static;
+        width: 400px;
+        outline: 1px solid var(--md-sys-color-outline-variant, #cac4d0);
+      }
+    </style>
+    <petal-top-app-bar headline="Inbox">
+      <petal-icon-button slot="navigation" aria-label="Menu"><petal-icon>menu</petal-icon></petal-icon-button>
+      <petal-icon-button slot="actions" aria-label="search"><petal-icon>search</petal-icon></petal-icon-button>
+      <petal-icon-button slot="actions" aria-label="more_vert"><petal-icon>more_vert</petal-icon></petal-icon-button>
+    </petal-top-app-bar>
+    <petal-top-app-bar size="medium" headline="Inbox" subtitle="12 unread">
+      <petal-icon-button slot="navigation" aria-label="Menu"><petal-icon>menu</petal-icon></petal-icon-button>
+      <petal-icon-button slot="actions" aria-label="search"><petal-icon>search</petal-icon></petal-icon-button>
+      <petal-icon-button slot="actions" aria-label="more_vert"><petal-icon>more_vert</petal-icon></petal-icon-button>
+    </petal-top-app-bar>
+  </figure>
+</div>

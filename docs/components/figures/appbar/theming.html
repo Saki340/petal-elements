@@ -1,0 +1,31 @@
+<!--
+  @license
+  Copyright 2026 Saki
+  SPDX-License-Identifier: Apache-2.0
+-->
+<div class="figure-wrapper">
+  <figure
+      class="app-bar-figure"
+      style="flex-direction: column; gap: 24px; padding-block: 24px"
+      title="Top app bar theming example"
+      aria-label="A small top app bar with a teal container.">
+    <style>
+      .app-bar-figure petal-top-app-bar {
+        position: static;
+        width: 400px;
+        outline: 1px solid var(--md-sys-color-outline-variant, #cac4d0);
+      }
+    </style>
+    <style>
+      .app-bar-theming {
+        --md-top-app-bar-container-color: #cce8e7;
+        --md-top-app-bar-title-color: #002020;
+      }
+    </style>
+    <petal-top-app-bar class="app-bar-theming" headline="Inbox">
+      <petal-icon-button slot="navigation" aria-label="Menu"><petal-icon>menu</petal-icon></petal-icon-button>
+      <petal-icon-button slot="actions" aria-label="search"><petal-icon>search</petal-icon></petal-icon-button>
+      <petal-icon-button slot="actions" aria-label="more_vert"><petal-icon>more_vert</petal-icon></petal-icon-button>
+    </petal-top-app-bar>
+  </figure>
+</div>

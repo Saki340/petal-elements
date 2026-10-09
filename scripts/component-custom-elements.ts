@@ -9,6 +9,7 @@
  * A map of components and their custom element TypeScript entrypoints.
  */
 export const COMPONENT_CUSTOM_ELEMENTS = {
+  appBar: ['appbar/top-app-bar.ts'],
   button: [
     'button/elevated-button.ts',
     'button/filled-button.ts',

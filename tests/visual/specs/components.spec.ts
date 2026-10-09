@@ -20,6 +20,7 @@ const COMPONENTS = [
   'switch',
   'text-field',
   'chips',
+  'top-app-bar',
   'card',
   'snackbar',
   'tooltip',

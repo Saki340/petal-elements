@@ -1,0 +1,240 @@
+//
+// Copyright 2026 Saki
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// Top app bars, after Jetpack Compose Material 3 (AppBar.kt): TopAppBar
+// (small) and the two-row MediumFlexibleTopAppBar and LargeFlexibleTopAppBar.
+//
+// Values: AppBarTokens, AppBarSmallTokens, AppBarMediumFlexibleTokens and
+// AppBarLargeFlexibleTokens (tokens/versions/compose/values); layout from
+// TopAppBarLayout (TopAppBarHorizontalPadding 4dp, TopAppBarTitleInset 12dp)
+// and the title bottom padding from its baseline (MediumTitleBottomPadding
+// 24dp, LargeTitleBottomPadding 28dp).
+//
+// Scrolling (top-app-bar.ts sets --_fraction, the collapsed fraction, and the
+// title opacities): small bars change to the scrolled container color when
+// content is under them; two-row bars collapse like exitUntilCollapsed, the
+// container color following the collapsed fraction.
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'sass:map';
+@use '../../tokens/versions/compose/values/md-comp-app-bar' as app-bar;
+@use '../../tokens/versions/compose/values/md-comp-app-bar-large-flexible' as large;
+@use '../../tokens/versions/compose/values/md-comp-app-bar-medium-flexible' as medium;
+@use '../../tokens/versions/compose/values/md-comp-app-bar-small' as small;
+@use '../../tokens/versions/v34/values/md-sys-motion-springs' as springs;
+// go/keep-sorted end
+
+@mixin _type($prefix, $values, $name) {
+  --_#{$prefix}-font: #{map.get($values, '#{$name}-font')};
+  --_#{$prefix}-size: #{map.get($values, '#{$name}-size')};
+  --_#{$prefix}-weight: #{map.get($values, '#{$name}-weight')};
+  --_#{$prefix}-line-height: #{map.get($values, '#{$name}-line-height')};
+  --_#{$prefix}-tracking: #{map.get($values, '#{$name}-tracking')};
+}
+
+@mixin _text($prefix) {
+  font-family: var(--_#{$prefix}-font);
+  font-size: var(--_#{$prefix}-size);
+  font-weight: var(--_#{$prefix}-weight);
+  line-height: var(--_#{$prefix}-line-height);
+  letter-spacing: var(--_#{$prefix}-tracking);
+}
+
+@mixin styles() {
+  :host {
+    @each $token, $value in app-bar.$values {
+      --_#{$token}: var(--md-top-app-bar-#{$token}, #{$value});
+    }
+
+    --_collapsed-height: #{map.get(small.$values, 'container-height')};
+    --_expanded-height: var(--_collapsed-height);
+    --_fraction: 0;
+    // Small title and subtitle (AppBarSmallTokens).
+    @include _type('small-title', small.$values, 'title');
+    @include _type('small-subtitle', small.$values, 'subtitle');
+
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: block;
+    color: var(--_title-color);
+  }
+
+  // Two-row bars: the bar sticks with only its top row in view; the bottom
+  // row scrolls away under it.
+  :host([size='medium']),
+  :host([size='large']) {
+    top: calc(var(--_collapsed-height) - var(--_expanded-height));
+  }
+
+  :host([size='medium']) {
+    --_expanded-height: #{map.get(medium.$values, 'container-height')};
+    --_title-bottom-padding: 24px;
+    @include _type('large-title', medium.$values, 'title');
+    @include _type('large-subtitle', medium.$values, 'subtitle');
+  }
+
+  :host([size='medium'][has-subtitle]) {
+    --_expanded-height: #{map.get(medium.$values, 'large-container-height')};
+  }
+
+  :host([size='large']) {
+    --_expanded-height: #{map.get(large.$values, 'container-height')};
+    --_title-bottom-padding: 28px;
+    @include _type('large-title', large.$values, 'title');
+    @include _type('large-subtitle', large.$values, 'subtitle');
+  }
+
+  :host([size='large'][has-subtitle]) {
+    --_expanded-height: #{map.get(large.$values, 'large-container-height')};
+  }
+
+  .bar,
+  .top {
+    background-color: color-mix(
+      in srgb,
+      var(--_on-scroll-container-color) calc(var(--_fraction) * 100%),
+      var(--_container-color)
+    );
+  }
+
+  // Small bars switch color at once, animated (MotionSchemeKeyTokens.DefaultEffects).
+  :host(:not([size='medium'], [size='large'])) .bar {
+    transition: background-color
+      map.get(springs.$values, 'spring-default-effects-duration')
+      map.get(springs.$values, 'spring-default-effects');
+  }
+
+  .bar {
+    border-radius: var(--_container-shape);
+  }
+
+  .top {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    height: var(--_collapsed-height);
+    padding-inline: var(--_leading-space) var(--_trailing-space);
+    border-radius: inherit;
+  }
+
+  .navigation,
+  .actions {
+    display: flex;
+    flex: none;
+    align-items: center;
+    gap: var(--_icon-button-space);
+  }
+
+  .navigation {
+    --md-icon-button-icon-color: var(--_leading-icon-color);
+    --md-icon-button-icon-size: var(--_icon-size);
+    color: var(--_leading-icon-color);
+  }
+
+  .actions {
+    margin-inline-start: auto;
+    --md-icon-button-icon-color: var(--_trailing-icon-color);
+    --md-icon-button-icon-size: var(--_icon-size);
+    color: var(--_trailing-icon-color);
+  }
+
+  // The title starts 16dp from the edge without a navigation icon
+  // (TopAppBarTitleInset plus its 4dp padding), after the icon otherwise.
+  .title {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding-inline: 4px;
+  }
+
+  .top .title {
+    flex: 1;
+    margin-inline-start: 8px;
+    opacity: var(--_top-title-opacity, 1);
+  }
+
+  :host([has-navigation]) .top .title {
+    margin-inline-start: 0;
+  }
+
+  .headline,
+  .subtitle {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .top .headline {
+    @include _text('small-title');
+  }
+
+  .top .subtitle {
+    @include _text('small-subtitle');
+    color: var(--_subtitle-color);
+  }
+
+  // Bottom row of two-row bars: the large title, its last baseline
+  // --_title-bottom-padding above the bottom.
+  .bottom {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    box-sizing: border-box;
+    height: calc(var(--_expanded-height) - var(--_collapsed-height));
+    // TopAppBarTitleInset (the bottom row has no navigation icon); the title
+    // adds its own 4dp.
+    padding-inline: 12px var(--_trailing-space);
+  }
+
+  // The bottom padding is a spacer that shrinks when the title does not fit,
+  // like the adjusted bottom padding in TopAppBarLayout.
+  .bottom::after {
+    content: '';
+    flex: 0 1 var(--_title-bottom-padding);
+    min-height: 0;
+  }
+
+  .bottom .title {
+    flex: none;
+    opacity: var(--_bottom-title-opacity, 1);
+    text-box: trim-end alphabetic;
+  }
+
+  .bottom .headline {
+    @include _text('large-title');
+  }
+
+  .bottom .subtitle {
+    @include _text('large-subtitle');
+    color: var(--_subtitle-color);
+  }
+
+  // Centered titles (titleHorizontalAlignment = CenterHorizontally): centered
+  // in the whole bar, as in Compose.
+  :host([centered]) .title {
+    align-items: center;
+    text-align: center;
+  }
+
+  :host([centered]) .top .title {
+    position: absolute;
+    inset-inline: 56px;
+    margin: 0;
+  }
+
+  :host([centered]) .bottom {
+    padding-inline: var(--_leading-space) var(--_trailing-space);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bar {
+      transition: none;
+    }
+  }
+}
