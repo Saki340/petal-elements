@@ -7,17 +7,17 @@
 /**
  * @fileoverview Generates tokens/versions/v34/values/: one Sass `$values` map
  * per v34 token set that the Expressive features use (button sizes, toggle
- * button colors, ...), plus the springs.
+ * button colors, filled FAB colors, ...), plus the springs.
  *
  *     @use '../../tokens/versions/v34/values/md-comp-button-small' as small;
  *     height: map.get(small.$values, 'container-height');  // 40px
  *
  * Keys are the token names without the set prefix, dots as dashes
  * (`md.comp.button.small.container.shape.round` -> `container-shape-round`).
- * References to system and reference tokens become `var(--md-sys-..., value)`
- * like in the stable components, so runtime theming still works. A typescale
- * reference such as `label-text` expands to `label-text-font`, `-size`,
- * `-line-height`, `-weight` and `-tracking`.
+ * References to system and reference tokens (except palette tones) become
+ * `var(--md-sys-..., value)` like in the stable components, so runtime theming
+ * still works. A typescale reference such as `label-text` expands to
+ * `label-text-font`, `-size`, `-line-height`, `-weight` and `-tracking`.
  */
 
 import {isToken, SOURCES, Token, walk} from './dtcg.js';
@@ -38,6 +38,10 @@ export const VALUE_MODULES = [
   ...['xsmall', 'small', 'medium', 'large', 'xlarge'].flatMap((size) => [
     `md-comp-button-group-standard-${size}`,
     `md-comp-button-group-connected-${size}`,
+  ]),
+  ...['primary', 'secondary', 'tertiary'].flatMap((color) => [
+    `md-comp-fab-${color}`,
+    `md-comp-extended-fab-${color}`,
   ]),
 ];
 
@@ -92,7 +96,10 @@ function literal(token: Token): string {
   }
 }
 
-const isSystem = (path: string) => /^md\.(sys|ref)\./.test(path);
+// Palette tones are not in sys.css (like in the stable components, a system
+// color falls back to the tone's value, not to a palette property).
+const isSystem = (path: string) =>
+  /^md\.(sys|ref)\./.test(path) && !path.startsWith('md.ref.palette.');
 const cssName = (path: string) => `--${path.replace(/\./g, '-')}`;
 
 export function buildValueModules(files: WebFile[], sysCss: string): Map<string, string> {
@@ -131,6 +138,10 @@ export function buildValueModules(files: WebFile[], sysCss: string): Map<string,
       const v = token.$value;
       const target = typeof v === 'string' && /^\{.*\}$/.test(v) ? v.slice(1, -1) : '';
       if (token.$type === 'typography' || tokens.get(target)?.$type === 'typography') {
+        // A composite such as `label-text.type` whose parts are tokens of their
+        // own (`label-text.font`, ...): the parts are enough.
+        const base = path.replace(/\.type$/, '');
+        if (!target && base !== path && tokens.has(`${base}.font`)) continue;
         // A typescale: expand into its parts, as var() of the system tokens.
         if (!target.startsWith('md.sys.typescale.')) {
           throw new Error(`${path}: typography that is not a typescale reference`);
