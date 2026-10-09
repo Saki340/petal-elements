@@ -17,6 +17,7 @@ export const COMPONENT_CUSTOM_ELEMENTS = {
     'button/text-button.ts',
   ],
   buttonGroup: ['buttongroup/button-group.ts'],
+  card: ['card/filled-card.ts', 'card/elevated-card.ts', 'card/outlined-card.ts'],
   checkbox: ['checkbox/checkbox.ts'],
   chips: [
     'chips/chip-set.ts',

@@ -1,0 +1,40 @@
+<!--
+  @license
+  Copyright 2026 Saki
+  SPDX-License-Identifier: Apache-2.0
+-->
+<div class="figure-wrapper">
+  <figure
+      class="card-figure"
+      style="justify-content: center; gap: 16px; padding-block: 24px"
+      title="Card theming example"
+      aria-label="An elevated card with large corners and a teal container.">
+    <style>
+      .card-figure [class$='-card'],
+      .card-figure petal-filled-card,
+      .card-figure petal-elevated-card,
+      .card-figure petal-outlined-card {
+        width: 200px;
+        padding: 16px;
+        gap: 4px;
+      }
+      .card-figure .title {
+        font: var(--md-sys-typescale-title-medium, 500 16px/24px Roboto);
+      }
+      .card-figure .text {
+        color: var(--md-sys-color-on-surface-variant, #49454f);
+        font: var(--md-sys-typescale-body-medium, 400 14px/20px Roboto);
+      }
+    </style>
+    <style>
+      .card-theming {
+        --md-elevated-card-container-shape: 28px;
+        --md-elevated-card-container-color: #cce8e7;
+      }
+    </style>
+    <petal-elevated-card class="card-theming">
+      <span class="title">Themed</span>
+      <span class="text">Large corners, teal container.</span>
+    </petal-elevated-card>
+  </figure>
+</div>

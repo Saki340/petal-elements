@@ -14,6 +14,7 @@ import {COMPONENT_CUSTOM_ELEMENTS} from '../component-custom-elements.js';
 export const docsToElementMapping: {[key: string]: readonly string[]} = {
   'button.md': COMPONENT_CUSTOM_ELEMENTS.button,
   'button-group.md': COMPONENT_CUSTOM_ELEMENTS.buttonGroup,
+  'card.md': COMPONENT_CUSTOM_ELEMENTS.card,
   'checkbox.md': COMPONENT_CUSTOM_ELEMENTS.checkbox,
   'chip.md': COMPONENT_CUSTOM_ELEMENTS.chips,
   'dialog.md': COMPONENT_CUSTOM_ELEMENTS.dialog,

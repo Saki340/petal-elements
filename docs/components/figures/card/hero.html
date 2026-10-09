@@ -1,0 +1,42 @@
+<!--
+  @license
+  Copyright 2026 Saki
+  SPDX-License-Identifier: Apache-2.0
+-->
+<div class="figure-wrapper">
+  <figure
+      class="card-figure"
+      style="justify-content: center; gap: 16px; padding-block: 24px"
+      title="Filled, elevated and outlined cards"
+      aria-label="Three cards: filled, elevated and outlined.">
+    <style>
+      .card-figure [class$='-card'],
+      .card-figure petal-filled-card,
+      .card-figure petal-elevated-card,
+      .card-figure petal-outlined-card {
+        width: 200px;
+        padding: 16px;
+        gap: 4px;
+      }
+      .card-figure .title {
+        font: var(--md-sys-typescale-title-medium, 500 16px/24px Roboto);
+      }
+      .card-figure .text {
+        color: var(--md-sys-color-on-surface-variant, #49454f);
+        font: var(--md-sys-typescale-body-medium, 400 14px/20px Roboto);
+      }
+    </style>
+    <petal-filled-card>
+      <span class="title">Filled</span>
+      <span class="text">Highest container color.</span>
+    </petal-filled-card>
+    <petal-elevated-card>
+      <span class="title">Elevated</span>
+      <span class="text">A shadow on a low container.</span>
+    </petal-elevated-card>
+    <petal-outlined-card>
+      <span class="title">Outlined</span>
+      <span class="text">An outline on the surface.</span>
+    </petal-outlined-card>
+  </figure>
+</div>

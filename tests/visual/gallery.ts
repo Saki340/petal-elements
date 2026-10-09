@@ -333,6 +333,24 @@ const galleries: Record<string, Gallery> = {
     ],
   },
 
+  card: {
+    states: ['default'],
+    rows: (['filled', 'elevated', 'outlined'] as const).flatMap((variant) => {
+      const card = (attributes: string, text: string) => {
+        const element = document.createElement(`petal-${variant}-card`);
+        for (const name of attributes.split(' ').filter(Boolean)) element.setAttribute(name, '');
+        element.style.cssText = 'width: 220px; padding: 16px; font: 400 14px/20px Roboto';
+        element.textContent = text;
+        return html`${element}`;
+      };
+      return [
+        {name: variant, render: () => card('', 'Card content')},
+        {name: `${variant} dragged`, render: () => card('dragged', 'Dragged')},
+        {name: `${variant} disabled`, render: () => card('clickable disabled', 'Disabled')},
+      ];
+    }),
+  },
+
   // Snackbars are fixed to the bottom of the page; here they sit in the grid.
   snackbar: {
     states: ['default'],
