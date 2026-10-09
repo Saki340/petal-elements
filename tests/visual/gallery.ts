@@ -234,6 +234,25 @@ const galleries: Record<string, Gallery> = {
     ],
   },
 
+  'fab-filled': {
+    states: ['default', 'hover', 'focus', 'pressed'],
+    harness: FabHarness,
+    rows: [
+      ...['primary', 'secondary', 'tertiary'].map((color) => ({
+        name: color,
+        render: () => html`<petal-fab data-subject variant=${`filled-${color}`}>${icon('icon')}</petal-fab>`,
+      })),
+      ...['small', 'large'].map((size) => ({
+        name: `primary ${size}`,
+        render: () => html`<petal-fab data-subject variant="filled-primary" size=${size}>${icon('icon')}</petal-fab>`,
+      })),
+      ...['primary', 'secondary', 'tertiary'].map((color) => ({
+        name: `${color} extended`,
+        render: () => html`<petal-fab data-subject variant=${`filled-${color}`} label="Label">${icon('icon')}</petal-fab>`,
+      })),
+    ],
+  },
+
   checkbox: {
     states: INTERACTIVE,
     harness: CheckboxHarness,

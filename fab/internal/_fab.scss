@@ -12,7 +12,21 @@
 @use '../../focus/focus-ring';
 @use '../../ripple/ripple';
 @use '../../tokens';
+@use '../../tokens/versions/v34/values/md-comp-extended-fab-primary' as extended-fab-primary;
+@use '../../tokens/versions/v34/values/md-comp-extended-fab-secondary' as extended-fab-secondary;
+@use '../../tokens/versions/v34/values/md-comp-extended-fab-tertiary' as extended-fab-tertiary;
+@use '../../tokens/versions/v34/values/md-comp-fab-primary' as fab-primary;
+@use '../../tokens/versions/v34/values/md-comp-fab-secondary' as fab-secondary;
+@use '../../tokens/versions/v34/values/md-comp-fab-tertiary' as fab-tertiary;
 // go/keep-sorted end
+
+// Filled (solid) variants: md.comp.fab.{primary,secondary,tertiary} for the
+// container, icon and state layer, md.comp.extended-fab.* for the label.
+$_filled: (
+  'primary': (fab-primary.$values, extended-fab-primary.$values),
+  'secondary': (fab-secondary.$values, extended-fab-secondary.$values),
+  'tertiary': (fab-tertiary.$values, extended-fab-tertiary.$values),
+);
 
 @mixin theme($tokens) {
   $supported-tokens: ltokens.$md-comp-fab-supported-tokens;
@@ -116,6 +130,29 @@
           'pressed-label-text-color': var(--_tertiary-pressed-label-text-color),
         )
       );
+    }
+
+    @each $color, $values in $_filled {
+      $fab: list.nth($values, 1);
+      $extended: list.nth($values, 2);
+
+      &.filled-#{$color} {
+        @include color(
+          (
+            'container-color': map.get($fab, 'container-color'),
+            'focus-icon-color': map.get($fab, 'focused-icon-color'),
+            'hover-icon-color': map.get($fab, 'hovered-icon-color'),
+            'hover-state-layer-color': map.get($fab, 'hovered-state-layer-color'),
+            'icon-color': map.get($fab, 'icon-color'),
+            'pressed-icon-color': map.get($fab, 'pressed-icon-color'),
+            'pressed-state-layer-color': map.get($fab, 'pressed-state-layer-color'),
+            'label-text-color': map.get($extended, 'label-text-color'),
+            'hover-label-text-color': map.get($extended, 'hovered-label-text-color'),
+            'focus-label-text-color': map.get($extended, 'focused-label-text-color'),
+            'pressed-label-text-color': map.get($extended, 'pressed-label-text-color'),
+          )
+        );
+      }
     }
   }
 

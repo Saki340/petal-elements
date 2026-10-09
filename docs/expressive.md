@@ -76,3 +76,24 @@ The group's total width does not change. On the web the space moves through
 the buttons' inline padding, so labels are never cut off. The change animates
 with the fast spatial spring. `prefers-reduced-motion` turns the animations
 off, here and for sized buttons.
+
+## Filled FAB
+
+```html
+<petal-fab variant="filled-primary" aria-label="Edit">…</petal-fab>
+<petal-fab variant="filled-tertiary" label="Compose">…</petal-fab>
+```
+
+`variant` takes `filled-primary`, `filled-secondary` and `filled-tertiary`
+besides the container variants (`primary`, ... keep their
+`primary-container`-based colors). Container, icon and state layer come from
+`md.comp.fab.{primary,secondary,tertiary}` (for example container `primary`,
+icon and state layer `on-primary`), the label from
+`md.comp.extended-fab.{primary,secondary,tertiary}`. Only the non-deprecated
+`focused.*` / `hovered.*` tokens are used; the deprecated `focus.*` / `hover.*`
+ones still point at the container colors. Sizes, shape and elevation are the
+same as for the other variants.
+
+Compose has no solid FAB tokens: `FloatingActionButton` takes any
+`containerColor` with `contentColorFor()` (`primary` gives `onPrimary`), which
+matches these tokens.

@@ -201,7 +201,10 @@ Extended FABs are the only FABs that can be used without an icon.
 ### Colors
 
 FAB colors may be changed with the `variant` attribute. It can be set to
-"surface" (default), "primary", "secondary", or "tertiary".
+"surface" (default), "primary", "secondary", or "tertiary". These use the
+container colors (for example `primary-container`). For the solid colors, use
+"filled-primary", "filled-secondary", or "filled-tertiary" (see
+[Material 3 Expressive features](../expressive.md#filled-fab)).
 
 <!-- no-catalog-start -->
 

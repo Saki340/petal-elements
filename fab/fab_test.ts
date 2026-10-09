@@ -77,6 +77,35 @@ describe('<petal-fab>', () => {
         expect(button.classList.contains('tertiary')).toBeTrue();
       });
 
+      it('filled variants use the solid colors', async () => {
+        const {harness, button} = await setupTest();
+        // Skips the background-color transition.
+        const finishTransitions = () => {
+          for (const animation of button.getAnimations()) animation.finish();
+        };
+        harness.element.variant = 'primary';
+        await env.waitForStability();
+        finishTransitions();
+        const containerColor = getComputedStyle(button).backgroundColor;
+
+        harness.element.variant = 'filled-primary';
+        await env.waitForStability();
+        finishTransitions();
+
+        expect(button.classList.contains('filled-primary')).toBeTrue();
+        expect(button.classList.contains('primary')).toBeFalse();
+        // md.sys.color.primary (#6750a4), not primary-container (#eaddff).
+        expect(containerColor).toBe('rgb(234, 221, 255)');
+        expect(getComputedStyle(button).backgroundColor).toBe('rgb(103, 80, 164)');
+
+        for (const color of ['secondary', 'tertiary'] as const) {
+          harness.element.variant = `filled-${color}`;
+          await env.waitForStability();
+          expect(button.classList.contains(`filled-${color}`)).toBeTrue();
+          expect(button.classList.contains(color)).toBeFalse();
+        }
+      });
+
       it('size classes are set', async () => {
         const {harness, button} = await setupTest();
         harness.element.size = 'small';

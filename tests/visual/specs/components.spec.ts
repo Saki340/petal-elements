@@ -14,6 +14,7 @@ const COMPONENTS = [
   'button-group',
   'icon-button',
   'fab',
+  'fab-filled',
   'checkbox',
   'radio',
   'switch',
