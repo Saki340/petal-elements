@@ -2,7 +2,7 @@
 
 ## petal-elements
 
-### 0.1.0 (unreleased)
+### 0.1.0 (2026-10-09)
 
 First release of petal-elements, forked from material-web 2.5.0 (upstream
 commit 47adb655b, 2026-10-07).
