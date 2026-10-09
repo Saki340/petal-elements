@@ -34,9 +34,9 @@ of an item on or off.
 
 <img
     class="hero"
-    src="images/switch/hero.webp"
-    alt="Two switches on a settings page for Wi-Fi and Bluetooth. The first is on and the second is off."
-    title="Switches on a settings page.">
+    alt="Two switches for Wi-Fi and Bluetooth; the first is on."
+    title="Switches"
+    src="images/switch/hero.webp">
 
 </catalog-component-header>
 

@@ -32,8 +32,11 @@ important prompts in a user flow.
 
 </catalog-component-header-title>
 
-<img class="hero" src="images/dialog/hero.webp" alt="A dialog displaying phone ringtone options."
-title="A dialog">
+<img
+    class="hero"
+    alt="A dialog asking whether to discard a draft."
+    title="A dialog"
+    src="images/dialog/hero.webp">
 
 </catalog-component-header>
 

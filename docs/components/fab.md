@@ -39,8 +39,8 @@ target area.
 
 <img
     class="hero"
-    alt="A phone showing a payment screen with a green filled button that says 'Make
-payment'"
+    alt="The 3 sizes of FAB"
+    title="There are three sizes of floating action buttons: FAB, small FAB, and large FAB"
     src="images/fab/hero.webp">
 
 </catalog-component-header>
@@ -268,7 +268,7 @@ branded FABs do not have color variants.
 
 <!-- no-catalog-start -->
 
-![A branded FAB with a google-colored plus icon.](images/fab/usage-branded.webp)
+![A branded FAB with a flower logo.](images/fab/usage-branded.webp)
 
 <!-- no-catalog-end -->
 <!-- catalog-include "figures/fab/usage-branded.html" -->
@@ -276,11 +276,11 @@ branded FABs do not have color variants.
 ```html
 <petal-branded-fab size="small" aria-label="Add">
   <svg slot="icon" viewBox="0 0 36 36">
-    <path fill="#34A853" d="M16 16v14h4V20z"></path>
-    <path fill="#4285F4" d="M30 16H20l-4 4h14z"></path>
-    <path fill="#FBBC05" d="M6 16v4h10l4-4z"></path>
-    <path fill="#EA4335" d="M20 16V6h-4v14z"></path>
-    <path fill="none" d="M0 0h36v36H0z"></path>
+    <ellipse cx="18" cy="10" rx="5" ry="8" fill="#F48FB1"></ellipse>
+    <ellipse cx="26" cy="18" rx="8" ry="5" fill="#EC407A"></ellipse>
+    <ellipse cx="18" cy="26" rx="5" ry="8" fill="#F06292"></ellipse>
+    <ellipse cx="10" cy="18" rx="8" ry="5" fill="#F8BBD0"></ellipse>
+    <circle cx="18" cy="18" r="4" fill="#FFD54F"></circle>
   </svg>
 </petal-branded-fab>
 ```
@@ -292,7 +292,7 @@ Branded FABs may be extended with a label for additional emphasis. Unlike
 
 <!-- no-catalog-start -->
 
-![An extended branded fab with a google-colored plus icon and the visible text
+![An extended branded fab with a flower logo and the visible text
 Add](images/fab/usage-branded-extended.webp)
 
 <!-- no-catalog-end -->
@@ -301,11 +301,11 @@ Add](images/fab/usage-branded-extended.webp)
 ```html
 <petal-branded-fab label="Add">
   <svg slot="icon" viewBox="0 0 36 36">
-    <path fill="#34A853" d="M16 16v14h4V20z"></path>
-    <path fill="#4285F4" d="M30 16H20l-4 4h14z"></path>
-    <path fill="#FBBC05" d="M6 16v4h10l4-4z"></path>
-    <path fill="#EA4335" d="M20 16V6h-4v14z"></path>
-    <path fill="none" d="M0 0h36v36H0z"></path>
+    <ellipse cx="18" cy="10" rx="5" ry="8" fill="#F48FB1"></ellipse>
+    <ellipse cx="26" cy="18" rx="8" ry="5" fill="#EC407A"></ellipse>
+    <ellipse cx="18" cy="26" rx="5" ry="8" fill="#F06292"></ellipse>
+    <ellipse cx="10" cy="18" rx="8" ry="5" fill="#F8BBD0"></ellipse>
+    <circle cx="18" cy="18" r="4" fill="#FFD54F"></circle>
   </svg>
 </petal-branded-fab>
 ```
@@ -316,7 +316,7 @@ Branded FABs may be medium (default) or large by setting the `size` attribute.
 
 <!-- no-catalog-start -->
 
-![Two branded FABs next to each other with a google-branded plus icon. A medium
+![Two branded FABs next to each other with a flower logo. A medium
 sized one and a large one.](images/fab/usage-branded-sizes.webp)
 
 <!-- no-catalog-end -->
@@ -325,20 +325,20 @@ sized one and a large one.](images/fab/usage-branded-sizes.webp)
 ```html
 <petal-branded-fab aria-label="Add">
   <svg slot="icon" viewBox="0 0 36 36">
-    <path fill="#34A853" d="M16 16v14h4V20z"></path>
-    <path fill="#4285F4" d="M30 16H20l-4 4h14z"></path>
-    <path fill="#FBBC05" d="M6 16v4h10l4-4z"></path>
-    <path fill="#EA4335" d="M20 16V6h-4v14z"></path>
-    <path fill="none" d="M0 0h36v36H0z"></path>
+    <ellipse cx="18" cy="10" rx="5" ry="8" fill="#F48FB1"></ellipse>
+    <ellipse cx="26" cy="18" rx="8" ry="5" fill="#EC407A"></ellipse>
+    <ellipse cx="18" cy="26" rx="5" ry="8" fill="#F06292"></ellipse>
+    <ellipse cx="10" cy="18" rx="8" ry="5" fill="#F8BBD0"></ellipse>
+    <circle cx="18" cy="18" r="4" fill="#FFD54F"></circle>
   </svg>
 </petal-branded-fab>
 <petal-branded-fab size="large" aria-label="Add">
   <svg slot="icon" viewBox="0 0 36 36">
-    <path fill="#34A853" d="M16 16v14h4V20z"></path>
-    <path fill="#4285F4" d="M30 16H20l-4 4h14z"></path>
-    <path fill="#FBBC05" d="M6 16v4h10l4-4z"></path>
-    <path fill="#EA4335" d="M20 16V6h-4v14z"></path>
-    <path fill="none" d="M0 0h36v36H0z"></path>
+    <ellipse cx="18" cy="10" rx="5" ry="8" fill="#F48FB1"></ellipse>
+    <ellipse cx="26" cy="18" rx="8" ry="5" fill="#EC407A"></ellipse>
+    <ellipse cx="18" cy="26" rx="5" ry="8" fill="#F06292"></ellipse>
+    <ellipse cx="10" cy="18" rx="8" ry="5" fill="#F8BBD0"></ellipse>
+    <circle cx="18" cy="18" r="4" fill="#FFD54F"></circle>
   </svg>
 </petal-branded-fab>
 ```
@@ -459,20 +459,20 @@ Add with a different theme applied](images/fab/theming-branded.webp)
 </style>
 <petal-branded-fab size="small" aria-label="Add">
   <svg slot="icon" viewBox="0 0 36 36">
-    <path fill="#34A853" d="M16 16v14h4V20z"></path>
-    <path fill="#4285F4" d="M30 16H20l-4 4h14z"></path>
-    <path fill="#FBBC05" d="M6 16v4h10l4-4z"></path>
-    <path fill="#EA4335" d="M20 16V6h-4v14z"></path>
-    <path fill="none" d="M0 0h36v36H0z"></path>
+    <ellipse cx="18" cy="10" rx="5" ry="8" fill="#F48FB1"></ellipse>
+    <ellipse cx="26" cy="18" rx="8" ry="5" fill="#EC407A"></ellipse>
+    <ellipse cx="18" cy="26" rx="5" ry="8" fill="#F06292"></ellipse>
+    <ellipse cx="10" cy="18" rx="8" ry="5" fill="#F8BBD0"></ellipse>
+    <circle cx="18" cy="18" r="4" fill="#FFD54F"></circle>
   </svg>
 </petal-branded-fab>
 <petal-branded-fab size="small" label="Add">
   <svg slot="icon" viewBox="0 0 36 36">
-    <path fill="#34A853" d="M16 16v14h4V20z"></path>
-    <path fill="#4285F4" d="M30 16H20l-4 4h14z"></path>
-    <path fill="#FBBC05" d="M6 16v4h10l4-4z"></path>
-    <path fill="#EA4335" d="M20 16V6h-4v14z"></path>
-    <path fill="none" d="M0 0h36v36H0z"></path>
+    <ellipse cx="18" cy="10" rx="5" ry="8" fill="#F48FB1"></ellipse>
+    <ellipse cx="26" cy="18" rx="8" ry="5" fill="#EC407A"></ellipse>
+    <ellipse cx="18" cy="26" rx="5" ry="8" fill="#F06292"></ellipse>
+    <ellipse cx="10" cy="18" rx="8" ry="5" fill="#F8BBD0"></ellipse>
+    <circle cx="18" cy="18" r="4" fill="#FFD54F"></circle>
   </svg>
 </petal-branded-fab>
 ```

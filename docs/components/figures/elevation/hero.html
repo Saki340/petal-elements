@@ -1,0 +1,30 @@
+<!--
+  @license
+  Copyright 2026 Saki
+  SPDX-License-Identifier: Apache-2.0
+-->
+<div class="figure-wrapper">
+  <figure
+      style="gap: 32px; padding-block: 32px"
+      title="Elevation levels 0 to 5"
+      aria-label="Six surfaces with elevation levels 0 to 5.">
+    <style>
+      .elevation-surface {
+        position: relative;
+        display: grid;
+        place-items: center;
+        width: 64px;
+        height: 64px;
+        border-radius: 16px;
+        background: var(--md-sys-color-surface-container-low);
+        font: 500 14px/20px Roboto, system-ui;
+      }
+    </style>
+    <div class="elevation-surface" style="--md-elevation-level: 0"><petal-elevation></petal-elevation>0</div>
+    <div class="elevation-surface" style="--md-elevation-level: 1"><petal-elevation></petal-elevation>1</div>
+    <div class="elevation-surface" style="--md-elevation-level: 2"><petal-elevation></petal-elevation>2</div>
+    <div class="elevation-surface" style="--md-elevation-level: 3"><petal-elevation></petal-elevation>3</div>
+    <div class="elevation-surface" style="--md-elevation-level: 4"><petal-elevation></petal-elevation>4</div>
+    <div class="elevation-surface" style="--md-elevation-level: 5"><petal-elevation></petal-elevation>5</div>
+  </figure>
+</div>

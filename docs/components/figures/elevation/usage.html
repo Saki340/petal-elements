@@ -1,0 +1,25 @@
+<!--
+  @license
+  Copyright 2026 Saki
+  SPDX-License-Identifier: Apache-2.0
+-->
+<div class="figure-wrapper">
+  <figure
+      style="padding-block: 32px"
+      title="A surface with an elevation shadow"
+      aria-label="A rounded square with a shadow beneath it.">
+    <style>
+      .elevation-surface {
+        position: relative;
+        display: grid;
+        place-items: center;
+        width: 64px;
+        height: 64px;
+        border-radius: 16px;
+        background: var(--md-sys-color-surface-container-low);
+        font: 500 14px/20px Roboto, system-ui;
+      }
+    </style>
+    <div class="elevation-surface" style="--md-elevation-level: 3"><petal-elevation></petal-elevation></div>
+  </figure>
+</div>

@@ -29,7 +29,8 @@ people take supplementary actions with a single tap.
 </catalog-component-header-title>
 <img
     class="hero"
-    alt="The top half of a phone application with a back icon button at the top left and three icon buttons on the top right, heart, share, and three dot."
+    alt="Side by side view of standard and contained icon buttons"
+    title="1 - Standard Icon Button. 2 - Contained Icon Button (including filled, filled tonal, and outlined styles)"
     src="images/iconbutton/hero.webp">
 
 </catalog-component-header>

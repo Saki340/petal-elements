@@ -1,0 +1,28 @@
+<!--
+  @license
+  Copyright 2026 Saki
+  SPDX-License-Identifier: Apache-2.0
+-->
+<div class="figure-wrapper">
+  <figure
+      style="gap: 24px; padding-block: 32px"
+      title="A focus ring on the focused element"
+      aria-label="Three buttons; the middle one has a focus ring.">
+    <style>
+      .focus-button {
+        position: relative;
+        width: 96px;
+        height: 48px;
+        border: 1px solid var(--md-sys-color-outline);
+        border-radius: 8px;
+        background: var(--md-sys-color-surface-container);
+        color: var(--md-sys-color-on-surface);
+        font: 500 14px/20px Roboto, system-ui;
+        outline: none;
+      }
+    </style>
+    <button class="focus-button">One</button>
+    <button class="focus-button">Two<petal-focus-ring visible style="--md-focus-ring-shape: 8px"></petal-focus-ring></button>
+    <button class="focus-button">Three</button>
+  </figure>
+</div>

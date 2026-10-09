@@ -1,0 +1,35 @@
+<!--
+  @license
+  Copyright 2026 Saki
+  SPDX-License-Identifier: Apache-2.0
+-->
+<div class="figure-wrapper">
+  <figure
+      title="Icons"
+      aria-label="Icons in the Outlined, Rounded and Sharp styles, unfilled and filled.">
+    <style>
+      .icon-hero petal-icon {
+        --md-icon-size: 40px;
+      }
+      .icon-hero .rounded {
+        --md-icon-font: 'Material Symbols Rounded';
+      }
+      .icon-hero .sharp {
+        --md-icon-font: 'Material Symbols Sharp';
+      }
+      .icon-hero .filled {
+        font-variation-settings: 'FILL' 1;
+      }
+    </style>
+    <div class="icon-hero" style="display: grid; grid-template-columns: repeat(4, auto); gap: 16px 24px">
+      <petal-icon>favorite</petal-icon>
+      <petal-icon class="rounded">star</petal-icon>
+      <petal-icon class="sharp">home</petal-icon>
+      <petal-icon>local_florist</petal-icon>
+      <petal-icon class="filled">favorite</petal-icon>
+      <petal-icon class="rounded filled">star</petal-icon>
+      <petal-icon class="sharp filled">home</petal-icon>
+      <petal-icon class="filled">local_florist</petal-icon>
+    </div>
+  </figure>
+</div>

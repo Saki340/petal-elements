@@ -16,7 +16,7 @@ that groups content in lists and containers.
 Dividers can reinforce tapability, such as when used to separate list items or
 define tappable regions in an accordion.
 
-![Screenshot of five stacked dividers](images/divider/hero.webp "Dividers separating items in a list.")
+![A list of four items separated by dividers](images/divider/hero.webp "Dividers separating items in a list.")
 
 *   [Design article](https://m3.material.io/components/divider) <!-- {.external} -->
 *   [API Documentation](#api)

@@ -1,0 +1,33 @@
+<!--
+  @license
+  Copyright 2026 Saki
+  SPDX-License-Identifier: Apache-2.0
+-->
+<div class="figure-wrapper">
+  <figure
+      style="padding-block: 32px"
+      title="Focus ring theming example"
+      aria-label="A square button with a thinner, square focus ring in a custom color.">
+    <style>
+      .focus-button {
+        position: relative;
+        width: 96px;
+        height: 48px;
+        border: 1px solid var(--md-sys-color-outline);
+        border-radius: 8px;
+        background: var(--md-sys-color-surface-container);
+        color: var(--md-sys-color-on-surface);
+        font: 500 14px/20px Roboto, system-ui;
+        outline: none;
+      }
+    </style>
+    <style>
+      .focus-theming {
+        --md-focus-ring-shape: 0px;
+        --md-focus-ring-width: 2px;
+        --md-sys-color-secondary: #4A6363;
+      }
+    </style>
+    <button class="focus-button" style="border-radius: 0">Focus<petal-focus-ring class="focus-theming" visible></petal-focus-ring></button>
+  </figure>
+</div>

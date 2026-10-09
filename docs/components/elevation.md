@@ -17,7 +17,7 @@ Material's elevation system is deliberately limited to just a handful of levels.
 This creative constraint means you need to make thoughtful decisions about your
 UI’s elevation story.
 
-![Diagram showing the five elevation levels and their respective dp values](images/elevation/hero.webp "Material uses six levels of elevation, each with a corresponding dp value. These values are named for their relative distance above the UI’s surface: 0, +1, +2, +3, +4, and +5. An element’s resting state can be on levels 0 to +3, while levels +4 and +5 are reserved for user-interacted states such as hover and dragged.")
+![Six surfaces with elevation levels 0 to 5](images/elevation/hero.webp "Elevation levels 0 to 5.")
 
 *   [Design article](https://m3.material.io/styles/elevation) <!-- {.external} -->
 *   [API Documentation](#api)
@@ -53,10 +53,6 @@ element's size and shape.
 
 Shadows may be animated between levels by adding `transition-duration` and
 `transition-easing-function` CSS properties.
-
-![A rounded square with a drop shadow beneath it. After a moment, the square
-lowers into the background and the shadow disappears, then
-repeats.](images/elevation/usage-animation.gif "Animating between elevations.")
 
 ```html
 <style>

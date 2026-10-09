@@ -37,9 +37,9 @@ There are two types of progress indicators: linear and circular.
 </catalog-component-header-title>
 
 <img
-    src="images/progress/hero.webp"
-    alt="Circular and linear progress indicators showing indetermine and determinate examples"
-    title="Progress indicators can be used to show indeterminate or determinate progress.">
+    alt="A determinate circular and linear progress indicator."
+    title="Progress indicators"
+    src="images/progress/hero.webp">
 
 </catalog-component-header>
 

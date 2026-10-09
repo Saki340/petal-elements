@@ -69,9 +69,11 @@ project.
 | `docs/theming/images/theming.webp` | Collage with Google product logos and stock photos. Source unknown. | Removed. |
 | `docs/theming/images/color-scheme-light.webp`, `color-scheme-dark.webp`, `token-types.webp` | Diagrams in Material Design site style. Source not recorded. | Kept for now; to be replaced with our own diagrams when the docs are rewritten. |
 | `docs/images/material-web.gif` | Animation of upstream components. | Kept; not used by our README. |
-| `docs/components/images/**` (112 files) | Screenshots of the upstream components, added by upstream contributors. | Kept; to be regenerated from our own components. |
+| `docs/components/images/**` | Screenshots of the upstream components; the hero images were phone mockups with stock photos. | Replaced (2026-10-09) by images rendered from our own components with `npm run docs:images` (`scripts/docs-images/`). Animated GIFs became still images or were dropped. |
+| Google logos in docs and demos (four-color plus in the branded FAB examples, "G" logo in the chip demo), Lit / Polymer / Angular logos in the list docs, `placekitten.com` images | Third-party brand marks and an external image service. | Replaced (2026-10-09) with our own flower logo, Material Symbols icons and inline placeholder images. |
 | `catalog/site/images/favicon.svg` | Upstream catalog icon. | Kept; to be replaced with our own icon. |
 | Web fonts loaded from fonts.googleapis.com (Roboto, Open Sans, Google Sans, Material Symbols) in demos and the catalog | Loaded at runtime, not redistributed. | No action. We do not bundle fonts. |
+| `@fontsource/roboto` (OFL-1.1), `material-symbols` (Apache-2.0) | Dev dependencies used to render test screenshots and doc images. | Not in the npm package. Only the rendered images are committed. |
 
 The removed files still exist in the upstream git history, which this
 repository keeps in full.

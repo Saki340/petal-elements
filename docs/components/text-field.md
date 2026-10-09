@@ -32,8 +32,10 @@ users enter text into a UI.
 
 </catalog-component-header-title>
 
-<img class="hero" src="images/textfield/hero.webp" alt="Several text fields in a form"
-title="Text fields">
+<img
+    class="hero"
+    alt="A filled textfield next to an outlined textfield. Both have a value of Value prefilled"
+    src="images/textfield/hero.webp">
 
 </catalog-component-header>
 

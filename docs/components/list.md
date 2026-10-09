@@ -32,7 +32,10 @@ vertical indexes of text and images
 
 </catalog-component-header-title>
 
-<img class="hero" src="images/list/hero.webp" alt="CImage of a mobile phone screen with a Recipies page and a list recipies in a material list. The first item is Fresh baked breads with an image of someone holding bread on the left and a horizontal three dot menu on the right. Then Tacos with an image of tacos and the same three dot menu">
+<img
+    class="hero"
+    alt="Three items in a list. The first item says Apple as its headline. The second one says Banana in its headline as well as Banana is a yellow fruit as its sub header. The third list item says Cucumber in its headline and Cucumbers are long green fruits that are just as long as this multi-line description as its sub header which is on two lines."
+    src="images/list/hero.webp">
 
 </catalog-component-header>
 
@@ -101,10 +104,8 @@ Icons can be slotted into list-items' `start` or `end` slot.
 
 <!-- no-catalog-start -->
 
-![A list with three items and dividers separating each item. The first item has
-the Lit logo and the text Lit. The second item has the Polymer logo and the text
-Polymer. The third item has the Angular logo and the text
-Angular.](images/list/usage-icon.webp)
+![A list with three items and dividers separating each item. Each item has a
+flower icon and the text Rose, Tulip or Daisy.](images/list/usage-icon.webp)
 
 <!-- no-catalog-end -->
 <!-- catalog-include "figures/list/usage-icon.html" -->
@@ -112,29 +113,18 @@ Angular.](images/list/usage-icon.webp)
 ```html
 <petal-list style="max-width: 300px">
   <petal-list-item>
-    Lit
-    <svg  slot="start" style="height: 24px" viewBox="0 0 160 200">
-      <path
-        fill="currentColor"
-        d="m160 80v80l-40-40zm-40 40v80l40-40zm0-80v80l-40-40zm-40 40v80l40-40zm-40-40v80l40-40zm40-40v80l-40-40zm-40 120v80l-40-40zm-40-40v80l40-40z"
-      />
-    </svg>
+    Rose
+    <petal-icon slot="start">local_florist</petal-icon>
   </petal-list-item>
   <petal-divider></petal-divider>
   <petal-list-item>
-    Polymer
-    <petal-icon slot="start">polymer</petal-icon>
+    Tulip
+    <petal-icon slot="start">filter_vintage</petal-icon>
   </petal-list-item>
   <petal-divider></petal-divider>
   <petal-list-item>
-    Angular
-    <svg slot="start" style="height: 24px" viewBox="0 0 250 250">
-      <polygon points="108,135.4 125,135.4 125,135.4 125,135.4 142,135.4 125,94.5   " />
-      <path
-        d="M125,30L125,30L125,30L31.9,63.2l14.2,123.1L125,230l0,0l0,0l78.9-43.7l14.2-123.1L125,30z M183.1,182.6h-21.7h0
-          l-11.7-29.2H125h0h0h-24.7l-11.7,29.2h0H66.9h0L125,52.1l0,0l0,0l0,0l0,0L183.1,182.6L183.1,182.6z"
-      />
-    </svg>
+    Daisy
+    <petal-icon slot="start">spa</petal-icon>
   </petal-list-item>
 </petal-list>
 ```
@@ -145,10 +135,8 @@ Images should be slotted into list-items' `start` slot.
 
 <!-- no-catalog-start -->
 
-![A list with three image items. The first item is a square picture of a cat and
-the text Cat. The second is a picture of a kitten with the text Kitty Cat. The
-third item is a square image of an older kitten with the text
-Cate.](images/list/usage-image.webp)
+![A list with three image items with the texts Rose, Tulip and
+Daisy.](images/list/usage-image.webp)
 
 <!-- no-catalog-end -->
 <!-- catalog-include "figures/list/usage-image.html" -->
@@ -156,18 +144,18 @@ Cate.](images/list/usage-image.webp)
 ```html
 <petal-list style="max-width: 300px;">
   <petal-list-item>
-    Cat
-    <img slot="start" style="width: 56px" src="https://placekitten.com/112/112">
+    Rose
+    <img slot="start" style="width: 56px" src="rose.jpg">
   </petal-list-item>
   <petal-divider></petal-divider>
   <petal-list-item>
-    Kitty Cat
-    <img slot="start" style="width: 56px" src="https://placekitten.com/114/114">
+    Tulip
+    <img slot="start" style="width: 56px" src="tulip.jpg">
   </petal-list-item>
   <petal-divider></petal-divider>
   <petal-list-item>
-    Cate
-    <img slot="start" style="width: 56px" src="https://placekitten.com/116/116">
+    Daisy
+    <img slot="start" style="width: 56px" src="daisy.jpg">
   </petal-list-item>
 </petal-list>
 ```
@@ -342,7 +330,7 @@ Token                                 | Default value
 
 <!-- no-catalog-start -->
 
-![Image of a list and image list items of cats with a different theme applied](images/list/theming-image.webp)
+![Image of a list and image list items of flowers with a different theme applied](images/list/theming-image.webp)
 
 <!-- no-catalog-end -->
 <!-- catalog-include "figures/list/theming-image.html" -->
@@ -362,14 +350,14 @@ Token                                 | Default value
   }
 </style>
 <petal-list>
-  <petal-list-item headline="Wide Cat">
-    <img slot="start" src="https://placekitten.com/200/100">
+  <petal-list-item headline="Rose">
+    <img slot="start" src="rose-wide.jpg">
   </petal-list-item>
-  <petal-list-item headline="Round kitty cat">
-    <img slot="start" src="https://placekitten.com/202/101">
+  <petal-list-item headline="Tulip">
+    <img slot="start" src="tulip-wide.jpg">
   </petal-list-item>
-  <petal-list-item headline="Softe cate">
-    <img slot="start" src="https://placekitten.com/212/106">
+  <petal-list-item headline="Daisy">
+    <img slot="start" src="daisy-wide.jpg">
   </petal-list-item>
 </petal-list>
 ```

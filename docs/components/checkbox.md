@@ -40,9 +40,8 @@ user needs to select one or more options from a list.
 
 <img
     class="hero"
-    src="images/checkbox/hero.webp"
-    alt="A list of burger additions represented with checkboxes"
-    title="Checkboxes in a list of items.">
+    alt="Three checkboxes in a row that are unselected, selected, and indeterminate"
+    src="images/checkbox/hero.webp">
 
 </catalog-component-header>
 

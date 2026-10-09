@@ -16,7 +16,7 @@ Focus rings follow the same heuristics as
 [`:focus-visible`](https://developer.mozilla.org/en-US/docs/Web/CSS/:focus-visible)<!-- {.external} -->
 to determine when they are visible.
 
-![Three elements with a focus ring that moves between them.](images/focus/hero.gif "A focus ring moving across elements.")
+![Three buttons; the middle one has a focus ring.](images/focus/hero.webp "A focus ring on the focused element.")
 
 *   [API Documentation](#api)
 *   [Source code](https://github.com/material-components/material-web/tree/main/focus)
@@ -27,7 +27,7 @@ to determine when they are visible.
 Focus rings display on keyboard navigation. They may be attached to a control in
 one of three ways.
 
-![An element with a focus ring.](images/focus/usage.gif "A focus ring.")
+![An element with a focus ring.](images/focus/usage.webp "A focus ring.")
 
 1.  Attached to the parent element
 
@@ -67,7 +67,7 @@ one of three ways.
 Focus rings can be changed to animate inwards by adding an `inward` attribute.
 This is useful for components like list items.
 
-![An element with a focus ring that animates inward.](images/focus/usage-inward.gif "A focus ring animating inward.")
+![A button with a focus ring inside its edge.](images/focus/usage-inward.webp "An inward focus ring.")
 
 ```html
 <button style="position: relative">
@@ -79,8 +79,6 @@ This is useful for components like list items.
 
 The focus ring animation may be customized or disabled using CSS custom
 properties.
-
-![An element with a focus ring that does not animate.](images/focus/usage-animation.gif "A focus ring with disabled animations.")
 
 ```html
 <style>
@@ -113,7 +111,7 @@ Token                   | Default value
 
 ### Example
 
-![Image of a focus ring with a different theme applied](images/focus/theming.gif "Focus ring theming example.")
+![Image of a focus ring with a different theme applied](images/focus/theming.webp "Focus ring theming example.")
 
 ```html
 <style>

@@ -37,8 +37,10 @@ state. A layer can be applied to an entire element or in a circular shape.
 
 </catalog-component-header-title>
 
-<img src="images/ripple/hero.gif" alt="Two containers that display a bounded and unbounded ripple on interaction."
-title="A bounded and unbounded ripple.">
+<img
+    alt="A container that shows a ripple when pressed."
+    title="A ripple"
+    src="images/ripple/hero.webp">
 
 </catalog-component-header>
 
@@ -67,10 +69,10 @@ a control in one of three ways.
 
 <!-- no-catalog-start -->
 
-![A container that displays a bounded ripple on interaction.](images/ripple/usage.gif "A bounded ripple.")
+![A container that displays a bounded ripple on interaction.](images/ripple/usage.webp "A bounded ripple.")
 
 <!-- no-catalog-end -->
-<!-- Need to add catalog-include "figures/<component>/usage.html" -->
+<!-- catalog-include "figures/ripple/usage.html" -->
 
 1.  Attached to the parent element
 
@@ -142,10 +144,10 @@ petal-ripple.unbounded {
 
 <!-- no-catalog-start -->
 
-![A circular container with an inner circle that displays an unbounded ripple around it on interaction.](images/ripple/usage-unbounded.gif "An unbounded ripple.")
+![A circular container with an inner circle that displays an unbounded ripple around it on interaction.](images/ripple/usage-unbounded.webp "An unbounded ripple.")
 
 <!-- no-catalog-end -->
-<!-- Need to add catalog-include "figures/<component>/usage.html" -->
+<!-- catalog-include "figures/ripple/usage-unbounded.html" -->
 
 ```html
 <style>
@@ -197,10 +199,10 @@ Token                    | Default value
 
 <!-- no-catalog-start -->
 
-![Image of a ripple with a different theme applied](images/ripple/theming.gif "Ripple theming example.")
+![Image of a ripple with a different theme applied](images/ripple/theming.webp "Ripple theming example.")
 
 <!-- no-catalog-end -->
-<!-- Need to add catalog-include "figures/<component>/usage.html" -->
+<!-- catalog-include "figures/ripple/theming.html" -->
 
 ```html
 <style>

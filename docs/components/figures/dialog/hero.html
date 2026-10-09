@@ -1,0 +1,19 @@
+<!--
+  @license
+  Copyright 2026 Saki
+  SPDX-License-Identifier: Apache-2.0
+-->
+<div class="figure-wrapper">
+  <figure
+      title="A dialog"
+      aria-label="A dialog asking whether to discard a draft.">
+    <petal-dialog open>
+      <div slot="headline">Discard draft?</div>
+      <form slot="content" id="hero-form" method="dialog">The draft will be deleted.</form>
+      <div slot="actions">
+        <petal-text-button form="hero-form">Cancel</petal-text-button>
+        <petal-text-button form="hero-form">Discard</petal-text-button>
+      </div>
+    </petal-dialog>
+  </figure>
+</div>

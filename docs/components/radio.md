@@ -30,9 +30,9 @@ people select one option from a set of options.
 
 <img
     class="hero"
-    src="images/radio/hero.webp"
-    alt="A list of items with radio buttons and one selected."
-    title="Radio buttons">
+    alt="A list of three options with radio buttons; the second is selected."
+    title="Radio buttons"
+    src="images/radio/hero.webp">
 
 </catalog-component-header>
 

@@ -14,7 +14,7 @@ tag: 'docType:reference'
 represent common actions. Material Symbols are a set of variable icon fonts
 created at seven weights across three different styles.
 
-![Array of icons with various stylistic attributes](images/icon/hero.gif)
+![Array of icons with various stylistic attributes](images/icon/hero.webp)
 
 *   [Design article](https://m3.material.io/styles/icons) <!-- {.external} -->
 *   [API Documentation](#api)

@@ -1,0 +1,33 @@
+<!--
+  @license
+  Copyright 2026 Saki
+  SPDX-License-Identifier: Apache-2.0
+-->
+<div class="figure-wrapper">
+  <figure
+      style="padding: 48px"
+      title="An unbounded ripple"
+      aria-label="A small circle with a larger ripple around it when pressed.">
+    <style>
+      .ripple-unbounded-container {
+        border-radius: 50%;
+        height: 32px;
+        width: 32px;
+        display: flex;
+        place-content: center;
+        place-items: center;
+        position: relative;
+        border: 1px solid var(--md-sys-color-outline);
+        background: none;
+        outline: none;
+      }
+      petal-ripple.unbounded {
+        border-radius: 50%;
+        inset: unset;
+        height: 64px;
+        width: 64px;
+      }
+    </style>
+    <button class="ripple-unbounded-container"><petal-ripple class="unbounded"></petal-ripple></button>
+  </figure>
+</div>

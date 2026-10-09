@@ -33,7 +33,11 @@ selected menu item above the menu.
 
 </catalog-component-header-title>
 
-<img class="hero" src="images/select/hero.webp" alt="A textfield containing the text Item 2, with a dropdown menu containing Item 1, Item 2, and Item 3.">
+<img
+    class="hero"
+    alt="An outlined dropdown menu filled with Apple, and a filled dropdown menu."
+    title="Example usage of an outlined dropdown menu and a filled dropdown menu."
+    src="images/select/hero.webp">
 
 </catalog-component-header>
 

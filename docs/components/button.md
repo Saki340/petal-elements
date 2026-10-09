@@ -38,9 +38,8 @@ outlined, and text.
 
 <img
     class="hero"
-    alt="A phone showing a payment screen with a green filled button that says 'Make
-payment'"
-    title="There are 5 types of common buttons"
+    alt="The 5 types of common buttons"
+    title="Elevated, filled, filled tonal, outlined, and text buttons"
     src="images/button/hero.webp">
 
 </catalog-component-header>

@@ -36,8 +36,11 @@ elements.
 
 </catalog-component-header-title>
 
-<img class="hero" src="images/chips/hero.webp" alt="Two collections of filter chips, with some options selected and some unselected."
-title="Filter chips">
+<img
+    class="hero"
+    alt="Filter chips for kinds of plants, with some selected."
+    title="Filter chips"
+    src="images/chips/hero.webp">
 
 </catalog-component-header>
 

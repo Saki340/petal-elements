@@ -1,0 +1,64 @@
+<!doctype html>
+<!--
+  @license
+  Copyright 2026 Saki
+  SPDX-License-Identifier: Apache-2.0
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>petal-elements docs images</title>
+    <link rel="stylesheet" href="/tokens/css/sys.css" />
+    <!-- Material Symbols from the material-symbols package (Apache-2.0). -->
+    <link rel="stylesheet" href="/node_modules/material-symbols/outlined.css" />
+    <link rel="stylesheet" href="/node_modules/material-symbols/rounded.css" />
+    <link rel="stylesheet" href="/node_modules/material-symbols/sharp.css" />
+    <style>
+      /* Roboto from @fontsource/roboto (OFL-1.1), for rendering only. */
+      @font-face {
+        font-family: Roboto;
+        font-weight: 400;
+        src: url(/node_modules/@fontsource/roboto/files/roboto-latin-400-normal.woff2) format('woff2');
+      }
+      @font-face {
+        font-family: Roboto;
+        font-weight: 500;
+        src: url(/node_modules/@fontsource/roboto/files/roboto-latin-500-normal.woff2) format('woff2');
+      }
+      @font-face {
+        font-family: Roboto;
+        font-weight: 700;
+        src: url(/node_modules/@fontsource/roboto/files/roboto-latin-700-normal.woff2) format('woff2');
+      }
+      body {
+        margin: 0;
+        padding: 24px;
+        background: var(--md-sys-color-surface);
+        color: var(--md-sys-color-on-surface);
+        font: 400 16px/24px Roboto;
+        -webkit-font-smoothing: antialiased;
+      }
+      /* Same figure layout as the catalog (catalog/site/css/md-layout.css),
+         without the border. */
+      #root {
+        display: inline-block;
+      }
+      .figure-wrapper {
+        display: flex;
+        justify-content: center;
+      }
+      figure {
+        display: inline-flex;
+        align-items: center;
+        margin: 0;
+        padding: 24px 28px;
+        min-height: 56px;
+        box-sizing: border-box;
+      }
+    </style>
+    <script type="module" src="/all.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>

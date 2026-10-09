@@ -34,7 +34,7 @@ choices on a temporary surface.
 
 <img
     class="hero"
-    alt="A phone showing a vertical threedot, pressed, icon button and a menu floating below it with the following visible items: Revert, Settings, and Send Feedback"
+    alt="Two filled buttons next to each other. The first one says set with idref and the other says set with element ref. Interact with them to open their respective menus."
     src="images/menu/hero.webp">
 
 </catalog-component-header>

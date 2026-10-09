@@ -1,0 +1,25 @@
+<!--
+  @license
+  Copyright 2026 Saki
+  SPDX-License-Identifier: Apache-2.0
+-->
+<div class="figure-wrapper">
+  <figure
+      title="Tab theming example"
+      aria-label="Three tabs with a teal indicator and a handwritten-style font.">
+    <style>
+      .tabs-theming {
+        --md-sys-color-surface: #f7faf9;
+        --md-sys-color-primary: #005353;
+        --md-primary-tab-label-text-font: cursive, system-ui;
+        --md-primary-tab-label-text-size: 0.8em;
+        width: 360px;
+      }
+    </style>
+    <petal-tabs class="tabs-theming">
+      <petal-primary-tab>Tab 1</petal-primary-tab>
+      <petal-primary-tab>Tab 2</petal-primary-tab>
+      <petal-primary-tab>Tab 3</petal-primary-tab>
+    </petal-tabs>
+  </figure>
+</div>

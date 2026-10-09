@@ -33,9 +33,10 @@ related content that are at the same level of hierarchy.
 </catalog-component-header-title>
 
 <img
-  class="hero"
-  src="images/tabs/hero.webp"
-  alt="Media gallery screen with tabs labeled 'Video', 'Photos', and 'Audio'.">
+    class="hero"
+    alt="Tabs labeled Video, Photos and Audio, with Photos selected."
+    title="Tabs"
+    src="images/tabs/hero.webp">
 
 </catalog-component-header>
 
