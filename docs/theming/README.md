@@ -21,9 +21,8 @@ read.
 Each component token maps to a system token, which has a concrete reference
 value.
 
-![A diagram showing the heirachy of component tokens to system tokens to
-reference
-tokens](images/token-types.webp "The relationship between reference, system, and component tokens.")
+![A diagram of a FAB whose container color goes from a component token to a
+system token to a reference token](images/token-types.webp "Component, system and reference tokens.")
 
 On the web, design tokens are
 [CSS custom properties](https://developer.mozilla.org/en-US/docs/Web/CSS/--*)<!-- {.external} -->

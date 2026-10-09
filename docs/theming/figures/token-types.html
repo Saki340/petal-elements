@@ -1,0 +1,60 @@
+<!--
+  @license
+  Copyright 2026 Saki
+  SPDX-License-Identifier: Apache-2.0
+-->
+<div class="figure-wrapper">
+  <figure
+      style="padding-block: 24px"
+      title="Component, system and reference tokens."
+      aria-label="A FAB whose container color comes from the component token --md-fab-primary-container-color, which refers to the system token --md-sys-color-primary-container, which refers to the reference token md.ref.palette.primary90 with the value #eaddff.">
+    <style>
+      .token-types {
+        display: grid;
+        grid-template-columns: auto auto;
+        align-items: center;
+        gap: 12px 24px;
+        font: 400 16px/24px Roboto, system-ui;
+      }
+      .token-types .kind {
+        text-align: end;
+      }
+      .token-types code {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        padding: 8px 16px;
+        border-radius: 24px;
+        background: var(--md-sys-color-inverse-surface);
+        color: var(--md-sys-color-inverse-on-surface);
+        font: 400 15px/20px ui-monospace, Menlo, Consolas, monospace;
+      }
+      .token-types .dot {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: #eaddff;
+      }
+      .token-types .arrow {
+        grid-column: 2;
+        padding-inline-start: 24px;
+        color: var(--md-sys-color-outline);
+      }
+    </style>
+    <div class="token-types">
+      <span class="kind">Component</span>
+      <code>--md-fab-primary-container-color</code>
+      <span class="arrow">&#8595;</span>
+      <span class="kind">System</span>
+      <code><span class="dot"></span>--md-sys-color-primary-container</code>
+      <span class="arrow">&#8595;</span>
+      <span class="kind">Reference</span>
+      <code><span class="dot"></span>md.ref.palette.primary90</code>
+      <span class="arrow">&#8595;</span>
+      <span class="kind">Value</span>
+      <code><span class="dot"></span>#eaddff</code>
+      <span></span>
+      <petal-fab variant="primary" aria-label="Edit"><petal-icon slot="icon">edit</petal-icon></petal-fab>
+    </div>
+  </figure>
+</div>

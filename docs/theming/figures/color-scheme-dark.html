@@ -1,0 +1,85 @@
+<!--
+  @license
+  Copyright 2026 Saki
+  SPDX-License-Identifier: Apache-2.0
+-->
+<div class="figure-wrapper">
+  <figure
+      style="padding: 0"
+      title="The baseline dark color scheme: primary, secondary, tertiary and error roles, surfaces, and outlines."
+      aria-label="The baseline dark color scheme: primary, secondary, tertiary and error roles, surfaces, and outlines.">
+    <style>
+      .color-roles {
+        display: grid;
+        gap: 8px;
+        width: 720px;
+        padding: 16px;
+        background: var(--md-sys-color-surface);
+        font: 500 12px/16px Roboto, system-ui;
+      }
+      .color-roles .row,
+      .color-roles .column {
+        display: flex;
+        gap: 4px;
+      }
+      .color-roles .row {
+        gap: 8px;
+      }
+      .color-roles .column {
+        flex: 1;
+        flex-direction: column;
+        gap: 0;
+      }
+      .color-roles .role {
+        box-sizing: border-box;
+        padding: 8px;
+      }
+    </style>
+    <div class="color-roles" style="color-scheme: dark">
+    <div class="row">
+    <div class="column">
+      <div class="role" style="background: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary); height: 72px; flex: 1">Primary</div>
+      <div class="role" style="background: var(--md-sys-color-on-primary); color: var(--md-sys-color-primary); height: 40px; flex: 1">On Primary</div>
+      <div class="role" style="background: var(--md-sys-color-primary-container); color: var(--md-sys-color-on-primary-container); height: 72px; flex: 1">Primary Container</div>
+      <div class="role" style="background: var(--md-sys-color-on-primary-container); color: var(--md-sys-color-primary-container); height: 40px; flex: 1">On Primary Container</div>
+    </div>
+    <div class="column">
+      <div class="role" style="background: var(--md-sys-color-secondary); color: var(--md-sys-color-on-secondary); height: 72px; flex: 1">Secondary</div>
+      <div class="role" style="background: var(--md-sys-color-on-secondary); color: var(--md-sys-color-secondary); height: 40px; flex: 1">On Secondary</div>
+      <div class="role" style="background: var(--md-sys-color-secondary-container); color: var(--md-sys-color-on-secondary-container); height: 72px; flex: 1">Secondary Container</div>
+      <div class="role" style="background: var(--md-sys-color-on-secondary-container); color: var(--md-sys-color-secondary-container); height: 40px; flex: 1">On Secondary Container</div>
+    </div>
+    <div class="column">
+      <div class="role" style="background: var(--md-sys-color-tertiary); color: var(--md-sys-color-on-tertiary); height: 72px; flex: 1">Tertiary</div>
+      <div class="role" style="background: var(--md-sys-color-on-tertiary); color: var(--md-sys-color-tertiary); height: 40px; flex: 1">On Tertiary</div>
+      <div class="role" style="background: var(--md-sys-color-tertiary-container); color: var(--md-sys-color-on-tertiary-container); height: 72px; flex: 1">Tertiary Container</div>
+      <div class="role" style="background: var(--md-sys-color-on-tertiary-container); color: var(--md-sys-color-tertiary-container); height: 40px; flex: 1">On Tertiary Container</div>
+    </div>
+    <div class="column">
+      <div class="role" style="background: var(--md-sys-color-error); color: var(--md-sys-color-on-error); height: 72px; flex: 1">Error</div>
+      <div class="role" style="background: var(--md-sys-color-on-error); color: var(--md-sys-color-error); height: 40px; flex: 1">On Error</div>
+      <div class="role" style="background: var(--md-sys-color-error-container); color: var(--md-sys-color-on-error-container); height: 72px; flex: 1">Error Container</div>
+      <div class="role" style="background: var(--md-sys-color-on-error-container); color: var(--md-sys-color-error-container); height: 40px; flex: 1">On Error Container</div>
+    </div>
+    </div>
+    <div class="row">
+    <div class="role" style="background: var(--md-sys-color-surface-dim); color: var(--md-sys-color-on-surface); height: 72px; flex: 1">Surface Dim</div>
+    <div class="role" style="background: var(--md-sys-color-surface); color: var(--md-sys-color-on-surface); height: 72px; flex: 1">Surface</div>
+    <div class="role" style="background: var(--md-sys-color-surface-bright); color: var(--md-sys-color-on-surface); height: 72px; flex: 1">Surface Bright</div>
+    </div>
+    <div class="row">
+    <div class="role" style="background: var(--md-sys-color-surface-container-lowest); color: var(--md-sys-color-on-surface); height: 72px; flex: 1">Surface Container Lowest</div>
+    <div class="role" style="background: var(--md-sys-color-surface-container-low); color: var(--md-sys-color-on-surface); height: 72px; flex: 1">Surface Container Low</div>
+    <div class="role" style="background: var(--md-sys-color-surface-container); color: var(--md-sys-color-on-surface); height: 72px; flex: 1">Surface Container</div>
+    <div class="role" style="background: var(--md-sys-color-surface-container-high); color: var(--md-sys-color-on-surface); height: 72px; flex: 1">Surface Container High</div>
+    <div class="role" style="background: var(--md-sys-color-surface-container-highest); color: var(--md-sys-color-on-surface); height: 72px; flex: 1">Surface Container Highest</div>
+    </div>
+    <div class="row">
+    <div class="role" style="background: var(--md-sys-color-on-surface); color: var(--md-sys-color-surface); height: 40px; flex: 1">On Surface</div>
+    <div class="role" style="background: var(--md-sys-color-on-surface-variant); color: var(--md-sys-color-surface); height: 40px; flex: 1">On Surface Variant</div>
+    <div class="role" style="background: var(--md-sys-color-outline); color: var(--md-sys-color-surface); height: 40px; flex: 1">Outline</div>
+    <div class="role" style="background: var(--md-sys-color-outline-variant); color: var(--md-sys-color-on-surface); height: 40px; flex: 1">Outline Variant</div>
+    </div>
+    </div>
+  </figure>
+</div>

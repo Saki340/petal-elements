@@ -5,8 +5,8 @@
  */
 
 /**
- * @fileoverview Renders the images in docs/components/images from our own
- * components. Run from the repository root after `npm run build`:
+ * @fileoverview Renders the images in docs/components and docs/theming from
+ * our own components. Run from the repository root after `npm run build`:
  *
  *     npm run docs:images                 # all docs
  *     npm run docs:images -- button fab   # docs/components/button.md, fab.md
@@ -29,7 +29,8 @@ import * as fs from 'fs';
 import * as path from 'path';
 import {chromium, Page} from 'playwright';
 
-const DOCS = 'docs/components';
+/** Directories of docs with images. */
+const DOCS = ['docs/components', 'docs/theming'];
 const PORT = 8772;
 
 /** Finishes all running animations and transitions. */
@@ -128,8 +129,8 @@ function figuresOf(doc: string, text: string): Figure[] {
  * A figure written for an image: `figures/<dir>/<name>.html` for
  * `images/<dir>/<name>.<ext>`.
  */
-function ownFigure(src: string): Figure | undefined {
-  const file = path.join(DOCS, src.replace(/^images\//, 'figures/').replace(/\.\w+$/, '.html'));
+function ownFigure(doc: string, src: string): Figure | undefined {
+  const file = path.join(path.dirname(doc), src.replace(/^images\//, 'figures/').replace(/\.\w+$/, '.html'));
   return fs.existsSync(file) ? {index: -1, html: fs.readFileSync(file, 'utf8')} : undefined;
 }
 
@@ -145,7 +146,7 @@ function imagesOf(doc: string): Image[] {
   refs.forEach((ref, i) => {
     const end = refs[i + 1]?.index ?? text.length;
     const figure =
-      ownFigure(ref.src) ?? figures.find((f) => f.index > ref.index && f.index < end);
+      ownFigure(doc, ref.src) ?? figures.find((f) => f.index > ref.index && f.index < end);
     if (figure) {
       images.push({doc, src: ref.src, figure, hero: false});
     } else {
@@ -156,7 +157,7 @@ function imagesOf(doc: string): Image[] {
   const header = text.match(/<catalog-component-header[\s\S]*?<\/catalog-component-header>/)?.[0];
   const hero = header?.match(/<img\b[^>]*\ssrc="(images\/[^"]+)"/)?.[1];
   if (hero) {
-    const figure = ownFigure(hero) ?? figures[0];
+    const figure = ownFigure(doc, hero) ?? figures[0];
     if (figure) {
       images.push({doc, src: hero, figure, hero: true});
     } else {
@@ -212,11 +213,13 @@ function labelOf(html: string, attribute: 'aria-label' | 'title') {
 async function main() {
   if (!fs.existsSync('all.js')) throw new Error('Run "npm run build" first.');
   const only = process.argv.slice(2);
-  const docs = fs
-    .readdirSync(DOCS)
-    .filter((name) => name.endsWith('.md'))
-    .filter((name) => !only.length || only.includes(name.replace(/\.md$/, '')))
-    .map((name) => `${DOCS}/${name}`);
+  const docs = DOCS.flatMap((dir) =>
+    fs
+      .readdirSync(dir)
+      .filter((name) => name.endsWith('.md'))
+      .filter((name) => !only.length || only.includes(name.replace(/\.md$/, '')))
+      .map((name) => `${dir}/${name}`),
+  );
 
   const server = await startDevServer({
     config: {rootDir: '.', port: PORT, nodeResolve: true},
@@ -239,7 +242,7 @@ async function main() {
           deviceScaleFactor: 2,
         });
         try {
-          fs.writeFileSync(path.join(DOCS, webp), await render(page, image));
+          fs.writeFileSync(path.join(path.dirname(doc), webp), await render(page, image));
         } catch (error) {
           throw new Error(`${doc} ${image.src}: ${error}`);
         } finally {
@@ -247,7 +250,7 @@ async function main() {
         }
         count++;
         if (webp !== image.src) {
-          fs.rmSync(path.join(DOCS, image.src), {force: true});
+          fs.rmSync(path.join(path.dirname(doc), image.src), {force: true});
           text = text.split(image.src).join(webp);
         }
         if (image.hero) {
