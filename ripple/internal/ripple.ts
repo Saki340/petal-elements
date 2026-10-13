@@ -2,6 +2,7 @@
  * @license
  * Copyright 2022 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {html, isServer, LitElement, PropertyValues} from 'lit';
@@ -14,57 +15,23 @@ import {
 } from '../../internal/controller/attachable-controller.js';
 import {EASING} from '../../internal/motion/animation.js';
 
+// The press ripple: a circle twice the element's diagonal, centered on the
+// pointer, that grows from 20% to full size in 450ms and fades out in 150ms
+// when released (styles), as on the original cny-jpy-rate site.
 const PRESS_GROW_MS = 450;
-const MINIMUM_PRESS_MS = 225;
 const INITIAL_ORIGIN_SCALE = 0.2;
-const PADDING = 10;
-const SOFT_EDGE_MINIMUM_SIZE = 75;
-const SOFT_EDGE_CONTAINER_RATIO = 0.35;
 const PRESS_PSEUDO = '::after';
 const ANIMATION_FILL = 'forwards';
 
 /**
- * Interaction states for the ripple.
- *
- * On Touch:
- *  - `INACTIVE -> TOUCH_DELAY -> WAITING_FOR_CLICK -> INACTIVE`
- *  - `INACTIVE -> TOUCH_DELAY -> HOLDING -> WAITING_FOR_CLICK -> INACTIVE`
- *
- * On Mouse or Pen:
- *   - `INACTIVE -> WAITING_FOR_CLICK -> INACTIVE`
+ * Interaction states for the ripple: `INACTIVE -> WAITING_FOR_CLICK ->
+ * INACTIVE`. The ripple starts on pointer down and fades out on click,
+ * pointer cancel or when the pointer leaves.
  */
 enum State {
-  /**
-   * Initial state of the control, no touch in progress.
-   *
-   * Transitions:
-   *   - on touch down: transition to `TOUCH_DELAY`.
-   *   - on mouse down: transition to `WAITING_FOR_CLICK`.
-   */
+  /** No press in progress. */
   INACTIVE,
-  /**
-   * Touch down has been received, waiting to determine if it's a swipe or
-   * scroll.
-   *
-   * Transitions:
-   *   - on touch up: begin press; transition to `WAITING_FOR_CLICK`.
-   *   - on cancel: transition to `INACTIVE`.
-   *   - after `TOUCH_DELAY_MS`: begin press; transition to `HOLDING`.
-   */
-  TOUCH_DELAY,
-  /**
-   * A touch has been deemed to be a press
-   *
-   * Transitions:
-   *  - on up: transition to `WAITING_FOR_CLICK`.
-   */
-  HOLDING,
-  /**
-   * The user touch has finished, transition into rest state.
-   *
-   * Transitions:
-   *   - on click end press; transition to `INACTIVE`.
-   */
+  /** Pressed; the ripple fades out on click. */
   WAITING_FOR_CLICK,
 }
 
@@ -80,12 +47,6 @@ const EVENTS = [
   'pointerleave',
   'pointerup',
 ];
-
-/**
- * Delay reacting to touch so that we do not show the ripple for a swipe or
- * scroll interaction.
- */
-const TOUCH_DELAY_MS = 150;
 
 /**
  * Used to detect if HCM is active. Events do not process during HCM when the
@@ -124,7 +85,6 @@ export class Ripple extends LitElement implements Attachable {
 
   @query('.surface') private readonly mdRoot!: HTMLElement | null;
   private rippleSize = '';
-  private rippleScale = '';
   private initialSize = 0;
   private growAnimation?: Animation;
   private state = State.INACTIVE;
@@ -199,42 +159,18 @@ export class Ripple extends LitElement implements Attachable {
     if (!this.shouldReactToEvent(event)) {
       return;
     }
-
-    if (this.state === State.HOLDING) {
-      this.state = State.WAITING_FOR_CLICK;
-      return;
-    }
-
-    if (this.state === State.TOUCH_DELAY) {
-      this.state = State.WAITING_FOR_CLICK;
-      this.startPressAnimation(this.rippleStartEvent);
-      return;
-    }
+    // The click that follows ends the press.
   }
 
-  private async handlePointerdown(event: PointerEvent) {
+  private handlePointerdown(event: PointerEvent) {
     if (!this.shouldReactToEvent(event)) {
       return;
     }
 
+    // Touches start at once too; if the touch becomes a scroll, the browser
+    // cancels the pointer and the ripple fades out.
     this.rippleStartEvent = event;
-    if (!this.isTouch(event)) {
-      this.state = State.WAITING_FOR_CLICK;
-      this.startPressAnimation(event);
-      return;
-    }
-
-    // Wait for a hold after touch delay
-    this.state = State.TOUCH_DELAY;
-    await new Promise((resolve) => {
-      setTimeout(resolve, TOUCH_DELAY_MS);
-    });
-
-    if (this.state !== State.TOUCH_DELAY) {
-      return;
-    }
-
-    this.state = State.HOLDING;
+    this.state = State.WAITING_FOR_CLICK;
     this.startPressAnimation(event);
   }
 
@@ -275,24 +211,11 @@ export class Ripple extends LitElement implements Attachable {
 
   private determineRippleSize() {
     const {height, width} = this.getBoundingClientRect();
-    const maxDim = Math.max(height, width);
-    const softEdgeSize = Math.max(
-      SOFT_EDGE_CONTAINER_RATIO * maxDim,
-      SOFT_EDGE_MINIMUM_SIZE,
-    );
-
     // `?? 1` may be removed once `currentCSSZoom` is widely available.
     const zoom = this.currentCSSZoom ?? 1;
-    const initialSize = Math.floor((maxDim * INITIAL_ORIGIN_SCALE) / zoom);
-    const hypotenuse = Math.sqrt(width ** 2 + height ** 2);
-    const maxRadius = hypotenuse + PADDING;
-
-    this.initialSize = initialSize;
-    // The dimensions may be altered by CSS `zoom`, which needs to be
-    // compensated for in the final scale() value.
-    const maybeZoomedScale = (maxRadius + softEdgeSize) / initialSize;
-    this.rippleScale = `${maybeZoomedScale / zoom}`;
-    this.rippleSize = `${initialSize}px`;
+    const size = (Math.hypot(width, height) * 2) / zoom;
+    this.initialSize = size;
+    this.rippleSize = `${size}px`;
   }
 
   private getNormalizedPointerEventCoords(pointerEvent: PointerEvent): {
@@ -312,33 +235,19 @@ export class Ripple extends LitElement implements Attachable {
     };
   }
 
-  private getTranslationCoordinates(positionEvent?: Event) {
+  /** Where the ripple's box starts: centered on the pointer. */
+  private getStartPoint(positionEvent?: Event) {
     const {height, width} = this.getBoundingClientRect();
     // `?? 1` may be removed once `currentCSSZoom` is widely available.
     const zoom = this.currentCSSZoom ?? 1;
-    // end in the center
-    const endPoint = {
-      x: (width / zoom - this.initialSize) / 2,
-      y: (height / zoom - this.initialSize) / 2,
+    const point =
+      positionEvent instanceof PointerEvent
+        ? this.getNormalizedPointerEventCoords(positionEvent)
+        : {x: width / zoom / 2, y: height / zoom / 2};
+    return {
+      x: point.x - this.initialSize / 2,
+      y: point.y - this.initialSize / 2,
     };
-
-    let startPoint;
-    if (positionEvent instanceof PointerEvent) {
-      startPoint = this.getNormalizedPointerEventCoords(positionEvent);
-    } else {
-      startPoint = {
-        x: width / zoom / 2,
-        y: height / zoom / 2,
-      };
-    }
-
-    // center around start point
-    startPoint = {
-      x: startPoint.x - this.initialSize / 2,
-      y: startPoint.y - this.initialSize / 2,
-    };
-
-    return {startPoint, endPoint};
   }
 
   private startPressAnimation(positionEvent?: Event) {
@@ -349,10 +258,8 @@ export class Ripple extends LitElement implements Attachable {
     this.pressed = true;
     this.growAnimation?.cancel();
     this.determineRippleSize();
-    const {startPoint, endPoint} =
-      this.getTranslationCoordinates(positionEvent);
-    const translateStart = `${startPoint.x}px, ${startPoint.y}px`;
-    const translateEnd = `${endPoint.x}px, ${endPoint.y}px`;
+    const start = this.getStartPoint(positionEvent);
+    const translate = `translate(${start.x}px, ${start.y}px)`;
 
     this.growAnimation = this.mdRoot.animate(
       {
@@ -361,8 +268,8 @@ export class Ripple extends LitElement implements Attachable {
         height: [this.rippleSize, this.rippleSize],
         width: [this.rippleSize, this.rippleSize],
         transform: [
-          `translate(${translateStart}) scale(1)`,
-          `translate(${translateEnd}) scale(${this.rippleScale})`,
+          `${translate} scale(${INITIAL_ORIGIN_SCALE})`,
+          `${translate} scale(1)`,
         ],
       },
       {
@@ -374,32 +281,10 @@ export class Ripple extends LitElement implements Attachable {
     );
   }
 
-  private async endPressAnimation() {
+  /** Fades the ripple out (it keeps growing while it fades). */
+  private endPressAnimation() {
     this.rippleStartEvent = undefined;
     this.state = State.INACTIVE;
-    const animation = this.growAnimation;
-    let pressAnimationPlayState = Infinity;
-    if (typeof animation?.currentTime === 'number') {
-      pressAnimationPlayState = animation.currentTime;
-    } else if (animation?.currentTime) {
-      pressAnimationPlayState = animation.currentTime.to('ms').value;
-    }
-
-    if (pressAnimationPlayState >= MINIMUM_PRESS_MS) {
-      this.pressed = false;
-      return;
-    }
-
-    await new Promise((resolve) => {
-      setTimeout(resolve, MINIMUM_PRESS_MS - pressAnimationPlayState);
-    });
-
-    if (this.growAnimation !== animation) {
-      // A new press animation was started. The old animation was canceled and
-      // should not finish the pressed state.
-      return;
-    }
-
     this.pressed = false;
   }
 

@@ -73,15 +73,13 @@
       transition: opacity 15ms linear, background-color 15ms linear;
     }
 
+    // The press ripple: a circle that grows from the pointer and fades out
+    // over 150ms when released.
     &::after {
-      // press ripple fade-out
-      background: radial-gradient(
-        closest-side,
-        map.get($tokens, 'pressed-color') max(calc(100% - 70px), 65%),
-        transparent 100%
-      );
+      background-color: map.get($tokens, 'pressed-color');
+      border-radius: 50%;
       transform-origin: center center;
-      transition: opacity 375ms linear;
+      transition: opacity 150ms linear;
     }
   }
 
@@ -91,8 +89,8 @@
   }
 
   .pressed::after {
-    // press ripple fade-in
+    // Shown at once while pressed.
     opacity: map.get($tokens, 'pressed-opacity');
-    transition-duration: 105ms;
+    transition-duration: 0s;
   }
 }

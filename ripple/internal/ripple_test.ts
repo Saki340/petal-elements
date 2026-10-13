@@ -2,7 +2,10 @@
  * @license
  * Copyright 2019 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
+
+import '../ripple.js';
 
 import {html} from 'lit';
 import {customElement} from 'lit/decorators.js';
@@ -73,7 +76,7 @@ describe('Ripple', () => {
     it('sets pressed class on begin press', async () => {
       const {harness, surface} = await setupTest();
       await harness.startTap();
-      jasmine.clock().tick(150); // touch delay
+      // No touch delay: the ripple starts at once.
       await env.waitForStability();
 
       expect(surface).toHaveClass(RippleStateClasses.PRESSED);
@@ -82,10 +85,9 @@ describe('Ripple', () => {
     it('removes pressed class on end press', async () => {
       const {harness, surface} = await setupTest();
       await harness.startTap();
-      jasmine.clock().tick(150); // touch delay
       await harness.endTap();
       await harness.endTapClick();
-      jasmine.clock().tick(225); // MINIMUM_PRESS_MS
+      // No minimum press: it fades out at once.
       await env.waitForStability();
 
       expect(surface).not.toHaveClass(RippleStateClasses.PRESSED);
@@ -128,6 +130,47 @@ describe('Ripple', () => {
       await harness.clickWithKeyboard();
       await env.waitForStability();
       expect((instance as unknown as WithState).state).toBe(STATE_INACTIVE);
+    });
+  });
+
+  describe('press ripple', () => {
+    it('grows a circle twice the diagonal from the pointer', async () => {
+      const root = env.render(html`
+        <div style="position: relative; width: 200px; height: 40px">
+          <petal-ripple></petal-ripple>
+        </div>
+      `);
+      const ripple = root.querySelector('petal-ripple')!;
+      await env.waitForStability();
+      const surface = ripple.renderRoot.querySelector('.surface')!;
+      const rect = ripple.getBoundingClientRect();
+      // The ripple listens to its control, the parent.
+      ripple.parentElement!.dispatchEvent(
+        new PointerEvent('pointerdown', {
+          isPrimary: true,
+          pointerType: 'mouse',
+          button: 0,
+          buttons: 1,
+          clientX: rect.left + 30,
+          clientY: rect.top + 20,
+          bubbles: true,
+        }),
+      );
+      await env.waitForStability();
+      expect(surface).toHaveClass(RippleStateClasses.PRESSED);
+      const animation = (ripple as unknown as {growAnimation: Animation}).growAnimation;
+      const [first, last] = (animation.effect as KeyframeEffect).getKeyframes();
+      const size = Math.hypot(200, 40) * 2;
+      const numbers = (value: unknown) => String(value).match(/-?[\d.]+/g)!.map(Number);
+      expect(numbers(first['width'])[0]).toBeCloseTo(size, 2);
+      // Centered on the pointer, from 20% to full size.
+      const [x, y, fromScale] = numbers(first['transform']);
+      expect(x).toBeCloseTo(30 - size / 2, 2);
+      expect(y).toBeCloseTo(20 - size / 2, 2);
+      expect(fromScale).toBe(0.2);
+      expect(numbers(last['transform'])).toEqual([x, y, 1]);
+      const after = getComputedStyle(surface, '::after');
+      expect(after.borderRadius).toBe('50%');
     });
   });
 });
