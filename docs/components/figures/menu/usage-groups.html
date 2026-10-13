@@ -1,0 +1,57 @@
+<!--
+  @license
+  Copyright 2026 Saki
+  SPDX-License-Identifier: Apache-2.0
+-->
+<div class="figure-wrapper">
+  <style>
+    main > .figure-wrapper {
+      /* prevent scrolling bars on menu open */
+      overflow: visible;
+    }
+  </style>
+  <figure
+    style="justify-content: center"
+    aria-label="A filled button that says text size. Interact with it to open a menu with two groups: Small, Medium and Large, with Medium checked; and Settings and Help.">
+    <span style="position: relative">
+      <petal-filled-button id="usage-groups-anchor">Text size</petal-filled-button>
+      <petal-menu id="usage-groups" anchor="usage-groups-anchor">
+        <petal-menu-group>
+          <petal-menu-item type="menuitemradio" keep-open>
+            <div slot="headline">Small</div>
+          </petal-menu-item>
+          <petal-menu-item type="menuitemradio" keep-open checked>
+            <div slot="headline">Medium</div>
+          </petal-menu-item>
+          <petal-menu-item type="menuitemradio" keep-open>
+            <div slot="headline">Large</div>
+          </petal-menu-item>
+        </petal-menu-group>
+        <petal-menu-group>
+          <petal-menu-item>
+            <petal-icon slot="start">settings</petal-icon>
+            <div slot="headline">Settings</div>
+          </petal-menu-item>
+          <petal-menu-item>
+            <petal-icon slot="start">help</petal-icon>
+            <div slot="headline">Help</div>
+          </petal-menu-item>
+        </petal-menu-group>
+      </petal-menu>
+    </span>
+    <script type="module">
+      const anchorEl = document.body.querySelector('#usage-groups-anchor');
+      const menuEl = document.body.querySelector('#usage-groups');
+      anchorEl.addEventListener('click', () => {
+        menuEl.open = !menuEl.open;
+      });
+      for (const item of menuEl.querySelectorAll('[type="menuitemradio"]')) {
+        item.addEventListener('click', () => {
+          for (const other of menuEl.querySelectorAll('[type="menuitemradio"]')) {
+            other.checked = other === item;
+          }
+        });
+      }
+    </script>
+  </figure>
+</div>

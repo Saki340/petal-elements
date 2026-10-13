@@ -1,0 +1,10 @@
+//
+// Copyright 2026 Saki
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// go/keep-sorted start
+@use './menu-group';
+// go/keep-sorted end
+
+@include menu-group.styles;

@@ -85,6 +85,14 @@ export class MenuItemEl extends menuItemBaseClass implements MenuItem {
    */
   @property({type: Boolean}) selected = false;
 
+  /**
+   * Checks the item. With `type="menuitemcheckbox"` or `"menuitemradio"` it
+   * sets `aria-checked`, and the item shows the selected colors and shape of
+   * Compose's selectable menu items. The menu does not toggle it: set it in a
+   * click handler.
+   */
+  @property({type: Boolean, reflect: true}) checked = false;
+
   @query('.list-item') protected readonly listItemRoot!: HTMLElement | null;
 
   @queryAssignedElements({slot: 'headline'})
@@ -164,7 +172,7 @@ export class MenuItemEl extends menuItemBaseClass implements MenuItem {
         role=${this.menuItemController.role}
         aria-label=${(this as ARIAMixinStrict).ariaLabel || nothing}
         aria-selected=${(this as ARIAMixinStrict).ariaSelected || nothing}
-        aria-checked=${(this as ARIAMixinStrict).ariaChecked || nothing}
+        aria-checked=${this.renderAriaChecked()}
         aria-expanded=${(this as ARIAMixinStrict).ariaExpanded || nothing}
         aria-haspopup=${(this as ARIAMixinStrict).ariaHasPopup || nothing}
         class="list-item ${classMap(this.getRenderClasses())}"
@@ -176,6 +184,14 @@ export class MenuItemEl extends menuItemBaseClass implements MenuItem {
         @keydown=${this.menuItemController.onKeydown}
       >${content}</${tag}>
     `;
+  }
+
+  private renderAriaChecked() {
+    const role = this.menuItemController.role;
+    if (role === 'menuitemcheckbox' || role === 'menuitemradio') {
+      return this.checked ? 'true' : 'false';
+    }
+    return (this as ARIAMixinStrict).ariaChecked || nothing;
   }
 
   /**
@@ -205,6 +221,7 @@ export class MenuItemEl extends menuItemBaseClass implements MenuItem {
     return {
       'disabled': this.disabled,
       'selected': this.selected,
+      'checked': this.checked,
     };
   }
 

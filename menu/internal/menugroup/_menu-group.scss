@@ -1,0 +1,149 @@
+//
+// Copyright 2026 Saki
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// Menu groups, after Jetpack Compose Material 3 Expressive
+// (DropdownMenuGroup and the selectable DropdownMenuItem in Menu.kt,
+// MenuDefaults.kt). Shapes, gap, elevation and item height:
+// SegmentedMenuTokens. Colors: StandardMenuTokens. Spacing: the constants in
+// Menu.kt and MenuDefaults.kt (group padding 2dp vertical; item padding 4dp
+// horizontal, 2dp vertical with supporting text; item content padding 12dp;
+// icon to text 8dp; item width 112dp to 280dp). Shape changes run on the fast
+// spatial spring.
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'sass:map';
+@use '../../../tokens/versions/compose/values/md-comp-segmented-menu' as segmented;
+@use '../../../tokens/versions/compose/values/md-comp-standard-menu' as standard;
+@use '../../../tokens/versions/v34/values/md-sys-motion-springs' as springs;
+// go/keep-sorted end
+
+$_tokens: (
+  'container-color': map.get(standard.$values, 'container-color'),
+  'container-elevation': map.get(segmented.$values, 'container-elevation'),
+  'container-shape': map.get(segmented.$values, 'container-shape'),
+  'group-shape': map.get(segmented.$values, 'group-shape'),
+  'inactive-container-shape':
+    map.get(segmented.$values, 'inactive-container-shape'),
+  'segmented-gap': map.get(segmented.$values, 'segmented-gap'),
+  'item-shape': map.get(segmented.$values, 'item-shape'),
+  'item-first-child-shape': map.get(segmented.$values, 'item-first-child-shape'),
+  'item-last-child-shape': map.get(segmented.$values, 'item-last-child-shape'),
+  'item-selected-shape': map.get(segmented.$values, 'item-selected-shape'),
+  'item-height': map.get(segmented.$values, 'item'),
+);
+
+$_transition: border-radius
+  map.get(springs.$values, 'spring-fast-spatial-duration')
+  map.get(springs.$values, 'spring-fast-spatial');
+
+@mixin styles() {
+  :host {
+    @each $token, $value in $_tokens {
+      --_#{$token}: var(--md-menu-group-#{$token}, #{$value});
+    }
+
+    position: relative;
+    z-index: 0;
+    display: block;
+    padding-block: 2px;
+    border-radius: var(--_group-shape);
+    background-color: var(--_container-color);
+    --md-elevation-level: var(--_container-elevation);
+    transition: $_transition;
+
+    // Compose's selectable menu item: labelLarge text, 44dp high, 12dp
+    // content padding.
+    --md-menu-item-container-color: transparent;
+    --md-menu-item-one-line-container-height: var(--_item-height);
+    --md-menu-item-top-space: 12px;
+    --md-menu-item-bottom-space: 12px;
+    --md-menu-item-leading-space: 12px;
+    --md-menu-item-trailing-space: 12px;
+    --md-menu-item-label-text-font: var(
+      --md-sys-typescale-label-large-font,
+      var(--md-ref-typeface-plain, sans-serif)
+    );
+    --md-menu-item-label-text-size: var(
+      --md-sys-typescale-label-large-size,
+      14px
+    );
+    --md-menu-item-label-text-line-height: var(
+      --md-sys-typescale-label-large-line-height,
+      20px
+    );
+    --md-menu-item-label-text-weight: var(
+      --md-sys-typescale-label-large-weight,
+      var(--md-ref-typeface-weight-medium, 500)
+    );
+  }
+
+  :host(:not(:first-child)) {
+    margin-top: var(--_segmented-gap);
+  }
+
+  :host(:first-child) {
+    border-start-start-radius: var(--_container-shape);
+    border-start-end-radius: var(--_container-shape);
+  }
+
+  :host(:last-child) {
+    border-end-start-radius: var(--_container-shape);
+    border-end-end-radius: var(--_container-shape);
+  }
+
+  :host([inactive]) {
+    border-radius: var(--_inactive-container-shape);
+  }
+
+  petal-elevation {
+    z-index: -1;
+    border-radius: inherit;
+  }
+
+  ::slotted([petal-menu-item]) {
+    gap: 8px;
+    min-width: 112px;
+    max-width: 280px;
+    margin-inline: 4px;
+    border-radius: var(--_item-shape);
+    transition: $_transition;
+  }
+
+  ::slotted([petal-menu-item]:has([slot='supporting-text'])) {
+    margin-block: 2px;
+  }
+
+  ::slotted([petal-menu-item]:first-child:not(:last-child)) {
+    border-start-start-radius: var(--_item-first-child-shape);
+    border-start-end-radius: var(--_item-first-child-shape);
+  }
+
+  ::slotted([petal-menu-item]:last-child:not(:first-child)) {
+    border-end-start-radius: var(--_item-last-child-shape);
+    border-end-end-radius: var(--_item-last-child-shape);
+  }
+
+  ::slotted([petal-menu-item][checked]) {
+    border-radius: var(--_item-selected-shape);
+  }
+
+  // The menu fades its items in while it opens.
+  ::slotted(.md-menu-hidden) {
+    opacity: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :host,
+    ::slotted([petal-menu-item]) {
+      transition: none;
+    }
+  }
+
+  @media (forced-colors: active) {
+    :host {
+      border: 1px solid CanvasText;
+    }
+  }
+}

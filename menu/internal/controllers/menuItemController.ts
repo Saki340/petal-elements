@@ -62,7 +62,13 @@ export type MenuItem = MenuItemAdditions & HTMLElement;
 /**
  * Supported behaviors for a menu item.
  */
-export type MenuItemType = 'menuitem' | 'option' | 'button' | 'link';
+export type MenuItemType =
+  | 'menuitem'
+  | 'menuitemcheckbox'
+  | 'menuitemradio'
+  | 'option'
+  | 'button'
+  | 'link';
 
 /**
  * The options used to inialize MenuItemController.
@@ -174,8 +180,6 @@ export class MenuItemController implements ReactiveController {
       case 'button':
         return 'button' as const;
       default:
-      case 'menuitem':
-      case 'option':
         return 'li' as const;
     }
   }
@@ -184,7 +188,12 @@ export class MenuItemController implements ReactiveController {
    * The recommended role of the menu item.
    */
   get role() {
-    return this.host.type === 'option' ? 'option' : 'menuitem';
+    const {type} = this.host;
+    return type === 'option' ||
+      type === 'menuitemcheckbox' ||
+      type === 'menuitemradio'
+      ? type
+      : 'menuitem';
   }
 
   hostConnected() {

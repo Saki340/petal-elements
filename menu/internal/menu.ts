@@ -251,6 +251,8 @@ export abstract class Menu extends LitElement {
 
   @queryAssignedElements({flatten: true}) protected slotItems!: HTMLElement[];
   @state() private typeaheadActive = true;
+  /** Whether the items are in petal-menu-groups, each its own surface. */
+  @state() private grouped = false;
 
   /**
    * Whether or not the current menu is a submenu and should not handle specific
@@ -275,7 +277,13 @@ export abstract class Menu extends LitElement {
     isItem: (maybeItem: HTMLElement): maybeItem is MenuItem => {
       return maybeItem.hasAttribute('petal-menu-item');
     },
-    getPossibleItems: () => this.slotItems,
+    // Items inside a petal-menu-group count as the menu's own items.
+    getPossibleItems: () =>
+      this.slotItems.flatMap((item) =>
+        item.hasAttribute('petal-menu-group')
+          ? (Array.from(item.children) as HTMLElement[])
+          : [item],
+      ),
     isRtl: () => getComputedStyle(this).direction === 'rtl',
     deactivateItem: (item: MenuItem) => {
       item.selected = false;
@@ -525,7 +533,7 @@ export abstract class Menu extends LitElement {
       @activate-typeahead=${this.handleActivateTypeahead}
       @stay-open-on-focusout=${this.handleStayOpenOnFocusout}
       @close-on-focusout=${this.handleCloseOnFocusout}
-      @slotchange=${this.listController.onSlotchange}></slot>`;
+      @slotchange=${this.onSlotchange}></slot>`;
   }
 
   /**
@@ -535,9 +543,17 @@ export abstract class Menu extends LitElement {
     return html`<petal-elevation part="elevation"></petal-elevation>`;
   }
 
+  private readonly onSlotchange = () => {
+    this.listController.onSlotchange();
+    this.grouped = this.slotItems.some((item) =>
+      item.hasAttribute('petal-menu-group'),
+    );
+  };
+
   private getSurfaceClasses(): ClassInfo {
     return {
       open: this.open,
+      grouped: this.grouped,
       fixed: this.positioning === 'fixed',
       'has-overflow': this.hasOverflow,
     };

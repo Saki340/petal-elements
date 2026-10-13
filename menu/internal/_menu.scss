@@ -105,6 +105,21 @@
       map.get($tokens, 'bottom-space');
   }
 
+  // With petal-menu-groups, each group is its own surface.
+  .grouped .items {
+    background-color: transparent;
+    // Keep the groups' shadows.
+    overflow: visible;
+  }
+
+  .grouped .item-padding {
+    padding-block: 0;
+  }
+
+  .grouped > petal-elevation {
+    display: none;
+  }
+
   .has-overflow:not([popover]) .items {
     overflow: visible;
   }

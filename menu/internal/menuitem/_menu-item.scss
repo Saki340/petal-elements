@@ -15,6 +15,7 @@
 @use '../../../list/list-item';
 @use '../../../ripple/ripple';
 @use '../../../tokens';
+@use '../../../tokens/versions/compose/values/md-comp-standard-menu' as standard-menu;
 // go/keep-sorted end
 
 @mixin theme($tokens) {
@@ -158,6 +159,25 @@
 
   .selected:not(.disabled) ::slotted(*) {
     color: map.get($tokens, 'selected-label-text-color');
+  }
+
+  // Checked: the selected item of Compose's selectable menu items
+  // (StandardMenuTokens).
+  .list-item.checked {
+    background-color: var(
+      --md-menu-item-checked-container-color,
+      #{map.get(standard-menu.$values, 'item-selected-container-color')}
+    );
+  }
+
+  .checked petal-item,
+  .checked [slot='start'],
+  .checked [slot='end'],
+  .checked:not(.disabled) ::slotted(*) {
+    color: var(
+      --md-menu-item-checked-label-text-color,
+      #{map.get(standard-menu.$values, 'item-selected-label-text-color')}
+    );
   }
 
   @media (forced-colors: active) {

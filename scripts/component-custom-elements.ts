@@ -42,7 +42,12 @@ export const COMPONENT_CUSTOM_ELEMENTS = {
   ],
   list: ['list/list.ts', 'list/list-item.ts'],
   loadingIndicator: ['loadingindicator/loading-indicator.ts'],
-  menu: ['menu/menu.ts', 'menu/menu-item.ts', 'menu/sub-menu.ts'],
+  menu: [
+    'menu/menu.ts',
+    'menu/menu-group.ts',
+    'menu/menu-item.ts',
+    'menu/sub-menu.ts',
+  ],
   progress: ['progress/linear-progress.ts', 'progress/circular-progress.ts'],
   radio: ['radio/radio.ts'],
   ripple: ['ripple/ripple.ts'],

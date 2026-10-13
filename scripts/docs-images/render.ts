@@ -38,7 +38,21 @@ async function finishAnimations(page: Page) {
   await page.evaluate(async () => {
     await new Promise(requestAnimationFrame);
     await new Promise(requestAnimationFrame);
-    for (const animation of document.getAnimations()) animation.finish();
+    for (const animation of document.getAnimations()) {
+      // Endless animations cannot finish.
+      if (animation.effect?.getComputedTiming().endTime === Infinity) continue;
+      animation.finish();
+    }
+  });
+}
+
+/** Stops the endless animations at their start, so images do not vary. */
+async function pauseAnimations(page: Page) {
+  await page.evaluate(() => {
+    for (const animation of document.getAnimations()) {
+      animation.pause();
+      animation.currentTime = 0;
+    }
   });
 }
 
@@ -95,6 +109,7 @@ const SETUP: Record<string, (page: Page) => Promise<void | 'viewport'>> = {
   'images/menu/usage-fixed.webp': openMenu(),
   'images/menu/usage-popover.webp': openMenu(),
   'images/menu/usage-submenu.webp': openMenu(),
+  'images/menu/usage-groups.webp': openMenu(),
   'images/menu/theming.webp': openMenu(),
 };
 
@@ -242,7 +257,9 @@ async function main() {
           deviceScaleFactor: 2,
         });
         try {
-          fs.writeFileSync(path.join(path.dirname(doc), webp), await render(page, image));
+          const file = path.join(path.dirname(doc), webp);
+          fs.mkdirSync(path.dirname(file), {recursive: true});
+          fs.writeFileSync(file, await render(page, image));
         } catch (error) {
           throw new Error(`${doc} ${image.src}: ${error}`);
         } finally {
