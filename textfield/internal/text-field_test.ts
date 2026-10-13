@@ -694,4 +694,59 @@ describe('TextField', () => {
       ],
     });
   });
+
+  describe('petal-elements additions', () => {
+    async function render(template: unknown) {
+      const root = env.render(template as never);
+      const field = root.querySelector('petal-test-text-field')!;
+      await env.waitForStability();
+      return field;
+    }
+
+    it('passes enterkeyhint, spellcheck and autocapitalize to the input', async () => {
+      const field = await render(html`<petal-test-text-field
+        enterkeyhint="done"
+        spellcheck="false"
+        autocapitalize="off"></petal-test-text-field>`);
+      const input = field.renderRoot.querySelector('input')!;
+      expect(input.getAttribute('enterkeyhint')).toBe('done');
+      expect(input.getAttribute('spellcheck')).toBe('false');
+      expect(input.getAttribute('autocapitalize')).toBe('off');
+
+      field.type = 'textarea';
+      await env.waitForStability();
+      const textarea = field.renderRoot.querySelector('textarea')!;
+      expect(textarea.getAttribute('enterkeyhint')).toBe('done');
+      expect(textarea.getAttribute('spellcheck')).toBe('false');
+    });
+
+    it('hides the counter with no-counter, keeping maxlength', async () => {
+      const field = await render(html`<petal-test-text-field
+        maxlength="10"
+        no-counter></petal-test-text-field>`);
+      const input = field.renderRoot.querySelector('input')!;
+      expect(input.maxLength).toBe(10);
+      const fieldEl = field.renderRoot.querySelector('petal-filled-field')!;
+      expect(fieldEl.max).toBe(-1);
+      field.noCounter = false;
+      await env.waitForStability();
+      expect(fieldEl.max).toBe(10);
+    });
+
+    it('floats the label of date and time fields, which always show a hint', async () => {
+      const field = await render(html`<petal-test-text-field
+        type="date"
+        label="Date"></petal-test-text-field>`);
+      const fieldEl = field.renderRoot.querySelector('petal-filled-field')!;
+      expect(fieldEl.populated).toBeTrue();
+      // The browser's picker icon stays when there is no trailing icon.
+      const input = field.renderRoot.querySelector('input')!;
+      expect(getComputedStyle(input, '::-webkit-calendar-picker-indicator').display).not.toBe(
+        'none',
+      );
+      field.type = 'text';
+      await env.waitForStability();
+      expect(fieldEl.populated).toBeFalse();
+    });
+  });
 });

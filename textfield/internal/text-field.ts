@@ -38,26 +38,30 @@ import {Validator} from '../../labs/behaviors/validators/validator.js';
  * Input types that are compatible with the text field.
  */
 export type TextFieldType =
+  | 'date'
+  | 'datetime-local'
   | 'email'
+  | 'month'
   | 'number'
   | 'password'
   | 'search'
   | 'tel'
   | 'text'
+  | 'time'
   | 'url'
+  | 'week'
   | 'textarea';
+
+/**
+ * Types whose input always shows something (a format hint and a picker
+ * button), so the label never rests inside the field.
+ */
+const ALWAYS_POPULATED_TYPES = new Set(['date', 'datetime-local', 'month', 'time', 'week']);
 
 /**
  * Input types that are not fully supported for the text field.
  */
-export type UnsupportedTextFieldType =
-  | 'color'
-  | 'date'
-  | 'datetime-local'
-  | 'file'
-  | 'month'
-  | 'time'
-  | 'week';
+export type UnsupportedTextFieldType = 'color' | 'file';
 
 /**
  * Input types that are incompatible with the text field.
@@ -138,6 +142,11 @@ export abstract class TextField extends textFieldBaseClass {
   @property({type: Boolean, attribute: 'no-asterisk'}) noAsterisk = false;
 
   /**
+   * Hides the character counter that `maxlength` shows.
+   */
+  @property({type: Boolean, attribute: 'no-counter'}) noCounter = false;
+
+  /**
    * Indicates that the user must specify a value for the input before the
    * owning form can be submitted and will render an error state when
    * `reportValidity()` is invoked when value is empty. Additionally the
@@ -200,6 +209,18 @@ export abstract class TextField extends textFieldBaseClass {
 
   // <input> properties
   @property({reflect: true}) override inputMode = '';
+
+  /**
+   * The input's `enterkeyhint`: the label of the enter key on virtual
+   * keyboards.
+   */
+  @property({reflect: true, attribute: 'enterkeyhint'}) override enterKeyHint = '';
+
+  // `spellcheck` and `autocapitalize` are passed to the input as set on the
+  // text field.
+  @property({attribute: 'spellcheck'}) private spellcheckAttribute: string | null = null;
+  @property({attribute: 'autocapitalize'}) private autocapitalizeAttribute: string | null =
+    null;
 
   /**
    * Defines the greatest value in the range of permitted values.
@@ -321,6 +342,9 @@ export abstract class TextField extends textFieldBaseClass {
    * - search
    * - tel
    * - url
+   * - date, datetime-local, month, time, week (the label stays floated, since
+   *   the browser shows a format hint; without a trailing icon, the browser's
+   *   picker icon is shown)
    *
    * See
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#input_types
@@ -542,6 +566,8 @@ export abstract class TextField extends textFieldBaseClass {
       'error': !this.disabled && this.hasError,
       'textarea': this.type === 'textarea',
       'no-spinner': this.noSpinner,
+      'has-trailing-icon': this.hasTrailingIcon,
+      'picker': ALWAYS_POPULATED_TYPES.has(this.type),
     };
 
     return html`
@@ -577,8 +603,8 @@ export abstract class TextField extends textFieldBaseClass {
       ?has-start=${this.hasLeadingIcon}
       label=${this.label}
       ?no-asterisk=${this.noAsterisk}
-      max=${this.maxLength}
-      ?populated=${!!this.value}
+      max=${this.noCounter ? -1 : this.maxLength}
+      ?populated=${!!this.value || ALWAYS_POPULATED_TYPES.has(this.type)}
       ?required=${this.required}
       ?resizable=${this.type === 'textarea'}
       supporting-text=${this.supportingText}
@@ -628,6 +654,9 @@ export abstract class TextField extends textFieldBaseClass {
           aria-invalid=${this.hasError}
           aria-label=${ariaLabel}
           autocomplete=${autocomplete || nothing}
+          autocapitalize=${this.autocapitalizeAttribute ?? nothing}
+          enterkeyhint=${(this.enterKeyHint || nothing) as string}
+          spellcheck=${(this.spellcheckAttribute ?? nothing) as unknown as boolean}
           name=${this.name || nothing}
           ?disabled=${this.disabled}
           maxlength=${hasMaxLength ? this.maxLength : nothing}
@@ -663,6 +692,9 @@ export abstract class TextField extends textFieldBaseClass {
           aria-invalid=${this.hasError}
           aria-label=${ariaLabel}
           autocomplete=${autocomplete || nothing}
+          autocapitalize=${this.autocapitalizeAttribute ?? nothing}
+          enterkeyhint=${(this.enterKeyHint || nothing) as string}
+          spellcheck=${(this.spellcheckAttribute ?? nothing) as unknown as boolean}
           name=${this.name || nothing}
           ?disabled=${this.disabled}
           inputmode=${inputMode || nothing}

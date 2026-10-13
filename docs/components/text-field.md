@@ -96,6 +96,10 @@ displaying a different keyboard or providing default validation.
     <!-- {.external} -->
 -   [`type="textarea"`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea)
     <!-- {.external} -->
+-   [`type="date"`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/date)<!-- {.external} -->,
+    `datetime-local`, `month`, `time` and `week`. The browser shows a format
+    hint, so the label always floats. Without a trailing icon, the browser's
+    picker icon is shown; with one, open the picker with `showPicker()`.
 
 <!-- no-catalog-start -->
 
@@ -115,7 +119,9 @@ and the outlined one has a label of Password](images/textfield/usage-type.webp)
 
 > Tip: use the
 > [`inputmode`](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/inputmode)<!-- {.external} -->
-> attribute for more control over the displayed keyboard.
+> attribute for more control over the displayed keyboard. `enterkeyhint`,
+> `spellcheck` and `autocapitalize` set on the text field are passed to the
+> input too.
 
 ### Labels
 
@@ -287,6 +293,8 @@ end](images/textfield/usage-char-counter.webp)
 <petal-outlined-text-field label="Title" value="Short" maxlength="10">
 </petal-outlined-text-field>
 ```
+
+Add `no-counter` to limit the length without showing the counter.
 
 ### Validation
 
@@ -482,6 +490,7 @@ Token                                          | Default value
 | `errorText` | `error-text` | `string` | `''` | The error message that replaces supporting text when `error` is true. If `errorText` is an empty string, then the supporting text will continue to show.<br>This error message overrides the error message displayed by `reportValidity()`. |
 | `label` | `label` | `string` | `''` | The floating Material label of the textfield component. It informs the user about what information is requested for a text field. It is aligned with the input text, is always visible, and it floats when focused or when text is entered into the textfield. This label also sets accessibilty labels, but the accessible label is overriden by `aria-label`.<br>Learn more about floating labels from the Material Design guidelines: https://m3.material.io/components/text-fields/guidelines |
 | `noAsterisk` | `no-asterisk` | `boolean` | `false` | Disables the asterisk on the floating label, when the text field is required. |
+| `noCounter` | `no-counter` | `boolean` | `false` | Hides the character counter that `maxlength` shows. |
 | `required` | `required` | `boolean` | `false` | Indicates that the user must specify a value for the input before the owning form can be submitted and will render an error state when `reportValidity()` is invoked when value is empty. Additionally the floating label will render an asterisk `"*"` when true.<br>https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/required |
 | `value` | `value` | `string` | `''` | The current value of the text field. It is always a string. |
 | `prefixText` | `prefix-text` | `string` | `''` | An optional prefix to display before the input value. |
@@ -493,6 +502,7 @@ Token                                          | Default value
 | `rows` | `rows` | `number` | `2` | The number of rows to display for a `type="textarea"` text field. Defaults to 2. |
 | `cols` | `cols` | `number` | `20` | The number of cols to display for a `type="textarea"` text field. Defaults to 20. |
 | `inputMode` | `inputmode` | `string` | `''` |  |
+| `enterKeyHint` | `enterkeyhint` | `string` | `''` | The input's `enterkeyhint`: the label of the enter key on virtual keyboards. |
 | `max` | `max` | `string` | `''` | Defines the greatest value in the range of permitted values.<br>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#max |
 | `maxLength` | `maxlength` | `number` | `-1` | The maximum number of characters a user can enter into the text field. Set to -1 for none.<br>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#maxlength |
 | `min` | `min` | `string` | `''` | Defines the most negative value in the range of permitted values.<br>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#min |
@@ -503,7 +513,7 @@ Token                                          | Default value
 | `readOnly` | `readonly` | `boolean` | `false` | Indicates whether or not a user should be able to edit the text field's value.<br>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#readonly |
 | `multiple` | `multiple` | `boolean` | `false` | Indicates that input accepts multiple email addresses.<br>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/email#multiple |
 | `step` | `step` | `string` | `''` | Returns or sets the element's step attribute, which works with min and max to limit the increments at which a numeric or date-time value can be set.<br>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#step |
-| `type` | `type` | `TextFieldType \| UnsupportedTextFieldType` | `'text'` | The `<input>` type to use, defaults to "text". The type greatly changes how the text field behaves.<br>Text fields support a limited number of `<input>` types:<br>- text - textarea - email - number - password - search - tel - url<br>See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#input_types for more details on each input type. |
+| `type` | `type` | `TextFieldType \| UnsupportedTextFieldType` | `'text'` | The `<input>` type to use, defaults to "text". The type greatly changes how the text field behaves.<br>Text fields support a limited number of `<input>` types:<br>- text - textarea - email - number - password - search - tel - url - date, datetime-local, month, time, week (the label stays floated, since the browser shows a format hint; without a trailing icon, the browser's picker icon is shown)<br>See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#input_types for more details on each input type. |
 | `autocomplete` | `autocomplete` | `string` | `''` | Describes what, if any, type of autocomplete functionality the input should provide.<br>https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete |
 | `name` | `name` | `string` | `undefined` | The HTML name to use in form submission. |
 | `disabled` | `disabled` | `boolean` | `undefined` | Whether or not the element is disabled. |
@@ -565,6 +575,7 @@ Token                                          | Default value
 | `errorText` | `error-text` | `string` | `''` | The error message that replaces supporting text when `error` is true. If `errorText` is an empty string, then the supporting text will continue to show.<br>This error message overrides the error message displayed by `reportValidity()`. |
 | `label` | `label` | `string` | `''` | The floating Material label of the textfield component. It informs the user about what information is requested for a text field. It is aligned with the input text, is always visible, and it floats when focused or when text is entered into the textfield. This label also sets accessibilty labels, but the accessible label is overriden by `aria-label`.<br>Learn more about floating labels from the Material Design guidelines: https://m3.material.io/components/text-fields/guidelines |
 | `noAsterisk` | `no-asterisk` | `boolean` | `false` | Disables the asterisk on the floating label, when the text field is required. |
+| `noCounter` | `no-counter` | `boolean` | `false` | Hides the character counter that `maxlength` shows. |
 | `required` | `required` | `boolean` | `false` | Indicates that the user must specify a value for the input before the owning form can be submitted and will render an error state when `reportValidity()` is invoked when value is empty. Additionally the floating label will render an asterisk `"*"` when true.<br>https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/required |
 | `value` | `value` | `string` | `''` | The current value of the text field. It is always a string. |
 | `prefixText` | `prefix-text` | `string` | `''` | An optional prefix to display before the input value. |
@@ -576,6 +587,7 @@ Token                                          | Default value
 | `rows` | `rows` | `number` | `2` | The number of rows to display for a `type="textarea"` text field. Defaults to 2. |
 | `cols` | `cols` | `number` | `20` | The number of cols to display for a `type="textarea"` text field. Defaults to 20. |
 | `inputMode` | `inputmode` | `string` | `''` |  |
+| `enterKeyHint` | `enterkeyhint` | `string` | `''` | The input's `enterkeyhint`: the label of the enter key on virtual keyboards. |
 | `max` | `max` | `string` | `''` | Defines the greatest value in the range of permitted values.<br>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#max |
 | `maxLength` | `maxlength` | `number` | `-1` | The maximum number of characters a user can enter into the text field. Set to -1 for none.<br>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#maxlength |
 | `min` | `min` | `string` | `''` | Defines the most negative value in the range of permitted values.<br>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#min |
@@ -586,7 +598,7 @@ Token                                          | Default value
 | `readOnly` | `readonly` | `boolean` | `false` | Indicates whether or not a user should be able to edit the text field's value.<br>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#readonly |
 | `multiple` | `multiple` | `boolean` | `false` | Indicates that input accepts multiple email addresses.<br>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/email#multiple |
 | `step` | `step` | `string` | `''` | Returns or sets the element's step attribute, which works with min and max to limit the increments at which a numeric or date-time value can be set.<br>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#step |
-| `type` | `type` | `TextFieldType \| UnsupportedTextFieldType` | `'text'` | The `<input>` type to use, defaults to "text". The type greatly changes how the text field behaves.<br>Text fields support a limited number of `<input>` types:<br>- text - textarea - email - number - password - search - tel - url<br>See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#input_types for more details on each input type. |
+| `type` | `type` | `TextFieldType \| UnsupportedTextFieldType` | `'text'` | The `<input>` type to use, defaults to "text". The type greatly changes how the text field behaves.<br>Text fields support a limited number of `<input>` types:<br>- text - textarea - email - number - password - search - tel - url - date, datetime-local, month, time, week (the label stays floated, since the browser shows a format hint; without a trailing icon, the browser's picker icon is shown)<br>See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#input_types for more details on each input type. |
 | `autocomplete` | `autocomplete` | `string` | `''` | Describes what, if any, type of autocomplete functionality the input should provide.<br>https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete |
 | `name` | `name` | `string` | `undefined` | The HTML name to use in form submission. |
 | `disabled` | `disabled` | `boolean` | `undefined` | Whether or not the element is disabled. |

@@ -1,6 +1,7 @@
 //
 // Copyright 2021 Google LLC
 // SPDX-License-Identifier: Apache-2.0
+// Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
 //
 
 @mixin styles() {
@@ -27,7 +28,8 @@
       opacity: 1;
     }
 
-    // Remove built-in datepicker icon on Chrome
+    // Remove built-in datepicker icon on Chrome when there is a trailing
+    // icon (it can open the picker with showPicker()).
     &::-webkit-calendar-picker-indicator {
       display: none;
     }
@@ -41,6 +43,20 @@
     @media (forced-colors: active) {
       background: none; // Remove background in Firefox HCM
     }
+  }
+
+  // Without a trailing icon, date and time fields keep the browser's picker
+  // icon, so they look like date fields.
+  .text-field:not(.has-trailing-icon) .input::-webkit-calendar-picker-indicator {
+    display: block;
+    cursor: pointer;
+  }
+
+  // The date or time takes the space before the picker icon, so the icon is
+  // at the end of the field.
+  .picker .input {
+    display: block;
+    width: 100%;
   }
 
   // Optionally remove number input's spinner
