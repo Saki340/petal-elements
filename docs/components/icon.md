@@ -29,6 +29,12 @@ element.
 The full range of icons can be found on the
 [Material Symbols](https://fonts.google.com/icons)<!-- {.external} --> font page.
 
+An icon name is text in the page: it can show in search results, text
+selection, reader modes, or before the font loads (as `sync_alt`). A code
+point is a single private-use character, so it does none of that, and it also
+works with a subset font that has no ligatures. Each icon's code point is on
+the font page.
+
 Material Symbols icons are available in three styles: **outlined**, **rounded**,
 and **sharp**.
 

@@ -106,6 +106,22 @@ Other stylesheets in `tokens/css/`:
 Each file is also available as a Lit `CSSResult`
 (`tokens/css/sys.cssresult.js` exports `styles`).
 
+### Fonts
+
+Components do not inherit the page's font: their text uses the typescale
+tokens, which fall back to Roboto. To use your own font, set the two typefaces
+([typography](theming/typography.md)):
+
+```css
+:root {
+  --md-ref-typeface-brand: 'Noto Sans SC', system-ui, sans-serif; /* headlines, titles */
+  --md-ref-typeface-plain: 'Noto Sans SC', system-ui, sans-serif; /* body, labels */
+}
+```
+
+Icons use the Material Symbols font (`--md-icon-font`); see
+[icons](components/icon.md).
+
 ## Usage
 
 Use the `<component-name>` tag in HTML markup. Refer to the
