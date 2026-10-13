@@ -173,9 +173,12 @@ picker.addEventListener('keydown', (event) => {
 
 // ---------- Spring demo ----------
 
+// The page uses the expressive springs; "Standard" sets the demo back to the
+// components' defaults.
 const springs = document.getElementById('springs')!;
-document.getElementById('spring-play')!.addEventListener('click', () => {
-  springs.classList.toggle('moved');
+document.getElementById('scheme')!.addEventListener('change', (event) => {
+  const scheme = (event.target as HTMLElement).dataset['scheme'];
+  springs.classList.toggle('standard', scheme === 'standard');
 });
 
 // ---------- Copy buttons ----------

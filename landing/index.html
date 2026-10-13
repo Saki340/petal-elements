@@ -22,6 +22,8 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0..1,0&display=block" />
     <link rel="stylesheet" href="assets/sys.css" />
+    <!-- Expressive motion, as Compose's MaterialExpressiveTheme. -->
+    <link rel="stylesheet" href="assets/motion-expressive.css" />
     <link rel="stylesheet" href="assets/styles.css" />
     <script type="module" src="assets/main.js"></script>
   </head>
@@ -128,14 +130,19 @@
 
           <article class="feature surface">
             <h3>Spring motion</h3>
-            <p>Standard and expressive motion schemes as CSS <code>linear()</code> springs. Switch the whole page with one stylesheet.</p>
+            <p>Presses run on Compose's springs: buttons morph, groups make room, menus scale in. Expressive springs overshoot; compare them with the standard scheme.</p>
             <div class="demo springs" id="springs">
-              <div class="track"><span class="dot standard"></span><span class="label">Standard</span></div>
-              <div class="track"><span class="dot expressive"></span><span class="label">Expressive</span></div>
-              <petal-text-button id="spring-play" size="small">
-                <petal-icon slot="icon">play_arrow</petal-icon>
-                Play
-              </petal-text-button>
+              <petal-button-group id="scheme" connected single-select size="xsmall" aria-label="Motion scheme">
+                <petal-filled-tonal-button toggle selected data-scheme="expressive">Expressive</petal-filled-tonal-button>
+                <petal-filled-tonal-button toggle data-scheme="standard">Standard</petal-filled-tonal-button>
+              </petal-button-group>
+              <p class="hint">Press and hold:</p>
+              <petal-button-group class="fill" connected size="small" aria-label="Press demo">
+                <petal-filled-button>Day</petal-filled-button>
+                <petal-filled-button>Week</petal-filled-button>
+                <petal-filled-button>Month</petal-filled-button>
+              </petal-button-group>
+              <petal-filled-tonal-button size="medium">Press me</petal-filled-tonal-button>
             </div>
           </article>
 

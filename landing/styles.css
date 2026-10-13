@@ -273,56 +273,55 @@ h3 {
   background: var(--md-sys-color-surface-container-lowest);
 }
 
-/* Spring demo: two dots travel with the standard and the expressive spatial
-   spring. */
+/* Spring demo: real components; the scheme switch sets the springs of the
+   demo back to the components' standard defaults. */
 
 .springs {
   display: grid;
   gap: 12px;
+  justify-items: start;
 }
 
-.track {
-  position: relative;
-  display: flex;
-  align-items: center;
-  height: 32px;
-  border-radius: var(--md-sys-shape-corner-full);
-  background: var(--md-sys-color-surface-container-high);
-}
-
-.track .label {
-  position: absolute;
-  inset-inline-end: 16px;
+.springs .hint {
+  margin: 4px 0 0;
   color: var(--md-sys-color-on-surface-variant);
   font: var(--md-sys-typescale-label-medium);
 }
 
-.dot {
-  position: absolute;
-  inset-inline-start: 4px;
-  width: 24px;
-  height: 24px;
-  border-radius: var(--md-sys-shape-corner-full);
-  background: var(--md-sys-color-primary);
+.springs .fill {
+  display: flex;
+  width: 100%;
 }
 
-.dot.standard {
-  transition: inset-inline-start var(--md-sys-motion-spring-default-spatial-duration)
-    var(--md-sys-motion-spring-default-spatial);
+.springs .fill > * {
+  flex: 1 1 0;
 }
 
-.dot.expressive {
-  background: var(--md-sys-color-tertiary);
-  transition: inset-inline-start var(--md-sys-motion-expressive-spring-default-spatial-duration)
-    var(--md-sys-motion-expressive-spring-default-spatial);
-}
-
-.springs.moved .dot {
-  inset-inline-start: calc(50% - 12px);
-}
-
-.springs petal-text-button {
-  justify-self: start;
+.springs.standard {
+  --md-sys-motion-spring-fast-spatial: initial;
+  --md-sys-motion-spring-fast-spatial-duration: initial;
+  --md-sys-motion-spring-fast-spatial-damping: initial;
+  --md-sys-motion-spring-fast-spatial-stiffness: initial;
+  --md-sys-motion-spring-fast-effects: initial;
+  --md-sys-motion-spring-fast-effects-duration: initial;
+  --md-sys-motion-spring-fast-effects-damping: initial;
+  --md-sys-motion-spring-fast-effects-stiffness: initial;
+  --md-sys-motion-spring-default-spatial: initial;
+  --md-sys-motion-spring-default-spatial-duration: initial;
+  --md-sys-motion-spring-default-spatial-damping: initial;
+  --md-sys-motion-spring-default-spatial-stiffness: initial;
+  --md-sys-motion-spring-default-effects: initial;
+  --md-sys-motion-spring-default-effects-duration: initial;
+  --md-sys-motion-spring-default-effects-damping: initial;
+  --md-sys-motion-spring-default-effects-stiffness: initial;
+  --md-sys-motion-spring-slow-spatial: initial;
+  --md-sys-motion-spring-slow-spatial-duration: initial;
+  --md-sys-motion-spring-slow-spatial-damping: initial;
+  --md-sys-motion-spring-slow-spatial-stiffness: initial;
+  --md-sys-motion-spring-slow-effects: initial;
+  --md-sys-motion-spring-slow-effects-duration: initial;
+  --md-sys-motion-spring-slow-effects-damping: initial;
+  --md-sys-motion-spring-slow-effects-stiffness: initial;
 }
 
 /* Reasons */
