@@ -50,6 +50,7 @@ async function finishAnimations(page: Page) {
 async function pauseAnimations(page: Page) {
   await page.evaluate(() => {
     for (const animation of document.getAnimations()) {
+      if (animation.effect?.getComputedTiming().endTime !== Infinity) continue;
       animation.pause();
       animation.currentTime = 0;
     }
