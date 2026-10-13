@@ -10,6 +10,16 @@
   instead of inheriting `font-variation-settings`. To fill icons from a parent,
   set `--md-icon-fill: 1` on it.
 
+#### Bug fixes
+
+* All components respect the `hidden` attribute (their host `display` no
+  longer overrides it).
+* **dialog:** the scrim is in the top layer, so no element on the page is
+  above it.
+* **snackbar:** calling `show()` while open resolves the earlier promise with
+  `replace` instead of sharing it.
+* **menu:** items with `keep-open` respond to Enter and Space.
+
 #### Features
 
 * **snackbar:** `petal-snackbar`, after Jetpack Compose `Snackbar`.
@@ -28,6 +38,21 @@
   Jetpack Compose `SegmentedListItem`.
 * **progress:** `wavy` on `petal-linear-progress`, after Jetpack Compose
   `LinearWavyProgressIndicator`.
+* **appbar:** `headline`, `subtitle`, `collapsed-headline` and
+  `collapsed-subtitle` slots and properties, `heading-level`, and a
+  `collapse-change` event; the collapsed fraction updates within the scroll
+  event.
+* **menu:** radio and checkbox items keep `checked` themselves and fire
+  `change`.
+* **buttongroup:** single-select groups move and select with arrow keys, with
+  only the selected button in the tab order.
+* **button:** toggle colors from public tokens
+  (`--md-filled-button-selected-container-color`, ...), size values from
+  `--md-button-<size>-*` tokens, and icon-only buttons.
+* **textfield:** `enterkeyhint`, `spellcheck` and `autocapitalize` reach the
+  input; `no-counter`; date and time types show their hint and picker icon.
+* **pulltorefresh:** `scroll-target="page"` and
+  `--md-pull-to-refresh-top-offset`.
 * **icon:** `filled`, and an animated FILL axis from the inherited
   `--md-icon-fill` property.
 
