@@ -1,6 +1,7 @@
 //
 // Copyright 2022 Google LLC
 // SPDX-License-Identifier: Apache-2.0
+// Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
 //
 
 // go/keep-sorted start
@@ -9,6 +10,8 @@
 // go/keep-sorted end
 // go/keep-sorted start
 @use '../../tokens';
+@use '../../tokens/versions/compose/values/md-comp-list' as compose-list;
+@use '../../tokens/versions/v34/values/md-sys-motion-springs' as springs;
 @use './listitem/list-item';
 // go/keep-sorted end
 
@@ -39,5 +42,63 @@
     // Add position so the elevation overlay (which is absolutely positioned)
     // can be positioned relative to the list root.
     position: relative;
+  }
+
+  // Segmented list, after Jetpack Compose SegmentedListItem
+  // (ListItemDefaults.segmentedShapes, segmentedColors, SegmentedGap): items
+  // are 4px rounded, the ends of the list 16px; hovered items 12px, pressed
+  // and focused 16px, on the fast spatial spring.
+  $segmented: compose-list.$values;
+
+  :host([segmented]) {
+    --_segmented-item-shape: var(
+      --md-list-segmented-item-shape,
+      #{map.get($segmented, 'item-container-expressive-shape')}
+    );
+    --_segmented-container-shape: var(
+      --md-list-segmented-container-shape,
+      #{map.get($segmented, 'container-shape')}
+    );
+    --_segmented-item-container-color: var(
+      --md-list-segmented-item-container-color,
+      #{map.get($segmented, 'item-segmented-container-color')}
+    );
+
+    background: transparent;
+    gap: map.get($segmented, 'segmented-gap');
+    padding: 0;
+  }
+
+  :host([segmented]) ::slotted([petal-list-item]) {
+    background-color: var(--_segmented-item-container-color);
+    border-radius: var(--_segmented-item-shape);
+    transition: border-radius
+      map.get(springs.$values, 'spring-fast-spatial-duration')
+      map.get(springs.$values, 'spring-fast-spatial');
+  }
+
+  :host([segmented]) ::slotted([petal-list-item]:first-child) {
+    border-start-start-radius: var(--_segmented-container-shape);
+    border-start-end-radius: var(--_segmented-container-shape);
+  }
+
+  :host([segmented]) ::slotted([petal-list-item]:last-child) {
+    border-end-start-radius: var(--_segmented-container-shape);
+    border-end-end-radius: var(--_segmented-container-shape);
+  }
+
+  :host([segmented]) ::slotted([petal-list-item]:not([disabled]):hover) {
+    border-radius: map.get($segmented, 'item-hovered-container-expressive-shape');
+  }
+
+  :host([segmented]) ::slotted([petal-list-item]:not([disabled]):focus-within),
+  :host([segmented]) ::slotted([petal-list-item]:not([disabled]):active) {
+    border-radius: map.get($segmented, 'item-pressed-container-expressive-shape');
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :host([segmented]) ::slotted([petal-list-item]) {
+      transition: none;
+    }
   }
 }

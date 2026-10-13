@@ -1021,4 +1021,57 @@ describe('<petal-list-item> link', () => {
 
     expect(internalRoot.hasAttribute('target')).toBe(false);
   });
+  describe('segmented', () => {
+    const radii = (element: Element) => {
+      const style = getComputedStyle(element);
+      return [
+        style.borderTopLeftRadius,
+        style.borderTopRightRadius,
+        style.borderBottomRightRadius,
+        style.borderBottomLeftRadius,
+      ];
+    };
+
+    it('shapes items by position, 2px apart, each on its own surface', async () => {
+      const root = env.render(html`<petal-list segmented>
+        <petal-list-item>One</petal-list-item>
+        <petal-list-item>Two</petal-list-item>
+        <petal-list-item>Three</petal-list-item>
+      </petal-list>`);
+      await env.waitForStability();
+      const list = root.querySelector('petal-list')!;
+      const items = Array.from(root.querySelectorAll('petal-list-item'));
+      for (const item of items) item.style.transition = 'none';
+
+      expect(getComputedStyle(list).backgroundColor).toBe('rgba(0, 0, 0, 0)');
+      expect(getComputedStyle(list).rowGap).toBe('2px');
+      // Compose's surface.
+      expect(getComputedStyle(items[1]).backgroundColor).toBe('rgb(254, 247, 255)');
+      expect(radii(items[0])).toEqual(['16px', '16px', '4px', '4px']);
+      expect(radii(items[1])).toEqual(['4px', '4px', '4px', '4px']);
+      expect(radii(items[2])).toEqual(['4px', '4px', '16px', '16px']);
+      const gap =
+        items[1].getBoundingClientRect().top - items[0].getBoundingClientRect().bottom;
+      expect(gap).toBe(2);
+    });
+
+    it('rounds a single item fully', async () => {
+      const root = env.render(html`<petal-list segmented>
+        <petal-list-item>One</petal-list-item>
+      </petal-list>`);
+      await env.waitForStability();
+      const item = root.querySelector('petal-list-item')!;
+      expect(radii(item)).toEqual(['16px', '16px', '16px', '16px']);
+    });
+
+    it('does not change lists without segmented', async () => {
+      const root = env.render(html`<petal-list>
+        <petal-list-item>One</petal-list-item>
+      </petal-list>`);
+      await env.waitForStability();
+      const item = root.querySelector('petal-list-item')!;
+      expect(radii(item)).toEqual(['0px', '0px', '0px', '0px']);
+      expect(getComputedStyle(item).backgroundColor).toBe('rgba(0, 0, 0, 0)');
+    });
+  });
 });

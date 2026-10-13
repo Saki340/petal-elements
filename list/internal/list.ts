@@ -6,7 +6,7 @@
  */
 
 import {html, isServer, LitElement} from 'lit';
-import {queryAssignedElements} from 'lit/decorators.js';
+import {property, queryAssignedElements} from 'lit/decorators.js';
 
 import {ListController, NavigableKeys} from './list-controller.js';
 import {ListItem as SharedListItem} from './list-navigation-helpers.js';
@@ -19,6 +19,12 @@ interface ListItem extends SharedListItem {
 
 // tslint:disable-next-line:enforce-comments-on-exported-symbols
 export class List extends LitElement {
+  /**
+   * Segmented list (Material 3 Expressive): items are separate surfaces 2px
+   * apart, with rounder corners at the ends of the list.
+   */
+  @property({type: Boolean, reflect: true}) segmented = false;
+
   /**
    * An array of activatable and disableable list items. Queries every assigned
    * element that has the `petal-list-item` attribute.

@@ -24,6 +24,8 @@
   `checked` with `type="menuitemcheckbox"` or `"menuitemradio"` on menu items.
 * **pulltorefresh:** `petal-pull-to-refresh`, with the petal-elements flower as
   its indicator.
+* **list:** `segmented` for Material 3 Expressive segmented lists, after
+  Jetpack Compose `SegmentedListItem`.
 * **icon:** `filled`, and an animated FILL axis from the inherited
   `--md-icon-fill` property.
 
