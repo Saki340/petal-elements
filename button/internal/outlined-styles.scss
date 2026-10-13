@@ -13,6 +13,6 @@
 
 @include outlined-button.styles;
 
-@include toggle.styles(toggle-tokens.$values, $outlined: true);
+@include toggle.styles(toggle-tokens.$values, 'outlined-button', $outlined: true);
 
 @include size.outline-width;

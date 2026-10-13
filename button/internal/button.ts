@@ -8,8 +8,14 @@
 import '../../focus/md-focus-ring.js';
 import '../../ripple/ripple.js';
 
-import {html, isServer, LitElement, nothing} from 'lit';
-import {property, query, queryAssignedElements} from 'lit/decorators.js';
+import {html, isServer, LitElement, nothing, PropertyValues} from 'lit';
+import {
+  property,
+  query,
+  queryAssignedElements,
+  queryAssignedNodes,
+  state,
+} from 'lit/decorators.js';
 
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 import {mixinDelegatesAria} from '../../internal/aria/delegate.js';
@@ -146,6 +152,12 @@ export abstract class Button extends buttonBaseClass {
   @queryAssignedElements({slot: 'icon', flatten: true})
   private readonly assignedIcons!: HTMLElement[];
 
+  @queryAssignedNodes({flatten: true})
+  private readonly assignedLabel!: Node[];
+
+  /** Without a label, an icon-only button has no gap after its icon. */
+  @state() private hasLabel = true;
+
   constructor() {
     super();
     if (!isServer) {
@@ -232,9 +244,24 @@ export abstract class Button extends buttonBaseClass {
     return html`
       <span class="touch"></span>
       ${this.trailingIcon ? nothing : icon}
-      <span class="label"><slot></slot></span>
+      <span class="label" ?hidden=${!this.hasLabel}
+        ><slot @slotchange=${this.handleLabelChange}></slot
+      ></span>
       ${this.trailingIcon ? icon : nothing}
     `;
+  }
+
+  protected override firstUpdated(changed: PropertyValues<this>) {
+    super.firstUpdated(changed);
+    this.handleLabelChange();
+  }
+
+  private handleLabelChange() {
+    this.hasLabel = this.assignedLabel.some(
+      (node) =>
+        node.nodeType === Node.ELEMENT_NODE ||
+        (node.nodeType === Node.TEXT_NODE && node.textContent!.trim() !== ''),
+    );
   }
 
   private handleClick(event: MouseEvent) {

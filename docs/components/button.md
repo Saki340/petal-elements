@@ -239,6 +239,24 @@ large](images/button/usage-sizes.webp)
 <petal-filled-button size="xlarge">XL</petal-filled-button>
 ```
 
+Each size reads its values from public tokens named after the size, such as
+`--md-button-small-leading-space`, `--md-button-small-trailing-space`,
+`--md-button-small-icon-size`, `--md-button-small-icon-label-space` and
+`--md-button-small-container-height`.
+
+A button with an icon and no label is icon only: the icon has no gap after it
+and the button has no minimum width, so its padding sets its width. Use the
+padding tokens for a more compact button.
+
+```html
+<petal-filled-tonal-button
+    size="small"
+    aria-label="Swap currencies"
+    style="--md-button-small-leading-space: 8px; --md-button-small-trailing-space: 8px">
+  <petal-icon slot="icon">swap_horiz</petal-icon>
+</petal-filled-tonal-button>
+```
+
 ### Shapes
 
 Sized buttons are round by default. Set `shape="square"` for rounded square
@@ -264,6 +282,13 @@ click, like Compose's `ToggleButton`. `selected` holds the state; the button
 fires `input` and `change` events when the user toggles it and sets
 `aria-pressed`. A selected round button becomes square and the other way
 round. Text buttons cannot be toggle buttons.
+
+Toggle colors come from public tokens for each state, named after the button,
+such as `--md-filled-button-unselected-container-color`,
+`--md-filled-button-selected-container-color`,
+`--md-filled-button-unselected-label-text-color` and
+`--md-filled-button-selected-icon-color` (also `-hover-`, `-focus-` and
+`-pressed-` label, icon and state layer colors).
 
 <!-- no-catalog-start -->
 

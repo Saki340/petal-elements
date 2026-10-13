@@ -72,21 +72,21 @@ $_overrides: (
 @mixin styles() {
   @each $size, $values in $sizes {
     :host([size='#{$size}']) {
-      --_container-height: #{_get($size, 'container-height')};
-      --_icon-size: #{_get($size, 'icon-size')};
-      --_icon-label-space: #{_get($size, 'icon-label-space')};
-      --_label-text-font: #{_get($size, 'label-text-font')};
-      --_label-text-line-height: #{_get($size, 'label-text-line-height')};
-      --_label-text-size: #{_get($size, 'label-text-size')};
-      --_label-text-weight: #{_get($size, 'label-text-weight')};
+      --_container-height: var(--md-button-#{$size}-container-height, #{_get($size, 'container-height')});
+      --_icon-size: var(--md-button-#{$size}-icon-size, #{_get($size, 'icon-size')});
+      --_icon-label-space: var(--md-button-#{$size}-icon-label-space, #{_get($size, 'icon-label-space')});
+      --_label-text-font: var(--md-button-#{$size}-label-text-font, #{_get($size, 'label-text-font')});
+      --_label-text-line-height: var(--md-button-#{$size}-label-text-line-height, #{_get($size, 'label-text-line-height')});
+      --_label-text-size: var(--md-button-#{$size}-label-text-size, #{_get($size, 'label-text-size')});
+      --_label-text-weight: var(--md-button-#{$size}-label-text-weight, #{_get($size, 'label-text-weight')});
       // The same padding with and without icons (ButtonDefaults content
       // padding for each size).
-      --_leading-space: #{_get($size, 'leading-space')};
-      --_trailing-space: #{_get($size, 'trailing-space')};
-      --_with-leading-icon-leading-space: #{_get($size, 'leading-space')};
-      --_with-leading-icon-trailing-space: #{_get($size, 'trailing-space')};
-      --_with-trailing-icon-leading-space: #{_get($size, 'leading-space')};
-      --_with-trailing-icon-trailing-space: #{_get($size, 'trailing-space')};
+      --_leading-space: var(--md-button-#{$size}-leading-space, #{_get($size, 'leading-space')});
+      --_trailing-space: var(--md-button-#{$size}-trailing-space, #{_get($size, 'trailing-space')});
+      --_with-leading-icon-leading-space: var(--md-button-#{$size}-leading-space, #{_get($size, 'leading-space')});
+      --_with-leading-icon-trailing-space: var(--md-button-#{$size}-trailing-space, #{_get($size, 'trailing-space')});
+      --_with-trailing-icon-leading-space: var(--md-button-#{$size}-leading-space, #{_get($size, 'leading-space')});
+      --_with-trailing-icon-trailing-space: var(--md-button-#{$size}-trailing-space, #{_get($size, 'trailing-space')});
       --_shape-round: #{_shape(_get($size, 'container-shape-round'))};
       --_shape-square: #{_shape(_get($size, 'container-shape-square'))};
       --_shape-pressed: #{_shape(_get($size, 'pressed-container-shape'))};

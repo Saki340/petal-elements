@@ -24,22 +24,25 @@ $_properties: (
   'pressed-state-layer-color': 'pressed-state-layer-color',
 );
 
-@mixin _state($values, $state) {
+// Each color reads a public token first, e.g.
+// --md-filled-button-unselected-container-color.
+@mixin _state($values, $state, $component) {
   @each $property, $key in $_properties {
     $value: map.get($values, '#{$state}-#{$key}');
     @if $value != null {
-      --_#{$property}: #{$value};
+      --_#{$property}: var(--md-#{$component}-#{$state}-#{$property}, #{$value});
     }
   }
 }
 
 /// @param $values A value map from tokens/versions/v34/values.
+/// @param $component The public token prefix, e.g. `filled-button`.
 /// @param $outlined Whether this is the outlined button: unselected uses the
 ///     outlined button's outline color, selected has a container and no
 ///     outline (Compose's OutlinedToggleButton), also when disabled.
-@mixin styles($values, $outlined: false) {
+@mixin styles($values, $component, $outlined: false) {
   :host([toggle]:not([selected])) {
-    @include _state($values, 'unselected');
+    @include _state($values, 'unselected', $component);
     @if $outlined {
       --_outline-color: #{map.get($values, 'outline-color')};
       --_pressed-outline-color: #{map.get(
@@ -54,7 +57,7 @@ $_properties: (
   }
 
   :host([toggle][selected]) {
-    @include _state($values, 'selected');
+    @include _state($values, 'selected', $component);
     @if $outlined {
       // No outline, so the state layer covers the whole container.
       --_outline-width: 0px;

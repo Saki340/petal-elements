@@ -6,7 +6,9 @@
 
 // Tests for the Material 3 Expressive additions: `size`, `shape`, `toggle`.
 
+import '../filled-button.js';
 import '../text-button.js';
+import '../../icon/icon.js';
 
 import {html} from 'lit';
 import {customElement} from 'lit/decorators.js';
@@ -149,6 +151,60 @@ describe('Button (Expressive)', () => {
 
       expect(button.getAttribute('size')).toBe('large');
       expect(button.getAttribute('shape')).toBe('square');
+    });
+  });
+
+  describe('tokens', () => {
+    it('takes toggle container colors from public tokens', async () => {
+      const root = env.render(html`
+        <petal-filled-button
+          toggle
+          style="--md-filled-button-unselected-container-color: rgb(1, 2, 3);
+            --md-filled-button-selected-container-color: rgb(4, 5, 6)"
+          >Day</petal-filled-button
+        >
+      `);
+      const button = root.querySelector('petal-filled-button')!;
+      await env.waitForStability();
+      const background = () =>
+        getComputedStyle(button.renderRoot.querySelector('.background')!).backgroundColor;
+      expect(background()).toBe('rgb(1, 2, 3)');
+      button.selected = true;
+      await env.waitForStability();
+      expect(background()).toBe('rgb(4, 5, 6)');
+    });
+
+    it('takes the padding of a size from public tokens', async () => {
+      const root = env.render(html`
+        <petal-filled-button size="small" style="--md-button-small-leading-space: 6px"
+          >Day</petal-filled-button
+        >
+      `);
+      const button = root.querySelector('petal-filled-button')!;
+      await env.waitForStability();
+      expect(getComputedStyle(button).paddingInlineStart).toBe('6px');
+      // Compose's small content padding.
+      expect(getComputedStyle(button).paddingInlineEnd).toBe('16px');
+    });
+  });
+
+  describe('icon only', () => {
+    it('centers the icon without a label', async () => {
+      const root = env.render(html`
+        <petal-filled-button size="small">
+          <petal-icon slot="icon">sync</petal-icon>
+        </petal-filled-button>
+        <petal-filled-button size="small">
+          <petal-icon slot="icon">sync</petal-icon>Sync
+        </petal-filled-button>
+      `);
+      const [iconOnly, labeled] = root.querySelectorAll('petal-filled-button');
+      await env.waitForStability();
+      const label = (button: Element) => button.shadowRoot!.querySelector('.label')!;
+      expect(getComputedStyle(label(iconOnly)).display).toBe('none');
+      expect(getComputedStyle(label(labeled)).display).not.toBe('none');
+      // 16px padding, 20px icon, 16px padding (ButtonDefaults small).
+      expect(iconOnly.getBoundingClientRect().width).toBe(52);
     });
   });
 });

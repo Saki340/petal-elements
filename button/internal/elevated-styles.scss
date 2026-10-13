@@ -12,4 +12,4 @@
 
 @include elevated-button.styles;
 
-@include toggle.styles(toggle-tokens.$values);
+@include toggle.styles(toggle-tokens.$values, 'elevated-button');

@@ -138,6 +138,17 @@
     overflow: hidden;
   }
 
+  // Icon-only buttons: no label, so no gap after the icon, and no minimum
+  // width: the padding (--md-button-<size>-leading-space, -trailing-space)
+  // sets the width.
+  .label[hidden] {
+    display: none;
+  }
+
+  .button:has(> .label[hidden]) {
+    min-width: 0;
+  }
+
   // Inherit text-overflow down through label and slotted content so that it
   // can be customized on the host.
   :is(.button, .label, .label slot),
