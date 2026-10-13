@@ -110,6 +110,8 @@ const SETUP: Record<string, (page: Page) => Promise<void | 'viewport'>> = {
   'images/menu/usage-popover.webp': openMenu(),
   'images/menu/usage-submenu.webp': openMenu(),
   'images/menu/usage-groups.webp': openMenu(),
+  'images/pulltorefresh/hero.webp': pauseAnimations,
+  'images/pulltorefresh/usage.webp': pauseAnimations,
   'images/menu/theming.webp': openMenu(),
 };
 

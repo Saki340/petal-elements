@@ -1,0 +1,252 @@
+//
+// Copyright 2026 Saki
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// Pull-to-refresh with the petal-elements flower as the indicator. Not part
+// of Material 3. While pulling, `--_pull` (distance, px) and `--_progress`
+// (0 to 1) are set from JS on the indicator; everything else is CSS.
+// Pull phase: four petals grow out of the centre one after another, then the
+// centre pops in, and the flower turns half a revolution. Refreshing: the
+// flower spins and the petals breathe. Done: the petals fold into the centre,
+// then the indicator slides up.
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'sass:map';
+@use '../../tokens/versions/v34/values/md-sys-motion-springs' as springs;
+// go/keep-sorted end
+
+$_slide: map.get(springs.$values, 'expressive-spring-default-spatial-duration')
+  map.get(springs.$values, 'expressive-spring-default-spatial');
+
+@mixin styles() {
+  :host {
+    --_container-color: var(
+      --md-pull-to-refresh-container-color,
+      var(--md-sys-color-surface-container-high, #ece6f0)
+    );
+    --_petal-1-color: var(--md-pull-to-refresh-petal-1-color, #f48fb1);
+    --_petal-2-color: var(--md-pull-to-refresh-petal-2-color, #ec407a);
+    --_petal-3-color: var(--md-pull-to-refresh-petal-3-color, #f06292);
+    --_petal-4-color: var(--md-pull-to-refresh-petal-4-color, #f8bbd0);
+    --_center-color: var(--md-pull-to-refresh-center-color, #ffd54f);
+
+    position: relative;
+    display: block;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+  }
+
+  :host([hidden]) {
+    display: none;
+  }
+
+  // Pinned to the top of the scroll area, takes no space.
+  .overlay {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    height: 0;
+    pointer-events: none;
+  }
+
+  .indicator {
+    --_progress: 0;
+    --_pull: 0px;
+    --md-elevation-level: 1;
+
+    position: relative;
+    display: grid;
+    flex: none;
+    place-items: center;
+    box-sizing: border-box;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--_container-color);
+    visibility: hidden;
+    transform: translateY(-48px);
+    transition: transform $_slide;
+  }
+
+  .indicator.dragging {
+    --md-elevation-level: 2;
+
+    visibility: visible;
+    transform: translateY(calc(var(--_pull) - 48px));
+    transition: none;
+  }
+
+  .indicator.refreshing {
+    --_progress: 1;
+
+    visibility: visible;
+    transform: translateY(24px);
+  }
+
+  .indicator.closing {
+    visibility: visible;
+    // Let the petals fold first.
+    transition-delay: 150ms;
+  }
+
+  .flower {
+    width: 28px;
+    height: 28px;
+    transform: rotate(calc(var(--_progress) * 180deg));
+  }
+
+  .indicator:not(.dragging) .flower {
+    transition: transform 250ms ease-out;
+  }
+
+  .indicator.refreshing .flower {
+    animation: spin 1.4s linear infinite;
+  }
+
+  .bloom {
+    transform-box: view-box;
+    transform-origin: 18px 18px;
+  }
+
+  // The threshold was crossed.
+  .indicator.ready .bloom {
+    animation: bloom 300ms ease-out;
+  }
+
+  .petal,
+  .center {
+    transform-box: view-box;
+    transform-origin: 18px 18px;
+  }
+
+  // Each petal grows during its own 40% slice of the progress, starting at
+  // `--_start`.
+  .petal {
+    transform: scale(
+      clamp(0, calc((var(--_progress) - var(--_start)) / 0.4), 1)
+    );
+  }
+
+  .petal-1 {
+    --_start: 0;
+
+    fill: var(--_petal-1-color);
+  }
+
+  .petal-2 {
+    --_start: 0.2;
+
+    fill: var(--_petal-2-color);
+  }
+
+  .petal-3 {
+    --_start: 0.4;
+
+    fill: var(--_petal-3-color);
+  }
+
+  .petal-4 {
+    --_start: 0.6;
+
+    fill: var(--_petal-4-color);
+  }
+
+  .center {
+    fill: var(--_center-color);
+    transform: scale(clamp(0, calc((var(--_progress) - 0.7) / 0.3), 1));
+  }
+
+  .indicator:not(.dragging) .petal,
+  .indicator:not(.dragging) .center {
+    transition: transform 250ms ease-out;
+  }
+
+  // Without a pull, petals appear one after another when refreshing starts.
+  .indicator.refreshing .petal {
+    transition-delay: calc(var(--_start) * 300ms);
+    animation: breathe 1.2s ease-in-out infinite;
+    animation-delay: calc(var(--_start) * -1.5s);
+  }
+
+  .indicator.closing .petal,
+  .indicator.closing .center {
+    transition-delay: 0s;
+  }
+
+  @keyframes spin {
+    from {
+      transform: rotate(180deg);
+    }
+
+    to {
+      transform: rotate(540deg);
+    }
+  }
+
+  @keyframes breathe {
+    0%,
+    100% {
+      transform: scale(1);
+    }
+
+    50% {
+      transform: scale(0.72);
+    }
+  }
+
+  @keyframes bloom {
+    0%,
+    100% {
+      transform: scale(1);
+    }
+
+    50% {
+      transform: scale(1.2);
+    }
+  }
+
+  @keyframes pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0.5;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    // Keep the transitions (`transitionend` closes the indicator), but make
+    // them instant.
+    .indicator,
+    .indicator.closing,
+    .indicator .flower,
+    .indicator .petal,
+    .indicator .center {
+      transition-duration: 1ms;
+      transition-delay: 0s;
+    }
+
+    .flower {
+      transform: none;
+    }
+
+    .indicator.ready .bloom {
+      animation: none;
+    }
+
+    // The complete flower, fading gently.
+    .indicator.refreshing .flower {
+      animation: pulse 1.6s ease-in-out infinite;
+    }
+
+    .indicator.refreshing .petal {
+      animation: none;
+      transition-delay: 0s;
+    }
+  }
+}

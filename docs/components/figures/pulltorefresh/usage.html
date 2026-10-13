@@ -1,0 +1,33 @@
+<!--
+  @license
+  Copyright 2026 Saki
+  SPDX-License-Identifier: Apache-2.0
+-->
+<div class="figure-wrapper">
+  <figure
+      style="justify-content: center; padding-block: 24px"
+      title="Pull-to-refresh"
+      aria-label="A list in a pull-to-refresh container, refreshing. The petal-elements flower spins at the top.">
+    <petal-pull-to-refresh
+        id="usage-pull-to-refresh"
+        refreshing
+        style="height: 240px; width: 280px; border-radius: 16px; background: var(--md-sys-color-surface-container-low, #f7f2fa)">
+      <petal-list style="background: transparent">
+        <petal-list-item>Inbox</petal-list-item>
+        <petal-list-item>Starred</petal-list-item>
+        <petal-list-item>Sent</petal-list-item>
+        <petal-list-item>Drafts</petal-list-item>
+        <petal-list-item>Archive</petal-list-item>
+        <petal-list-item>Trash</petal-list-item>
+      </petal-list>
+    </petal-pull-to-refresh>
+    <script type="module">
+      const el = document.body.querySelector('#usage-pull-to-refresh');
+      el.addEventListener('refresh', () => {
+        setTimeout(() => {
+          el.refreshing = false;
+        }, 2000);
+      });
+    </script>
+  </figure>
+</div>

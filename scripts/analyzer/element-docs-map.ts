@@ -27,6 +27,7 @@ export const docsToElementMapping: {[key: string]: readonly string[]} = {
   'icon.md': COMPONENT_CUSTOM_ELEMENTS.icon,
   'list.md': COMPONENT_CUSTOM_ELEMENTS.list,
   'loading-indicator.md': COMPONENT_CUSTOM_ELEMENTS.loadingIndicator,
+  'pull-to-refresh.md': COMPONENT_CUSTOM_ELEMENTS.pullToRefresh,
   'menu.md': COMPONENT_CUSTOM_ELEMENTS.menu,
   'progress.md': COMPONENT_CUSTOM_ELEMENTS.progress,
   'radio.md': COMPONENT_CUSTOM_ELEMENTS.radio,

@@ -42,6 +42,7 @@ export const COMPONENT_CUSTOM_ELEMENTS = {
   ],
   list: ['list/list.ts', 'list/list-item.ts'],
   loadingIndicator: ['loadingindicator/loading-indicator.ts'],
+  pullToRefresh: ['pulltorefresh/pull-to-refresh.ts'],
   menu: [
     'menu/menu.ts',
     'menu/menu-group.ts',
