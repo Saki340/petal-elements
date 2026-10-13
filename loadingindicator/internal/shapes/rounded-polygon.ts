@@ -281,7 +281,7 @@ function buildCubics(features: readonly Feature[], center: Point): Cubic[] {
         if (!firstCubic) firstCubic = cubic;
       } else if (lastCubic) {
         // Keep the latest anchor point when dropping zero-length curves.
-        const points = new Float64Array(lastCubic.points);
+        const points: Float64Array = new Float64Array(lastCubic.points);
         points[6] = cubic.anchor1X;
         points[7] = cubic.anchor1Y;
         lastCubic = new Cubic(points);

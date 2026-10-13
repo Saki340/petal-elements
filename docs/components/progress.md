@@ -1,7 +1,6 @@
 <!-- catalog-only-start --><!-- ---
 name: Progress indicators
 dirname: progress
-ssrOnly: true
 -----><!-- catalog-only-end -->
 
 <catalog-component-header image-align="end">
