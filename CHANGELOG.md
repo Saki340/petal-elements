@@ -9,6 +9,12 @@
 * **icon:** icons set `font-variation-settings: 'FILL' var(--md-icon-fill)`
   instead of inheriting `font-variation-settings`. To fill icons from a parent,
   set `--md-icon-fill: 1` on it.
+* **ripple:** the press ripple is a circle that grows from the pointer (twice
+  the element's diagonal, 450ms) and fades out in 150ms when released; it
+  starts at once on touch.
+* **menu:** menus open and close by scaling from 80% and fading, from the
+  corner next to the anchor, as Compose's `DropdownMenu`, instead of growing
+  in height with staggered items.
 
 #### Bug fixes
 

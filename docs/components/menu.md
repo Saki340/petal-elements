@@ -207,6 +207,13 @@ Granny Smith, and Red Delicious."](images/menu/usage-submenu.webp)
 </script>
 ```
 
+### Motion
+
+Like Jetpack Compose's `DropdownMenu`, a menu opens by scaling from 80% and
+fading in, from the corner next to its anchor, on the fast spatial and fast
+effects springs (expressive with `motion-expressive.css`). Closing reverses
+it. `quick` skips the animation.
+
 ### Groups
 
 `<petal-menu-group>` puts menu items on separate surfaces, as in Material 3

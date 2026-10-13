@@ -15,6 +15,7 @@
 @use '../../list/list' as petal-list;
 @use '../../list/list-item';
 @use '../../tokens';
+@use '../../tokens/versions/v34/values/md-sys-motion-springs' as springs;
 // go/keep-sorted end
 
 @mixin theme($tokens) {
@@ -46,6 +47,13 @@
         'shadow-color': map.get($tokens, 'container-shadow-color'),
       )
     );
+
+    // Opening and closing (read by menu.ts): the fast spatial and fast effects
+    // springs, as Compose's DropdownMenu.
+    --menu-spatial-easing: #{map.get(springs.$values, 'spring-fast-spatial')};
+    --menu-spatial-duration: #{map.get(springs.$values, 'spring-fast-spatial-duration')};
+    --menu-effects-easing: #{map.get(springs.$values, 'spring-fast-effects')};
+    --menu-effects-duration: #{map.get(springs.$values, 'spring-fast-effects-duration')};
 
     min-width: 112px;
     color: unset;

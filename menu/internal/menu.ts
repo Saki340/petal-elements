@@ -88,7 +88,6 @@ function getFocusedElement(
  */
 export abstract class Menu extends LitElement {
   @query('.menu') private readonly surfaceEl!: HTMLElement | null;
-  @query('slot') private readonly slotEl!: HTMLSlotElement | null;
 
   /**
    * The ID of the element in the same root node in which the menu should align
@@ -315,15 +314,6 @@ export abstract class Menu extends LitElement {
     },
     wrapNavigation: () => !this.noNavigationWrap,
   });
-
-  /**
-   * Whether the menu is animating upwards or downwards when opening. This is
-   * helpful for calculating some animation calculations.
-   */
-  private get openDirection(): 'UP' | 'DOWN' {
-    const menuCornerBlock = this.menuCorner.split('-')[0];
-    return menuCornerBlock === 'start' ? 'DOWN' : 'UP';
-  }
 
   /**
    * The element that was focused before the menu opened.
@@ -695,227 +685,124 @@ export abstract class Menu extends LitElement {
   };
 
   /**
-   * Performs the opening animation:
-   *
-   * https://direct.googleplex.com/#/spec/295000003+271060003
+   * The menu's motion, after Jetpack Compose's DropdownMenu: it scales from
+   * 80% on the fast spatial spring and fades on the fast effects spring, from
+   * the corner nearest its anchor.
+   */
+  private motion() {
+    const style = getComputedStyle(this);
+    const get = (name: string) => style.getPropertyValue(name).trim();
+    return {
+      spatial: {
+        easing: get('--menu-spatial-easing') || EASING.STANDARD,
+        duration: parseFloat(get('--menu-spatial-duration')) || 223,
+      },
+      effects: {
+        easing: get('--menu-effects-easing') || EASING.STANDARD,
+        duration: parseFloat(get('--menu-effects-duration')) || 149,
+      },
+    };
+  }
+
+  /**
+   * The scaling origin: the part of the menu next to its anchor, like
+   * Compose's calculateTransformOrigin.
+   */
+  private transformOrigin(surface: HTMLElement) {
+    const menu = surface.getBoundingClientRect();
+    const anchor = this.anchorElement?.getBoundingClientRect();
+    if (!anchor || !menu.width || !menu.height) return 'top left';
+    const pivot = (start: number, end: number, anchorStart: number, anchorEnd: number) => {
+      if (start >= anchorEnd) return 0;
+      if (end <= anchorStart) return 1;
+      const center = (Math.max(start, anchorStart) + Math.min(end, anchorEnd)) / 2;
+      return (center - start) / (end - start);
+    };
+    const x = pivot(menu.left, menu.right, anchor.left, anchor.right);
+    const y = pivot(menu.top, menu.bottom, anchor.top, anchor.bottom);
+    return `${x * 100}% ${y * 100}%`;
+  }
+
+  /** Animations of the last close, kept until the next open. */
+  private closeAnimations: Animation[] = [];
+
+  /**
+   * Performs the opening animation.
    *
    * @return A promise that resolve to `true` if the animation was aborted,
    *     `false` if it was not aborted.
    */
   private async animateOpen() {
     const surfaceEl = this.surfaceEl;
-    const slotEl = this.slotEl;
+    if (!surfaceEl) return true;
 
-    if (!surfaceEl || !slotEl) return true;
-
-    const openDirection = this.openDirection;
     this.dispatchEvent(new Event('opening'));
-    // needs to be imperative because we don't want to mix animation and Lit
-    // render timing
-    surfaceEl.classList.toggle('animating', true);
-
+    this.closeAnimations.forEach((animation) => animation.cancel());
+    this.closeAnimations = [];
     const signal = this.openCloseAnimationSignal.start();
-    const height = surfaceEl.offsetHeight;
-    const openingUpwards = openDirection === 'UP';
-    const children = this.items;
-    const FULL_DURATION = 500;
-    const SURFACE_OPACITY_DURATION = 50;
-    const ITEM_OPACITY_DURATION = 250;
-    // We want to fit every child fade-in animation within the full duration of
-    // the animation.
-    const DELAY_BETWEEN_ITEMS =
-      (FULL_DURATION - ITEM_OPACITY_DURATION) / children.length;
+    const {spatial, effects} = this.motion();
+    surfaceEl.style.transformOrigin = this.transformOrigin(surfaceEl);
+    const animations = [
+      surfaceEl.animate([{transform: 'scale(0.8)'}, {transform: 'none'}], spatial),
+      surfaceEl.animate([{opacity: 0}, {opacity: 1}], effects),
+    ];
 
-    const surfaceHeightAnimation = surfaceEl.animate(
-      [{height: '0px'}, {height: `${height}px`}],
-      {
-        duration: FULL_DURATION,
-        easing: EASING.EMPHASIZED,
-      },
-    );
-    // When we are opening upwards, we want to make sure the last item is always
-    // in view, so we need to translate it upwards the opposite direction of the
-    // height animation
-    const upPositionCorrectionAnimation = slotEl.animate(
-      [
-        {transform: openingUpwards ? `translateY(-${height}px)` : ''},
-        {transform: ''},
-      ],
-      {duration: FULL_DURATION, easing: EASING.EMPHASIZED},
-    );
-
-    const surfaceOpacityAnimation = surfaceEl.animate(
-      [{opacity: 0}, {opacity: 1}],
-      SURFACE_OPACITY_DURATION,
-    );
-
-    const childrenAnimations: Array<[HTMLElement, Animation]> = [];
-
-    for (let i = 0; i < children.length; i++) {
-      // If we are animating upwards, then reverse the children list.
-      const directionalIndex = openingUpwards ? children.length - 1 - i : i;
-      const child = children[directionalIndex];
-      const animation = child.animate([{opacity: 0}, {opacity: 1}], {
-        duration: ITEM_OPACITY_DURATION,
-        delay: DELAY_BETWEEN_ITEMS * i,
+    return new Promise<boolean>((resolve) => {
+      signal.addEventListener('abort', () => {
+        animations.forEach((animation) => animation.cancel());
+        resolve(true);
       });
-
-      // Make them all initially hidden and then clean up at the end of each
-      // animation.
-      child.classList.toggle('md-menu-hidden', true);
-      animation.addEventListener('finish', () => {
-        child.classList.toggle('md-menu-hidden', false);
-      });
-
-      childrenAnimations.push([child, animation]);
-    }
-
-    let resolveAnimation = (value: boolean) => {};
-    const animationFinished = new Promise<boolean>((resolve) => {
-      resolveAnimation = resolve;
+      Promise.all(animations.map((animation) => animation.finished)).then(
+        () => {
+          this.openCloseAnimationSignal.finish();
+          resolve(false);
+        },
+        () => {
+          // Canceled; the abort listener resolves.
+        },
+      );
     });
-
-    signal.addEventListener('abort', () => {
-      surfaceHeightAnimation.cancel();
-      upPositionCorrectionAnimation.cancel();
-      surfaceOpacityAnimation.cancel();
-      childrenAnimations.forEach(([child, animation]) => {
-        child.classList.toggle('md-menu-hidden', false);
-        animation.cancel();
-      });
-
-      resolveAnimation(true);
-    });
-
-    surfaceHeightAnimation.addEventListener('finish', () => {
-      surfaceEl.classList.toggle('animating', false);
-      this.openCloseAnimationSignal.finish();
-      resolveAnimation(false);
-    });
-
-    return await animationFinished;
   }
 
   /**
-   * Performs the closing animation:
-   *
-   * https://direct.googleplex.com/#/spec/295000003+271060003
+   * Performs the closing animation: the opening animation in reverse.
    */
   private animateClose() {
-    let resolve!: (value: unknown) => void;
-
-    // This promise blocks the surface position controller from setting
-    // display: none on the surface which will interfere with this animation.
-    const animationEnded = new Promise((res) => {
-      resolve = res;
-    });
-
     const surfaceEl = this.surfaceEl;
-    const slotEl = this.slotEl;
+    if (!surfaceEl) return Promise.resolve(false);
 
-    if (!surfaceEl || !slotEl) {
-      resolve(false);
-      return animationEnded;
-    }
-
-    const openDirection = this.openDirection;
-    const closingDownwards = openDirection === 'UP';
     this.dispatchEvent(new Event('closing'));
-    // needs to be imperative because we don't want to mix animation and Lit
-    // render timing
-    surfaceEl.classList.toggle('animating', true);
     const signal = this.openCloseAnimationSignal.start();
-    const height = surfaceEl.offsetHeight;
-    const children = this.items;
-    const FULL_DURATION = 150;
-    const SURFACE_OPACITY_DURATION = 50;
-    // The surface fades away at the very end
-    const SURFACE_OPACITY_DELAY = FULL_DURATION - SURFACE_OPACITY_DURATION;
-    const ITEM_OPACITY_DURATION = 50;
-    const ITEM_OPACITY_INITIAL_DELAY = 50;
-    const END_HEIGHT_PERCENTAGE = 0.35;
+    const {spatial, effects} = this.motion();
+    surfaceEl.style.transformOrigin = this.transformOrigin(surfaceEl);
+    // Kept at the end until the menu is hidden; canceled on the next open.
+    const animations = [
+      surfaceEl.animate([{transform: 'none'}, {transform: 'scale(0.8)'}], {
+        ...spatial,
+        fill: 'forwards',
+      }),
+      surfaceEl.animate([{opacity: 1}, {opacity: 0}], {...effects, fill: 'forwards'}),
+    ];
+    this.closeAnimations = animations;
 
-    // We want to fit every child fade-out animation within the full duration of
-    // the animation.
-    const DELAY_BETWEEN_ITEMS =
-      (FULL_DURATION - ITEM_OPACITY_INITIAL_DELAY - ITEM_OPACITY_DURATION) /
-      children.length;
-
-    // The mock has the animation shrink to 35%
-    const surfaceHeightAnimation = surfaceEl.animate(
-      [
-        {height: `${height}px`},
-        {height: `${height * END_HEIGHT_PERCENTAGE}px`},
-      ],
-      {
-        duration: FULL_DURATION,
-        easing: EASING.EMPHASIZED_ACCELERATE,
-      },
-    );
-
-    // When we are closing downwards, we want to make sure the last item is
-    // always in view, so we need to translate it upwards the opposite direction
-    // of the height animation
-    const downPositionCorrectionAnimation = slotEl.animate(
-      [
-        {transform: ''},
-        {
-          transform: closingDownwards
-            ? `translateY(-${height * (1 - END_HEIGHT_PERCENTAGE)}px)`
-            : '',
+    return new Promise<boolean>((resolve) => {
+      signal.addEventListener('abort', () => {
+        animations.forEach((animation) => animation.cancel());
+        resolve(false);
+      });
+      Promise.all(animations.map((animation) => animation.finished)).then(
+        () => {
+          this.openCloseAnimationSignal.finish();
+          this.dispatchEvent(new Event('closed'));
+          resolve(true);
         },
-      ],
-      {duration: FULL_DURATION, easing: EASING.EMPHASIZED_ACCELERATE},
-    );
-
-    const surfaceOpacityAnimation = surfaceEl.animate(
-      [{opacity: 1}, {opacity: 0}],
-      {duration: SURFACE_OPACITY_DURATION, delay: SURFACE_OPACITY_DELAY},
-    );
-
-    const childrenAnimations: Array<[HTMLElement, Animation]> = [];
-
-    for (let i = 0; i < children.length; i++) {
-      // If the animation is closing upwards, then reverse the list of
-      // children so that we animate in the opposite direction.
-      const directionalIndex = closingDownwards ? i : children.length - 1 - i;
-      const child = children[directionalIndex];
-      const animation = child.animate([{opacity: 1}, {opacity: 0}], {
-        duration: ITEM_OPACITY_DURATION,
-        delay: ITEM_OPACITY_INITIAL_DELAY + DELAY_BETWEEN_ITEMS * i,
-      });
-
-      // Make sure the items stay hidden at the end of each child animation.
-      // We clean this up at the end of the overall animation.
-      animation.addEventListener('finish', () => {
-        child.classList.toggle('md-menu-hidden', true);
-      });
-      childrenAnimations.push([child, animation]);
-    }
-
-    signal.addEventListener('abort', () => {
-      surfaceHeightAnimation.cancel();
-      downPositionCorrectionAnimation.cancel();
-      surfaceOpacityAnimation.cancel();
-      childrenAnimations.forEach(([child, animation]) => {
-        animation.cancel();
-        child.classList.toggle('md-menu-hidden', false);
-      });
-      resolve(false);
+        () => {
+          // Canceled; the abort listener resolves.
+        },
+      );
     });
-
-    surfaceHeightAnimation.addEventListener('finish', () => {
-      surfaceEl.classList.toggle('animating', false);
-      childrenAnimations.forEach(([child]) => {
-        child.classList.toggle('md-menu-hidden', false);
-      });
-      this.openCloseAnimationSignal.finish();
-      this.dispatchEvent(new Event('closed'));
-      resolve(true);
-    });
-
-    return animationEnded;
   }
+
 
   private handleKeydown(event: KeyboardEvent) {
     // At any key event, the pointer interaction is done so we need to clear our
