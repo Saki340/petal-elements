@@ -37,6 +37,12 @@ $_slide: map.get(springs.$values, 'expressive-spring-default-spatial-duration')
     overscroll-behavior-y: contain;
   }
 
+  // Following the page scroll: not a scroll container.
+  :host([scroll-target='page']) {
+    overflow-y: visible;
+    overscroll-behavior-y: auto;
+  }
+
   :host([hidden]) {
     display: none;
   }
@@ -44,7 +50,8 @@ $_slide: map.get(springs.$values, 'expressive-spring-default-spatial-duration')
   // Pinned to the top of the scroll area, takes no space.
   .overlay {
     position: sticky;
-    top: 0;
+    // Below a sticky top app bar, for example.
+    top: var(--md-pull-to-refresh-top-offset, 0px);
     z-index: 1;
     display: flex;
     justify-content: center;

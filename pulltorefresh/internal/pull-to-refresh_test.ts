@@ -135,4 +135,47 @@ describe('<petal-pull-to-refresh>', () => {
 
     expect(onRefresh).not.toHaveBeenCalled();
   });
+
+  describe('scroll-target="page"', () => {
+    async function setupPage() {
+      const root = env.render(html`
+        <petal-pull-to-refresh scroll-target="page">
+          <div style="height: 3000px">Content</div>
+        </petal-pull-to-refresh>
+      `);
+      const element = root.querySelector('petal-pull-to-refresh') as PullToRefresh;
+      await env.waitForStability();
+      return element;
+    }
+
+    afterEach(() => {
+      window.scrollTo(0, 0);
+    });
+
+    it('is not a scroll container', async () => {
+      const element = await setupPage();
+      expect(getComputedStyle(element).overflowY).toBe('visible');
+    });
+
+    it('refreshes when the page is at the top', async () => {
+      const element = await setupPage();
+      const onRefresh = jasmine.createSpy('refresh');
+      element.addEventListener('refresh', onRefresh);
+      window.scrollTo(0, 0);
+      pull(element, 400);
+      await env.waitForStability();
+      expect(onRefresh).toHaveBeenCalled();
+    });
+
+    it('ignores pulls when the page is scrolled', async () => {
+      const element = await setupPage();
+      const onRefresh = jasmine.createSpy('refresh');
+      element.addEventListener('refresh', onRefresh);
+      window.scrollTo(0, 100);
+      expect(window.scrollY).toBeGreaterThan(0);
+      pull(element, 400);
+      await env.waitForStability();
+      expect(onRefresh).not.toHaveBeenCalled();
+    });
+  });
 });

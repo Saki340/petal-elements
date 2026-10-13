@@ -27,8 +27,9 @@ function resist(raw: number) {
 /**
  * A pull-to-refresh container that animates the petal-elements flower.
  *
- * The element is the scroll container: give it a height. Content goes in the
- * default slot and stays still; only the indicator moves over it. Pulling
+ * The element is the scroll container: give it a height. Or set
+ * `scroll-target="page"` to follow the page scroll instead. Content goes in
+ * the default slot and stays still; only the indicator moves over it. Pulling
  * down at the top and releasing past the threshold sets `refreshing` and fires
  * `refresh`. The app sets `refreshing` back to false when it is done.
  *
@@ -47,6 +48,13 @@ export class PullToRefresh extends LitElement {
 
   /** Accessible name of the indicator while refreshing. */
   @property() label = 'Refreshing';
+
+  /**
+   * What scrolls: empty (the default) for the element itself, which then
+   * needs a height, or `page` to follow the page scroll, so the whole page
+   * does not need to be wrapped in a scroll container.
+   */
+  @property({attribute: 'scroll-target', reflect: true}) scrollTarget: '' | 'page' = '';
 
   /** The indicator is closing: the flower folds, then it slides away. */
   @state() private closing = false;
@@ -117,7 +125,7 @@ export class PullToRefresh extends LitElement {
       this.disabled ||
       this.refreshing ||
       event.touches.length !== 1 ||
-      this.scrollTop > 0
+      this.scrolled
     ) {
       return;
     }
@@ -128,7 +136,7 @@ export class PullToRefresh extends LitElement {
 
   private readonly onTouchMove = (event: TouchEvent) => {
     if (!this.tracking) return;
-    if (this.disabled || this.refreshing || this.scrollTop > 0) {
+    if (this.disabled || this.refreshing || this.scrolled) {
       this.endPull(false);
       return;
     }
@@ -156,6 +164,14 @@ export class PullToRefresh extends LitElement {
   private readonly onTouchCancel = () => {
     this.endPull(false);
   };
+
+  /** Whether the content is scrolled away from the top. */
+  private get scrolled() {
+    if (this.scrollTarget === 'page') {
+      return (document.scrollingElement?.scrollTop ?? window.scrollY) > 0;
+    }
+    return this.scrollTop > 0;
+  }
 
   /** Pushes the pull distance to the indicator without re-rendering. */
   private showPull() {
