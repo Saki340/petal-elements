@@ -77,8 +77,16 @@
     background: none;
   }
 
+  // A manual popover, so it is in the top layer under the dialog.
   .scrim {
     background: map.get($md-sys-color, 'scrim');
+    border: none;
+    height: auto;
+    margin: 0;
+    max-height: none;
+    max-width: none;
+    padding: 0;
+    width: auto;
     display: none;
     inset: 0;
     opacity: 32%;

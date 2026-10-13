@@ -115,7 +115,7 @@ export class Dialog extends dialogBaseClass {
   private isConnectedPromiseResolve!: () => void;
   private isConnectedPromise = this.getIsConnectedPromise();
   @query('dialog') private readonly dialog!: HTMLDialogElement | null;
-  @query('.scrim') private readonly scrim!: HTMLDialogElement | null;
+  @query('.scrim') private readonly scrim!: HTMLElement | null;
   @query('.container') private readonly container!: HTMLDialogElement | null;
   @query('.headline') private readonly headline!: HTMLDialogElement | null;
   @query('.content') private readonly content!: HTMLDialogElement | null;
@@ -196,6 +196,9 @@ export class Dialog extends dialogBaseClass {
       return;
     }
 
+    // The scrim goes in the top layer first, so it stays under the dialog and
+    // above everything else on the page.
+    this.showScrim();
     // All Material dialogs are modal.
     dialog.showModal();
     this.open = true;
@@ -235,6 +238,7 @@ export class Dialog extends dialogBaseClass {
     const dialog = this.dialog!;
     // Check if already closed or if `dialog.show()` was called while awaiting.
     if (!dialog.open || this.isOpening) {
+      if (!dialog.open) this.hideScrim();
       this.open = false;
       return;
     }
@@ -251,6 +255,7 @@ export class Dialog extends dialogBaseClass {
 
     await this.animateDialog(this.getCloseAnimation());
     dialog.close(returnValue);
+    this.hideScrim();
     this.open = false;
     this.dispatchEvent(new Event('closed'));
   }
@@ -290,7 +295,7 @@ export class Dialog extends dialogBaseClass {
 
     const {ariaLabel} = this as ARIAMixinStrict;
     return html`
-      <div class="scrim"></div>
+      <div class="scrim" popover="manual"></div>
       <dialog
         class=${classMap(classes)}
         aria-label=${ariaLabel || nothing}
@@ -399,7 +404,24 @@ export class Dialog extends dialogBaseClass {
     this.close();
   }
 
+  private showScrim() {
+    const scrim = this.scrim;
+    if (scrim && 'showPopover' in scrim && !scrim.matches(':popover-open')) {
+      scrim.showPopover();
+    }
+  }
+
+  private hideScrim() {
+    const scrim = this.scrim;
+    if (scrim && 'hidePopover' in scrim && scrim.matches(':popover-open')) {
+      scrim.hidePopover();
+    }
+  }
+
   private handleClose() {
+    // The native dialog can close on its own, e.g. a form with
+    // method="dialog".
+    if (!this.dialog?.open) this.hideScrim();
     if (!this.escapePressedWithoutCancel) {
       return;
     }

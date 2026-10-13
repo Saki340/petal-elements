@@ -82,6 +82,19 @@ describe('<petal-dialog>', () => {
       expect(dialogElement.open).toBeFalse();
     });
 
+    it('puts the scrim in the top layer while open', async () => {
+      const {harness} = await setupTest();
+      const scrim = harness.element.shadowRoot!.querySelector('.scrim')!;
+      expect(scrim.matches(':popover-open')).toBeFalse();
+      await harness.element.show();
+      // In the top layer, so no z-index on the page goes above it.
+      expect(scrim.matches(':popover-open')).toBeTrue();
+      expect(getComputedStyle(scrim).display).toBe('flex');
+      await harness.element.close();
+      await env.waitForStability();
+      expect(scrim.matches(':popover-open')).toBeFalse();
+    });
+
     it('fires open/close events', async () => {
       const {harness} = await setupTest();
       const openHandler = jasmine.createSpy('openHandler');
