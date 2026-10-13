@@ -2,6 +2,31 @@
 
 ## petal-elements
 
+### Unreleased
+
+#### Breaking changes
+
+* **icon:** icons set `font-variation-settings: 'FILL' var(--md-icon-fill)`
+  instead of inheriting `font-variation-settings`. To fill icons from a parent,
+  set `--md-icon-fill: 1` on it.
+
+#### Features
+
+* **snackbar:** `petal-snackbar`, after Jetpack Compose `Snackbar`.
+* **tooltip:** `petal-tooltip`, after Jetpack Compose `PlainTooltip`.
+* **card:** filled, elevated and outlined cards move from labs to
+  `petal-elements/card/`, after Jetpack Compose, and can be clickable.
+* **appbar:** `petal-top-app-bar`: small, medium and large top app bars that
+  collapse on scroll, after Jetpack Compose `TopAppBar`.
+* **loadingindicator:** `petal-loading-indicator`, the Material 3 Expressive
+  loading indicator with Compose's shape morphing.
+* **menu:** `petal-menu-group` for Material 3 Expressive grouped menus, and
+  `checked` with `type="menuitemcheckbox"` or `"menuitemradio"` on menu items.
+* **pulltorefresh:** `petal-pull-to-refresh`, with the petal-elements flower as
+  its indicator.
+* **icon:** `filled`, and an animated FILL axis from the inherited
+  `--md-icon-fill` property.
+
 ### 0.1.0 (2026-10-09)
 
 First release of petal-elements, forked from material-web 2.5.0 (upstream
