@@ -57,6 +57,16 @@ async function pauseAnimations(page: Page) {
   });
 }
 
+/** Shows the wavy indeterminate progress 600ms into its cycle, with both lines. */
+async function wavyProgress(page: Page) {
+  await page.evaluate(async () => {
+    for (const el of document.querySelectorAll('petal-linear-progress[wavy]')) {
+      (el as unknown as {start: number}).start = performance.now() - 600;
+    }
+    await new Promise(requestAnimationFrame);
+  });
+}
+
 /** Opens a menu by clicking its button, with room below the figure for it. */
 function openMenu(button = '#root petal-filled-button', room = 240) {
   return async (page: Page) => {
@@ -111,6 +121,7 @@ const SETUP: Record<string, (page: Page) => Promise<void | 'viewport'>> = {
   'images/menu/usage-popover.webp': openMenu(),
   'images/menu/usage-submenu.webp': openMenu(),
   'images/menu/usage-groups.webp': openMenu(),
+  'images/progress/usage-wavy.webp': wavyProgress,
   'images/pulltorefresh/hero.webp': pauseAnimations,
   'images/pulltorefresh/usage.webp': pauseAnimations,
   'images/menu/theming.webp': openMenu(),

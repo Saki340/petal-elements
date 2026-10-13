@@ -233,6 +233,34 @@ while the buffer dots represent unknown progress.
 <petal-linear-progress value="0.5" buffer="0.8"></petal-linear-progress>
 ```
 
+### Wavy
+
+`wavy` draws the indicator as a wave, as in Material 3 Expressive (Jetpack
+Compose `LinearWavyProgressIndicator`): 10px high, 4px strokes with round caps,
+a 4px gap before the track and a stop dot at its end. Indeterminate waves are
+20px long; determinate waves are 40px long and flatten below 10% and from 95%.
+The wave moves one wavelength per second. `buffer` and `four-color` do not
+apply.
+
+<!-- no-catalog-start -->
+
+![An indeterminate and a determinate wavy linear progress
+indicator](images/progress/usage-wavy.webp)
+
+<!-- no-catalog-end -->
+<!-- catalog-include "figures/progress/usage-wavy.html" -->
+
+```html
+<petal-linear-progress wavy indeterminate></petal-linear-progress>
+<petal-linear-progress wavy value="0.6"></petal-linear-progress>
+```
+
+Wavy indicators use `--md-linear-progress-wavy-active-indicator-color`
+(`--md-sys-color-primary`) and `--md-linear-progress-wavy-track-color`
+(`--md-sys-color-secondary-container`), from Compose's
+`ProgressIndicatorTokens`. With `prefers-reduced-motion`, the wave does not
+move.
+
 ## Theming
 
 Progress indicators supports [Material theming](../theming/README.md) and can be
@@ -377,6 +405,7 @@ Token                                          | Default value
 | Property | Attribute | Type | Default | Description |
 | --- | --- | --- | --- | --- |
 | `buffer` | `buffer` | `number` | `0` | Buffer amount to display, a fraction between 0 and `max`. If the value is 0 or negative, the buffer is not displayed. |
+| `wavy` | `wavy` | `boolean` | `false` | Draws the indicator as a wave (Material 3 Expressive, Jetpack Compose `LinearWavyProgressIndicator`). Determinate waves flatten below 10% and from 95%. `buffer` and `four-color` do not apply. |
 | `value` | `value` | `number` | `0` | Progress to display, a fraction between 0 and `max`. |
 | `max` | `max` | `number` | `1` | Maximum progress to display, defaults to 1. |
 | `indeterminate` | `indeterminate` | `boolean` | `false` | Whether or not to display indeterminate progress, which gives no indication to how long an activity will take. |

@@ -1,13 +1,17 @@
 //
 // Copyright 2023 Google LLC
 // SPDX-License-Identifier: Apache-2.0
+// Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
 //
 
 // go/keep-sorted start
 @use 'sass:list';
+@use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
 @use '../../tokens';
+@use '../../tokens/versions/compose/values/md-comp-linear-progress-indicator' as wavy-linear;
+@use '../../tokens/versions/compose/values/md-comp-progress-indicator' as wavy-progress;
 // go/keep-sorted end
 
 @mixin theme($tokens) {
@@ -331,5 +335,46 @@ $_indeterminate-duration: 2s;
 
     // TODO(b/296262544): fix dots not being CanvasText. This need a refactor,
     // since background gradiants are not displayed in HCM.
+  }
+
+  // Wavy (Jetpack Compose LinearWavyProgressIndicator): drawn in JS. Colors:
+  // ProgressIndicatorTokens; height and strokes:
+  // LinearProgressIndicatorTokens.
+  :host([wavy]) {
+    --_wavy-active-color: var(
+      --md-linear-progress-wavy-active-indicator-color,
+      #{map.get(wavy-progress.$values, 'active-indicator-color')}
+    );
+    --_wavy-track-color: var(
+      --md-linear-progress-wavy-track-color,
+      #{map.get(wavy-progress.$values, 'track-color')}
+    );
+
+    height: map.get(wavy-linear.$values, 'wave-height');
+    border-radius: 0;
+  }
+
+  .wavy {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    fill: none;
+    stroke-linecap: round;
+  }
+
+  .wavy-track {
+    stroke: var(--_wavy-track-color);
+    stroke-width: map.get(wavy-linear.$values, 'track-thickness');
+  }
+
+  .wavy-active {
+    stroke: var(--_wavy-active-color);
+    stroke-width: map.get(wavy-linear.$values, 'active-thickness');
+  }
+
+  .wavy-stop {
+    fill: var(--_wavy-active-color);
   }
 }

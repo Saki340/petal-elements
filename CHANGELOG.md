@@ -26,6 +26,8 @@
   its indicator.
 * **list:** `segmented` for Material 3 Expressive segmented lists, after
   Jetpack Compose `SegmentedListItem`.
+* **progress:** `wavy` on `petal-linear-progress`, after Jetpack Compose
+  `LinearWavyProgressIndicator`.
 * **icon:** `filled`, and an animated FILL axis from the inherited
   `--md-icon-fill` property.
 
