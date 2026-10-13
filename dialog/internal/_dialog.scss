@@ -30,6 +30,11 @@
   $md-sys-motion: tokens.md-sys-motion-values();
   $tokens: tokens.md-comp-dialog-values();
 
+  // The hidden attribute, which `display` on the host would override.
+  :host([hidden]) {
+    display: none;
+  }
+
   :host {
     border-start-start-radius: map.get($tokens, 'container-shape-start-start');
     border-start-end-radius: map.get($tokens, 'container-shape-start-end');

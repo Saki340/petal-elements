@@ -23,6 +23,11 @@ $_variants: (
 
 /// Shared styles.
 @mixin styles() {
+  // The hidden attribute, which `display` on the host would override.
+  :host([hidden]) {
+    display: none;
+  }
+
   :host {
     position: relative;
     z-index: 0;

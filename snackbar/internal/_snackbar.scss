@@ -25,6 +25,11 @@
 }
 
 @mixin styles() {
+  // The hidden attribute, which `display` on the host would override.
+  :host([hidden]) {
+    display: none;
+  }
+
   :host {
     @each $token, $value in snackbar.$values {
       --_#{$token}: var(--md-snackbar-#{$token}, #{$value});

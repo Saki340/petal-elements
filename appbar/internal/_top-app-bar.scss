@@ -43,6 +43,11 @@
 }
 
 @mixin styles() {
+  // The hidden attribute, which `display` on the host would override.
+  :host([hidden]) {
+    display: none;
+  }
+
   :host {
     @each $token, $value in app-bar.$values {
       --_#{$token}: var(--md-top-app-bar-#{$token}, #{$value});

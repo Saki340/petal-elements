@@ -1,6 +1,7 @@
 //
 // Copyright 2021 Google LLC
 // SPDX-License-Identifier: Apache-2.0
+// Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
 //
 
 // go/keep-sorted start
@@ -39,6 +40,11 @@ $_md-sys-motion: tokens.md-sys-motion-values();
   $start-end: map.get($tokens, 'shape-start-end');
   $end-end: map.get($tokens, 'shape-end-end');
   $end-start: map.get($tokens, 'shape-end-start');
+
+  // The hidden attribute, which `display` on the host would override.
+  :host([hidden]) {
+    display: none;
+  }
 
   :host {
     animation-delay: 0s, calc($duration * 0.25);

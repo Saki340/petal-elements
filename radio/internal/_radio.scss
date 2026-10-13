@@ -35,6 +35,11 @@ $_md-sys-motion: tokens.md-sys-motion-values();
   $tokens: tokens.md-comp-radio-values();
 
   @layer {
+    // The hidden attribute, which `display` on the host would override.
+    :host([hidden]) {
+      display: none;
+    }
+
     :host {
       display: inline-flex;
       height: map.get($tokens, 'icon-size');

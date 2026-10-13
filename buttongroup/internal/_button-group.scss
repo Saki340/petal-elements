@@ -49,6 +49,11 @@ $_outer: calc(var(--_container-height) / 2);
 }
 
 @mixin styles() {
+  // The hidden attribute, which `display` on the host would override.
+  :host([hidden]) {
+    display: none;
+  }
+
   :host {
     align-items: center;
     display: inline-flex;

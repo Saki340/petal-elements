@@ -60,6 +60,11 @@ $_md-sys-shape: tokens.md-sys-shape-values();
       (1 - var(--_end-fraction))
   );
 
+  // The hidden attribute, which `display` on the host would override.
+  :host([hidden]) {
+    display: none;
+  }
+
   :host {
     @each $token, $value in $tokens {
       --_#{$token}: #{$value};

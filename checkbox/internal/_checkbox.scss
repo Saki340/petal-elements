@@ -41,6 +41,11 @@ $_checkmark-bottom-left: 7px, -14px;
 @mixin styles() {
   $tokens: tokens.md-comp-checkbox-values();
 
+  // The hidden attribute, which `display` on the host would override.
+  :host([hidden]) {
+    display: none;
+  }
+
   :host {
     border-start-start-radius: map.get($tokens, 'container-shape-start-start');
     border-start-end-radius: map.get($tokens, 'container-shape-start-end');

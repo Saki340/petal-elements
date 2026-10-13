@@ -13,6 +13,11 @@
 // go/keep-sorted end
 
 @mixin styles() {
+  // The hidden attribute, which `display` on the host would override.
+  :host([hidden]) {
+    display: none;
+  }
+
   :host {
     @each $token, $value in indicator.$values {
       --_#{$token}: var(--md-loading-indicator-#{$token}, #{$value});

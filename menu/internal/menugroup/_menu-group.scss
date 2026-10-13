@@ -39,6 +39,11 @@ $_transition: border-radius
   map.get(springs.$values, 'spring-fast-spatial');
 
 @mixin styles() {
+  // The hidden attribute, which `display` on the host would override.
+  :host([hidden]) {
+    display: none;
+  }
+
   :host {
     @each $token, $value in $_tokens {
       --_#{$token}: var(--md-menu-group-#{$token}, #{$value});

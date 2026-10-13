@@ -32,6 +32,11 @@
 @mixin styles() {
   $tokens: tokens.md-comp-list-values();
 
+  // The hidden attribute, which `display` on the host would override.
+  :host([hidden]) {
+    display: none;
+  }
+
   :host {
     background: map.get($tokens, 'container-color');
     color: unset;

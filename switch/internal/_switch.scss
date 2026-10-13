@@ -34,6 +34,11 @@
 
   @layer styles, hcm;
   @layer styles {
+    // The hidden attribute, which `display` on the host would override.
+    :host([hidden]) {
+      display: none;
+    }
+
     :host {
       display: inline-flex;
       outline: none;

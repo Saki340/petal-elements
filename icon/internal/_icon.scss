@@ -30,6 +30,11 @@
 @mixin styles() {
   $tokens: tokens.md-comp-icon-values();
 
+  // The hidden attribute, which `display` on the host would override.
+  :host([hidden]) {
+    display: none;
+  }
+
   :host {
     font-size: map.get($tokens, 'size');
     width: map.get($tokens, 'size');

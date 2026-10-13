@@ -1,6 +1,7 @@
 //
 // Copyright 2022 Google LLC
 // SPDX-License-Identifier: Apache-2.0
+// Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
 //
 
 // go/keep-sorted start
@@ -38,6 +39,11 @@
     transition-duration: inherit;
     transition-property: inherit;
     transition-timing-function: inherit;
+  }
+
+  // The hidden attribute, which `display` on the host would override.
+  :host([hidden]) {
+    display: none;
   }
 
   :host {
