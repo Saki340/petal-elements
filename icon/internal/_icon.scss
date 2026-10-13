@@ -1,6 +1,7 @@
 //
 // Copyright 2022 Google LLC
 // SPDX-License-Identifier: Apache-2.0
+// Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
 //
 
 // go/keep-sorted start
@@ -9,6 +10,7 @@
 // go/keep-sorted end
 // go/keep-sorted start
 @use '../../tokens';
+@use '../../tokens/versions/v34/values/md-sys-motion-springs' as springs;
 // go/keep-sorted end
 
 @mixin theme($tokens) {
@@ -33,7 +35,12 @@
     width: map.get($tokens, 'size');
     height: map.get($tokens, 'size');
     color: inherit;
-    font-variation-settings: inherit;
+    // FILL from --md-icon-fill (registered in icon.ts), on the default
+    // effects spring.
+    font-variation-settings: 'FILL' var(--md-icon-fill, 0);
+    transition: --md-icon-fill
+      map.get(springs.$values, 'spring-default-effects-duration')
+      map.get(springs.$values, 'spring-default-effects');
     font-weight: 400;
     font-family: map.get($tokens, 'font');
     display: inline-flex;
@@ -63,6 +70,16 @@
     text-rendering: optimizeLegibility;
     /* Support for Firefox. */
     -moz-osx-font-smoothing: grayscale;
+  }
+
+  :host([filled]) {
+    --md-icon-fill: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :host {
+      transition: none;
+    }
   }
 
   ::slotted(svg) {

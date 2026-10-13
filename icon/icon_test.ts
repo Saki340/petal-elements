@@ -68,4 +68,42 @@ describe('<petal-icon>', () => {
       expect(icon.getAttribute('aria-hidden')).toBe('true');
     });
   });
+  describe('fill', () => {
+    it('is outlined by default and filled with `filled`', async () => {
+      const root = env.render(html`<petal-icon>check</petal-icon>`);
+      const icon = root.querySelector('petal-icon')!;
+      await env.waitForStability();
+      icon.style.transition = 'none';
+      const fill = () => getComputedStyle(icon).getPropertyValue('--md-icon-fill').trim();
+      expect(fill()).toBe('0');
+      expect(getComputedStyle(icon).fontVariationSettings).toBe('"FILL" 0');
+
+      icon.filled = true;
+      await env.waitForStability();
+      expect(icon.hasAttribute('filled')).toBeTrue();
+      expect(fill()).toBe('1');
+      expect(getComputedStyle(icon).fontVariationSettings).toBe('"FILL" 1');
+    });
+
+    it('takes the fill from a parent', async () => {
+      const root = env.render(
+        html`<div style="--md-icon-fill: 1"><petal-icon>check</petal-icon></div>`,
+      );
+      const icon = root.querySelector('petal-icon')!;
+      await env.waitForStability();
+      expect(getComputedStyle(icon).fontVariationSettings).toBe('"FILL" 1');
+    });
+
+    it('animates the fill', async () => {
+      const root = env.render(html`<petal-icon>check</petal-icon>`);
+      const icon = root.querySelector('petal-icon')!;
+      await env.waitForStability();
+      // A computed style to transition from.
+      getComputedStyle(icon).getPropertyValue('--md-icon-fill');
+      icon.filled = true;
+      await env.waitForStability();
+      const [transition] = icon.getAnimations() as CSSTransition[];
+      expect(transition.transitionProperty).toBe('--md-icon-fill');
+    });
+  });
 });
