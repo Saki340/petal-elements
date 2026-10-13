@@ -102,4 +102,75 @@ describe('<petal-top-app-bar>', () => {
     await env.waitForStability();
     expect(root.querySelector('petal-top-app-bar')!.hasAttribute('has-navigation')).toBeTrue();
   });
+
+  /** The text of the collapsed (top) and expanded (bottom) titles. */
+  const titleTexts = (bar: TopAppBar) =>
+    [...bar.shadowRoot!.querySelectorAll('.title')].map((title) =>
+      [...title.querySelectorAll('slot')]
+        .map((slot) => {
+          const assigned = slot.assignedNodes();
+          const nodes = assigned.length ? assigned : [...slot.childNodes];
+          return nodes
+            .filter((node) => node.nodeType !== Node.COMMENT_NODE)
+            .map((node) => node.textContent)
+            .join('')
+            .trim();
+        })
+        .filter(Boolean)
+        .join(' / '),
+    );
+
+  it('shows the subtitle in the collapsed row unless collapsed-subtitle is set', async () => {
+    const {bar} = await setupTest('size=medium subtitle=Unread');
+    expect(titleTexts(bar)).toEqual(['Inbox / Unread', 'Inbox / Unread']);
+
+    bar.collapsedSubtitle = '';
+    await env.waitForStability();
+    expect(titleTexts(bar)).toEqual(['Inbox', 'Inbox / Unread']);
+    const subtitles = bar.shadowRoot!.querySelectorAll<HTMLElement>('.subtitle');
+    expect(subtitles[0].hidden).toBeTrue();
+    expect(subtitles[1].hidden).toBeFalse();
+
+    bar.collapsedHeadline = 'In';
+    await env.waitForStability();
+    expect(titleTexts(bar)[0]).toBe('In');
+  });
+
+  it('takes the title and subtitle from slots', async () => {
+    const root = env.render(html`
+      <petal-top-app-bar size="medium">
+        <span slot="headline">JPY <b>to</b> CNY</span>
+        <span slot="subtitle">Today</span>
+        <span slot="collapsed-headline">JPY-CNY</span>
+      </petal-top-app-bar>
+    `);
+    const bar = root.querySelector('petal-top-app-bar') as TopAppBar;
+    await env.waitForStability();
+    expect(titleTexts(bar)).toEqual(['JPY-CNY', 'JPY to CNY / Today']);
+    // The expanded heights with a subtitle.
+    expect(bar.hasAttribute('has-subtitle')).toBeTrue();
+  });
+
+  it('makes the titles headings with heading-level', async () => {
+    const {bar} = await setupTest('size=medium');
+    const titles = () => [...bar.shadowRoot!.querySelectorAll('.title')];
+    expect(titles().every((title) => !title.hasAttribute('role'))).toBeTrue();
+    bar.headingLevel = 1;
+    await env.waitForStability();
+    for (const title of titles()) {
+      expect(title.getAttribute('role')).toBe('heading');
+      expect(title.getAttribute('aria-level')).toBe('1');
+    }
+  });
+
+  it('updates within the scroll event and fires collapse-change', async () => {
+    const {bar, scroller} = await setupTest('size=medium');
+    const handler = jasmine.createSpy('collapse-change');
+    bar.addEventListener('collapse-change', handler);
+    scroller.scrollTop = 200;
+    scroller.dispatchEvent(new Event('scroll'));
+    // No frame needed.
+    expect(bar.collapsedFraction).toBe(1);
+    expect(handler).toHaveBeenCalledTimes(1);
+  });
 });

@@ -5,7 +5,7 @@
  */
 
 import {html, isServer, LitElement, nothing, PropertyValues} from 'lit';
-import {property, queryAssignedElements} from 'lit/decorators.js';
+import {property, queryAssignedElements, queryAssignedNodes, state} from 'lit/decorators.js';
 
 /** `small` (TopAppBar), `medium` or `large` (the flexible two-row bars). */
 export type TopAppBarSize = 'small' | 'medium' | 'large';
@@ -37,8 +37,18 @@ function topTitleAlpha(fraction: number) {
  * color when content is scrolled under it; a medium or large bar collapses
  * into a small one as the page scrolls (`exitUntilCollapsed`).
  *
+ * @fires collapse-change {Event} The collapsed fraction changed (on scroll,
+ * resize or a size change). Read it from `collapsedFraction`.
+ *
  * @slot navigation - A navigation icon button, at the start.
  * @slot actions - Action icon buttons, at the end.
+ * @slot headline - The title, instead of `headline`, for content other than
+ * text (an icon, for example).
+ * @slot subtitle - The subtitle, instead of `subtitle`.
+ * @slot collapsed-headline - The title in the collapsed row of medium and
+ * large bars. Defaults to `collapsed-headline` or `headline` (text only: a
+ * slotted title cannot be shown twice).
+ * @slot collapsed-subtitle - The subtitle in the collapsed row.
  */
 export class TopAppBar extends LitElement {
   /** `small`, `medium` or `large`. */
@@ -49,6 +59,25 @@ export class TopAppBar extends LitElement {
 
   /** An optional subtitle below the title. */
   @property() subtitle = '';
+
+  /**
+   * The title in the collapsed row of medium and large bars (Compose's
+   * `smallTitle`). When not set, the collapsed row shows `headline`.
+   */
+  @property({attribute: 'collapsed-headline'}) collapsedHeadline?: string;
+
+  /**
+   * The subtitle in the collapsed row of medium and large bars (Compose's
+   * `smallSubtitle`). When not set, the collapsed row shows `subtitle`; set it
+   * to an empty string to show no subtitle there.
+   */
+  @property({attribute: 'collapsed-subtitle'}) collapsedSubtitle?: string;
+
+  /**
+   * Makes the title a heading of this level (`role="heading"`), for example
+   * 1 when it is the page title. 0, the default, leaves it plain text.
+   */
+  @property({type: Number, attribute: 'heading-level'}) headingLevel = 0;
 
   /** Centers the title (`titleHorizontalAlignment`). */
   @property({type: Boolean, reflect: true}) centered = false;
@@ -67,11 +96,17 @@ export class TopAppBar extends LitElement {
   @queryAssignedElements({slot: 'navigation'})
   private readonly navigationElements!: HTMLElement[];
 
+  @queryAssignedNodes({slot: 'subtitle'})
+  private readonly subtitleNodes!: Node[];
+  @queryAssignedNodes({slot: 'collapsed-subtitle'})
+  private readonly collapsedSubtitleNodes!: Node[];
+  @state() private hasSubtitleSlot = false;
+  @state() private hasCollapsedSubtitleSlot = false;
+
   private fraction = 0;
   /** The size the custom properties were last set for. */
   private applied?: TopAppBarSize;
   private scroller: EventTarget | null = null;
-  private frame = 0;
 
   override connectedCallback() {
     super.connectedCallback();
@@ -88,36 +123,69 @@ export class TopAppBar extends LitElement {
     const twoRows = this.size === 'medium' || this.size === 'large';
     // Like Compose, only one title is exposed to assistive technology.
     const smallTitleHidden = twoRows && this.fraction < 0.5;
+    const hasSubtitle = !!this.subtitle || this.hasSubtitleSlot;
+    const collapsedSubtitle = this.collapsedSubtitle ?? this.subtitle;
+    const hasCollapsedSubtitle = !!collapsedSubtitle || this.hasCollapsedSubtitleSlot;
+    const expanded = this.renderTitle(
+      html`<slot name="headline">${this.headline}</slot>`,
+      html`<slot name="subtitle" @slotchange=${this.onSubtitleChange}
+        >${this.subtitle}</slot
+      >`,
+      hasSubtitle,
+      twoRows ? !smallTitleHidden : false,
+    );
     return html`
       <div class="bar" part="container">
         <div class="top">
           <div class="navigation">
             <slot name="navigation" @slotchange=${this.onNavigationChange}></slot>
           </div>
-          <div class="title" aria-hidden=${smallTitleHidden ? 'true' : nothing}>
-            ${this.renderTitle()}
-          </div>
+          ${twoRows
+            ? this.renderTitle(
+                html`<slot name="collapsed-headline"
+                  >${this.collapsedHeadline ?? this.headline}</slot
+                >`,
+                html`<slot name="collapsed-subtitle" @slotchange=${this.onSubtitleChange}
+                  >${collapsedSubtitle}</slot
+                >`,
+                hasCollapsedSubtitle,
+                smallTitleHidden,
+              )
+            : expanded}
           <div class="actions"><slot name="actions"></slot></div>
         </div>
-        ${twoRows
-          ? html`<div class="bottom">
-              <div class="title" aria-hidden=${smallTitleHidden ? nothing : 'true'}>
-                ${this.renderTitle()}
-              </div>
-            </div>`
-          : nothing}
+        ${twoRows ? html`<div class="bottom">${expanded}</div>` : nothing}
       </div>
     `;
   }
 
-  private renderTitle() {
-    return html`<span class="headline">${this.headline}</span>${this.subtitle
-        ? html`<span class="subtitle">${this.subtitle}</span>`
-        : nothing}`;
+  private renderTitle(
+    headline: unknown,
+    subtitle: unknown,
+    hasSubtitle: boolean,
+    hidden: boolean,
+  ) {
+    const heading = this.headingLevel > 0;
+    return html`<div
+      class="title"
+      role=${heading ? 'heading' : nothing}
+      aria-level=${heading ? this.headingLevel : nothing}
+      aria-hidden=${hidden ? 'true' : nothing}>
+      <span class="headline">${headline}</span>
+      <span class="subtitle" ?hidden=${!hasSubtitle}>${subtitle}</span>
+    </div>`;
+  }
+
+  private onSubtitleChange() {
+    const hasContent = (nodes: Node[]) =>
+      nodes.some((node) => node.nodeType === Node.ELEMENT_NODE || node.textContent?.trim());
+    this.hasSubtitleSlot = hasContent(this.subtitleNodes);
+    this.hasCollapsedSubtitleSlot = hasContent(this.collapsedSubtitleNodes);
   }
 
   protected override updated(changed: PropertyValues<this>) {
-    if (changed.has('subtitle')) this.toggleAttribute('has-subtitle', !!this.subtitle);
+    // The expanded heights depend on the expanded subtitle.
+    this.toggleAttribute('has-subtitle', !!this.subtitle || this.hasSubtitleSlot);
     if (changed.has('scrollTarget') && this.isConnected) {
       this.unlisten();
       this.listen();
@@ -142,12 +210,13 @@ export class TopAppBar extends LitElement {
     this.scroller?.removeEventListener('scroll', this.onScroll);
     window.removeEventListener('resize', this.onScroll);
     this.scroller = null;
-    cancelAnimationFrame(this.frame);
   }
 
+  // Browsers fire scroll events once per frame, so update right away:
+  // `collapsedFraction` is current in any scroll listener that runs after this
+  // one, and `collapse-change` reports every change.
   private readonly onScroll = () => {
-    cancelAnimationFrame(this.frame);
-    this.frame = requestAnimationFrame(() => this.update_());
+    this.update_();
   };
 
   /** Recomputes the collapsed fraction from the scroll position. */
@@ -182,5 +251,6 @@ export class TopAppBar extends LitElement {
     this.style.setProperty('--_bottom-title-opacity', (1 - fraction).toFixed(4));
     this.toggleAttribute('scrolled', fraction > 0);
     if (crossedHalf) this.requestUpdate();
+    this.dispatchEvent(new Event('collapse-change'));
   }
 }
