@@ -19,7 +19,11 @@ import {classMap} from 'lit/directives/class-map.js';
 export type SnackbarDuration = 'short' | 'long' | 'indefinite';
 
 /** Why a snackbar closed. */
-export type SnackbarCloseReason = 'timeout' | 'action' | 'dismiss' | 'close';
+/**
+ * Why a snackbar closed. `replace` resolves the promise of an earlier
+ * `show()` when `show()` is called again while open.
+ */
+export type SnackbarCloseReason = 'timeout' | 'action' | 'dismiss' | 'close' | 'replace';
 
 const DURATION_MS: Record<SnackbarDuration, number> = {
   short: 4000,
@@ -86,14 +90,14 @@ export class Snackbar extends LitElement {
 
   /**
    * Shows the snackbar. Resolves with the close reason when it closes. If it
-   * is already open, its timer starts again.
+   * is already open (with new content, for example), its timer starts again
+   * and the promise of the previous `show()` resolves with `replace`.
    */
   show(): Promise<SnackbarCloseReason> {
-    if (!this.result) {
-      this.result = new Promise<SnackbarCloseReason>((resolve) => {
-        this.closed = resolve;
-      });
-    }
+    this.closed?.('replace');
+    this.result = new Promise<SnackbarCloseReason>((resolve) => {
+      this.closed = resolve;
+    });
     this.open = true;
     this.startTimer();
     return this.result;

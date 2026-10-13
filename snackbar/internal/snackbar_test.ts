@@ -142,12 +142,14 @@ describe('<petal-snackbar>', () => {
     expect(closeSpy.calls.mostRecent().args[0].detail.reason).toBe('close');
   });
 
-  it('returns the same promise when shown again while open', async () => {
-    const snackbar = await setupTest();
+
+  it('resolves the previous show() with replace when shown again', async () => {
+    const snackbar = await setupTest('action=Undo');
     const first = snackbar.show();
+    await env.waitForStability();
     const second = snackbar.show();
-    expect(second).toBe(first);
-    snackbar.close();
-    expect(await first).toBe('close');
+    expect(await first).toBe('replace');
+    snackbar.shadowRoot!.querySelector<HTMLElement>('.action')!.click();
+    expect(await second).toBe('action');
   });
 });
