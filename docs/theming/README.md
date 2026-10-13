@@ -138,3 +138,31 @@ Refer to each [components' documentation](../components/) for available tokens.
 
 > Note: unlike `--md-ref-*` and `--md-sys-*` tokens, which are prefixed with
 > `ref` and `sys`, component tokens are *not* prefixed with `comp`.
+
+The springs' `-damping` and `-stiffness` properties (Compose's `dampingRatio`
+and `stiffness`) are read by components that simulate a spring, such as the
+button group's press, and by the theme transition below.
+
+### Theme transition
+
+`transitionTheme()` changes the theme with a circle that grows from the
+control the user pressed until it covers the page, revealing the new theme. It
+uses the View Transitions API and the page's slow spatial spring, so it
+bounces with the expressive scheme. Without View Transitions, or with
+`prefers-reduced-motion`, the theme just changes.
+
+```js
+import {transitionTheme} from 'petal-elements/theme/theme-transition.js';
+
+toggle.addEventListener('click', (event) => {
+  transitionTheme(() => {
+    document.documentElement.style.colorScheme = isDark() ? 'light' : 'dark';
+  }, event);
+});
+```
+
+The first argument changes the theme; the second is where the circle starts:
+a pointer event (keyboard clicks start from the center of their target), an
+element, or `{x, y}` in viewport coordinates. It returns a promise that
+resolves when the transition has finished. Other view transitions on the
+page are not affected.

@@ -17,6 +17,8 @@ import 'petal-elements/iconbutton/filled-icon-button.js';
 import 'petal-elements/iconbutton/icon-button.js';
 import 'petal-elements/switch/switch.js';
 
+import {transitionTheme} from 'petal-elements/theme/theme-transition.js';
+
 import {
   argbFromHex,
   hexFromArgb,
@@ -70,10 +72,11 @@ applyScheme(load('scheme'));
 matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
   applyScheme(load('scheme'));
 });
-toggle.addEventListener('click', () => {
+// The new scheme grows in a circle from the toggle.
+toggle.addEventListener('click', (event) => {
   const next = isDark() ? 'light' : 'dark';
   save('scheme', next);
-  applyScheme(next);
+  transitionTheme(() => applyScheme(next), event);
 });
 
 // ---------- Theme from a source color ----------

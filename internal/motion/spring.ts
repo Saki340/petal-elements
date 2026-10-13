@@ -34,6 +34,29 @@ export function springFromCss(element: Element, name: string, fallback: SpringSp
 /** StandardMotionTokens.SpringFastSpatial: damping 0.9, stiffness 1400. */
 export const STANDARD_FAST_SPATIAL: SpringSpec = {dampingRatio: 0.9, stiffness: 1400};
 
+/** StandardMotionTokens.SpringSlowSpatial: damping 0.9, stiffness 300. */
+export const STANDARD_SLOW_SPATIAL: SpringSpec = {dampingRatio: 0.9, stiffness: 300};
+
+/**
+ * The spring from 0 to 1 as a CSS `linear()` easing and its duration, for the
+ * Web Animations API.
+ */
+export function springEasing(spec: SpringSpec) {
+  const spring = new Spring(spec);
+  spring.target = 1;
+  const frameMs = 1000 / 60;
+  const points = [0];
+  while (!spring.atRest && points.length < 600) {
+    spring.step(frameMs);
+    points.push(Number(spring.value.toFixed(4)));
+  }
+  points[points.length - 1] = 1;
+  return {
+    easing: `linear(${points.join(', ')})`,
+    duration: Math.round((points.length - 1) * frameMs),
+  };
+}
+
 /** A value driven by a spring. */
 export class Spring {
   value = 0;

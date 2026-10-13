@@ -20,6 +20,7 @@ before using it; do not guess attributes.
 - [Expressive features](docs/expressive.md): sizes, shape morphing, springs, button groups
 - [Tokens](docs/tokens.md): system tokens and their sources
 - [Colors](docs/theming/color.md), [shape](docs/theming/shape.md), [typography](docs/theming/typography.md)
+- [Theme transition](docs/theming/README.md#theme-transition): `theme/theme-transition.js`, `transitionTheme(apply, event)` for a circular light/dark switch
 - [Changelog](CHANGELOG.md)
 
 ## Components (import path, tags)

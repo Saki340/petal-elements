@@ -55,6 +55,9 @@
   only the selected button in the tab order. Connected groups widen the
   pressed button too, and the press is a simulated spring like Compose's
   `animateWidth` (overshoot, velocity, held to 75% on a quick tap).
+* **theme:** `transitionTheme()` (`theme/theme-transition.js`) changes the
+  theme with a circle that grows from the pressed control, on the slow
+  spatial spring (View Transitions API).
 * **tokens:** `motion-expressive.css` also switches the springs' `-damping`
   and `-stiffness` properties.
 * **ripple:** waves of quick presses overlap; no press ripple with reduced
