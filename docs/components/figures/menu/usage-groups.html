@@ -45,13 +45,6 @@
       anchorEl.addEventListener('click', () => {
         menuEl.open = !menuEl.open;
       });
-      for (const item of menuEl.querySelectorAll('[type="menuitemradio"]')) {
-        item.addEventListener('click', () => {
-          for (const other of menuEl.querySelectorAll('[type="menuitemradio"]')) {
-            other.checked = other === item;
-          }
-        });
-      }
     </script>
   </figure>
 </div>

@@ -115,4 +115,45 @@ describe('<petal-menu-group>', () => {
     groups[0].style.transition = 'none';
     expect(radii(groups[0])).toEqual(['8px', '8px', '8px', '8px']);
   });
+
+  it('checks radio items on click or Enter, unchecking the others', async () => {
+    const {items} = await setupTest();
+    const change = jasmine.createSpy('change');
+    items[0].parentElement!.addEventListener('change', change);
+    const root = (item: MenuItemEl) => item.shadowRoot!.querySelector<HTMLElement>('.list-item')!;
+
+    root(items[2]).click();
+    expect(items.slice(0, 3).map((item) => item.checked)).toEqual([false, false, true]);
+    expect(change).toHaveBeenCalledTimes(1);
+
+    root(items[1]).dispatchEvent(
+      new KeyboardEvent('keydown', {code: 'Enter', key: 'Enter', bubbles: true, cancelable: true}),
+    );
+    expect(items.slice(0, 3).map((item) => item.checked)).toEqual([false, true, false]);
+    expect(change).toHaveBeenCalledTimes(2);
+
+    // Choosing the checked radio item again changes nothing.
+    root(items[1]).click();
+    expect(change).toHaveBeenCalledTimes(2);
+    // Not a radio item.
+    root(items[3]).click();
+    expect(items[3].checked).toBeFalse();
+  });
+
+  it('toggles checkbox items', async () => {
+    const root = env.render(html`
+      <petal-menu-item type="menuitemcheckbox" keep-open>
+        <div slot="headline">Bold</div>
+      </petal-menu-item>
+    `);
+    const item = root.querySelector('petal-menu-item') as MenuItemEl;
+    await env.waitForStability();
+    const listItem = item.shadowRoot!.querySelector<HTMLElement>('.list-item')!;
+    listItem.click();
+    expect(item.checked).toBeTrue();
+    listItem.dispatchEvent(
+      new KeyboardEvent('keydown', {code: 'Space', key: ' ', bubbles: true, cancelable: true}),
+    );
+    expect(item.checked).toBeFalse();
+  });
 });

@@ -34,6 +34,8 @@ const menuItemBaseClass = mixinDelegatesAria(LitElement);
 /**
  * @fires close-menu {CustomEvent<{initiator: SelectOption, reason: Reason, itemPath: SelectOption[]}>}
  * Closes the encapsulating menu on closable interaction. --bubbles --composed
+ * @fires change {Event} A checkbox or radio item was checked or unchecked by
+ * the user. --bubbles
  */
 export class MenuItemEl extends menuItemBaseClass implements MenuItem {
   /** @nocollapse */
@@ -88,8 +90,9 @@ export class MenuItemEl extends menuItemBaseClass implements MenuItem {
   /**
    * Checks the item. With `type="menuitemcheckbox"` or `"menuitemradio"` it
    * sets `aria-checked`, and the item shows the selected colors and shape of
-   * Compose's selectable menu items. The menu does not toggle it: set it in a
-   * click handler.
+   * Compose's selectable menu items. Choosing a checkbox item toggles it;
+   * choosing a radio item checks it and unchecks the other radio items of its
+   * group (or menu), and fires `change`.
    */
   @property({type: Boolean, reflect: true}) checked = false;
 
@@ -180,10 +183,52 @@ export class MenuItemEl extends menuItemBaseClass implements MenuItem {
         target=${target}
         rel=${(isAnchor && this.rel) || nothing}
         referrerpolicy=${(isAnchor && this.referrerPolicy) || nothing}
-        @click=${this.menuItemController.onClick}
-        @keydown=${this.menuItemController.onKeydown}
+        @click=${this.onClick}
+        @keydown=${this.onKeydown}
       >${content}</${tag}>
     `;
+  }
+
+  private readonly onClick = () => {
+    this.choose();
+    this.menuItemController.onClick();
+  };
+
+  private readonly onKeydown = (event: KeyboardEvent) => {
+    if (
+      !event.defaultPrevented &&
+      !this.href &&
+      (event.code === 'Enter' || event.code === 'Space') &&
+      this.choose()
+    ) {
+      // Space would scroll the menu.
+      event.preventDefault();
+    }
+    this.menuItemController.onKeydown(event);
+  };
+
+  /**
+   * Checks or toggles a checkbox or radio item. Returns whether it is one.
+   */
+  private choose() {
+    const {type} = this;
+    if (this.disabled || (type !== 'menuitemradio' && type !== 'menuitemcheckbox')) {
+      return false;
+    }
+    if (type === 'menuitemcheckbox') {
+      this.checked = !this.checked;
+    } else if (!this.checked) {
+      for (const sibling of this.parentElement?.children ?? []) {
+        if (sibling !== this && (sibling as MenuItemEl).type === 'menuitemradio') {
+          (sibling as MenuItemEl).checked = false;
+        }
+      }
+      this.checked = true;
+    } else {
+      return true;
+    }
+    this.dispatchEvent(new Event('change', {bubbles: true}));
+    return true;
   }
 
   private renderAriaChecked() {
