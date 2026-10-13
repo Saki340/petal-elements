@@ -28,7 +28,9 @@ export class ButtonGroup extends LitElement {
 
   /**
    * Only one toggle button can be selected. Selecting one deselects the others;
-   * clicking the selected one keeps it selected.
+   * clicking the selected one keeps it selected. Like a radio group, only the
+   * selected button is in the tab order, and arrow keys (and Home, End) move
+   * the selection.
    */
   @property({type: Boolean, attribute: 'single-select', reflect: true})
   singleSelect = false;
@@ -38,6 +40,8 @@ export class ButtonGroup extends LitElement {
 
   /** Buttons whose size was set by the group. */
   private readonly sized = new WeakSet<Button>();
+  /** Buttons whose tabindex was set by the group. */
+  private readonly tabStops = new WeakSet<HTMLElement>();
 
   private pressed: {
     item: HTMLElement;
@@ -54,6 +58,7 @@ export class ButtonGroup extends LitElement {
       if (!event.repeat && (event.key === ' ' || event.key === 'Enter')) {
         this.startPress(event);
       }
+      this.handleArrowKey(event);
     });
     this.addEventListener('keyup', () => {
       this.endPress();
@@ -72,11 +77,80 @@ export class ButtonGroup extends LitElement {
   }
 
   protected override render() {
-    return html`<slot @slotchange=${this.applySize}></slot>`;
+    return html`<slot @slotchange=${this.onSlotChange}></slot>`;
   }
 
   protected override updated(changed: PropertyValues<this>) {
     if (changed.has('size')) this.applySize();
+    if (changed.has('singleSelect')) this.updateTabStops();
+  }
+
+  private onSlotChange() {
+    this.applySize();
+    this.updateTabStops();
+  }
+
+  /** The toggle buttons that can be chosen. */
+  private get choices() {
+    return this.items.filter(
+      (item): item is Button =>
+        item instanceof Button && item.toggle && !item.disabled && !item.softDisabled,
+    );
+  }
+
+  /**
+   * In single-select groups, only the selected button (or the first one) is in
+   * the tab order, like a radio group.
+   */
+  private updateTabStops() {
+    const choices = this.singleSelect ? this.choices : [];
+    const current = choices.find((item) => item.selected) ?? choices[0];
+    for (const item of this.items) {
+      if (choices.includes(item as Button)) {
+        item.tabIndex = item === current ? 0 : -1;
+        this.tabStops.add(item);
+      } else if (this.tabStops.has(item)) {
+        item.removeAttribute('tabindex');
+        this.tabStops.delete(item);
+      }
+    }
+  }
+
+  /** Arrow keys, Home and End choose another button in single-select groups. */
+  private handleArrowKey(event: KeyboardEvent) {
+    if (!this.singleSelect || event.altKey || event.ctrlKey || event.metaKey) return;
+    const choices = this.choices;
+    const item = this.itemOf(event);
+    const index = choices.indexOf(item as Button);
+    if (index < 0) return;
+    const rtl = getComputedStyle(this).direction === 'rtl';
+    let next: number;
+    switch (event.key) {
+      case 'ArrowRight':
+        next = index + (rtl ? -1 : 1);
+        break;
+      case 'ArrowLeft':
+        next = index + (rtl ? 1 : -1);
+        break;
+      case 'ArrowDown':
+        next = index + 1;
+        break;
+      case 'ArrowUp':
+        next = index - 1;
+        break;
+      case 'Home':
+        next = 0;
+        break;
+      case 'End':
+        next = choices.length - 1;
+        break;
+      default:
+        return;
+    }
+    event.preventDefault();
+    const target = choices[(next + choices.length) % choices.length];
+    target.focus();
+    if (!target.selected) target.click();
   }
 
   private applySize() {
@@ -111,6 +185,7 @@ export class ButtonGroup extends LitElement {
         other.selected = false;
       }
     }
+    this.updateTabStops();
   }
 
   /**

@@ -81,4 +81,50 @@ describe('<petal-button-group>', () => {
       expect(buttons[2].selected).toBeTrue();
     });
   });
+
+  describe('single-select keyboard', () => {
+    /** The focused button, through shadow roots. */
+    const focusedButton = () => document.activeElement?.closest('petal-filled-button');
+
+    it('keeps only the selected button in the tab order', async () => {
+      const {group} = await setupTest('connected single-select');
+      const [one, two, three] = [...group.querySelectorAll('petal-filled-button')] as Button[];
+      two.selected = true;
+      two.dispatchEvent(new Event('change', {bubbles: true}));
+      await env.waitForStability();
+      expect([one, two, three].map((b) => b.tabIndex)).toEqual([-1, 0, -1]);
+    });
+
+    it('moves and selects with arrow keys, Home and End', async () => {
+      const {group} = await setupTest('connected single-select');
+      const buttons = [...group.querySelectorAll('petal-filled-button')] as Button[];
+      const selected = () => buttons.map((b) => b.selected);
+      /** Presses a key on the focused button. */
+      const sendKeys = async ({press}: {press: string}) => {
+        const target = document.activeElement!.shadowRoot!.activeElement!;
+        target.dispatchEvent(
+          new KeyboardEvent('keydown', {key: press, bubbles: true, composed: true, cancelable: true}),
+        );
+      };
+      buttons[0].focus();
+      await sendKeys({press: 'ArrowRight'});
+      await env.waitForStability();
+      expect(focusedButton()).toBe(buttons[1]);
+      expect(selected()).toEqual([false, true, false]);
+      await sendKeys({press: 'End'});
+      await env.waitForStability();
+      expect(selected()).toEqual([false, false, true]);
+      // Wraps around.
+      await sendKeys({press: 'ArrowRight'});
+      await env.waitForStability();
+      expect(selected()).toEqual([true, false, false]);
+      expect(buttons.map((b) => b.tabIndex)).toEqual([0, -1, -1]);
+    });
+
+    it('leaves the tab order alone without single-select', async () => {
+      const {group} = await setupTest('connected');
+      const buttons = [...group.querySelectorAll('petal-filled-button')];
+      expect(buttons.every((b) => !b.hasAttribute('tabindex'))).toBeTrue();
+    });
+  });
 });
