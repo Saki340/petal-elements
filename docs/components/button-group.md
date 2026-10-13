@@ -39,8 +39,11 @@ arrange related buttons in a row. A Material 3 Expressive component.
 ## Usage
 
 Put buttons in a `<petal-button-group>`. In a standard group the buttons are
-spaced apart; a pressed button widens by 15% of its width and its neighbors
-make room, while the group keeps its width.
+spaced apart. In standard and connected groups, a pressed button widens by
+15% of its width and its neighbors make room, while the group keeps its
+width. Like Compose, the press runs on a spring (it bounces with the
+expressive motion scheme) and a quick tap still widens three quarters of the
+way before it springs back.
 
 <!-- no-catalog-start -->
 

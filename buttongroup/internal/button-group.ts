@@ -8,6 +8,20 @@ import {html, isServer, LitElement, PropertyValues} from 'lit';
 import {property, queryAssignedElements} from 'lit/decorators.js';
 
 import {Button, ButtonSize} from '../../button/internal/button.js';
+import {
+  Spring,
+  springFromCss,
+  STANDARD_FAST_SPATIAL,
+} from '../../internal/motion/spring.js';
+
+/**
+ * ButtonDefaults.ContentPadding's end padding (BaselineButtonTokens
+ * .TrailingSpace): how much a neighbor can be compressed (compressionLimit).
+ */
+const COMPRESSION_LIMIT = 24;
+
+/** A pressed item lets go once its press has reached this far, like Compose. */
+const RELEASE_AT = 0.75;
 
 /**
  * A Material 3 Expressive button group.
@@ -43,10 +57,15 @@ export class ButtonGroup extends LitElement {
   /** Buttons whose tabindex was set by the group. */
   private readonly tabStops = new WeakSet<HTMLElement>();
 
-  private pressed: {
-    item: HTMLElement;
-    setPaddings: (extra: (index: number) => number) => void;
-  } | null = null;
+  /** The press of each item, a spring from 0 (released) to 1 (pressed). */
+  private readonly presses = new Map<HTMLElement, Spring>();
+  /** Items released before their press reached RELEASE_AT. */
+  private readonly releasing = new Set<HTMLElement>();
+  /** Paddings and widths of the items at rest, while presses animate. */
+  private basePaddings: number[][] | null = null;
+  private baseWidths: number[] = [];
+  private frame = 0;
+  private lastTime = 0;
 
   constructor() {
     super();
@@ -190,71 +209,117 @@ export class ButtonGroup extends LitElement {
 
   /**
    * Widens the pressed item by `--_expanded-ratio` of its width, taking the
-   * space from its neighbors, at most their leading padding. A middle item
-   * takes half from each side. Same rules as Compose's ButtonGroup layout.
+   * space from its neighbors, at most COMPRESSION_LIMIT from each. A middle
+   * item takes half from each side. Like Compose's ButtonGroup, the press is
+   * a fast spatial spring (so it overshoots with the expressive scheme), and
+   * a quick press is held until it is 75% of the way.
    *
    * The space moves through the items' inline padding (half on each side),
    * so labels keep their width and are never cut off.
    */
   private startPress(event: Event) {
-    if (this.pressed) return;
     const item = this.itemOf(event);
-    const items = this.items;
-    const index = item ? items.indexOf(item) : -1;
-    if (!item || index < 0 || items.length < 2) return;
+    if (!item || this.items.length < 2) return;
     if (item.hasAttribute('disabled') || item.hasAttribute('soft-disabled')) return;
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    const ratio = Number(getComputedStyle(this).getPropertyValue('--_expanded-ratio')) || 0;
-    const paddings = items.map((el) => {
-      const style = getComputedStyle(el);
-      return [parseFloat(style.paddingInlineStart) || 0, parseFloat(style.paddingInlineEnd) || 0];
-    });
-    const change = items.map(() => 0);
-    const grow = ratio * item.getBoundingClientRect().width;
-    if (index > 0 && index < items.length - 1) {
-      const growth = Math.min(grow / 2, paddings[index - 1][0], paddings[index + 1][0]);
-      change[index - 1] = -growth;
-      change[index + 1] = -growth;
-      change[index] = 2 * growth;
-    } else {
-      const neighbor = index === 0 ? 1 : index - 1;
-      const growth = Math.min(grow, paddings[neighbor][0]);
-      change[neighbor] = -growth;
-      change[index] = growth;
+    let spring = this.presses.get(item);
+    if (!spring) {
+      spring = new Spring(springFromCss(this, 'fast-spatial', STANDARD_FAST_SPATIAL));
+      this.presses.set(item, spring);
     }
-
-    const setPaddings = (extra: (i: number) => number) => {
-      items.forEach((el, i) => {
-        el.style.paddingInlineStart = `${paddings[i][0] + extra(i) / 2}px`;
-        el.style.paddingInlineEnd = `${paddings[i][1] + extra(i) / 2}px`;
-      });
-    };
-    this.pressed = {item, setPaddings};
-    // Fix the current paddings first, so the change to the targets animates.
-    setPaddings(() => 0);
-    requestAnimationFrame(() => {
-      if (this.pressed?.item === item) setPaddings((i) => change[i]);
-    });
-    window.addEventListener('pointerup', () => this.endPress(), {once: true});
-    window.addEventListener('pointercancel', () => this.endPress(), {once: true});
+    spring.target = 1;
+    this.releasing.delete(item);
+    this.animatePresses();
+    const end = () => this.endPress(item);
+    window.addEventListener('pointerup', end, {once: true});
+    window.addEventListener('pointercancel', end, {once: true});
   }
 
-  private endPress() {
-    const pressed = this.pressed;
-    if (!pressed) return;
-    this.pressed = null;
-    pressed.setPaddings(() => 0);
-    // Back to the stylesheet's paddings once the items have settled.
-    const items = this.items;
-    const duration = Math.max(
-      ...items.map((el) => parseFloat(getComputedStyle(el).transitionDuration) || 0),
-    );
-    setTimeout(() => {
-      if (this.pressed) return;
-      for (const el of items) {
-        el.style.removeProperty('padding-inline-start');
-        el.style.removeProperty('padding-inline-end');
+  private endPress(item?: HTMLElement) {
+    for (const [pressed, spring] of this.presses) {
+      if (item && pressed !== item) continue;
+      if (spring.target === 0) continue;
+      if (spring.value >= RELEASE_AT) spring.target = 0;
+      else this.releasing.add(pressed);
+    }
+    this.animatePresses();
+  }
+
+  private animatePresses() {
+    if (this.frame) return;
+    this.lastTime = performance.now();
+    const tick = () => {
+      const now = performance.now();
+      // At most a few frames' worth, so a background tab does not jump.
+      const ms = Math.min(now - this.lastTime, 64);
+      this.lastTime = now;
+      let moving = false;
+      for (const [item, spring] of this.presses) {
+        spring.step(ms);
+        if (this.releasing.has(item) && spring.value >= RELEASE_AT) {
+          this.releasing.delete(item);
+          spring.target = 0;
+        }
+        if (!spring.atRest || spring.target !== 0) moving = true;
       }
-    }, duration * 1000 + 50);
+      this.layoutPresses();
+      if (moving) {
+        this.frame = requestAnimationFrame(tick);
+      } else {
+        this.frame = 0;
+        this.presses.clear();
+        this.resetPaddings();
+      }
+    };
+    this.frame = requestAnimationFrame(tick);
   }
+
+  /** Sets the items' paddings for the current presses (Compose's measure). */
+  private layoutPresses() {
+    const items = this.items;
+    if (!this.basePaddings) {
+      this.basePaddings = items.map((el) => {
+        const style = getComputedStyle(el);
+        return [parseFloat(style.paddingInlineStart) || 0, parseFloat(style.paddingInlineEnd) || 0];
+      });
+      this.baseWidths = items.map((el) => el.getBoundingClientRect().width);
+    }
+    const ratio = Number(getComputedStyle(this).getPropertyValue('--_expanded-ratio')) || 0;
+    const change = items.map(() => 0);
+    items.forEach((item, index) => {
+      const value = this.presses.get(item)?.value ?? 0;
+      if (!value) return;
+      // The width at rest, as Compose's measure uses.
+      const width = this.baseWidths[index] ?? 0;
+      if (index > 0 && index < items.length - 1) {
+        const growth = value * Math.min((ratio * width) / 2, COMPRESSION_LIMIT, COMPRESSION_LIMIT);
+        change[index - 1] -= growth;
+        change[index + 1] -= growth;
+        change[index] += 2 * growth;
+      } else {
+        const neighbor = index === 0 ? 1 : index - 1;
+        const growth = value * Math.min(ratio * width, COMPRESSION_LIMIT);
+        change[neighbor] -= growth;
+        change[index] += growth;
+      }
+    });
+    const base = this.basePaddings;
+    items.forEach((el, i) => {
+      if (!base[i]) return;
+      // Paddings cannot go below zero.
+      el.style.paddingInlineStart = `${Math.max(0, base[i][0] + change[i] / 2)}px`;
+      el.style.paddingInlineEnd = `${Math.max(0, base[i][1] + change[i] / 2)}px`;
+    });
+  }
+
+  /** Back to the stylesheet's paddings once every press has settled. */
+  private resetPaddings() {
+    this.basePaddings = null;
+    for (const el of this.items) {
+      el.style.removeProperty('padding-inline-start');
+      el.style.removeProperty('padding-inline-end');
+    }
+  }
+
 }

@@ -348,7 +348,9 @@ export async function buildCss(
   const expressive: string[] = [];
   for (const speed of ['fast', 'default', 'slow']) {
     for (const kind of ['spatial', 'effects']) {
-      for (const suffix of ['', '-duration']) {
+      // The curve and duration, and the spring itself (damping, stiffness) for
+      // components that simulate it.
+      for (const suffix of ['', '-duration', '-damping', '-stiffness']) {
         const name = `${speed}-${kind}${suffix}`;
         expressive.push(
           `  --md-sys-motion-spring-${name}: var(--md-sys-motion-expressive-spring-${name});`,

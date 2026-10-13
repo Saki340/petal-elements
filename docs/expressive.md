@@ -75,13 +75,22 @@ Toggle buttons morph with the fast spatial spring (`ToggleButton.kt`).
 | `connected` | Buttons 2px apart; outer corners full, inner corners `inner-corner.corner-size`, smaller while pressed, fully rounded when selected (pressed wins), as in Compose's `ButtonGroupDefaults.connected*ButtonShapes`. |
 | `single-select` | Selecting a toggle button deselects the others; clicking the selected one keeps it selected. |
 
-Standard groups: a pressed button widens by `pressed.item.width.multiplier`
-(15%) of its width and its neighbors give way, at most their leading padding;
-a middle button takes half from each side (Compose's `ButtonGroup` layout).
-The group's total width does not change. On the web the space moves through
-the buttons' inline padding, so labels are never cut off. The change animates
-with the fast spatial spring. `prefers-reduced-motion` turns the animations
-off, here and for sized buttons.
+Standard and connected groups: a pressed button widens by
+`pressed.item.width.multiplier` (15%) of its width at rest and its neighbors
+give way, at most 24px each (Compose's `compressionLimit`,
+`ButtonDefaults.ContentPadding`); a middle button takes half from each side
+(Compose's `ButtonGroup` layout). The group's total width does not change. On
+the web the space moves through the buttons' inline padding, so labels are
+never cut off.
+
+The press is simulated like Compose's `animateWidth`: a spring from 0 to 1
+with the fast spatial spring's damping and stiffness, read from
+`--md-sys-motion-spring-fast-spatial-damping` and `-stiffness` (standard
+0.9 / 1400; `motion-expressive.css` switches them to 0.6 / 800, which
+overshoots), keeping its velocity when released mid-way. A press released
+before it is 75% of the way continues to 75% first, as in Compose.
+`prefers-reduced-motion` turns the animations off, here and for sized
+buttons.
 
 ## Filled FAB
 

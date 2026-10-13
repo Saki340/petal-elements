@@ -88,22 +88,8 @@ $_outer: calc(var(--_container-height) / 2);
     z-index: 1;
   }
 
-  // While an item is pressed, button-group.ts changes the items' inline
-  // padding; it animates with the fast spatial spring
-  // (md.comp.button-group.*.pressed.item.width.motion.spring). The button's
-  // own shape transition is repeated, since this declaration replaces it.
-  $_width-duration: map.get(springs.$values, 'spring-fast-spatial-duration');
-  $_width-easing: map.get(springs.$values, 'spring-fast-spatial');
-
-  ::slotted(*) {
-    transition:
-      padding-inline-start #{$_width-duration} #{$_width-easing},
-      padding-inline-end #{$_width-duration} #{$_width-easing},
-      border-start-start-radius var(--_shape-duration) var(--_shape-easing),
-      border-start-end-radius var(--_shape-duration) var(--_shape-easing),
-      border-end-end-radius var(--_shape-duration) var(--_shape-easing),
-      border-end-start-radius var(--_shape-duration) var(--_shape-easing);
-  }
+  // While an item is pressed, button-group.ts animates the items' inline
+  // padding with a spring, every frame.
 
   // Connected: outer corners full, inner corners small. Pressed inner corners
   // are smaller; a selected (checked) item is fully rounded. Pressed wins over

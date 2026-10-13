@@ -15,14 +15,26 @@
 :root {
   --md-sys-motion-spring-fast-spatial: var(--md-sys-motion-expressive-spring-fast-spatial);
   --md-sys-motion-spring-fast-spatial-duration: var(--md-sys-motion-expressive-spring-fast-spatial-duration);
+  --md-sys-motion-spring-fast-spatial-damping: var(--md-sys-motion-expressive-spring-fast-spatial-damping);
+  --md-sys-motion-spring-fast-spatial-stiffness: var(--md-sys-motion-expressive-spring-fast-spatial-stiffness);
   --md-sys-motion-spring-fast-effects: var(--md-sys-motion-expressive-spring-fast-effects);
   --md-sys-motion-spring-fast-effects-duration: var(--md-sys-motion-expressive-spring-fast-effects-duration);
+  --md-sys-motion-spring-fast-effects-damping: var(--md-sys-motion-expressive-spring-fast-effects-damping);
+  --md-sys-motion-spring-fast-effects-stiffness: var(--md-sys-motion-expressive-spring-fast-effects-stiffness);
   --md-sys-motion-spring-default-spatial: var(--md-sys-motion-expressive-spring-default-spatial);
   --md-sys-motion-spring-default-spatial-duration: var(--md-sys-motion-expressive-spring-default-spatial-duration);
+  --md-sys-motion-spring-default-spatial-damping: var(--md-sys-motion-expressive-spring-default-spatial-damping);
+  --md-sys-motion-spring-default-spatial-stiffness: var(--md-sys-motion-expressive-spring-default-spatial-stiffness);
   --md-sys-motion-spring-default-effects: var(--md-sys-motion-expressive-spring-default-effects);
   --md-sys-motion-spring-default-effects-duration: var(--md-sys-motion-expressive-spring-default-effects-duration);
+  --md-sys-motion-spring-default-effects-damping: var(--md-sys-motion-expressive-spring-default-effects-damping);
+  --md-sys-motion-spring-default-effects-stiffness: var(--md-sys-motion-expressive-spring-default-effects-stiffness);
   --md-sys-motion-spring-slow-spatial: var(--md-sys-motion-expressive-spring-slow-spatial);
   --md-sys-motion-spring-slow-spatial-duration: var(--md-sys-motion-expressive-spring-slow-spatial-duration);
+  --md-sys-motion-spring-slow-spatial-damping: var(--md-sys-motion-expressive-spring-slow-spatial-damping);
+  --md-sys-motion-spring-slow-spatial-stiffness: var(--md-sys-motion-expressive-spring-slow-spatial-stiffness);
   --md-sys-motion-spring-slow-effects: var(--md-sys-motion-expressive-spring-slow-effects);
   --md-sys-motion-spring-slow-effects-duration: var(--md-sys-motion-expressive-spring-slow-effects-duration);
+  --md-sys-motion-spring-slow-effects-damping: var(--md-sys-motion-expressive-spring-slow-effects-damping);
+  --md-sys-motion-spring-slow-effects-stiffness: var(--md-sys-motion-expressive-spring-slow-effects-stiffness);
 }

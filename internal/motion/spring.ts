@@ -1,0 +1,95 @@
+/**
+ * @license
+ * Copyright 2026 Saki
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+// A spring like Compose's spring() animation spec (SpringSimulation.kt): the
+// value moves toward its target with the spring's physics, keeping its
+// velocity when the target changes mid-way.
+
+/** A spring's damping ratio and stiffness (Compose's spring() parameters). */
+export interface SpringSpec {
+  dampingRatio: number;
+  stiffness: number;
+}
+
+/** Compose's default visibility threshold for floats (Spring.DefaultDisplacementThreshold). */
+const THRESHOLD = 0.01;
+
+/**
+ * Reads a `--md-sys-motion-spring-<name>-damping` and `-stiffness` pair from
+ * an element, e.g. `fast-spatial`, falling back to `fallback`. Pages switch
+ * the scheme by setting these properties (tokens/css/motion-expressive.css).
+ */
+export function springFromCss(element: Element, name: string, fallback: SpringSpec): SpringSpec {
+  const style = getComputedStyle(element);
+  const read = (suffix: string) =>
+    parseFloat(style.getPropertyValue(`--md-sys-motion-spring-${name}-${suffix}`));
+  const dampingRatio = read('damping');
+  const stiffness = read('stiffness');
+  return dampingRatio > 0 && stiffness > 0 ? {dampingRatio, stiffness} : fallback;
+}
+
+/** StandardMotionTokens.SpringFastSpatial: damping 0.9, stiffness 1400. */
+export const STANDARD_FAST_SPATIAL: SpringSpec = {dampingRatio: 0.9, stiffness: 1400};
+
+/** A value driven by a spring. */
+export class Spring {
+  value = 0;
+  velocity = 0;
+  target = 0;
+
+  constructor(public spec: SpringSpec) {}
+
+  /** Whether the value has settled on its target. */
+  get atRest() {
+    return Math.abs(this.value - this.target) < THRESHOLD && Math.abs(this.velocity) < THRESHOLD;
+  }
+
+  /** Moves the value `ms` milliseconds forward. */
+  step(ms: number) {
+    if (this.atRest) {
+      this.value = this.target;
+      this.velocity = 0;
+      return;
+    }
+    const t = ms / 1000;
+    const {dampingRatio: zeta, stiffness} = this.spec;
+    const omega = Math.sqrt(stiffness);
+    const x0 = this.value - this.target;
+    const v0 = this.velocity;
+    let x: number;
+    let v: number;
+    if (zeta > 1) {
+      // Over-damped.
+      const root = omega * Math.sqrt(zeta * zeta - 1);
+      const r1 = -zeta * omega - root;
+      const r2 = -zeta * omega + root;
+      const c2 = (v0 - r1 * x0) / (r2 - r1);
+      const c1 = x0 - c2;
+      x = c1 * Math.exp(r1 * t) + c2 * Math.exp(r2 * t);
+      v = c1 * r1 * Math.exp(r1 * t) + c2 * r2 * Math.exp(r2 * t);
+    } else if (zeta === 1) {
+      // Critically damped.
+      const c1 = x0;
+      const c2 = v0 + omega * x0;
+      const e = Math.exp(-omega * t);
+      x = (c1 + c2 * t) * e;
+      v = (c2 - omega * (c1 + c2 * t)) * e;
+    } else {
+      // Under-damped: overshoots.
+      const omegaD = omega * Math.sqrt(1 - zeta * zeta);
+      const cos = Math.cos(omegaD * t);
+      const sin = Math.sin(omegaD * t);
+      const e = Math.exp(-zeta * omega * t);
+      const sinCoef = (v0 + zeta * omega * x0) / omegaD;
+      x = e * (x0 * cos + sinCoef * sin);
+      v =
+        e *
+        (-zeta * omega * (x0 * cos + sinCoef * sin) + omegaD * (sinCoef * cos - x0 * sin));
+    }
+    this.value = this.target + x;
+    this.velocity = v;
+  }
+}

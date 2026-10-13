@@ -149,4 +149,17 @@ describe('<petal-button-group>', () => {
       });
     }
   });
+
+  it('holds a quick press until it is 75% of the way, like Compose', async () => {
+    const {group, buttons} = await setupTest('connected');
+    buttons[1].dispatchEvent(new PointerEvent('pointerdown', {button: 0, bubbles: true, composed: true}));
+    window.dispatchEvent(new PointerEvent('pointerup'));
+    const state = group as unknown as {
+      presses: Map<HTMLElement, {target: number; value: number}>;
+      releasing: Set<HTMLElement>;
+    };
+    // Released at once, but still heading to fully pressed.
+    expect(state.presses.get(buttons[1])!.target).toBe(1);
+    expect(state.releasing.has(buttons[1])).toBeTrue();
+  });
 });

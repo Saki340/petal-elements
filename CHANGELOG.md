@@ -52,7 +52,13 @@
 * **menu:** radio and checkbox items keep `checked` themselves and fire
   `change`.
 * **buttongroup:** single-select groups move and select with arrow keys, with
-  only the selected button in the tab order.
+  only the selected button in the tab order. Connected groups widen the
+  pressed button too, and the press is a simulated spring like Compose's
+  `animateWidth` (overshoot, velocity, held to 75% on a quick tap).
+* **tokens:** `motion-expressive.css` also switches the springs' `-damping`
+  and `-stiffness` properties.
+* **ripple:** waves of quick presses overlap; no press ripple with reduced
+  motion.
 * **buttongroup:** connected groups widen the pressed button (15%) and
   squeeze its neighbours, as standard groups do.
 * **button:** toggle colors from public tokens
