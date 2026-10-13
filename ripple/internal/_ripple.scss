@@ -60,37 +60,29 @@
   .surface {
     -webkit-tap-highlight-color: transparent;
 
-    &::before,
-    &::after {
-      content: '';
-      opacity: 0;
-      position: absolute;
-    }
-
     &::before {
       background-color: map.get($tokens, 'hover-color');
+      content: '';
       inset: 0;
+      opacity: 0;
+      position: absolute;
       transition: opacity 15ms linear, background-color 15ms linear;
     }
+  }
 
-    // The press ripple: a circle that grows from the pointer and fades out
-    // over 150ms when released.
-    &::after {
-      background-color: map.get($tokens, 'pressed-color');
-      border-radius: 50%;
-      transform-origin: center center;
-      transition: opacity 150ms linear;
-    }
+  // The press ripple: circles added by ripple.ts that grow from the pointer
+  // and fade out when released.
+  .wave {
+    background-color: map.get($tokens, 'pressed-color');
+    border-radius: 50%;
+    opacity: map.get($tokens, 'pressed-opacity');
+    pointer-events: none;
+    position: absolute;
+    transform-origin: center center;
   }
 
   .hovered::before {
     background-color: map.get($tokens, 'hover-color');
     opacity: map.get($tokens, 'hover-opacity');
-  }
-
-  .pressed::after {
-    // Shown at once while pressed.
-    opacity: map.get($tokens, 'pressed-opacity');
-    transition-duration: 0s;
   }
 }

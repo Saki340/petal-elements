@@ -197,7 +197,7 @@ export class ButtonGroup extends LitElement {
    * so labels keep their width and are never cut off.
    */
   private startPress(event: Event) {
-    if (this.connected || this.pressed) return;
+    if (this.pressed) return;
     const item = this.itemOf(event);
     const items = this.items;
     const index = item ? items.indexOf(item) : -1;

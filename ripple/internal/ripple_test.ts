@@ -134,7 +134,7 @@ describe('Ripple', () => {
   });
 
   describe('press ripple', () => {
-    it('grows a circle twice the diagonal from the pointer', async () => {
+    async function setupPress() {
       const root = env.render(html`
         <div style="position: relative; width: 200px; height: 40px">
           <petal-ripple></petal-ripple>
@@ -144,33 +144,61 @@ describe('Ripple', () => {
       await env.waitForStability();
       const surface = ripple.renderRoot.querySelector('.surface')!;
       const rect = ripple.getBoundingClientRect();
-      // The ripple listens to its control, the parent.
-      ripple.parentElement!.dispatchEvent(
-        new PointerEvent('pointerdown', {
-          isPrimary: true,
-          pointerType: 'mouse',
-          button: 0,
-          buttons: 1,
-          clientX: rect.left + 30,
-          clientY: rect.top + 20,
-          bubbles: true,
-        }),
-      );
+      const press = (x: number, y: number) => {
+        // The ripple listens to its control, the parent.
+        ripple.parentElement!.dispatchEvent(
+          new PointerEvent('pointerdown', {
+            isPrimary: true,
+            pointerType: 'mouse',
+            button: 0,
+            buttons: 1,
+            clientX: rect.left + x,
+            clientY: rect.top + y,
+            bubbles: true,
+          }),
+        );
+      };
+      const release = () => {
+        ripple.parentElement!.dispatchEvent(new MouseEvent('click', {bubbles: true}));
+      };
+      return {ripple, surface, press, release};
+    }
+
+    it('grows a circle twice the diagonal from the pointer', async () => {
+      const {surface, press} = await setupPress();
+      press(30, 20);
       await env.waitForStability();
       expect(surface).toHaveClass(RippleStateClasses.PRESSED);
-      const animation = (ripple as unknown as {growAnimation: Animation}).growAnimation;
-      const [first, last] = (animation.effect as KeyframeEffect).getKeyframes();
+      const wave = surface.querySelector<HTMLElement>('.wave')!;
       const size = Math.hypot(200, 40) * 2;
-      const numbers = (value: unknown) => String(value).match(/-?[\d.]+/g)!.map(Number);
-      expect(numbers(first['width'])[0]).toBeCloseTo(size, 2);
-      // Centered on the pointer, from 20% to full size.
-      const [x, y, fromScale] = numbers(first['transform']);
-      expect(x).toBeCloseTo(30 - size / 2, 2);
-      expect(y).toBeCloseTo(20 - size / 2, 2);
-      expect(fromScale).toBe(0.2);
-      expect(numbers(last['transform'])).toEqual([x, y, 1]);
-      const after = getComputedStyle(surface, '::after');
-      expect(after.borderRadius).toBe('50%');
+      expect(parseFloat(wave.style.width)).toBeCloseTo(size, 2);
+      // Centered on the pointer.
+      expect(parseFloat(wave.style.left)).toBeCloseTo(30 - size / 2, 2);
+      expect(parseFloat(wave.style.top)).toBeCloseTo(20 - size / 2, 2);
+      expect(getComputedStyle(wave).borderRadius).toBe('50%');
+      // From 20% to full size.
+      const [animation] = wave.getAnimations();
+      const [first, last] = (animation.effect as KeyframeEffect).getKeyframes();
+      expect(first['transform']).toBe('scale(0.2)');
+      expect(last['transform']).toBe('scale(1)');
+    });
+
+    it('overlaps the waves of quick presses', async () => {
+      const {surface, press, release} = await setupPress();
+      press(30, 20);
+      release();
+      press(150, 20);
+      await env.waitForStability();
+      // The first wave is still fading out.
+      expect(surface.querySelectorAll('.wave').length).toBe(2);
+    });
+
+    it('shows no wave with reduced motion', async () => {
+      const {surface, press} = await setupPress();
+      spyOn(window, 'matchMedia').and.returnValue({matches: true} as MediaQueryList);
+      press(30, 20);
+      await env.waitForStability();
+      expect(surface.querySelector('.wave')).toBeNull();
     });
   });
 });

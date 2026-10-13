@@ -15,12 +15,13 @@ import {
 } from '../../internal/controller/attachable-controller.js';
 import {EASING} from '../../internal/motion/animation.js';
 
-// The press ripple: a circle twice the element's diagonal, centered on the
-// pointer, that grows from 20% to full size in 450ms and fades out in 150ms
-// when released (styles), as on the original cny-jpy-rate site.
+// The press ripple, as on the original cny-jpy-rate site: each press adds a
+// circle twice the element's diagonal, centered on the pointer, that grows
+// from 20% to full size in 450ms and fades out in 150ms when released, still
+// growing. Waves of quick presses overlap. No ripple with reduced motion.
 const PRESS_GROW_MS = 450;
+const RELEASE_FADE_MS = 150;
 const INITIAL_ORIGIN_SCALE = 0.2;
-const PRESS_PSEUDO = '::after';
 const ANIMATION_FILL = 'forwards';
 
 /**
@@ -86,7 +87,8 @@ export class Ripple extends LitElement implements Attachable {
   @query('.surface') private readonly mdRoot!: HTMLElement | null;
   private rippleSize = '';
   private initialSize = 0;
-  private growAnimation?: Animation;
+  /** The wave of the current press. */
+  private wave?: HTMLElement;
   private state = State.INACTIVE;
   private rippleStartEvent?: PointerEvent;
   private readonly attachableController = new AttachableController(
@@ -256,24 +258,27 @@ export class Ripple extends LitElement implements Attachable {
     }
 
     this.pressed = true;
-    this.growAnimation?.cancel();
+    // The previous wave fades out while the new one grows.
+    this.releaseWave();
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return;
+    }
+
     this.determineRippleSize();
     const start = this.getStartPoint(positionEvent);
-    const translate = `translate(${start.x}px, ${start.y}px)`;
-
-    this.growAnimation = this.mdRoot.animate(
+    const wave = document.createElement('span');
+    wave.className = 'wave';
+    Object.assign(wave.style, {
+      width: this.rippleSize,
+      height: this.rippleSize,
+      left: `${start.x}px`,
+      top: `${start.y}px`,
+    });
+    this.mdRoot.append(wave);
+    this.wave = wave;
+    wave.animate(
+      [{transform: `scale(${INITIAL_ORIGIN_SCALE})`}, {transform: 'scale(1)'}],
       {
-        top: [0, 0],
-        left: [0, 0],
-        height: [this.rippleSize, this.rippleSize],
-        width: [this.rippleSize, this.rippleSize],
-        transform: [
-          `${translate} scale(${INITIAL_ORIGIN_SCALE})`,
-          `${translate} scale(1)`,
-        ],
-      },
-      {
-        pseudoElement: PRESS_PSEUDO,
         duration: PRESS_GROW_MS,
         easing: EASING.STANDARD,
         fill: ANIMATION_FILL,
@@ -281,11 +286,24 @@ export class Ripple extends LitElement implements Attachable {
     );
   }
 
-  /** Fades the ripple out (it keeps growing while it fades). */
+  /** Ends the press: the wave fades out (it keeps growing while it fades). */
   private endPressAnimation() {
     this.rippleStartEvent = undefined;
     this.state = State.INACTIVE;
     this.pressed = false;
+    this.releaseWave();
+  }
+
+  private releaseWave() {
+    const wave = this.wave;
+    if (!wave) return;
+    this.wave = undefined;
+    wave
+      .animate({opacity: 0}, {duration: RELEASE_FADE_MS, easing: 'linear', fill: 'forwards'})
+      .finished.then(
+        () => wave.remove(),
+        () => wave.remove(),
+      );
   }
 
   /**

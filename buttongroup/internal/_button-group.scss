@@ -3,8 +3,8 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-// Button group: standard (spaced, pressed item widens) and connected
-// (2px apart, inner corners). Values from md.comp.button-group.* (web tokens
+// Button group: standard (spaced) and connected (2px apart, inner corners);
+// in both, the pressed item widens, taking space from its neighbors. Values from md.comp.button-group.* (web tokens
 // v34); shapes follow Compose's ButtonGroupDefaults.connected*ButtonShapes.
 
 // go/keep-sorted start by_regex='(.+) prefix_order=sass:
@@ -95,7 +95,7 @@ $_outer: calc(var(--_container-height) / 2);
   $_width-duration: map.get(springs.$values, 'spring-fast-spatial-duration');
   $_width-easing: map.get(springs.$values, 'spring-fast-spatial');
 
-  :host(:not([connected])) ::slotted(*) {
+  ::slotted(*) {
     transition:
       padding-inline-start #{$_width-duration} #{$_width-easing},
       padding-inline-end #{$_width-duration} #{$_width-easing},

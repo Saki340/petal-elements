@@ -127,4 +127,26 @@ describe('<petal-button-group>', () => {
       expect(buttons.every((b) => !b.hasAttribute('tabindex'))).toBeTrue();
     });
   });
+
+  describe('pressed item width', () => {
+    for (const attributes of ['', 'connected']) {
+      it(`widens the pressed item into its neighbors${attributes ? ' (connected)' : ''}`, async () => {
+        const {buttons} = await setupTest(attributes);
+        const paddings = () =>
+          buttons.map((b) => parseFloat(getComputedStyle(b).paddingInlineStart));
+        const before = paddings();
+        buttons[1].dispatchEvent(
+          new PointerEvent('pointerdown', {button: 0, bubbles: true, composed: true}),
+        );
+        jasmine.clock().tick(20); // the next frame
+        await env.waitForStability();
+        for (const button of buttons) button.style.transition = 'none';
+        const after = paddings();
+        expect(after[1]).toBeGreaterThan(before[1]);
+        expect(after[0]).toBeLessThan(before[0]);
+        expect(after[2]).toBeLessThan(before[2]);
+        window.dispatchEvent(new PointerEvent('pointerup'));
+      });
+    }
+  });
 });
