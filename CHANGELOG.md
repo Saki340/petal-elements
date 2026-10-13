@@ -11,7 +11,8 @@
   set `--md-icon-fill: 1` on it.
 * **ripple:** the press ripple is a circle that grows from the pointer (twice
   the element's diagonal, 450ms) and fades out in 150ms when released; it
-  starts at once on touch.
+  starts at once on touch. Every press adds a ripple and earlier ones keep
+  spreading; with reduced motion the press ripple is not shown.
 * **menu:** menus open and close by scaling from 80% and fading, from the
   corner next to the anchor, as Compose's `DropdownMenu`, instead of growing
   in height with staggered items.
@@ -52,6 +53,8 @@
   `change`.
 * **buttongroup:** single-select groups move and select with arrow keys, with
   only the selected button in the tab order.
+* **buttongroup:** connected groups widen the pressed button (15%) and
+  squeeze its neighbours, as standard groups do.
 * **button:** toggle colors from public tokens
   (`--md-filled-button-selected-container-color`, ...), size values from
   `--md-button-<size>-*` tokens, and icon-only buttons.

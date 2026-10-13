@@ -1,0 +1,58 @@
+# petal-elements
+
+> Community-maintained Material 3 Expressive web components (Lit), forked from
+> material-web. Tags are `petal-*`, classes `Petal*`, CSS custom properties
+> `--md-*`. Values follow Jetpack Compose. Not an official Google project.
+
+Install: `npm install petal-elements`. Import one component per module,
+for example `import 'petal-elements/button/filled-button.js'`, or everything
+with `import 'petal-elements/all.js'`. Load `petal-elements/tokens/css/sys.css`
+once in the page head; set `--md-ref-typeface-brand` and
+`--md-ref-typeface-plain` for fonts. Icons need the Material Symbols font.
+
+Docs are shipped in the package under `docs/`. Read the doc of a component
+before using it; do not guess attributes.
+
+## Guides
+
+- [Using in an existing site](docs/migrating.md): steps, mapping from hand-written parts, pitfalls
+- [Quick start](docs/quick-start.md): install, import, tokens, build
+- [Expressive features](docs/expressive.md): sizes, shape morphing, springs, button groups
+- [Tokens](docs/tokens.md): system tokens and their sources
+- [Colors](docs/theming/color.md), [shape](docs/theming/shape.md), [typography](docs/theming/typography.md)
+- [Changelog](CHANGELOG.md)
+
+## Components (import path, tags)
+
+- [Button](docs/components/button.md): `button/{filled,filled-tonal,outlined,elevated,text}-button.js`
+- [Button group](docs/components/button-group.md): `buttongroup/button-group.js`, `petal-button-group`
+- [Icon button](docs/components/icon-button.md): `iconbutton/{icon,filled-icon,filled-tonal-icon,outlined-icon}-button.js`
+- [FAB](docs/components/fab.md): `fab/fab.js`, `fab/branded-fab.js`
+- [Icon](docs/components/icon.md): `icon/icon.js`, `petal-icon`
+- [Card](docs/components/card.md): `card/{filled,elevated,outlined}-card.js`
+- [Dialog](docs/components/dialog.md): `dialog/dialog.js`, `petal-dialog`
+- [Snackbar](docs/components/snackbar.md): `snackbar/snackbar.js`, `petal-snackbar`
+- [Tooltip](docs/components/tooltip.md): `tooltip/tooltip.js`, `petal-tooltip`
+- [Menu](docs/components/menu.md): `menu/{menu,menu-item,sub-menu,menu-group}.js`
+- [Top app bar](docs/components/top-app-bar.md): `appbar/top-app-bar.js`, `petal-top-app-bar`
+- [Pull to refresh](docs/components/pull-to-refresh.md): `pulltorefresh/pull-to-refresh.js`
+- [Progress](docs/components/progress.md): `progress/{linear,circular}-progress.js`
+- [Loading indicator](docs/components/loading-indicator.md): `loadingindicator/loading-indicator.js`
+- [List](docs/components/list.md): `list/list.js`, `list/list-item.js`
+- [Text field](docs/components/text-field.md): `textfield/{filled,outlined}-text-field.js`
+- [Select](docs/components/select.md): `select/{filled,outlined}-select.js`, `select/select-option.js`
+- [Checkbox](docs/components/checkbox.md), [radio](docs/components/radio.md), [switch](docs/components/switch.md), [slider](docs/components/slider.md)
+- [Tabs](docs/components/tabs.md): `tabs/{tabs,primary-tab,secondary-tab}.js`
+- [Chips](docs/components/chip.md): `chips/{assist,filter,input,suggestion}-chip.js`, `chips/chip-set.js`
+- [Divider](docs/components/divider.md), [elevation](docs/components/elevation.md), [focus ring](docs/components/focus-ring.md), [ripple](docs/components/ripple.md)
+
+## Machine-readable API
+
+- [custom-elements.json](custom-elements.json): every element's attributes, properties, events, slots and CSS parts
+- `.d.ts` files sit next to every `.js` module
+
+## Optional
+
+- [Support and browsers](docs/support.md)
+- [Breaking changes in v2 (aria attributes)](migrations/v2/README.md)
+- Source: https://github.com/Saki340/petal-elements — catalog: https://petal.anontokyo.vip/
