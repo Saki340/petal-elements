@@ -7,7 +7,7 @@
 import {
   springEasing,
   springFromCss,
-  STANDARD_SLOW_SPATIAL,
+  SLOW_SPATIAL,
 } from '../internal/motion/spring.js';
 
 /** Where the new theme starts: a pointer event, an element or a point. */
@@ -84,7 +84,7 @@ export async function transitionTheme(
   // To the farthest corner of the viewport.
   const radius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
   const root = document.documentElement;
-  const timing = springEasing(springFromCss(root, 'slow-spatial', STANDARD_SLOW_SPATIAL));
+  const timing = springEasing(springFromCss(root, 'slow-spatial', SLOW_SPATIAL));
 
   root.classList.add(ACTIVE);
   const transition = document.startViewTransition(apply);

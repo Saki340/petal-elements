@@ -176,8 +176,8 @@ picker.addEventListener('keydown', (event) => {
 
 // ---------- Spring demo ----------
 
-// The page uses the expressive springs; "Standard" sets the demo back to the
-// components' defaults.
+// The springs are expressive by default; "Standard" switches the demo to the
+// standard scheme.
 const springs = document.getElementById('springs')!;
 document.getElementById('scheme')!.addEventListener('change', (event) => {
   const scheme = (event.target as HTMLElement).dataset['scheme'];

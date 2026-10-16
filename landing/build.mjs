@@ -42,7 +42,6 @@ await esbuild.build({
 fs.copyFileSync('landing/index.html', `${OUT}/index.html`);
 fs.copyFileSync('landing/styles.css', `${OUT}/assets/styles.css`);
 fs.copyFileSync('tokens/css/sys.css', `${OUT}/assets/sys.css`);
-fs.copyFileSync('tokens/css/motion-expressive.css', `${OUT}/assets/motion-expressive.css`);
 fs.copyFileSync('catalog/site/images/favicon.svg', `${OUT}/favicon.svg`);
 console.log(`Landing page in ${OUT}/`);
 

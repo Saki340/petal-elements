@@ -308,6 +308,23 @@ export async function buildCss(
     'the system setting, or `light` / `dark` on any element to fix the scheme.',
   ];
 
+  // The default motion scheme is expressive, like Compose's
+  // MaterialExpressiveTheme: --md-sys-motion-spring-* (which components use)
+  // are the expressive springs, and the standard scheme is kept as
+  // --md-sys-motion-standard-spring-*.
+  const standard = (lines: string[]) =>
+    lines.map((line) =>
+      line.replace('--md-sys-motion-spring-', '--md-sys-motion-standard-spring-'),
+    );
+  const motion = standard(properties(system, '--md-sys-motion-'));
+  const springs = [
+    ...standard(springProperties(system, 'spring')),
+    ...springProperties(system, 'expressive-spring'),
+  ];
+  const defaults = [...motion, ...springs]
+    .filter((line) => line.startsWith('  --md-sys-motion-expressive-spring-'))
+    .map((line) => line.replace('--md-sys-motion-expressive-spring-', '--md-sys-motion-spring-'));
+
   const sections: Array<[string, string[]]> = [
     ['Typeface', properties(system, '--md-ref-typeface-')],
     ['Color', await colorProperties(byModule, '')],
@@ -315,12 +332,17 @@ export async function buildCss(
     ['Shape', properties(system, '--md-sys-shape-')],
     ['State', properties(system, '--md-sys-state-')],
     ['Elevation', properties(system, '--md-sys-elevation-')],
-    ['Motion', properties(system, '--md-sys-motion-')],
+    ['Motion', motion],
     [
       'Springs as linear() easings and settle durations, derived from stiffness\n' +
-        '   * and damping (not in the sources). spring-*: standard motion scheme;\n' +
-        '   * expressive-spring-*: expressive motion scheme',
-      [...springProperties(system, 'spring'), ...springProperties(system, 'expressive-spring')],
+        '   * and damping (not in the sources). standard-spring-*: standard motion\n' +
+        '   * scheme; expressive-spring-*: expressive motion scheme',
+      springs,
+    ],
+    [
+      'The springs components use: the expressive scheme by default (load\n' +
+        '   * motion-standard.css for the standard one)',
+      defaults,
     ],
   ];
   const body = sections
@@ -342,29 +364,32 @@ export async function buildCss(
     );
   }
 
-  // Components use the --md-sys-motion-spring-* names, which are the standard
-  // motion scheme by default. This file switches them to the expressive scheme
-  // (like Compose's MotionScheme.expressive()), for :root or any element.
-  const expressive: string[] = [];
-  for (const speed of ['fast', 'default', 'slow']) {
-    for (const kind of ['spatial', 'effects']) {
-      // The curve and duration, and the spring itself (damping, stiffness) for
-      // components that simulate it.
-      for (const suffix of ['', '-duration', '-damping', '-stiffness']) {
-        const name = `${speed}-${kind}${suffix}`;
-        expressive.push(
-          `  --md-sys-motion-spring-${name}: var(--md-sys-motion-expressive-spring-${name});`,
-        );
+  // Components use the --md-sys-motion-spring-* names, which are the
+  // expressive scheme by default. These files point them at one scheme, for
+  // :root or any element.
+  for (const [scheme, title, note] of [
+    ['standard', 'Standard motion scheme', 'MotionScheme.standard(): calmer, no overshoot'],
+    ['expressive', 'Expressive motion scheme', 'MotionScheme.expressive(), the default'],
+  ]) {
+    const lines: string[] = [];
+    for (const speed of ['fast', 'default', 'slow']) {
+      for (const kind of ['spatial', 'effects']) {
+        // The curve and duration, and the spring itself (damping, stiffness)
+        // for components that simulate it.
+        for (const suffix of ['', '-duration', '-damping', '-stiffness']) {
+          const name = `${speed}-${kind}${suffix}`;
+          lines.push(`  --md-sys-motion-spring-${name}: var(--md-sys-motion-${scheme}-spring-${name});`);
+        }
       }
     }
+    output.set(
+      `motion-${scheme}.css`,
+      fileHeader(`${title}. Load after sys.css.`, [
+        'Points the --md-sys-motion-spring-* properties, which components use, at',
+        `the ${scheme} springs (${note}).`,
+        'To use it for part of a page only, copy the rule to a class.',
+      ]) + `:root {\n${lines.join('\n')}\n}\n`,
+    );
   }
-  output.set(
-    'motion-expressive.css',
-    fileHeader('Expressive motion scheme. Load after sys.css.', [
-      'Points the --md-sys-motion-spring-* properties, which components use and',
-      'which are the standard scheme by default, at the expressive springs.',
-      'To use it for part of a page only, copy the rule to a class.',
-    ]) + `:root {\n${expressive.join('\n')}\n}\n`,
-  );
   return output;
 }

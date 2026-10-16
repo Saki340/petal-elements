@@ -8,8 +8,8 @@
  *
  * Do not edit; regenerate instead.
  *
- * Points the --md-sys-motion-spring-* properties, which components use and
- * which are the standard scheme by default, at the expressive springs.
+ * Points the --md-sys-motion-spring-* properties, which components use, at
+ * the expressive springs (MotionScheme.expressive(), the default).
  * To use it for part of a page only, copy the rule to a class.
  */
 :root {

@@ -38,7 +38,8 @@ exists.
    <style>:root { color-scheme: light dark; }</style>
    ```
 
-   Optionally add `motion-expressive.css` after it for bouncier springs.
+   The springs are expressive (they overshoot a little); add
+   `motion-standard.css` after it for calmer ones.
 3. **Set fonts and the theme**, see below.
 4. **Replace one kind of component at a time** (all buttons, then all
    dialogs, ...). Import only what the page uses:

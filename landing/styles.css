@@ -273,8 +273,8 @@ h3 {
   background: var(--md-sys-color-surface-container-lowest);
 }
 
-/* Spring demo: real components; the scheme switch sets the springs of the
-   demo back to the components' standard defaults. */
+/* Spring demo: real components; the scheme switch points the springs of the
+   demo at the standard scheme (like motion-standard.css). */
 
 .springs {
   display: grid;
@@ -298,30 +298,30 @@ h3 {
 }
 
 .springs.standard {
-  --md-sys-motion-spring-fast-spatial: initial;
-  --md-sys-motion-spring-fast-spatial-duration: initial;
-  --md-sys-motion-spring-fast-spatial-damping: initial;
-  --md-sys-motion-spring-fast-spatial-stiffness: initial;
-  --md-sys-motion-spring-fast-effects: initial;
-  --md-sys-motion-spring-fast-effects-duration: initial;
-  --md-sys-motion-spring-fast-effects-damping: initial;
-  --md-sys-motion-spring-fast-effects-stiffness: initial;
-  --md-sys-motion-spring-default-spatial: initial;
-  --md-sys-motion-spring-default-spatial-duration: initial;
-  --md-sys-motion-spring-default-spatial-damping: initial;
-  --md-sys-motion-spring-default-spatial-stiffness: initial;
-  --md-sys-motion-spring-default-effects: initial;
-  --md-sys-motion-spring-default-effects-duration: initial;
-  --md-sys-motion-spring-default-effects-damping: initial;
-  --md-sys-motion-spring-default-effects-stiffness: initial;
-  --md-sys-motion-spring-slow-spatial: initial;
-  --md-sys-motion-spring-slow-spatial-duration: initial;
-  --md-sys-motion-spring-slow-spatial-damping: initial;
-  --md-sys-motion-spring-slow-spatial-stiffness: initial;
-  --md-sys-motion-spring-slow-effects: initial;
-  --md-sys-motion-spring-slow-effects-duration: initial;
-  --md-sys-motion-spring-slow-effects-damping: initial;
-  --md-sys-motion-spring-slow-effects-stiffness: initial;
+  --md-sys-motion-spring-fast-spatial: var(--md-sys-motion-standard-spring-fast-spatial);
+  --md-sys-motion-spring-fast-spatial-duration: var(--md-sys-motion-standard-spring-fast-spatial-duration);
+  --md-sys-motion-spring-fast-spatial-damping: var(--md-sys-motion-standard-spring-fast-spatial-damping);
+  --md-sys-motion-spring-fast-spatial-stiffness: var(--md-sys-motion-standard-spring-fast-spatial-stiffness);
+  --md-sys-motion-spring-fast-effects: var(--md-sys-motion-standard-spring-fast-effects);
+  --md-sys-motion-spring-fast-effects-duration: var(--md-sys-motion-standard-spring-fast-effects-duration);
+  --md-sys-motion-spring-fast-effects-damping: var(--md-sys-motion-standard-spring-fast-effects-damping);
+  --md-sys-motion-spring-fast-effects-stiffness: var(--md-sys-motion-standard-spring-fast-effects-stiffness);
+  --md-sys-motion-spring-default-spatial: var(--md-sys-motion-standard-spring-default-spatial);
+  --md-sys-motion-spring-default-spatial-duration: var(--md-sys-motion-standard-spring-default-spatial-duration);
+  --md-sys-motion-spring-default-spatial-damping: var(--md-sys-motion-standard-spring-default-spatial-damping);
+  --md-sys-motion-spring-default-spatial-stiffness: var(--md-sys-motion-standard-spring-default-spatial-stiffness);
+  --md-sys-motion-spring-default-effects: var(--md-sys-motion-standard-spring-default-effects);
+  --md-sys-motion-spring-default-effects-duration: var(--md-sys-motion-standard-spring-default-effects-duration);
+  --md-sys-motion-spring-default-effects-damping: var(--md-sys-motion-standard-spring-default-effects-damping);
+  --md-sys-motion-spring-default-effects-stiffness: var(--md-sys-motion-standard-spring-default-effects-stiffness);
+  --md-sys-motion-spring-slow-spatial: var(--md-sys-motion-standard-spring-slow-spatial);
+  --md-sys-motion-spring-slow-spatial-duration: var(--md-sys-motion-standard-spring-slow-spatial-duration);
+  --md-sys-motion-spring-slow-spatial-damping: var(--md-sys-motion-standard-spring-slow-spatial-damping);
+  --md-sys-motion-spring-slow-spatial-stiffness: var(--md-sys-motion-standard-spring-slow-spatial-stiffness);
+  --md-sys-motion-spring-slow-effects: var(--md-sys-motion-standard-spring-slow-effects);
+  --md-sys-motion-spring-slow-effects-duration: var(--md-sys-motion-standard-spring-slow-effects-duration);
+  --md-sys-motion-spring-slow-effects-damping: var(--md-sys-motion-standard-spring-slow-effects-damping);
+  --md-sys-motion-spring-slow-effects-stiffness: var(--md-sys-motion-standard-spring-slow-effects-stiffness);
 }
 
 /* Reasons */

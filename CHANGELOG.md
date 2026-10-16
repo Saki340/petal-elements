@@ -13,6 +13,10 @@
   the element's diagonal, 450ms) and fades out in 150ms when released; it
   starts at once on touch. Every press adds a ripple and earlier ones keep
   spreading; with reduced motion the press ripple is not shown.
+* **motion:** the springs (`--md-sys-motion-spring-*`) are the expressive
+  scheme by default, like Compose's `MaterialExpressiveTheme`; the standard
+  ones are `--md-sys-motion-standard-spring-*`, and `motion-standard.css`
+  switches back to them.
 * **menu:** menus open and close by scaling from 80% and fading, from the
   corner next to the anchor, as Compose's `DropdownMenu`, instead of growing
   in height with staggered items.
@@ -53,13 +57,15 @@
   `change`.
 * **buttongroup:** single-select groups move and select with arrow keys, with
   only the selected button in the tab order. Connected groups widen the
-  pressed button too, and the press is a simulated spring like Compose's
-  `animateWidth` (overshoot, velocity, held to 75% on a quick tap).
+  pressed button too; the whole group makes room (a petal-elements choice;
+  Compose takes it from the neighbors only), and the press is a simulated
+  spring like Compose's `animateWidth` (overshoot, velocity, held to 75% on a
+  quick tap).
 * **theme:** `transitionTheme()` (`theme/theme-transition.js`) changes the
   theme with a circle that grows from the pressed control, on the slow
   spatial spring (View Transitions API).
-* **tokens:** `motion-expressive.css` also switches the springs' `-damping`
-  and `-stiffness` properties.
+* **tokens:** `motion-standard.css`, and the springs' `-damping` and
+  `-stiffness` properties for components that simulate a spring.
 * **ripple:** waves of quick presses overlap; no press ripple with reduced
   motion.
 * **buttongroup:** connected groups widen the pressed button (15%) and

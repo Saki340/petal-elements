@@ -100,8 +100,10 @@ Other stylesheets in `tokens/css/`:
 
 -   `sys-medium-contrast.css`, `sys-high-contrast.css`: colors with more
     contrast. They contain only colors; load one after `sys.css`.
--   `motion-expressive.css`: switches the motion springs to the expressive
-    scheme (more bounce). Load it after `sys.css`.
+-   `motion-standard.css`: switches the motion springs from the expressive
+    scheme (the default, with a little bounce) to the calmer standard scheme.
+    Load it after `sys.css`. (`motion-expressive.css` switches them back, for
+    part of a page.)
 
 Each file is also available as a Lit `CSSResult`
 (`tokens/css/sys.cssresult.js` exports `styles`).

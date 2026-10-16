@@ -115,8 +115,9 @@ springs, for example for shape morphing.
 }
 ```
 
-Load `tokens/css/motion-expressive.css` to switch to the expressive motion
-scheme. See [Material 3 Expressive features](../expressive.md#motion).
+The springs are the expressive motion scheme by default. Load
+`tokens/css/motion-standard.css` to switch to the standard scheme. See
+[Material 3 Expressive features](../expressive.md#motion).
 
 ### Component
 

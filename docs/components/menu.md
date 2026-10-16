@@ -211,7 +211,7 @@ Granny Smith, and Red Delicious."](images/menu/usage-submenu.webp)
 
 Like Jetpack Compose's `DropdownMenu`, a menu opens by scaling from 80% and
 fading in, from the corner next to its anchor, on the fast spatial and fast
-effects springs (expressive with `motion-expressive.css`). Closing reverses
+effects springs (expressive by default). Closing reverses
 it. `quick` skips the animation.
 
 ### Groups

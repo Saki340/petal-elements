@@ -87,8 +87,9 @@ takes to settle within 0.1%:
 
 | Properties | Scheme | Source |
 |---|---|---|
-| `--md-sys-motion-spring-<speed>-<kind>[-duration]` | standard | web tokens |
-| `--md-sys-motion-expressive-spring-<speed>-<kind>[-duration]` | expressive | Compose `ExpressiveMotionTokens` |
+| `--md-sys-motion-standard-spring-<speed>-<kind>[-duration\|-damping\|-stiffness]` | standard | web tokens |
+| `--md-sys-motion-expressive-spring-<speed>-<kind>[-duration\|-damping\|-stiffness]` | expressive | Compose `ExpressiveMotionTokens` |
+| `--md-sys-motion-spring-<speed>-<kind>[-duration\|-damping\|-stiffness]` | what components use: expressive by default, standard with `motion-standard.css` | |
 
 `<speed>` is `fast`, `default` or `slow`; `<kind>` is `spatial` (position,
 size, shape; may overshoot) or `effects` (color, opacity).

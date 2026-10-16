@@ -20,7 +20,7 @@ const THRESHOLD = 0.01;
 /**
  * Reads a `--md-sys-motion-spring-<name>-damping` and `-stiffness` pair from
  * an element, e.g. `fast-spatial`, falling back to `fallback`. Pages switch
- * the scheme by setting these properties (tokens/css/motion-expressive.css).
+ * the scheme by setting these properties (tokens/css/motion-standard.css).
  */
 export function springFromCss(element: Element, name: string, fallback: SpringSpec): SpringSpec {
   const style = getComputedStyle(element);
@@ -31,11 +31,14 @@ export function springFromCss(element: Element, name: string, fallback: SpringSp
   return dampingRatio > 0 && stiffness > 0 ? {dampingRatio, stiffness} : fallback;
 }
 
-/** StandardMotionTokens.SpringFastSpatial: damping 0.9, stiffness 1400. */
-export const STANDARD_FAST_SPATIAL: SpringSpec = {dampingRatio: 0.9, stiffness: 1400};
+// Fallbacks when the page has no spring tokens: the expressive scheme, the
+// default (ExpressiveMotionTokens).
 
-/** StandardMotionTokens.SpringSlowSpatial: damping 0.9, stiffness 300. */
-export const STANDARD_SLOW_SPATIAL: SpringSpec = {dampingRatio: 0.9, stiffness: 300};
+/** ExpressiveMotionTokens.SpringFastSpatial: damping 0.6, stiffness 800. */
+export const FAST_SPATIAL: SpringSpec = {dampingRatio: 0.6, stiffness: 800};
+
+/** ExpressiveMotionTokens.SpringSlowSpatial: damping 0.8, stiffness 200. */
+export const SLOW_SPATIAL: SpringSpec = {dampingRatio: 0.8, stiffness: 200};
 
 /**
  * The spring from 0 to 1 as a CSS `linear()` easing and its duration, for the

@@ -44,9 +44,10 @@ ring takes the new shape at once.
 
 Shape changes use the springs as `linear()` easings
 (`--md-sys-motion-spring-*`, see [tokens.md](tokens.md)). These are the
-standard motion scheme by default; load `tokens/css/motion-expressive.css`
-(after `sys.css`) for the expressive scheme, like Compose's
-`MotionScheme.expressive()`.
+expressive motion scheme by default, like Compose's `MaterialExpressiveTheme`
+(`MotionScheme.expressive()`): spatial springs overshoot a little. Load
+`tokens/css/motion-standard.css` (after `sys.css`) for the calmer standard
+scheme (`MotionScheme.standard()`).
 
 ### Deviations from the tokens
 
@@ -76,18 +77,20 @@ Toggle buttons morph with the fast spatial spring (`ToggleButton.kt`).
 | `single-select` | Selecting a toggle button deselects the others; clicking the selected one keeps it selected. |
 
 Standard and connected groups: a pressed button widens by
-`pressed.item.width.multiplier` (15%) of its width at rest and its neighbors
-give way, at most 24px each (Compose's `compressionLimit`,
-`ButtonDefaults.ContentPadding`); a middle button takes half from each side
-(Compose's `ButtonGroup` layout). The group's total width does not change. On
+`pressed.item.width.multiplier` (15%) of its width at rest, and every other
+button in the group gives way in proportion to its width, at most its own
+padding. This is a petal-elements choice, as on cny-jpy-rate: Compose's
+`ButtonGroup` takes the space from the neighbors only, and its connected
+group sample has no width animation. The group's total width does not
+change. On
 the web the space moves through the buttons' inline padding, so labels are
 never cut off.
 
 The press is simulated like Compose's `animateWidth`: a spring from 0 to 1
 with the fast spatial spring's damping and stiffness, read from
-`--md-sys-motion-spring-fast-spatial-damping` and `-stiffness` (standard
-0.9 / 1400; `motion-expressive.css` switches them to 0.6 / 800, which
-overshoots), keeping its velocity when released mid-way. A press released
+`--md-sys-motion-spring-fast-spatial-damping` and `-stiffness` (expressive
+0.6 / 800 by default, which overshoots; standard 0.9 / 1400 with
+`motion-standard.css`), keeping its velocity when released mid-way. A press released
 before it is 75% of the way continues to 75% first, as in Compose.
 `prefers-reduced-motion` turns the animations off, here and for sized
 buttons.
