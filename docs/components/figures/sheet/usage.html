@@ -1,0 +1,29 @@
+<!--
+  @license
+  Copyright 2026 Saki
+  SPDX-License-Identifier: Apache-2.0
+-->
+<div class="figure-wrapper">
+  <figure
+      style="justify-content: center; padding-block: 24px"
+      title="A bottom sheet"
+      aria-label="A filled button that says open bottom sheet. Interact with the button to open a modal bottom sheet.">
+    <petal-filled-button id="usage-sheet-opener">Open bottom sheet</petal-filled-button>
+    <petal-bottom-sheet id="usage-sheet" aria-label="Share">
+      <div style="padding: 0 24px 24px">
+        <h2 style="margin: 0 0 8px; font: var(--md-sys-typescale-title-large-weight, 400) var(--md-sys-typescale-title-large-size, 22px) / var(--md-sys-typescale-title-large-line-height, 28px) var(--md-sys-typescale-title-large-font, sans-serif)">Share</h2>
+        <div style="display: flex; flex-direction: column; align-items: flex-start">
+          <petal-text-button>Copy link</petal-text-button>
+          <petal-text-button>Send by email</petal-text-button>
+          <petal-text-button>Save to files</petal-text-button>
+        </div>
+      </div>
+    </petal-bottom-sheet>
+    <script type="module">
+      const sheet = document.body.querySelector('#usage-sheet');
+      document.body.querySelector('#usage-sheet-opener').addEventListener('click', () => {
+        sheet.show();
+      });
+    </script>
+  </figure>
+</div>

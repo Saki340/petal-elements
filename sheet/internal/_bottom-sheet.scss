@@ -1,0 +1,224 @@
+//
+// Copyright 2026 Saki
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// Modal bottom sheet, after Jetpack Compose Material 3 (ModalBottomSheet.kt,
+// BottomSheet.kt, SheetDefaults.kt). Colors, shape and the drag handle's size:
+// SheetBottomTokens (tokens/versions/compose/values). Scrim: ScrimTokens, drawn
+// at ContainerOpacity (0.32) times an alpha the element animates. Max width:
+// BottomSheetDefaults.SheetMaxWidth (640dp). The drag handle row is the
+// handle's 4dp plus the 22dp of DragHandleVerticalPadding above and below it.
+// The sheet's position and the scrim's alpha are springs run by the element.
+// Compose's ModalBottomSheet has no elevation (tonalElevation = 0.dp).
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'sass:map';
+@use '../../focus/focus-ring';
+@use '../../tokens/versions/compose/values/md-comp-scrim' as scrim;
+@use '../../tokens/versions/compose/values/md-comp-sheet-bottom' as sheet;
+// go/keep-sorted end
+
+@mixin styles() {
+  // The hidden attribute, which `display` on the host would override.
+  :host([hidden]) {
+    display: none;
+  }
+
+  :host {
+    --_container-color: var(
+      --md-bottom-sheet-container-color,
+      #{map.get(sheet.$values, 'docked-container-color')}
+    );
+    --_container-shape: var(
+      --md-bottom-sheet-container-shape,
+      #{map.get(sheet.$values, 'docked-container-shape')}
+    );
+    // contentColorFor(SurfaceContainerLow) is OnSurface.
+    --_content-color: var(--md-bottom-sheet-content-color, var(--md-sys-color-on-surface, #1d1b20));
+    --_drag-handle-color: var(
+      --md-bottom-sheet-drag-handle-color,
+      #{map.get(sheet.$values, 'docked-drag-handle-color')}
+    );
+    --_drag-handle-height: var(
+      --md-bottom-sheet-drag-handle-height,
+      #{map.get(sheet.$values, 'docked-drag-handle-height')}
+    );
+    --_drag-handle-width: var(
+      --md-bottom-sheet-drag-handle-width,
+      #{map.get(sheet.$values, 'docked-drag-handle-width')}
+    );
+    --_focus-indicator-color: var(
+      --md-bottom-sheet-focus-indicator-color,
+      #{map.get(sheet.$values, 'focus-indicator-color')}
+    );
+    --_max-width: var(--md-bottom-sheet-max-width, 640px);
+    --_scrim-color: var(
+      --md-bottom-sheet-scrim-color,
+      #{map.get(scrim.$values, 'container-color')}
+    );
+    --_scrim-opacity: var(
+      --md-bottom-sheet-scrim-opacity,
+      #{map.get(scrim.$values, 'container-opacity')}
+    );
+
+    display: contents;
+  }
+
+  dialog {
+    position: fixed;
+    inset: 0;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: inherit;
+    outline: none;
+    // Not hidden: a scroll container would scroll to the drag handle when it
+    // gets focus while the sheet is still below the page.
+    overflow: clip;
+    overscroll-behavior: contain;
+  }
+
+  dialog[open] {
+    display: block;
+  }
+
+  ::backdrop {
+    // The scrim is its own element, which animates.
+    background: none;
+  }
+
+  // A manual popover, so it is in the top layer under the dialog.
+  .scrim {
+    position: fixed;
+    inset: 0;
+    width: auto;
+    height: auto;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: var(--_scrim-color);
+    opacity: calc(var(--_scrim-opacity) * var(--_scrim-alpha, 0));
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  // The sheet sits at the top of the page, moved down by a transform; it is
+  // as tall as its content up to the page.
+  .sheet {
+    position: absolute;
+    top: 0;
+    inset-inline: 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: var(--_max-width);
+    max-height: 100%;
+    margin-inline: auto;
+    border-radius: var(--_container-shape);
+    background-color: var(--_container-color);
+    color: var(--_content-color);
+    overflow: hidden;
+    // Below the page until the element positions it.
+    transform: translateY(100%);
+    transform-origin: top center;
+    touch-action: none;
+    will-change: transform;
+  }
+
+  .sheet.dragging {
+    cursor: grabbing;
+    user-select: none;
+  }
+
+  .content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-height: 0;
+    // The bottom of ModalBottomSheet's modalWindowInsets. The top inset is not
+    // padded: a browser page seldom reaches under a system bar.
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    transform-origin: top center;
+  }
+
+  .drag-handle {
+    all: unset;
+    box-sizing: border-box;
+    display: flex;
+    flex: none;
+    align-items: center;
+    align-self: center;
+    justify-content: center;
+    min-width: 48px;
+    // 22dp + the handle's 4dp + 22dp.
+    min-height: calc(var(--_drag-handle-height) + 44px);
+    cursor: pointer;
+    touch-action: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .handle-bounds {
+    position: relative;
+    display: flex;
+  }
+
+  .handle {
+    width: var(--_drag-handle-width);
+    height: var(--_drag-handle-height);
+    // MaterialTheme.shapes.extraLarge, which a 4dp handle fills as a pill.
+    border-radius: var(--md-sys-shape-corner-extra-large, 28px);
+    background-color: var(--_drag-handle-color);
+  }
+
+  petal-focus-ring {
+    @include focus-ring.theme(
+      (
+        'color': var(--_focus-indicator-color),
+        'shape': var(--md-sys-shape-corner-extra-large, 28px),
+      )
+    );
+  }
+
+  .body {
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+    overscroll-behavior: contain;
+    touch-action: none;
+  }
+
+  // An expanded sheet with content taller than itself scrolls the content;
+  // otherwise a touch on the content drags the sheet.
+  .sheet.scrolls .body {
+    overflow-y: auto;
+    touch-action: pan-y;
+  }
+
+  // Zero-size sentinels, which keep Tab inside the sheet.
+  .focus-trap {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+  }
+
+  @media (forced-colors: active) {
+    .sheet {
+      outline: 1px solid CanvasText;
+    }
+
+    .handle {
+      background-color: CanvasText;
+    }
+  }
+}

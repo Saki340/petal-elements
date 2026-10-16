@@ -72,6 +72,7 @@ exists.
 | Floating action button | `petal-fab` (`variant="filled-primary"` etc.), `petal-branded-fab` |
 | Modal | `petal-dialog` |
 | Toast or snackbar | `petal-snackbar` (`show()` returns a promise) |
+| Bottom sheet or action sheet | `petal-bottom-sheet` (`show()` and `close()` return promises) |
 | Hover hint | `petal-tooltip` with `for="<anchor id>"` |
 | Dropdown or context menu | `petal-menu` with `petal-menu-item`, `petal-sub-menu`, `petal-menu-group` |
 | Sticky header | `petal-top-app-bar` (`size`, `headline`, collapses on scroll) |

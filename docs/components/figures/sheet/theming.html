@@ -1,0 +1,31 @@
+<!--
+  @license
+  Copyright 2026 Saki
+  SPDX-License-Identifier: Apache-2.0
+-->
+<div class="figure-wrapper">
+  <figure
+      style="justify-content: center; padding-block: 24px"
+      title="Bottom sheet theming example"
+      aria-label="A filled button that says open themed sheet. Interact with the button to open a bottom sheet with a tertiary container and a darker scrim.">
+    <style>
+      #theming-sheet {
+        --md-bottom-sheet-container-color: var(--md-sys-color-tertiary-container, #ffd8e4);
+        --md-bottom-sheet-content-color: var(--md-sys-color-on-tertiary-container, #31111d);
+        --md-bottom-sheet-scrim-opacity: 0.6;
+      }
+    </style>
+    <petal-filled-button id="theming-sheet-opener">Open themed sheet</petal-filled-button>
+    <petal-bottom-sheet id="theming-sheet" aria-label="Options">
+      <div style="padding: 0 24px 24px">
+        <p style="margin: 0">A sheet with a tertiary container.</p>
+      </div>
+    </petal-bottom-sheet>
+    <script type="module">
+      const sheet = document.body.querySelector('#theming-sheet');
+      document.body.querySelector('#theming-sheet-opener').addEventListener('click', () => {
+        sheet.show();
+      });
+    </script>
+  </figure>
+</div>

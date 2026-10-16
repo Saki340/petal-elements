@@ -1,0 +1,28 @@
+<!--
+  @license
+  Copyright 2026 Saki
+  SPDX-License-Identifier: Apache-2.0
+-->
+<div class="figure-wrapper">
+  <figure
+      style="justify-content: center; padding-block: 24px"
+      title="A bottom sheet that skips the partial height"
+      aria-label="A filled button that says open full sheet. Interact with the button to open a bottom sheet at its full height.">
+    <petal-filled-button id="usage-skip-opener">Open full sheet</petal-filled-button>
+    <petal-bottom-sheet id="usage-skip-sheet" skip-partially-expanded aria-label="Options">
+      <div style="padding: 0 24px 24px">
+        <p style="margin: 0 0 16px">This sheet opens at its full height.</p>
+        <petal-text-button id="usage-skip-close">Close</petal-text-button>
+      </div>
+    </petal-bottom-sheet>
+    <script type="module">
+      const sheet = document.body.querySelector('#usage-skip-sheet');
+      document.body.querySelector('#usage-skip-opener').addEventListener('click', () => {
+        sheet.show();
+      });
+      document.body.querySelector('#usage-skip-close').addEventListener('click', () => {
+        sheet.close();
+      });
+    </script>
+  </figure>
+</div>

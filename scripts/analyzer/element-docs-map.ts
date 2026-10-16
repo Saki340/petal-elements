@@ -13,6 +13,7 @@ import {COMPONENT_CUSTOM_ELEMENTS} from '../component-custom-elements.js';
  */
 export const docsToElementMapping: {[key: string]: readonly string[]} = {
   'top-app-bar.md': COMPONENT_CUSTOM_ELEMENTS.appBar,
+  'bottom-sheet.md': COMPONENT_CUSTOM_ELEMENTS.sheet,
   'button.md': COMPONENT_CUSTOM_ELEMENTS.button,
   'button-group.md': COMPONENT_CUSTOM_ELEMENTS.buttonGroup,
   'card.md': COMPONENT_CUSTOM_ELEMENTS.card,

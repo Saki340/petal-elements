@@ -55,7 +55,7 @@ tokens/dtcg/compose/. The expressive motion springs in tokens/css/sys.css come
 from ExpressiveMotionTokens.kt. Generated files state their source commit and
 the original copyright in their headers. tokens/versions/compose/values/ holds
 value maps generated from these tokens, used by the components that follow
-Compose (snackbar, tooltip, card, top app bar, loading indicator).
+Compose (snackbar, tooltip, card, top app bar, loading indicator, bottom sheet).
 
 -------------------------------------------------------------------------------
 AndroidX graphics-shapes and Compose Material 3 MaterialShapes

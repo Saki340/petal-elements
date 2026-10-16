@@ -40,6 +40,11 @@
 * **search:** `petal-search-bar`, a search bar that expands into a full screen or
   docked search view, after Jetpack Compose `SearchBar`,
   `ExpandedFullScreenSearchBar` and `ExpandedDockedSearchBar`.
+* **sheet:** `petal-bottom-sheet`, a modal bottom sheet after Jetpack Compose
+  `ModalBottomSheet`: opens partially expanded, expands and dismisses by
+  dragging (with the pointer's velocity, on the motion scheme's springs), the
+  drag handle, Escape and the scrim, and traps focus. There is no side sheet:
+  Compose has none.
 * **snackbar:** `petal-snackbar`, after Jetpack Compose `Snackbar`.
 * **tooltip:** `petal-tooltip`, after Jetpack Compose `PlainTooltip`.
 * **card:** filled, elevated and outlined cards move from labs to

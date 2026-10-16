@@ -58,6 +58,7 @@ export const COMPONENT_CUSTOM_ELEMENTS = {
     'select/outlined-select.ts',
     'select/select-option.ts',
   ],
+  sheet: ['sheet/bottom-sheet.ts'],
   slider: ['slider/slider.ts'],
   snackbar: ['snackbar/snackbar.ts'],
   switch: ['switch/switch.ts'],
