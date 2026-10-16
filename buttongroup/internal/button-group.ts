@@ -11,14 +11,8 @@ import {Button, ButtonSize} from '../../button/internal/button.js';
 import {
   Spring,
   springFromCss,
-  STANDARD_FAST_SPATIAL,
+  FAST_SPATIAL,
 } from '../../internal/motion/spring.js';
-
-/**
- * ButtonDefaults.ContentPadding's end padding (BaselineButtonTokens
- * .TrailingSpace): how much a neighbor can be compressed (compressionLimit).
- */
-const COMPRESSION_LIMIT = 24;
 
 /** A pressed item lets go once its press has reached this far, like Compose. */
 const RELEASE_AT = 0.75;
@@ -208,11 +202,12 @@ export class ButtonGroup extends LitElement {
   }
 
   /**
-   * Widens the pressed item by `--_expanded-ratio` of its width, taking the
-   * space from its neighbors, at most COMPRESSION_LIMIT from each. A middle
-   * item takes half from each side. Like Compose's ButtonGroup, the press is
-   * a fast spatial spring (so it overshoots with the expressive scheme), and
-   * a quick press is held until it is 75% of the way.
+   * Widens the pressed item by `--_expanded-ratio` of its width at rest; the
+   * whole group makes room, each other item in proportion to its width (a
+   * petal-elements choice: Compose's ButtonGroup takes the space from the
+   * neighbors only). Like Compose's `animateWidth`, the press is a fast
+   * spatial spring (it overshoots with the expressive scheme), and a quick
+   * press is held until it is 75% of the way.
    *
    * The space moves through the items' inline padding (half on each side),
    * so labels keep their width and are never cut off.
@@ -225,7 +220,7 @@ export class ButtonGroup extends LitElement {
 
     let spring = this.presses.get(item);
     if (!spring) {
-      spring = new Spring(springFromCss(this, 'fast-spatial', STANDARD_FAST_SPATIAL));
+      spring = new Spring(springFromCss(this, 'fast-spatial', FAST_SPATIAL));
       this.presses.set(item, spring);
     }
     spring.target = 1;
@@ -286,25 +281,27 @@ export class ButtonGroup extends LitElement {
       this.baseWidths = items.map((el) => el.getBoundingClientRect().width);
     }
     const ratio = Number(getComputedStyle(this).getPropertyValue('--_expanded-ratio')) || 0;
+    const base = this.basePaddings;
     const change = items.map(() => 0);
     items.forEach((item, index) => {
       const value = this.presses.get(item)?.value ?? 0;
       if (!value) return;
-      // The width at rest, as Compose's measure uses.
-      const width = this.baseWidths[index] ?? 0;
-      if (index > 0 && index < items.length - 1) {
-        const growth = value * Math.min((ratio * width) / 2, COMPRESSION_LIMIT, COMPRESSION_LIMIT);
-        change[index - 1] -= growth;
-        change[index + 1] -= growth;
-        change[index] += 2 * growth;
-      } else {
-        const neighbor = index === 0 ? 1 : index - 1;
-        const growth = value * Math.min(ratio * width, COMPRESSION_LIMIT);
-        change[neighbor] -= growth;
-        change[index] += growth;
+      // The whole group makes room: every other item gives up a share in
+      // proportion to its width at rest, at most its own padding, so labels
+      // are never cut off.
+      const others = items.map((_, i) => i).filter((i) => i !== index);
+      const total = others.reduce((sum, i) => sum + this.baseWidths[i], 0);
+      if (!total) return;
+      const growth = value * ratio * this.baseWidths[index];
+      let given = 0;
+      for (const i of others) {
+        const padding = base[i] ? base[i][0] + base[i][1] : 0;
+        const share = Math.min((growth * this.baseWidths[i]) / total, padding);
+        change[i] -= share;
+        given += share;
       }
+      change[index] += given;
     });
-    const base = this.basePaddings;
     items.forEach((el, i) => {
       if (!base[i]) return;
       // Paddings cannot go below zero.

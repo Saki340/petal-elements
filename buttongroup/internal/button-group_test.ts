@@ -162,4 +162,41 @@ describe('<petal-button-group>', () => {
     expect(state.presses.get(buttons[1])!.target).toBe(1);
     expect(state.releasing.has(buttons[1])).toBeTrue();
   });
+
+  it('makes room across the whole group, in proportion to the widths', async () => {
+    const root = env.render(html`
+      <petal-button-group connected style="display: flex; width: 400px">
+        <petal-filled-button style="flex: 1 1 0">A</petal-filled-button>
+        <petal-filled-button style="flex: 1 1 0">B</petal-filled-button>
+        <petal-filled-button style="flex: 1 1 0">C</petal-filled-button>
+        <petal-filled-button style="flex: 1 1 0">D</petal-filled-button>
+      </petal-button-group>
+    `);
+    await env.waitForStability();
+    const buttons = [...root.querySelectorAll('petal-filled-button')];
+    const widths = () => buttons.map((b) => b.getBoundingClientRect().width);
+    const before = widths();
+    buttons[2].dispatchEvent(
+      new PointerEvent('pointerdown', {button: 0, bubbles: true, composed: true}),
+    );
+    // Let the spring settle.
+    for (let i = 0; i < 60; i++) jasmine.clock().tick(16);
+    await env.waitForStability();
+    const state = root.querySelector('petal-button-group') as unknown as {
+      presses: Map<Element, {value: number; target: number; spec: unknown}>;
+      layoutPresses(): void;
+    };
+    // The mocked clock does not move performance.now(): settle the spring
+    // directly and lay out once.
+    state.presses.get(buttons[2])!.value = 1;
+    state.layoutPresses();
+    const after = widths();
+    // 15% of its width.
+    expect(after[2] - before[2]).toBeCloseTo(before[2] * 0.15, 0);
+    // Every other button gives up the same share, the far one too.
+    expect(after[0]).toBeCloseTo(after[1], 1);
+    expect(after[0]).toBeCloseTo(after[3], 1);
+    expect(after[0]).toBeLessThan(before[0]);
+    window.dispatchEvent(new PointerEvent('pointerup'));
+  });
 });
