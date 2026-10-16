@@ -138,9 +138,14 @@ describe('<petal-button-group>', () => {
         buttons[1].dispatchEvent(
           new PointerEvent('pointerdown', {button: 0, bubbles: true, composed: true}),
         );
-        jasmine.clock().tick(20); // the next frame
-        await env.waitForStability();
-        for (const button of buttons) button.style.transition = 'none';
+        // The mocked clock does not move performance.now(): set the spring at
+        // the end of the press and lay out once.
+        const group = buttons[0].parentElement as unknown as {
+          presses: Map<Element, {value: number}>;
+          layoutPresses(): void;
+        };
+        group.presses.get(buttons[1])!.value = 1;
+        group.layoutPresses();
         const after = paddings();
         expect(after[1]).toBeGreaterThan(before[1]);
         expect(after[0]).toBeLessThan(before[0]);
