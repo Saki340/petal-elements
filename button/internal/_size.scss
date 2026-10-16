@@ -9,8 +9,11 @@
 // Values come from the web tokens md.comp.button.{xsmall,...,xlarge}
 // (tokens/versions/v34/values). Where Compose's ButtonDefaults deliberately
 // override a token, the component follows Compose:
-// - small pressed shape: 6dp (ButtonDefaults / ToggleButtonDefaults), not
-//   corner.small (8dp);
+// - small toggle button pressed shape: 6dp (ToggleButtonDefaults
+//   .pressedShape); a plain small button keeps corner.small (8dp,
+//   ButtonDefaults.pressedShape = ButtonSmallTokens.PressedContainerShape);
+// - a pressed toggle button takes the pressed shape even when selected
+//   (ToggleButton's shapeByInteraction checks pressed first);
 // - xsmall icon spacing: 4dp (ButtonDefaults.ExtraSmallIconSpacing), not 8dp;
 // - the pressed morph of a plain button uses the default effects spring, so it
 //   does not bounce (Button.kt); toggle buttons use fast spatial
@@ -38,9 +41,6 @@ $sizes: (
 
 // Compose ButtonDefaults overrides (see above).
 $_overrides: (
-  'small': (
-    'pressed-container-shape': 6px,
-  ),
   'xsmall': (
     'icon-label-space': 4px,
   ),
@@ -136,6 +136,17 @@ $_overrides: (
 
   :host([size]:active:not([disabled], [soft-disabled])) {
     --_shape: var(--_shape-pressed);
+  }
+
+  // Pressed wins over selected for toggle buttons, as in Compose.
+  :host([size][toggle]:active:not([disabled], [soft-disabled])) {
+    --_shape: var(--_shape-pressed);
+  }
+
+  // Compose's small ToggleButton presses to 6dp (ToggleButtonDefaults
+  // .pressedShape), not ButtonSmallTokens.PressedContainerShape.
+  :host([size='small'][toggle]:active:not([disabled], [soft-disabled])) {
+    --_shape: 6px;
   }
 
   // Parts that draw the shape follow the host's (animated) radius.

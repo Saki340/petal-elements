@@ -54,11 +54,17 @@ scheme (`MotionScheme.standard()`).
 | Token value | Used | Source |
 |---|---|---|
 | Pressed shape of a plain button morphs with `md.sys.motion.spring.fast.spatial` | default effects spring (no bounce) | `Button.kt`: "MotionSchemeKeyTokens.DefaultEffects is intentional here to prevent any bounce" |
-| Small pressed shape `corner.small` (8px) | 6px | `ButtonDefaults` / `ToggleButtonDefaults` pressed shape for the small size |
+| Small toggle button pressed shape `corner.small` (8px) | 6px | `ToggleButtonDefaults.pressedShape`; plain buttons keep 8px (`ButtonDefaults.pressedShape`) |
+| Disabled label and icon color `on-surface` | `on-surface-variant` (filled, outlined, elevated, text; tonal keeps `on-surface`) | `ButtonDefaults` colors use `*ButtonTokens.DisabledLabelTextColor` from Compose |
 | xsmall icon-label space 8px | 4px | `ButtonDefaults.ExtraSmallIconSpacing` |
 | Outlined selected toggle: no tokens for outline | no outline (also disabled) | `OutlinedToggleButton`: no border when checked |
 
-Toggle buttons morph with the fast spatial spring (`ToggleButton.kt`).
+Toggle buttons morph with the fast spatial spring (`ToggleButton.kt`); a
+pressed toggle button takes its pressed shape even when selected, like
+`shapeByInteraction`. Compose animates each corner with an `Animatable`, which
+keeps its velocity when the shape changes mid-way; petal-elements uses a CSS
+transition with the same spring curve, so a press released mid-morph restarts
+from the current radius without its velocity.
 
 ## Button group
 

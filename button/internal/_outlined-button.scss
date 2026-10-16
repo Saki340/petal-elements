@@ -10,6 +10,7 @@
 // go/keep-sorted end
 // go/keep-sorted start
 @use '../../tokens';
+@use '../../tokens/versions/compose/values/md-comp-outlined-button' as compose-values;
 // go/keep-sorted end
 
 @mixin theme($tokens) {
@@ -34,6 +35,17 @@
     @each $token, $value in $tokens {
       --_#{$token}: #{$value};
     }
+
+    // Disabled content color from Jetpack Compose (ButtonDefaults uses
+    // OutlinedButtonTokens.DisabledLabelTextColor): on-surface-variant.
+    --_disabled-label-text-color: var(
+      --md-outlined-button-disabled-label-text-color,
+      #{map.get(compose-values.$values, 'disabled-label-text-color')}
+    );
+    --_disabled-icon-color: var(
+      --md-outlined-button-disabled-icon-color,
+      #{map.get(compose-values.$values, 'disabled-label-text-color')}
+    );
 
     --_container-color: none;
     --_disabled-container-color: none;

@@ -1,6 +1,7 @@
 //
 // Copyright 2021 Google LLC
 // SPDX-License-Identifier: Apache-2.0
+// Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
 //
 
 // go/keep-sorted start
@@ -9,6 +10,7 @@
 // go/keep-sorted end
 // go/keep-sorted start
 @use '../../tokens';
+@use '../../tokens/versions/compose/values/md-comp-text-button' as compose-values;
 // go/keep-sorted end
 
 @mixin theme($tokens) {
@@ -33,6 +35,17 @@
     @each $token, $value in $tokens {
       --_#{$token}: #{$value};
     }
+
+    // Disabled content color from Jetpack Compose (ButtonDefaults uses
+    // TextButtonTokens.DisabledLabelColor): on-surface-variant.
+    --_disabled-label-text-color: var(
+      --md-text-button-disabled-label-text-color,
+      #{map.get(compose-values.$values, 'disabled-label-color')}
+    );
+    --_disabled-icon-color: var(
+      --md-text-button-disabled-icon-color,
+      #{map.get(compose-values.$values, 'disabled-label-color')}
+    );
 
     --_container-color: none;
     --_disabled-container-color: none;
