@@ -49,6 +49,8 @@ export const COMPONENT_CUSTOM_ELEMENTS = {
     'menu/menu-item.ts',
     'menu/sub-menu.ts',
   ],
+  navigationBar: ['navigationbar/navigation-bar.ts', 'navigationbar/navigation-bar-item.ts'],
+  navigationRail: ['navigationrail/navigation-rail.ts', 'navigationrail/navigation-rail-item.ts'],
   progress: ['progress/linear-progress.ts', 'progress/circular-progress.ts'],
   radio: ['radio/radio.ts'],
   ripple: ['ripple/ripple.ts'],

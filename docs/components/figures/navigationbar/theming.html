@@ -1,0 +1,37 @@
+<!--
+  @license
+  Copyright 2026 Saki
+  SPDX-License-Identifier: Apache-2.0
+-->
+<div class="figure-wrapper">
+  <figure
+      title="Navigation bar theming example"
+      aria-label="A navigation bar with a teal container and indicator.">
+    <style>
+      .navigation-bar-theming {
+        --md-navigation-bar-container-color: #e0f2f1;
+        --md-navigation-bar-item-active-indicator-color: #80cbc4;
+        --md-navigation-bar-item-active-icon-color: #00332f;
+        --md-navigation-bar-item-active-label-text-color: #004d46;
+      }
+    </style>
+    <petal-navigation-bar class="navigation-bar-theming" style="width: 420px">
+      <petal-navigation-bar-item selected>
+        <petal-icon slot="icon">home</petal-icon>
+        Home
+      </petal-navigation-bar-item>
+      <petal-navigation-bar-item>
+        <petal-icon slot="icon">search</petal-icon>
+        Search
+      </petal-navigation-bar-item>
+      <petal-navigation-bar-item>
+        <petal-icon slot="icon">bookmark</petal-icon>
+        Saved
+      </petal-navigation-bar-item>
+      <petal-navigation-bar-item>
+        <petal-icon slot="icon">person</petal-icon>
+        Profile
+      </petal-navigation-bar-item>
+    </petal-navigation-bar>
+  </figure>
+</div>

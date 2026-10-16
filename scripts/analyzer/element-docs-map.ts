@@ -30,6 +30,8 @@ export const docsToElementMapping: {[key: string]: readonly string[]} = {
   'loading-indicator.md': COMPONENT_CUSTOM_ELEMENTS.loadingIndicator,
   'pull-to-refresh.md': COMPONENT_CUSTOM_ELEMENTS.pullToRefresh,
   'menu.md': COMPONENT_CUSTOM_ELEMENTS.menu,
+  'navigation-bar.md': COMPONENT_CUSTOM_ELEMENTS.navigationBar,
+  'navigation-rail.md': COMPONENT_CUSTOM_ELEMENTS.navigationRail,
   'progress.md': COMPONENT_CUSTOM_ELEMENTS.progress,
   'radio.md': COMPONENT_CUSTOM_ELEMENTS.radio,
   'ripple.md': COMPONENT_CUSTOM_ELEMENTS.ripple,

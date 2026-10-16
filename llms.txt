@@ -37,6 +37,8 @@ before using it; do not guess attributes.
 - [Bottom sheet](docs/components/bottom-sheet.md): `sheet/bottom-sheet.js`, `petal-bottom-sheet`
 - [Tooltip](docs/components/tooltip.md): `tooltip/tooltip.js`, `petal-tooltip`
 - [Menu](docs/components/menu.md): `menu/{menu,menu-item,sub-menu,menu-group}.js`
+- [Navigation bar](docs/components/navigation-bar.md): `navigationbar/{navigation-bar,navigation-bar-item}.js`, `petal-navigation-bar`
+- [Navigation rail](docs/components/navigation-rail.md): `navigationrail/{navigation-rail,navigation-rail-item}.js`, `petal-navigation-rail`
 - [Top app bar](docs/components/top-app-bar.md): `appbar/top-app-bar.js`, `petal-top-app-bar`
 - [Pull to refresh](docs/components/pull-to-refresh.md): `pulltorefresh/pull-to-refresh.js`
 - [Progress](docs/components/progress.md): `progress/{linear,circular}-progress.js`

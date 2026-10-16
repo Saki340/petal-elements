@@ -1,0 +1,95 @@
+//
+// Copyright 2026 Saki
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// Wide navigation rail, after Jetpack Compose Material 3 (WideNavigationRail
+// in WideNavigationRail.kt). Container color, shape and widths:
+// NavigationRailCollapsedTokens and NavigationRailExpandedTokens. The width,
+// the space between items (4dp collapsed, 0 expanded) animate with the
+// default spatial spring. Content padding: WNRTopPadding (TopSpace, 44dp) on
+// top; the header is followed by WNRHeaderPadding (HeaderSpaceMinimum, 40dp).
+// The window insets are the vertical and start system bars, here the safe
+// area.
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'sass:map';
+@use '../../tokens/versions/compose/values/md-comp-navigation-rail-baseline-item' as baseline;
+@use '../../tokens/versions/compose/values/md-comp-navigation-rail-collapsed' as collapsed;
+@use '../../tokens/versions/compose/values/md-comp-navigation-rail-expanded' as expanded;
+@use '../../tokens/versions/v34/values/md-sys-motion-springs' as springs;
+// go/keep-sorted end
+
+@mixin styles() {
+  // The hidden attribute, which `display` on the host would override.
+  :host([hidden]) {
+    display: none;
+  }
+
+  :host {
+    @each $token, $value in collapsed.$values {
+      --_collapsed-#{$token}: var(--md-navigation-rail-collapsed-#{$token}, #{$value});
+    }
+    @each $token, $value in expanded.$values {
+      --_expanded-#{$token}: var(--md-navigation-rail-expanded-#{$token}, #{$value});
+    }
+    --_header-space: var(
+      --md-navigation-rail-baseline-item-header-space-minimum,
+      #{map.get(baseline.$values, 'header-space-minimum')}
+    );
+
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    height: 100%;
+    overflow: hidden;
+    background: var(--_collapsed-container-color);
+    // contentColorFor(surface)
+    color: var(--md-sys-color-on-surface, #1d1b20);
+    border-radius: var(--_collapsed-container-shape);
+    padding-top: var(--_collapsed-top-space);
+    padding-inline-start: env(safe-area-inset-left, 0px);
+    padding-block-end: env(safe-area-inset-bottom, 0px);
+    width: var(--_collapsed-container-width);
+    transition: width map.get(springs.$values, 'spring-default-spatial-duration')
+      map.get(springs.$values, 'spring-default-spatial');
+  }
+
+  // The expanded width is set by the rail from its widest item and header,
+  // between the minimum and maximum width.
+  :host([expanded]) {
+    width: var(--_expanded-width, var(--_expanded-container-width-minimum));
+  }
+
+  .header {
+    display: none;
+    flex: none;
+  }
+
+  .header.has-header {
+    display: block;
+    margin-block-end: var(--_header-space);
+  }
+
+  .items {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: var(--_collapsed-item-vertical-space);
+    min-height: 0;
+    transition: row-gap map.get(springs.$values, 'spring-default-spatial-duration')
+      map.get(springs.$values, 'spring-default-spatial');
+  }
+
+  :host([expanded]) .items {
+    row-gap: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :host,
+    .items {
+      transition: none;
+    }
+  }
+}

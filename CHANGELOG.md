@@ -45,6 +45,12 @@
   dragging (with the pointer's velocity, on the motion scheme's springs), the
   drag handle, Escape and the scrim, and traps focus. There is no side sheet:
   Compose has none.
+* **navigationbar, navigationrail:** `petal-navigation-bar` and
+  `petal-navigation-bar-item` (Compose `ShortNavigationBar`), and
+  `petal-navigation-rail` and `petal-navigation-rail-item` (Compose
+  `WideNavigationRail`, collapsed and expanded, with a header slot). They
+  replace the labs navigation bar and tab (`labs/navigationbar`,
+  `labs/navigationtab`), which are removed.
 * **snackbar:** `petal-snackbar`, after Jetpack Compose `Snackbar`.
 * **tooltip:** `petal-tooltip`, after Jetpack Compose `PlainTooltip`.
 * **card:** filled, elevated and outlined cards move from labs to

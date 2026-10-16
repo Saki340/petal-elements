@@ -1,0 +1,247 @@
+//
+// Copyright 2026 Saki
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// Navigation bar item, after Jetpack Compose Material 3
+// (ShortNavigationBarItem in ShortNavigationBar.kt, NavigationItem in
+// NavigationItem.kt). Colors, shape and type: NavigationBarTokens; indicator
+// size and spacing: NavigationBarVerticalItemTokens (icon above the label) and
+// NavigationBarHorizontalItemTokens (icon before the label). Motion: the
+// indicator grows with the default spatial spring (animateIndicatorProgress).
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'sass:map';
+@use '../../focus/focus-ring';
+@use '../../ripple/ripple';
+@use '../../tokens/versions/compose/values/md-comp-navigation-bar' as bar;
+@use '../../tokens/versions/compose/values/md-comp-navigation-bar-horizontal-item' as horizontal;
+@use '../../tokens/versions/compose/values/md-comp-navigation-bar-vertical-item' as vertical;
+@use '../../tokens/versions/v34/values/md-sys-motion-springs' as springs;
+// go/keep-sorted end
+
+// The disabled color: the unselected one at 38% (DisabledAlpha).
+@function _disabled($color) {
+  @return color-mix(in srgb, #{$color} 38%, transparent);
+}
+
+@mixin styles() {
+  // The hidden attribute, which `display` on the host would override.
+  :host([hidden]) {
+    display: none;
+  }
+
+  :host {
+    @each $token, $value in bar.$values {
+      --_#{$token}: var(--md-navigation-bar-#{$token}, #{$value});
+    }
+    @each $token, $value in vertical.$values {
+      --_vertical-#{$token}: var(--md-navigation-bar-vertical-item-#{$token}, #{$value});
+    }
+    @each $token, $value in horizontal.$values {
+      --_horizontal-#{$token}: var(--md-navigation-bar-horizontal-item-#{$token}, #{$value});
+    }
+
+    // The token falls back to 50%, which is an ellipse on a wide indicator.
+    --_indicator-shape: var(
+      --md-navigation-bar-item-active-indicator-shape,
+      var(--md-sys-shape-corner-full, 9999px)
+    );
+    --_icon-size: 24px;
+    // Compose's LocalMinimumInteractiveComponentSize.
+    --_minimum-size: 48px;
+
+    @include ripple.theme(
+      (
+        hover-color: var(--md-sys-color-on-surface, #1d1b20),
+        pressed-color: var(--md-sys-color-on-surface, #1d1b20),
+      )
+    );
+
+    display: flex;
+    flex: 1 1 0;
+    box-sizing: border-box;
+    min-width: var(--_minimum-size);
+    min-height: var(--_minimum-size);
+    position: relative;
+    outline: none;
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    font-family: var(--_label-text-font);
+    font-size: var(--_label-text-size);
+    font-weight: var(--_label-text-weight);
+    line-height: var(--_label-text-line-height);
+    letter-spacing: var(--_label-text-tracking);
+  }
+
+  :host([disabled]) {
+    cursor: default;
+    pointer-events: none;
+  }
+
+  .item {
+    --_icon-color: var(--_item-inactive-icon-color);
+    --_text-color: var(--_item-inactive-label-text-color);
+
+    display: grid;
+    flex: 1;
+    box-sizing: border-box;
+    // Row 1 is the icon on its indicator, row 2 the label.
+    grid-template-columns: auto;
+    grid-template-rows: var(--_vertical-active-indicator-height) auto;
+    row-gap: var(--_item-active-indicator-icon-label-space);
+    justify-items: center;
+    align-content: center;
+    // Compose's TopIconItemVerticalPadding.
+    padding-block: var(--_vertical-container-between-space);
+    color: inherit;
+    text-decoration: none;
+    outline: none;
+    --petal-navigation-indicator: 0;
+    transition: --petal-navigation-indicator
+      map.get(springs.$values, 'spring-default-spatial-duration')
+      map.get(springs.$values, 'spring-default-spatial');
+  }
+
+  .item.selected {
+    --petal-navigation-indicator: 1;
+    --_icon-color: var(--_item-active-icon-color);
+    --_text-color: var(--_item-active-label-text-color);
+    // Fills the icon when it is a Material Symbol.
+    --md-icon-fill: 1;
+  }
+
+  .item.disabled {
+    --_icon-color: #{_disabled('var(--_item-inactive-icon-color)')};
+    --_text-color: #{_disabled('var(--_item-inactive-label-text-color)')};
+  }
+
+  .item.icon-only {
+    grid-template-rows: var(--_vertical-active-indicator-height);
+    row-gap: 0;
+  }
+
+  .indicator-area {
+    grid-area: 1 / 1;
+    position: relative;
+    width: var(--_vertical-active-indicator-width);
+    height: var(--_vertical-active-indicator-height);
+    border-radius: var(--_indicator-shape);
+  }
+
+  // Grows from the center with the spring, and fades in with it.
+  .indicator {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: calc(max(0, var(--petal-navigation-indicator)) * 100%);
+    translate: -50% 0;
+    border-radius: inherit;
+    background: var(--_item-active-indicator-color);
+    opacity: clamp(0, var(--petal-navigation-indicator), 1);
+  }
+
+  petal-focus-ring {
+    @include focus-ring.theme(
+      (
+        'shape': var(--_indicator-shape),
+      )
+    );
+  }
+
+  .icon {
+    grid-area: 1 / 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--_vertical-active-indicator-width);
+    height: var(--_vertical-active-indicator-height);
+    color: var(--_icon-color);
+    pointer-events: none;
+  }
+
+  .icon ::slotted(*) {
+    display: inline-flex;
+    width: var(--_icon-size);
+    height: var(--_icon-size);
+    font-size: var(--_icon-size);
+    fill: currentColor;
+  }
+
+  // A selected icon replaces the icon when there is one.
+  .item.has-selected-icon.selected slot[name='icon'],
+  .item.has-selected-icon:not(.selected) slot[name='selected-icon'] {
+    display: none;
+  }
+
+  .label {
+    grid-area: 2 / 1;
+    position: relative;
+    max-width: 100%;
+    color: var(--_text-color);
+    text-align: center;
+    pointer-events: none;
+  }
+
+  .item.icon-only .label {
+    display: none;
+  }
+
+  // Icon before the label (NavigationItemIconPosition.Start): the indicator
+  // wraps both, 16dp from the icon and the label, 40dp high.
+  .item.start {
+    grid-template-columns:
+      var(--_horizontal-active-indicator-leading-space)
+      var(--_icon-size)
+      var(--_item-active-indicator-icon-label-space)
+      auto
+      var(--_horizontal-active-indicator-trailing-space);
+    grid-template-rows: var(--_horizontal-active-indicator-height);
+    row-gap: 0;
+    justify-content: center;
+    padding-block: 0;
+    // The label has the icon's color when selected (selectedTextColorStartIconPosition).
+    --_text-color: var(--_item-inactive-label-text-color);
+  }
+
+  .item.start.selected {
+    --_text-color: var(--_item-active-icon-color);
+  }
+
+  .item.start.disabled {
+    --_text-color: #{_disabled('var(--_item-inactive-label-text-color)')};
+  }
+
+  .item.start.icon-only {
+    grid-template-columns:
+      var(--_horizontal-active-indicator-leading-space) var(--_icon-size) 0 0
+      var(--_horizontal-active-indicator-trailing-space);
+  }
+
+  .item.start .indicator-area {
+    grid-area: 1 / 1 / 2 / 6;
+    justify-self: stretch;
+    width: auto;
+    height: auto;
+  }
+
+  .item.start .icon {
+    grid-area: 1 / 2;
+    width: var(--_icon-size);
+    height: var(--_icon-size);
+  }
+
+  .item.start .label {
+    grid-area: 1 / 4;
+    white-space: nowrap;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .item {
+      transition: none;
+    }
+  }
+}

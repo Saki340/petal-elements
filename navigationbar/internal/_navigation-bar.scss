@@ -1,0 +1,44 @@
+//
+// Copyright 2026 Saki
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// Navigation bar, after Jetpack Compose Material 3 (ShortNavigationBar in
+// ShortNavigationBar.kt). Container color, height and shape:
+// NavigationBarTokens. Compose draws no elevation on it (the Surface has no
+// tonal or shadow elevation). The window insets are the horizontal and bottom
+// system bars (ShortNavigationBarDefaults.windowInsets), here the safe area.
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'sass:map';
+@use '../../tokens/versions/compose/values/md-comp-navigation-bar' as bar;
+// go/keep-sorted end
+
+@mixin styles() {
+  // The hidden attribute, which `display` on the host would override.
+  :host([hidden]) {
+    display: none;
+  }
+
+  :host {
+    @each $token, $value in bar.$values {
+      --_#{$token}: var(--md-navigation-bar-#{$token}, #{$value});
+    }
+
+    display: block;
+    box-sizing: border-box;
+    background: var(--_container-color);
+    // contentColorFor(surfaceContainer)
+    color: var(--md-sys-color-on-surface, #1d1b20);
+    border-radius: var(--_nav-shape);
+    padding-inline: env(safe-area-inset-left, 0px) env(safe-area-inset-right, 0px);
+    padding-block-end: env(safe-area-inset-bottom, 0px);
+  }
+
+  .bar {
+    display: flex;
+    box-sizing: border-box;
+    min-height: var(--_container-height);
+    align-items: stretch;
+  }
+}
