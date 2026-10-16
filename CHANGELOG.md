@@ -37,6 +37,9 @@
 
 #### Features
 
+* **search:** `petal-search-bar`, a search bar that expands into a full screen or
+  docked search view, after Jetpack Compose `SearchBar`,
+  `ExpandedFullScreenSearchBar` and `ExpandedDockedSearchBar`.
 * **snackbar:** `petal-snackbar`, after Jetpack Compose `Snackbar`.
 * **tooltip:** `petal-tooltip`, after Jetpack Compose `PlainTooltip`.
 * **card:** filled, elevated and outlined cards move from labs to

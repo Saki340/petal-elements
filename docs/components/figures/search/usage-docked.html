@@ -1,0 +1,38 @@
+<!--
+  @license
+  Copyright 2026 Saki
+  SPDX-License-Identifier: Apache-2.0
+-->
+<div class="figure-wrapper">
+  <figure
+      class="search-figure"
+      style="justify-content: center; padding-block: 24px; min-height: 290px; align-items: flex-start"
+      title="A docked search view"
+      aria-label="A docked search view with the text weather and three suggestions below it.">
+    <style>
+      .search-figure petal-search-bar {
+        width: 400px;
+      }
+      .search-figure petal-list {
+        --md-list-container-color: transparent;
+        --md-list-item-container-color: transparent;
+      }
+    </style>
+    <petal-search-bar expanded layout="docked" value="weather" placeholder="Search apps">
+      <petal-list>
+        <petal-list-item type="button">
+          weather today
+          <petal-icon slot="start">history</petal-icon>
+        </petal-list-item>
+        <petal-list-item type="button">
+          weather tomorrow
+          <petal-icon slot="start">history</petal-icon>
+        </petal-list-item>
+        <petal-list-item type="button">
+          weather radar
+          <petal-icon slot="start">history</petal-icon>
+        </petal-list-item>
+      </petal-list>
+    </petal-search-bar>
+  </figure>
+</div>

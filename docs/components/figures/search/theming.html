@@ -1,0 +1,23 @@
+<!--
+  @license
+  Copyright 2026 Saki
+  SPDX-License-Identifier: Apache-2.0
+-->
+<div class="figure-wrapper">
+  <figure
+      class="search-figure"
+      style="justify-content: center; padding-block: 24px"
+      title="Search bar theming example"
+      aria-label="A search bar with a teal container and square corners.">
+    <style>
+      .search-figure petal-search-bar {
+        width: 400px;
+      }
+      .search-theming {
+        --md-search-bar-container-color: #c8ebe6;
+        --md-search-bar-container-shape: 8px;
+      }
+    </style>
+    <petal-search-bar class="search-theming" placeholder="Search apps"></petal-search-bar>
+  </figure>
+</div>

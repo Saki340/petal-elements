@@ -1,0 +1,300 @@
+//
+// Copyright 2026 Saki
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// Search bar, after Jetpack Compose Material 3 (SearchBar.kt: the Expressive
+// SearchBar, ExpandedFullScreenSearchBar and ExpandedDockedSearchBar).
+// Colors, shapes, heights and type: SearchBarTokens and SearchViewTokens
+// (tokens/versions/compose/values); the divider is DividerTokens. Layout:
+// SearchBarMinWidth 360dp, SearchBarMaxWidth 720dp, SearchBarVerticalPadding
+// 8dp, SearchBarIconOffsetX 4dp (icons sit 16dp from the edge while a text
+// field has 12dp), TextFieldPadding 16dp, DockedExpandedTableMinHeight 240dp
+// and DockedExpandedTableMaxHeightScreenRatio 2/3. SearchBarDefaults uses no
+// elevation (TonalElevation and ShadowElevation are Level0). The expand and
+// collapse motion is in search-bar.ts.
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'sass:map';
+@use '../../focus/focus-ring';
+@use '../../tokens/versions/compose/values/md-comp-divider' as divider;
+@use '../../tokens/versions/compose/values/md-comp-search-bar' as bar;
+@use '../../tokens/versions/compose/values/md-comp-search-view' as view;
+// go/keep-sorted end
+
+@mixin styles() {
+  // The hidden attribute, which `display` on the host would override.
+  :host([hidden]) {
+    display: none;
+  }
+
+  :host {
+    @each $token, $value in bar.$values {
+      --_bar-#{$token}: var(--md-search-bar-#{$token}, #{$value});
+    }
+    @each $token, $value in view.$values {
+      --_view-#{$token}: var(--md-search-view-#{$token}, #{$value});
+    }
+    --_divider-thickness: var(
+      --md-search-view-divider-thickness,
+      #{map.get(divider.$values, 'thickness')}
+    );
+
+    // The caret is FilledTextFieldTokens.CaretColor (primary) in Compose.
+    --_caret-color: var(--md-search-bar-caret-color, var(--md-sys-color-primary, #6750a4));
+
+    // SearchBarDefaults.InputField: sizeIn(minWidth 360dp, maxWidth 720dp,
+    // minHeight 56dp). The host keeps the height of the collapsed bar, so the
+    // page does not move when the view opens over it.
+    display: block;
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    min-width: min(360px, 100vw);
+    max-width: 720px;
+    height: var(--_bar-container-height);
+
+    // DockedExpandedTableMaxHeightScreenRatio is 2/3 of the window height and
+    // DockedExpandedTableMinHeight 240dp, at most the maximum.
+    --_docked-max-height: calc(100dvh * 2 / 3);
+    --_docked-min-height: min(240px, var(--_docked-max-height));
+  }
+
+  .container {
+    --_container-color: var(--_bar-container-color);
+    --_container-shape: var(--_bar-container-shape);
+    --_leading-icon-color: var(--_bar-leading-icon-color);
+    --_trailing-icon-color: var(--_bar-trailing-icon-color);
+    --_input-text-color: var(--_bar-input-text-color);
+    --_input-text-font: var(--_bar-input-text-font);
+    --_input-text-size: var(--_bar-input-text-size);
+    --_input-text-weight: var(--_bar-input-text-weight);
+    --_input-text-line-height: var(--_bar-input-text-line-height);
+    --_input-text-tracking: var(--_bar-input-text-tracking);
+    --_supporting-text-color: var(--_bar-supporting-text-color);
+    --_supporting-text-font: var(--_bar-supporting-text-font);
+    --_supporting-text-size: var(--_bar-supporting-text-size);
+    --_supporting-text-weight: var(--_bar-supporting-text-weight);
+    --_supporting-text-line-height: var(--_bar-supporting-text-line-height);
+    --_supporting-text-tracking: var(--_bar-supporting-text-tracking);
+
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    overflow: hidden;
+    border-radius: var(--_container-shape);
+    background-color: var(--_container-color);
+    color: var(--_input-text-color);
+  }
+
+  // The view: the container is open, or animating to or from it.
+  .container.shown {
+    --_leading-icon-color: var(--_view-header-leading-icon-color);
+    --_trailing-icon-color: var(--_view-header-trailing-icon-color);
+    --_container-color: var(--_view-container-color);
+    --_input-text-color: var(--_view-header-input-text-color);
+    --_input-text-font: var(--_view-header-input-text-font);
+    --_input-text-size: var(--_view-header-input-text-size);
+    --_input-text-weight: var(--_view-header-input-text-weight);
+    --_input-text-line-height: var(--_view-header-input-text-line-height);
+    --_input-text-tracking: var(--_view-header-input-text-tracking);
+    --_supporting-text-color: var(--_view-header-supporting-text-color);
+    --_supporting-text-font: var(--_view-header-supporting-text-font);
+    --_supporting-text-size: var(--_view-header-supporting-text-size);
+    --_supporting-text-weight: var(--_view-header-supporting-text-weight);
+    --_supporting-text-line-height: var(--_view-header-supporting-text-line-height);
+    --_supporting-text-tracking: var(--_view-header-supporting-text-tracking);
+
+    z-index: var(--md-search-bar-z-index, 1000);
+  }
+
+  // Full screen: the container covers the window; the bar's bounds to the
+  // window's is animated in search-bar.ts. Its corners are the full screen
+  // shape (rounded in the collapsed bar, animated).
+  :host([layout='full-screen']) .container.shown {
+    --_container-shape: var(--_view-full-screen-container-shape);
+
+    position: fixed;
+    inset: 0;
+  }
+
+  // Docked: the container stays under the bar and grows downward.
+  :host([layout='docked']) .container.shown {
+    --_container-shape: var(--_view-docked-container-shape);
+
+    inset-block-end: auto;
+    height: auto;
+    min-height: var(--_docked-min-height);
+    max-height: var(--_docked-max-height);
+  }
+
+  .header {
+    display: flex;
+    flex: none;
+    align-items: center;
+    box-sizing: border-box;
+    min-height: var(--_bar-container-height);
+    position: relative;
+  }
+
+  // The window insets the full screen view respects, and SearchBarVerticalPadding
+  // (8dp) above and below the input field.
+  :host([layout='full-screen']) .container.shown .header {
+    margin-block: calc(8px + env(safe-area-inset-top, 0px)) 8px;
+    padding-inline: env(safe-area-inset-left, 0px) env(safe-area-inset-right, 0px);
+  }
+
+  // The icons are 24dp in 48dp boxes, shifted 4dp toward the middle (the
+  // box stays 48dp in the layout), so they sit 16dp from the edge.
+  .leading,
+  .trailing {
+    position: relative;
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    min-width: 48px;
+    height: 48px;
+  }
+
+  .leading {
+    inset-inline-start: 4px;
+    color: var(--_leading-icon-color);
+  }
+
+  .trailing {
+    inset-inline-end: 4px;
+    color: var(--_trailing-icon-color);
+  }
+
+  .trailing:not(.has-content) {
+    display: none;
+  }
+
+  // The avatar, as SearchBarTokens.AvatarSize and AvatarShape.
+  ::slotted(img[slot='trailing']) {
+    width: var(--_bar-avatar-size);
+    height: var(--_bar-avatar-size);
+    border-radius: var(--_bar-avatar-shape);
+    object-fit: cover;
+  }
+
+  // The text field's content padding is 16dp at the edges; next to an icon
+  // box it is 4dp (16dp minus the 12dp around the icon).
+  .input {
+    flex: 1;
+    min-width: 0;
+    box-sizing: border-box;
+    height: var(--_bar-container-height);
+    margin: 0;
+    padding-block: 16px;
+    padding-inline: 4px 16px;
+    border: none;
+    border-radius: 0;
+    outline: none;
+    background: transparent;
+    color: var(--_input-text-color);
+    caret-color: var(--_caret-color);
+    font-family: var(--_input-text-font);
+    font-size: var(--_input-text-size);
+    font-weight: var(--_input-text-weight);
+    line-height: var(--_input-text-line-height);
+    letter-spacing: var(--_input-text-tracking);
+    text-overflow: ellipsis;
+    appearance: none;
+  }
+
+  .container.has-trailing .input {
+    padding-inline-end: 4px;
+  }
+
+  .input::placeholder {
+    color: var(--_supporting-text-color);
+    font-family: var(--_supporting-text-font);
+    font-size: var(--_supporting-text-size);
+    font-weight: var(--_supporting-text-weight);
+    line-height: var(--_supporting-text-line-height);
+    letter-spacing: var(--_supporting-text-tracking);
+    opacity: 1;
+  }
+
+  // The clear button is ours.
+  .input::-webkit-search-cancel-button,
+  .input::-webkit-search-decoration {
+    display: none;
+  }
+
+  .input:disabled {
+    cursor: default;
+  }
+
+  .container:not(.shown) .input {
+    cursor: text;
+  }
+
+  .icon-button {
+    --md-icon-button-icon-size: 24px;
+    --md-icon-button-icon-color: currentColor;
+    --md-icon-button-hover-icon-color: currentColor;
+    --md-icon-button-focus-icon-color: currentColor;
+    --md-icon-button-pressed-icon-color: currentColor;
+    --md-icon-button-hover-state-layer-color: currentColor;
+    --md-icon-button-pressed-state-layer-color: currentColor;
+  }
+
+  .icon {
+    width: 24px;
+    height: 24px;
+    fill: currentColor;
+  }
+
+  // Only the collapsed bar has a focus ring; the view covers the page.
+  .container.expanded petal-focus-ring {
+    display: none;
+  }
+
+  petal-focus-ring {
+    @include focus-ring.theme(
+      (
+        'inward-offset': 0px,
+        'shape-start-start': var(--_bar-container-shape),
+        'shape-start-end': var(--_bar-container-shape),
+        'shape-end-end': var(--_bar-container-shape),
+        'shape-end-start': var(--_bar-container-shape),
+      )
+    );
+  }
+
+  // The results, below the header and a divider.
+  .content {
+    display: none;
+    flex: 1 1 auto;
+    flex-direction: column;
+    min-height: 0;
+    color: var(--_view-header-input-text-color);
+  }
+
+  .container.shown .content {
+    display: flex;
+  }
+
+  :host([layout='full-screen']) .container.shown .content {
+    padding-inline: env(safe-area-inset-left, 0px) env(safe-area-inset-right, 0px);
+    padding-block-end: env(safe-area-inset-bottom, 0px);
+  }
+
+  .divider {
+    flex: none;
+    height: var(--_divider-thickness);
+    background-color: var(--_view-divider-color);
+  }
+
+  .results {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: auto;
+    overscroll-behavior: contain;
+  }
+}

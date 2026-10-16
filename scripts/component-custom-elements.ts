@@ -52,6 +52,7 @@ export const COMPONENT_CUSTOM_ELEMENTS = {
   progress: ['progress/linear-progress.ts', 'progress/circular-progress.ts'],
   radio: ['radio/radio.ts'],
   ripple: ['ripple/ripple.ts'],
+  search: ['search/search-bar.ts'],
   select: [
     'select/filled-select.ts',
     'select/outlined-select.ts',

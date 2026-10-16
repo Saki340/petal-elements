@@ -33,6 +33,7 @@ before using it; do not guess attributes.
 - [Card](docs/components/card.md): `card/{filled,elevated,outlined}-card.js`
 - [Dialog](docs/components/dialog.md): `dialog/dialog.js`, `petal-dialog`
 - [Snackbar](docs/components/snackbar.md): `snackbar/snackbar.js`, `petal-snackbar`
+- [Search bar](docs/components/search.md): `search/search-bar.js`, `petal-search-bar`
 - [Tooltip](docs/components/tooltip.md): `tooltip/tooltip.js`, `petal-tooltip`
 - [Menu](docs/components/menu.md): `menu/{menu,menu-item,sub-menu,menu-group}.js`
 - [Top app bar](docs/components/top-app-bar.md): `appbar/top-app-bar.js`, `petal-top-app-bar`
