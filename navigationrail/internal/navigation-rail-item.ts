@@ -92,7 +92,17 @@ export class NavigationRailItem extends NavigationItem {
   }
 
   private readLabelText() {
-    this.labelText = (this.textContent ?? '').replace(/\s+/g, ' ').trim();
+    // Only the label: the default slot's content, not the icons (an icon's
+    // text is its ligature name).
+    const text = [...this.childNodes]
+      .filter((node) =>
+        node instanceof Element
+          ? !node.hasAttribute('slot')
+          : node.nodeType === Node.TEXT_NODE,
+      )
+      .map((node) => node.textContent ?? '')
+      .join('');
+    this.labelText = text.replace(/\s+/g, ' ').trim();
   }
 
   private measure() {

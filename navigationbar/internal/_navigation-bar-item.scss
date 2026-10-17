@@ -202,6 +202,8 @@
     grid-template-rows: var(--_horizontal-active-indicator-height);
     row-gap: 0;
     justify-content: center;
+    // The icon and the label are centered in the indicator's height.
+    align-items: center;
     padding-block: 0;
     // The label has the icon's color when selected (selectedTextColorStartIconPosition).
     --_text-color: var(--_item-inactive-label-text-color);
@@ -224,6 +226,7 @@
   .item.start .indicator-area {
     grid-area: 1 / 1 / 2 / 6;
     justify-self: stretch;
+    align-self: stretch;
     width: auto;
     height: auto;
   }

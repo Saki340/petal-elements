@@ -338,4 +338,21 @@ describe('<petal-navigation-rail>', () => {
       expect(rect(part(items[0], '.indicator-area')).height).toBe(32);
     });
   });
+
+  it('measures only the label, not an icon named by its ligature', async () => {
+    const root = env.render(html`
+      <petal-navigation-rail>
+        <petal-navigation-rail-item
+          ><span slot="icon">bookmark</span>Saved</petal-navigation-rail-item
+        >
+      </petal-navigation-rail>
+    `);
+    await env.waitForStability();
+    const item = root.querySelector('petal-navigation-rail-item')!;
+    const label = item.shadowRoot!.querySelector<HTMLElement>('.label')!;
+    const measured = parseFloat(item.style.getPropertyValue('--_label-top-width'));
+    // The label is centered under the icon in the 96dp item.
+    expect(measured).toBeCloseTo(label.offsetWidth, 0);
+    expect(label.offsetLeft).toBeCloseTo((96 - label.offsetWidth) / 2, 0);
+  });
 });
