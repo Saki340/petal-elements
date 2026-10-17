@@ -20,6 +20,11 @@
 * **menu:** menus open and close by scaling from 80% and fading, from the
   corner next to the anchor, as Compose's `DropdownMenu`, instead of growing
   in height with staggered items.
+* **fab:** sizes follow Compose: `small` (40px), `baseline` (56px, the new
+  default, was `medium`), `medium` (80px, 20px corners, 28px icon) and
+  `large` (96px, 36px icon). With a `label`, the size picks Compose's small,
+  medium or large extended FAB. The default `variant` is `primary` (primary
+  container, Compose's default) instead of `surface`.
 
 #### Bug fixes
 
@@ -37,6 +42,8 @@
 
 #### Features
 
+* **fab:** `expanded` shrinks an extended FAB to its icon and back on
+  Compose's springs (fast spatial width, fast effects label).
 * **search:** `petal-search-bar`, a search bar that expands into a full screen or
   docked search view, after Jetpack Compose `SearchBar`,
   `ExpandedFullScreenSearchBar` and `ExpandedDockedSearchBar`.

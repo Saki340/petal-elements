@@ -47,8 +47,8 @@ describe('<petal-fab>', () => {
       expect(harness.element).toBeInstanceOf(PetalFab);
       expect(harness.element.lowered).toEqual(false);
       expect(harness.element.label).toEqual('');
-      expect(harness.element.variant).toEqual('surface');
-      expect(harness.element.size).toEqual('medium');
+      expect(harness.element.variant).toEqual('primary');
+      expect(harness.element.size).toEqual('baseline');
       expect(harness.element.label).toEqual('');
     });
 

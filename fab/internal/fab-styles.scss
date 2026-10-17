@@ -5,6 +5,8 @@
 
 // go/keep-sorted start
 @use './fab';
+@use './size';
 // go/keep-sorted end
 
 @include fab.styles;
+@include size.styles;

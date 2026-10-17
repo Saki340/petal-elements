@@ -219,13 +219,23 @@ const galleries: Record<string, Gallery> = {
         name: variant,
         render: () => html`<petal-fab data-subject variant=${variant}>${icon('icon')}</petal-fab>`,
       })),
-      ...['small', 'large'].map((size) => ({
+      ...['small', 'medium', 'large'].map((size) => ({
         name: `primary ${size}`,
         render: () => html`<petal-fab data-subject variant="primary" size=${size}>${icon('icon')}</petal-fab>`,
       })),
       {
         name: 'extended',
         render: () => html`<petal-fab data-subject variant="primary" label="Label">${icon('icon')}</petal-fab>`,
+      },
+      ...['small', 'medium', 'large'].map((size) => ({
+        name: `extended ${size}`,
+        render: () =>
+          html`<petal-fab data-subject size=${size} label="Label">${icon('icon')}</petal-fab>`,
+      })),
+      {
+        name: 'collapsed',
+        render: () =>
+          html`<petal-fab data-subject label="Label" .expanded=${false}>${icon('icon')}</petal-fab>`,
       },
       {
         name: 'lowered',

@@ -1,0 +1,139 @@
+//
+// Copyright 2026 Saki
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// Compose FAB sizes (FloatingActionButton.kt) on top of the web FAB styles:
+// - FAB: small 40, baseline 56, medium 80, large 96 (FabSmall/Baseline/
+//   Medium/LargeTokens). The medium shape is ShapeDefaults.LargeIncreased and
+//   the large icon 36dp (FloatingActionButtonDefaults: the medium shape and
+//   large icon tokens are marked incorrect there). Small, baseline and large
+//   come from the web tokens already.
+// - Extended FAB with a size: ExtendedFabSmall/Medium/LargeTokens for the
+//   height, padding and icon, the text styles SmallExtendedFabTextStyle and
+//   so on, and the icon spacing from FloatingActionButton.kt (medium 12dp and
+//   large 16dp: the tokens are marked incorrect). The baseline extended FAB
+//   (no size) keeps 16dp/20dp padding, 12dp spacing and an 80dp minimum width
+//   (ExtendedFabStartIconPadding, ...).
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'sass:map';
+@use '../../focus/focus-ring';
+@use '../../tokens';
+@use '../../tokens/versions/compose/values/md-comp-extended-fab-large' as extended-large;
+@use '../../tokens/versions/compose/values/md-comp-extended-fab-medium' as extended-medium;
+@use '../../tokens/versions/compose/values/md-comp-extended-fab-small' as extended-small;
+@use '../../tokens/versions/compose/values/md-comp-fab-medium' as medium;
+// go/keep-sorted end
+
+$_typescale: tokens.md-sys-typescale-values();
+
+// ShapeDefaults.LargeIncreased.
+$_large-increased: var(--md-sys-shape-corner-large-increased, 20px);
+
+$_extended: (
+  'small': (
+    'values': extended-small.$values,
+    'shape': map.get(extended-small.$values, 'container-shape'),
+    'icon-label-space': map.get(extended-small.$values, 'icon-label-space'),
+    'type': 'title-medium',
+  ),
+  'medium': (
+    'values': extended-medium.$values,
+    'shape': $_large-increased,
+    'icon-label-space': 12px,
+    'type': 'title-large',
+  ),
+  'large': (
+    'values': extended-large.$values,
+    'shape': map.get(extended-large.$values, 'container-shape'),
+    'icon-label-space': 16px,
+    'type': 'headline-small',
+  ),
+);
+
+@mixin _shape($shape) {
+  &,
+  .ripple {
+    border-radius: $shape;
+  }
+
+  petal-focus-ring {
+    @include focus-ring.theme(
+      (
+        'shape-start-start': $shape,
+        'shape-start-end': $shape,
+        'shape-end-end': $shape,
+        'shape-end-start': $shape,
+      )
+    );
+  }
+}
+
+@mixin styles() {
+  .fab.medium {
+    $size: var(--md-fab-medium-container-height, #{map.get(medium.$values, 'container-height')});
+    $icon: var(--md-fab-medium-icon-size, #{map.get(medium.$values, 'icon-size')});
+
+    width: $size;
+    height: $size;
+
+    .icon ::slotted(*) {
+      width: $icon;
+      height: $icon;
+      font-size: $icon;
+    }
+
+    @include _shape(var(--md-fab-medium-container-shape, #{$_large-increased}));
+  }
+
+  .fab.extended {
+    // ExtendedFabMinimumWidth.
+    min-width: 80px;
+  }
+
+  @each $size, $spec in $_extended {
+    $values: map.get($spec, 'values');
+    $type: map.get($spec, 'type');
+    $height: map.get($values, 'container-height');
+    $icon: map.get($values, 'icon-size');
+
+    .fab.extended-#{$size} {
+      height: $height;
+      min-width: $height;
+      padding-inline: map.get($values, 'leading-space') map.get($values, 'trailing-space');
+
+      .icon ::slotted(*) {
+        width: $icon;
+        height: $icon;
+        font-size: $icon;
+        margin-inline-end: map.get($spec, 'icon-label-space');
+      }
+
+      .label {
+        font-family: map.get($_typescale, '#{$type}-font');
+        font-size: map.get($_typescale, '#{$type}-size');
+        line-height: map.get($_typescale, '#{$type}-line-height');
+        font-weight: map.get($_typescale, '#{$type}-weight');
+      }
+
+      // No padding trick (see _fab.scss): the leading and trailing space is
+      // the same.
+      slot span {
+        padding-inline-start: 0;
+      }
+
+      @include _shape(map.get($spec, 'shape'));
+    }
+  }
+
+  // While collapsing, collapsed (`expanded` is false) or expanding, the label
+  // is clipped from the end and the icon stays in place.
+  .fab.extended.collapsing {
+    justify-content: start;
+
+    .label {
+      text-overflow: clip;
+    }
+  }
+}

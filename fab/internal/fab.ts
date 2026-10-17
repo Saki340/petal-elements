@@ -28,9 +28,10 @@ export type FabVariant =
 // tslint:disable-next-line:enforce-comments-on-exported-symbols
 export class Fab extends SharedFab {
   /**
-   * The FAB color variant to render.
+   * The FAB color variant to render. The default, `primary`, is Compose's
+   * default FAB color (primary container).
    */
-  @property() variant: FabVariant = 'surface';
+  @property() variant: FabVariant = 'primary';
 
   protected override getRenderClasses() {
     return {
