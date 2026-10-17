@@ -38,6 +38,12 @@
   icons are `on-surface-variant` (filled, outlined, elevated, text); a plain
   small button presses to 8px and a small toggle button to 6px; a pressed
   toggle button takes its pressed shape even when selected.
+* **checkbox, radio, switch:** follow Compose: the checkbox is 20px with a
+  checkmark path drawn by springs and morphing into the indeterminate dash;
+  the radio dot grows with the fast spatial spring; the switch thumb moves
+  with the fast spatial spring and snaps when pressed. Hover, focus and
+  pressed no longer change the outline, ring or thumb colors (the per-state
+  tokens still work), and the switch no longer animates colors or icons.
 * All components respect the `hidden` attribute (their host `display` no
   longer overrides it).
 * **dialog:** the scrim is in the top layer, so no element on the page is

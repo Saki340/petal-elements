@@ -1,17 +1,12 @@
 //
 // Copyright 2022 Google LLC
 // SPDX-License-Identifier: Apache-2.0
+// Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
 //
 
 // go/keep-sorted start
 @use 'sass:map';
 // go/keep-sorted end
-// go/keep-sorted start
-@use '../../tokens';
-// go/keep-sorted end
-
-$_md-sys-motion: tokens.md-sys-motion-values();
-$_easing-standard: map.get($_md-sys-motion, 'easing-standard');
 
 @mixin styles($tokens) {
   @layer styles {
@@ -30,23 +25,13 @@ $_easing-standard: map.get($_md-sys-motion, 'easing-standard');
       justify-content: center;
       fill: currentColor;
 
-      transition: fill 67ms linear, opacity 33ms linear,
-        transform 167ms $_easing-standard;
+      // Compose (Switch.kt) shows the thumb content without any transition.
       opacity: 0;
-    }
-
-    .disabled .icon {
-      transition: none;
     }
 
     .selected .icon--on,
     .unselected .icon--off {
       opacity: 1;
-    }
-
-    // rotate selected icon into view when there is no unselected icon
-    .unselected .handle:not(.with-icon) .icon--on {
-      transform: rotate(-45deg);
     }
 
     .icon--off {

@@ -20,6 +20,11 @@ import {
 } from '../../internal/events/form-label-activation.js';
 import {redispatchEvent} from '../../internal/events/redispatch-event.js';
 import {
+  DEFAULT_SPATIAL,
+  Spring,
+  springFromCss,
+} from '../../internal/motion/spring.js';
+import {
   createValidator,
   getValidityAnchor,
   mixinConstraintValidation,
@@ -31,6 +36,55 @@ import {
   mixinFormAssociated,
 } from '../../labs/behaviors/form-associated.js';
 import {CheckboxValidator} from '../../labs/behaviors/validators/checkbox-validator.js';
+
+/** The mark's state (Compose's ToggleableState). */
+type MarkState = 'off' | 'on' | 'indeterminate';
+
+/**
+ * Compose's SnapAnimationDelay: unchecking keeps the mark for 100ms (while
+ * the box fades out), then removes it at once.
+ */
+const SNAP_DELAY_MS = 100;
+
+// The checkmark path in Compose's drawCheck, in the 20 unit box of
+// CheckboxSize (the checkbox is 20dp in the default configuration): a polyline
+// from the left end through the cross to the right end. The indeterminate dash
+// is the same path with its cross and right end moved to the middle line
+// ("center gravitation").
+const VIEW = 20;
+const LEFT_X = 0.2;
+const LEFT_Y = 0.5;
+const CROSS_X = 0.4;
+const CROSS_Y = 0.7;
+const RIGHT_X = 0.8;
+const RIGHT_Y = 0.3;
+
+const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+
+/**
+ * The checkmark path for a draw fraction (how much of the path is stroked)
+ * and a gravitation (0: checkmark, 1: indeterminate dash).
+ *
+ * @internal
+ */
+export function checkmarkGeometry(draw: number, gravitation: number) {
+  const left = [LEFT_X * VIEW, lerp(LEFT_Y, 0.5, gravitation) * VIEW];
+  const cross = [
+    lerp(CROSS_X, 0.5, gravitation) * VIEW,
+    lerp(CROSS_Y, 0.5, gravitation) * VIEW,
+  ];
+  const right = [RIGHT_X * VIEW, lerp(RIGHT_Y, 0.5, gravitation) * VIEW];
+  const length =
+    Math.hypot(cross[0] - left[0], cross[1] - left[1]) +
+    Math.hypot(right[0] - cross[0], right[1] - cross[1]);
+  // Compose's PathMeasure.getSegment(0, length * fraction).
+  const visible = length * Math.min(Math.max(draw, 0), 1);
+  return {
+    d: `M${left[0]} ${left[1]}L${cross[0]} ${cross[1]}L${right[0]} ${right[1]}`,
+    length,
+    visible,
+  };
+}
 
 // Separate variable needed for closure.
 const checkboxBaseClass = mixinDelegatesAria(
@@ -84,10 +138,21 @@ export class Checkbox extends checkboxBaseClass {
    */
   @property() value = 'on';
 
-  @state() private prevChecked = false;
   @state() private prevDisabled = false;
-  @state() private prevIndeterminate = false;
   @query('input') private readonly input!: HTMLInputElement | null;
+  @query('.mark') private readonly mark!: SVGPathElement | null;
+
+  /** What the mark is drawn for (it follows `checked` and `indeterminate`). */
+  private markState: MarkState = 'off';
+  private markReady = false;
+  /** The draw progress of the mark: 0 hidden, 1 fully drawn. */
+  private readonly draw = new Spring(DEFAULT_SPATIAL);
+  /** 0 for the checkmark, 1 for the indeterminate dash. */
+  private readonly gravitation = new Spring(DEFAULT_SPATIAL);
+  private markFrame = 0;
+  private markTime = 0;
+  private markFrames = 0;
+  private markDelay?: ReturnType<typeof setTimeout>;
 
   constructor() {
     super();
@@ -108,19 +173,129 @@ export class Checkbox extends checkboxBaseClass {
       changed.has('disabled') ||
       changed.has('indeterminate')
     ) {
-      this.prevChecked = changed.get('checked') ?? this.checked;
       this.prevDisabled = changed.get('disabled') ?? this.disabled;
-      this.prevIndeterminate =
-        changed.get('indeterminate') ?? this.indeterminate;
     }
 
     super.update(changed);
   }
 
+  protected override updated(changed: PropertyValues<Checkbox>) {
+    super.updated(changed);
+    this.setMark(this.markTarget());
+  }
+
+  override disconnectedCallback() {
+    super.disconnectedCallback();
+    this.stopMark();
+  }
+
+  private markTarget(): MarkState {
+    return this.indeterminate ? 'indeterminate' : this.checked ? 'on' : 'off';
+  }
+
+  /**
+   * Moves the mark to the state, like Compose's CheckboxImpl: the draw
+   * progress is a default spatial spring, and so is the morph between the
+   * checkmark and the indeterminate dash. From unchecked the morph is already
+   * done, and to unchecked both snap after SnapAnimationDelay.
+   */
+  private setMark(next: MarkState) {
+    const first = !this.markReady;
+    this.markReady = true;
+    const previous = this.markState;
+    if (!first && previous === next) return;
+    this.markState = next;
+
+    const draw = next === 'off' ? 0 : 1;
+    const gravitation = next === 'indeterminate' ? 1 : 0;
+    this.stopMark();
+    if (first || matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      this.snapMark(draw, gravitation);
+      return;
+    }
+
+    const spec = springFromCss(this, 'default-spatial', DEFAULT_SPATIAL);
+    this.draw.spec = spec;
+    this.gravitation.spec = spec;
+    if (next === 'off') {
+      // Keep the mark as it is, remove it after the delay.
+      this.draw.target = this.draw.value;
+      this.gravitation.target = this.gravitation.value;
+      this.markDelay = setTimeout(() => {
+        this.markDelay = undefined;
+        this.snapMark(0, 0);
+      }, SNAP_DELAY_MS);
+      return;
+    }
+    this.draw.target = draw;
+    if (previous === 'off') {
+      // The mark appears in its final shape and is drawn from the start.
+      this.gravitation.value = this.gravitation.target = gravitation;
+      this.gravitation.velocity = 0;
+    } else {
+      this.gravitation.target = gravitation;
+    }
+    this.syncMark();
+    this.runMark();
+  }
+
+  private snapMark(draw: number, gravitation: number) {
+    for (const [spring, value] of [
+      [this.draw, draw],
+      [this.gravitation, gravitation],
+    ] as const) {
+      spring.value = spring.target = value;
+      spring.velocity = 0;
+    }
+    this.syncMark();
+  }
+
+  private stopMark() {
+    if (this.markFrame) cancelAnimationFrame(this.markFrame);
+    this.markFrame = 0;
+    clearTimeout(this.markDelay);
+    this.markDelay = undefined;
+  }
+
+  private runMark() {
+    this.markTime = performance.now();
+    this.markFrames = 0;
+    const tick = () => {
+      const now = performance.now();
+      // At most a few frames' worth, so a background tab does not jump.
+      const ms = Math.min(now - this.markTime, 64);
+      this.markTime = now;
+      this.draw.step(ms);
+      this.gravitation.step(ms);
+      this.syncMark();
+      if (
+        (this.draw.atRest && this.gravitation.atRest) ||
+        ++this.markFrames > 600
+      ) {
+        this.snapMark(this.draw.target, this.gravitation.target);
+        this.markFrame = 0;
+        return;
+      }
+      this.markFrame = requestAnimationFrame(tick);
+    };
+    this.markFrame = requestAnimationFrame(tick);
+  }
+
+  /** Draws the mark for the current draw progress and gravitation. */
+  private syncMark() {
+    const mark = this.mark;
+    if (!mark) return;
+    const {d, length, visible} = checkmarkGeometry(
+      this.draw.value,
+      this.gravitation.value,
+    );
+    mark.setAttribute('d', d);
+    // A zero length dash with square caps would still show a dot.
+    mark.style.display = visible > 0.001 ? '' : 'none';
+    mark.style.strokeDasharray = `${visible} ${length}`;
+  }
+
   protected override render() {
-    const prevNone = !this.prevChecked && !this.prevIndeterminate;
-    const prevChecked = this.prevChecked && !this.prevIndeterminate;
-    const prevIndeterminate = this.prevIndeterminate;
     const isChecked = this.checked && !this.indeterminate;
     const isIndeterminate = this.indeterminate;
 
@@ -130,9 +305,6 @@ export class Checkbox extends checkboxBaseClass {
       'unselected': !isChecked && !isIndeterminate,
       'checked': isChecked,
       'indeterminate': isIndeterminate,
-      'prev-unselected': prevNone,
-      'prev-checked': prevChecked,
-      'prev-indeterminate': prevIndeterminate,
       'prev-disabled': this.prevDisabled,
     });
 
@@ -155,13 +327,11 @@ export class Checkbox extends checkboxBaseClass {
           @input=${this.handleInput}
           @change=${this.handleChange} />
 
-        <div class="outline"></div>
-        <div class="background"></div>
+        <div class="box"></div>
         <petal-focus-ring part="focus-ring" for="input"></petal-focus-ring>
         <petal-ripple for="input" ?disabled=${this.disabled}></petal-ripple>
-        <svg class="icon" viewBox="0 0 18 18" aria-hidden="true">
-          <rect class="mark short" />
-          <rect class="mark long" />
+        <svg class="icon" viewBox="0 0 20 20" aria-hidden="true">
+          <path class="mark" />
         </svg>
       </div>
     `;

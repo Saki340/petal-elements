@@ -10,12 +10,24 @@
 // go/keep-sorted end
 // go/keep-sorted start
 @use '../../focus/focus-ring';
-@use '../../internal/motion/animation';
 @use '../../ripple/ripple';
 @use '../../tokens';
+@use '../../tokens/versions/compose/values/md-comp-radio-button' as compose;
+@use '../../tokens/versions/v34/values/md-sys-motion-springs' as springs;
 // go/keep-sorted end
 
-$_md-sys-motion: tokens.md-sys-motion-values();
+// Radio button, after Jetpack Compose Material 3 (RadioButton.kt,
+// RadioButtonDefaults, RadioButtonTokens): a 20dp ring with a 2dp stroke and a
+// dot, both in one color (selected, unselected, or the disabled ones at 38%).
+// The color does not change on hover, focus or press (those show only the
+// ripple) and animates with the default effects spring, snapping while
+// disabled. The dot's radius is a fast spatial spring (see radio.ts).
+
+// Hover, focus and pressed keep the plain icon color in Compose: default them
+// to the plain token, which a page may still set per state.
+@function _same-as($token, $base-token, $value) {
+  @return var(--md-radio-#{$token}, var(--md-radio-#{$base-token}, #{$value}));
+}
 
 @mixin theme($tokens) {
   $supported-tokens: tokens.$md-comp-radio-supported-tokens;
@@ -32,7 +44,19 @@ $_md-sys-motion: tokens.md-sys-motion-values();
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-radio-values();
+  $unselected: map.get(compose.$values, 'unselected-icon-color');
+  $selected: map.get(compose.$values, 'selected-icon-color');
+  $tokens: map.merge(
+    tokens.md-comp-radio-values(),
+    (
+      'hover-icon-color': _same-as('hover-icon-color', 'icon-color', $unselected),
+      'focus-icon-color': _same-as('focus-icon-color', 'icon-color', $unselected),
+      'pressed-icon-color': _same-as('pressed-icon-color', 'icon-color', $unselected),
+      'selected-hover-icon-color': _same-as('selected-hover-icon-color', 'selected-icon-color', $selected),
+      'selected-focus-icon-color': _same-as('selected-focus-icon-color', 'selected-icon-color', $selected),
+      'selected-pressed-icon-color': _same-as('selected-pressed-icon-color', 'selected-icon-color', $selected),
+    )
+  );
 
   @layer {
     // The hidden attribute, which `display` on the host would override.
@@ -113,90 +137,88 @@ $_md-sys-motion: tokens.md-sys-motion-values();
     }
 
     .icon {
-      fill: map.get($tokens, 'icon-color');
+      color: map.get($tokens, 'icon-color');
       inset: 0;
       position: absolute;
+      transition: color #{map.get(springs.$values, 'spring-default-effects-duration')}
+        #{map.get(springs.$values, 'spring-default-effects')};
     }
 
-    .outer.circle {
-      // Outline color enter/exit transition
-      transition: fill 50ms linear;
+    // Compose's drawCircle with Stroke(2dp) and Fill.
+    .ring {
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
     }
 
-    .inner.circle {
-      opacity: 0;
+    .dot {
+      fill: currentColor;
+      transform: scale(0);
       transform-origin: center;
-      transition: opacity 50ms linear;
     }
 
     .checked .icon {
-      fill: map.get($tokens, 'selected-icon-color');
+      color: map.get($tokens, 'selected-icon-color');
     }
 
-    .checked .inner.circle {
-      animation: inner-circle-grow 300ms
-        map.get($_md-sys-motion, easing-emphasized-decelerate);
-      opacity: 1;
+    .checked .dot {
+      transform: scale(1);
     }
 
-    @keyframes inner-circle-grow {
-      from {
-        transform: scale(0);
-      }
-      to {
-        transform: scale(1);
-      }
-    }
-
-    // Don't animate when disabled
-    :host([disabled]) .circle {
-      animation-duration: 0s;
-      transition-duration: 0s;
+    // Snap while disabled.
+    :host([disabled]) .icon {
+      transition: none;
     }
 
     :host(:hover) .icon {
-      fill: map.get($tokens, 'hover-icon-color');
+      color: map.get($tokens, 'hover-icon-color');
     }
 
     :host(:focus-within) .icon {
-      fill: map.get($tokens, 'focus-icon-color');
+      color: map.get($tokens, 'focus-icon-color');
     }
 
     :host(:active) .icon {
-      fill: map.get($tokens, 'pressed-icon-color');
+      color: map.get($tokens, 'pressed-icon-color');
     }
 
     :host([disabled]) .icon {
-      fill: map.get($tokens, 'disabled-unselected-icon-color');
+      color: map.get($tokens, 'disabled-unselected-icon-color');
       opacity: map.get($tokens, 'disabled-unselected-icon-opacity');
     }
 
     :host(:hover) .checked .icon {
-      fill: map.get($tokens, 'selected-hover-icon-color');
+      color: map.get($tokens, 'selected-hover-icon-color');
     }
 
     :host(:focus-within) .checked .icon {
-      fill: map.get($tokens, 'selected-focus-icon-color');
+      color: map.get($tokens, 'selected-focus-icon-color');
     }
 
     :host(:active) .checked .icon {
-      fill: map.get($tokens, 'selected-pressed-icon-color');
+      color: map.get($tokens, 'selected-pressed-icon-color');
     }
 
     :host([disabled]) .checked .icon {
-      fill: map.get($tokens, 'disabled-selected-icon-color');
+      color: map.get($tokens, 'disabled-selected-icon-color');
       opacity: map.get($tokens, 'disabled-selected-icon-opacity');
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .icon {
+        transition: none;
+      }
     }
   }
 
   @layer hcm {
     @media (forced-colors: active) {
       .icon {
-        fill: CanvasText;
+        color: CanvasText;
       }
 
       :host([disabled]) .icon {
-        fill: GrayText;
+        color: GrayText;
         opacity: 1;
       }
     }

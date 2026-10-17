@@ -7,23 +7,40 @@
 // go/keep-sorted start
 @use 'sass:list';
 @use 'sass:map';
-@use 'sass:math';
 // go/keep-sorted end
 // go/keep-sorted start
 @use '../../ripple/ripple';
 @use '../../tokens';
+@use '../../tokens/versions/compose/values/md-comp-checkbox' as compose;
+@use '../../tokens/versions/v34/values/md-sys-motion-springs' as springs;
 // go/keep-sorted end
 
-// Motion token values.
-$_md-sys-motion: tokens.md-sys-motion-values();
-// The stroke width of the icon marks.
-$_mark-stroke: 2px;
-// The coordinates in an 18px viewBox of the bottom left corner of the
-// indeterminate icon. Y is negative to fix an issue in Safari (see below).
-$_indeterminate-bottom-left: 4px, -10px;
-// The coordinates in an 18px viewBox of the bottom left corner of the
-// checkmark icon. Y is negative to fix an issue in Safari (see below).
-$_checkmark-bottom-left: 7px, -14px;
+// Checkbox, after Jetpack Compose Material 3 (Checkbox.kt, CheckboxDefaults,
+// CheckboxTokens). What Compose actually draws, with
+// ComposeMaterial3Flags.isCheckboxStylingFixEnabled off (the default):
+// - a 20dp box (CheckboxSize) with 2dp corners, unselected: a 2dp outline in
+//   CheckboxTokens.UnselectedOutlineColor, selected: filled with
+//   SelectedContainerColor; the colors do not change on hover, focus or press
+//   (those show only the ripple), and there is no error state;
+// - the checkmark in SelectedIconColor, also when disabled (the flag decides
+//   whether the disabled icon color is used); disabled: the box or outline at
+//   38% opacity of OnSurface;
+// - the colors animate with a fast effects spring when the checkbox is
+//   unselected, a default effects spring when it is selected, and snap while
+//   disabled. The checkmark itself is drawn by checkbox.ts (path progress and
+//   the indeterminate morph are default spatial springs).
+
+// The stroke width of the checkmark in the 20 unit viewBox (CheckboxDefaults.StrokeWidth).
+$_mark-stroke: 2;
+// Compose's CheckboxSize.
+$_container-size: 20px;
+
+// Hover, focus and pressed keep the plain outline (and icon) color in
+// Compose: default them to the plain token, which a page may still set per
+// state.
+@function _same-as($token, $base-token, $value) {
+  @return var(--md-checkbox-#{$token}, var(--md-checkbox-#{$base-token}, #{$value}));
+}
 
 @mixin theme($tokens) {
   $supported-tokens: tokens.$md-comp-checkbox-supported-tokens;
@@ -39,7 +56,23 @@ $_checkmark-bottom-left: 7px, -14px;
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-checkbox-values();
+  $outline: map.get(compose.$values, 'unselected-outline-color');
+  $tokens: map.merge(
+    tokens.md-comp-checkbox-values(),
+    (
+      'container-size': var(--md-checkbox-container-size, #{$_container-size}),
+      'icon-size': var(--md-checkbox-icon-size, #{$_container-size}),
+      'hover-outline-color': _same-as('hover-outline-color', 'outline-color', $outline),
+      'focus-outline-color': _same-as('focus-outline-color', 'outline-color', $outline),
+      'pressed-outline-color': _same-as('pressed-outline-color', 'outline-color', $outline),
+      'selected-disabled-icon-color':
+        _same-as('selected-disabled-icon-color', 'selected-icon-color', map.get(compose.$values, 'selected-icon-color')),
+    )
+  );
+  $spring-in: map.get(springs.$values, 'spring-default-effects-duration')
+    map.get(springs.$values, 'spring-default-effects');
+  $spring-out: map.get(springs.$values, 'spring-fast-effects-duration')
+    map.get(springs.$values, 'spring-fast-effects');
 
   // The hidden attribute, which `display` on the host would override.
   :host([hidden]) {
@@ -102,55 +135,32 @@ $_checkmark-bottom-left: 7px, -14px;
     width: 100%;
   }
 
-  .outline,
-  .background,
+  .box,
   .icon {
     inset: 0;
     position: absolute;
   }
 
-  .outline,
-  .background {
+  // Compose's drawBox: a fill inside a 2dp outline, both animated to the
+  // selected color (or from it, quickly).
+  .box {
+    background-clip: padding-box;
+    background-color: transparent;
+    border: map.get($tokens, 'outline-width') solid
+      map.get($tokens, 'outline-color');
     border-radius: inherit;
-  }
-
-  .outline {
-    border-color: map.get($tokens, 'outline-color');
-    border-style: solid;
-    border-width: map.get($tokens, 'outline-width');
     box-sizing: border-box;
+    transition:
+      background-color $spring-out,
+      border-color $spring-out;
   }
 
-  .background {
+  :where(.selected) .box {
     background-color: map.get($tokens, 'selected-container-color');
-  }
-
-  // Background and icon transitions.
-  .background,
-  .icon {
-    opacity: 0; // Background and icon fade in
-    transition-duration: 150ms, 50ms; // Exit duration for scale and opacity.
-    transition-property: transform, opacity;
-    // Exit easing function for scale, linear for opacity.
-    transition-timing-function: map.get(
-        $_md-sys-motion,
-        easing-emphasized-accelerate
-      ),
-      linear;
-    transform: scale(0.6); // Background and icon scale from 60% to 100%.
-  }
-
-  :where(.selected) :is(.background, .icon) {
-    opacity: 1;
-    // Enter duration for scale and opacity.
-    transition-duration: 350ms, 50ms;
-    // Enter easing function for scale, linear for opacity.
-    transition-timing-function: map.get(
-        $_md-sys-motion,
-        easing-emphasized-decelerate
-      ),
-      linear;
-    transform: scale(1);
+    border-color: map.get($tokens, 'selected-container-color');
+    transition:
+      background-color $spring-in,
+      border-color $spring-in;
   }
 
   // Ripple
@@ -183,216 +193,123 @@ $_checkmark-bottom-left: 7px, -14px;
     );
   }
 
-  // Icon and icon marks
+  // Icon
 
+  // The checkmark / indeterminate dash is a path drawn by checkbox.ts: its
+  // draw progress and the morph between both are springs there; the color
+  // animates here, like the box.
   .icon {
-    // The icon is created with two <rect> marks for animation:
-    // 1. Short end
-    //   - the smaller leading part of the checkmark
-    //   - hidden behind long end for indeterminate mark
-    // 2. Long end
-    //   - the larger trailing part of the checkmark
-    //   - the entirety of the indeterminate mark
-    fill: map.get($tokens, 'selected-icon-color');
+    fill: none;
     height: map.get($tokens, 'icon-size');
+    stroke: transparent;
+    stroke-linecap: square;
+    stroke-linejoin: miter;
+    stroke-width: $_mark-stroke;
+    transition: stroke $spring-out;
     width: map.get($tokens, 'icon-size');
   }
 
-  // The short end of the checkmark. Initially hidden underneath the
-  // indeterminate mark.
-  .mark.short {
-    height: $_mark-stroke;
-    transition-property: transform, height;
-    width: $_mark-stroke;
-  }
-
-  // The long end of the checkmark. Initially the indeterminate mark.
-  .mark.long {
-    height: $_mark-stroke;
-    transition-property: transform, width;
-    width: 10px;
-  }
-
-  // Exit duration and easing.
-  .mark {
-    animation-duration: 150ms;
-    animation-timing-function: map.get(
-      $_md-sys-motion,
-      easing-emphasized-accelerate
-    );
-    transition-duration: 150ms;
-    transition-timing-function: map.get(
-      $_md-sys-motion,
-      easing-emphasized-accelerate
-    );
-  }
-
-  // Enter duration and easing.
-  .selected .mark {
-    animation-duration: 350ms;
-    animation-timing-function: map.get(
-      $_md-sys-motion,
-      easing-emphasized-decelerate
-    );
-    transition-duration: 350ms;
-    transition-timing-function: map.get(
-      $_md-sys-motion,
-      easing-emphasized-decelerate
-    );
-  }
-
-  // Creates the checkmark icon.
-  .checked,
-  // Keep the checkmark shape when unselecting a checked checkbox.
-  .prev-checked.unselected {
-    .mark {
-      // Transform from the bottom left of the rectangles, whch turn into the
-      // bottom-most point of the checkmark.
-      // Fix Safari's transform-origin bug from "top left" to "bottom left"
-      $scale: scaleY(-1);
-      // Move the "bottom left" corner to the checkmark location.
-      $translate: translate($_checkmark-bottom-left);
-      // Rotate the checkmark.
-      $rotate: rotate(45deg);
-      transform: $scale $translate $rotate;
-    }
-
-    .mark.short {
-      // The right triangle that forms the short end has an X, Y length of
-      // 4dp, 4dp. The hypoteneuse is √(4*4 + 4*4), which is the length of the
-      // short end when checked.
-      height: 1px * math.sqrt(32);
-    }
-
-    .mark.long {
-      // The right triangle that forms the long end has an X, Y length of
-      // 8dp, 8dp. The hypoteneuse is √(8*8 + 8*8), which is the length of the
-      // long end when checked.
-      width: 1px * math.sqrt(128);
-    }
-  }
-
-  // Creates the indeterminate icon.
-  .indeterminate,
-  // Keep the indeterminate shape when unselecting an indeterminate checkbox.
-  .prev-indeterminate.unselected {
-    .mark {
-      transform: scaleY(-1) translate($_indeterminate-bottom-left) rotate(0deg);
-    }
-  }
-
-  // When selecting an unselected checkbox, don't transition between the
-  // checked and indeterminate states. The checkmark icon or indeterminate icon
-  // should fade in from its final position.
-  .prev-unselected .mark {
-    transition-property: none;
-  }
-
-  // When checking a checkbox, the long mark of the checkmark grows from the
-  // bottom-most point of the checkmark. An animation provides the starting
-  // width to animate from.
-  .prev-unselected.checked .mark.long {
-    animation-name: prev-unselected-to-checked;
-  }
-  @keyframes prev-unselected-to-checked {
-    from {
-      width: 0;
-    }
+  :where(.selected) .icon {
+    stroke: map.get($tokens, 'selected-icon-color');
+    transition: stroke $spring-in;
   }
 
   // States
 
-  :where(:hover) .outline {
+  :where(:hover) .box {
     border-color: map.get($tokens, 'hover-outline-color');
-    border-width: map.get($tokens, 'hover-outline-width');
   }
 
-  :where(:hover) .background {
-    background: map.get($tokens, 'selected-hover-container-color');
+  :where(:hover) :where(.selected) .box {
+    background-color: map.get($tokens, 'selected-hover-container-color');
+    border-color: map.get($tokens, 'selected-hover-container-color');
   }
 
-  :where(:hover) .icon {
-    fill: map.get($tokens, 'selected-hover-icon-color');
+  :where(:hover) :where(.selected) .icon {
+    stroke: map.get($tokens, 'selected-hover-icon-color');
   }
 
-  :where(:focus-within) .outline {
+  :where(:focus-within) .box {
     border-color: map.get($tokens, 'focus-outline-color');
-    border-width: map.get($tokens, 'focus-outline-width');
   }
 
-  :where(:focus-within) .background {
-    background: map.get($tokens, 'selected-focus-container-color');
+  :where(:focus-within) :where(.selected) .box {
+    background-color: map.get($tokens, 'selected-focus-container-color');
+    border-color: map.get($tokens, 'selected-focus-container-color');
   }
 
-  :where(:focus-within) .icon {
-    fill: map.get($tokens, 'selected-focus-icon-color');
+  :where(:focus-within) :where(.selected) .icon {
+    stroke: map.get($tokens, 'selected-focus-icon-color');
   }
 
-  :where(:active) .outline {
+  :where(:active) .box {
     border-color: map.get($tokens, 'pressed-outline-color');
-    border-width: map.get($tokens, 'pressed-outline-width');
   }
 
-  :where(:active) .background {
-    background: map.get($tokens, 'selected-pressed-container-color');
+  :where(:active) :where(.selected) .box {
+    background-color: map.get($tokens, 'selected-pressed-container-color');
+    border-color: map.get($tokens, 'selected-pressed-container-color');
   }
 
-  :where(:active) .icon {
-    fill: map.get($tokens, 'selected-pressed-icon-color');
+  :where(:active) :where(.selected) .icon {
+    stroke: map.get($tokens, 'selected-pressed-icon-color');
   }
 
-  // Don't animate to/from disabled states because the outline is hidden when
-  // selected. Without this, there'd be a FOUC if the checkbox state is
-  // programmatically  changed while disabled.
-  :where(.disabled, .prev-disabled) :is(.background, .icon, .mark) {
-    animation-duration: 0s;
+  // Compose snaps the box and outline while disabled (no animation between
+  // enabled and disabled).
+  :where(.disabled, .prev-disabled) .box {
     transition-duration: 0s;
   }
 
-  :where(.disabled) .outline {
+  :where(.disabled) .box {
     border-color: map.get($tokens, 'disabled-outline-color');
-    border-width: map.get($tokens, 'disabled-outline-width');
     opacity: map.get($tokens, 'disabled-container-opacity');
   }
 
-  :where(.selected.disabled) .outline {
-    // Hide the outline behind the transparent selected container color.
-    // This can be removed once disabled colors are flattened.
-    visibility: hidden;
-  }
-
-  :where(.selected.disabled) .background {
-    // Set disabled opacity only when selected since opacity is used to show
-    // or hide the container background.
-    background: map.get($tokens, 'selected-disabled-container-color');
+  :where(.selected):where(.disabled) .box {
+    background-color: map.get($tokens, 'selected-disabled-container-color');
+    border-color: map.get($tokens, 'selected-disabled-container-color');
     opacity: map.get($tokens, 'selected-disabled-container-opacity');
   }
 
   :where(.disabled) .icon {
-    fill: map.get($tokens, 'selected-disabled-icon-color');
+    stroke: transparent;
+  }
+
+  :where(.selected):where(.disabled) .icon {
+    stroke: map.get($tokens, 'selected-disabled-icon-color');
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .box,
+    .icon {
+      transition-duration: 0s;
+    }
   }
 
   @media (forced-colors: active) {
-    .background {
+    :where(.selected) .box {
       background-color: CanvasText;
-    }
-
-    .selected.disabled .background {
-      background-color: GrayText;
-      opacity: 1;
-    }
-
-    .outline {
       border-color: CanvasText;
     }
 
-    .disabled .outline {
+    .selected.disabled .box {
+      background-color: GrayText;
       border-color: GrayText;
       opacity: 1;
     }
 
-    .icon {
-      fill: Canvas;
+    .box {
+      border-color: CanvasText;
+    }
+
+    .disabled .box {
+      border-color: GrayText;
+      opacity: 1;
+    }
+
+    .selected .icon {
+      stroke: Canvas;
     }
   }
 }

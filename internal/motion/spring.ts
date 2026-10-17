@@ -34,6 +34,9 @@ export function springFromCss(element: Element, name: string, fallback: SpringSp
 // Fallbacks when the page has no spring tokens: the expressive scheme, the
 // default (ExpressiveMotionTokens).
 
+/** ExpressiveMotionTokens.SpringDefaultSpatial: damping 0.8, stiffness 380. */
+export const DEFAULT_SPATIAL: SpringSpec = {dampingRatio: 0.8, stiffness: 380};
+
 /** ExpressiveMotionTokens.SpringFastSpatial: damping 0.6, stiffness 800. */
 export const FAST_SPATIAL: SpringSpec = {dampingRatio: 0.6, stiffness: 800};
 

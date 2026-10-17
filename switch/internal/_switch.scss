@@ -11,6 +11,7 @@
 // go/keep-sorted start
 @use '../../focus/focus-ring';
 @use '../../tokens';
+@use '../../tokens/versions/compose/values/md-comp-switch' as compose;
 @use './handle';
 @use './icon';
 @use './track';
@@ -29,8 +30,35 @@
   }
 }
 
+// Compose (SwitchDefaults.colors) has one thumb color per checked state: it
+// does not change with hover, focus or press (those only show the ripple). So
+// the hover/focus/pressed thumb tokens default to the plain thumb color,
+// which is SwitchTokens.UnselectedHandleColor / SelectedHandleColor.
+@function _handle-default($state-token, $base-token, $compose-token) {
+  @return var(
+    --md-switch-#{$state-token},
+    var(--md-switch-#{$base-token}, #{map.get(compose.$values, $compose-token)})
+  );
+}
+
 @mixin styles() {
-  $tokens: tokens.md-comp-switch-values();
+  $tokens: map.merge(
+    tokens.md-comp-switch-values(),
+    (
+      'hover-handle-color':
+        _handle-default('hover-handle-color', 'handle-color', 'unselected-handle-color'),
+      'focus-handle-color':
+        _handle-default('focus-handle-color', 'handle-color', 'unselected-handle-color'),
+      'pressed-handle-color':
+        _handle-default('pressed-handle-color', 'handle-color', 'unselected-handle-color'),
+      'selected-hover-handle-color':
+        _handle-default('selected-hover-handle-color', 'selected-handle-color', 'selected-handle-color'),
+      'selected-focus-handle-color':
+        _handle-default('selected-focus-handle-color', 'selected-handle-color', 'selected-handle-color'),
+      'selected-pressed-handle-color':
+        _handle-default('selected-pressed-handle-color', 'selected-handle-color', 'selected-handle-color'),
+    )
+  );
 
   @layer styles, hcm;
   @layer styles {

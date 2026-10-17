@@ -119,6 +119,10 @@ descriptive.
 > Note: switches are not automatically labelled by `<label>` elements and always
 > need an `aria-label`. See b/294081528.
 
+## Compose behavior
+
+The switch follows Jetpack Compose Material 3: the thumb moves and resizes with the fast spatial spring (it overshoots), snaps to the pressed size on press, and the thumb color does not change on hover, focus or press. Colors and icons change without animation.
+
 ## Theming
 
 Switches supports [Material theming](../theming/README.md) and can be customized

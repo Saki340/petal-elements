@@ -120,6 +120,10 @@ Radio groups must display a label, either with `aria-label` or
 > Note: radios are not automatically labelled by `<label>` elements and always
 > need an `aria-label`. See b/294081528.
 
+## Compose behavior
+
+The radio button follows Jetpack Compose Material 3: a 20dp ring with a 2dp stroke and a dot that grows with the fast spatial spring. The ring and dot are one color that animates with the default effects spring and does not change on hover, focus or press (only the ripple does).
+
 ## Theming
 
 Radios support [Material theming](../theming/README.md) and can be customized in

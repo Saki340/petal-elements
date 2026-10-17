@@ -9,11 +9,15 @@
 // go/keep-sorted end
 // go/keep-sorted start
 @use '../../ripple/ripple';
-@use '../../tokens';
+@use '../../tokens/versions/v34/values/md-sys-motion-springs' as springs;
 // go/keep-sorted end
 
-$_md-sys-motion: tokens.md-sys-motion-values();
-$_easing-standard: map.get($_md-sys-motion, 'easing-standard');
+// Compose Switch (Switch.kt, ThumbNode): the thumb's size and offset animate
+// with MotionSchemeKeyTokens.FastSpatial (a spring that overshoots in the
+// expressive scheme). Pressing snaps to the pressed size (SnapSpec), releasing
+// springs back. Colors and icons change instantly.
+$_thumb-spring: map.get(springs.$values, 'spring-fast-spatial-duration')
+  map.get(springs.$values, 'spring-fast-spatial');
 
 @mixin styles($tokens) {
   @layer styles {
@@ -22,8 +26,7 @@ $_easing-standard: map.get($_md-sys-motion, 'easing-standard');
       place-content: center;
       place-items: center;
       position: relative;
-      // this easing is custom to perform the "overshoot" animation
-      transition: margin 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transition: margin $_thumb-spring;
     }
 
     $margin: calc(
@@ -52,9 +55,7 @@ $_easing-standard: map.get($_md-sys-motion, 'easing-standard');
       width: map.get($tokens, 'handle-width');
 
       transform-origin: center;
-      transition-property: height, width;
-      transition-duration: 250ms, 250ms;
-      transition-timing-function: $_easing-standard, $_easing-standard;
+      transition: height $_thumb-spring, width $_thumb-spring;
       z-index: 0;
     }
 
@@ -65,11 +66,9 @@ $_easing-standard: map.get($_md-sys-motion, 'easing-standard');
       position: absolute;
       border-radius: inherit;
       box-sizing: border-box;
-      transition: background-color 67ms linear;
     }
 
-    .disabled .handle,
-    .disabled .handle::before {
+    .disabled .handle {
       transition: none;
     }
 
@@ -87,8 +86,8 @@ $_easing-standard: map.get($_md-sys-motion, 'easing-standard');
     .unselected:not(.disabled):active .handle {
       height: map.get($tokens, 'pressed-handle-height');
       width: map.get($tokens, 'pressed-handle-width');
-      transition-timing-function: linear;
-      transition-duration: 100ms;
+      // Compose snaps to the pressed size (SnapSpec).
+      transition: none;
     }
 
     .selected .handle::before {
@@ -163,6 +162,15 @@ $_easing-standard: map.get($_md-sys-motion, 'easing-standard');
           'pressed-opacity': map.get($tokens, 'pressed-state-layer-opacity'),
         )
       );
+    }
+  }
+
+  @layer styles {
+    @media (prefers-reduced-motion: reduce) {
+      .handle-container,
+      .handle {
+        transition: none;
+      }
     }
   }
 

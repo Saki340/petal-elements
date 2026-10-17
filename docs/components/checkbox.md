@@ -108,6 +108,10 @@ more descriptive.
 > Note: checkboxes are not automatically labelled by `<label>` elements and
 > always need an `aria-label`. See b/294081528.
 
+## Compose behavior
+
+The checkbox follows Jetpack Compose Material 3: a 20dp box with a 2dp outline, and the checkmark is drawn as a path (default spatial spring) that morphs into the indeterminate dash. Colors animate with the effects springs and do not change on hover, focus or press (only the ripple does). There is no error state in Compose.
+
 ## Theming
 
 Checkbox supports [Material theming](../theming/README.md) and can be customized
