@@ -28,6 +28,9 @@ import {mixinFormSubmitter} from '../../labs/behaviors/form-submitter.js';
 type LinkTarget = '_blank' | '_parent' | '_self' | '_top';
 
 // Separate variable needed for closure.
+/** Material 3 Expressive icon button sizes. */
+export type IconButtonSize = 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
+
 const iconButtonBaseClass = mixinDelegatesAria(
   mixinFormSubmitter(mixinFormAssociated(mixinElementInternals(LitElement))),
 );
@@ -108,6 +111,23 @@ export class IconButton extends iconButtonBaseClass {
    * icon is provided.
    */
   @property({type: Boolean, reflect: true}) selected = false;
+
+  /**
+   * Material 3 Expressive size (Compose's XSmall…XLargeIconButtonTokens):
+   * `xsmall` (32px), `small` (40px), `medium` (56px), `large` (96px) or
+   * `xlarge` (136px) high. Sized icon buttons morph their shape when pressed
+   * or selected. Without it, the button keeps its original 40px look.
+   */
+  @property({reflect: true}) size?: IconButtonSize;
+
+  /**
+   * The width of a sized icon button (Compose's `IconButtonWidthOption`):
+   * `narrow`, `default` or `wide`.
+   */
+  @property({reflect: true}) width?: 'narrow' | 'default' | 'wide';
+
+  /** The shape of a sized icon button: `round` (default) or `square`. */
+  @property({reflect: true}) shape?: 'round' | 'square';
 
   @state() private flipIcon = isRtl(this, this.flipIconInRtl);
 

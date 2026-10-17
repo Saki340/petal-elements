@@ -1,0 +1,84 @@
+//
+// Copyright 2026 Saki
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// Icon button colors where Jetpack Compose's IconButtonDefaults differ from
+// the web tokens (tokens/versions/compose/values, *IconButtonTokens). Each
+// keeps its public token.
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'sass:map';
+@use '../../tokens/versions/compose/values/md-comp-filled-icon-button' as filled;
+@use '../../tokens/versions/compose/values/md-comp-filled-tonal-icon-button' as tonal;
+@use '../../tokens/versions/compose/values/md-comp-outlined-icon-button' as outlined;
+// go/keep-sorted end
+
+@function _token($component, $name, $value) {
+  @return var(--md-#{$component}-#{$name}, #{$value});
+}
+
+// A toggle state's colors: Compose uses one content color for the icon in
+// every interaction state, and the state layer takes the content color.
+@mixin _content($component, $prefix, $color) {
+  @each $state in ('', 'hover-', 'focus-', 'pressed-') {
+    --_#{$prefix}#{$state}icon-color: #{_token($component, '#{$prefix}#{$state}icon-color', $color)};
+  }
+  @each $state in ('hover-', 'pressed-') {
+    --_#{$prefix}#{$state}state-layer-color: #{_token(
+        $component,
+        '#{$prefix}#{$state}state-layer-color',
+        $color
+      )};
+  }
+}
+
+/// FilledIconButtonDefaults: unselected toggle is surface-container with an
+/// on-surface-variant icon; disabled container opacity 0.1.
+@mixin filled() {
+  $c: 'filled-icon-button';
+  --_unselected-container-color: #{_token(
+      $c,
+      'unselected-container-color',
+      map.get(filled.$values, 'unselected-container-color')
+    )};
+  @include _content($c, 'toggle-', map.get(filled.$values, 'unselected-color'));
+  --_disabled-container-opacity: #{_token(
+      $c,
+      'disabled-container-opacity',
+      map.get(filled.$values, 'disabled-container-opacity')
+    )};
+}
+
+/// FilledTonalIconButtonDefaults: unselected toggle is secondary-container
+/// with on-secondary-container, selected is secondary with on-secondary.
+@mixin tonal() {
+  $c: 'filled-tonal-icon-button';
+  --_unselected-container-color: #{_token(
+      $c,
+      'unselected-container-color',
+      map.get(tonal.$values, 'unselected-container-color')
+    )};
+  --_selected-container-color: #{_token(
+      $c,
+      'selected-container-color',
+      map.get(tonal.$values, 'selected-container-color')
+    )};
+  @include _content($c, 'toggle-', map.get(tonal.$values, 'unselected-color'));
+  @include _content($c, 'toggle-selected-', map.get(tonal.$values, 'selected-color'));
+  --_disabled-container-opacity: #{_token(
+      $c,
+      'disabled-container-opacity',
+      map.get(tonal.$values, 'disabled-container-opacity')
+    )};
+}
+
+/// IconButtonDefaults.outlinedIconButtonBorder: the outline takes the content
+/// color (LocalContentColor), not a token.
+@mixin outlined() {
+  --_outline-color: #{_token(
+      'outlined-icon-button',
+      'outline-color',
+      map.get(outlined.$values, 'color')
+    )};
+}

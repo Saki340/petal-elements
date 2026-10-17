@@ -5,6 +5,9 @@
 
 // go/keep-sorted start
 @use './filled-icon-button';
+@use './size';
 // go/keep-sorted end
 
 @include filled-icon-button.styles;
+
+@include size.styles;

@@ -81,6 +81,10 @@
   input; `no-counter`; date and time types show their hint and picker icon.
 * **pulltorefresh:** `scroll-target="page"` and
   `--md-pull-to-refresh-top-offset`.
+* **iconbutton:** `size` (`xsmall`–`xlarge`), `width` (`narrow`, `default`,
+  `wide`) and `shape` (`round`, `square`) after Compose's
+  `XSmall…XLargeIconButtonTokens`, with the pressed and selected shape morph;
+  toggle and outlined colors follow `IconButtonDefaults`.
 * **icon:** `filled`, and an animated FILL axis from the inherited
   `--md-icon-fill` property.
 

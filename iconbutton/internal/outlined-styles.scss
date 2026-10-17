@@ -5,6 +5,9 @@
 
 // go/keep-sorted start
 @use './outlined-icon-button';
+@use './size';
 // go/keep-sorted end
 
 @include outlined-icon-button.styles;
+
+@include size.styles($outlined: true);

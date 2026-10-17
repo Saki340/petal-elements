@@ -1,0 +1,142 @@
+//
+// Copyright 2026 Saki
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// Material 3 Expressive icon button sizes, widths and shapes, after Jetpack
+// Compose (IconButtonDefaults.*ContainerSize, shapes(), toggleableShapes()).
+// Values: XSmall…XLargeIconButtonTokens (tokens/versions/compose/values).
+// - width = icon size + leading + trailing space of the width option
+//   (narrow, default "uniform", wide), height = ContainerHeight;
+// - round (default) or square; pressed corners PressedContainerShape, a
+//   selected toggle SelectedContainerShapeRound / Square; pressed wins over
+//   selected (shapeByInteraction);
+// - the morph runs on the default effects spring: "MotionSchemeKeyTokens
+//   .DefaultEffects is intentional here to prevent any bounce" (IconButton.kt).
+// Without `size`, the icon button keeps its original look.
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'sass:map';
+@use '../../tokens/versions/compose/values/md-comp-large-icon-button' as large;
+@use '../../tokens/versions/compose/values/md-comp-medium-icon-button' as medium;
+@use '../../tokens/versions/compose/values/md-comp-small-icon-button' as small;
+@use '../../tokens/versions/compose/values/md-comp-xlarge-icon-button' as xlarge;
+@use '../../tokens/versions/compose/values/md-comp-xsmall-icon-button' as xsmall;
+@use '../../tokens/versions/v34/values/md-sys-motion-springs' as springs;
+// go/keep-sorted end
+
+$sizes: (
+  'xsmall': xsmall.$values,
+  'small': small.$values,
+  'medium': medium.$values,
+  'large': large.$values,
+  'xlarge': xlarge.$values,
+);
+
+@function _get($size, $key) {
+  $values: map.get($sizes, $size);
+  $value: map.get($values, $key);
+  // LargeIconButtonTokens names the default width "uniform".
+  @if $value == null {
+    $value: map.get($values, str-replace-default($key));
+  }
+  @return $value;
+}
+
+@function str-replace-default($key) {
+  @if $key == 'default-leading-space' {
+    @return 'uniform-leading-space';
+  }
+  @if $key == 'default-trailing-space' {
+    @return 'uniform-trailing-space';
+  }
+  @return $key;
+}
+
+@function _width($size, $option) {
+  @return calc(
+    #{_get($size, 'icon-size')} + #{_get($size, '#{$option}-leading-space')} +
+      #{_get($size, '#{$option}-trailing-space')}
+  );
+}
+
+/// @param $outlined The outlined icon button: sizes set its outline width.
+/// @param $standard The standard icon button: its state layer is the button.
+@mixin styles($outlined: false, $standard: false) {
+  @each $size, $values in $sizes {
+    :host([size='#{$size}']) {
+      --_container-height: var(
+        --md-icon-button-#{$size}-container-height,
+        #{_get($size, 'container-height')}
+      );
+      --_container-width: var(--md-icon-button-#{$size}-container-width, #{_width($size, 'default')});
+      --_icon-size: var(--md-icon-button-#{$size}-icon-size, #{_get($size, 'icon-size')});
+      @if $outlined {
+        --_outline-width: #{_get($size, 'outlined-outline-width')};
+      }
+      --_shape-round: #{_get($size, 'container-shape-round')};
+      --_shape-square: #{_get($size, 'container-shape-square')};
+      --_shape-pressed: #{_get($size, 'pressed-container-shape')};
+      --_shape-selected-round: #{_get($size, 'selected-container-shape-round')};
+      --_shape-selected-square: #{_get($size, 'selected-container-shape-square')};
+    }
+
+    :host([size='#{$size}'][width='narrow']) {
+      --_container-width: #{_width($size, 'narrow')};
+    }
+
+    :host([size='#{$size}'][width='wide']) {
+      --_container-width: #{_width($size, 'wide')};
+    }
+  }
+
+  :host([size]) {
+    --_shape: var(--_shape-round);
+    --_container-shape-start-start: var(--_shape);
+    --_container-shape-start-end: var(--_shape);
+    --_container-shape-end-end: var(--_shape);
+    --_container-shape-end-start: var(--_shape);
+    @if $standard {
+      // The standard icon button has no container: its state layer is the
+      // button.
+      --_state-layer-height: var(--_container-height);
+      --_state-layer-width: var(--_container-width);
+      --_state-layer-shape: var(--_shape);
+    }
+  }
+
+  :host([size][shape='square']) {
+    --_shape: var(--_shape-square);
+  }
+
+  :host([size][selected]) {
+    --_shape: var(--_shape-selected-round);
+  }
+
+  :host([size][selected][shape='square']) {
+    --_shape: var(--_shape-selected-square);
+  }
+
+  // Pressed wins over selected.
+  :host([size]:active:not([disabled], [soft-disabled])),
+  :host([size][selected]:active:not([disabled], [soft-disabled])) {
+    --_shape: var(--_shape-pressed);
+  }
+
+  $_transition: map.get(springs.$values, 'spring-default-effects-duration')
+    map.get(springs.$values, 'spring-default-effects');
+
+  :host([size]) :is(.icon-button, petal-ripple) {
+    transition:
+      border-start-start-radius #{$_transition},
+      border-start-end-radius #{$_transition},
+      border-end-end-radius #{$_transition},
+      border-end-start-radius #{$_transition};
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :host([size]) :is(.icon-button, petal-ripple) {
+      transition-duration: 0s;
+    }
+  }
+}

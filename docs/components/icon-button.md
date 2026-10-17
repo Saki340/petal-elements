@@ -163,6 +163,48 @@ attribute.
 </div>
 ```
 
+### Sizes, widths and shapes
+
+Material 3 Expressive icon buttons, after Jetpack Compose
+(`IconButtonDefaults`, `XSmall…XLargeIconButtonTokens`):
+
+-   `size`: `xsmall` (32px), `small` (40px), `medium` (56px), `large` (96px)
+    or `xlarge` (136px) high, with a matching icon size. Without `size`, an
+    icon button keeps its original 40px look.
+-   `width`: `narrow`, `default` or `wide` (Compose's `IconButtonWidthOption`):
+    the icon plus the size's leading and trailing space.
+-   `shape`: `round` (default) or `square`.
+
+Sized icon buttons morph their corners when pressed and when a toggle is
+selected (pressed wins), on the default effects spring, so they do not bounce
+(`IconButton.kt`: "DefaultEffects is intentional here to prevent any bounce").
+
+<!-- no-catalog-start -->
+
+![Filled icon buttons in five sizes, filled tonal icon buttons in narrow,
+default and wide widths, and round, square and selected
+shapes](images/iconbutton/usage-sizes.webp)
+
+<!-- no-catalog-end -->
+<!-- catalog-include "figures/iconbutton/usage-sizes.html" -->
+
+```html
+<petal-filled-icon-button size="medium" aria-label="Edit">
+  <petal-icon>edit</petal-icon>
+</petal-filled-icon-button>
+<petal-filled-tonal-icon-button size="medium" width="wide" aria-label="Edit">
+  <petal-icon>edit</petal-icon>
+</petal-filled-tonal-icon-button>
+<petal-outlined-icon-button size="medium" shape="square" aria-label="Edit">
+  <petal-icon>edit</petal-icon>
+</petal-outlined-icon-button>
+```
+
+Colors follow Compose's `IconButtonDefaults`: an unselected filled toggle is
+`surface-container` with an `on-surface-variant` icon; a filled tonal toggle
+is `secondary-container`, and `secondary` with `on-secondary` when selected;
+the outlined border takes the icon color.
+
 ## Accessibility
 
 Add an
@@ -462,6 +504,9 @@ Token                                        | Default value
 | `ariaLabelSelected` | `aria-label-selected` | `string` | `''` | The `aria-label` of the button when the button is toggleable and selected. |
 | `toggle` | `toggle` | `boolean` | `false` | When true, the button will toggle between selected and unselected states |
 | `selected` | `selected` | `boolean` | `false` | Sets the selected state. When false, displays the default icon. When true, displays the selected icon, or the default icon If no `slot="selected"` icon is provided. |
+| `size` | `size` | `IconButtonSize` | `undefined` | Material 3 Expressive size (Compose's XSmall…XLargeIconButtonTokens): `xsmall` (32px), `small` (40px), `medium` (56px), `large` (96px) or `xlarge` (136px) high. Sized icon buttons morph their shape when pressed or selected. Without it, the button keeps its original 40px look. |
+| `width` | `width` | `"narrow" \| "default" \| "wide"` | `undefined` | The width of a sized icon button (Compose's `IconButtonWidthOption`): `narrow`, `default` or `wide`. |
+| `shape` | `shape` | `"round" \| "square"` | `undefined` | The shape of a sized icon button: `round` (default) or `square`. |
 | `name` | `name` | `string` | `undefined` | The HTML name to use in form submission. |
 | `disabled` | `disabled` | `boolean` | `undefined` | Whether or not the element is disabled. |
 | `type` | `type` | `string` | `'submit'` | A string indicating the form submission behavior of the element.<br>- submit: The element submits the form. This is the default value if the attribute is not specified, or if it is dynamically changed to an empty or invalid value. - reset: The element resets the form. - button: The element does nothing. |
@@ -500,6 +545,9 @@ Token                                        | Default value
 | `ariaLabelSelected` | `aria-label-selected` | `string` | `''` | The `aria-label` of the button when the button is toggleable and selected. |
 | `toggle` | `toggle` | `boolean` | `false` | When true, the button will toggle between selected and unselected states |
 | `selected` | `selected` | `boolean` | `false` | Sets the selected state. When false, displays the default icon. When true, displays the selected icon, or the default icon If no `slot="selected"` icon is provided. |
+| `size` | `size` | `IconButtonSize` | `undefined` | Material 3 Expressive size (Compose's XSmall…XLargeIconButtonTokens): `xsmall` (32px), `small` (40px), `medium` (56px), `large` (96px) or `xlarge` (136px) high. Sized icon buttons morph their shape when pressed or selected. Without it, the button keeps its original 40px look. |
+| `width` | `width` | `"narrow" \| "default" \| "wide"` | `undefined` | The width of a sized icon button (Compose's `IconButtonWidthOption`): `narrow`, `default` or `wide`. |
+| `shape` | `shape` | `"round" \| "square"` | `undefined` | The shape of a sized icon button: `round` (default) or `square`. |
 | `name` | `name` | `string` | `undefined` | The HTML name to use in form submission. |
 | `disabled` | `disabled` | `boolean` | `undefined` | Whether or not the element is disabled. |
 | `type` | `type` | `string` | `'submit'` | A string indicating the form submission behavior of the element.<br>- submit: The element submits the form. This is the default value if the attribute is not specified, or if it is dynamically changed to an empty or invalid value. - reset: The element resets the form. - button: The element does nothing. |
@@ -538,6 +586,9 @@ Token                                        | Default value
 | `ariaLabelSelected` | `aria-label-selected` | `string` | `''` | The `aria-label` of the button when the button is toggleable and selected. |
 | `toggle` | `toggle` | `boolean` | `false` | When true, the button will toggle between selected and unselected states |
 | `selected` | `selected` | `boolean` | `false` | Sets the selected state. When false, displays the default icon. When true, displays the selected icon, or the default icon If no `slot="selected"` icon is provided. |
+| `size` | `size` | `IconButtonSize` | `undefined` | Material 3 Expressive size (Compose's XSmall…XLargeIconButtonTokens): `xsmall` (32px), `small` (40px), `medium` (56px), `large` (96px) or `xlarge` (136px) high. Sized icon buttons morph their shape when pressed or selected. Without it, the button keeps its original 40px look. |
+| `width` | `width` | `"narrow" \| "default" \| "wide"` | `undefined` | The width of a sized icon button (Compose's `IconButtonWidthOption`): `narrow`, `default` or `wide`. |
+| `shape` | `shape` | `"round" \| "square"` | `undefined` | The shape of a sized icon button: `round` (default) or `square`. |
 | `name` | `name` | `string` | `undefined` | The HTML name to use in form submission. |
 | `disabled` | `disabled` | `boolean` | `undefined` | Whether or not the element is disabled. |
 | `type` | `type` | `string` | `'submit'` | A string indicating the form submission behavior of the element.<br>- submit: The element submits the form. This is the default value if the attribute is not specified, or if it is dynamically changed to an empty or invalid value. - reset: The element resets the form. - button: The element does nothing. |
@@ -576,6 +627,9 @@ Token                                        | Default value
 | `ariaLabelSelected` | `aria-label-selected` | `string` | `''` | The `aria-label` of the button when the button is toggleable and selected. |
 | `toggle` | `toggle` | `boolean` | `false` | When true, the button will toggle between selected and unselected states |
 | `selected` | `selected` | `boolean` | `false` | Sets the selected state. When false, displays the default icon. When true, displays the selected icon, or the default icon If no `slot="selected"` icon is provided. |
+| `size` | `size` | `IconButtonSize` | `undefined` | Material 3 Expressive size (Compose's XSmall…XLargeIconButtonTokens): `xsmall` (32px), `small` (40px), `medium` (56px), `large` (96px) or `xlarge` (136px) high. Sized icon buttons morph their shape when pressed or selected. Without it, the button keeps its original 40px look. |
+| `width` | `width` | `"narrow" \| "default" \| "wide"` | `undefined` | The width of a sized icon button (Compose's `IconButtonWidthOption`): `narrow`, `default` or `wide`. |
+| `shape` | `shape` | `"round" \| "square"` | `undefined` | The shape of a sized icon button: `round` (default) or `square`. |
 | `name` | `name` | `string` | `undefined` | The HTML name to use in form submission. |
 | `disabled` | `disabled` | `boolean` | `undefined` | Whether or not the element is disabled. |
 | `type` | `type` | `string` | `'submit'` | A string indicating the form submission behavior of the element.<br>- submit: The element submits the form. This is the default value if the attribute is not specified, or if it is dynamically changed to an empty or invalid value. - reset: The element resets the form. - button: The element does nothing. |

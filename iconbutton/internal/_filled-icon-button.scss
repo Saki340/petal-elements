@@ -1,6 +1,7 @@
 //
 // Copyright 2022 Google LLC
 // SPDX-License-Identifier: Apache-2.0
+// Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
 //
 
 // go/keep-sorted start
@@ -10,6 +11,7 @@
 // go/keep-sorted start
 @use '../../ripple/ripple';
 @use '../../tokens';
+@use './compose-colors';
 // go/keep-sorted end
 
 @mixin theme($tokens) {
@@ -34,6 +36,8 @@
     @each $token, $value in $tokens {
       --_#{$token}: #{$value};
     }
+
+    @include compose-colors.filled;
   }
 
   .icon-button {
