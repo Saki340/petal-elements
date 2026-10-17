@@ -65,6 +65,12 @@ const TAGS = [
   'petal-filled-text-field',
   'petal-outlined-text-field',
   'petal-tooltip',
+  'petal-navigation-bar',
+  'petal-navigation-bar-item',
+  'petal-navigation-rail',
+  'petal-navigation-rail-item',
+  'petal-bottom-sheet',
+  'petal-search-bar',
 ];
 
 describe('the hidden attribute', () => {
