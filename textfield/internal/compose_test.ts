@@ -253,13 +253,19 @@ describe('text fields, after Compose', () => {
     it('cuts the outline over the label as the label floats', async () => {
       const {fieldRoot} = await setup('outlined');
       const panel = fieldRoot.querySelector('.outline-panel-inactive')!;
-      expect(css(panel, 'clip-path', '::before')).toBe('inset(0px)');
+      expect(css(panel, 'transform', '::before')).toBe('none');
+      // Shrinks toward the end, so the cut grows from the start edge.
+      const [originX] = css(panel, 'transform-origin', '::before').split(' ');
+      expect(parseFloat(originX)).toBeCloseTo(
+        panel.getBoundingClientRect().width,
+        0,
+      );
       expect(css(panel, 'transition-duration', '::before')).toBe('0.359s');
 
       const {fieldRoot: populated} = await setup('outlined', 'value=Text');
       await settle(populated);
       const cut = populated.querySelector('.outline-panel-inactive')!;
-      expect(css(cut, 'clip-path', '::before')).toContain('100%');
+      expect(css(cut, 'transform', '::before')).toBe('matrix(0, 0, 0, 1, 0, 0)');
     });
 
     it('is on-surface at 12% when disabled', async () => {

@@ -167,8 +167,15 @@ $_effects: map.get(springs.$values, 'spring-fast-effects-duration')
         border-top-style: solid;
         border-bottom: none;
         bottom: auto;
-        clip-path: inset(0 0 0 0);
-        transition: clip-path $_spatial;
+        // Scaled toward the end rather than clipped: a clip-path shifts the
+        // 1px line by a fraction of a pixel, which shows a step at the
+        // notch's ends.
+        transform-origin: right;
+        transition: transform $_spatial;
+
+        &:dir(rtl) {
+          transform-origin: left;
+        }
       }
 
       &::after {
@@ -181,7 +188,7 @@ $_effects: map.get(springs.$values, 'spring-fast-effects-duration')
     .focused .outline-panel-inactive,
     .focused .outline-panel-active {
       &::before {
-        clip-path: inset(0 0 0 100%);
+        transform: scaleX(0);
       }
     }
 
