@@ -1,0 +1,28 @@
+<!--
+  @license
+  Copyright 2026 Saki
+  SPDX-License-Identifier: Apache-2.0
+-->
+<!-- Only for the image: a full screen view cannot be a live catalog figure. -->
+<div class="figure-wrapper">
+  <figure
+      title="A full screen search view"
+      aria-label="A full screen search view with the text weather and three suggestions.">
+    <petal-search-bar placeholder="Search apps" value="weather">
+      <petal-list style="background: transparent">
+        <petal-list-item type="button">
+          <petal-icon slot="start">history</petal-icon>
+          weather today
+        </petal-list-item>
+        <petal-list-item type="button">
+          <petal-icon slot="start">history</petal-icon>
+          weather tomorrow
+        </petal-list-item>
+        <petal-list-item type="button">
+          <petal-icon slot="start">history</petal-icon>
+          weather radar
+        </petal-list-item>
+      </petal-list>
+    </petal-search-bar>
+  </figure>
+</div>

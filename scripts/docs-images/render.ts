@@ -67,6 +67,32 @@ async function wavyProgress(page: Page) {
   });
 }
 
+/**
+ * Opens what the figure's button opens (a bottom sheet) in a phone-sized
+ * viewport and captures the viewport.
+ */
+async function openSheet(page: Page) {
+  await page.setViewportSize({width: 412, height: 720});
+  await page.click('#root petal-filled-button');
+  await page.waitForTimeout(1200);
+  await finishAnimations(page);
+  return 'viewport' as const;
+}
+
+/** Expands the figure's search bar to full screen and captures the viewport. */
+async function fullScreenSearch(page: Page) {
+  await page.setViewportSize({width: 412, height: 600});
+  await page.evaluate(async () => {
+    const bar = document.querySelector<HTMLElement & {expand(): Promise<void>}>(
+      '#root petal-search-bar',
+    )!;
+    await bar.expand();
+  });
+  await page.waitForTimeout(300);
+  await finishAnimations(page);
+  return 'viewport' as const;
+}
+
 /** Opens a menu by clicking its button, with room below the figure for it. */
 function openMenu(button = '#root petal-filled-button', room = 240) {
   return async (page: Page) => {
@@ -125,6 +151,12 @@ const SETUP: Record<string, (page: Page) => Promise<void | 'viewport'>> = {
   'images/pulltorefresh/hero.webp': pauseAnimations,
   'images/pulltorefresh/usage.webp': pauseAnimations,
   'images/menu/theming.webp': openMenu(),
+  'images/sheet/hero.webp': openSheet,
+  'images/sheet/usage.webp': openSheet,
+  'images/sheet/usage-skip.webp': openSheet,
+  'images/sheet/usage-drag-handle.webp': openSheet,
+  'images/sheet/theming.webp': openSheet,
+  'images/search/usage-full-screen.webp': fullScreenSearch,
 };
 
 interface Figure {
