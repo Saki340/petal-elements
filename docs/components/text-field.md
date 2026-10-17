@@ -395,6 +395,30 @@ for guidance on which one to use.
 <petal-outlined-text-field label="Outlined" value="Value"></petal-outlined-text-field>
 ```
 
+## Compose
+
+The text fields follow Jetpack Compose Material 3 (`TextField`,
+`OutlinedTextField` and `TextFieldDefaults`), and every `--md-*` token stays:
+
+*   The size is at least 280px by 56px; the focused indicator and outline are
+    2px (the web tokens say 3px); text has the letter spacing of its type scale
+    (body large 0.5px, body small 0.4px).
+*   There is no hover state, as in Compose: the hover tokens default to the
+    resting values and the hover state layer to 0. Set the hover tokens (for
+    example `--md-filled-text-field-hover-state-layer-opacity: 0.08`) to bring
+    it back.
+*   A disabled filled text field keeps its container color (it is not on-surface
+    at 4%).
+*   The label floats on the fast spatial spring (a small overshoot with the
+    default expressive motion scheme) and changes color on the fast effects
+    spring. The filled indicator grows from 1px to 2px on the fast spatial
+    spring and changes color on the fast effects spring. The outline changes
+    color on the fast effects spring, the focused outline fades in on the fast
+    spatial spring, and the cut in the outline grows with the label. The
+    placeholder fades in on the slow effects spring. With reduced motion the
+    label does not move and nothing animates. Pages switch the motion scheme
+    with `motion-standard.css`.
+
 ## Theming
 
 Text fields support [Material theming](../theming/README.md) and can be

@@ -1,7 +1,11 @@
 //
 // Copyright 2021 Google LLC
 // SPDX-License-Identifier: Apache-2.0
+// Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
 //
+
+@use 'sass:map';
+@use '../../tokens/versions/v34/values/md-sys-motion-springs' as springs;
 
 @mixin styles() {
   @layer styles {
@@ -17,7 +21,12 @@
       font-size: var(--_label-text-size);
       line-height: var(--_label-text-line-height);
       font-weight: var(--_label-text-weight);
+      letter-spacing: var(--_label-text-tracking);
       width: min-content;
+      // The label color animates on the fast effects spring
+      // (TextFieldImpl.kt labelTextStyleColor).
+      transition: color map.get(springs.$values, 'spring-fast-effects-duration')
+        map.get(springs.$values, 'spring-fast-effects');
     }
 
     .label-wrapper {
@@ -40,6 +49,7 @@
     .label.floating {
       font-size: var(--_label-text-populated-size);
       line-height: var(--_label-text-populated-line-height);
+      letter-spacing: var(--_label-text-populated-tracking);
       transform-origin: top left;
     }
 
@@ -88,6 +98,15 @@
 
     .error.focused .label {
       color: var(--_error-focus-label-text-color);
+    }
+  }
+
+  @layer reduced-motion {
+    @media (prefers-reduced-motion: reduce) {
+      .label,
+      .disabled .label {
+        transition: none;
+      }
     }
   }
 

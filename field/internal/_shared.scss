@@ -22,6 +22,18 @@
   :host {
     display: inline-flex;
     resize: both;
+    // Letter spacing of the type scales: body large for the content and the
+    // resting label, body small for the floating label and supporting text.
+    --_content-tracking: var(--md-sys-typescale-body-large-tracking, 0.5px);
+    --_label-text-tracking: var(--md-sys-typescale-body-large-tracking, 0.5px);
+    --_label-text-populated-tracking: var(
+      --md-sys-typescale-body-small-tracking,
+      0.4px
+    );
+    --_supporting-text-tracking: var(
+      --md-sys-typescale-body-small-tracking,
+      0.4px
+    );
   }
 
   .field {

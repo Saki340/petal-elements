@@ -1,6 +1,7 @@
 //
 // Copyright 2021 Google LLC
 // SPDX-License-Identifier: Apache-2.0
+// Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
 //
 
 // go/keep-sorted start
@@ -10,9 +11,8 @@
 // go/keep-sorted end
 // go/keep-sorted start
 @use '../../tokens';
+@use '../../tokens/versions/v34/values/md-sys-motion-springs' as springs;
 // go/keep-sorted end
-
-$_md-sys-motion: tokens.md-sys-motion-values();
 
 @mixin theme($tokens) {
   $supported-tokens: list.join(
@@ -60,8 +60,15 @@ $_md-sys-motion: tokens.md-sys-motion-values();
       position: absolute;
     }
 
+    // The container color animates on the fast effects spring
+    // (TextFieldDefaults.Container).
     .background {
       background: var(--_container-color);
+      transition:
+        background-color map.get(springs.$values, 'spring-fast-effects-duration')
+          map.get(springs.$values, 'spring-fast-effects'),
+        opacity map.get(springs.$values, 'spring-fast-effects-duration')
+          map.get(springs.$values, 'spring-fast-effects');
     }
 
     .state-layer {
@@ -85,35 +92,26 @@ $_md-sys-motion: tokens.md-sys-motion-values();
       margin-inline-end: var(--_trailing-space);
     }
 
+    // The indicator line (TextFieldDefaults.indicatorLine): a line at the
+    // bottom of the container whose thickness animates on the fast spatial
+    // spring and its color on the fast effects spring. It is 1px, and 2px
+    // (`focus-active-indicator-height`) when focused.
     .active-indicator {
+      background: var(--_active-indicator-color);
+      height: var(--_active-indicator-height);
       inset: auto 0 0 0;
       // Prevent click events on the indicator element since it has no width and
       // causes bugs when handled by the foundation for updating transform-origin.
       pointer-events: none;
       position: absolute;
+      transition:
+        height map.get(springs.$values, 'spring-fast-spatial-duration')
+          map.get(springs.$values, 'spring-fast-spatial'),
+        background-color
+          map.get(springs.$values, 'spring-fast-effects-duration')
+          map.get(springs.$values, 'spring-fast-effects');
       width: 100%;
       z-index: 1;
-
-      &::before,
-      &::after {
-        border-bottom: var(--_active-indicator-height) solid
-          var(--_active-indicator-color);
-        inset: auto 0 0 0;
-        content: '';
-        position: absolute;
-        width: 100%;
-      }
-
-      // focused indicator
-      &::after {
-        opacity: 0;
-        transition: opacity map.get($_md-sys-motion, 'duration-short3')
-          map.get($_md-sys-motion, 'easing-emphasized');
-      }
-    }
-
-    .focused .active-indicator::after {
-      opacity: 1;
     }
 
     .field:not(.with-start) .content ::slotted(*) {
@@ -139,15 +137,14 @@ $_md-sys-motion: tokens.md-sys-motion-values();
       );
     }
 
-    :hover .active-indicator::before {
-      border-bottom-color: var(--_hover-active-indicator-color);
-      border-bottom-width: var(--_hover-active-indicator-height);
+    :hover .active-indicator {
+      background: var(--_hover-active-indicator-color);
+      height: var(--_hover-active-indicator-height);
     }
 
-    // Focus is on a separate element and does not need a focus selector
-    .active-indicator::after {
-      border-bottom-color: var(--_focus-active-indicator-color);
-      border-bottom-width: var(--_focus-active-indicator-height);
+    .focused .active-indicator {
+      background: var(--_focus-active-indicator-color);
+      height: var(--_focus-active-indicator-height);
     }
 
     :hover .state-layer {
@@ -155,10 +152,12 @@ $_md-sys-motion: tokens.md-sys-motion-values();
       opacity: var(--_hover-state-layer-opacity);
     }
 
-    .disabled .active-indicator::before {
-      border-bottom-color: var(--_disabled-active-indicator-color);
-      border-bottom-width: var(--_disabled-active-indicator-height);
+    // A disabled field does not animate the indicator.
+    .disabled .active-indicator {
+      background: var(--_disabled-active-indicator-color);
+      height: var(--_disabled-active-indicator-height);
       opacity: var(--_disabled-active-indicator-opacity);
+      transition: none;
     }
 
     .disabled .background {
@@ -166,12 +165,12 @@ $_md-sys-motion: tokens.md-sys-motion-values();
       opacity: var(--_disabled-container-opacity);
     }
 
-    .error .active-indicator::before {
-      border-bottom-color: var(--_error-active-indicator-color);
+    .error .active-indicator {
+      background: var(--_error-active-indicator-color);
     }
 
-    .error:hover .active-indicator::before {
-      border-bottom-color: var(--_error-hover-active-indicator-color);
+    .error:hover .active-indicator {
+      background: var(--_error-hover-active-indicator-color);
     }
 
     .error:hover .state-layer {
@@ -179,9 +178,8 @@ $_md-sys-motion: tokens.md-sys-motion-values();
       opacity: var(--_error-hover-state-layer-opacity);
     }
 
-    // Focus is on a separate element and does not need a focus selector
-    .error .active-indicator::after {
-      border-bottom-color: var(--_error-focus-active-indicator-color);
+    .error.focused .active-indicator {
+      background: var(--_error-focus-active-indicator-color);
     }
 
     // Move the container up so that the resize handle doesn't overlap the focus
@@ -197,10 +195,25 @@ $_md-sys-motion: tokens.md-sys-motion-values();
     }
   }
 
+  @layer reduced-motion {
+    @media (prefers-reduced-motion: reduce) {
+      .background,
+      .active-indicator {
+        transition: none;
+      }
+    }
+  }
+
   @layer hcm {
     @media (forced-colors: active) {
-      .disabled .active-indicator::before {
-        border-color: GrayText;
+      // Backgrounds are not kept in forced colors mode.
+      .active-indicator {
+        background: CanvasText;
+        forced-color-adjust: none;
+      }
+
+      .disabled .active-indicator {
+        background: GrayText;
         opacity: 1;
       }
     }

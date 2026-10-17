@@ -1,6 +1,7 @@
 //
 // Copyright 2022 Google LLC
 // SPDX-License-Identifier: Apache-2.0
+// Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
 //
 
 @mixin styles() {
@@ -12,6 +13,7 @@
       font-size: var(--_supporting-text-size);
       line-height: var(--_supporting-text-line-height);
       font-weight: var(--_supporting-text-weight);
+      letter-spacing: var(--_supporting-text-tracking);
       gap: 16px;
       justify-content: space-between;
       padding-inline-start: var(--_supporting-text-leading-space);

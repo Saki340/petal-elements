@@ -1,6 +1,7 @@
 //
 // Copyright 2021 Google LLC
 // SPDX-License-Identifier: Apache-2.0
+// Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
 //
 
 // go/keep-sorted start
@@ -10,6 +11,7 @@
 // go/keep-sorted start
 @use '../../field/outlined-field';
 @use '../../tokens';
+@use './compose-values';
 // go/keep-sorted end
 
 @mixin theme($tokens) {
@@ -26,7 +28,7 @@
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-outlined-text-field-values();
+  $tokens: compose-values.outlined-values();
 
   :host {
     // Only use the logical properties.

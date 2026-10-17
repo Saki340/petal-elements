@@ -2,6 +2,7 @@
  * @license
  * Copyright 2021 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {
@@ -15,7 +16,11 @@ import {
 import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 
-import {EASING} from '../../internal/motion/animation.js';
+import {
+  FAST_SPATIAL,
+  springEasing,
+  springFromCss,
+} from '../../internal/motion/spring.js';
 
 /**
  * A field component.
@@ -281,9 +286,6 @@ export class Field extends LitElement {
       return;
     }
 
-    this.isAnimating = true;
-    this.labelAnimation?.cancel();
-
     // Only one label is visible at a time for clearer text rendering.
     // The floating label is visible and used during animation. At the end of
     // the animation, it will either remain visible (if floating) or hide and
@@ -295,10 +297,22 @@ export class Field extends LitElement {
     //
     // Re-calculating the animation each time will prevent any visual glitches
     // from appearing.
-    // TODO(b/241113345): use animation tokens
+    //
+    // The label follows Compose's TextField (TextFieldImpl.kt labelProgress):
+    // a spring on the fast spatial spec, with the overshoot of the expressive
+    // scheme. With reduced motion the label does not move.
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return;
+    }
+
+    this.isAnimating = true;
+    this.labelAnimation?.cancel();
+    const {easing, duration} = springEasing(
+      springFromCss(this, 'fast-spatial', FAST_SPATIAL),
+    );
     this.labelAnimation = this.floatingLabelEl?.animate(keyframes, {
-      duration: 150,
-      easing: EASING.STANDARD,
+      duration,
+      easing,
     });
 
     this.labelAnimation?.addEventListener('finish', () => {

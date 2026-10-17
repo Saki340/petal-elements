@@ -1,0 +1,121 @@
+//
+// Copyright 2026 Saki
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// The text field token values from Jetpack Compose Material 3
+// (FilledTextFieldTokens and OutlinedTextFieldTokens, in
+// tokens/versions/compose/values), under the web token names, so every public
+// `--md-<variant>-text-field-*` token stays and defaults to what Compose
+// draws. Where TextFieldDefaults draws something else than the tokens say, it
+// follows the defaults:
+//
+// - A text field has no hover state: TextFieldColors has no hover colors and
+//   nothing else reacts to the pointer. The hover tokens default to the
+//   values of the resting state (and the state layer to 0).
+// - The disabled container is the container color as is
+//   (`disabledContainerColor = ContainerColor`), not on-surface at 4%.
+// - The focused indicator and outline are 2dp
+//   (TextFieldDefaults.FocusedIndicatorThickness), not the web's 3px.
+
+@use 'sass:map';
+@use 'sass:string';
+@use '../../tokens';
+@use '../../tokens/versions/compose/values/md-comp-filled-text-field' as filled;
+@use '../../tokens/versions/compose/values/md-comp-outlined-text-field' as outlined;
+
+@function _replace($string, $from, $to) {
+  $i: string.index($string, $from);
+  @if $i == null {
+    @return $string;
+  }
+  @return string.slice($string, 1, $i - 1) + $to +
+    string.slice($string, $i + string.length($from));
+}
+
+/// The Compose token name of a web token name: `input-text-color` is
+/// `input-color`, `label-text-size` is `label-size`.
+@function _compose-key($key) {
+  $key: _replace($key, 'input-text-', 'input-');
+  $key: _replace($key, 'label-text-', 'label-');
+  @return _replace($key, 'supporting-text-', 'supporting-');
+}
+
+/// The resting state token a hover token falls back to.
+@function _hover-base($key) {
+  @if string.index($key, 'error-hover-') != null {
+    @return _replace($key, 'error-hover-', 'error-');
+  }
+  @return _replace($key, 'hover-', '');
+}
+
+@function _values($variant, $web, $compose) {
+  $prefix: '--md-#{$variant}-text-field-';
+  $result: $web;
+
+  @each $key, $web-value in $web {
+    $compose-value: map.get($compose, _compose-key($key));
+    @if $compose-value != null and $key != 'container-shape' {
+      $result: map.set(
+        $result,
+        $key,
+        var(#{$prefix}#{$key}, #{$compose-value})
+      );
+    }
+  }
+
+  // The focus caret is the caret color.
+  $result: map.set(
+    $result,
+    'focus-caret-color',
+    var(#{$prefix}focus-caret-color, #{map.get($compose, 'caret-color')})
+  );
+
+  // No hover state.
+  @each $key, $web-value in $web {
+    @if string.index($key, 'hover-') != null {
+      @if string.slice($key, -17) == 'state-layer-color' {
+        // Invisible with no opacity.
+      } @else if string.slice($key, -19) == 'state-layer-opacity' {
+        $result: map.set($result, $key, var(#{$prefix}#{$key}, 0));
+      } @else {
+        $result: map.set(
+          $result,
+          $key,
+          var(#{$prefix}#{$key}, #{map.get($result, _hover-base($key))})
+        );
+      }
+    }
+  }
+
+  @return $result;
+}
+
+/// The values of `petal-filled-text-field`.
+@function filled-values() {
+  $values: _values(
+    'filled',
+    tokens.md-comp-filled-text-field-values(),
+    filled.$values
+  );
+  $container: map.get($values, 'container-color');
+  @return map.merge(
+    $values,
+    (
+      // TextFieldDefaults.colors(): the disabled container is the container.
+      'disabled-container-color':
+        var(--md-filled-text-field-disabled-container-color, #{$container}),
+      'disabled-container-opacity':
+        var(--md-filled-text-field-disabled-container-opacity, 1),
+    )
+  );
+}
+
+/// The values of `petal-outlined-text-field`.
+@function outlined-values() {
+  @return _values(
+    'outlined',
+    tokens.md-comp-outlined-text-field-values(),
+    outlined.$values
+  );
+}

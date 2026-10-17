@@ -25,6 +25,12 @@
   `large` (96px, 36px icon). With a `label`, the size picks Compose's small,
   medium or large extended FAB. The default `variant` is `primary` (primary
   container, Compose's default) instead of `surface`.
+* **textfield:** text fields follow Compose: at least 280px wide, a 2px (not
+  3px) focused indicator and outline, letter spacing on text, no hover state
+  (the hover tokens default to the resting values; the state layer to 0), and
+  the disabled filled container keeps its color. The filled indicator is one
+  line (`.active-indicator`) instead of two borders. This also changes
+  `petal-select`, which shares the field.
 
 #### Bug fixes
 
@@ -93,6 +99,10 @@
   `-stiffness` properties for components that simulate a spring.
 * **ripple:** waves of quick presses overlap; no press ripple with reduced
   motion.
+* **textfield:** the label, indicator, outline and placeholder animate on
+  Compose's springs (fast spatial and effects, slow effects), following the
+  motion scheme and `prefers-reduced-motion`; the outline's cut grows with the
+  label.
 * **buttongroup:** connected groups widen the pressed button (15%) and
   squeeze its neighbours, as standard groups do.
 * **button:** toggle colors from public tokens

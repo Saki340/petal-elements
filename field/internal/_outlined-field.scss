@@ -1,6 +1,7 @@
 //
 // Copyright 2021 Google LLC
 // SPDX-License-Identifier: Apache-2.0
+// Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
 //
 
 // go/keep-sorted start
@@ -9,9 +10,13 @@
 // go/keep-sorted end
 // go/keep-sorted start
 @use '../../tokens';
+@use '../../tokens/versions/v34/values/md-sys-motion-springs' as springs;
 // go/keep-sorted end
 
-$_md-sys-motion: tokens.md-sys-motion-values();
+$_spatial: map.get(springs.$values, 'spring-fast-spatial-duration')
+  map.get(springs.$values, 'spring-fast-spatial');
+$_effects: map.get(springs.$values, 'spring-fast-effects-duration')
+  map.get(springs.$values, 'spring-fast-effects');
 
 @mixin theme($tokens) {
   $supported-tokens: list.join(
@@ -47,9 +52,15 @@ $_md-sys-motion: tokens.md-sys-motion-values();
       }
     }
 
+    // The outline color animates on the fast effects spring, and its width on
+    // the fast spatial spring (animateBorderStrokeAsState). The 2px focused
+    // outline is a second border that fades in over the 1px one.
     .outline {
       border-color: var(--_outline-color);
       border-radius: inherit;
+      transition:
+        border-color $_effects,
+        color $_effects;
       display: flex;
       // Allow events to target elements underneath the outline, such as icons.
       pointer-events: none;
@@ -89,8 +100,7 @@ $_md-sys-motion: tokens.md-sys-motion-values();
 
       &::after {
         opacity: 0;
-        transition: opacity map.get($_md-sys-motion, 'duration-short3')
-          map.get($_md-sys-motion, 'easing-emphasized');
+        transition: opacity $_spatial;
       }
     }
 
@@ -142,6 +152,10 @@ $_md-sys-motion: tokens.md-sys-motion-values();
       display: none;
     }
 
+    // The border over the label is cut out by the label's width, which
+    // follows the label's progress (outlineCutout in OutlinedTextField.kt):
+    // the cutout grows from the start edge to the label's end on the fast
+    // spatial spring.
     .outline-panel-inactive,
     .outline-panel-active {
       border: inherit;
@@ -149,26 +163,16 @@ $_md-sys-motion: tokens.md-sys-motion-values();
       inset: 0;
       position: absolute;
 
-      &::before,
-      &::after {
+      &::before {
         border-top-style: solid;
         border-bottom: none;
         bottom: auto;
-        transform: scaleX(1);
-        transition: transform map.get($_md-sys-motion, 'duration-short3')
-          map.get($_md-sys-motion, 'easing-emphasized');
-      }
-
-      // Note: no need to do any RTL flipping here. If RTLCSS flips this, it's also
-      // ok, we just need one to be left and one to be right.
-      &::before {
-        right: 50%;
-        transform-origin: top left;
+        clip-path: inset(0 0 0 0);
+        transition: clip-path $_spatial;
       }
 
       &::after {
-        left: 50%;
-        transform-origin: top right;
+        content: none;
       }
     }
 
@@ -176,16 +180,14 @@ $_md-sys-motion: tokens.md-sys-motion-values();
     .populated .outline-panel-active,
     .focused .outline-panel-inactive,
     .focused .outline-panel-active {
-      &::before,
-      &::after {
-        transform: scaleX(0);
+      &::before {
+        clip-path: inset(0 0 0 100%);
       }
     }
 
     .outline-panel-active {
       opacity: 0;
-      transition: opacity map.get($_md-sys-motion, 'duration-short3')
-        map.get($_md-sys-motion, 'easing-emphasized');
+      transition: opacity $_spatial;
     }
 
     .focused .outline-panel-active {
@@ -270,6 +272,16 @@ $_md-sys-motion: tokens.md-sys-motion-values();
       border-width: var(--_focus-outline-width);
     }
 
+    // A disabled field does not animate.
+    .disabled .outline,
+    .disabled .outline-start::after,
+    .disabled .outline-end::after,
+    .disabled .outline-panel-active,
+    .disabled .outline-panel-inactive::before,
+    .disabled .outline-panel-active::before {
+      transition: none;
+    }
+
     .disabled .outline {
       border-color: var(--_disabled-outline-color);
       color: var(--_disabled-outline-color); // Needed for Firefox HCM
@@ -326,6 +338,19 @@ $_md-sys-motion: tokens.md-sys-motion-values();
       clip-path: inset(
         var(--_focus-outline-width) var(--_focus-outline-width) 0 0
       );
+    }
+  }
+
+  @layer reduced-motion {
+    @media (prefers-reduced-motion: reduce) {
+      .outline,
+      .outline-start::after,
+      .outline-end::after,
+      .outline-panel-inactive::before,
+      .outline-panel-active,
+      .outline-panel-active::before {
+        transition: none;
+      }
     }
   }
 

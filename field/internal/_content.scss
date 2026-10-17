@@ -1,24 +1,11 @@
 //
 // Copyright 2021 Google LLC
 // SPDX-License-Identifier: Apache-2.0
+// Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
 //
 
-// go/keep-sorted start
 @use 'sass:map';
-@use 'sass:math';
-// go/keep-sorted end
-// go/keep-sorted start
-@use '../../tokens';
-// go/keep-sorted end
-
-$_md-sys-motion: tokens.md-sys-motion-values();
-// Duration of the label animation.
-$_label-duration: map.get($_md-sys-motion, 'duration-short3');
-// Duration of the content's visibility animation.
-$_visible-duration: math.round(math.div($_label-duration * 5, 9));
-// Short delay when entering (focusing/populating) so that the label may move
-// out of the way before the content starts to appear.
-$_enter-delay: $_label-duration - $_visible-duration;
+@use '../../tokens/versions/v34/values/md-sys-motion-springs' as springs;
 
 @mixin styles() {
   @layer styles {
@@ -75,19 +62,29 @@ $_enter-delay: $_label-duration - $_visible-duration;
       display: flex;
       flex: 1;
       opacity: 0;
-      transition: opacity $_visible-duration
-        map.get($_md-sys-motion, 'easing-emphasized');
+      // The placeholder, prefix and suffix fade out on the fast effects
+      // spring, and in on the slow effects spring when focused
+      // (TextFieldImpl.kt placeholderOpacity).
+      transition: opacity map.get(springs.$values, 'spring-fast-effects-duration')
+        map.get(springs.$values, 'spring-fast-effects');
     }
 
     .no-label .content,
     .focused .content,
     .populated .content {
       opacity: 1;
-      transition-delay: $_enter-delay;
+      transition: opacity map.get(springs.$values, 'spring-slow-effects-duration')
+        map.get(springs.$values, 'spring-slow-effects');
     }
 
     :is(.disabled, .disable-transitions) .content {
       transition: none;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .content {
+        transition: none;
+      }
     }
 
     .content ::slotted(*) {
@@ -99,6 +96,7 @@ $_enter-delay: $_label-duration - $_visible-duration;
       font-size: var(--_content-size);
       line-height: var(--_content-line-height);
       font-weight: var(--_content-weight);
+      letter-spacing: var(--_content-tracking);
       width: 100%;
       // Reverting values before "all: unset"
       overflow-wrap: revert; // Needed to break words in textarea
