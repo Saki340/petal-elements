@@ -219,8 +219,14 @@ it. `quick` skips the animation.
 `<petal-menu-group>` puts menu items on separate surfaces, as in Material 3
 Expressive menus (Jetpack Compose `DropdownMenuGroup`). Groups are 2px apart,
 the outer corners of the first and last groups are rounder, and items follow
-the selectable menu items of Compose: 44px high, with corners that match their
-position in the group.
+the selectable menu items of Compose: 44px high.
+
+Items are concentric with their group, a petal-elements choice: the group is
+padded by 4px on all sides (Compose's `GroupPadding` token), the items next to
+the menu's 16px outer corners have 12px corners there, and all other item
+corners are 4px. Compose's own code pads groups by 2px vertically and gives
+every group's first and last items 12px corners, so its items do not follow
+the group's corners.
 
 Set `type="menuitemradio"` or `type="menuitemcheckbox"` on items that can be
 checked, and `checked` on the checked ones. Choosing a radio item, by pointer or

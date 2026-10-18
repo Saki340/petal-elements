@@ -55,6 +55,10 @@
   `DropdownMenuGroup` does, instead of keeping the inactive shape from the
   last time the pointer left them; `no-inactive-shape` on a group or the menu
   turns the inactive shape off.
+* **menu:** items in groups are concentric with the group (a petal-elements
+  choice): groups are padded by 4px on all sides (`GroupPadding`, was 2px top
+  and bottom), only the items next to the menu's outer corners have 12px
+  corners there, and a lone item in the first or last group follows both.
 * **button-group:** a press ends when the window loses focus, or when focus
   moves away during a key press, instead of keeping the group squeezed.
 

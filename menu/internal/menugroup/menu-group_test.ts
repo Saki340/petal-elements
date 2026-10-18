@@ -74,16 +74,30 @@ describe('<petal-menu-group>', () => {
     expect(radii(groups[0])).toEqual(['16px', '16px', '8px', '8px']);
     expect(radii(groups[1])).toEqual(['8px', '8px', '16px', '16px']);
     expect(getComputedStyle(groups[1]).marginTop).toBe('2px');
-    expect(getComputedStyle(groups[0]).paddingTop).toBe('2px');
+    // SegmentedMenuTokens.GroupPadding.
+    expect(getComputedStyle(groups[0]).paddingTop).toBe('4px');
   });
 
   it('shapes items by their position, and checked items at 12px', async () => {
-    const {items} = await setupTest();
+    const {groups, items} = await setupTest();
     expect(radii(items[0])).toEqual(['12px', '12px', '12px', '12px']);
     expect(radii(items[1])).toEqual(['4px', '4px', '4px', '4px']);
-    expect(radii(items[2])).toEqual(['4px', '4px', '12px', '12px']);
-    // A lone item in a group.
-    expect(radii(items[3])).toEqual(['4px', '4px', '4px', '4px']);
+    // Not next to the menu's outer corners: the item shape.
+    expect(radii(items[2])).toEqual(['4px', '4px', '4px', '4px']);
+    // A lone item in the last group: concentric with its 8px top and 16px
+    // bottom corners, 4px in.
+    expect(radii(items[3])).toEqual(['4px', '4px', '12px', '12px']);
+    // 4px in on every side: the group's padding and the item's margins.
+    const lastGroup = getComputedStyle(groups[1]);
+    const lone = getComputedStyle(items[3]);
+    expect([
+      lastGroup.paddingTop,
+      lone.marginTop,
+      lone.marginLeft,
+      lone.marginRight,
+      lone.marginBottom,
+      lastGroup.paddingBottom,
+    ]).toEqual(['4px', '0px', '4px', '4px', '0px', '4px']);
     expect(getComputedStyle(items[1]).marginLeft).toBe('4px');
     const item = items[1].shadowRoot!.querySelector('petal-item')!;
     expect(getComputedStyle(item).minHeight).toBe('44px');

@@ -5,12 +5,19 @@
 
 // Menu groups, after Jetpack Compose Material 3 Expressive
 // (DropdownMenuGroup and the selectable DropdownMenuItem in Menu.kt,
-// MenuDefaults.kt). Shapes, gap, elevation and item height:
+// MenuDefaults.kt). Shapes, gap, elevation, item height and group padding:
 // SegmentedMenuTokens. Colors: StandardMenuTokens. Spacing: the constants in
-// Menu.kt and MenuDefaults.kt (group padding 2dp vertical; item padding 4dp
-// horizontal, 2dp vertical with supporting text; item content padding 12dp;
-// icon to text 8dp; item width 112dp to 280dp). Shape changes run on the fast
-// spatial spring.
+// Menu.kt and MenuDefaults.kt (2dp between items with supporting text; item
+// content padding 12dp; icon to text 8dp; item width 112dp to 280dp). Shape
+// changes run on the fast spatial spring.
+//
+// A petal-elements choice: items are concentric with their group. Compose's
+// code insets items 2dp vertically and 4dp horizontally, and gives every
+// group's first and last items 12dp outer corners (a lone item 4dp), so they
+// do not follow the group's corners. Here the group is padded by
+// SegmentedMenuTokens.GroupPadding (4dp) on all sides, the items next to the
+// menu's 16dp outer corners take the 12dp first and last child shapes (16 - 4),
+// and all other item corners the 4dp item shape (8 - 4).
 
 // go/keep-sorted start by_regex='(.+) prefix_order=sass:
 @use 'sass:map';
@@ -27,6 +34,7 @@ $_tokens: (
   'inactive-container-shape':
     map.get(segmented.$values, 'inactive-container-shape'),
   'segmented-gap': map.get(segmented.$values, 'segmented-gap'),
+  'group-padding': map.get(segmented.$values, 'group-padding'),
   'item-shape': map.get(segmented.$values, 'item-shape'),
   'item-first-child-shape': map.get(segmented.$values, 'item-first-child-shape'),
   'item-last-child-shape': map.get(segmented.$values, 'item-last-child-shape'),
@@ -52,7 +60,7 @@ $_transition: border-radius
     position: relative;
     z-index: 0;
     display: block;
-    padding-block: 2px;
+    padding-block: var(--_group-padding);
     border-radius: var(--_group-shape);
     background-color: var(--_container-color);
     --md-elevation-level: var(--_container-elevation);
@@ -111,21 +119,28 @@ $_transition: border-radius
     gap: 8px;
     min-width: 112px;
     max-width: 280px;
-    margin-inline: 4px;
+    margin-inline: var(--_group-padding);
     border-radius: var(--_item-shape);
     transition: $_transition;
   }
 
-  ::slotted([petal-menu-item]:has([slot='supporting-text'])) {
-    margin-block: 2px;
+  // Compose's 2dp around items with supporting text, kept between items only
+  // so the group's padding stays even.
+  ::slotted([petal-menu-item]:has([slot='supporting-text']):not(:first-child)) {
+    margin-top: 2px;
   }
 
-  ::slotted([petal-menu-item]:first-child:not(:last-child)) {
+  ::slotted([petal-menu-item]:has([slot='supporting-text']):not(:last-child)) {
+    margin-bottom: 2px;
+  }
+
+  // Concentric with the menu's outer corners; a lone item takes both.
+  :host(:first-child) ::slotted([petal-menu-item]:first-child) {
     border-start-start-radius: var(--_item-first-child-shape);
     border-start-end-radius: var(--_item-first-child-shape);
   }
 
-  ::slotted([petal-menu-item]:last-child:not(:first-child)) {
+  :host(:last-child) ::slotted([petal-menu-item]:last-child) {
     border-end-start-radius: var(--_item-last-child-shape);
     border-end-end-radius: var(--_item-last-child-shape);
   }
