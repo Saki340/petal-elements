@@ -251,9 +251,17 @@ export abstract class Button extends buttonBaseClass {
     `;
   }
 
-  protected override firstUpdated(changed: PropertyValues<this>) {
-    super.firstUpdated(changed);
-    this.handleLabelChange();
+  protected override willUpdate(changed: PropertyValues<this>) {
+    super.willUpdate(changed);
+    // Before the first render, from the content: setting it after the render
+    // would render the button again at once. The slot keeps it up to date.
+    if (!this.hasUpdated) {
+      this.hasLabel = Array.from(this.childNodes).some((node) =>
+        node.nodeType === Node.ELEMENT_NODE
+          ? !(node as Element).hasAttribute('slot')
+          : node.nodeType === Node.TEXT_NODE && node.textContent!.trim() !== '',
+      );
+    }
   }
 
   private handleLabelChange() {

@@ -40,6 +40,14 @@ Please follow our [code of conduct](CODE_OF_CONDUCT.md).
   in `tokens/versions/`, or Jetpack Compose Material 3), not from screenshots or
   memory. Mention the source in the PR.
 - Do not copy text or images from m3.material.io.
+- Elements must not set their own reactive properties (or call
+  `requestUpdate()`) from `updated()`, `firstUpdated()` or a controller's
+  `hostUpdated()`: Lit renders them again at once and warns
+  ("change-in-update"). Work out values before rendering (`willUpdate()`),
+  or keep values that change during animations out of reactive properties.
+  Tests fail on this warning: `testing/environment.ts` checks after every
+  test, and `testing/update-cycle_test.ts` renders and changes every element
+  that `all.ts` exports.
 
 ## Licensing of contributions
 

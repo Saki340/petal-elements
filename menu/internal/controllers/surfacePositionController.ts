@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {ReactiveController, ReactiveControllerHost} from 'lit';
@@ -618,6 +619,9 @@ export class SurfacePositionController implements ReactiveController {
         // dirty checking.
         this.lastValues = props;
 
+        // Positioning renders the host again; start it after the host's
+        // update, not inside it (hostUpdated), so it is a new update.
+        await null;
         await this.position();
         props.onOpen();
       } else if (openChanged) {

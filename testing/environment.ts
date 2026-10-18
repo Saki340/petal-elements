@@ -2,6 +2,7 @@
  * @license
  * Copyright 2021 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 // import 'jasmine'; (google3-only)
@@ -9,6 +10,7 @@
 import {ReactiveElement, TemplateResult, render as litRender} from 'lit';
 
 import {installSkipWebAnimations} from './skip-animations.js';
+import {takeUpdateWarnings, watchUpdateWarnings} from './update-warnings.js';
 
 /**
  * Test environment setup for screenshot tests.
@@ -31,6 +33,15 @@ export class Environment {
 
     beforeAll(() => {
       jasmine.clock().install();
+    });
+
+    // An element that sets its own properties while it updates renders twice
+    // (Lit's change-in-update warning); that is a bug.
+    watchUpdateWarnings();
+    afterEach(() => {
+      expect(takeUpdateWarnings())
+        .withContext('Lit change-in-update warnings')
+        .toEqual([]);
     });
 
     afterAll(() => {
