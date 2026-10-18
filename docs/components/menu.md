@@ -235,6 +235,20 @@ with Enter or Space, checks it and unchecks the other radio items of its group
 (or of the menu, outside groups); choosing a checkbox item toggles it. Both fire
 `change`. Checked items are tertiary container colored with rounder corners.
 
+Each `<petal-menu-group>` is its own set of radio items: choosing a radio item
+does not uncheck radio items in other groups. If one choice spans groups, such
+as "Follow the device" in one group and the languages in another, uncheck the
+others in the menu's `change` listener:
+
+```js
+menu.addEventListener('change', (event) => {
+  if (event.target.type !== 'menuitemradio' || !event.target.checked) return;
+  for (const item of menu.items) {
+    if (item !== event.target && item.type === 'menuitemradio') item.checked = false;
+  }
+});
+```
+
 Like Compose's `DropdownMenuGroup`, a group that a mouse has hovered and left
 takes the smaller inactive shape (`--md-menu-group-inactive-container-shape`,
 8px on all four corners, the outer corners of the first and last groups too),

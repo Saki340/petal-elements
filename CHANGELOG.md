@@ -62,6 +62,11 @@
   corners there, and a lone item follows both.
 * **menu:** hidden items and groups do not count as a group's or the menu's
   first and last, so the shown ones keep the right corners and gaps.
+* **theme:** `transitionTheme()` keeps the circle's last frame until the view
+  transition finishes, so the old theme no longer flashes at the end.
+* **tooltip:** shows on focus only when the anchor shows its focus
+  (`:focus-visible`), not when a menu moves focus back to it after a pointer
+  choice.
 * **button-group:** a press ends when the window loses focus, or when focus
   moves away during a key press, instead of keeping the group squeezed.
 
