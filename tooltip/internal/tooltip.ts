@@ -201,9 +201,20 @@ export class Tooltip extends LitElement {
 
   // Keyboard focus shows it; focus from a click or tap does not.
   private readonly onFocusIn = () => {
-    if (!this.pointerFocus) this.show();
+    // Only keyboard focus: not focus from a press on the anchor, nor focus a
+    // script moves back to it, such as a menu closing after a pointer choice.
+    if (!this.pointerFocus && this.focusVisible()) this.show();
     this.pointerFocus = false;
   };
+
+  /** Whether the anchor, or the element focused inside it, shows its focus. */
+  private focusVisible() {
+    let focused: Element | null | undefined = this.anchor;
+    while (focused?.shadowRoot?.activeElement) {
+      focused = focused.shadowRoot.activeElement;
+    }
+    return !!(this.anchor?.matches(':focus-visible') || focused?.matches(':focus-visible'));
+  }
 
   private readonly onFocusOut = () => {
     this.pointerFocus = false;

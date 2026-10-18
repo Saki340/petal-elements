@@ -50,6 +50,8 @@ describe('transitionTheme()', () => {
     const radii = keyframes['--petal-theme-transition-radius'].map(parseFloat);
     expect(options.pseudoElement).toBe('::view-transition-new(root)');
     expect(options.easing).toBe('linear');
+    // Holds the last frame until the view transition finishes.
+    expect(options.fill).toBe('forwards');
     expect(radii[0]).toBe(0);
     // The opaque part, inside the 320px soft edge, ends on the farthest corner.
     const corner = Math.hypot(innerWidth - 10, innerHeight - 20);

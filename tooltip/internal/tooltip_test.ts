@@ -58,9 +58,26 @@ describe('<petal-tooltip>', () => {
     expect(isOpen(tooltip)).withContext('after a click').toBeFalse();
 
     anchor.dispatchEvent(new FocusEvent('focusout'));
+    const matches = anchor.matches.bind(anchor);
+    spyOn(anchor, 'matches').and.callFake(
+      (selector: string) => selector === ':focus-visible' || matches(selector),
+    );
     anchor.dispatchEvent(new FocusEvent('focusin'));
     await env.waitForStability();
     expect(isOpen(tooltip)).withContext('after keyboard focus').toBeTrue();
+  });
+
+  it('does not show when a script moves focus back without a focus ring', async () => {
+    const {anchor, tooltip} = await setupTest();
+    // For example a menu closing after a pointer choice: the anchor does not
+    // match :focus-visible.
+    const matches = anchor.matches.bind(anchor);
+    spyOn(anchor, 'matches').and.callFake(
+      (selector: string) => selector !== ':focus-visible' && matches(selector),
+    );
+    anchor.dispatchEvent(new FocusEvent('focusin'));
+    await env.waitForStability();
+    expect(isOpen(tooltip)).toBeFalse();
   });
 
   it('shows after a 400ms touch long press, for 1.5s', async () => {

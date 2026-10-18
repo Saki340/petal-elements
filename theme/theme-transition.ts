@@ -139,6 +139,9 @@ export async function transitionTheme(
       {
         duration: ((values.length - 1) * 1000) / 60,
         easing: 'linear',
+        // Kept until the transition finishes: back at 0px, the soft edge
+        // would hide the new page for a frame.
+        fill: 'forwards',
         pseudoElement: '::view-transition-new(root)',
       },
     );
