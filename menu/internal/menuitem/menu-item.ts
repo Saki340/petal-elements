@@ -218,7 +218,7 @@ export class MenuItemEl extends menuItemBaseClass implements MenuItem {
     if (type === 'menuitemcheckbox') {
       this.checked = !this.checked;
     } else if (!this.checked) {
-      for (const sibling of this.parentElement?.children ?? []) {
+      for (const sibling of this.radioSet()) {
         if (sibling !== this && (sibling as MenuItemEl).type === 'menuitemradio') {
           (sibling as MenuItemEl).checked = false;
         }
@@ -229,6 +229,21 @@ export class MenuItemEl extends menuItemBaseClass implements MenuItem {
     }
     this.dispatchEvent(new Event('change', {bubbles: true}));
     return true;
+  }
+
+  /**
+   * The items a radio item unchecks: its group (or the menu, outside groups),
+   * or all of the menu's items with `single-radio` on the menu.
+   */
+  private radioSet(): Iterable<Element> {
+    const parent = this.parentElement;
+    const menu = parent?.hasAttribute('petal-menu-group') ? parent.parentElement : parent;
+    if (menu?.hasAttribute('single-radio')) {
+      return menu.querySelectorAll(
+        ':scope > [petal-menu-item], :scope > [petal-menu-group] > [petal-menu-item]',
+      );
+    }
+    return parent?.children ?? [];
   }
 
   private renderAriaChecked() {

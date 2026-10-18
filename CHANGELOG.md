@@ -72,6 +72,8 @@
 
 #### Features
 
+* **menu:** `single-radio` makes all of a menu's radio items one set, across
+  its groups.
 * **fab:** `expanded` shrinks an extended FAB to its icon and back on
   Compose's springs (fast spatial width, fast effects label).
 * **search:** `petal-search-bar`, a search bar that expands into a full screen or

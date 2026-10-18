@@ -248,6 +248,13 @@ export abstract class Menu extends LitElement {
   @property({type: Boolean, attribute: 'no-navigation-wrap'})
   noNavigationWrap = false;
 
+  /**
+   * Makes all of the menu's radio items one set, across its groups: choosing
+   * one unchecks the others. By default each group is its own set.
+   */
+  @property({type: Boolean, attribute: 'single-radio', reflect: true})
+  singleRadio = false;
+
   @queryAssignedElements({flatten: true}) protected slotItems!: HTMLElement[];
   @state() private typeaheadActive = true;
   /** Whether the items are in petal-menu-groups, each its own surface. */

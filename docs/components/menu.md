@@ -237,16 +237,25 @@ with Enter or Space, checks it and unchecks the other radio items of its group
 
 Each `<petal-menu-group>` is its own set of radio items: choosing a radio item
 does not uncheck radio items in other groups. If one choice spans groups, such
-as "Follow the device" in one group and the languages in another, uncheck the
-others in the menu's `change` listener:
+as "Follow the device" in one group and the languages in another, set
+`single-radio` on the menu to make all of its radio items one set:
 
-```js
-menu.addEventListener('change', (event) => {
-  if (event.target.type !== 'menuitemradio' || !event.target.checked) return;
-  for (const item of menu.items) {
-    if (item !== event.target && item.type === 'menuitemradio') item.checked = false;
-  }
-});
+```html
+<petal-menu single-radio>
+  <petal-menu-group>
+    <petal-menu-item type="menuitemradio" checked>
+      <div slot="headline">Follow the device</div>
+    </petal-menu-item>
+  </petal-menu-group>
+  <petal-menu-group>
+    <petal-menu-item type="menuitemradio">
+      <div slot="headline">English</div>
+    </petal-menu-item>
+    <petal-menu-item type="menuitemradio">
+      <div slot="headline">日本語</div>
+    </petal-menu-item>
+  </petal-menu-group>
+</petal-menu>
 ```
 
 Like Compose's `DropdownMenuGroup`, a group that a mouse has hovered and left
@@ -626,6 +635,7 @@ a sharp 0px border radius.](images/menu/theming.webp)
 | `skipRestoreFocus` | `skip-restore-focus` | `boolean` | `false` | After closing, does not restore focus to the last focused element before the menu was opened. |
 | `defaultFocus` | `default-focus` | `FocusState` | `FocusState.FIRST_ITEM` | The element that should be focused by default once opened.<br>NOTE: When setting default focus to 'LIST_ROOT', remember to change `tabindex` to `0` and change petal-menu's display to something other than `display: contents` when necessary. |
 | `noNavigationWrap` | `no-navigation-wrap` | `boolean` | `false` | Turns off navigation wrapping. By default, navigating past the end of the menu items will wrap focus back to the beginning and vice versa. Use this for ARIA patterns that do not wrap focus, like combobox. |
+| `singleRadio` | `single-radio` | `boolean` | `false` | Makes all of the menu's radio items one set, across its groups: choosing one unchecks the others. By default each group is its own set. |
 | `isSubmenu` |  | `boolean` | `false` | Whether or not the current menu is a submenu and should not handle specific navigation keys. |
 | `typeaheadController` |  | `TypeaheadController` | `function { ... }` | Handles typeahead navigation through the menu. |
 | `anchorElement` |  | `HTMLElement & Partial<SurfacePositionTarget>` | `undefined` |  |

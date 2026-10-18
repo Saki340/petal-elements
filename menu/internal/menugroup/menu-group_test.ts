@@ -190,6 +190,35 @@ describe('<petal-menu-group>', () => {
     expect(groups.map((group) => group.hasAttribute('inactive'))).toEqual([false, false]);
   });
 
+  it('keeps each group its own radio set, or one set with single-radio', async () => {
+    const root = env.render(html`
+      <petal-menu>
+        <petal-menu-group>
+          <petal-menu-item type="menuitemradio" checked><div slot="headline">Device</div></petal-menu-item>
+        </petal-menu-group>
+        <petal-menu-group>
+          <petal-menu-item type="menuitemradio"><div slot="headline">English</div></petal-menu-item>
+          <petal-menu-item type="menuitemradio"><div slot="headline">日本語</div></petal-menu-item>
+        </petal-menu-group>
+      </petal-menu>
+    `);
+    await env.waitForStability();
+    const menu = root.querySelector('petal-menu') as Menu;
+    const items = Array.from(root.querySelectorAll('petal-menu-item')) as MenuItemEl[];
+    const choose = (item: MenuItemEl) =>
+      item.shadowRoot!.querySelector<HTMLElement>('.list-item')!.click();
+
+    choose(items[1]);
+    expect(items.map((item) => item.checked)).toEqual([true, true, false]);
+
+    menu.singleRadio = true;
+    await env.waitForStability();
+    choose(items[2]);
+    expect(items.map((item) => item.checked)).toEqual([false, false, true]);
+    choose(items[0]);
+    expect(items.map((item) => item.checked)).toEqual([true, false, false]);
+  });
+
   it('checks radio items on click or Enter, unchecking the others', async () => {
     const {items} = await setupTest();
     const change = jasmine.createSpy('change');
