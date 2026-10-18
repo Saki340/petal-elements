@@ -116,6 +116,35 @@ describe('<petal-menu-group>', () => {
     expect(radii(groups[0])).toEqual(['8px', '8px', '8px', '8px']);
   });
 
+  it('opens again with the groups in their own shapes', async () => {
+    const {menu, groups} = await setupTest();
+    for (const group of groups) {
+      group.dispatchEvent(new PointerEvent('pointerenter', {pointerType: 'mouse'}));
+      group.dispatchEvent(new PointerEvent('pointerleave', {pointerType: 'mouse'}));
+    }
+    expect(groups.map((group) => group.hasAttribute('inactive'))).toEqual([true, true]);
+    menu.quick = true;
+    menu.show();
+    await env.waitForStability();
+    expect(groups.some((group) => group.hasAttribute('inactive'))).toBeFalse();
+    // The outer corners are large again (Compose's leading and trailing
+    // group shapes).
+    expect(radii(groups[0])).toEqual(['16px', '16px', '8px', '8px']);
+    expect(radii(groups[1])).toEqual(['8px', '8px', '16px', '16px']);
+    menu.close();
+  });
+
+  it('keeps its shape with no-inactive-shape, on the group or the menu', async () => {
+    const {menu, groups} = await setupTest();
+    groups[0].noInactiveShape = true;
+    menu.setAttribute('no-inactive-shape', '');
+    for (const group of groups) {
+      group.dispatchEvent(new PointerEvent('pointerenter', {pointerType: 'mouse'}));
+      group.dispatchEvent(new PointerEvent('pointerleave', {pointerType: 'mouse'}));
+    }
+    expect(groups.map((group) => group.hasAttribute('inactive'))).toEqual([false, false]);
+  });
+
   it('checks radio items on click or Enter, unchecking the others', async () => {
     const {items} = await setupTest();
     const change = jasmine.createSpy('change');

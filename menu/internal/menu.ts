@@ -422,6 +422,14 @@ export abstract class Menu extends LitElement {
 
     if (this.open) {
       this.removeAttribute('aria-hidden');
+      // Compose's hover state lives as long as the open menu: a menu opens
+      // with its groups in their own shapes, wherever the pointer left them
+      // last time (they may have been left while the menu closed).
+      for (const item of this.slotItems ?? []) {
+        if (item.hasAttribute('petal-menu-group')) {
+          (item as HTMLElement & {resetHover?: () => void}).resetHover?.();
+        }
+      }
       return;
     }
 

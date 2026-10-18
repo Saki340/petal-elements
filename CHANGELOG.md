@@ -51,6 +51,12 @@
 * **snackbar:** calling `show()` while open resolves the earlier promise with
   `replace` instead of sharing it.
 * **menu:** items with `keep-open` respond to Enter and Space.
+* **menu:** groups open again in their own shapes, as Compose's
+  `DropdownMenuGroup` does, instead of keeping the inactive shape from the
+  last time the pointer left them; `no-inactive-shape` on a group or the menu
+  turns the inactive shape off.
+* **button-group:** a press ends when the window loses focus, or when focus
+  moves away during a key press, instead of keeping the group squeezed.
 
 #### Features
 
