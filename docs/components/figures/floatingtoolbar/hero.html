@@ -1,0 +1,24 @@
+<!--
+  @license
+  Copyright 2026 Saki
+  SPDX-License-Identifier: Apache-2.0
+-->
+<div class="figure-wrapper">
+  <figure
+      style="justify-content: center; gap: 24px; padding-block: 24px"
+      title="Floating toolbars"
+      aria-label="A standard floating toolbar with text formatting actions, and a vibrant one with a floating action button.">
+    <petal-floating-toolbar expanded aria-label="Text formatting">
+      <petal-icon-button aria-label="Bold"><petal-icon>format_bold</petal-icon></petal-icon-button>
+      <petal-icon-button aria-label="Italic"><petal-icon>format_italic</petal-icon></petal-icon-button>
+      <petal-icon-button aria-label="Underline"><petal-icon>format_underlined</petal-icon></petal-icon-button>
+      <petal-icon-button aria-label="Link"><petal-icon>link</petal-icon></petal-icon-button>
+    </petal-floating-toolbar>
+    <petal-floating-toolbar expanded colors="vibrant" aria-label="Photo">
+      <petal-icon-button aria-label="Crop"><petal-icon>crop</petal-icon></petal-icon-button>
+      <petal-icon-button aria-label="Filters"><petal-icon>filter_vintage</petal-icon></petal-icon-button>
+      <petal-icon-button aria-label="Share"><petal-icon>share</petal-icon></petal-icon-button>
+      <petal-fab slot="fab" aria-label="Edit"><petal-icon slot="icon">edit</petal-icon></petal-fab>
+    </petal-floating-toolbar>
+  </figure>
+</div>

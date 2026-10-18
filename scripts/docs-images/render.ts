@@ -79,6 +79,19 @@ async function openSheet(page: Page) {
   return 'viewport' as const;
 }
 
+/**
+ * Opens the figure's modal navigation drawer in a phone-sized viewport, with
+ * the pointer over the scrim, and captures the viewport.
+ */
+async function openDrawer(page: Page) {
+  await page.setViewportSize({width: 412, height: 720});
+  await page.click('#root petal-filled-button');
+  await page.mouse.move(400, 360);
+  await page.waitForTimeout(1200);
+  await finishAnimations(page);
+  return 'viewport' as const;
+}
+
 /** Expands the figure's search bar to full screen and captures the viewport. */
 async function fullScreenSearch(page: Page) {
   await page.setViewportSize({width: 412, height: 600});
@@ -157,6 +170,7 @@ const SETUP: Record<string, (page: Page) => Promise<void | 'viewport'>> = {
   'images/sheet/usage-drag-handle.webp': openSheet,
   'images/sheet/theming.webp': openSheet,
   'images/search/usage-full-screen.webp': fullScreenSearch,
+  'images/navigationdrawer/usage.webp': openDrawer,
 };
 
 interface Figure {

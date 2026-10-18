@@ -25,6 +25,12 @@ content. They expand and collapse.
 
 </catalog-component-header-title>
 
+<img
+    class="hero"
+    alt="A standard floating toolbar with text formatting actions, and a vibrant one with a floating action button."
+    title="Floating toolbars"
+    src="images/floatingtoolbar/hero.webp">
+
 </catalog-component-header>
 
 *   [Design article](https://m3.material.io/components/toolbars) <!-- {.external} -->
@@ -40,6 +46,13 @@ The values and the motion follow Jetpack Compose Material 3
 
 `<petal-floating-toolbar>` is a row of actions. Put icon buttons (or any
 elements) in the default slot.
+
+<!-- no-catalog-start -->
+
+![A floating toolbar with text formatting actions](images/floatingtoolbar/usage.webp)
+
+<!-- no-catalog-end -->
+<!-- catalog-include "figures/floatingtoolbar/usage.html" -->
 
 ```html
 <petal-floating-toolbar expanded aria-label="Text formatting">

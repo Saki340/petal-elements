@@ -25,6 +25,12 @@ button turns into a close button while the list is open.
 
 </catalog-component-header-title>
 
+<img
+    class="hero"
+    alt="An open FAB menu with three items above a close button."
+    title="A FAB menu"
+    src="images/fabmenu/hero.webp">
+
 </catalog-component-header>
 
 *   [Design article](https://m3.material.io/components/fab-menu) <!-- {.external} -->
@@ -44,6 +50,11 @@ The values and the motion follow Jetpack Compose Material 3
 Place the menu yourself, for example `position: fixed` at the bottom end of
 the window.
 
+<!-- no-catalog-start -->
+
+![An open FAB menu with three items above a close button](images/fabmenu/usage.webp)
+
+<!-- no-catalog-end -->
 <!-- catalog-include "figures/fabmenu/usage.html" -->
 
 ```html
