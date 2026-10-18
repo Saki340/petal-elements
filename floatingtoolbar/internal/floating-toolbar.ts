@@ -81,7 +81,8 @@ export class FloatingToolbar extends floatingToolbarBaseClass {
   @state() private hasFab = false;
 
   /** The expand or collapse animation is running. */
-  @state() private moving = false;
+  // Not a reactive property: it changes during updates and animation frames.
+  private moving = false;
 
   @query('.root') private readonly rootEl!: HTMLElement | null;
   @query('.toolbar') private readonly toolbarEl!: HTMLElement | null;
@@ -118,7 +119,6 @@ export class FloatingToolbar extends floatingToolbarBaseClass {
       'fab-first': fabFirst,
       // The hidden parts are also hidden from focus and assistive technology
       // once they are collapsed.
-      'rest-collapsed': !this.expanded && !this.moving,
     };
     const hidden = !this.expanded;
     const {ariaLabel} = this as ARIAMixinStrict;
@@ -173,6 +173,12 @@ export class FloatingToolbar extends floatingToolbarBaseClass {
     } else {
       this.paint();
     }
+    this.updateRestClass();
+  }
+
+  /** Collapsed and still: the parts that are not shown take no room. */
+  private updateRestClass() {
+    this.rootEl?.classList.toggle('rest-collapsed', !this.expanded && !this.moving);
   }
 
   // Layout -------------------------------------------------------------------
@@ -224,6 +230,7 @@ export class FloatingToolbar extends floatingToolbarBaseClass {
     this.progress.spec = springFromCss(this, 'fast-spatial', FAST_SPATIAL);
     if (this.frame) return;
     this.moving = true;
+    this.updateRestClass();
     this.lastTime = undefined;
     this.frame = requestAnimationFrame(this.tick);
   }
@@ -240,6 +247,7 @@ export class FloatingToolbar extends floatingToolbarBaseClass {
     if (this.frame) cancelAnimationFrame(this.frame);
     this.frame = 0;
     this.moving = false;
+    this.updateRestClass();
   }
 
   private readonly tick = (time?: number) => {
