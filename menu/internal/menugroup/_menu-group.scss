@@ -42,6 +42,10 @@ $_tokens: (
   'item-height': map.get(segmented.$values, 'item'),
 );
 
+// The first and last shown children: hidden groups and items do not count.
+$_first: ':nth-child(1 of :not([hidden]))';
+$_last: ':nth-last-child(1 of :not([hidden]))';
+
 $_transition: border-radius
   map.get(springs.$values, 'spring-fast-spatial-duration')
   map.get(springs.$values, 'spring-fast-spatial');
@@ -92,21 +96,23 @@ $_transition: border-radius
     );
   }
 
-  :host(:not(:first-child)) {
+  :host(:not(#{$_first})) {
     margin-top: var(--_segmented-gap);
   }
 
-  :host(:first-child) {
+  :host(#{$_first}) {
     border-start-start-radius: var(--_container-shape);
     border-start-end-radius: var(--_container-shape);
   }
 
-  :host(:last-child) {
+  :host(#{$_last}) {
     border-end-start-radius: var(--_container-shape);
     border-end-end-radius: var(--_container-shape);
   }
 
-  :host([inactive]) {
+  // As specific as the first and last rules above (`:not([hidden])` adds an
+  // attribute), and after them, so it wins.
+  :host([inactive]:not([hidden])) {
     border-radius: var(--_inactive-container-shape);
   }
 
@@ -126,21 +132,21 @@ $_transition: border-radius
 
   // Compose's 2dp around items with supporting text, kept between items only
   // so the group's padding stays even.
-  ::slotted([petal-menu-item]:has([slot='supporting-text']):not(:first-child)) {
+  ::slotted([petal-menu-item]:has([slot='supporting-text']):not(#{$_first})) {
     margin-top: 2px;
   }
 
-  ::slotted([petal-menu-item]:has([slot='supporting-text']):not(:last-child)) {
+  ::slotted([petal-menu-item]:has([slot='supporting-text']):not(#{$_last})) {
     margin-bottom: 2px;
   }
 
   // Concentric with the menu's outer corners; a lone item takes both.
-  :host(:first-child) ::slotted([petal-menu-item]:first-child) {
+  :host(#{$_first}) ::slotted([petal-menu-item]#{$_first}) {
     border-start-start-radius: var(--_item-first-child-shape);
     border-start-end-radius: var(--_item-first-child-shape);
   }
 
-  :host(:last-child) ::slotted([petal-menu-item]:last-child) {
+  :host(#{$_last}) ::slotted([petal-menu-item]#{$_last}) {
     border-end-start-radius: var(--_item-last-child-shape);
     border-end-end-radius: var(--_item-last-child-shape);
   }

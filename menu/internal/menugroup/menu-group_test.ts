@@ -116,6 +116,37 @@ describe('<petal-menu-group>', () => {
     expect(getComputedStyle(root(items[1])).backgroundColor).toBe('rgba(0, 0, 0, 0)');
   });
 
+  it('leaves hidden items and groups out of the first and last', async () => {
+    const root = env.render(html`
+      <petal-menu>
+        <petal-menu-group>
+          <petal-menu-item><div slot="headline">Keyboard</div></petal-menu-item>
+          <petal-menu-item><div slot="headline">Install</div></petal-menu-item>
+        </petal-menu-group>
+        <petal-menu-group>
+          <petal-menu-item><div slot="headline">Data</div></petal-menu-item>
+          <petal-menu-item hidden><div slot="headline">GitHub</div></petal-menu-item>
+        </petal-menu-group>
+        <petal-menu-group hidden>
+          <petal-menu-item><div slot="headline">Hidden</div></petal-menu-item>
+        </petal-menu-group>
+      </petal-menu>
+    `);
+    await env.waitForStability();
+    const groups = Array.from(root.querySelectorAll('petal-menu-group'));
+    const items = Array.from(root.querySelectorAll('petal-menu-item'));
+    groups.forEach((group) => (group.style.transition = 'none'));
+    // The second group is the last shown one.
+    expect(radii(groups[1])).toEqual(['8px', '8px', '16px', '16px']);
+    // Its only shown item is concentric with it.
+    expect(radii(items[2])).toEqual(['4px', '4px', '12px', '12px']);
+    // Hiding the first group makes the second one first.
+    groups[0].hidden = true;
+    expect(radii(groups[1])).toEqual(['16px', '16px', '16px', '16px']);
+    expect(radii(items[2])).toEqual(['12px', '12px', '12px', '12px']);
+    expect(getComputedStyle(groups[1]).marginTop).toBe('0px');
+  });
+
   it('takes the inactive shape after a mouse hovers and leaves', async () => {
     const {groups} = await setupTest();
     groups[0].dispatchEvent(new PointerEvent('pointerenter', {pointerType: 'touch'}));

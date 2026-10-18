@@ -59,6 +59,8 @@
   choice): groups are padded by 4px on all sides (`GroupPadding`, was 2px top
   and bottom), only the items next to the menu's outer corners have 12px
   corners there, and a lone item in the first or last group follows both.
+* **menu:** hidden items and groups do not count as a group's or the menu's
+  first and last, so the shown ones keep the right corners and gaps.
 * **button-group:** a press ends when the window loses focus, or when focus
   moves away during a key press, instead of keeping the group squeezed.
 
