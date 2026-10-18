@@ -72,6 +72,12 @@
 
 #### Features
 
+* **navigation-drawer:** `petal-navigation-drawer` and
+  `petal-navigation-drawer-item`, after Jetpack Compose `ModalNavigationDrawer`,
+  `DismissibleNavigationDrawer` and `PermanentNavigationDrawer` (`type`:
+  modal, dismissible, standard), opening on the default spatial spring and
+  closing on the fast effects spring, with dragging for the modal drawer. They
+  replace the old `labs/navigationdrawer`, which is removed.
 * **menu:** `single-radio` makes all of a menu's radio items one set, across
   its groups.
 * **fab:** `expanded` shrinks an extended FAB to its icon and back on

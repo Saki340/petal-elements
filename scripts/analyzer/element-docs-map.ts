@@ -31,6 +31,7 @@ export const docsToElementMapping: {[key: string]: readonly string[]} = {
   'pull-to-refresh.md': COMPONENT_CUSTOM_ELEMENTS.pullToRefresh,
   'menu.md': COMPONENT_CUSTOM_ELEMENTS.menu,
   'navigation-bar.md': COMPONENT_CUSTOM_ELEMENTS.navigationBar,
+  'navigation-drawer.md': COMPONENT_CUSTOM_ELEMENTS.navigationDrawer,
   'navigation-rail.md': COMPONENT_CUSTOM_ELEMENTS.navigationRail,
   'progress.md': COMPONENT_CUSTOM_ELEMENTS.progress,
   'radio.md': COMPONENT_CUSTOM_ELEMENTS.radio,

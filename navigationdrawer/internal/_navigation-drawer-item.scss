@@ -1,0 +1,162 @@
+//
+// Copyright 2026 Saki
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// Navigation drawer item, after Jetpack Compose Material 3
+// (NavigationDrawerItem in NavigationDrawer.kt). Sizes, shape, type and
+// colors: NavigationDrawerTokens (the item only has selected and unselected
+// colors, NavigationDrawerItemDefaults.colors). From the code: 16dp before the
+// icon and 24dp after the label or badge, 12dp between the icon, the label and
+// the badge; the badge takes the label's color.
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'sass:map';
+@use '../../focus/focus-ring';
+@use '../../ripple/ripple';
+@use '../../tokens/versions/compose/values/md-comp-navigation-drawer' as drawer;
+// go/keep-sorted end
+
+$_tokens: (
+  'active-indicator-color': map.get(drawer.$values, 'active-indicator-color'),
+  'active-indicator-height': map.get(drawer.$values, 'active-indicator-height'),
+  'active-icon-color': map.get(drawer.$values, 'active-icon-color'),
+  'active-label-text-color': map.get(drawer.$values, 'active-label-text-color'),
+  'inactive-icon-color': map.get(drawer.$values, 'inactive-icon-color'),
+  'inactive-label-text-color': map.get(drawer.$values, 'inactive-label-text-color'),
+  'icon-size': map.get(drawer.$values, 'icon-size'),
+  'label-text-font': map.get(drawer.$values, 'label-text-font'),
+  'label-text-line-height': map.get(drawer.$values, 'label-text-line-height'),
+  'label-text-size': map.get(drawer.$values, 'label-text-size'),
+  'label-text-weight': map.get(drawer.$values, 'label-text-weight'),
+  'focus-indicator-color': map.get(drawer.$values, 'focus-indicator-color'),
+);
+
+@mixin styles() {
+  // The hidden attribute, which `display` on the host would override.
+  :host([hidden]) {
+    display: none;
+  }
+
+  :host {
+    @each $token, $value in $_tokens {
+      --_#{$token}: var(--md-navigation-drawer-#{$token}, #{$value});
+    }
+
+    // ActiveIndicatorShape, corner.full: half the height, not 50%, which is
+    // an ellipse on a wide item.
+    --_indicator-shape: var(
+      --md-navigation-drawer-active-indicator-shape,
+      calc(var(--_active-indicator-height) / 2)
+    );
+
+    @include focus-ring.theme(
+      (
+        'color': var(--_focus-indicator-color),
+        'shape': var(--_indicator-shape),
+      )
+    );
+
+    display: block;
+    position: relative;
+    outline: none;
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  :host([disabled]) {
+    cursor: default;
+    pointer-events: none;
+    opacity: 0.38;
+  }
+
+  .item {
+    --_icon-color: var(--_inactive-icon-color);
+    --_text-color: var(--_inactive-label-text-color);
+
+    @include ripple.theme(
+      (
+        hover-color: var(--_text-color),
+        pressed-color: var(--_text-color),
+      )
+    );
+
+    position: relative;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    min-height: var(--_active-indicator-height);
+    padding-inline: 16px 24px;
+    border-radius: var(--_indicator-shape);
+    color: var(--_text-color);
+    text-decoration: none;
+    font-family: var(--_label-text-font);
+    font-size: var(--_label-text-size);
+    font-weight: var(--_label-text-weight);
+    line-height: var(--_label-text-line-height);
+  }
+
+  .item.selected {
+    --_icon-color: var(--_active-icon-color);
+    --_text-color: var(--_active-label-text-color);
+  }
+
+  .indicator-area {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+  }
+
+  .indicator,
+  petal-ripple {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+  }
+
+  .selected .indicator {
+    background-color: var(--_active-indicator-color);
+  }
+
+  .icon {
+    position: relative;
+    display: flex;
+    color: var(--_icon-color);
+    font-size: var(--_icon-size);
+  }
+
+  .icon ::slotted(*) {
+    width: var(--_icon-size);
+    height: var(--_icon-size);
+    font-size: var(--_icon-size);
+    margin-inline-end: 12px;
+  }
+
+  .has-selected-icon.selected slot[name='icon'],
+  .item:not(.selected) slot[name='selected-icon'] {
+    display: none;
+  }
+
+  .label {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+    padding-block: 8px;
+  }
+
+  .badge {
+    position: relative;
+    color: var(--_text-color);
+  }
+
+  .badge ::slotted(*) {
+    margin-inline-start: 12px;
+  }
+
+  @media (forced-colors: active) {
+    .selected .indicator {
+      outline: 1px solid CanvasText;
+    }
+  }
+}

@@ -1,0 +1,39 @@
+<!--
+  @license
+  Copyright 2026 Saki
+  SPDX-License-Identifier: Apache-2.0
+-->
+<div class="figure-wrapper">
+  <figure
+      style="justify-content: flex-start; padding: 0"
+      title="A navigation drawer"
+      aria-label="A navigation drawer with Mail and Labels headlines, Inbox selected with a count of 24.">
+    <petal-navigation-drawer type="standard" style="height: 440px">
+      <h2>Mail</h2>
+      <petal-navigation-drawer-item selected>
+        <petal-icon slot="icon">inbox</petal-icon>
+        Inbox
+        <span slot="badge">24</span>
+      </petal-navigation-drawer-item>
+      <petal-navigation-drawer-item>
+        <petal-icon slot="icon">send</petal-icon>
+        Sent
+      </petal-navigation-drawer-item>
+      <petal-navigation-drawer-item>
+        <petal-icon slot="icon">drafts</petal-icon>
+        Drafts
+        <span slot="badge">3</span>
+      </petal-navigation-drawer-item>
+      <petal-divider style="margin: 8px 28px"></petal-divider>
+      <h2>Labels</h2>
+      <petal-navigation-drawer-item>
+        <petal-icon slot="icon">label</petal-icon>
+        Family
+      </petal-navigation-drawer-item>
+      <petal-navigation-drawer-item>
+        <petal-icon slot="icon">label</petal-icon>
+        Work
+      </petal-navigation-drawer-item>
+    </petal-navigation-drawer>
+  </figure>
+</div>

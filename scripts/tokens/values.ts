@@ -88,6 +88,7 @@ export const COMPOSE_VALUE_MODULES = [
   'NavigationBar',
   'NavigationBarHorizontalItem',
   'NavigationBarVerticalItem',
+  'NavigationDrawer',
   'NavigationRailBaselineItem',
   'NavigationRailCollapsed',
   'NavigationRailColor',

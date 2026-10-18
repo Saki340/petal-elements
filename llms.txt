@@ -38,6 +38,7 @@ before using it; do not guess attributes.
 - [Tooltip](docs/components/tooltip.md): `tooltip/tooltip.js`, `petal-tooltip`
 - [Menu](docs/components/menu.md): `menu/{menu,menu-item,sub-menu,menu-group}.js`
 - [Navigation bar](docs/components/navigation-bar.md): `navigationbar/{navigation-bar,navigation-bar-item}.js`, `petal-navigation-bar`
+- [Navigation drawer](docs/components/navigation-drawer.md): `navigationdrawer/{navigation-drawer,navigation-drawer-item}.js`, `petal-navigation-drawer` (`type`: modal, dismissible, standard)
 - [Navigation rail](docs/components/navigation-rail.md): `navigationrail/{navigation-rail,navigation-rail-item}.js`, `petal-navigation-rail`
 - [Top app bar](docs/components/top-app-bar.md): `appbar/top-app-bar.js`, `petal-top-app-bar`
 - [Pull to refresh](docs/components/pull-to-refresh.md): `pulltorefresh/pull-to-refresh.js`

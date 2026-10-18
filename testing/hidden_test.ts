@@ -69,6 +69,8 @@ const TAGS = [
   'petal-navigation-bar-item',
   'petal-navigation-rail',
   'petal-navigation-rail-item',
+  'petal-navigation-drawer',
+  'petal-navigation-drawer-item',
   'petal-bottom-sheet',
   'petal-search-bar',
 ];

@@ -1,0 +1,47 @@
+<!--
+  @license
+  Copyright 2026 Saki
+  SPDX-License-Identifier: Apache-2.0
+-->
+<div class="figure-wrapper">
+  <figure
+      style="justify-content: center; padding-block: 24px"
+      title="A modal navigation drawer"
+      aria-label="A modal navigation drawer over a dimmed page, Inbox selected. Interact with the open drawer button to open it.">
+    <petal-filled-button id="usage-drawer-opener">Open drawer</petal-filled-button>
+    <petal-navigation-drawer id="usage-drawer">
+      <h2>Mail</h2>
+      <petal-navigation-drawer-item selected>
+        <petal-icon slot="icon">inbox</petal-icon>
+        Inbox
+        <span slot="badge">24</span>
+      </petal-navigation-drawer-item>
+      <petal-navigation-drawer-item>
+        <petal-icon slot="icon">send</petal-icon>
+        Sent
+      </petal-navigation-drawer-item>
+      <petal-navigation-drawer-item>
+        <petal-icon slot="icon">drafts</petal-icon>
+        Drafts
+        <span slot="badge">3</span>
+      </petal-navigation-drawer-item>
+      <petal-divider style="margin: 8px 28px"></petal-divider>
+      <h2>Labels</h2>
+      <petal-navigation-drawer-item>
+        <petal-icon slot="icon">label</petal-icon>
+        Family
+      </petal-navigation-drawer-item>
+      <petal-navigation-drawer-item>
+        <petal-icon slot="icon">label</petal-icon>
+        Work
+      </petal-navigation-drawer-item>
+    </petal-navigation-drawer>
+    <script type="module">
+      const drawer = document.body.querySelector('#usage-drawer');
+      document.body.querySelector('#usage-drawer-opener').addEventListener('click', () => {
+        drawer.show();
+      });
+      drawer.addEventListener('change', () => drawer.close());
+    </script>
+  </figure>
+</div>

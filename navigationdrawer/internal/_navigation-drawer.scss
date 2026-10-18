@@ -1,0 +1,183 @@
+//
+// Copyright 2026 Saki
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// Navigation drawer, after Jetpack Compose Material 3 (NavigationDrawer.kt).
+// Sizes and colors: NavigationDrawerTokens; scrim: ScrimTokens. From the code:
+// the drawer is 240dp to 360dp wide (MinimumDrawerWidth, ContainerWidth); a
+// modal drawer has the container shape and the modal container color, with
+// no shadow (ModalDrawerElevation is level 0, a tonal elevation); dismissible
+// and standard drawers are rectangles in the standard container color; items
+// are inset by 12dp (NavigationDrawerItemDefaults.ItemPadding). The movement
+// is a spring run by the element.
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'sass:map';
+@use '../../tokens/versions/compose/values/md-comp-navigation-drawer' as drawer;
+@use '../../tokens/versions/compose/values/md-comp-scrim' as scrim;
+// go/keep-sorted end
+
+$_tokens: (
+  'container-width': map.get(drawer.$values, 'container-width'),
+  'modal-container-color': map.get(drawer.$values, 'modal-container-color'),
+  'standard-container-color': map.get(drawer.$values, 'standard-container-color'),
+  'headline-color': map.get(drawer.$values, 'headline-color'),
+  'headline-font': map.get(drawer.$values, 'headline-font'),
+  'headline-line-height': map.get(drawer.$values, 'headline-line-height'),
+  'headline-size': map.get(drawer.$values, 'headline-size'),
+  'headline-weight': map.get(drawer.$values, 'headline-weight'),
+  'scrim-color': map.get(scrim.$values, 'container-color'),
+  'scrim-opacity': map.get(scrim.$values, 'container-opacity'),
+);
+
+@mixin styles() {
+  // The hidden attribute, which `display` on the host would override.
+  :host([hidden]) {
+    display: none;
+  }
+
+  :host {
+    @each $token, $value in $_tokens {
+      --_#{$token}: var(--md-navigation-drawer-#{$token}, #{$value});
+    }
+
+    // NavigationDrawerTokens.ContainerShape, corner.large on the end side.
+    --_container-shape: var(
+      --md-navigation-drawer-container-shape,
+      var(--md-sys-shape-corner-large, 16px)
+    );
+    // MinimumDrawerWidth, a constant in NavigationDrawer.kt.
+    --_minimum-width: 240px;
+
+    display: block;
+    flex: none;
+    height: 100%;
+  }
+
+  :host([type='modal']:not([hidden])) {
+    display: contents;
+  }
+
+  .sheet {
+    box-sizing: border-box;
+    width: var(--_container-width);
+    min-width: var(--_minimum-width);
+    max-width: 100vw;
+    height: 100%;
+    background-color: var(--_standard-container-color);
+    color: var(--md-sys-color-on-surface, #1d1b20);
+    overflow: clip;
+    transform-origin: right center;
+  }
+
+  :host(:dir(rtl)) .sheet {
+    transform-origin: left center;
+  }
+
+  .content {
+    box-sizing: border-box;
+    height: 100%;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    outline: none;
+    transform-origin: right top;
+  }
+
+  :host(:dir(rtl)) .content {
+    transform-origin: left top;
+  }
+
+  ::slotted([petal-navigation-drawer-item]) {
+    margin-inline: 12px;
+  }
+
+  // A headline above a section (Compose's samples, the headline tokens).
+  ::slotted(:is(h1, h2, h3, h4, h5, h6)) {
+    margin: 0;
+    padding: 16px 28px;
+    color: var(--_headline-color);
+    font-family: var(--_headline-font);
+    font-size: var(--_headline-size);
+    font-weight: var(--_headline-weight);
+    line-height: var(--_headline-line-height);
+  }
+
+  // Dismissible: in the row of the page, moved out past its start edge while
+  // closed; the element moves it on a spring.
+  :host([type='dismissible']:not([open]):not([moving])) {
+    margin-inline-start: calc(-1 * min(var(--_container-width), 100vw));
+  }
+
+  :host([type='dismissible']:not([open]):not([moving])) .sheet {
+    visibility: hidden;
+  }
+
+  // Modal: over the page in a dialog, with the scrim under it.
+  dialog {
+    position: fixed;
+    inset: 0;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: inherit;
+    outline: none;
+    overflow: clip;
+    overscroll-behavior: contain;
+  }
+
+  dialog[open] {
+    display: block;
+  }
+
+  ::backdrop {
+    // The scrim is its own element, which follows the drawer.
+    background: none;
+  }
+
+  // A manual popover, so it is in the top layer under the dialog.
+  .scrim {
+    position: fixed;
+    inset: 0;
+    width: auto;
+    height: auto;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: var(--_scrim-color);
+    opacity: calc(var(--_scrim-opacity) * var(--_scrim-alpha, 0));
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  dialog .sheet {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    border-start-end-radius: var(--_container-shape);
+    border-end-end-radius: var(--_container-shape);
+    background-color: var(--_modal-container-color);
+    // Closed until the element moves it.
+    transform: translateX(-100%);
+    touch-action: pan-y;
+    will-change: transform;
+  }
+
+  :host(:dir(rtl)) dialog .sheet {
+    transform: translateX(100%);
+  }
+
+  @media (forced-colors: active) {
+    .sheet {
+      border-inline-end: 1px solid CanvasText;
+    }
+  }
+}

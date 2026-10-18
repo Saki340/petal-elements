@@ -1,0 +1,36 @@
+<!--
+  @license
+  Copyright 2026 Saki
+  SPDX-License-Identifier: Apache-2.0
+-->
+<div class="figure-wrapper">
+  <figure
+      style="padding: 0"
+      title="A dismissible navigation drawer"
+      aria-label="A dismissible navigation drawer beside the page content, which a menu button opens and closes.">
+    <div style="display: flex; width: 100%; height: 360px; overflow: hidden">
+      <petal-navigation-drawer id="dismissible-drawer" type="dismissible" open>
+        <petal-navigation-drawer-item selected>
+          <petal-icon slot="icon">inbox</petal-icon>
+          Inbox
+        </petal-navigation-drawer-item>
+        <petal-navigation-drawer-item>
+          <petal-icon slot="icon">send</petal-icon>
+          Sent
+        </petal-navigation-drawer-item>
+      </petal-navigation-drawer>
+      <div style="flex: 1; min-width: 240px; padding: 16px">
+        <petal-icon-button id="dismissible-toggle" aria-label="Menu">
+          <petal-icon>menu</petal-icon>
+        </petal-icon-button>
+        <p>Page content</p>
+      </div>
+    </div>
+    <script type="module">
+      const drawer = document.body.querySelector('#dismissible-drawer');
+      document.body.querySelector('#dismissible-toggle').addEventListener('click', () => {
+        drawer.open = !drawer.open;
+      });
+    </script>
+  </figure>
+</div>
