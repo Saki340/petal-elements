@@ -81,6 +81,9 @@ export class NavigationDrawer extends navigationDrawerBaseClass {
     this.isOpen = open;
     this.toggleAttribute('open', open);
     if (open) {
+      // Open from the start, like rememberDrawerState(DrawerValue.Open): shown
+      // at once, without taking the focus.
+      if (!this.hasUpdated) this.openAtStart = true;
       void this.show();
     } else {
       void this.close();
@@ -100,6 +103,7 @@ export class NavigationDrawer extends navigationDrawerBaseClass {
   @query('.content') private readonly content!: HTMLElement | null;
 
   private isOpen = false;
+  private openAtStart = false;
   // getIsConnectedPromise() immediately sets the resolve property.
   private isConnectedPromiseResolve!: () => void;
   private isConnectedPromise = this.getIsConnectedPromise();
@@ -154,6 +158,12 @@ export class NavigationDrawer extends navigationDrawerBaseClass {
       this.dialog?.showModal();
     }
     this.measure();
+    if (this.openAtStart) {
+      this.openAtStart = false;
+      this.jump(0);
+      this.dispatchEvent(new Event('opened'));
+      return;
+    }
     if (!this.moving) this.jump(-this.width);
     this.toggleAttribute('moving', true);
     // ModalNavigationDrawer and DismissibleNavigationDrawer: keyboard focus

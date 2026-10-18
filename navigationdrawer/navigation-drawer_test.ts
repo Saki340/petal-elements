@@ -117,6 +117,25 @@ describe('<petal-navigation-drawer>', () => {
     expect(getComputedStyle(sheet(drawer)).visibility).toBe('hidden');
   });
 
+  it('shows at once without taking the focus when open from the start', async () => {
+    const root = env.render(html`
+      <div style="display: flex">
+        <petal-navigation-drawer type="dismissible" open>
+          <petal-navigation-drawer-item>Inbox</petal-navigation-drawer-item>
+        </petal-navigation-drawer>
+        <main style="flex: 1">Content</main>
+      </div>
+    `);
+    await env.waitForStability();
+    const drawer = root.querySelector('petal-navigation-drawer') as PetalNavigationDrawer;
+    await drawer.updateComplete;
+    expect(drawer.open).toBeTrue();
+    expect(drawer.hasAttribute('moving')).toBeFalse();
+    expect(document.activeElement).not.toBe(drawer.querySelector('petal-navigation-drawer-item'));
+    const row = drawer.parentElement!.getBoundingClientRect().left;
+    expect(root.querySelector('main')!.getBoundingClientRect().left - row).toBe(360);
+  });
+
   it('is always shown as a standard drawer', async () => {
     const {drawer, content} = await setupTest('standard');
     expect(content.getBoundingClientRect().left - drawer.parentElement!.getBoundingClientRect().left)
