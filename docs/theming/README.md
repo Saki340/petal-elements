@@ -148,8 +148,10 @@ button group's press, and by the theme transition below.
 
 `transitionTheme()` changes the theme with a circle that grows from the
 control the user pressed until it covers the page, revealing the new theme. It
-uses the View Transitions API and the page's slow spatial spring, so it
-bounces with the expressive scheme. Without View Transitions, or with
+uses the View Transitions API. The circle has a 320px soft edge and is sized
+to the viewport: it grows on the page's slow spatial spring and slows down to
+a stop as its opaque part reaches the corner farthest from the control,
+without bouncing back. Without View Transitions, or with
 `prefers-reduced-motion`, the theme just changes.
 
 ```js

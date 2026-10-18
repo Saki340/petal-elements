@@ -23,30 +23,61 @@ describe('transitionTheme()', () => {
     expect(spy).not.toHaveBeenCalled();
   });
 
-  it('reveals the new theme with a circle from the pointer', async () => {
+  it('reveals the new theme with a soft-edged circle from the pointer', async () => {
     const root = document.documentElement;
     const animate = spyOn(root, 'animate').and.callThrough();
     let activeDuringApply = false;
+    let center = '';
     await transitionTheme(
       () => {
         activeDuringApply = root.classList.contains('petal-theme-transition');
+        center = `${root.style.getPropertyValue('--petal-theme-transition-x')} ${root.style.getPropertyValue('--petal-theme-transition-y')}`;
         root.classList.add('dark-test');
       },
       {x: 10, y: 20},
     );
     expect(root.classList.contains('dark-test')).toBeTrue();
     expect(activeDuringApply).toBeTrue();
+    expect(center).toBe('10px 20px');
     // Only while the transition runs.
     expect(root.classList.contains('petal-theme-transition')).toBeFalse();
+    expect(root.style.getPropertyValue('--petal-theme-transition-x')).toBe('');
+
     const [keyframes, options] = animate.calls.mostRecent().args as [
-      {clipPath: string[]},
+      Record<string, string[]>,
       KeyframeAnimationOptions,
     ];
-    expect(keyframes.clipPath[0]).toBe('circle(0px at 10px 20px)');
-    const radius = Math.hypot(innerWidth - 10, innerHeight - 20);
-    expect(keyframes.clipPath[1]).toBe(`circle(${radius}px at 10px 20px)`);
+    const radii = keyframes['--petal-theme-transition-radius'].map(parseFloat);
     expect(options.pseudoElement).toBe('::view-transition-new(root)');
-    expect(String(options.easing)).toMatch(/^linear\(/);
+    expect(options.easing).toBe('linear');
+    expect(radii[0]).toBe(0);
+    // The opaque part, inside the 320px soft edge, ends on the farthest corner.
+    const corner = Math.hypot(innerWidth - 10, innerHeight - 20);
+    expect(radii[radii.length - 1]).toBeCloseTo(corner + 320, 3);
+    // It slows down toward the corner and never goes past it.
+    for (let i = 1; i < radii.length; i++) {
+      expect(radii[i]).toBeGreaterThanOrEqual(radii[i - 1]);
+    }
+    const last = radii.length - 1;
+    expect(radii[last] - radii[last - 1]).toBeLessThan((radii[2] - radii[1]) / 10);
+  });
+
+  it('follows the slow spatial spring of the page', async () => {
+    const root = document.documentElement;
+    const animate = spyOn(root, 'animate').and.callThrough();
+    await transitionTheme(() => {}, {x: 0, y: 0});
+    const expressive = Number((animate.calls.mostRecent().args[1] as KeyframeAnimationOptions).duration);
+    root.style.setProperty('--md-sys-motion-spring-slow-spatial-damping', '0.9');
+    root.style.setProperty('--md-sys-motion-spring-slow-spatial-stiffness', '300');
+    try {
+      await transitionTheme(() => {}, {x: 0, y: 0});
+    } finally {
+      root.style.removeProperty('--md-sys-motion-spring-slow-spatial-damping');
+      root.style.removeProperty('--md-sys-motion-spring-slow-spatial-stiffness');
+    }
+    const standard = Number((animate.calls.mostRecent().args[1] as KeyframeAnimationOptions).duration);
+    expect(expressive).toBeGreaterThan(300);
+    expect(standard).not.toBe(expressive);
   });
 });
 

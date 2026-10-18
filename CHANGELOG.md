@@ -99,8 +99,10 @@
   spring like Compose's `animateWidth` (overshoot, velocity, held to 75% on a
   quick tap).
 * **theme:** `transitionTheme()` (`theme/theme-transition.js`) changes the
-  theme with a circle that grows from the pressed control, on the slow
-  spatial spring (View Transitions API).
+  theme with a circle that grows from the pressed control (View Transitions
+  API). The circle has a 320px soft edge and is sized to the viewport; on the
+  slow spatial spring, it slows down to a stop as it reaches the farthest
+  corner, without bouncing back.
 * **tokens:** `motion-standard.css`, and the springs' `-damping` and
   `-stiffness` properties for components that simulate a spring.
 * **ripple:** waves of quick presses overlap; no press ripple with reduced
