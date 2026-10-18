@@ -82,6 +82,11 @@
   floating toolbar that expands and collapses on a spring, with an optional
   floating action button and standard or vibrant colors, after Jetpack Compose
   `HorizontalFloatingToolbar` and `VerticalFloatingToolbar`.
+* **fabmenu:** `petal-fab-menu`, `petal-fab-menu-item` and `petal-toggle-fab`, a
+  FAB menu after Jetpack Compose `FloatingActionButtonMenu`,
+  `FloatingActionButtonMenuItem` and `ToggleFloatingActionButton`: the toggle's
+  container morphs in size, shape and color on the fast spatial spring, and the
+  items appear one after the other on the slow effects spring.
 * **menu:** `single-radio` makes all of a menu's radio items one set, across
   its groups.
 * **fab:** `expanded` shrinks an extended FAB to its icon and back on

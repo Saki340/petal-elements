@@ -23,6 +23,7 @@ export const docsToElementMapping: {[key: string]: readonly string[]} = {
   'divider.md': COMPONENT_CUSTOM_ELEMENTS.divider,
   'elevation.md': COMPONENT_CUSTOM_ELEMENTS.elevation,
   'fab.md': COMPONENT_CUSTOM_ELEMENTS.fab,
+  'fab-menu.md': COMPONENT_CUSTOM_ELEMENTS.fabMenu,
   'focus-ring.md': COMPONENT_CUSTOM_ELEMENTS.focus,
   'icon-button.md': COMPONENT_CUSTOM_ELEMENTS.iconButton,
   'icon.md': COMPONENT_CUSTOM_ELEMENTS.icon,

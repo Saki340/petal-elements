@@ -32,6 +32,7 @@ export const COMPONENT_CUSTOM_ELEMENTS = {
   elevation: ['elevation/elevation.ts'],
   fab: ['fab/fab.ts', 'fab/branded-fab.ts'],
   floatingToolbar: ['floatingtoolbar/floating-toolbar.ts'],
+  fabMenu: ['fabmenu/fab-menu.ts', 'fabmenu/fab-menu-item.ts', 'fabmenu/toggle-fab.ts'],
   field: ['field/filled-field.ts', 'field/outlined-field.ts'],
   focus: ['focus/md-focus-ring.ts'],
   icon: ['icon/icon.ts'],

@@ -73,6 +73,8 @@ export const COMPOSE_VALUE_MODULES = [
   'FabBaseline',
   'FabLarge',
   'FabMedium',
+  'FabMenuBaseline',
+  'FabPrimaryContainer',
   'FabSmall',
   'FilledButton',
   'FilledCard',

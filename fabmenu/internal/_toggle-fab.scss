@@ -1,0 +1,219 @@
+//
+// Copyright 2026 Saki
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// Toggleable FAB, after Jetpack Compose Material 3's ToggleFloatingActionButton
+// (FloatingActionButtonMenu.kt). The container is lerped by the checked
+// progress (--_progress, 0 to 1; the element sets it on each frame of the
+// spring):
+// - size: FabBaselineTokens.ContainerHeight (56), FabMediumTokens (80) or
+//   FabLargeTokens (96) to FabMenuBaselineTokens.CloseButtonContainerHeight
+//   (56). The element keeps the room of the unchecked size and the container
+//   sits at its top, with ToggleFloatingActionButton's contentAlignment
+//   (TopEnd by default).
+// - corner radius: 16, 20 or 28dp (FabInitialCornerRadius,
+//   FabMediumInitialCornerRadius, FabLargeInitialCornerRadius: literals in the
+//   code) to half the final size (FabFinalCornerRadius), 28dp.
+// - color: primary container to primary (ToggleFloatingActionButtonDefaults.
+//   containerColor, lerp in Oklab like androidx.compose.ui.graphics.lerp).
+// - icon: size FabBaselineTokens.IconSize (24), FabMediumTokens (28) or 36 to
+//   FabMenuBaselineTokens.CloseButtonIconSize (20); color on primary container
+//   to on primary. The large icon is 36dp in the code (FabLargeInitialIconSize)
+//   because FabLargeTokens.IconSize (32) is marked incorrect there.
+// The shadow is FabPrimaryContainerTokens.ContainerElevation (level 3) and
+// does not change when hovered or pressed.
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'sass:map';
+@use '../../elevation/elevation';
+@use '../../focus/focus-ring';
+@use '../../ripple/ripple';
+@use '../../tokens/versions/compose/values/md-comp-fab-baseline' as baseline;
+@use '../../tokens/versions/compose/values/md-comp-fab-large' as large;
+@use '../../tokens/versions/compose/values/md-comp-fab-medium' as medium;
+@use '../../tokens/versions/compose/values/md-comp-fab-menu-baseline' as menu;
+@use '../../tokens/versions/compose/values/md-comp-fab-primary-container' as primary;
+// go/keep-sorted end
+
+@mixin styles() {
+  // The hidden attribute, which `display` on the host would override.
+  :host([hidden]) {
+    display: none;
+  }
+
+  :host {
+    --_container-color: var(
+      --md-toggle-fab-container-color,
+      #{map.get(primary.$values, 'container-color')}
+    );
+    --_checked-container-color: var(
+      --md-toggle-fab-checked-container-color,
+      var(--md-sys-color-primary, #6750a4)
+    );
+    --_icon-color: var(--md-toggle-fab-icon-color, #{map.get(primary.$values, 'icon-color')});
+    --_checked-icon-color: var(
+      --md-toggle-fab-checked-icon-color,
+      var(--md-sys-color-on-primary, #ffffff)
+    );
+    --_elevation: var(
+      --md-toggle-fab-container-elevation,
+      #{map.get(primary.$values, 'container-elevation')}
+    );
+    --_checked-size: var(
+      --md-fab-menu-close-button-container-height,
+      #{map.get(menu.$values, 'close-button-container-height')}
+    );
+    --_checked-icon-size: var(
+      --md-fab-menu-close-button-icon-size,
+      #{map.get(menu.$values, 'close-button-icon-size')}
+    );
+
+    // FabInitialSize, FabInitialCornerRadius, FabInitialIconSize.
+    --_initial-size: #{map.get(baseline.$values, 'container-height')};
+    --_initial-radius: 16px;
+    --_initial-icon-size: #{map.get(baseline.$values, 'icon-size')};
+
+    // The checked progress, set on the button.
+    --_progress: 0;
+
+    display: inline-block;
+    position: relative;
+    width: var(--_initial-size);
+    height: var(--_initial-size);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  :host([size='medium']) {
+    // FabMediumInitialSize, FabMediumInitialCornerRadius, FabMediumTokens.
+    --_initial-size: #{map.get(medium.$values, 'container-height')};
+    --_initial-radius: 20px;
+    --_initial-icon-size: #{map.get(medium.$values, 'icon-size')};
+  }
+
+  :host([size='large']) {
+    // FabLargeInitialSize, FabLargeInitialCornerRadius, FabLargeInitialIconSize
+    // (36dp: FabLargeTokens.IconSize, 32px, is incorrect, as the TODO in the
+    // code says).
+    --_initial-size: #{map.get(large.$values, 'container-height')};
+    --_initial-radius: 28px;
+    --_initial-icon-size: 36px;
+  }
+
+  .toggle {
+    --_mix: clamp(0, var(--_progress), 1);
+    --_size: max(
+      0px,
+      calc(var(--_initial-size) + (var(--_checked-size) - var(--_initial-size)) * var(--_progress))
+    );
+    // FabFinalCornerRadius is half of the final size.
+    --_radius: max(
+      0px,
+      calc(
+        var(--_initial-radius) + (var(--_checked-size) / 2 - var(--_initial-radius)) *
+          var(--_progress)
+      )
+    );
+    --_icon-size: max(
+      0px,
+      calc(
+        var(--_initial-icon-size) + (var(--_checked-icon-size) - var(--_initial-icon-size)) *
+          var(--_progress)
+      )
+    );
+
+    @include ripple.theme(
+      (
+        hover-color: currentColor,
+        pressed-color: currentColor,
+      )
+    );
+
+    @include elevation.theme(
+      (
+        'level': var(--_elevation),
+      )
+    );
+
+    // At the top, with the alignment on the inline axis.
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline: 0;
+    margin-inline: auto 0;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--_size);
+    height: var(--_size);
+    padding: 0;
+    border: none;
+    outline: none;
+    border-radius: var(--_radius);
+    cursor: pointer;
+    // Required for elevation and ripple to stay below content.
+    z-index: 0;
+    background-color: color-mix(
+      in oklab,
+      var(--_checked-container-color) calc(var(--_mix) * 100%),
+      var(--_container-color)
+    );
+    color: color-mix(
+      in oklab,
+      var(--_checked-icon-color) calc(var(--_mix) * 100%),
+      var(--_icon-color)
+    );
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  :host([content-alignment='start']) .toggle {
+    margin-inline: 0 auto;
+  }
+
+  :host([content-alignment='center']) .toggle {
+    margin-inline: auto;
+  }
+
+  .ripple,
+  petal-elevation {
+    // Behind the content.
+    z-index: -1;
+  }
+
+  petal-focus-ring {
+    @include focus-ring.theme(
+      (
+        'shape-start-start': var(--_radius),
+        'shape-start-end': var(--_radius),
+        'shape-end-end': var(--_radius),
+        'shape-end-start': var(--_radius),
+      )
+    );
+  }
+
+  .icon {
+    display: flex;
+    width: var(--_icon-size);
+    height: var(--_icon-size);
+  }
+
+  // The icon switches at 50% progress.
+  .icon:not(.checked) slot[name='checked-icon'],
+  .icon.checked slot[name='icon'] {
+    display: none;
+  }
+
+  .icon ::slotted(*),
+  .icon svg {
+    display: flex;
+    width: var(--_icon-size);
+    height: var(--_icon-size);
+    font-size: var(--_icon-size);
+  }
+
+  @media (forced-colors: active) {
+    .toggle {
+      border: 1px solid ButtonText;
+    }
+  }
+}

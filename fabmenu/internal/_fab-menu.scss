@@ -1,0 +1,65 @@
+//
+// Copyright 2026 Saki
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// FAB menu, after Jetpack Compose Material 3's FloatingActionButtonMenu
+// (FloatingActionButtonMenu.kt): a column of items above the button, aligned
+// to the same side (horizontalAlignment, End by default). FabMenuPaddingHorizontal
+// is 16dp on both sides; the items are FabMenuItemSpacingVertical apart
+// (ListItemBetweenSpace, 4dp) and end FabMenuPaddingBottom (CloseButtonBetweenSpace,
+// 8dp) above the button's room, which has FabMenuButtonPaddingBottom (16dp)
+// below it. The items take no room while none is drawn. Compose scrolls the
+// items when they do not fit the available height; this menu does not.
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'sass:map';
+@use '../../tokens/versions/compose/values/md-comp-fab-menu-baseline' as menu;
+// go/keep-sorted end
+
+@mixin styles() {
+  // The hidden attribute, which `display` on the host would override.
+  :host([hidden]) {
+    display: none;
+  }
+
+  :host {
+    --_items-gap: #{map.get(menu.$values, 'list-item-between-space')};
+    --_items-button-gap: #{map.get(menu.$values, 'close-button-between-space')};
+
+    // FabMenuPaddingHorizontal and FabMenuButtonPaddingBottom.
+    --_padding-horizontal: 16px;
+    --_button-padding-bottom: 16px;
+
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-end;
+    box-sizing: border-box;
+    padding-inline: var(--_padding-horizontal);
+  }
+
+  :host([horizontal-alignment='start']) {
+    align-items: flex-start;
+  }
+
+  :host([horizontal-alignment='center']) {
+    align-items: center;
+  }
+
+  .items {
+    display: none;
+    flex-direction: column;
+    align-items: inherit;
+    gap: var(--_items-gap);
+    margin-block-end: var(--_items-button-gap);
+  }
+
+  .items.shown {
+    display: flex;
+  }
+
+  .button {
+    display: flex;
+    margin-block-end: var(--_button-padding-bottom);
+  }
+}

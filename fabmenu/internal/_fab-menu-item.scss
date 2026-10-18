@@ -1,0 +1,161 @@
+//
+// Copyright 2026 Saki
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// FAB menu item, after Jetpack Compose Material 3's
+// FloatingActionButtonMenuItem (FloatingActionButtonMenu.kt) and
+// FabMenuBaselineTokens: a Surface of primary container with on primary
+// container content, 56dp high and at least 56dp wide (ListItemContainerHeight),
+// shape ListItemContainerShape (full), 24dp before and after the content
+// (ListItemLeadingSpace, ListItemTrailingSpace), 8dp between the icon and the
+// label (ListItemIconLabelSpace) and the titleMedium text style. The code gives
+// the Surface no shadow elevation, although ListItemContainerElevation is
+// level 3, so there is none here either. The icon is as big as
+// ListItemIconSize (24dp) here; Compose leaves its size to the caller.
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'sass:map';
+@use '../../focus/focus-ring';
+@use '../../ripple/ripple';
+@use '../../tokens';
+@use '../../tokens/versions/compose/values/md-comp-fab-menu-baseline' as menu;
+@use '../../tokens/versions/compose/values/md-comp-fab-primary-container' as primary;
+// go/keep-sorted end
+
+$_typescale: tokens.md-sys-typescale-values();
+
+@mixin styles() {
+  // The hidden attribute, which `display` on the host would override.
+  :host([hidden]) {
+    display: none;
+  }
+
+  :host {
+    --_container-color: var(
+      --md-fab-menu-list-item-container-color,
+      #{map.get(primary.$values, 'container-color')}
+    );
+    --_content-color: var(
+      --md-fab-menu-list-item-content-color,
+      #{map.get(primary.$values, 'icon-color')}
+    );
+    --_container-shape: var(
+      --md-fab-menu-list-item-container-shape,
+      #{map.get(menu.$values, 'list-item-container-shape')}
+    );
+    --_height: var(
+      --md-fab-menu-list-item-container-height,
+      #{map.get(menu.$values, 'list-item-container-height')}
+    );
+    --_leading-space: var(
+      --md-fab-menu-list-item-leading-space,
+      #{map.get(menu.$values, 'list-item-leading-space')}
+    );
+    --_trailing-space: var(
+      --md-fab-menu-list-item-trailing-space,
+      #{map.get(menu.$values, 'list-item-trailing-space')}
+    );
+    --_icon-label-space: var(
+      --md-fab-menu-list-item-icon-label-space,
+      #{map.get(menu.$values, 'list-item-icon-label-space')}
+    );
+    --_icon-size: var(
+      --md-fab-menu-list-item-icon-size,
+      #{map.get(menu.$values, 'list-item-icon-size')}
+    );
+
+    display: inline-flex;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .item {
+    @include ripple.theme(
+      (
+        hover-color: currentColor,
+        pressed-color: currentColor,
+      )
+    );
+
+    position: relative;
+    display: flex;
+    box-sizing: border-box;
+    height: var(--_height);
+    padding: 0;
+    border: none;
+    outline: none;
+    border-radius: var(--_container-shape);
+    background-color: var(--_container-color);
+    color: var(--_content-color);
+    cursor: pointer;
+    font: inherit;
+    text-align: start;
+    // Required for the ripple to stay below the content.
+    z-index: 0;
+  }
+
+  // The width animates, and the content stays at the side of the menu.
+  .clip {
+    display: flex;
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    border-radius: inherit;
+    justify-content: flex-end;
+  }
+
+  :host([horizontal-alignment='start']) .clip {
+    justify-content: flex-start;
+  }
+
+  :host([horizontal-alignment='center']) .clip {
+    justify-content: center;
+  }
+
+  .content {
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    min-width: var(--_height);
+    min-height: var(--_height);
+    padding-inline: var(--_leading-space) var(--_trailing-space);
+    gap: var(--_icon-label-space);
+    white-space: nowrap;
+  }
+
+  .ripple {
+    z-index: -1;
+  }
+
+  .label {
+    font-family: map.get($_typescale, 'title-medium-font');
+    font-size: map.get($_typescale, 'title-medium-size');
+    line-height: map.get($_typescale, 'title-medium-line-height');
+    font-weight: map.get($_typescale, 'title-medium-weight');
+    letter-spacing: map.get($_typescale, 'title-medium-tracking');
+  }
+
+  ::slotted([slot='icon']) {
+    display: flex;
+    width: var(--_icon-size);
+    height: var(--_icon-size);
+    font-size: var(--_icon-size);
+  }
+
+  petal-focus-ring {
+    @include focus-ring.theme(
+      (
+        'shape-start-start': var(--_container-shape),
+        'shape-start-end': var(--_container-shape),
+        'shape-end-end': var(--_container-shape),
+        'shape-end-start': var(--_container-shape),
+      )
+    );
+  }
+
+  .ripple {
+    border-radius: var(--_container-shape);
+  }
+}
