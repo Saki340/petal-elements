@@ -44,4 +44,5 @@ export const docsToElementMapping: {[key: string]: readonly string[]} = {
   'select.md': COMPONENT_CUSTOM_ELEMENTS.select,
   'snackbar.md': COMPONENT_CUSTOM_ELEMENTS.snackbar,
   'search.md': COMPONENT_CUSTOM_ELEMENTS.search,
+  'floating-toolbar.md': COMPONENT_CUSTOM_ELEMENTS.floatingToolbar,
 };

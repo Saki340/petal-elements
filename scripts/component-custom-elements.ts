@@ -31,6 +31,7 @@ export const COMPONENT_CUSTOM_ELEMENTS = {
   divider: ['divider/divider.ts'],
   elevation: ['elevation/elevation.ts'],
   fab: ['fab/fab.ts', 'fab/branded-fab.ts'],
+  floatingToolbar: ['floatingtoolbar/floating-toolbar.ts'],
   field: ['field/filled-field.ts', 'field/outlined-field.ts'],
   focus: ['focus/md-focus-ring.ts'],
   icon: ['icon/icon.ts'],

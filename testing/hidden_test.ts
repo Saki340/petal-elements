@@ -73,6 +73,7 @@ const TAGS = [
   'petal-navigation-drawer-item',
   'petal-bottom-sheet',
   'petal-search-bar',
+  'petal-floating-toolbar',
 ];
 
 describe('the hidden attribute', () => {

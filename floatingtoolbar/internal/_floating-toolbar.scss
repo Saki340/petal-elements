@@ -1,0 +1,381 @@
+//
+// Copyright 2026 Saki
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// Floating toolbar, after Jetpack Compose Material 3 (FloatingToolbar.kt:
+// HorizontalFloatingToolbar and VerticalFloatingToolbar, FloatingToolbarDefaults).
+// - FloatingToolbarTokens: container height 64dp, shape full, padding
+//   ContainerLeadingSpace/ContainerTrailingSpace 8dp (FloatingToolbarDefaults
+//   .ContentPadding), standard and vibrant container colors.
+// - The content colors are contentColorFor() the container (the code has a
+//   "TODO load colors from the toolbar tokens"): on-surface for standard,
+//   on-primary-container for vibrant (the same as the
+//   VibrantButtonUnselectedIconColor token). The FAB is primary-container
+//   (standard) or tertiary-container (vibrant) with the matching "on" color.
+// - With a FAB: the toolbar scales with the expanded progress, the FAB goes
+//   from FabBaselineTokens.ContainerWidth (56dp, expanded) to
+//   FabMediumTokens.ContainerWidth (80dp, collapsed) (FabSizeRange), the gap
+//   is ToolbarToFabGap 8dp and the layout is at least 80dp across.
+// - Elevation: ContainerExpandedElevation and ContainerCollapsedElevation
+//   are Level0 ("TODO read from token"), and Level1 expanded and Level0
+//   collapsed with a FAB. The FAB itself is Level2 (Level3 hovered).
+// The motion is in floating-toolbar.ts.
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'sass:map';
+@use '../../tokens/versions/compose/values/md-comp-fab-baseline' as fab-baseline;
+@use '../../tokens/versions/compose/values/md-comp-fab-medium' as fab-medium;
+@use '../../tokens/versions/compose/values/md-comp-floating-toolbar' as toolbar;
+// go/keep-sorted end
+
+// The icon button colors a toolbar's color scheme sets on its slotted icon
+// buttons (IconButton uses LocalContentColor).
+@mixin _icon-button-colors($color) {
+  @each $name in ('icon-color', 'hover-icon-color', 'focus-icon-color', 'pressed-icon-color') {
+    --md-icon-button-#{$name}: #{$color};
+  }
+  @each $name in ('hover-state-layer-color', 'focus-state-layer-color', 'pressed-state-layer-color') {
+    --md-icon-button-#{$name}: #{$color};
+  }
+}
+
+@mixin styles() {
+  // The hidden attribute, which `display` on the host would override.
+  :host([hidden]) {
+    display: none;
+  }
+
+  :host {
+    --_container-height: var(
+      --md-floating-toolbar-container-height,
+      #{map.get(toolbar.$values, 'container-height')}
+    );
+    --_leading-space: var(
+      --md-floating-toolbar-container-leading-space,
+      #{map.get(toolbar.$values, 'container-leading-space')}
+    );
+    --_trailing-space: var(
+      --md-floating-toolbar-container-trailing-space,
+      #{map.get(toolbar.$values, 'container-trailing-space')}
+    );
+    // CornerFull: 9999px, not 50%, which would make ovals.
+    --_shape: var(--md-floating-toolbar-container-shape, var(--md-sys-shape-corner-full, 9999px));
+
+    // FloatingToolbarDefaults.FabSizeRange and ToolbarToFabGap.
+    --_fab-min: var(
+      --md-floating-toolbar-fab-expanded-size,
+      #{map.get(fab-baseline.$values, 'container-width')}
+    );
+    --_fab-max: var(
+      --md-floating-toolbar-fab-collapsed-size,
+      #{map.get(fab-medium.$values, 'container-width')}
+    );
+    --_gap: var(--md-floating-toolbar-fab-gap, 8px);
+
+    --_container-color: var(
+      --md-floating-toolbar-standard-container-color,
+      #{map.get(toolbar.$values, 'standard-container-color')}
+    );
+    // contentColorFor(surfaceContainer)
+    --_content-color: var(--md-floating-toolbar-standard-content-color, var(--md-sys-color-on-surface, #1d1b20));
+    --_fab-container-color: var(
+      --md-floating-toolbar-standard-fab-container-color,
+      var(--md-sys-color-primary-container, #eaddff)
+    );
+    --_fab-content-color: var(
+      --md-floating-toolbar-standard-fab-content-color,
+      var(--md-sys-color-on-primary-container, #21005d)
+    );
+
+    display: inline-flex;
+    vertical-align: middle;
+  }
+
+  :host([colors='vibrant']) {
+    --_container-color: var(
+      --md-floating-toolbar-vibrant-container-color,
+      #{map.get(toolbar.$values, 'vibrant-container-color')}
+    );
+    --_content-color: var(
+      --md-floating-toolbar-vibrant-content-color,
+      #{map.get(toolbar.$values, 'vibrant-button-unselected-icon-color')}
+    );
+    --_fab-container-color: var(
+      --md-floating-toolbar-vibrant-fab-container-color,
+      var(--md-sys-color-tertiary-container, #ffd8e4)
+    );
+    --_fab-content-color: var(
+      --md-floating-toolbar-vibrant-fab-content-color,
+      var(--md-sys-color-on-tertiary-container, #633b48)
+    );
+    // VibrantButtonSelected*: a selected toggle button.
+    --_selected-container-color: var(
+      --md-floating-toolbar-vibrant-button-selected-container-color,
+      #{map.get(toolbar.$values, 'vibrant-button-selected-container-color')}
+    );
+    --_selected-icon-color: var(
+      --md-floating-toolbar-vibrant-button-selected-icon-color,
+      #{map.get(toolbar.$values, 'vibrant-button-selected-icon-color')}
+    );
+  }
+
+  .root {
+    --_p: 1;
+    --_natural: 0px;
+    --_leading-natural: 0px;
+    --_trailing-natural: 0px;
+    --_expanded-elevation: var(--md-floating-toolbar-expanded-elevation, 0);
+    --_collapsed-elevation: var(--md-floating-toolbar-collapsed-elevation, 0);
+    // How far expanded, between 0 and 1 (the spring may overshoot).
+    --_amount: clamp(0, var(--_p), 1);
+
+    position: relative;
+    display: flex;
+    box-sizing: border-box;
+  }
+
+  .root.with-fab {
+    --_expanded-elevation: var(--md-floating-toolbar-expanded-elevation-with-fab, 1);
+    --_collapsed-elevation: var(--md-floating-toolbar-collapsed-elevation-with-fab, 0);
+    // lerp(FabSizeRange, 1 - progress)
+    --_fab-size: max(
+      0px,
+      calc(var(--_fab-min) + (var(--_fab-max) - var(--_fab-min)) * (1 - var(--_p)))
+    );
+    // The toolbar's size along its main axis.
+    --_main: calc(var(--_natural) * var(--_amount));
+  }
+
+  .toolbar-box {
+    position: relative;
+    border-radius: var(--_shape);
+  }
+
+  petal-elevation {
+    --md-elevation-level: calc(
+      var(--_collapsed-elevation) + (var(--_expanded-elevation) - var(--_collapsed-elevation)) *
+        var(--_amount)
+    );
+  }
+
+  .surface {
+    position: relative;
+    box-sizing: border-box;
+    overflow: hidden;
+    border-radius: inherit;
+    background: var(--_container-color);
+    color: var(--_content-color);
+    // The slotted icon buttons take the content color, as in Compose, where
+    // IconButton uses LocalContentColor.
+    @include _icon-button-colors(var(--_content-color));
+  }
+
+  :host([colors='vibrant']) .surface {
+    --md-icon-button-selected-icon-color: var(--_selected-icon-color);
+    --md-icon-button-selected-hover-icon-color: var(--_selected-icon-color);
+    --md-icon-button-selected-focus-icon-color: var(--_selected-icon-color);
+    --md-icon-button-selected-pressed-icon-color: var(--_selected-icon-color);
+    --md-filled-icon-button-selected-container-color: var(--_selected-container-color);
+    --md-filled-icon-button-toggle-selected-icon-color: var(--_selected-icon-color);
+    --md-filled-icon-button-toggle-selected-focus-icon-color: var(--_selected-icon-color);
+  }
+
+  .toolbar {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--_leading-space) var(--_trailing-space) var(--_trailing-space)
+      var(--_leading-space);
+  }
+
+  .items {
+    display: flex;
+    align-items: center;
+  }
+
+  .vertical .toolbar,
+  .vertical .items,
+  .vertical .end {
+    flex-direction: column;
+  }
+
+  .horizontal .toolbar {
+    min-block-size: var(--_container-height);
+  }
+
+  .vertical .toolbar {
+    min-inline-size: var(--_container-height);
+  }
+
+  // leadingContent and trailingContent: AnimatedVisibility with
+  // expandHorizontally and shrinkHorizontally (or the vertical ones), the
+  // leading content from the start edge and the trailing content from the end.
+  .end {
+    display: flex;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .horizontal .leading {
+    inline-size: calc(var(--_leading-natural) * var(--_amount));
+  }
+
+  .horizontal .trailing {
+    inline-size: calc(var(--_trailing-natural) * var(--_amount));
+    justify-content: flex-end;
+  }
+
+  .vertical .leading {
+    block-size: calc(var(--_leading-natural) * var(--_amount));
+  }
+
+  .vertical .trailing {
+    block-size: calc(var(--_trailing-natural) * var(--_amount));
+    justify-content: flex-end;
+  }
+
+  .leading-inner,
+  .trailing-inner {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+  }
+
+  .vertical .leading-inner,
+  .vertical .trailing-inner {
+    flex-direction: column;
+  }
+
+  .rest-collapsed .end {
+    visibility: hidden;
+  }
+
+  // With a FAB ------------------------------------------------------------
+
+  .with-fab .toolbar {
+    // The toolbar keeps its full size and the surface clips it.
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+  }
+
+  .with-fab.horizontal {
+    inline-size: calc(var(--_natural) + var(--_gap) + var(--_fab-min));
+    block-size: var(--_fab-max);
+
+    .toolbar {
+      inline-size: max-content;
+      block-size: 100%;
+    }
+
+    .toolbar-box {
+      position: absolute;
+      inset-block-start: calc((var(--_fab-max) - var(--_container-height)) / 2);
+      inset-inline-start: calc(var(--_natural) - var(--_main));
+      inline-size: var(--_main);
+      block-size: var(--_container-height);
+    }
+
+    &.fab-first .toolbar-box {
+      inset-inline-start: calc(var(--_fab-min) + var(--_gap));
+    }
+
+    .surface {
+      block-size: 100%;
+    }
+
+    .fab {
+      inset-block: 0;
+      inset-inline-end: 0;
+      inline-size: var(--_fab-size);
+      align-items: center;
+    }
+
+    &.fab-first .fab {
+      inset-inline-end: auto;
+      inset-inline-start: 0;
+    }
+  }
+
+  .with-fab.vertical {
+    inline-size: var(--_fab-max);
+    block-size: calc(var(--_natural) + var(--_gap) + var(--_fab-min));
+
+    .toolbar {
+      block-size: max-content;
+      inline-size: 100%;
+    }
+
+    .toolbar-box {
+      position: absolute;
+      inset-inline-start: calc((var(--_fab-max) - var(--_container-height)) / 2);
+      inset-block-start: calc(var(--_natural) - var(--_main));
+      block-size: var(--_main);
+      inline-size: var(--_container-height);
+    }
+
+    &.fab-first .toolbar-box {
+      inset-block-start: calc(var(--_fab-min) + var(--_gap));
+    }
+
+    .surface {
+      inline-size: 100%;
+      block-size: 100%;
+    }
+
+    .fab {
+      inset-inline: 0;
+      inset-block-end: 0;
+      block-size: var(--_fab-size);
+      justify-content: center;
+    }
+
+    &.fab-first .fab {
+      inset-block-end: auto;
+      inset-block-start: 0;
+    }
+  }
+
+  .rest-collapsed.with-fab .toolbar {
+    visibility: hidden;
+  }
+
+  // Without a FAB the FAB slot is not shown.
+  .fab {
+    display: none;
+  }
+
+  .with-fab .fab {
+    position: absolute;
+    display: flex;
+    // FloatingActionButtonDefaults.shape stays; the FAB fills the size the
+    // toolbar gives it (fillMaxSize), and takes the toolbar's FAB colors and
+    // elevation (Level2, Level3 hovered).
+  }
+
+  ::slotted([slot='fab']) {
+    --md-fab-container-width: var(--_fab-size);
+    --md-fab-container-height: var(--_fab-size);
+    --md-fab-container-color: var(--_fab-container-color);
+    --md-fab-primary-container-color: var(--_fab-container-color);
+    @each $name in ('icon-color', 'hover-icon-color', 'focus-icon-color', 'pressed-icon-color') {
+      --md-fab-#{$name}: var(--_fab-content-color);
+      --md-fab-primary-#{$name}: var(--_fab-content-color);
+    }
+    @each $name in ('hover-state-layer-color', 'pressed-state-layer-color') {
+      --md-fab-primary-#{$name}: var(--_fab-content-color);
+    }
+    --md-fab-container-elevation: 2;
+    --md-fab-focus-container-elevation: 2;
+    --md-fab-pressed-container-elevation: 2;
+    --md-fab-hover-container-elevation: 3;
+  }
+
+  @media (forced-colors: active) {
+    .surface {
+      border: 1px solid CanvasText;
+    }
+  }
+}

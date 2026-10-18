@@ -80,6 +80,7 @@ export const COMPOSE_VALUE_MODULES = [
   'FilledTextField',
   'FilledTonalButton',
   'FilledTonalIconButton',
+  'FloatingToolbar',
   'LargeIconButton',
   'LinearProgressIndicator',
   'List',

@@ -78,6 +78,10 @@
   modal, dismissible, standard), opening on the default spatial spring and
   closing on the fast effects spring, with dragging for the modal drawer. They
   replace the old `labs/navigationdrawer`, which is removed.
+* **floating-toolbar:** `petal-floating-toolbar`, a horizontal or vertical
+  floating toolbar that expands and collapses on a spring, with an optional
+  floating action button and standard or vibrant colors, after Jetpack Compose
+  `HorizontalFloatingToolbar` and `VerticalFloatingToolbar`.
 * **menu:** `single-radio` makes all of a menu's radio items one set, across
   its groups.
 * **fab:** `expanded` shrinks an extended FAB to its icon and back on

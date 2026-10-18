@@ -29,6 +29,7 @@ before using it; do not guess attributes.
 - [Button group](docs/components/button-group.md): `buttongroup/button-group.js`, `petal-button-group`
 - [Icon button](docs/components/icon-button.md): `iconbutton/{icon,filled-icon,filled-tonal-icon,outlined-icon}-button.js`
 - [FAB](docs/components/fab.md): `fab/fab.js`, `fab/branded-fab.js`
+- [Floating toolbar](docs/components/floating-toolbar.md): `floatingtoolbar/floating-toolbar.js`, `petal-floating-toolbar`
 - [Icon](docs/components/icon.md): `icon/icon.js`, `petal-icon`
 - [Card](docs/components/card.md): `card/{filled,elevated,outlined}-card.js`
 - [Dialog](docs/components/dialog.md): `dialog/dialog.js`, `petal-dialog`
