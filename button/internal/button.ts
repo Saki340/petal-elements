@@ -255,7 +255,8 @@ export abstract class Button extends buttonBaseClass {
     super.willUpdate(changed);
     // Before the first render, from the content: setting it after the render
     // would render the button again at once. The slot keeps it up to date.
-    if (!this.hasUpdated) {
+    // On the server there is no content to look at; a label is assumed.
+    if (!this.hasUpdated && !isServer) {
       this.hasLabel = Array.from(this.childNodes).some((node) =>
         node.nodeType === Node.ELEMENT_NODE
           ? !(node as Element).hasAttribute('slot')

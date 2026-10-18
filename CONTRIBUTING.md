@@ -31,7 +31,13 @@ Please follow our [code of conduct](CODE_OF_CONDUCT.md).
   npm test
   npm run check:licenses
   npm run check:rebrand
+  npm run build:catalog
   ```
+
+  The catalog renders the components on the server (Lit SSR), where
+  constructors, property setters, `willUpdate()` and `render()` run without a
+  DOM: no `matchMedia`, `requestAnimationFrame` or reading children there
+  (check `isServer` from `lit`).
 
 - For changes that affect how components look, also run
   `npm run test:visual` and explain every screenshot change in the PR (see

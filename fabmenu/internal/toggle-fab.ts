@@ -8,7 +8,7 @@ import '../../elevation/elevation.js';
 import '../../focus/md-focus-ring.js';
 import '../../ripple/ripple.js';
 
-import {html, LitElement, nothing, PropertyValues, svg} from 'lit';
+import {html, isServer, LitElement, nothing, PropertyValues, svg} from 'lit';
 import {property, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
@@ -128,6 +128,11 @@ export class ToggleFab extends toggleFabBaseClass {
   protected override willUpdate(changed: PropertyValues<this>) {
     if (!changed.has('checked')) return;
     const target = this.checked ? 1 : 0;
+    // willUpdate() also runs when rendering on the server: no animation.
+    if (isServer) {
+      this.progress = target;
+      return;
+    }
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (!this.hasUpdated || reduce || !this.isConnected) {
       // animateFloatAsState starts at its target, and reduced motion jumps.

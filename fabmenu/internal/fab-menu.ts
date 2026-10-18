@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import {html, LitElement, nothing, PropertyValues} from 'lit';
+import {html, isServer, LitElement, nothing, PropertyValues} from 'lit';
 import {property, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 
@@ -102,9 +102,11 @@ export class FabMenu extends LitElement {
 
   protected override willUpdate(changed: PropertyValues<this>) {
     if (!changed.has('expanded')) return;
-    this.stagger.target = this.expanded ? this.items.length : 0;
     // The items take their room at once, so that focus can go to them.
     if (this.expanded) this.shown = true;
+    // willUpdate() also runs when rendering on the server: no DOM to measure.
+    if (isServer) return;
+    this.stagger.target = this.expanded ? this.items.length : 0;
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (!this.hasUpdated || reduce) {
       this.settle();

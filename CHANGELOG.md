@@ -67,6 +67,8 @@
 * **tooltip:** shows on focus only when the anchor shows its focus
   (`:focus-visible`), not when a menu moves focus back to it after a pointer
   choice.
+* **button, fab-menu:** render on the server again (the catalog's Lit SSR):
+  no reading children or `matchMedia` while rendering there.
 * **button, menu:** a button no longer renders twice on its first render, and
   a menu no longer renders again inside its own update when it opens (Lit's
   change-in-update warning). Tests now fail on this warning.
