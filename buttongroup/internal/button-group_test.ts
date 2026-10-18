@@ -168,6 +168,24 @@ describe('<petal-button-group>', () => {
     expect(state.releasing.has(buttons[1])).toBeTrue();
   });
 
+  it('ends a press when the release cannot reach the group', async () => {
+    const {group, buttons} = await setupTest('connected');
+    const state = group as unknown as {
+      presses: Map<HTMLElement, {target: number; value: number}>;
+    };
+    // Space held, then focus moves away: the keyup goes elsewhere.
+    buttons[0].dispatchEvent(new KeyboardEvent('keydown', {key: ' ', bubbles: true, composed: true}));
+    state.presses.get(buttons[0])!.value = 1;
+    buttons[0].dispatchEvent(new FocusEvent('focusout', {bubbles: true, composed: true}));
+    expect(state.presses.get(buttons[0])!.target).toBe(0);
+
+    // Pressed with the pointer, then the window loses focus: no pointerup.
+    buttons[1].dispatchEvent(new PointerEvent('pointerdown', {button: 0, bubbles: true, composed: true}));
+    state.presses.get(buttons[1])!.value = 1;
+    window.dispatchEvent(new Event('blur'));
+    expect(state.presses.get(buttons[1])!.target).toBe(0);
+  });
+
   it('makes room across the whole group, in proportion to the widths', async () => {
     const root = env.render(html`
       <petal-button-group connected style="display: flex; width: 400px">

@@ -229,6 +229,10 @@ export class ButtonGroup extends LitElement {
     const end = () => this.endPress(item);
     window.addEventListener('pointerup', end, {once: true});
     window.addEventListener('pointercancel', end, {once: true});
+    // The release may never come here: the window loses focus, or a key press
+    // ends on another element when focus moves away.
+    window.addEventListener('blur', end, {once: true});
+    if (event.type === 'keydown') item.addEventListener('focusout', end, {once: true});
   }
 
   private endPress(item?: HTMLElement) {
