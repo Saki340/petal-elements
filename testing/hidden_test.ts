@@ -74,6 +74,7 @@ const TAGS = [
   'petal-bottom-sheet',
   'petal-search-bar',
   'petal-floating-toolbar',
+  'petal-split-button',
 ];
 
 describe('the hidden attribute', () => {

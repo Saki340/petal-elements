@@ -45,4 +45,5 @@ export const docsToElementMapping: {[key: string]: readonly string[]} = {
   'snackbar.md': COMPONENT_CUSTOM_ELEMENTS.snackbar,
   'search.md': COMPONENT_CUSTOM_ELEMENTS.search,
   'floating-toolbar.md': COMPONENT_CUSTOM_ELEMENTS.floatingToolbar,
+  'split-button.md': COMPONENT_CUSTOM_ELEMENTS.splitButton,
 };

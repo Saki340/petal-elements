@@ -1,0 +1,207 @@
+//
+// Copyright 2026 Saki
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// Split button, after Jetpack Compose Material 3 (SplitButtonLayout and
+// SplitButtonDefaults in SplitButton.kt). Each half is a petal button of the
+// chosen variant, so colors, elevation, outline, ripple and focus ring are the
+// button's. This file sets what Compose's split button adds:
+// - sizes, spacing and paddings: SplitButton{XSmall,Small,Medium,Large,XLarge}
+//   Tokens;
+// - shapes: the outer corners are fully round, the inner corners are
+//   InnerCornerCornerSize (InnerPressedCornerCornerSize while pressed, which
+//   wins over checked, as in shapeByInteraction); a checked trailing button is
+//   a circle (TrailingCheckedShape = CircleShape). The morph uses the default
+//   effects spring (MotionSchemeKeyTokens.DefaultEffects);
+//   InnerHoveredCornerCornerSize is not used by Compose's code, so neither here;
+// - the checked trailing button draws its content color over the container at
+//   StateTokens.PressedStateLayerOpacity (TrailingButtonStateLayerAlpha);
+// - the trailing content is shifted by 0.11 * (start corner - end corner)
+//   (horizontalCenterOptically, CenterOpticallyCoefficient);
+// - the trailing icon turns 180deg when checked (animateFloatAsState with its
+//   default spring(), see split-button.ts).
+// The trailing button is at least 48px wide (TrailingButtonMinWidth).
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'sass:map';
+@use '../../tokens/versions/compose/values/md-comp-elevated-button' as elevated;
+@use '../../tokens/versions/compose/values/md-comp-filled-button' as filled;
+@use '../../tokens/versions/compose/values/md-comp-filled-tonal-button' as tonal;
+@use '../../tokens/versions/compose/values/md-comp-outlined-button' as outlined;
+@use '../../tokens/versions/compose/values/md-comp-split-button-large' as large;
+@use '../../tokens/versions/compose/values/md-comp-split-button-medium' as medium;
+@use '../../tokens/versions/compose/values/md-comp-split-button-small' as small;
+@use '../../tokens/versions/compose/values/md-comp-split-button-xlarge' as xlarge;
+@use '../../tokens/versions/compose/values/md-comp-split-button-xsmall' as xsmall;
+@use '../../tokens/versions/compose/values/md-comp-state' as state;
+@use '../../tokens/versions/v34/values/md-sys-motion-springs' as springs;
+// go/keep-sorted end
+
+$sizes: (
+  'xsmall': xsmall.$values,
+  'small': small.$values,
+  'medium': medium.$values,
+  'large': large.$values,
+  'xlarge': xlarge.$values,
+);
+
+// Content color of each variant (ButtonColors.contentColor).
+$variants: (
+  'filled': filled.$values,
+  'tonal': tonal.$values,
+  'elevated': elevated.$values,
+  'outlined': outlined.$values,
+);
+
+@mixin styles() {
+  // The hidden attribute, which `display` on the host would override.
+  :host([hidden]) {
+    display: none;
+  }
+
+  :host {
+    display: inline-flex;
+    align-items: stretch;
+    gap: var(--_between-space);
+    vertical-align: top;
+    // Rotation of the trailing icon: spring() with its default damping 1 and
+    // stiffness 1500, set from split-button.ts.
+    --_icon-rotation-easing: ease-out;
+    --_icon-rotation-duration: 200ms;
+    --_direction: 1;
+    --_shape-easing: #{map.get(springs.$values, 'spring-default-effects')};
+    --_shape-duration: #{map.get(
+        springs.$values,
+        'spring-default-effects-duration'
+      )};
+    --_checked-state-layer-opacity: #{map.get(
+        state.$values,
+        'pressed-state-layer-opacity'
+      )};
+  }
+
+  :host(:dir(rtl)) {
+    --_direction: -1;
+  }
+
+  @each $size, $values in $sizes {
+    :host([size='#{$size}']) {
+      --_height: var(--md-split-button-#{$size}-container-height, #{map.get($values, 'container-height')});
+      --_between-space: var(--md-split-button-#{$size}-between-space, #{map.get($values, 'between-space')});
+      --_inner-corner: var(--md-split-button-#{$size}-inner-corner-size, #{map.get($values, 'inner-corner-corner-size')});
+      --_inner-corner-pressed: var(--md-split-button-#{$size}-inner-pressed-corner-size, #{map.get($values, 'inner-pressed-corner-corner-size')});
+      --_leading-leading-space: var(--md-split-button-#{$size}-leading-button-leading-space, #{map.get($values, 'leading-button-leading-space')});
+      --_leading-trailing-space: var(--md-split-button-#{$size}-leading-button-trailing-space, #{map.get($values, 'leading-button-trailing-space')});
+      --_trailing-leading-space: var(--md-split-button-#{$size}-trailing-button-leading-space, #{map.get($values, 'trailing-button-leading-space')});
+      --_trailing-trailing-space: var(--md-split-button-#{$size}-trailing-button-trailing-space, #{map.get($values, 'trailing-button-trailing-space')});
+      --_trailing-icon-size: var(--md-split-button-#{$size}-trailing-icon-size, #{map.get($values, 'trailing-icon-size')});
+    }
+
+    // The button of that size reads its metrics from these properties.
+    :host([size='#{$size}']) .part {
+      --md-button-#{$size}-container-height: var(--_height);
+    }
+
+    :host([size='#{$size}']) .leading {
+      --md-button-#{$size}-leading-space: var(--_leading-leading-space);
+      --md-button-#{$size}-trailing-space: var(--_leading-trailing-space);
+    }
+
+    :host([size='#{$size}']) .trailing {
+      --md-button-#{$size}-leading-space: var(--_trailing-leading-space);
+      --md-button-#{$size}-trailing-space: var(--_trailing-trailing-space);
+      --md-button-#{$size}-icon-size: var(--_trailing-icon-size);
+    }
+  }
+
+  @each $variant, $values in $variants {
+    :host([variant='#{$variant}']) {
+      --_content-color: #{map.get($values, 'label-text-color')};
+    }
+  }
+
+  // Shapes. Outer corners are fully round; --_outer is half the height.
+  .part {
+    --_outer: calc(var(--_height) / 2);
+    --_inner: var(--_inner-corner);
+    border-start-start-radius: var(--_container-shape-start-start);
+    border-start-end-radius: var(--_container-shape-start-end);
+    border-end-end-radius: var(--_container-shape-end-end);
+    border-end-start-radius: var(--_container-shape-end-start);
+  }
+
+  .part:active:not([disabled]) {
+    --_inner: var(--_inner-corner-pressed);
+  }
+
+  .leading {
+    --_container-shape-start-start: var(--_outer);
+    --_container-shape-end-start: var(--_outer);
+    --_container-shape-start-end: var(--_inner);
+    --_container-shape-end-end: var(--_inner);
+  }
+
+  .trailing {
+    --_container-shape-start-start: var(--_inner);
+    --_container-shape-end-start: var(--_inner);
+    --_container-shape-start-end: var(--_outer);
+    --_container-shape-end-end: var(--_outer);
+    min-width: 48px;
+  }
+
+  // A checked trailing button is a circle, unless it is pressed.
+  :host([checked]:not([uncheckable])) .trailing:not(:active) {
+    --_inner: var(--_outer);
+  }
+
+  // The content color over the container while checked.
+  .trailing::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: var(--_content-color);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  :host([checked]:not([uncheckable], [disabled])) .trailing::after {
+    opacity: var(--_checked-state-layer-opacity);
+  }
+
+  .chevron {
+    // Shifts toward the side with the smaller corners, 0.11 of the difference
+    // between the start and end corners.
+    translate: calc(var(--_direction) * 0.11 * (var(--_inner) - var(--_outer))) 0;
+    rotate: 0deg;
+    transition-property: translate, rotate;
+    transition-duration: var(--_shape-duration), var(--_icon-rotation-duration);
+    transition-timing-function: var(--_shape-easing), var(--_icon-rotation-easing);
+  }
+
+  .chevron > svg,
+  .chevron ::slotted(*) {
+    inline-size: 100%;
+    block-size: 100%;
+    fill: currentColor;
+  }
+
+  :host([checked]:not([uncheckable])) .chevron {
+    rotate: 180deg;
+  }
+
+  // Icons in the leading button fill the button's icon box.
+  .leading slot[name='icon']::slotted(*) {
+    font-size: inherit;
+    inline-size: 1em;
+    block-size: 1em;
+    fill: currentColor;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .chevron {
+      transition-duration: 0s;
+    }
+  }
+}

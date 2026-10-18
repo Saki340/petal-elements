@@ -100,6 +100,9 @@
   `WideNavigationRail`, collapsed and expanded, with a header slot). They
   replace the labs navigation bar and tab (`labs/navigationbar`,
   `labs/navigationtab`), which are removed.
+* **split-button:** `petal-split-button`, a leading button and a trailing button
+  that toggles a menu, in filled, tonal, elevated and outlined variants and five
+  sizes, after Jetpack Compose `SplitButtonLayout` and `SplitButtonDefaults`.
 * **snackbar:** `petal-snackbar`, after Jetpack Compose `Snackbar`.
 * **tooltip:** `petal-tooltip`, after Jetpack Compose `PlainTooltip`.
 * **card:** filled, elevated and outlined cards move from labs to

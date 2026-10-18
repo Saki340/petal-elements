@@ -68,6 +68,7 @@ export const COMPONENT_CUSTOM_ELEMENTS = {
   sheet: ['sheet/bottom-sheet.ts'],
   slider: ['slider/slider.ts'],
   snackbar: ['snackbar/snackbar.ts'],
+  splitButton: ['splitbutton/split-button.ts'],
   switch: ['switch/switch.ts'],
   tabs: ['tabs/tabs.ts', 'tabs/primary-tab.ts', 'tabs/secondary-tab.ts'],
   textField: [
