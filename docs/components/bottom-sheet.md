@@ -27,7 +27,7 @@ This one is modal: the page behind it is inert until the sheet is dismissed.
 
 <img
     class="hero"
-    alt="A modal bottom sheet with a Share headline and three actions above a dimmed page."
+    alt="A modal bottom sheet with a Share headline and three actions above a dimmed page. Interact with the open bottom sheet button to open it."
     title="A bottom sheet"
     src="images/sheet/hero.webp">
 
