@@ -11,13 +11,15 @@
 // content padding 12dp; icon to text 8dp; item width 112dp to 280dp). Shape
 // changes run on the fast spatial spring.
 //
-// A petal-elements choice: items are concentric with their group. Compose's
-// code insets items 2dp vertically and 4dp horizontally, and gives every
-// group's first and last items 12dp outer corners (a lone item 4dp), so they
-// do not follow the group's corners. Here the group is padded by
-// SegmentedMenuTokens.GroupPadding (4dp) on all sides, the items next to the
-// menu's 16dp outer corners take the 12dp first and last child shapes (16 - 4),
-// and all other item corners the 4dp item shape (8 - 4).
+// A petal-elements choice: items are concentric with their group, and every
+// group has the same corners. Compose's code gives the first and last groups
+// smaller corners where they meet (leading and trailing group shapes), insets
+// items 2dp vertically and 4dp horizontally, and gives a lone item 4dp
+// corners, so items do not follow the group's corners. Here every group takes
+// Compose's standalone group shape (ContainerShape, 16dp) and is padded by
+// SegmentedMenuTokens.GroupPadding (4dp) on all sides; each group's first and
+// last items take the 12dp first and last child shapes (16 - 4) at the
+// group's edges, and the corners between items the 4dp item shape.
 
 // go/keep-sorted start by_regex='(.+) prefix_order=sass:
 @use 'sass:map';
@@ -30,7 +32,6 @@ $_tokens: (
   'container-color': map.get(standard.$values, 'container-color'),
   'container-elevation': map.get(segmented.$values, 'container-elevation'),
   'container-shape': map.get(segmented.$values, 'container-shape'),
-  'group-shape': map.get(segmented.$values, 'group-shape'),
   'inactive-container-shape':
     map.get(segmented.$values, 'inactive-container-shape'),
   'segmented-gap': map.get(segmented.$values, 'segmented-gap'),
@@ -65,7 +66,7 @@ $_transition: border-radius
     z-index: 0;
     display: block;
     padding-block: var(--_group-padding);
-    border-radius: var(--_group-shape);
+    border-radius: var(--_container-shape);
     background-color: var(--_container-color);
     --md-elevation-level: var(--_container-elevation);
     transition: $_transition;
@@ -100,19 +101,7 @@ $_transition: border-radius
     margin-top: var(--_segmented-gap);
   }
 
-  :host(#{$_first}) {
-    border-start-start-radius: var(--_container-shape);
-    border-start-end-radius: var(--_container-shape);
-  }
-
-  :host(#{$_last}) {
-    border-end-start-radius: var(--_container-shape);
-    border-end-end-radius: var(--_container-shape);
-  }
-
-  // As specific as the first and last rules above (`:not([hidden])` adds an
-  // attribute), and after them, so it wins.
-  :host([inactive]:not([hidden])) {
+  :host([inactive]) {
     border-radius: var(--_inactive-container-shape);
   }
 
@@ -140,13 +129,13 @@ $_transition: border-radius
     margin-bottom: 2px;
   }
 
-  // Concentric with the menu's outer corners; a lone item takes both.
-  :host(#{$_first}) ::slotted([petal-menu-item]#{$_first}) {
+  // Concentric with the group's corners; a lone item takes both.
+  ::slotted([petal-menu-item]#{$_first}) {
     border-start-start-radius: var(--_item-first-child-shape);
     border-start-end-radius: var(--_item-first-child-shape);
   }
 
-  :host(#{$_last}) ::slotted([petal-menu-item]#{$_last}) {
+  ::slotted([petal-menu-item]#{$_last}) {
     border-end-start-radius: var(--_item-last-child-shape);
     border-end-end-radius: var(--_item-last-child-shape);
   }

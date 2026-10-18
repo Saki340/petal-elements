@@ -218,15 +218,15 @@ it. `quick` skips the animation.
 
 `<petal-menu-group>` puts menu items on separate surfaces, as in Material 3
 Expressive menus (Jetpack Compose `DropdownMenuGroup`). Groups are 2px apart,
-the outer corners of the first and last groups are rounder, and items follow
-the selectable menu items of Compose: 44px high.
+and items follow the selectable menu items of Compose: 44px high.
 
-Items are concentric with their group, a petal-elements choice: the group is
-padded by 4px on all sides (Compose's `GroupPadding` token), the items next to
-the menu's 16px outer corners have 12px corners there, and all other item
-corners are 4px. Compose's own code pads groups by 2px vertically and gives
-every group's first and last items 12px corners, so its items do not follow
-the group's corners.
+Every group has 16px corners and its items are concentric with it, a
+petal-elements choice: the group is padded by 4px on all sides (Compose's
+`GroupPadding` token), each group's first and last items have 12px corners at
+the group's edges (a lone item on all four), and the corners between items are
+4px. Compose's own code gives the first and last groups 8px corners where they
+meet, pads groups by 2px vertically and gives a lone item 4px corners, so its
+items do not follow the group's corners.
 
 Set `type="menuitemradio"` or `type="menuitemcheckbox"` on items that can be
 checked, and `checked` on the checked ones. Choosing a radio item, by pointer or
@@ -236,7 +236,7 @@ with Enter or Space, checks it and unchecks the other radio items of its group
 
 Like Compose's `DropdownMenuGroup`, a group that a mouse has hovered and left
 takes the smaller inactive shape (`--md-menu-group-inactive-container-shape`,
-8px on all four corners, the outer corners of the first and last groups too),
+8px on all four corners),
 so the group under the pointer stands out. It lasts while the menu is open:
 the menu opens again with every group in its own shape. To keep the shapes
 fixed, set `no-inactive-shape` on the group or on the menu.

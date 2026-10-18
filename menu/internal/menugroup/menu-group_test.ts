@@ -69,10 +69,11 @@ describe('<petal-menu-group>', () => {
     expect(getComputedStyle(surface).backgroundColor).toBe('rgba(0, 0, 0, 0)');
   });
 
-  it('shapes groups by their position, 2px apart', async () => {
+  it('gives every group the standalone shape, 2px apart', async () => {
     const {groups} = await setupTest();
-    expect(radii(groups[0])).toEqual(['16px', '16px', '8px', '8px']);
-    expect(radii(groups[1])).toEqual(['8px', '8px', '16px', '16px']);
+    // Compose's ContainerShape on all corners, also where groups meet.
+    expect(radii(groups[0])).toEqual(['16px', '16px', '16px', '16px']);
+    expect(radii(groups[1])).toEqual(['16px', '16px', '16px', '16px']);
     expect(getComputedStyle(groups[1]).marginTop).toBe('2px');
     // SegmentedMenuTokens.GroupPadding.
     expect(getComputedStyle(groups[0]).paddingTop).toBe('4px');
@@ -82,11 +83,10 @@ describe('<petal-menu-group>', () => {
     const {groups, items} = await setupTest();
     expect(radii(items[0])).toEqual(['12px', '12px', '12px', '12px']);
     expect(radii(items[1])).toEqual(['4px', '4px', '4px', '4px']);
-    // Not next to the menu's outer corners: the item shape.
-    expect(radii(items[2])).toEqual(['4px', '4px', '4px', '4px']);
-    // A lone item in the last group: concentric with its 8px top and 16px
-    // bottom corners, 4px in.
-    expect(radii(items[3])).toEqual(['4px', '4px', '12px', '12px']);
+    // The last item of its group: 12px at the group's edge.
+    expect(radii(items[2])).toEqual(['4px', '4px', '12px', '12px']);
+    // A lone item: concentric with the group's 16px corners, 4px in.
+    expect(radii(items[3])).toEqual(['12px', '12px', '12px', '12px']);
     // 4px in on every side: the group's padding and the item's margins.
     const lastGroup = getComputedStyle(groups[1]);
     const lone = getComputedStyle(items[3]);
@@ -136,14 +136,14 @@ describe('<petal-menu-group>', () => {
     const groups = Array.from(root.querySelectorAll('petal-menu-group'));
     const items = Array.from(root.querySelectorAll('petal-menu-item'));
     groups.forEach((group) => (group.style.transition = 'none'));
-    // The second group is the last shown one.
-    expect(radii(groups[1])).toEqual(['8px', '8px', '16px', '16px']);
-    // Its only shown item is concentric with it.
-    expect(radii(items[2])).toEqual(['4px', '4px', '12px', '12px']);
-    // Hiding the first group makes the second one first.
-    groups[0].hidden = true;
-    expect(radii(groups[1])).toEqual(['16px', '16px', '16px', '16px']);
+    // The second group's only shown item is concentric with it.
     expect(radii(items[2])).toEqual(['12px', '12px', '12px', '12px']);
+    // Its first item when the one before it is hidden.
+    expect(radii(items[1])).toEqual(['4px', '4px', '12px', '12px']);
+    items[0].hidden = true;
+    expect(radii(items[1])).toEqual(['12px', '12px', '12px', '12px']);
+    // Hiding the first group makes the second one first: no gap above it.
+    groups[0].hidden = true;
     expect(getComputedStyle(groups[1]).marginTop).toBe('0px');
   });
 
@@ -172,10 +172,9 @@ describe('<petal-menu-group>', () => {
     menu.show();
     await env.waitForStability();
     expect(groups.some((group) => group.hasAttribute('inactive'))).toBeFalse();
-    // The outer corners are large again (Compose's leading and trailing
-    // group shapes).
-    expect(radii(groups[0])).toEqual(['16px', '16px', '8px', '8px']);
-    expect(radii(groups[1])).toEqual(['8px', '8px', '16px', '16px']);
+    // Their own 16px corners again.
+    expect(radii(groups[0])).toEqual(['16px', '16px', '16px', '16px']);
+    expect(radii(groups[1])).toEqual(['16px', '16px', '16px', '16px']);
     menu.close();
   });
 
