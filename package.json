@@ -138,7 +138,8 @@
         "!catalog/",
         "!landing/",
         "!_site/",
-        "!scripts/"
+        "!scripts/",
+        "!.claude/**"
       ],
       "output": [
         ".tsbuildinfo",
@@ -152,7 +153,8 @@
         "!catalog/",
         "!landing/",
         "!_site/",
-        "!scripts/"
+        "!scripts/",
+        "!.claude/**"
       ],
       "clean": "if-file-deleted",
       "dependencies": [
@@ -182,11 +184,13 @@
       "command": "node scripts/build-tasks.js css-to-ts",
       "files": [
         "**/*.css",
-        "!catalog/"
+        "!catalog/",
+        "!.claude/**"
       ],
       "output": [
         "**/*.cssresult.ts",
-        "!catalog/"
+        "!catalog/",
+        "!.claude/**"
       ],
       "clean": "if-file-deleted",
       "dependencies": [
@@ -198,7 +202,8 @@
       "command": "node scripts/build-tasks.js sass",
       "files": [
         "**/*.scss",
-        "!catalog/"
+        "!catalog/",
+        "!.claude/**"
       ],
       "output": [
         "**/*.css",
@@ -206,7 +211,8 @@
         "!catalog/",
         "!landing/",
         "!_site/",
-        "!tokens/css/**"
+        "!tokens/css/**",
+        "!.claude/**"
       ],
       "dependencies": [
         "build:sass:generate"
@@ -228,7 +234,8 @@
     "build:manifest": {
       "command": "node scripts/analyzer/generate-manifest.js",
       "files": [
-        "**/*.ts"
+        "**/*.ts",
+        "!.claude/**"
       ],
       "output": [
         "custom-elements.json"
@@ -283,7 +290,8 @@
         "!**/*.cssresult.ts",
         "!catalog/",
         "!scripts/",
-        "scripts/analyzer/update-docs.js"
+        "scripts/analyzer/update-docs.js",
+        "!.claude/**"
       ],
       "output": [],
       "dependencies": [
