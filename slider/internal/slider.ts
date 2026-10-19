@@ -5,12 +5,10 @@
  * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
-import '../../elevation/elevation.js';
 import '../../focus/md-focus-ring.js';
-import '../../ripple/ripple.js';
 
 import {html, isServer, LitElement, nothing, PropertyValues} from 'lit';
-import {property, query, queryAsync, state} from 'lit/decorators.js';
+import {property, query, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {styleMap} from 'lit/directives/style-map.js';
 import {when} from 'lit/directives/when.js';
@@ -27,10 +25,12 @@ import {
   getFormValue,
   mixinFormAssociated,
 } from '../../labs/behaviors/form-associated.js';
-import {PetalRipple} from '../../ripple/ripple.js';
 
 // Disable warning for classMap with destructuring
 // tslint:disable:no-implicit-dictionary-conversion
+
+// Ticks are elements; beyond this many they would be too dense to see.
+const MAX_TICKS = 1000;
 
 // Separate variable needed for closure.
 const sliderBaseClass = mixinDelegatesAria(
@@ -170,13 +170,9 @@ export class Slider extends sliderBaseClass {
 
   @query('input.start') private readonly inputStart!: HTMLInputElement | null;
   @query('.handle.start') private readonly handleStart!: HTMLDivElement | null;
-  @queryAsync('petal-ripple.start')
-  private readonly rippleStart!: Promise<PetalRipple | null>;
 
   @query('input.end') private readonly inputEnd!: HTMLInputElement | null;
   @query('.handle.end') private readonly handleEnd!: HTMLDivElement | null;
-  @queryAsync('petal-ripple.end')
-  private readonly rippleEnd!: Promise<PetalRipple | null>;
 
   // handle hover/pressed states are set manually since the handle
   // does not receive pointer events so that the native inputs are
@@ -185,7 +181,6 @@ export class Slider extends sliderBaseClass {
   @state() private handleEndHover = false;
 
   @state() private startOnTop = false;
-  @state() private handlesOverlapping = false;
 
   @state() private renderValueStart?: number;
   @state() private renderValueEnd?: number;
@@ -239,9 +234,6 @@ export class Slider extends sliderBaseClass {
     return ariaValueText || this.valueLabel || String(this.value);
   }
 
-  // used in synthetic events generated to control ripple hover state.
-  private ripplePointerId = 1;
-
   // flag to prevent processing of re-dispatched input event.
   private isRedispatchingEvent = false;
 
@@ -275,13 +267,6 @@ export class Slider extends sliderBaseClass {
         ? this.valueEnd
         : this.value
       : this.inputEnd?.valueAsNumber;
-    // manually handle ripple hover state since the handle is pointer events
-    // none.
-    if (changed.get('handleStartHover') !== undefined) {
-      this.toggleRippleHover(this.rippleStart, this.handleStartHover);
-    } else if (changed.get('handleEndHover') !== undefined) {
-      this.toggleRippleHover(this.rippleEnd, this.handleEndHover);
-    }
   }
 
   protected override updated(changed: PropertyValues) {
@@ -313,18 +298,6 @@ export class Slider extends sliderBaseClass {
     } else {
       this.value ??= this.renderValueEnd;
     }
-    if (
-      changed.has('range') ||
-      changed.has('renderValueStart') ||
-      changed.has('renderValueEnd') ||
-      this.isUpdatePending
-    ) {
-      // Only check if the handle nubs are overlapping, as the ripple touch
-      // target extends subtantially beyond the boundary of the handle nub.
-      const startNub = this.handleStart?.querySelector('.handleNub');
-      const endNub = this.handleEnd?.querySelector('.handleNub');
-      this.handlesOverlapping = isOverlapping(startNub, endNub);
-    }
     // called to finish the update imediately;
     // note, this is a no-op unless an update is scheduled
     this.performUpdate();
@@ -337,12 +310,16 @@ export class Slider extends sliderBaseClass {
       ? ((this.renderValueStart ?? this.min) - this.min) / range
       : 0;
     const endFraction = ((this.renderValueEnd ?? this.min) - this.min) / range;
+    // With ticks, the values between the first and the last are inset by the
+    // track's corner radius (SliderImpl in Compose's Slider.kt).
+    const inset = (fraction: number) =>
+      this.ticks && fraction > 0 && fraction < 1 ? '1' : '0';
     const containerStyles = {
-      // for clipping inputs and active track.
+      // for placing the handles and the track and clipping the inputs.
       '--_start-fraction': String(startFraction),
       '--_end-fraction': String(endFraction),
-      // for generating tick marks
-      '--_tick-count': String(range / step),
+      '--_start-inset': inset(startFraction),
+      '--_end-inset': inset(endFraction),
     };
     const containerClasses = {ranged: this.range};
 
@@ -382,31 +359,55 @@ export class Slider extends sliderBaseClass {
       label: labelEnd,
     };
 
-    const handleContainerClasses = {
-      hover: this.handleStartHover || this.handleEndHover,
-    };
-
     return html` <div
       class="container ${classMap(containerClasses)}"
       style=${styleMap(containerStyles)}>
       ${when(this.range, () => this.renderInput(inputStartProps))}
-      ${this.renderInput(inputEndProps)} ${this.renderTrack()}
-      <div class="handleContainerPadded">
-        <div class="handleContainerBlock">
-          <div class="handleContainer ${classMap(handleContainerClasses)}">
-            ${when(this.range, () => this.renderHandle(handleStartProps))}
-            ${this.renderHandle(handleEndProps)}
-          </div>
-        </div>
+      ${this.renderInput(inputEndProps)}
+      <div class="track">
+        ${this.renderTrack(range / step)}
+        ${when(this.range, () => this.renderHandle(handleStartProps))}
+        ${this.renderHandle(handleEndProps)}
       </div>
     </div>`;
   }
 
-  private renderTrack() {
+  /**
+   * The parts of the track: the inactive part before a range, the active
+   * part and the inactive part after it, with their stop indicators and
+   * ticks.
+   */
+  private renderTrack(intervals: number) {
+    const ticks = this.renderTicks(intervals);
     return html`
-      <div class="track"></div>
-      ${this.ticks ? html`<div class="tickmarks"></div>` : nothing}
+      ${when(
+        this.range,
+        () =>
+          html`<div class="segment inactive start">
+            ${ticks}<span class="stop"></span>
+          </div>`,
+      )}
+      <div class="segment active">${ticks}</div>
+      <div class="segment inactive end">
+        ${ticks}<span class="stop"></span>
+      </div>
     `;
+  }
+
+  // Compose skips the last tick, where the stop indicator is, and the first
+  // one of a range slider.
+  private renderTicks(intervals: number) {
+    if (!this.ticks || !Number.isFinite(intervals) || intervals <= 0) {
+      return nothing;
+    }
+    const count = Math.min(Math.round(intervals), MAX_TICKS);
+    const ticks = [];
+    for (let i = this.range ? 1 : 0; i < count; i++) {
+      ticks.push(
+        html`<span class="tick" style="--_tick: ${i / count}"></span>`,
+      );
+    }
+    return html`<div class="ticks">${ticks}</div>`;
   }
 
   private renderLabel(value: string) {
@@ -425,23 +426,15 @@ export class Slider extends sliderBaseClass {
     label: string;
   }) {
     const onTop = !this.disabled && start === this.startOnTop;
-    const isOverlapping = !this.disabled && this.handlesOverlapping;
     const name = start ? 'start' : 'end';
     return html`<div
       class="handle ${classMap({
         [name]: true,
         hover,
         onTop,
-        isOverlapping,
       })}">
       <petal-focus-ring part="focus-ring" for=${name}></petal-focus-ring>
-      <petal-ripple
-        for=${name}
-        class=${name}
-        ?disabled=${this.disabled}></petal-ripple>
-      <div class="handleNub">
-        <petal-elevation part="elevation"></petal-elevation>
-      </div>
+      <div class="handleNub"></div>
       ${when(this.labeled, () => this.renderLabel(label))}
     </div>`;
   }
@@ -494,32 +487,6 @@ export class Slider extends sliderBaseClass {
       aria-valuetext=${ariaValueText} />`;
   }
 
-  private async toggleRippleHover(
-    ripple: Promise<PetalRipple | null>,
-    hovering: boolean,
-  ) {
-    const rippleEl = await ripple;
-    if (!rippleEl) {
-      return;
-    }
-    // TODO(b/269799771): improve slider ripple connection
-    if (hovering) {
-      rippleEl.handlePointerenter(
-        new PointerEvent('pointerenter', {
-          isPrimary: true,
-          pointerId: this.ripplePointerId,
-        }),
-      );
-    } else {
-      rippleEl.handlePointerleave(
-        new PointerEvent('pointerleave', {
-          isPrimary: true,
-          pointerId: this.ripplePointerId,
-        }),
-      );
-    }
-  }
-
   private handleFocus(event: Event) {
     this.updateOnTop(event.target as HTMLInputElement);
   }
@@ -554,7 +521,6 @@ export class Slider extends sliderBaseClass {
 
   private handleDown(event: PointerEvent) {
     this.startAction(event);
-    this.ripplePointerId = event.pointerId;
     const isStart = (event.target as HTMLInputElement) === this.inputStart;
     // Since handle moves to pointer on down and there may not be a move,
     // it needs to be considered hovered..
@@ -586,17 +552,9 @@ export class Slider extends sliderBaseClass {
   }
 
   /**
-   * The move handler tracks handle hovering to facilitate proper ripple
-   * behavior on the slider handle. This is needed because user interaction with
-   * the native input is leveraged to position the handle. Because the separate
-   * displayed handle element has pointer events disabled (to allow interaction
-   * with the input) and the input's handle is a pseudo-element, neither can be
-   * the ripple's interactive element. Therefore the input is the ripple's
-   * interactive element and has a `ripple` directive; however the ripple
-   * is gated on the handle being hovered. In addition, because the ripple
-   * hover state is being specially handled, it must be triggered independent
-   * of the directive. This is done based on the hover state when the
-   * slider is updated.
+   * The move handler tracks whether the pointer is over a handle, to show
+   * the value label like Compose's Label does on hover. The displayed handle
+   * has pointer events disabled so that the native input gets them.
    */
   private handleMove(event: PointerEvent) {
     this.handleStartHover = !this.disabled && inBounds(event, this.handleStart);
@@ -771,23 +729,6 @@ function inBounds({x, y}: PointerEvent, element?: HTMLElement | null) {
   }
   const {top, left, bottom, right} = element.getBoundingClientRect();
   return x >= left && x <= right && y >= top && y <= bottom;
-}
-
-function isOverlapping(
-  elA: Element | null | undefined,
-  elB: Element | null | undefined,
-) {
-  if (!(elA && elB)) {
-    return false;
-  }
-  const a = elA.getBoundingClientRect();
-  const b = elB.getBoundingClientRect();
-  return !(
-    a.top > b.bottom ||
-    a.right < b.left ||
-    a.bottom < b.top ||
-    a.left > b.right
-  );
 }
 
 interface Action {

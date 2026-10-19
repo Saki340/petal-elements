@@ -443,6 +443,17 @@ const galleries: Record<string, Gallery> = {
     })),
   },
 
+  slider: {
+    states: ['default'],
+    rows: [
+      {name: 'continuous', render: () => html`<petal-slider style="width: 240px" value="40"></petal-slider>`},
+      {name: 'ticks', render: () => html`<petal-slider style="width: 240px" ticks step="10" value="30"></petal-slider>`},
+      {name: 'range', render: () => html`<petal-slider style="width: 240px" range value-start="20" value-end="70"></petal-slider>`},
+      {name: 'range ticks', render: () => html`<petal-slider style="width: 240px" range ticks step="10" value-start="20" value-end="70"></petal-slider>`},
+      {name: 'disabled', render: () => html`<petal-slider style="width: 240px" disabled ticks step="10" value="40"></petal-slider>`},
+    ],
+  },
+
   badge: {
     states: ['default'],
     rows: [

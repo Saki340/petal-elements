@@ -4,24 +4,76 @@
 // Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
 //
 
-// go/keep-sorted start
-@use 'sass:list';
+// The slider, after Jetpack Compose Material 3 (Slider.kt, SliderTokens at
+// androidx commit df73c24):
+//
+// - The handle is a 4dp x 44dp bar (HandleWidth, HandleHeight); while it is
+//   pressed, dragged or focused it is half as wide (ThumbContent). There is no
+//   ripple or state layer.
+// - The track is 16dp high with fully rounded ends. 6dp (ThumbTrackGapSize)
+//   plus half the handle width separate it from the handle on both sides; the
+//   corners next to the handle are 2dp (TrackInsideCornerSize). A part of the
+//   track narrower than its corner radius is not drawn.
+// - The track is as wide as the slider minus the handle width, so the handle
+//   center goes from 2dp to the width minus 2dp. With ticks (Compose's steps)
+//   the values between the first and the last are inset by the corner radius.
+// - A 4dp stop indicator in the active track color sits 8dp before the end of
+//   the inactive track (both ends for a range slider). Ticks are 4dp dots, in
+//   the inactive track color on the active track and the active track color
+//   on the inactive track, not drawn next to the handle or on the stop
+//   indicator.
+// - Disabled: handle on-surface at 38% over surface, active track on-surface
+//   at 38%, inactive track on-surface at 12%.
+// - The value label (`labeled`) is a plain tooltip above the handle, as in
+//   Compose's slider samples (Label with PlainTooltip), shown while the handle
+//   is hovered, pressed or dragged, and here also while it has keyboard focus.
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
 @use 'sass:map';
-// go/keep-sorted end
-// go/keep-sorted start
-@use '../../elevation/elevation';
-@use '../../ripple/ripple';
-@use '../../tokens';
+@use '../../tokens/versions/compose/values/md-comp-plain-tooltip' as tooltip;
+@use '../../tokens/versions/compose/values/md-comp-slider' as compose;
+@use '../../tokens/versions/v34/values/md-sys-motion-springs' as springs;
 // go/keep-sorted end
 
-$_md-sys-motion: tokens.md-sys-motion-values();
-$_md-sys-shape: tokens.md-sys-shape-values();
+// The public tokens and their Compose values.
+$_tokens: (
+  'active-track-color': map.get(compose.$values, 'active-track-color'),
+  'active-track-height': map.get(compose.$values, 'active-track-height'),
+  'inactive-track-color': map.get(compose.$values, 'inactive-track-color'),
+  'handle-color': map.get(compose.$values, 'handle-color'),
+  'handle-height': map.get(compose.$values, 'handle-height'),
+  'handle-width': map.get(compose.$values, 'handle-width'),
+  'pressed-handle-width': map.get(compose.$values, 'pressed-handle-width'),
+  'handle-shape': map.get(compose.$values, 'handle-shape'),
+  'disabled-active-track-color':
+    map.get(compose.$values, 'disabled-active-track-color'),
+  'disabled-active-track-opacity':
+    map.get(compose.$values, 'disabled-active-track-opacity'),
+  'disabled-inactive-track-color':
+    map.get(compose.$values, 'disabled-inactive-track-color'),
+  'disabled-inactive-track-opacity':
+    map.get(compose.$values, 'disabled-inactive-track-opacity'),
+  'disabled-handle-color': map.get(compose.$values, 'disabled-handle-color'),
+  'disabled-handle-opacity': map.get(compose.$values, 'disabled-handle-opacity'),
+  'with-tick-marks-container-size': map.get(compose.$values, 'stop-indicator-size'),
+  'with-tick-marks-active-container-color':
+    map.get(compose.$values, 'inactive-track-color'),
+  'with-tick-marks-inactive-container-color':
+    map.get(compose.$values, 'active-track-color'),
+  'label-container-color': map.get(tooltip.$values, 'container-color'),
+  'label-container-shape': map.get(tooltip.$values, 'container-shape'),
+  'label-text-color': map.get(tooltip.$values, 'supporting-text-color'),
+  'label-text-font': map.get(tooltip.$values, 'supporting-text-font'),
+  'label-text-line-height': map.get(tooltip.$values, 'supporting-text-line-height'),
+  'label-text-size': map.get(tooltip.$values, 'supporting-text-size'),
+  'label-text-tracking': map.get(tooltip.$values, 'supporting-text-tracking'),
+  'label-text-weight': map.get(tooltip.$values, 'supporting-text-weight'),
+);
 
+/// Sets the slider tokens (`--md-slider-*`).
 @mixin theme($tokens) {
-  $supported-tokens: tokens.$md-comp-slider-supported-tokens;
-
   @each $token, $value in $tokens {
-    @if list.index($supported-tokens, $token) == null {
+    @if not map.has-key($_tokens, $token) {
       @error 'Token `#{$token}` is not a supported token.';
     }
 
@@ -31,90 +83,43 @@ $_md-sys-shape: tokens.md-sys-shape-values();
   }
 }
 
+@function _spring($name) {
+  @return map.get(springs.$values, 'spring-#{$name}-duration')
+    map.get(springs.$values, 'spring-#{$name}');
+}
+
+// Hides a part of the track narrower than `$min` (Compose does not draw it)
+// by making its width 0, without dividing lengths.
+@function _shown($width, $min) {
+  @return min(#{$width}, max(0px, (#{$width} - #{$min}) * 1000));
+}
+
 @mixin styles() {
-  $tokens: tokens.md-comp-slider-values();
-
-  // The max clip is reduced by 1 full tick display which is 2x the container
-  // size to account for always showing the active track on the outside
-  // edge of the last tick.
-  $_active-track-max-clip: calc(
-    100% - var(--_with-tick-marks-container-size) * 2
-  );
-  // When the start fraction is !0, add clipping by the tick container size
-  $_start-fraction-not-zero: min(var(--_start-fraction) * 1e9, 1);
-  $_active-track-start-offset: calc(
-    var(--_with-tick-marks-container-size) * $_start-fraction-not-zero
-  );
-  $_active-track-start-clip: calc(
-    $_active-track-start-offset + $_active-track-max-clip *
-      var(--_start-fraction)
-  );
-
-  // When the end fraction is !1, add clipping by the tick container size
-  $_end-fraction-not-one: min((1 - var(--_end-fraction)) * 1e9, 1);
-  $_active-track-end-offset: calc(
-    var(--_with-tick-marks-container-size) * $_end-fraction-not-one
-  );
-  $_active-track-end-clip: calc(
-    $_active-track-end-offset + $_active-track-max-clip *
-      (1 - var(--_end-fraction))
-  );
-
   // The hidden attribute, which `display` on the host would override.
   :host([hidden]) {
     display: none;
   }
 
   :host {
-    @each $token, $value in $tokens {
-      --_#{$token}: #{$value};
+    @each $token, $value in $_tokens {
+      --_#{$token}: var(--md-slider-#{$token}, #{$value});
     }
 
-    // Set these to avoid token test failures
+    // Set by slider.ts.
     --_start-fraction: 0;
     --_end-fraction: 0;
-    --_tick-count: 0;
+    --_start-inset: 0;
+    --_end-inset: 0;
+
+    // ThumbTrackGapSize (6dp) plus half the handle; the corner radius of the
+    // track ends; TrackInsideCornerSize.
+    --_gap: calc(6px + var(--_handle-width) / 2);
+    --_corner: calc(var(--_active-track-height) / 2);
+    --_inside-corner: 2px;
 
     display: inline-flex;
     vertical-align: middle;
     min-inline-size: 200px;
-
-    @include elevation.theme(
-      (
-        level: var(--_handle-elevation),
-        shadow-color: var(--_handle-shadow-color),
-      )
-    );
-  }
-
-  petal-focus-ring {
-    height: 48px;
-    inset: unset;
-    width: 48px;
-  }
-
-  petal-elevation {
-    transition-duration: map.get($_md-sys-motion, 'duration-medium1');
-    transition-timing-function: map.get($_md-sys-motion, 'emphasized-easing');
-  }
-
-  @media (prefers-reduced-motion) {
-    .label {
-      transition-duration: 0;
-    }
-  }
-
-  // Note, opacity for active track and handle controlled via host.
-  // This avoids bleed through from the handle to the track since they overlap.
-  // It also means the inactive track opacity is calc'd to compensate.
-  :host([disabled]) {
-    opacity: var(--_disabled-active-track-opacity);
-
-    @include elevation.theme(
-      (
-        level: var(--_disabled-handle-elevation),
-      )
-    );
   }
 
   .container {
@@ -122,7 +127,8 @@ $_md-sys-shape: tokens.md-sys-shape-values();
     display: flex;
     align-items: center;
     position: relative;
-    block-size: var(--_state-layer-size);
+    // minimumInteractiveComponentSize around the 44dp handle.
+    block-size: 48px;
     // note, only the native inputs are interactive.
     pointer-events: none;
     // ensure scrolling is prevented on mobile.
@@ -130,254 +136,266 @@ $_md-sys-shape: tokens.md-sys-shape-values();
     user-select: none;
   }
 
-  .track,
-  .tickmarks {
+  // The track area: the width of the slider minus the handle width, centered.
+  // It is a size container, so `100cqi` is the track width.
+  .track {
     position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-  }
-
-  // inactive-track
-  .track::before,
-  .tickmarks::before,
-  // active-track
-  .track::after,
-  .tickmarks::after {
-    position: absolute;
-    content: '';
-    // pad the track inward by half the ripple size offset by the tick container size.
-    $_track-padding: calc(
-      (var(--_state-layer-size) / 2) - var(--_with-tick-marks-container-size)
+    inset-block: 0;
+    inset-inline: calc(var(--_handle-width) / 2);
+    container-type: inline-size;
+    // The handle centers, from the start of the track. Between the first and
+    // the last tick they are inset by the corner radius.
+    --_start-x: calc(
+      var(--_start-inset) * var(--_corner) + var(--_start-fraction) *
+        (100cqi - var(--_start-inset) * 2 * var(--_corner))
     );
-    inset-inline-start: $_track-padding;
-    inset-inline-end: $_track-padding;
-
-    // ticks size: set here since it does not change.
-    background-size: calc(
-        (100% - var(--_with-tick-marks-container-size) * 2) / var(--_tick-count)
-      )
-      100%;
+    --_end-x: calc(
+      var(--_end-inset) * var(--_corner) + var(--_end-fraction) *
+        (100cqi - var(--_end-inset) * 2 * var(--_corner))
+    );
   }
 
-  // inactive-track
-  .track::before,
-  .tickmarks::before {
-    block-size: var(--_inactive-track-height);
-    border-radius: var(--_inactive-track-shape);
+  .segment {
+    position: absolute;
+    inset-block-start: calc(50% - var(--_active-track-height) / 2);
+    block-size: var(--_active-track-height);
+    overflow: hidden;
   }
 
-  .track::before {
+  .segment.active {
+    background: var(--_active-track-color);
+    inset-inline-start: 0;
+    inline-size: _shown(calc(var(--_end-x) - var(--_gap)), var(--_corner));
+    border-start-start-radius: var(--_corner);
+    border-end-start-radius: var(--_corner);
+    border-start-end-radius: var(--_inside-corner);
+    border-end-end-radius: var(--_inside-corner);
+  }
+
+  .ranged .segment.active {
+    inset-inline-start: calc(var(--_start-x) + var(--_gap));
+    inline-size: _shown(
+      calc(var(--_end-x) - var(--_start-x) - 2 * var(--_gap)),
+      var(--_inside-corner)
+    );
+    border-radius: var(--_inside-corner);
+  }
+
+  .segment.inactive {
     background: var(--_inactive-track-color);
   }
 
-  .tickmarks::before {
-    background-image: _get-tick-image(
-      var(--_with-tick-marks-inactive-container-color)
+  .segment.inactive.end {
+    inset-inline-end: 0;
+    inline-size: _shown(
+      calc(100cqi - var(--_end-x) - var(--_gap)),
+      var(--_corner)
     );
+    border-start-start-radius: var(--_inside-corner);
+    border-end-start-radius: var(--_inside-corner);
+    border-start-end-radius: var(--_corner);
+    border-end-end-radius: var(--_corner);
   }
 
-  :host([disabled]) .track::before {
-    // Note, the active track opacity is applied to the entire host,
-    // so the inactive track is calc'd to compensate.
-    opacity: calc(
-      (1 / var(--_disabled-active-track-opacity)) *
-        var(--_disabled-inactive-track-opacity)
-    );
-    background: var(--_disabled-inactive-track-color);
+  .segment.inactive.start {
+    inset-inline-start: 0;
+    inline-size: _shown(calc(var(--_start-x) - var(--_gap)), var(--_corner));
+    border-start-start-radius: var(--_corner);
+    border-end-start-radius: var(--_corner);
+    border-start-end-radius: var(--_inside-corner);
+    border-end-end-radius: var(--_inside-corner);
   }
 
-  // active-track
-  .track::after,
-  .tickmarks::after {
-    block-size: var(--_active-track-height);
-    border-radius: var(--_active-track-shape);
-    clip-path: inset(0 $_active-track-end-clip 0 $_active-track-start-clip);
+  // The stop indicators, centered a corner radius from the track ends.
+  .stop,
+  .tick {
+    position: absolute;
+    inset-block-start: calc(50% - var(--_with-tick-marks-container-size) / 2);
+    block-size: var(--_with-tick-marks-container-size);
+    inline-size: var(--_with-tick-marks-container-size);
+    border-radius: 50%;
   }
 
-  .track::after {
+  .stop {
     background: var(--_active-track-color);
   }
 
-  .tickmarks::after {
-    background-image: _get-tick-image(
-      var(--_with-tick-marks-active-container-color)
-    );
+  .end > .stop {
+    inset-inline-end: calc(var(--_corner) - var(--_with-tick-marks-container-size) / 2);
   }
 
-  // rtl for active track clipping
-  .track:dir(rtl)::after {
-    clip-path: inset(0 $_active-track-start-clip 0 $_active-track-end-clip);
+  .start > .stop {
+    inset-inline-start: calc(var(--_corner) - var(--_with-tick-marks-container-size) / 2);
   }
 
-  .tickmarks:dir(rtl)::after {
-    clip-path: inset(0 $_active-track-start-clip 0 $_active-track-end-clip);
-  }
-
-  :host([disabled]) .track::after {
-    background: var(--_disabled-active-track-color);
-  }
-
-  :host([disabled]) .tickmarks::before {
-    background-image: _get-tick-image(
-      var(--_with-tick-marks-disabled-container-color)
-    );
-  }
-
-  // container for the handle that is inset with padding to be
-  // track-sized so that the handle container can be positioned with % only
-  // and avoid a Safari issue with not being able to transition values that
-  // are calced from different units.
-  // TODO remove when https://bugs.webkit.org/show_bug.cgi?id=23775 is
-  // addressed.
-  .handleContainerPadded {
-    position: relative;
-    block-size: 100%;
-    inline-size: 100%;
-    padding-inline: calc(var(--_state-layer-size) / 2);
-  }
-
-  .handleContainerBlock {
-    position: relative;
-    block-size: 100%;
-    inline-size: 100%;
-  }
-
-  .handleContainer {
+  // The ticks of each part of the track are placed along the whole track and
+  // clipped by the part, so none is drawn in the gaps around the handles.
+  .ticks {
     position: absolute;
-    inset-block-start: 0;
-    inset-block-end: 0;
-    inset-inline-start: calc(100% * var(--_start-fraction));
-    inline-size: calc(100% * (var(--_end-fraction) - var(--_start-fraction)));
+    inset-block: 0;
+    inline-size: 100cqi;
   }
 
-  // handle
+  .active > .ticks {
+    inset-inline-start: 0;
+  }
+
+  .ranged .active > .ticks {
+    inset-inline-start: calc(0px - var(--_start-x) - var(--_gap));
+  }
+
+  .end > .ticks {
+    inset-inline-end: 0;
+  }
+
+  .start > .ticks {
+    inset-inline-start: 0;
+  }
+
+  .tick {
+    // Set by slider.ts: the tick's fraction of the track.
+    --_tick: 0;
+    inset-inline-start: calc(
+      var(--_corner) + var(--_tick) * (100cqi - 2 * var(--_corner)) -
+        var(--_with-tick-marks-container-size) / 2
+    );
+  }
+
+  .active .tick {
+    background: var(--_with-tick-marks-active-container-color);
+  }
+
+  .inactive .tick {
+    background: var(--_with-tick-marks-inactive-container-color);
+  }
+
+  :host([disabled]) {
+    .segment.active,
+    .stop,
+    .inactive .tick {
+      background: color-mix(
+        in srgb,
+        var(--_disabled-active-track-color)
+          calc(var(--_disabled-active-track-opacity) * 100%),
+        transparent
+      );
+    }
+
+    .segment.inactive,
+    .active .tick {
+      background: color-mix(
+        in srgb,
+        var(--_disabled-inactive-track-color)
+          calc(var(--_disabled-inactive-track-opacity) * 100%),
+        transparent
+      );
+    }
+  }
+
+  // The handle: a box the size of the handle, centered on the value.
   .handle {
     position: absolute;
-    block-size: var(--_state-layer-size);
-    inline-size: var(--_state-layer-size);
-    border-radius: var(--_handle-shape);
+    inset-block-start: calc(50% - var(--_handle-height) / 2);
+    block-size: var(--_handle-height);
+    inline-size: var(--_handle-width);
     display: flex;
-    place-content: center;
-    place-items: center;
+    justify-content: center;
+  }
+
+  .handle.start {
+    inset-inline-start: calc(var(--_start-x) - var(--_handle-width) / 2);
+  }
+
+  .handle.end {
+    inset-inline-start: calc(var(--_end-x) - var(--_handle-width) / 2);
   }
 
   .handleNub {
-    position: absolute;
-    height: var(--_handle-height);
-    width: var(--_handle-width);
+    block-size: 100%;
+    inline-size: var(--_handle-width);
     border-radius: var(--_handle-shape);
     background: var(--_handle-color);
   }
 
+  // Half as wide while pressed, dragged or focused.
+  input.end:is(:focus, :active) ~ .track .handle.end > .handleNub,
+  input.start:is(:focus, :active) ~ .track .handle.start > .handleNub {
+    inline-size: var(--_pressed-handle-width);
+  }
+
+  // Composited over surface (an opaque color), as in SliderDefaults.colors().
   :host([disabled]) .handleNub {
-    background: var(--_disabled-handle-color);
+    background: color-mix(
+      in srgb,
+      var(--_disabled-handle-color)
+        calc(var(--_disabled-handle-opacity) * 100%),
+      var(--md-sys-color-surface, #fef7ff)
+    );
   }
 
-  input.end:focus ~ .handleContainerPadded .handle.end > .handleNub,
-  input.start:focus ~ .handleContainerPadded .handle.start > .handleNub {
-    background: var(--_focus-handle-color);
+  petal-focus-ring {
+    --md-focus-ring-shape: var(--_handle-shape);
   }
 
-  // prefix classes exist to overcome specificity of focus styling.
-  .container > .handleContainerPadded .handle.hover > .handleNub {
-    background: var(--_hover-handle-color);
+  .onTop {
+    z-index: 1;
   }
 
-  :host(:not([disabled])) {
-    input.end:active ~ .handleContainerPadded .handle.end > .handleNub,
-    input.start:active ~ .handleContainerPadded .handle.start > .handleNub {
-      background: var(--_pressed-handle-color);
-    }
-  }
-
-  .onTop.isOverlapping {
-    .label,
-    .label::before {
-      outline: var(--_with-overlap-handle-outline-color) solid
-        var(--_with-overlap-handle-outline-width);
-    }
-
-    .handleNub {
-      border: var(--_with-overlap-handle-outline-color) solid
-        var(--_with-overlap-handle-outline-width);
-    }
-  }
-
-  .handle.start {
-    inset-inline-start: calc(0px - var(--_state-layer-size) / 2);
-  }
-  .handle.end {
-    inset-inline-end: calc(0px - var(--_state-layer-size) / 2);
-  }
-
-  // label
+  // The value label: a plain tooltip 4dp above the handle
+  // (SpacingBetweenTooltipAndAnchor), at least 40dp x 24dp with 8dp x 4dp
+  // padding. It appears on the fast effects and fast spatial springs.
   .label {
     position: absolute;
+    inset-block-end: calc(100% + 4px);
+    inset-inline-start: 50%;
+    translate: -50% 0;
     box-sizing: border-box;
     display: flex;
-    padding: 4px;
     place-content: center;
     place-items: center;
-    border-radius: map.get($_md-sys-shape, 'corner-full');
-
+    min-inline-size: 40px;
+    min-block-size: 24px;
+    padding: 4px 8px;
+    border-radius: var(--_label-container-shape);
+    background: var(--_label-container-color);
     color: var(--_label-text-color);
     font-family: var(--_label-text-font);
     font-size: var(--_label-text-size);
-    line-height: var(--_label-text-line-height);
     font-weight: var(--_label-text-weight);
-
-    inset-block-end: 100%;
-    min-inline-size: var(--_label-container-height);
-    min-block-size: var(--_label-container-height);
-    background: var(--_label-container-color);
-    transition: transform map.get($_md-sys-motion, 'duration-short2')
-      map.get($_md-sys-motion, 'easing-emphasized');
+    line-height: var(--_label-text-line-height);
+    letter-spacing: var(--_label-text-tracking);
+    white-space: nowrap;
+    opacity: 0;
+    scale: 0.8;
     transform-origin: center bottom;
-    transform: scale(0);
+    transition:
+      opacity _spring('fast-effects'),
+      scale _spring('fast-spatial');
   }
 
-  // note, `:has` needed only for Safari; it's wrapped in a "forgiving"
-  // `:where` since the syntax isn't supported yet in Firefox.
-  :host(:focus-within) .label,
-  .handleContainer.hover .label,
-  :where(:has(input:active)) .label {
-    transform: scale(1);
+  :host(:dir(rtl)) .label {
+    translate: 50% 0;
   }
 
-  .label::before,
-  .label::after {
-    position: absolute;
-    display: block;
-    content: '';
-    background: inherit;
+  .handle.hover .label,
+  input.end:is(:active, :focus-visible) ~ .track .handle.end .label,
+  input.start:is(:active, :focus-visible) ~ .track .handle.start .label {
+    opacity: 1;
+    scale: 1;
   }
 
-  // triangle below label
-  .label::before {
-    // Note, sizing carefully estimated to create an ice cream cone shape.
-    $_triangleSize: calc(var(--_label-container-height) / 2);
-    inline-size: $_triangleSize;
-    block-size: $_triangleSize;
-    bottom: calc(var(--_label-container-height) / -10);
-    transform: rotate(45deg);
-  }
-
-  // fits inside label and occludes top half of triangle.
-  .label::after {
-    inset: 0px;
-    border-radius: inherit;
-  }
-
-  // must stack above the label's pseudo-elements.
-  .labelContent {
-    z-index: 1;
+  @media (prefers-reduced-motion: reduce) {
+    .label {
+      transition: none;
+    }
   }
 
   // native input styling
   // note, the input is what the user interacts with so it must render and
   // be clickable, but it is visually hidden via opacity: 0 and non-clickable
-  // styled ui is shown instead and positioned accordingly.
+  // styled ui is shown instead and positioned accordingly. Its thumb is as
+  // wide as the handle, so the native thumb center (half the thumb width plus
+  // the fraction of the rest) is the handle center.
   input[type='range'] {
     opacity: 0;
     -webkit-tap-highlight-color: transparent;
@@ -408,21 +426,17 @@ $_md-sys-shape: tokens.md-sys-shape-values();
   ::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    // note, this is sized to align with thumb
     block-size: var(--_handle-height);
     inline-size: var(--_handle-width);
     opacity: 0;
     z-index: 2;
   }
 
-  @include _get-safari-knob-translate('end');
-  @include _get-safari-knob-translate('start');
-
   ::-moz-range-thumb {
     appearance: none;
-    block-size: var(--_state-layer-size);
-    inline-size: var(--_state-layer-size);
-    transform: scaleX(0);
+    block-size: var(--_handle-height);
+    inline-size: var(--_handle-width);
+    border: 0;
     opacity: 0;
     z-index: 2;
   }
@@ -430,7 +444,7 @@ $_md-sys-shape: tokens.md-sys-shape-values();
   // Clip the inputs to the space left/right of the center point between the
   // values so the right input gets pointer events.
   $_clip-to-start: calc(
-    var(--_state-layer-size) / 2 + (100% - var(--_state-layer-size)) *
+    var(--_handle-width) / 2 + (100% - var(--_handle-width)) *
       (
         var(--_start-fraction) +
           ((var(--_end-fraction) - var(--_start-fraction)) / 2)
@@ -457,70 +471,5 @@ $_md-sys-shape: tokens.md-sys-shape-values();
   // in 'rtl', clip left side of "greater" input
   .ranged input.end:dir(rtl) {
     clip-path: inset(0 $_clip-to-start 0 0);
-  }
-
-  .onTop {
-    z-index: 1;
-  }
-
-  // Ripple
-  .handle {
-    @include ripple.theme(
-      (
-        hover-color: var(--_hover-state-layer-color),
-        hover-opacity: var(--_hover-state-layer-opacity),
-        pressed-color: var(--_pressed-state-layer-color),
-        pressed-opacity: var(--_pressed-state-layer-opacity),
-      )
-    );
-  }
-
-  petal-ripple {
-    border-radius: 50%;
-    height: var(--_state-layer-size);
-    width: var(--_state-layer-size);
-  }
-}
-
-// Returns a background-image with sized circular ticks of the given color.
-@function _get-tick-image($color) {
-  @return radial-gradient(
-    circle at var(--_with-tick-marks-container-size) center,
-    #{$color} 0,
-    #{$color} calc(var(--_with-tick-marks-container-size) / 2),
-    transparent calc(var(--_with-tick-marks-container-size) / 2)
-  );
-}
-
-// Webkit on iOS requires _some_ size on the thumb. We want to make this the
-// same as --_handle-size but also be centered on the handle.
-//
-// the layout is similar to this:
-// [()---[()===========]----]
-//
-// where - is the native input and the == is the material track.
-// at 0 we want to shift the native knob right (padding + knob-size / 2):
-// [----[(())===========]----]
-//
-// at the end we want to shift the native knob left by the same amount:
-// [----[===========(())]----]
-//
-// Therefore we can do `layout-shift - 2 * `percent-fraction` * `layout-shift`
-// and in RTL we want to do the the same * -1
-@mixin _get-safari-knob-translate($start-or-end) {
-  input.#{$start-or-end}::-webkit-slider-thumb {
-    // AKA `layout-shift` in the equations above
-    --_track-and-knob-padding: calc(
-      (var(--_state-layer-size) - var(--_handle-width)) / 2
-    );
-    --_x-translate: calc(
-      var(--_track-and-knob-padding) - 2 * var(--_#{$start-or-end}-fraction) *
-        var(--_track-and-knob-padding)
-    );
-    transform: translateX(var(--_x-translate));
-  }
-
-  input.#{$start-or-end}:dir(rtl)::-webkit-slider-thumb {
-    transform: translateX(calc(-1 * var(--_x-translate)));
   }
 }

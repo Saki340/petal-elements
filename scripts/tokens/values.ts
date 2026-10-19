@@ -117,6 +117,7 @@ export const COMPOSE_VALUE_MODULES = [
   'SearchView',
   'SegmentedMenu',
   'SheetBottom',
+  'Slider',
   'SmallIconButton',
   'Snackbar',
   'SplitButtonLarge',

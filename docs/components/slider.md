@@ -93,14 +93,32 @@ range.
 A value label displays the specific value that corresponds with the handle's
 placement.
 
-The label appears when the handle is selected. For range sliders, labels appear
-when either handle is selected.
+The label appears while the handle is hovered, pressed or dragged, and while it
+has keyboard focus. For range sliders, each handle has its own label.
 
 ```html
 <petal-slider labeled></petal-slider>
 ```
 
 <!-- TODO(b/318567101): ## Accessibility -->
+
+## Compose behavior
+
+Sliders follow Jetpack Compose Material 3 Expressive (`Slider`, `RangeSlider`,
+`SliderTokens`):
+
+*   The handle is a 4dp x 44dp bar, half as wide while it is pressed, dragged or
+    focused. There is no ripple or state layer.
+*   The track is 16dp high with fully rounded ends, and stops 6dp before the
+    handle on each side; the ends next to the handle have 2dp corners. A part
+    of the track narrower than its corner is not drawn.
+*   A 4dp stop indicator in the active track color marks the end of the
+    inactive track (both ends of a range slider). Ticks are 4dp dots, with
+    values between the first and the last tick inset by the track's corner
+    radius, as in Compose.
+*   The value label is a plain tooltip (inverse surface, 4dp corners) 4dp above
+    the handle, as in Compose's slider samples. Compose shows it on hover,
+    press and drag; petal-elements also shows it on keyboard focus.
 
 ## Theming
 
@@ -109,16 +127,21 @@ in terms of color and shape.
 
 ### Tokens
 
-Token                              | Default value
----------------------------------- | ------------------------------------------
-`--md-slider-active-track-color`   | `--md-sys-color-primary`
-`--md-slider-active-track-shape`   | `--md-sys-shape-corner-full`
-`--md-slider-inactive-track-color` | `--md-sys-color-surface-container-highest`
-`--md-slider-inactive-track-shape` | `--md-sys-shape-corner-full`
-`--md-slider-handle-color`         | `--md-sys-color-primary`
-`--md-slider-handle-shape`         | `--md-sys-shape-corner-full`
+Token                                      | Default value
+------------------------------------------ | ------------------------------------
+`--md-slider-active-track-color`           | `--md-sys-color-primary`
+`--md-slider-active-track-height`          | `16px`
+`--md-slider-inactive-track-color`         | `--md-sys-color-secondary-container`
+`--md-slider-handle-color`                 | `--md-sys-color-primary`
+`--md-slider-handle-width`                 | `4px`
+`--md-slider-pressed-handle-width`         | `2px`
+`--md-slider-handle-height`                | `44px`
+`--md-slider-handle-shape`                 | `--md-sys-shape-corner-full`
+`--md-slider-with-tick-marks-container-size` | `4px`
+`--md-slider-label-container-color`        | `--md-sys-color-inverse-surface`
+`--md-slider-label-text-color`             | `--md-sys-color-inverse-on-surface`
 
-*   [All tokens](https://github.com/Saki340/petal-elements/blob/main/tokens/_md-comp-slider.scss)
+*   [All tokens](https://github.com/Saki340/petal-elements/blob/main/slider/internal/_slider.scss)
     <!-- {.external} -->
 
 ### Example

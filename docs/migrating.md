@@ -162,6 +162,8 @@ exists.
 - **Labs navigation is gone.** The old `labs/navigationbar`,
   `labs/navigationtab` and `labs/navigationdrawer` were removed; use
   `petal-navigation-bar`, `-rail` and `-drawer`.
+- **Sliders** have Compose's bar handle and gapped 16px track. The
+  `*-state-layer-*`, `handle-elevation` and `*-track-shape` tokens are gone.
 - **The labs badge moved** to `petal-elements/badge/badge.js`
   (`petal-badge`, still with `value`). Put it in the `badge` slot of an icon
   button or a navigation item instead of positioning it yourself.

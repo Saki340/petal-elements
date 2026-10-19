@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {Harness} from '../testing/harness.js';
@@ -41,9 +42,9 @@ export class SliderHarness extends Harness<Slider> {
     return labels.some((l) => {
       // remove transition to avoid the need to wait for it.
       (l as HTMLElement).style.setProperty('transition', 'none');
-      const {width} = l.getBoundingClientRect();
+      const opacity = Number(getComputedStyle(l).opacity);
       (l as HTMLElement).style.removeProperty('transition');
-      return width > 0;
+      return opacity > 0;
     });
   }
 

@@ -27,6 +27,7 @@ const COMPONENTS = [
   'tooltip',
   'progress',
   'badge',
+  'slider',
   'tabs',
 ];
 

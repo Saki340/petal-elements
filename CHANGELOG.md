@@ -73,6 +73,16 @@
   `--md-tabs-scrollable-edge-padding`); a row scrolls its selected tab to the
   center on a spring. The scroller is an inner element now: `scrollLeft` of
   `<petal-tabs>` itself no longer scrolls.
+* **slider:** sliders follow Compose's Material 3 Expressive `Slider` and
+  `RangeSlider`: a 4px x 44px bar handle (2px while pressed or focused)
+  instead of a 20px circle, a 16px track that stops 6px before the handle,
+  stop indicators at the track ends and 4px ticks; with `ticks`, the values
+  between the first and the last tick are inset by the track's corner radius.
+  No ripple, state layer or handle elevation. The value label is a plain
+  tooltip above the handle. The slider is 48px high. Tokens without a Compose
+  counterpart are gone (`*-state-layer-*`, `handle-elevation`,
+  `*-track-shape`, `label-container-height`, `with-overlap-handle-*`); new:
+  `--md-slider-pressed-handle-width`, `--md-slider-label-container-shape`.
 * **chips:** chips follow Compose's `AssistChip`, `FilterChip`, `InputChip`
   and `SuggestionChip`: input chips have 12px of space next to the label
   without an icon (was 16px) and keep 8px corners with an avatar (were fully
