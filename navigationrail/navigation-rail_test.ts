@@ -135,7 +135,7 @@ describe('<petal-navigation-rail>', () => {
       const indicator = part(items[0], '.indicator');
       expect(rect(indicator).width).toBe(56);
       expect(getComputedStyle(indicator).backgroundColor).toBe('rgb(232, 222, 248)');
-      expect(getComputedStyle(part(items[0], '.icon')).color).toBe('rgb(29, 25, 43)');
+      expect(getComputedStyle(part(items[0], '.icon')).color).toBe('rgb(74, 68, 88)');
       expect(getComputedStyle(part(items[0], '.label')).color).toBe('rgb(98, 91, 113)');
       expect(getComputedStyle(part(items[1], '.icon')).color).toBe('rgb(73, 69, 79)');
       expect(rect(part(items[1], '.indicator')).width).toBe(0);
@@ -195,7 +195,7 @@ describe('<petal-navigation-rail>', () => {
 
     it('gives the selected label the icon color', async () => {
       const {items} = await setupTest(defaultTemplate(true));
-      expect(getComputedStyle(part(items[0], '.label')).color).toBe('rgb(29, 25, 43)');
+      expect(getComputedStyle(part(items[0], '.label')).color).toBe('rgb(74, 68, 88)');
     });
   });
 

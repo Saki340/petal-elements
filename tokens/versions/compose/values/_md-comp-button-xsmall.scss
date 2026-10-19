@@ -9,14 +9,14 @@
 //
 $values: (
   'container-height': 32px,
-  'container-shape-round': var(--md-sys-shape-corner-full, 50%),
+  'container-shape-round': var(--md-sys-shape-corner-full, 9999px),
   'container-shape-square': var(--md-sys-shape-corner-medium, 12px),
   'icon-label-space': 8px,
   'icon-size': 20px,
   'leading-space': 16px,
   'outlined-outline-width': 1px,
   'pressed-container-shape': var(--md-sys-shape-corner-small, 8px),
-  'selected-container-shape-round': var(--md-sys-shape-corner-full, 50%),
+  'selected-container-shape-round': var(--md-sys-shape-corner-full, 9999px),
   'selected-container-shape-square': var(--md-sys-shape-corner-medium, 12px),
   'trailing-space': 16px,
 );

@@ -9,14 +9,14 @@
 //
 $values: (
   'container-height': 64px,
-  'subtitle-font': var(--md-sys-typescale-label-medium-font, var(--md-ref-typeface-plain, sans-serif)),
-  'subtitle-line-height': var(--md-sys-typescale-label-medium-line-height, 16px),
-  'subtitle-size': var(--md-sys-typescale-label-medium-size, 12px),
-  'subtitle-tracking': var(--md-sys-typescale-label-medium-tracking, 0.5px),
+  'subtitle-font': var(--md-sys-typescale-label-medium-font, var(--md-ref-typeface-plain, Roboto)),
+  'subtitle-line-height': var(--md-sys-typescale-label-medium-line-height, 1rem),
+  'subtitle-size': var(--md-sys-typescale-label-medium-size, 0.75rem),
+  'subtitle-tracking': var(--md-sys-typescale-label-medium-tracking, 0.03125rem),
   'subtitle-weight': var(--md-sys-typescale-label-medium-weight, var(--md-ref-typeface-weight-medium, 500)),
-  'title-font': var(--md-sys-typescale-title-large-font, var(--md-ref-typeface-brand, sans-serif)),
-  'title-line-height': var(--md-sys-typescale-title-large-line-height, 28px),
-  'title-size': var(--md-sys-typescale-title-large-size, 22px),
-  'title-tracking': var(--md-sys-typescale-title-large-tracking, 0px),
+  'title-font': var(--md-sys-typescale-title-large-font, var(--md-ref-typeface-brand, Roboto)),
+  'title-line-height': var(--md-sys-typescale-title-large-line-height, 1.75rem),
+  'title-size': var(--md-sys-typescale-title-large-size, 1.375rem),
+  'title-tracking': var(--md-sys-typescale-title-large-tracking, 0rem),
   'title-weight': var(--md-sys-typescale-title-large-weight, var(--md-ref-typeface-weight-regular, 400)),
 );

@@ -10,7 +10,7 @@
 $values: (
   'between-space': 2px,
   'container-height': 40px,
-  'container-shape': var(--md-sys-shape-corner-full, 50%),
+  'container-shape': var(--md-sys-shape-corner-full, 9999px),
   'inner-corner-corner-size': var(--md-sys-shape-corner-value-extra-small, 4px),
   'inner-hovered-corner-corner-size': var(--md-sys-shape-corner-value-medium, 12px),
   'inner-pressed-corner-corner-size': var(--md-sys-shape-corner-value-medium, 12px),

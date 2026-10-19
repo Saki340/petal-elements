@@ -144,6 +144,25 @@ The springs' `-damping` and `-stiffness` properties (Compose's `dampingRatio`
 and `stiffness`) are read by components that simulate a spring, such as the
 button group's press, and by the theme transition below.
 
+### System tokens and Jetpack Compose
+
+The components follow Jetpack Compose Material 3, but the system tokens in
+`sys.css` (colors, type scale, shape, elevation) are the Material Design web
+tokens. They match Compose's, except where the web tokens follow the newer
+Material specification:
+
+- In the light scheme, `on-primary-container`, `on-secondary-container`,
+  `on-tertiary-container` and `on-error-container` are tone 30 (for example
+  `#4f378b`); Compose's baseline scheme uses tone 10 (`#21005d`).
+- The letter spacing of a few type styles (body medium, title medium, display
+  large, and the emphasized body large and display large) is the web value;
+  Compose rounds it (for example 0.25px against 0.2px).
+- The fonts are Roboto; Compose uses the platform's sans-serif.
+
+The spring tokens (`--md-sys-motion-spring-*`) come from Compose's motion
+schemes. When a page does not load `sys.css`, the components fall back to
+the same web values.
+
 ### Theme transition
 
 `transitionTheme()` changes the theme with a circle that grows from the

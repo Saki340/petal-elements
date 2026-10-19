@@ -20,7 +20,7 @@ import type {PetalListItem} from './list-item.js';
 const ON_SURFACE = 'rgb(29, 27, 32)';
 const ON_SURFACE_VARIANT = 'rgb(73, 69, 79)';
 const SECONDARY_CONTAINER = 'rgb(232, 222, 248)';
-const ON_SECONDARY_CONTAINER = 'rgb(29, 25, 43)';
+const ON_SECONDARY_CONTAINER = 'rgb(74, 68, 88)';
 
 describe('petal-list-item after Compose', () => {
   const env = new Environment();
@@ -162,7 +162,7 @@ describe('petal-list-item after Compose', () => {
       expect(css(content, 'color')).toBe(ON_SURFACE);
     });
 
-    it('supporting text: body medium, 14/20 at 0.2px, on-surface-variant', async () => {
+    it('supporting text: body medium, 14/20 at 0.25px (the web body medium tracking), on-surface-variant', async () => {
       const {item, css} = await setup(html`<petal-list-item>
         <div slot="headline">Headline</div>
         <div slot="supporting-text">Supporting</div>
@@ -170,7 +170,7 @@ describe('petal-list-item after Compose', () => {
       const supporting = item.querySelector('[slot=supporting-text]')!;
       expect(css(supporting, 'font-size')).toBe('14px');
       expect(css(supporting, 'line-height')).toBe('20px');
-      expect(css(supporting, 'letter-spacing')).toBe('0.2px');
+      expect(css(supporting, 'letter-spacing')).toBe('0.25px');
       expect(css(supporting, 'color')).toBe(ON_SURFACE_VARIANT);
     });
 

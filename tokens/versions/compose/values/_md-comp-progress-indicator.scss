@@ -9,9 +9,9 @@
 //
 $values: (
   'active-indicator-color': var(--md-sys-color-primary, #6750a4),
-  'active-shape': var(--md-sys-shape-corner-full, 50%),
+  'active-shape': var(--md-sys-shape-corner-full, 9999px),
   'stop-color': var(--md-sys-color-primary, #6750a4),
-  'stop-shape': var(--md-sys-shape-corner-full, 50%),
+  'stop-shape': var(--md-sys-shape-corner-full, 9999px),
   'track-color': var(--md-sys-color-secondary-container, #e8def8),
-  'track-shape': var(--md-sys-shape-corner-full, 50%),
+  'track-shape': var(--md-sys-shape-corner-full, 9999px),
 );

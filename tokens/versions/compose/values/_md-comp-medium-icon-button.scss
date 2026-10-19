@@ -9,7 +9,7 @@
 //
 $values: (
   'container-height': 56px,
-  'container-shape-round': var(--md-sys-shape-corner-full, 50%),
+  'container-shape-round': var(--md-sys-shape-corner-full, 9999px),
   'container-shape-square': var(--md-sys-shape-corner-large, 16px),
   'default-leading-space': 16px,
   'default-trailing-space': 16px,
@@ -19,7 +19,7 @@ $values: (
   'outlined-outline-width': 1px,
   'pressed-container-shape': var(--md-sys-shape-corner-medium, 12px),
   'selected-container-shape-round': var(--md-sys-shape-corner-large, 16px),
-  'selected-container-shape-square': var(--md-sys-shape-corner-full, 50%),
+  'selected-container-shape-square': var(--md-sys-shape-corner-full, 9999px),
   'wide-leading-space': 24px,
   'wide-trailing-space': 24px,
 );

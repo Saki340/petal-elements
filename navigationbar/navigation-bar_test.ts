@@ -160,7 +160,7 @@ describe('<petal-navigation-bar>', () => {
       const {items} = await setupTest();
       // Selected: on-secondary-container icon, secondary label; unselected:
       // on-surface-variant (NavigationBarTokens).
-      expect(getComputedStyle(part(items[0], '.icon')).color).toBe('rgb(29, 25, 43)');
+      expect(getComputedStyle(part(items[0], '.icon')).color).toBe('rgb(74, 68, 88)');
       expect(getComputedStyle(part(items[0], '.label')).color).toBe('rgb(98, 91, 113)');
       expect(getComputedStyle(part(items[1], '.icon')).color).toBe('rgb(73, 69, 79)');
       expect(getComputedStyle(part(items[1], '.label')).color).toBe('rgb(73, 69, 79)');
@@ -190,7 +190,7 @@ describe('<petal-navigation-bar>', () => {
       expect(width).toBeCloseTo(16 + 24 + 4 + label.getBoundingClientRect().width + 16, 0);
       expect(label.getBoundingClientRect().left - icon.getBoundingClientRect().right).toBeCloseTo(4, 1);
       // The label has the icon's color when selected.
-      expect(getComputedStyle(label).color).toBe('rgb(29, 25, 43)');
+      expect(getComputedStyle(label).color).toBe('rgb(74, 68, 88)');
     });
   });
 

@@ -17,7 +17,7 @@
 
 import * as fs from 'fs';
 
-const SKIP = new Set(['node_modules', 'catalog', '.wireit', '.git', '.cache', 'tokens']);
+const SKIP = new Set(['node_modules', 'catalog', '.wireit', '.git', '.cache', '.claude', 'tokens']);
 
 function cssFiles(dir: string): string[] {
   const files: string[] = [];

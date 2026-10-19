@@ -55,7 +55,7 @@ describe('<petal-loading-indicator>', () => {
     indicator.contained = true;
     await env.waitForStability();
     // Compose's on-primary-container and primary-container.
-    expect(fill()).toBe('rgb(33, 0, 93)');
+    expect(fill()).toBe('rgb(79, 55, 139)');
     const container = indicator.shadowRoot!.querySelector('.container')!;
     expect(getComputedStyle(container).backgroundColor).toBe('rgb(234, 221, 255)');
   });

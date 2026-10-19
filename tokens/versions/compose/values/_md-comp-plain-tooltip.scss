@@ -11,9 +11,9 @@ $values: (
   'container-color': var(--md-sys-color-inverse-surface, #322f35),
   'container-shape': var(--md-sys-shape-corner-extra-small, 4px),
   'supporting-text-color': var(--md-sys-color-inverse-on-surface, #f5eff7),
-  'supporting-text-font': var(--md-sys-typescale-body-small-font, var(--md-ref-typeface-plain, sans-serif)),
-  'supporting-text-line-height': var(--md-sys-typescale-body-small-line-height, 16px),
-  'supporting-text-size': var(--md-sys-typescale-body-small-size, 12px),
-  'supporting-text-tracking': var(--md-sys-typescale-body-small-tracking, 0.4px),
+  'supporting-text-font': var(--md-sys-typescale-body-small-font, var(--md-ref-typeface-plain, Roboto)),
+  'supporting-text-line-height': var(--md-sys-typescale-body-small-line-height, 1rem),
+  'supporting-text-size': var(--md-sys-typescale-body-small-size, 0.75rem),
+  'supporting-text-tracking': var(--md-sys-typescale-body-small-tracking, 0.025rem),
   'supporting-text-weight': var(--md-sys-typescale-body-small-weight, var(--md-ref-typeface-weight-regular, 400)),
 );

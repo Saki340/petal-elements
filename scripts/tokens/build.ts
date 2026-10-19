@@ -72,7 +72,7 @@ outputs.push(valuesOut);
 
 // Value maps from Compose, for components that follow Compose.
 const composeValuesOut = new Output('tokens/versions/compose/values', '.scss', /-meta\.scss$/);
-for (const [name, content] of buildComposeValueModules(compose.files)) {
+for (const [name, content] of buildComposeValueModules(compose.files, web.files)) {
   composeValuesOut.add(name, content);
 }
 outputs.push(composeValuesOut);

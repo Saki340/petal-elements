@@ -36,7 +36,7 @@ $values: (
   'selected-pressed-container-color': var(--md-sys-color-primary, #6750a4),
   'selected-pressed-icon-color': var(--md-sys-color-on-primary, #ffffff),
   'selected-pressed-outline-width': 0px,
-  'state-layer-shape': var(--md-sys-shape-corner-full, 50%),
+  'state-layer-shape': var(--md-sys-shape-corner-full, 9999px),
   'state-layer-size': 40px,
   'unselected-disabled-container-opacity': 0.38,
   'unselected-disabled-outline-color': var(--md-sys-color-on-surface, #1d1b20),

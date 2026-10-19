@@ -285,13 +285,40 @@ const kebabObject = (name: string) => name.replace(/([a-z0-9])([A-Z])/g, '$1-$2'
  * references become the level number (for `--md-elevation-level`), and a
  * typescale reference `label-text-font` expands to `label-text-font`,
  * `label-text-size`, ... Colors fall back to the light scheme.
+ *
+ * System tokens fall back to the web values, the ones sys.css has, where the
+ * web tokens define them: petal-elements keeps the web system tokens (for
+ * example the tone 30 on-*-container colors and the type scale tracking),
+ * so a page looks the same with or without sys.css.
  */
-export function buildComposeValueModules(files: ComposeFile[]): Map<string, string> {
+export function buildComposeValueModules(
+  files: ComposeFile[],
+  webFiles: WebFile[] = [],
+): Map<string, string> {
   const tokens = new Map<string, Token>();
   for (const file of files) {
     if (file.object === 'ColorDarkTokens') continue;
     for (const [path, token] of walk(file.tokens)) tokens.set(path, token);
   }
+
+  const webTokens = new Map<string, Token>();
+  for (const file of webFiles) {
+    if (!file.context) for (const [path, token] of walk(file.tokens)) webTokens.set(path, token);
+  }
+  /** The web value of a system token, as in sys.css, or undefined. */
+  const webValue = (path: string, depth = 0): string | undefined => {
+    if (depth > 20) throw new Error(`Reference loop at ${path}`);
+    const token = webTokens.get(path);
+    if (!token || !isToken(token) || token.$type === 'typography') return undefined;
+    const v = token.$value;
+    if (typeof v === 'string' && /^\{.*\}$/.test(v)) {
+      const target = v.slice(1, -1);
+      const resolved = webValue(target, depth + 1);
+      if (resolved === undefined) return undefined;
+      return isSystem(target) ? `var(${cssName(target)}, ${resolved})` : resolved;
+    }
+    return literal(token);
+  };
 
   const value = (path: string, depth = 0): string => {
     if (depth > 20) throw new Error(`Reference loop at ${path}`);
@@ -302,7 +329,7 @@ export function buildComposeValueModules(files: ComposeFile[]): Map<string, stri
       const target = v.slice(1, -1);
       const level = target.match(/^md\.sys\.elevation\.level(\d)$/);
       if (level) return level[1];
-      const resolved = value(target, depth + 1);
+      const resolved = (isSystem(target) && webValue(target)) || value(target, depth + 1);
       return isSystem(target) ? `var(${cssName(target)}, ${resolved})` : resolved;
     }
     return literal(token);
@@ -322,7 +349,8 @@ export function buildComposeValueModules(files: ComposeFile[]): Map<string, stri
       if (target.startsWith('md.sys.typescale.')) {
         const base = key.replace(/-(font|type)$/, '');
         for (const part of ['font', 'size', 'line-height', 'weight', 'tracking']) {
-          entries.push([`${base}-${part}`, `var(${cssName(`${target}.${part}`)}, ${value(`${target}.${part}`)})`]);
+          const part_ = `${target}.${part}`;
+          entries.push([`${base}-${part}`, `var(${cssName(part_)}, ${webValue(part_) ?? value(part_)})`]);
         }
         continue;
       }
