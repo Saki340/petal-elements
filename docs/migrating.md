@@ -68,14 +68,21 @@ exists.
 | --- | --- |
 | Primary, secondary, tonal, outlined, text buttons | `petal-filled-button`, `petal-filled-tonal-button`, `petal-outlined-button`, `petal-text-button`, `petal-elevated-button`; `size` and `shape` for Expressive sizes, `toggle` for toggle buttons |
 | Segmented or connected buttons | `petal-button-group` |
-| Icon buttons | `petal-icon-button` and the filled, tonal, outlined variants |
-| Floating action button | `petal-fab` (`variant="filled-primary"` etc.), `petal-branded-fab` |
+| Split button (action plus dropdown arrow) | `petal-split-button` with a `petal-menu` |
+| Icon buttons | `petal-icon-button` and the filled, tonal, outlined variants; `size` (`xsmall` to `xlarge`), `width`, `shape` |
+| Floating action button | `petal-fab` (`size`, `variant`, `label` for extended, `expanded` to shrink to the icon), `petal-branded-fab` |
+| FAB that opens a speed-dial | `petal-fab-menu` with `petal-fab-menu-item` and `petal-toggle-fab` |
+| Floating action bar | `petal-floating-toolbar` (horizontal or vertical) |
 | Modal | `petal-dialog` |
 | Toast or snackbar | `petal-snackbar` (`show()` returns a promise) |
 | Bottom sheet or action sheet | `petal-bottom-sheet` (`show()` and `close()` return promises) |
 | Hover hint | `petal-tooltip` with `for="<anchor id>"` |
 | Dropdown or context menu | `petal-menu` with `petal-menu-item`, `petal-sub-menu`, `petal-menu-group` |
 | Sticky header | `petal-top-app-bar` (`size`, `headline`, collapses on scroll) |
+| Bottom navigation | `petal-navigation-bar` with `petal-navigation-bar-item` |
+| Side navigation | `petal-navigation-rail` with `petal-navigation-rail-item` (collapsed or expanded), or `petal-navigation-drawer` (`type`: `modal`, `dismissible`, `standard`) with `petal-navigation-drawer-item` |
+| Search box with suggestions | `petal-search-bar` (full-screen or docked view) |
+| Theme switch with a circular reveal | `transitionTheme()` from `theme/theme-transition.js` |
 | Pull-to-refresh | `petal-pull-to-refresh` |
 | Spinner | `petal-loading-indicator` (Expressive) or `petal-circular-progress` |
 | Progress bar | `petal-linear-progress` (`wavy` for the Expressive style) |
@@ -119,6 +126,44 @@ exists.
   in both standard and connected groups. Do not add your own press animation.
 - **Menus** scale in from 80% and fade, from the corner next to the anchor,
   not by growing in height. Remove custom open animations.
+- **Motion is the expressive spring scheme by default**
+  (`--md-sys-motion-spring-*`), as in Compose's `MaterialExpressiveTheme`.
+  For the calmer standard springs, load `tokens/css/motion-standard.css`
+  after `sys.css`. Components follow `prefers-reduced-motion`, so do not
+  add your own motion for them.
+- **Theme switching:** to change light and dark with a circle growing from the
+  pressed control, call `transitionTheme(apply, event)` from
+  `petal-elements/theme/theme-transition.js`. `apply` changes the theme (for
+  example sets `document.documentElement.style.colorScheme`); `event` is the
+  click, an element, or `{x, y}`. It uses the View Transitions API and just
+  applies the change without it or with reduced motion. It returns a promise
+  that resolves when it ends. Replace a site's own `startViewTransition` code
+  with it instead of stacking both.
+- **Dialog** opens by scaling up from 80% and fading, with 16px under the
+  headline and stacked buttons when they do not fit. Remove custom open and
+  close animations.
+- **FAB** sizes follow Compose: `small`, `baseline` (the default, 56px),
+  `medium`, `large`; the default `variant` is `primary`. With `label` it is an
+  extended FAB.
+- **Text fields and selects** follow Compose: at least 280px wide, a 2px
+  focused indicator, no hover state. The select menu is as wide as the field
+  (`no-clamp-menu-width` for the old behavior) and its options are 48px high.
+  Set an explicit `width` or `min-width` if a layout depended on narrower
+  fields.
+- **Checkbox, radio and switch** follow Compose sizes and spring animations;
+  per-state color tokens still work, but hover, focus and press no longer
+  recolor the outline or thumb.
+- **List items** follow Compose's `ListItem`: use the `selected` property, and
+  `three-line` for overline plus two lines of text. Item corners are 4px and
+  grow on hover, focus and selection, so do not add your own corner radius.
+- **Menus with groups:** groups keep their own shapes when reopened; use
+  `no-inactive-shape` to turn off the smaller shape after hover. With
+  `single-radio` on the menu, all radio items across groups form one set.
+- **Labs navigation is gone.** The old `labs/navigationbar`,
+  `labs/navigationtab` and `labs/navigationdrawer` were removed; use
+  `petal-navigation-bar`, `-rail` and `-drawer`.
+- **Tooltips** show on focus only when the anchor shows a focus ring
+  (`:focus-visible`), not after a pointer choice.
 - **Text fields** forward `enterkeyhint`, `spellcheck` and `autocapitalize`;
   use `no-counter` to hide the character counter.
 
