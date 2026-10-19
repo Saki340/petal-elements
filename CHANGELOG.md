@@ -20,6 +20,11 @@
 * **menu:** menus open and close by scaling from 80% and fading, from the
   corner next to the anchor, as Compose's `DropdownMenu`, instead of growing
   in height with staggered items.
+* **dialog:** 16px under the headline instead of 24px, and buttons that do not
+  fit stack with the last one on top (Compose's `AlertDialog`). The dialog
+  opens by scaling up from 80% and fading in on the motion scheme springs, and
+  closes on the fast effects spring, instead of the material-web slide and
+  grow; reduced motion turns it off.
 * **fab:** sizes follow Compose: `small` (40px), `baseline` (56px, the new
   default, was `medium`), `medium` (80px, 20px corners, 28px icon) and
   `large` (96px, 36px icon). With a `label`, the size picks Compose's small,

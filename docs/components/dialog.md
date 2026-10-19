@@ -103,6 +103,22 @@ closeButton.addEventListener('click', async () => {
 });
 ```
 
+### Layout and motion
+
+The layout follows Jetpack Compose's `AlertDialog`: 24px around the content,
+16px under the headline (and under the icon), 24px above the buttons, and
+buttons 8px apart at the end. When the buttons do not fit on one line they
+stack, the last one (the confirm button) on top.
+
+Compose leaves the dialog's motion to the platform, so the dialog moves like
+the menu: it opens by scaling up from 80% on the default spatial spring and
+fading in on the default effects spring, and closes on the fast effects spring
+of the page's motion scheme (`--md-sys-motion-spring-*`). With
+`prefers-reduced-motion` or `quick` it opens and closes at once. To use the
+material-web animation instead, set `getOpenAnimation` and `getCloseAnimation`
+to return `DIALOG_DEFAULT_OPEN_ANIMATION` and `DIALOG_DEFAULT_CLOSE_ANIMATION`
+from `dialog/internal/animations.js`.
+
 ### Return value
 
 A button's value attribute will set the dialog's `returnValue` property to

@@ -143,12 +143,17 @@
     padding-top: 16px;
   }
 
+  // Compose's AlertDialog: 16dp under the title (TitlePadding).
   .scrollable slot[name='headline']::slotted(*) {
     padding-bottom: 16px;
   }
 
   .scrollable.has-headline slot[name='content']::slotted(*) {
-    padding-top: 8px;
+    padding-top: 0;
+  }
+
+  .has-headline:not(.scrollable) slot[name='content']::slotted(*) {
+    padding-top: 16px;
   }
 
   .container {
@@ -224,9 +229,12 @@
     position: relative;
   }
 
+  // Compose's AlertDialogFlowRow: buttons 8dp apart at the end, wrapping
+  // when they do not fit, the confirm button (the last one) on top.
   slot[name='actions']::slotted(*) {
     box-sizing: border-box;
     display: flex;
+    flex-wrap: wrap-reverse;
     gap: 8px;
     justify-content: flex-end;
     padding: 16px 24px 24px;

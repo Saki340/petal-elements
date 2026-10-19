@@ -16,10 +16,10 @@ import {mixinDelegatesAria} from '../../internal/aria/delegate.js';
 import {redispatchEvent} from '../../internal/events/redispatch-event.js';
 
 import {
-  DIALOG_DEFAULT_CLOSE_ANIMATION,
-  DIALOG_DEFAULT_OPEN_ANIMATION,
   DialogAnimation,
   DialogAnimationArgs,
+  springCloseAnimation,
+  springOpenAnimation,
 } from './animations.js';
 
 // Separate variable needed for closure.
@@ -99,15 +99,18 @@ export class Dialog extends dialogBaseClass {
 
   /**
    * Gets the opening animation for a dialog. Set to a new function to customize
-   * the animation.
+   * the animation. By default the dialog scales up from 80% and fades in on
+   * the page's motion scheme springs; `DIALOG_DEFAULT_OPEN_ANIMATION` is the
+   * material-web animation.
    */
-  getOpenAnimation = () => DIALOG_DEFAULT_OPEN_ANIMATION;
+  getOpenAnimation = (): DialogAnimation => springOpenAnimation(this);
 
   /**
    * Gets the closing animation for a dialog. Set to a new function to customize
-   * the animation.
+   * the animation. `DIALOG_DEFAULT_CLOSE_ANIMATION` is the material-web
+   * animation.
    */
-  getCloseAnimation = () => DIALOG_DEFAULT_CLOSE_ANIMATION;
+  getCloseAnimation = (): DialogAnimation => springCloseAnimation(this);
 
   private isOpen = false;
   private isOpening = false;
@@ -452,7 +455,7 @@ export class Dialog extends dialogBaseClass {
     // previously opening and closing without `quick`.
     this.cancelAnimations?.abort();
     this.cancelAnimations = new AbortController();
-    if (this.quick) {
+    if (this.quick || matchMedia('(prefers-reduced-motion: reduce)').matches) {
       return;
     }
 
