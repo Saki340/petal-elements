@@ -1,6 +1,7 @@
 //
 // Copyright 2023 Google LLC
 // SPDX-License-Identifier: Apache-2.0
+// Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
 //
 
 // go/keep-sorted start
@@ -8,8 +9,17 @@
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
+@use '../../elevation/elevation';
 @use '../../tokens';
+@use '../../tokens/versions/v34/values/md-sys-motion-springs' as springs;
+@use './compose-values' as compose;
+@use './expressive';
 // go/keep-sorted end
+
+@function _spring($name) {
+  @return map.get(springs.$values, 'spring-#{$name}-duration')
+    map.get(springs.$values, 'spring-#{$name}');
+}
 
 @mixin theme($tokens) {
   $supported-tokens: tokens.$md-comp-filter-chip-supported-tokens;
@@ -25,7 +35,7 @@
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-filter-chip-values();
+  $tokens: compose.values('filter-chip');
 
   :host {
     // Only use the logical properties.
@@ -39,18 +49,115 @@
     background: var(--_elevated-selected-container-color);
   }
 
+  // A flat chip rises while hovered, not while pressed or focused.
+  .container:not(.elevated, .disabled):hover {
+    @include elevation.theme(
+      (
+        'level': var(--_flat-hover-container-elevation),
+      )
+    );
+  }
+
+  .container:not(.elevated):active {
+    @include elevation.theme(
+      (
+        'level': 0,
+      )
+    );
+  }
+
+  // The leading icon, or the checkmark of a selected chip, takes its space
+  // from the start and fades in; when it goes away, its space shrinks and it
+  // fades out (AnimatingChipContent in Chip.kt: expand on the fast spatial
+  // spring and fade in on the slow effects spring, shrink on the default
+  // effects spring and fade out on the fast effects spring). Without an icon,
+  // the space is what makes up the leading space.
+  .primary.action {
+    padding-inline-start: var(--_with-leading-icon-leading-space);
+  }
+
+  .leading.icon {
+    flex: none;
+    height: var(--_icon-size);
+    overflow: hidden;
+    transition: width _spring('default-effects');
+    width: calc(var(--_leading-space) - var(--_with-leading-icon-leading-space));
+  }
+
+  :is(.has-icon, .selected) .leading.icon {
+    transition: width _spring('fast-spatial');
+    width: calc(var(--_icon-size) + var(--_icon-label-space));
+  }
+
+  .leading.icon ::slotted(*),
+  .leading.icon svg {
+    margin-inline-end: 0;
+  }
+
+  .selected slot[name='icon'] {
+    display: none;
+  }
+
+  .selected-icon {
+    display: flex;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    opacity: 0;
+    position: absolute;
+    transition: opacity _spring('fast-effects');
+  }
+
+  .selected .selected-icon {
+    opacity: 1;
+    transition: opacity _spring('slow-effects');
+  }
+
+  // A chip with its own icon swaps it for the checkmark.
+  .has-icon .selected-icon {
+    transition: none;
+  }
+
   .checkmark {
     height: var(--_icon-size);
     width: var(--_icon-size);
   }
 
-  .disabled .checkmark {
-    opacity: var(--_disabled-leading-icon-opacity);
+  @include expressive.styles('filter-chip');
+
+  // Expressive: CompactHorizontalSpacing between an icon and the label, and
+  // FilterChipDefaults.horizontalArrangement(): without a leading icon but
+  // with a trailing one, the label starts 4dp after the padding.
+  :host([expressive]) :is(.has-icon, .selected) .leading.icon {
+    width: calc(var(--_icon-size) + var(--_compact-space));
   }
 
-  @media (forced-colors: active) {
-    .disabled .checkmark {
-      opacity: 1;
+  :host([expressive]) .has-trailing:not(.has-icon, .selected) .leading.icon {
+    width: var(--_compact-space);
+  }
+
+  :host([expressive]) :is(.has-icon, .selected) .trailing.action {
+    padding-inline-start: var(--_compact-space);
+  }
+
+  // The expressive chip animates the icon with the fast spatial and default
+  // effects springs both ways.
+  :host([expressive]) .leading.icon {
+    transition: width _spring('fast-spatial');
+  }
+
+  :host([expressive]) .selected-icon,
+  :host([expressive]) .selected .selected-icon {
+    transition: opacity _spring('default-effects');
+  }
+
+  :host([expressive]) .has-icon .selected-icon {
+    transition: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .leading.icon,
+    .selected-icon {
+      transition-duration: 0s !important;
     }
   }
 }

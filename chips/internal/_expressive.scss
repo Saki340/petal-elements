@@ -1,0 +1,62 @@
+//
+// Copyright 2026 Saki
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// The expressive filter and input chips (`expressive`), after Compose's
+// FilterChip and InputChip overloads with `shapes` (Chip.kt):
+//
+// - the container shape is ChipsTokens.UnselectedShape (corner.medium),
+//   SelectedShape (corner.full) when selected and PressedShape (corner.small)
+//   while pressed, pressed first (shapeByInteraction). It morphs on the fast
+//   spatial spring;
+// - the unselected leading icon is on-surface-variant
+//   (tonalFilterChipColors(), tonalInputChipColors());
+// - the space between an icon and the label is
+//   CompactHorizontalSpacing (4dp); each chip sets where it applies.
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'sass:map';
+@use '../../tokens/versions/v34/values/md-sys-motion-springs' as springs;
+@use './compose-values' as compose;
+// go/keep-sorted end
+
+@mixin styles($chip) {
+  $values: compose.expressive-values();
+  $icon-color: var(
+    --md-#{$chip}-leading-icon-color,
+    #{map.get($values, 'unselected-leading-icon-color')}
+  );
+
+  :host([expressive]) {
+    --_shape: #{map.get($values, 'shape')};
+    --_compact-space: #{map.get($values, 'compact-space')};
+    --_container-shape-start-start: var(--_shape);
+    --_container-shape-start-end: var(--_shape);
+    --_container-shape-end-end: var(--_shape);
+    --_container-shape-end-start: var(--_shape);
+    --_leading-icon-color: #{$icon-color};
+    --_hover-leading-icon-color: #{$icon-color};
+    --_focus-leading-icon-color: #{$icon-color};
+    --_pressed-leading-icon-color: #{$icon-color};
+    transition-property: border-start-start-radius, border-start-end-radius,
+      border-end-end-radius, border-end-start-radius;
+    transition-duration: #{map.get(springs.$values, 'spring-fast-spatial-duration')};
+    transition-timing-function: #{map.get(springs.$values, 'spring-fast-spatial')};
+  }
+
+  // Fully rounded as half the height, so that the morph is gradual.
+  :host([expressive][selected]) {
+    --_shape: calc(var(--_container-height) / 2);
+  }
+
+  :host([expressive]:active:not([disabled], [soft-disabled])) {
+    --_shape: #{map.get($values, 'pressed-shape')};
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :host([expressive]) {
+      transition-duration: 0s;
+    }
+  }
+}

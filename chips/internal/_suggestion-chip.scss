@@ -1,6 +1,7 @@
 //
 // Copyright 2023 Google LLC
 // SPDX-License-Identifier: Apache-2.0
+// Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
 //
 
 // go/keep-sorted start
@@ -9,6 +10,7 @@
 // go/keep-sorted end
 // go/keep-sorted start
 @use '../../tokens';
+@use './compose-values' as compose;
 // go/keep-sorted end
 
 @mixin theme($tokens) {
@@ -25,7 +27,7 @@
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-suggestion-chip-values();
+  $tokens: compose.values('suggestion-chip');
 
   :host {
     // Only use the logical properties.

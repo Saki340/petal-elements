@@ -2,6 +2,7 @@
  * @license
  * Copyright 2023 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {html, nothing} from 'lit';
@@ -35,6 +36,14 @@ export class InputChip extends MultiActionChip {
   @property() referrerPolicy = '';
   @property({type: Boolean, attribute: 'remove-only'}) removeOnly = false;
   @property({type: Boolean, reflect: true}) selected = false;
+
+  /**
+   * Whether the chip has the expressive shapes of Compose's InputChip with
+   * `shapes`: rounder while not selected, fully rounded when selected and
+   * less round while pressed, morphing on a spring. The spacing next to the
+   * icons is tighter and the leading icon is on-surface-variant.
+   */
+  @property({type: Boolean, reflect: true}) expressive = false;
 
   protected get primaryId() {
     if (this.href) {

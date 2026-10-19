@@ -73,9 +73,18 @@
   `--md-tabs-scrollable-edge-padding`); a row scrolls its selected tab to the
   center on a spring. The scroller is an inner element now: `scrollLeft` of
   `<petal-tabs>` itself no longer scrolls.
+* **chips:** chips follow Compose's `AssistChip`, `FilterChip`, `InputChip`
+  and `SuggestionChip`: input chips have 12px of space next to the label
+  without an icon (was 16px) and keep 8px corners with an avatar (were fully
+  rounded); the ripple is on-surface, or on-secondary-container when
+  selected; labels have the LabelLarge letter spacing. The checkmark of a
+  selected filter chip is always rendered and takes its space on a spring, and
+  a flat filter chip rises to level 1 while hovered.
 
 #### Bug fixes
 
+* **chips:** the checkmark of a disabled selected filter chip has the disabled
+  icon opacity once (0.38), not twice.
 * **button:** values checked against Jetpack Compose: disabled labels and
   icons are `on-surface-variant` (filled, outlined, elevated, text); a plain
   small button presses to 8px and a small toggle button to 6px; a pressed
@@ -127,6 +136,10 @@
 
 #### Features
 
+* **chips:** `expressive` on filter and input chips: Compose's expressive chip
+  shapes (12px corners, fully rounded when selected, 8px while pressed,
+  morphing on the fast spatial spring), 4px between an icon and the label and
+  an on-surface-variant leading icon.
 * **navigation-drawer:** `petal-navigation-drawer` and
   `petal-navigation-drawer-item`, after Jetpack Compose `ModalNavigationDrawer`,
   `DismissibleNavigationDrawer` and `PermanentNavigationDrawer` (`type`:

@@ -1,0 +1,106 @@
+//
+// Copyright 2026 Saki
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// The chip token values, after Jetpack Compose Material 3 (AssistChipTokens,
+// FilterChipTokens, InputChipTokens and SuggestionChipTokens in
+// tokens/versions/compose/values, and Chip.kt). The token values are the same
+// as the web tokens', so every public `--md-*-chip-*` token stays. Where
+// Chip.kt draws something else, it wins:
+//
+// - The ripple of a chip is `ripple()` inside a Surface, so it has the
+//   Surface's content color, `contentColorFor(containerColor)`: on-surface for
+//   the transparent and surface-container-low containers (the content color
+//   around the chip), on-secondary-container for a selected chip. The web
+//   tokens use on-surface-variant for some of them, and on-secondary-container
+//   for a pressed unselected filter chip.
+// - InputChip pads its content by 4dp at the start without a leading icon and
+//   at the end without a trailing icon (inputChipPadding), plus the 8dp
+//   between the elements: 12px, not the web tokens' 16px.
+// - A flat FilterChip rises to level 1 while hovered (filterChipElevation()
+//   uses FlatSelectedHoverContainerElevation, selected or not).
+// - The label has the LabelLarge letter spacing (no public token).
+
+@use 'sass:map';
+@use '../../tokens';
+@use '../../tokens/versions/compose/values/md-comp-chips' as chips;
+@use '../../tokens/versions/compose/values/md-comp-filter-chip' as filter;
+
+$_on-surface: var(--md-sys-color-on-surface, #1d1b20);
+$_on-secondary-container: map.get(chips.$values, 'selected-label-text-color');
+
+@function _web($chip) {
+  @if $chip == 'assist-chip' {
+    @return tokens.md-comp-assist-chip-values();
+  }
+  @if $chip == 'filter-chip' {
+    @return tokens.md-comp-filter-chip-values();
+  }
+  @if $chip == 'input-chip' {
+    @return tokens.md-comp-input-chip-values();
+  }
+  @return tokens.md-comp-suggestion-chip-values();
+}
+
+$_overrides: (
+  'assist-chip': (
+    'hover-state-layer-color': $_on-surface,
+    'pressed-state-layer-color': $_on-surface,
+  ),
+  'filter-chip': (
+    'hover-state-layer-color': $_on-surface,
+    'pressed-state-layer-color': $_on-surface,
+    'selected-hover-state-layer-color': $_on-secondary-container,
+    'selected-pressed-state-layer-color': $_on-secondary-container,
+  ),
+  'input-chip': (
+    'hover-state-layer-color': $_on-surface,
+    'pressed-state-layer-color': $_on-surface,
+    'selected-hover-state-layer-color': $_on-secondary-container,
+    'selected-pressed-state-layer-color': $_on-secondary-container,
+    'leading-space': 12px,
+    'trailing-space': 12px,
+  ),
+  'suggestion-chip': (
+    'hover-state-layer-color': $_on-surface,
+    'pressed-state-layer-color': $_on-surface,
+  ),
+);
+
+/// The values of a chip (`assist-chip`, `filter-chip`, `input-chip` or
+/// `suggestion-chip`), under the web token names.
+@function values($chip) {
+  $result: _web($chip);
+  @each $key, $value in map.get($_overrides, $chip) {
+    $result: map.set($result, $key, var(--md-#{$chip}-#{$key}, #{$value}));
+  }
+  // No public tokens.
+  $result: map.set(
+    $result,
+    'label-text-tracking',
+    map.get(filter.$values, 'label-text-tracking')
+  );
+  @if $chip == 'filter-chip' {
+    $result: map.set(
+      $result,
+      'flat-hover-container-elevation',
+      map.get(filter.$values, 'flat-selected-hover-container-elevation')
+    );
+  }
+  @return $result;
+}
+
+/// The values of the expressive (`expressive`) filter and input chips, after
+/// the FilterChip and InputChip overloads with `shapes` (ChipsTokens and
+/// FilterChipDefaults/InputChipDefaults.shapes()).
+@function expressive-values() {
+  @return (
+    'shape': map.get(chips.$values, 'unselected-shape'),
+    'selected-shape': map.get(chips.$values, 'selected-shape'),
+    'pressed-shape': map.get(chips.$values, 'pressed-shape'),
+    'unselected-leading-icon-color': map.get(chips.$values, 'unselected-leading-icon-color'),
+    // FilterChipDefaults/InputChipDefaults.CompactHorizontalSpacing.
+    'compact-space': 4px,
+  );
+}

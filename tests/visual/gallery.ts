@@ -338,6 +338,7 @@ const galleries: Record<string, Gallery> = {
       {name: 'filter', render: (s: State) => html`<petal-filter-chip data-subject label="Filter" ?disabled=${disabled(s)}></petal-filter-chip>`},
       {name: 'filter selected', render: (s: State) => html`<petal-filter-chip data-subject selected label="Filter" ?disabled=${disabled(s)}></petal-filter-chip>`},
       {name: 'filter removable', render: (s: State) => html`<petal-filter-chip data-subject removable selected label="Filter" ?disabled=${disabled(s)}></petal-filter-chip>`},
+      {name: 'filter expressive', render: (s: State) => html`<petal-filter-chip data-subject expressive selected label="Filter" ?disabled=${disabled(s)}></petal-filter-chip>`},
       {name: 'input', render: (s: State) => html`<petal-input-chip data-subject label="Input" ?disabled=${disabled(s)}></petal-input-chip>`},
       {name: 'suggestion', render: (s: State) => html`<petal-suggestion-chip data-subject label="Suggestion" ?disabled=${disabled(s)}></petal-suggestion-chip>`},
     ],

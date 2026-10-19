@@ -1,6 +1,7 @@
 //
 // Copyright 2023 Google LLC
 // SPDX-License-Identifier: Apache-2.0
+// Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
 //
 
 // go/keep-sorted start
@@ -9,6 +10,8 @@
 // go/keep-sorted end
 // go/keep-sorted start
 @use '../../tokens';
+@use './compose-values' as compose;
+@use './expressive';
 // go/keep-sorted end
 
 @mixin theme($tokens) {
@@ -25,7 +28,7 @@
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-input-chip-values();
+  $tokens: compose.values('input-chip');
 
   :host {
     // Only use the logical properties.
@@ -35,27 +38,8 @@
     }
   }
 
-  :host([avatar]) {
-    // Use a rounded border by default for avatar chips. Recreating the
-    // fallbacks allows `--md-input-chip-container-shape` to cascade and
-    // override this without needing to add more specificity for avatar chips.
-    --_container-shape-start-start: var(
-      --md-input-chip-container-shape-start-start,
-      var(--md-input-chip-container-shape, calc(var(--_container-height) / 2))
-    );
-    --_container-shape-start-end: var(
-      --md-input-chip-container-shape-start-end,
-      var(--md-input-chip-container-shape, calc(var(--_container-height) / 2))
-    );
-    --_container-shape-end-end: var(
-      --md-input-chip-container-shape-end-end,
-      var(--md-input-chip-container-shape, calc(var(--_container-height) / 2))
-    );
-    --_container-shape-end-start: var(
-      --md-input-chip-container-shape-end-start,
-      var(--md-input-chip-container-shape, calc(var(--_container-height) / 2))
-    );
-  }
+  // The container keeps its shape with an avatar; only the avatar is round
+  // (InputChip in Chip.kt).
 
   .avatar .primary.action {
     padding-inline-start: 4px;
@@ -69,6 +53,23 @@
 
   .disabled.avatar .leading.icon {
     opacity: var(--_disabled-avatar-opacity);
+  }
+
+  @include expressive.styles('input-chip');
+
+  // Expressive: CompactHorizontalSpacing next to the leading icon or avatar
+  // and before the trailing icon (InputChipDefaults.horizontalArrangement()).
+  // Without a leading icon, the label starts 4dp after the 4dp padding.
+  :host([expressive]) .container:not(.avatar) .primary.action {
+    padding-inline-start: var(--_with-leading-icon-leading-space);
+  }
+
+  :host([expressive]) .leading.icon ::slotted(*) {
+    margin-inline-end: var(--_compact-space);
+  }
+
+  :host([expressive]) :is(.has-icon, .avatar) .trailing.action {
+    padding-inline-start: var(--_compact-space);
   }
 
   @media (forced-colors: active) {

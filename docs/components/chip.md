@@ -326,6 +326,40 @@ offer generated suggestions, such as quick replies or search refinements.
 </petal-chip-set>
 ```
 
+## Compose behavior
+
+Chips follow Jetpack Compose Material 3 (`AssistChip`, `FilterChip`,
+`InputChip`, `SuggestionChip`):
+
+*   Chips are 32dp high with corner.small (8dp) corners, also input chips with
+    an avatar (only the avatar is round). The label is 16dp from the sides, 8dp
+    next to an icon; input chips have 12dp without an icon.
+*   The ripple has the content color of the chip's surface: on-surface, or
+    on-secondary-container when a filter or input chip is selected.
+*   When a filter chip is selected, the checkmark takes its space from the
+    start on the fast spatial spring and fades in; when it is deselected, the
+    space shrinks on the default effects spring and the checkmark fades out. A
+    chip with its own icon swaps the icon for the checkmark.
+*   A flat filter chip rises to elevation level 1 while hovered.
+
+### Expressive
+
+`expressive` gives filter and input chips the expressive shapes of Compose's
+`FilterChip` and `InputChip` with `shapes`: corner.medium (12dp) when not
+selected, fully rounded when selected and corner.small while pressed, morphing
+on the fast spatial spring. The space between an icon and the label is 4dp and
+the leading icon is on-surface-variant. Assist and suggestion chips have no
+expressive shapes in Compose, so mixing them with expressive chips mixes
+corner sizes.
+
+```html
+<petal-chip-set>
+  <petal-filter-chip expressive label="Nearby" selected></petal-filter-chip>
+  <petal-filter-chip expressive label="Open now"></petal-filter-chip>
+  <petal-filter-chip expressive label="Pet friendly"></petal-filter-chip>
+</petal-chip-set>
+```
+
 ## Theming
 
 Chips support [Material theming](../theming/README.md) and can be customized in
@@ -525,6 +559,7 @@ Token                                   | Default value
 | `elevated` | `elevated` | `boolean` | `false` |  |
 | `removable` | `removable` | `boolean` | `false` |  |
 | `selected` | `selected` | `boolean` | `false` |  |
+| `expressive` | `expressive` | `boolean` | `false` | Whether the chip has the expressive shapes of Compose's FilterChip with `shapes`: rounder while not selected, fully rounded when selected and less round while pressed, morphing on a spring. The spacing next to the icons is tighter and the leading icon is on-surface-variant. |
 | `hasSelectedIcon` | `has-selected-icon` | `boolean` | `false` | Only needed for SSR.<br>Add this attribute when a filter chip has a `slot="selected-icon"` to avoid a Flash Of Unstyled Content. |
 | `disabled` | `disabled` | `boolean` | `false` | Whether or not the chip is disabled.<br>Disabled chips are not focusable, unless `always-focusable` is set. |
 | `softDisabled` | `soft-disabled` | `boolean` | `false` | Whether or not the chip is "soft-disabled" (disabled but still focusable).<br>Use this when a chip needs increased visibility when disabled. See https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_disabled_controls for more guidance on when this is needed. |
@@ -562,6 +597,7 @@ Token                                   | Default value
 | `referrerPolicy` | `referrerpolicy` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `referrerpolicy` attribute when `href` is set. |
 | `removeOnly` | `remove-only` | `boolean` | `false` |  |
 | `selected` | `selected` | `boolean` | `false` |  |
+| `expressive` | `expressive` | `boolean` | `false` | Whether the chip has the expressive shapes of Compose's InputChip with `shapes`: rounder while not selected, fully rounded when selected and less round while pressed, morphing on a spring. The spacing next to the icons is tighter and the leading icon is on-surface-variant. |
 | `disabled` | `disabled` | `boolean` | `false` | Whether or not the chip is disabled.<br>Disabled chips are not focusable, unless `always-focusable` is set. |
 | `softDisabled` | `soft-disabled` | `boolean` | `false` | Whether or not the chip is "soft-disabled" (disabled but still focusable).<br>Use this when a chip needs increased visibility when disabled. See https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_disabled_controls for more guidance on when this is needed. |
 | `alwaysFocusable` | `always-focusable` | `boolean` | `false` | When true, allow disabled chips to be focused with arrow keys.<br>Add this when a chip needs increased visibility when disabled. See https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#kbd_disabled_controls for more guidance on when this is needed. |
