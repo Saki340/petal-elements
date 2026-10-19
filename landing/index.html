@@ -11,7 +11,7 @@
     <title>petal-elements · Material 3 Expressive web components</title>
     <meta
       name="description"
-      content="Community-maintained Material 3 Expressive web components: button sizes, shape morphing, spring motion and button groups. Works with any framework." />
+      content="Community-maintained Material 3 Expressive web components: navigation, sheets, dialogs, forms and buttons that morph and move on Jetpack Compose's springs. Works with any framework." />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -57,9 +57,9 @@
           <h1>Expressive Material&nbsp;3, for&nbsp;the&nbsp;web.</h1>
           <p class="lead">
             petal-elements brings Material 3 Expressive to plain HTML and any
-            framework: sized buttons that morph when pressed, spring motion,
-            button groups, and the accessible, form-ready components you know
-            from material-web.
+            framework: navigation rails and drawers, sheets, dialogs, menus,
+            form controls and buttons that morph when pressed, all moving on
+            Jetpack Compose's springs, accessible and form-ready.
           </p>
           <div class="actions">
             <petal-filled-button size="medium" href="#start">Get started</petal-filled-button>
@@ -92,6 +92,245 @@
             </petal-filled-icon-button>
           </div>
           <p class="hint">These are the real components. Press, toggle, tab through them.</p>
+        </div>
+      </section>
+
+      <section class="section showcase" id="showcase" aria-labelledby="showcase-title">
+        <h2 id="showcase-title">See it on a real page</h2>
+        <p class="section-lead">
+          Three web pages made only of petal-elements components. Everything in
+          the window is live: click, type and scroll. Switch to the mobile width
+          to see the same page adapt.
+        </p>
+
+        <div class="showcase-controls">
+          <petal-tabs id="scene-tabs" aria-label="Example page">
+            <petal-primary-tab inline-icon data-scene="dashboard"><petal-icon slot="icon">dashboard</petal-icon>Dashboard</petal-primary-tab>
+            <petal-primary-tab inline-icon data-scene="form"><petal-icon slot="icon">assignment</petal-icon>Sign-up form</petal-primary-tab>
+            <petal-primary-tab inline-icon data-scene="shop"><petal-icon slot="icon">storefront</petal-icon>Shop</petal-primary-tab>
+          </petal-tabs>
+          <petal-button-group id="width-toggle" class="width-toggle" connected single-select size="xsmall" aria-label="Window width">
+            <petal-filled-tonal-button toggle selected data-width="desktop"><petal-icon slot="icon">desktop_windows</petal-icon>Desktop</petal-filled-tonal-button>
+            <petal-filled-tonal-button toggle data-width="mobile"><petal-icon slot="icon">smartphone</petal-icon>Mobile</petal-filled-tonal-button>
+          </petal-button-group>
+        </div>
+
+        <div class="browser" id="browser">
+          <div class="browser-bar" aria-hidden="true">
+            <span class="dots"><i></i><i></i><i></i></span>
+            <span class="address"><petal-icon>lock</petal-icon><span id="address">app.example.com/orders</span></span>
+          </div>
+          <div class="viewport" id="viewport">
+
+            <!-- Dashboard -->
+            <div class="page dashboard" data-scene="dashboard">
+              <petal-navigation-rail id="dash-rail" class="dash-rail" aria-label="Main">
+                <petal-icon-button slot="header" id="dash-rail-toggle" aria-label="Expand navigation"><petal-icon>menu</petal-icon></petal-icon-button>
+                <petal-navigation-rail-item><petal-icon slot="icon">home</petal-icon>Home</petal-navigation-rail-item>
+                <petal-navigation-rail-item selected><petal-icon slot="icon">receipt_long</petal-icon>Orders</petal-navigation-rail-item>
+                <petal-navigation-rail-item><petal-icon slot="icon">group</petal-icon>Customers</petal-navigation-rail-item>
+                <petal-navigation-rail-item><petal-icon slot="icon">bar_chart</petal-icon>Reports</petal-navigation-rail-item>
+              </petal-navigation-rail>
+              <div class="dash-main scroll">
+                <header class="dash-header">
+                  <h3 class="page-title">Orders</h3>
+                  <petal-search-bar id="dash-search" class="dash-search" layout="docked" placeholder="Search orders"></petal-search-bar>
+                  <span class="anchor-wrap">
+                    <petal-icon-button id="dash-account" aria-label="Account"><petal-icon>account_circle</petal-icon></petal-icon-button>
+                    <petal-menu id="dash-account-menu" anchor="dash-account" anchor-corner="end-end" menu-corner="start-end">
+                      <petal-menu-group>
+                        <petal-menu-item><petal-icon slot="start">person</petal-icon><div slot="headline">Profile</div></petal-menu-item>
+                        <petal-menu-item><petal-icon slot="start">settings</petal-icon><div slot="headline">Settings</div></petal-menu-item>
+                      </petal-menu-group>
+                      <petal-menu-group>
+                        <petal-menu-item id="dash-sign-out"><petal-icon slot="start">logout</petal-icon><div slot="headline">Sign out</div></petal-menu-item>
+                      </petal-menu-group>
+                    </petal-menu>
+                  </span>
+                </header>
+                <div class="stats">
+                  <petal-filled-card class="stat"><span class="stat-label">Revenue</span><strong>¥1,284,500</strong><span class="trend up"><petal-icon>trending_up</petal-icon>12% this month</span></petal-filled-card>
+                  <petal-filled-card class="stat"><span class="stat-label">Orders</span><strong id="dash-count">128</strong><span class="trend up"><petal-icon>trending_up</petal-icon>8 today</span></petal-filled-card>
+                  <petal-filled-card class="stat"><span class="stat-label">Refunds</span><strong>3</strong><span class="trend down"><petal-icon>trending_down</petal-icon>2 fewer</span></petal-filled-card>
+                </div>
+                <div class="toolbar-row">
+                  <petal-chip-set id="dash-filters" aria-label="Status">
+                    <petal-filter-chip label="All" selected data-status=""></petal-filter-chip>
+                    <petal-filter-chip label="Paid" data-status="Paid"></petal-filter-chip>
+                    <petal-filter-chip label="Pending" data-status="Pending"></petal-filter-chip>
+                    <petal-filter-chip label="Refunded" data-status="Refunded"></petal-filter-chip>
+                  </petal-chip-set>
+                  <petal-filled-button id="dash-new"><petal-icon slot="icon">add</petal-icon>New order</petal-filled-button>
+                </div>
+                <petal-outlined-card class="orders">
+                  <petal-list id="dash-orders" aria-label="Orders"></petal-list>
+                </petal-outlined-card>
+              </div>
+              <petal-navigation-bar class="dash-bar" aria-label="Main">
+                <petal-navigation-bar-item><petal-icon slot="icon">home</petal-icon>Home</petal-navigation-bar-item>
+                <petal-navigation-bar-item selected><petal-icon slot="icon">receipt_long</petal-icon>Orders</petal-navigation-bar-item>
+                <petal-navigation-bar-item><petal-icon slot="icon">group</petal-icon>Customers</petal-navigation-bar-item>
+                <petal-navigation-bar-item><petal-icon slot="icon">bar_chart</petal-icon>Reports</petal-navigation-bar-item>
+              </petal-navigation-bar>
+            </div>
+
+            <!-- Sign-up form -->
+            <div class="page form-page scroll" data-scene="form" hidden>
+              <petal-outlined-card class="form-card">
+                <petal-linear-progress id="signup-progress" class="form-progress" wavy indeterminate hidden></petal-linear-progress>
+                <form id="signup" class="signup" novalidate>
+                  <h3 class="page-title">Create your account</h3>
+                  <p class="muted">Start a 30-day trial. No card needed.</p>
+                  <div class="two">
+                    <petal-outlined-text-field id="signup-name" label="Full name" required autocomplete="off" error-text="Enter your name"></petal-outlined-text-field>
+                    <petal-outlined-text-field label="Company" autocomplete="off"></petal-outlined-text-field>
+                  </div>
+                  <petal-outlined-text-field id="signup-email" label="Work email" type="email" required autocomplete="off" supporting-text="We send the sign-in link here" error-text="Enter a valid email address"></petal-outlined-text-field>
+                  <petal-outlined-text-field id="signup-password" label="Password" type="password" required minlength="8" autocomplete="off" supporting-text="At least 8 characters" error-text="Use at least 8 characters">
+                    <petal-icon-button id="signup-show" slot="trailing-icon" toggle aria-label="Show password">
+                      <petal-icon>visibility</petal-icon>
+                      <petal-icon slot="selected">visibility_off</petal-icon>
+                    </petal-icon-button>
+                  </petal-outlined-text-field>
+                  <fieldset class="plans">
+                    <legend>Plan</legend>
+                    <label class="plan"><petal-radio name="plan" value="Free" checked></petal-radio><span><b>Free</b> · 3 projects</span></label>
+                    <label class="plan"><petal-radio name="plan" value="Pro"></petal-radio><span><b>Pro</b> · ¥1,200 / month</span></label>
+                    <label class="plan"><petal-radio name="plan" value="Team"></petal-radio><span><b>Team</b> · ¥4,800 / month</span></label>
+                  </fieldset>
+                  <div class="two">
+                    <petal-outlined-select id="signup-country" label="Country">
+                      <petal-select-option value="jp" selected><div slot="headline">Japan</div></petal-select-option>
+                      <petal-select-option value="cn"><div slot="headline">China</div></petal-select-option>
+                      <petal-select-option value="us"><div slot="headline">United States</div></petal-select-option>
+                      <petal-select-option value="de"><div slot="headline">Germany</div></petal-select-option>
+                    </petal-outlined-select>
+                    <div class="slider-field">
+                      <span class="field-label">Team size: <b id="team-size-value">5</b></span>
+                      <petal-slider id="signup-team" min="1" max="50" value="5" labeled aria-label="Team size"></petal-slider>
+                    </div>
+                  </div>
+                  <label class="check"><petal-checkbox checked></petal-checkbox>Send me product updates</label>
+                  <label class="check"><petal-switch id="signup-2fa" selected></petal-switch>Two-step verification</label>
+                  <div class="form-actions">
+                    <petal-text-button type="reset">Clear</petal-text-button>
+                    <petal-filled-button id="signup-submit" type="submit">Create account</petal-filled-button>
+                  </div>
+                </form>
+              </petal-outlined-card>
+            </div>
+
+            <!-- Shop -->
+            <div class="page shop scroll" data-scene="shop" hidden>
+              <header class="shop-header">
+                <span class="shop-brand">
+                  <svg viewBox="0 0 36 36" aria-hidden="true"><ellipse cx="18" cy="10" rx="5" ry="8" fill="#F48FB1" /><ellipse cx="26" cy="18" rx="8" ry="5" fill="#EC407A" /><ellipse cx="18" cy="26" rx="5" ry="8" fill="#F06292" /><ellipse cx="10" cy="18" rx="8" ry="5" fill="#F8BBD0" /><circle cx="18" cy="18" r="4" fill="#FFD54F" /></svg>
+                  Petal Florist
+                </span>
+                <petal-search-bar class="shop-search" layout="docked" placeholder="Search flowers"></petal-search-bar>
+                <span class="cart">
+                  <petal-icon-button id="shop-cart" aria-label="Cart"><petal-icon>shopping_bag</petal-icon></petal-icon-button>
+                  <span class="badge" id="shop-count" hidden>0</span>
+                </span>
+              </header>
+              <petal-tabs id="shop-tabs" class="shop-tabs" aria-label="Category">
+                <petal-secondary-tab>Bouquets</petal-secondary-tab>
+                <petal-secondary-tab>Plants</petal-secondary-tab>
+                <petal-secondary-tab>Gifts</petal-secondary-tab>
+              </petal-tabs>
+              <petal-chip-set class="shop-filters" aria-label="Filters">
+                <petal-filter-chip label="Same-day delivery"></petal-filter-chip>
+                <petal-filter-chip label="Under ¥5,000"></petal-filter-chip>
+                <petal-filter-chip label="Eco packaging"></petal-filter-chip>
+              </petal-chip-set>
+              <div class="products" id="shop-products"></div>
+            </div>
+
+            <petal-snackbar id="page-snackbar"></petal-snackbar>
+          </div>
+        </div>
+
+        <div class="scene-notes">
+          <p class="notes" data-scene="dashboard"><b>Try it:</b> expand the rail with the menu button, filter the orders with the chips, search them, open the account menu, and add an order. In the mobile width the rail turns into a navigation bar.</p>
+          <p class="notes" data-scene="form" hidden><b>Try it:</b> submit the empty form to see the errors, show the password, pick a plan and a country, drag the team size, then create the account.</p>
+          <p class="notes" data-scene="shop" hidden><b>Try it:</b> switch the category tabs, save a flower (hover the heart for its tooltip), add flowers to the cart and open the cart.</p>
+        </div>
+
+        <petal-dialog id="order-dialog">
+          <div slot="headline">New order</div>
+          <form slot="content" id="order-form" method="dialog" class="dialog-form">
+            <petal-outlined-text-field id="order-customer" label="Customer" value="Mei Chen" autocomplete="off"></petal-outlined-text-field>
+            <petal-outlined-text-field id="order-amount" label="Amount" type="number" prefix-text="¥" value="8400"></petal-outlined-text-field>
+            <petal-outlined-select id="order-status" label="Status">
+              <petal-select-option value="Paid" selected><div slot="headline">Paid</div></petal-select-option>
+              <petal-select-option value="Pending"><div slot="headline">Pending</div></petal-select-option>
+            </petal-outlined-select>
+          </form>
+          <div slot="actions">
+            <petal-text-button form="order-form" value="cancel">Cancel</petal-text-button>
+            <petal-filled-button form="order-form" value="save">Save order</petal-filled-button>
+          </div>
+        </petal-dialog>
+
+        <petal-dialog id="welcome-dialog">
+          <petal-icon slot="icon">celebration</petal-icon>
+          <div slot="headline" id="welcome-title">Welcome!</div>
+          <form slot="content" id="welcome-form" method="dialog">Your account is ready. We sent a sign-in link to your email.</form>
+          <div slot="actions">
+            <petal-filled-button form="welcome-form" value="ok">Get started</petal-filled-button>
+          </div>
+        </petal-dialog>
+
+        <petal-dialog id="cart-dialog">
+          <div slot="headline">Your cart</div>
+          <div slot="content" class="cart-content">
+            <petal-list id="cart-list" aria-label="Cart"></petal-list>
+            <p class="cart-total" id="cart-total"></p>
+          </div>
+          <div slot="actions">
+            <petal-text-button id="cart-close">Keep shopping</petal-text-button>
+            <petal-split-button id="cart-checkout" size="small" trailing-label="Payment method">Checkout</petal-split-button>
+            <petal-menu id="cart-pay-menu" anchor="cart-checkout" single-radio anchor-corner="end-end" menu-corner="start-end">
+              <petal-menu-item type="menuitemradio" checked><petal-icon slot="start">credit_card</petal-icon><div slot="headline">Card</div></petal-menu-item>
+              <petal-menu-item type="menuitemradio"><petal-icon slot="start">account_balance</petal-icon><div slot="headline">Bank transfer</div></petal-menu-item>
+            </petal-menu>
+          </div>
+        </petal-dialog>
+      </section>
+
+      <section class="section production" aria-labelledby="production-title">
+        <h2 id="production-title">Used in production</h2>
+        <div class="case surface">
+          <div class="case-text">
+            <p class="eyebrow">rate.anontokyo.vip</p>
+            <h3>JPY ⇄ CNY exchange rates</h3>
+            <p>
+              A live currency site built with petal-elements: today's rate and its
+              trend, a converter, saved amounts and historical rates, in
+              Japanese, Chinese and English, light and dark. It uses about twenty
+              components, from the top app bar and pull to refresh to button
+              groups, menu groups, dialogs and the theme transition.
+            </p>
+            <ul class="case-components" aria-label="Components it uses">
+              <li>Top app bar</li><li>Pull to refresh</li><li>Cards</li><li>Button group</li>
+              <li>Menu groups</li><li>Text fields</li><li>Dialog</li><li>Snackbar</li>
+              <li>Tooltip</li><li>Assist chips</li><li>Loading indicator</li><li>Theme transition</li>
+            </ul>
+            <div class="actions">
+              <petal-filled-button href="https://rate.anontokyo.vip/" target="_blank"><petal-icon slot="icon">open_in_new</petal-icon>Open the site</petal-filled-button>
+              <petal-outlined-button href="https://github.com/Saki340/cny-jpy-rate" target="_blank">Source code</petal-outlined-button>
+            </div>
+          </div>
+          <div class="case-shots">
+            <figure class="shot-desktop">
+              <img class="shot light" src="assets/rate-desktop-light.webp" width="1280" height="800" loading="lazy" alt="rate.anontokyo.vip on a desktop: today's JPY to CNY rate, a converter, and the rate trend." />
+              <img class="shot dark" src="assets/rate-desktop-dark.webp" width="1280" height="800" loading="lazy" alt="rate.anontokyo.vip on a desktop in the dark theme." />
+            </figure>
+            <figure class="shot-mobile">
+              <img class="shot light" src="assets/rate-mobile-light.webp" width="390" height="844" loading="lazy" alt="rate.anontokyo.vip on a phone." />
+              <img class="shot dark" src="assets/rate-mobile-dark.webp" width="390" height="844" loading="lazy" alt="rate.anontokyo.vip on a phone in the dark theme." />
+            </figure>
+          </div>
         </div>
       </section>
 

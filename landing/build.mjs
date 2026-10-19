@@ -43,6 +43,9 @@ fs.copyFileSync('landing/index.html', `${OUT}/index.html`);
 fs.copyFileSync('landing/styles.css', `${OUT}/assets/styles.css`);
 fs.copyFileSync('tokens/css/sys.css', `${OUT}/assets/sys.css`);
 fs.copyFileSync('catalog/site/images/favicon.svg', `${OUT}/favicon.svg`);
+for (const image of fs.readdirSync('landing/images')) {
+  fs.copyFileSync(`landing/images/${image}`, `${OUT}/assets/${image}`);
+}
 console.log(`Landing page in ${OUT}/`);
 
 if (process.argv.includes('--site')) {
