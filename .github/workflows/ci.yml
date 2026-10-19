@@ -16,7 +16,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        # ubuntu-24.04: Playwright cannot install Chromium on newer images
+        # (ubuntu-latest moves to them).
+        os: [ubuntu-24.04, windows-latest]
     runs-on: ${{ matrix.os }}
 
     steps:
