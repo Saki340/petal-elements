@@ -19,11 +19,15 @@ import 'petal-elements/chips/chip-set.js';
 import 'petal-elements/chips/filter-chip.js';
 import 'petal-elements/dialog/dialog.js';
 import 'petal-elements/fab/fab.js';
+import 'petal-elements/fabmenu/fab-menu.js';
+import 'petal-elements/fabmenu/fab-menu-item.js';
+import 'petal-elements/fabmenu/toggle-fab.js';
 import 'petal-elements/icon/icon.js';
 import 'petal-elements/iconbutton/filled-icon-button.js';
 import 'petal-elements/iconbutton/icon-button.js';
 import 'petal-elements/list/list.js';
 import 'petal-elements/list/list-item.js';
+import 'petal-elements/loadingindicator/loading-indicator.js';
 import 'petal-elements/menu/menu.js';
 import 'petal-elements/menu/menu-group.js';
 import 'petal-elements/menu/menu-item.js';
@@ -541,3 +545,34 @@ checkout.addEventListener('click', () => {
   updateCart();
   void notify('Order placed. Thank you!');
 });
+
+// ---------- Split button and progress demo ----------
+
+{
+  const split = document.getElementById('demo-split') as HTMLElement & {checked: boolean};
+  const menu = document.getElementById('demo-split-menu') as HTMLElement & {open: boolean};
+  const loading = document.getElementById('demo-loading')!;
+  const progress = document.getElementById('demo-progress') as HTMLElement & {value: number};
+  split.addEventListener('change', () => {
+    menu.open = split.checked;
+  });
+  menu.addEventListener('closed', () => {
+    split.checked = false;
+  });
+  // The main action: a download that takes two seconds.
+  split.addEventListener('click', () => {
+    if (!loading.hidden) return;
+    loading.hidden = false;
+    const start = performance.now();
+    const step = (now: number) => {
+      progress.value = Math.min(1, (now - start) / 2000);
+      if (progress.value < 1) {
+        requestAnimationFrame(step);
+        return;
+      }
+      loading.hidden = true;
+      setTimeout(() => (progress.value = 0), 800);
+    };
+    requestAnimationFrame(step);
+  });
+}

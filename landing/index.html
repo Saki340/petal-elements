@@ -337,8 +337,9 @@
       <section class="section" aria-labelledby="expressive-title">
         <h2 id="expressive-title">Material 3 Expressive, built in</h2>
         <p class="section-lead">
-          Opt-in additions on top of the classic components. Without them, your
-          buttons look exactly as before.
+          Sizes, shapes and motion read from the Jetpack Compose sources. The
+          expressive motion scheme is the default: things move on springs and
+          overshoot a little.
         </p>
 
         <div class="features">
@@ -384,14 +385,47 @@
           </article>
 
           <article class="feature surface">
-            <h3>Solid FABs</h3>
-            <p>Filled primary, secondary and tertiary FABs next to the container colors.</p>
-            <div class="demo">
-              <petal-fab variant="filled-primary" aria-label="Edit"><petal-icon slot="icon">edit</petal-icon></petal-fab>
-              <petal-fab variant="filled-secondary" aria-label="Share"><petal-icon slot="icon">share</petal-icon></petal-fab>
-              <petal-fab variant="filled-tertiary" label="Compose"><petal-icon slot="icon">edit_square</petal-icon></petal-fab>
+            <h3>Tabs that slide</h3>
+            <p>The indicator moves and resizes on a spring, under the label. Scrollable rows center the selected tab.</p>
+            <div class="demo tabs-demo">
+              <petal-tabs aria-label="Travel">
+                <petal-primary-tab><petal-icon slot="icon">flight</petal-icon>Flights</petal-primary-tab>
+                <petal-primary-tab active><petal-icon slot="icon">hotel</petal-icon>Hotels</petal-primary-tab>
+                <petal-primary-tab><petal-icon slot="icon">explore</petal-icon>Explore</petal-primary-tab>
+              </petal-tabs>
             </div>
           </article>
+
+          <article class="feature surface">
+            <h3>FAB menu</h3>
+            <p>The button morphs into a close button while the actions come in one after another.</p>
+            <div class="demo fab-menu-demo">
+              <petal-fab-menu items-label="Create">
+                <petal-fab-menu-item><petal-icon slot="icon">edit_note</petal-icon>Note</petal-fab-menu-item>
+                <petal-fab-menu-item><petal-icon slot="icon">checklist</petal-icon>List</petal-fab-menu-item>
+                <petal-fab-menu-item><petal-icon slot="icon">photo_camera</petal-icon>Photo</petal-fab-menu-item>
+                <petal-toggle-fab slot="button" aria-label="Create"></petal-toggle-fab>
+              </petal-fab-menu>
+            </div>
+          </article>
+
+          <article class="feature surface">
+            <h3>Split buttons and progress</h3>
+            <p>A main action with a menu of options, and wavy progress and the loading indicator while it runs.</p>
+            <div class="demo progress-demo">
+              <span class="anchor-wrap">
+                <petal-split-button id="demo-split" size="medium" trailing-label="Format"><petal-icon slot="icon">download</petal-icon>Download</petal-split-button>
+                <petal-menu id="demo-split-menu" anchor="demo-split" single-radio anchor-corner="end-end" menu-corner="start-end">
+                  <petal-menu-item type="menuitemradio" checked><div slot="headline">PDF</div></petal-menu-item>
+                  <petal-menu-item type="menuitemradio"><div slot="headline">Word</div></petal-menu-item>
+                  <petal-menu-item type="menuitemradio"><div slot="headline">Markdown</div></petal-menu-item>
+                </petal-menu>
+              </span>
+              <petal-loading-indicator id="demo-loading" hidden></petal-loading-indicator>
+              <petal-linear-progress id="demo-progress" class="fill" wavy value="0"></petal-linear-progress>
+            </div>
+          </article>
+
         </div>
       </section>
 

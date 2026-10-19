@@ -476,6 +476,30 @@ thead th {
 
 /* ---------- Small screens ---------- */
 
+
+.tabs-demo petal-tabs {
+  flex: 1;
+  min-width: 0;
+}
+
+.fab-menu-demo {
+  min-height: 268px;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+.progress-demo {
+  flex-wrap: wrap;
+}
+
+.progress-demo .fill {
+  flex-basis: 100%;
+}
+
+.progress-demo petal-loading-indicator[hidden] {
+  display: none;
+}
+
 /* ---------- Example pages ---------- */
 
 .showcase-controls {
@@ -484,6 +508,11 @@ thead th {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
+}
+
+/* On a narrow screen the tabs get their own line and scroll inside it. */
+.showcase-controls petal-tabs {
+  min-width: 0;
 }
 
 /* A browser window. Its viewport is the containing block of the snackbar
@@ -939,6 +968,8 @@ thead th {
   .dash-search {
     order: 3;
     width: 100%;
+    /* Below the search bar's 360px minimum (SearchBarMinWidth) on a phone. */
+    min-width: 0;
   }
 
   .stats {
