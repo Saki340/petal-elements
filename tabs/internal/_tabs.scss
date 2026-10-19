@@ -1,18 +1,21 @@
 //
 // Copyright 2023 Google LLC
 // SPDX-License-Identifier: Apache-2.0
+// Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
 //
 
-// Note, there are currently no tokens for tabs. Instead, tabs are entirely
-// themed via primary/secondary tab.
+// A tab row, after Jetpack Compose Material 3 (PrimaryTabRow, SecondaryTabRow
+// and their scrollable versions in TabRow.kt). The tabs share the row's width
+// equally; with `scrollable` they are as wide as their content (90dp at least,
+// ScrollableTabRowMinTabWidth) between 52dp of space at the start and the end
+// (ScrollableTabRowEdgeStartPadding). The divider (HorizontalDivider) is drawn
+// at the bottom of the row, under the indicators, and does not scroll. Note,
+// there are currently no tokens for tabs. Instead, tabs are entirely themed via
+// primary/secondary tab.
 @mixin styles() {
   :host {
     box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    overflow: auto;
-    scroll-behavior: smooth;
-    scrollbar-width: none;
+    display: block;
     position: relative;
   }
 
@@ -20,28 +23,50 @@
     display: none;
   }
 
-  :host::-webkit-scrollbar {
+  // The scroller: the row scrolls when the tabs do not fit.
+  .tabs {
+    align-items: stretch;
+    box-sizing: border-box;
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    position: relative;
+    scrollbar-width: none;
+    width: 100%;
+    // Above the divider.
+    z-index: 1;
+  }
+
+  .tabs::-webkit-scrollbar {
     display: none;
   }
 
-  .tabs {
-    align-items: end;
-    display: flex;
-    height: 100%;
-    overflow: inherit;
-    scroll-behavior: inherit;
-    scrollbar-width: inherit;
-    justify-content: space-between;
-    width: 100%;
+  petal-divider {
+    inset: auto 0 0 0;
+    position: absolute;
+    z-index: 0;
   }
 
   ::slotted(*) {
     flex: 1;
+    // The tab does not draw its container over the divider.
+    --md-tab-divider-inset: var(--md-divider-thickness, 1px);
   }
 
   // draw selected on top so its indicator can be transitioned from the
   // previously selected tab, on top of it
   ::slotted([active]) {
     z-index: 1;
+  }
+
+  // ScrollableTabRowMinTabWidth and ScrollableTabRowEdgeStartPadding, which a
+  // page can change.
+  :host([scrollable]) .tabs {
+    padding-inline: var(--md-tabs-scrollable-edge-padding, 52px);
+  }
+
+  :host([scrollable]) ::slotted(*) {
+    flex: none;
+    min-width: var(--md-tabs-scrollable-min-tab-width, 90px);
   }
 }

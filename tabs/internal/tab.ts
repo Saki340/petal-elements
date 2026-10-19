@@ -19,7 +19,11 @@ import {
 } from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 
-import {EASING} from '../../internal/motion/animation.js';
+import {
+  DEFAULT_SPATIAL,
+  springEasing,
+  springFromCss,
+} from '../../internal/motion/spring.js';
 import {mixinFocusable} from '../../labs/behaviors/focusable.js';
 
 /**
@@ -140,52 +144,39 @@ export class Tab extends tabBaseClass {
   }
 
   [ANIMATE_INDICATOR](previousTab: Tab) {
-    if (!this.indicator) {
+    if (isServer || !this.indicator) {
       return;
     }
 
     this.indicator.getAnimations().forEach((a) => {
       a.cancel();
     });
-    const frames = this.getKeyframes(previousTab);
-    if (frames !== null) {
-      this.indicator.animate(frames, {
-        duration: 250,
-        easing: EASING.EMPHASIZED,
-      });
-    }
-  }
-
-  private getKeyframes(previousTab: Tab) {
-    const reduceMotion = shouldReduceMotion();
-    if (!this.active) {
-      return reduceMotion ? [{'opacity': 1}, {'transform': 'none'}] : null;
+    const previous = previousTab.indicator;
+    if (!previous || shouldReduceMotion()) {
+      return;
     }
 
-    const from: Keyframe = {};
-    const fromRect =
-      previousTab.indicator?.getBoundingClientRect() ?? ({} as DOMRect);
-    const fromPos = fromRect.left;
-    const fromExtent = fromRect.width;
-    const toRect = this.indicator!.getBoundingClientRect();
-    const toPos = toRect.left;
-    const toExtent = toRect.width;
-    const scale = fromExtent / toExtent;
-    if (
-      !reduceMotion &&
-      fromPos !== undefined &&
-      toPos !== undefined &&
-      !isNaN(scale)
-    ) {
-      from['transform'] = `translateX(${(fromPos - toPos).toFixed(
-        4,
-      )}px) scaleX(${scale.toFixed(4)})`;
-    } else {
-      from['opacity'] = 0;
+    // TabIndicatorOffsetNode animates the indicator's offset and width from
+    // where they are to the new tab's on the default spatial spring. Both
+    // edges follow the same spring, which moves the offset and the width in
+    // step. The previous indicator is where the last animation left it, if one
+    // is running.
+    const from = previous.getBoundingClientRect();
+    const to = this.indicator.getBoundingClientRect();
+    if (from.width === 0 || to.width === 0) {
+      return;
     }
-    // note, including `transform: none` avoids quirky Safari behavior
-    // that can hide the animation.
-    return [from, {'transform': 'none'}];
+
+    const {easing, duration} = springEasing(
+      springFromCss(this, 'default-spatial', DEFAULT_SPATIAL),
+    );
+    this.indicator.animate(
+      [
+        {left: `${from.left - to.left}px`, right: `${to.right - from.right}px`},
+        {left: '0px', right: '0px'},
+      ],
+      {duration, easing},
+    );
   }
 
   private handleSlotChange() {

@@ -216,6 +216,38 @@ content and establish hierarchy.
 </petal-tabs>
 ```
 
+## Compose behavior
+
+Tabs follow Jetpack Compose Material 3 Expressive (`PrimaryTabRow`,
+`SecondaryTabRow`, `Tab`, `LeadingIconTab`):
+
+*   Tabs share the width of the row equally and are 48dp high, 72dp with an
+    icon above the label (the label and icon are 16dp from the sides). The
+    divider is drawn over the bottom of the row, under the indicator.
+*   The primary indicator is 3dp high, rounded, as wide as the label (24dp at
+    least) and centered; the secondary indicator is as wide as the tab. Both
+    move to the selected tab on the default spatial spring, offset and width
+    together.
+*   The content color of tabs is the color of the row (primary for primary
+    tabs, on-surface for secondary tabs), selected or not, and does not change
+    on hover, focus or press, only the ripple does. Set the inactive tokens
+    (for example `--md-primary-tab-label-text-color`) for another color; the
+    color fades on the effects springs.
+*   `scrollable` makes the row like Compose's scrollable tab rows: tabs as
+    wide as their content (90dp at least) with 52dp of space at the start and
+    the end. Change them with `--md-tabs-scrollable-min-tab-width` and
+    `--md-tabs-scrollable-edge-padding`. The selected tab scrolls to the center
+    of the row on the default spatial spring.
+
+```html
+<petal-tabs scrollable>
+  <petal-primary-tab>Video</petal-primary-tab>
+  <petal-primary-tab>Photos</petal-primary-tab>
+  <petal-primary-tab>Audio</petal-primary-tab>
+  <!-- ... -->
+</petal-tabs>
+```
+
 ## Accessibility
 
 Add an
@@ -282,7 +314,8 @@ Token                                     | Default value
 `--md-primary-tab-container-color`        | `--md-sys-color-surface`
 `--md-primary-tab-label-text-font`        | `--md-sys-typescale-title-small-font`
 `--md-primary-tab-active-indicator-color` | `--md-sys-color-primary`
-`--md-primary-tab-icon-color`             | `--md-sys-color-on-surface-variant`
+`--md-primary-tab-label-text-color`       | `--md-primary-tab-active-label-text-color` (`--md-sys-color-primary`)
+`--md-primary-tab-icon-color`             | `--md-primary-tab-active-icon-color` (`--md-sys-color-primary`)
 `--md-primary-tab-container-shape`        | `--md-sys-shape-corner-none`
 
 *   [All tokens](https://github.com/Saki340/petal-elements/blob/main/tokens/_md-comp-primary-tab.scss)
@@ -323,7 +356,8 @@ Token                                       | Default value
 `--md-secondary-tab-container-color`        | `--md-sys-color-surface`
 `--md-secondary-tab-label-text-font`        | `--md-sys-typescale-title-small-font`
 `--md-secondary-tab-active-indicator-color` | `--md-sys-color-primary`
-`--md-secondary-tab-icon-color`             | `--md-sys-color-on-surface-variant`
+`--md-secondary-tab-label-text-color`       | `--md-secondary-tab-active-label-text-color` (`--md-sys-color-on-surface`)
+`--md-secondary-tab-icon-color`             | `--md-secondary-tab-active-icon-color` (`--md-sys-color-on-surface`)
 `--md-secondary-tab-container-shape`        | `--md-sys-shape-corner-none`
 
 *   [All tokens](https://github.com/Saki340/petal-elements/blob/main/tokens/_md-comp-secondary-tab.scss)
@@ -369,6 +403,7 @@ Token                                       | Default value
 | Property | Attribute | Type | Default | Description |
 | --- | --- | --- | --- | --- |
 | `autoActivate` | `auto-activate` | `boolean` | `false` | Whether or not to automatically select a tab when it is focused. |
+| `scrollable` | `scrollable` | `boolean` | `false` | Whether the tabs are as wide as their content (90px at least) with 52px of space at the start and the end, and the row scrolls, like Compose's scrollable tab rows. |
 | `activeTabIndex` | `active-tab-index` | `number` | `undefined` |  |
 | `tabs` |  | `Tab[]` | `undefined` | The tabs of this tab bar. |
 | `activeTab` |  | `Tab` | `undefined` |  |

@@ -56,6 +56,23 @@
   larger of the spaces above and below the select less 48px; options are
   48px (was 56px) high with 16px at the sides and the label large text style
   (was body large).
+* **tabs:** tabs follow Compose's `PrimaryTabRow`, `SecondaryTabRow` and
+  `Tab`: unselected tabs have the selected content color (primary in primary
+  tabs, on-surface in secondary tabs; the inactive tokens still change it) and
+  hover, focus and press change only the ripple, which uses that color; the
+  indicator is 3px high (secondary tabs: was 2px, in primary), primary tabs
+  round all corners of it, and it is as wide as the label (24px at least),
+  moving between tabs on the default spatial spring (was 250ms emphasized
+  easing); a tab with an icon above its label is 72px (was 64px) high and
+  tabs in a row are as high as the tallest one with their content centered;
+  the divider is drawn over the bottom of the row instead of under it, so a
+  row is 48px (was 49px) high; labels get the title small letter spacing. The
+  color of a tab changes on the effects springs. New: the `scrollable`
+  attribute (tabs as wide as their content, 90px at least, with 52px of space
+  at both ends, `--md-tabs-scrollable-min-tab-width` and
+  `--md-tabs-scrollable-edge-padding`); a row scrolls its selected tab to the
+  center on a spring. The scroller is an inner element now: `scrollLeft` of
+  `<petal-tabs>` itself no longer scrolls.
 
 #### Bug fixes
 

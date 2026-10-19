@@ -10,6 +10,12 @@ import '../../divider/divider.js';
 import {html, isServer, LitElement} from 'lit';
 import {property, query, queryAssignedElements} from 'lit/decorators.js';
 
+import {
+  DEFAULT_SPATIAL,
+  Spring,
+  springFromCss,
+} from '../../internal/motion/spring.js';
+
 import {ANIMATE_INDICATOR, Tab} from './tab.js';
 
 /**
@@ -104,8 +110,23 @@ export class Tabs extends LitElement {
    */
   @property({type: Boolean, attribute: 'auto-activate'}) autoActivate = false;
 
+  /**
+   * Whether the tabs are as wide as their content (90px at least) with 52px
+   * of space at the start and the end, and the row scrolls, like Compose's
+   * scrollable tab rows. Otherwise the tabs share the width equally. The
+   * selected tab scrolls to the center of the row either way, if the row
+   * overflows.
+   */
+  @property({type: Boolean, reflect: true}) scrollable = false;
+
   @query('.tabs') private readonly tabsScrollerElement!: HTMLElement | null;
   @query('slot') private readonly slotElement!: HTMLSlotElement | null;
+
+  // The scroll position, driven like Compose's animateScrollTo on the default
+  // spatial spring (ScrollableTabData).
+  private readonly scrollSpring = new Spring(DEFAULT_SPATIAL);
+  private scrollFrame = 0;
+  private scrolledOnce = false;
 
   private get focusedTab() {
     return this.tabs.find((tab) => tab.matches(':focus-within'));
@@ -150,25 +171,85 @@ export class Tabs extends LitElement {
       await tab.updateComplete;
     }
 
-    const offset = tabToScrollTo.offsetLeft;
-    const extent = tabToScrollTo.offsetWidth;
-    const scroll = this.scrollLeft;
-    const hostExtent = this.offsetWidth;
-    const scrollMargin = 48;
-    const min = offset - scrollMargin;
-    const max = offset + extent - hostExtent + scrollMargin;
-    const to = Math.min(min, Math.max(max, scroll));
-    // When a tab is focused, use 'auto' to use the CSS `scroll-behavior`. The
-    // default behavior is smooth scrolling. However, when there is not a tab
-    // focused on initialization, use 'instant' to immediately bring the focused
-    // tab into view.
-    const behavior: ScrollBehavior = !this.focusedTab ? 'instant' : 'auto';
-    this.tabsScrollerElement.scrollTo({behavior, top: 0, left: to});
+    // Like ScrollableTabData: the tab goes to the center of the row, or as
+    // close to it as the scroll range allows.
+    const scroller = this.tabsScrollerElement;
+    const tabRect = tabToScrollTo.getBoundingClientRect();
+    const scrollerRect = scroller.getBoundingClientRect();
+    const delta =
+      tabRect.left +
+      tabRect.width / 2 -
+      (scrollerRect.left + scrollerRect.width / 2);
+    const range = scroller.scrollWidth - scroller.clientWidth;
+    const isRtl = getComputedStyle(this).direction === 'rtl';
+    const [min, max] = isRtl ? [-range, 0] : [0, range];
+    const to = Math.min(max, Math.max(min, scroller.scrollLeft + delta));
+    // The first scroll, to the selected tab when the tabs appear, is not
+    // animated.
+    const animate = this.scrolledOnce;
+    this.scrolledOnce = true;
+    this.scrollTabsTo(to, animate);
+  }
+
+  private scrollTabsTo(left: number, animate: boolean) {
+    const scroller = this.tabsScrollerElement;
+    if (!scroller) {
+      return;
+    }
+
+    const moving = this.scrollFrame !== 0;
+    this.cancelScroll();
+    if (
+      !animate ||
+      left === scroller.scrollLeft ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
+      scroller.scrollLeft = left;
+      return;
+    }
+
+    const spring = this.scrollSpring;
+    spring.spec = springFromCss(this, 'default-spatial', DEFAULT_SPATIAL);
+    spring.value = scroller.scrollLeft;
+    spring.velocity = moving ? spring.velocity : 0;
+    spring.target = left;
+    let last = performance.now();
+    const step = () => {
+      const now = performance.now();
+      spring.step(Math.min(now - last, 50));
+      last = now;
+      if (spring.atRest) {
+        scroller.scrollLeft = left;
+        this.scrollFrame = 0;
+        return;
+      }
+      scroller.scrollLeft = spring.value;
+      this.scrollFrame = requestAnimationFrame(step);
+    };
+    this.scrollFrame = requestAnimationFrame(step);
+  }
+
+  // The user takes over the scroll position.
+  private readonly cancelScrollListener = {
+    handleEvent: () => {
+      this.cancelScroll();
+    },
+    passive: true,
+  };
+
+  private cancelScroll() {
+    if (this.scrollFrame !== 0) {
+      cancelAnimationFrame(this.scrollFrame);
+      this.scrollFrame = 0;
+    }
   }
 
   protected override render() {
     return html`
-      <div class="tabs">
+      <div
+        class="tabs"
+        @wheel=${this.cancelScrollListener}
+        @touchstart=${this.cancelScrollListener}>
         <slot
           @slotchange=${this.handleSlotChange}
           @click=${this.handleTabClick}></slot>

@@ -13,19 +13,35 @@
 @use '../../focus/focus-ring';
 @use '../../ripple/ripple';
 @use '../../tokens';
+@use '../../tokens/versions/v34/values/md-sys-motion-springs' as springs;
 // go/keep-sorted end
 
+// Tabs, after Jetpack Compose Material 3 (Tab.kt, TabRow.kt). The content
+// color changes with TabTransition: the default effects spring when the tab
+// gets selected, the fast effects spring when it is not selected any more. The
+// indicator moves between tabs in tabs.ts and tab.ts on the default spatial
+// spring. See _compose-values.scss for the values.
+
 @mixin styles() {
+  $spring-in: map.get(springs.$values, 'spring-default-effects-duration')
+    map.get(springs.$values, 'spring-default-effects');
+  $spring-out: map.get(springs.$values, 'spring-fast-effects-duration')
+    map.get(springs.$values, 'spring-fast-effects');
+
   // The hidden attribute, which `display` on the host would override.
   :host([hidden]) {
     display: none;
   }
 
   :host {
+    box-sizing: border-box;
     display: inline-flex;
-    align-items: center;
+    // The tab takes the height of its row, whose tallest tab (with an icon
+    // above its label) sets it. The content stays centered.
+    align-items: stretch;
     justify-content: center;
     outline: none;
+    // HorizontalTextPadding.
     padding: 0 16px;
     position: relative;
     -webkit-tap-highlight-color: transparent;
@@ -35,7 +51,9 @@
     font-size: var(--_label-text-size);
     line-height: var(--_label-text-line-height);
     font-weight: var(--_label-text-weight);
+    letter-spacing: var(--_label-text-tracking);
     color: var(--_label-text-color);
+    transition: color $spring-out;
     z-index: 0; // Ensure this is a stacking context so the indicator displays
 
     @include ripple.theme(
@@ -67,10 +85,18 @@
     margin-bottom: calc(var(--_active-indicator-height) + 1px);
   }
 
+  .button {
+    align-items: stretch;
+    display: flex;
+    justify-content: center;
+  }
+
   .button::before {
     background: var(--_container-color);
     content: '';
-    inset: 0;
+    // Leaves room for the divider of the tabs under the tab (the indicator
+    // draws over it).
+    inset: 0 0 var(--md-tab-divider-inset, 0px) 0;
     position: absolute;
     z-index: -1;
   }
@@ -91,7 +117,12 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    height: var(--_container-height);
+    // The tab is as high as its row; Compose's SmallTabHeight at least.
+    min-height: var(--_container-height);
+    // The indicator is at least 24dp wide (the minimum touch target in
+    // TabRow.kt).
+    min-width: 24px;
+    // TextDistanceFromLeadingIcon.
     gap: 8px;
   }
 
@@ -118,6 +149,7 @@
     font-size: var(--_icon-size);
     width: var(--_icon-size);
     height: var(--_icon-size);
+    transition: color $spring-out;
   }
 
   :host(:hover) {
@@ -151,6 +183,7 @@
   }
   :host([active]) {
     color: var(--_active-label-text-color);
+    transition: color $spring-in;
 
     @include ripple.theme(
       (
@@ -164,6 +197,7 @@
 
   :host([active]) ::slotted([slot='icon']) {
     color: var(--_active-icon-color);
+    transition: color $spring-in;
   }
 
   // selected states
@@ -194,6 +228,15 @@
   :host,
   ::slotted(*) {
     white-space: nowrap;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :host,
+    :host([active]),
+    ::slotted([slot='icon']),
+    :host([active]) ::slotted([slot='icon']) {
+      transition-duration: 0s;
+    }
   }
 
   @media (forced-colors: active) {

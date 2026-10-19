@@ -1,0 +1,163 @@
+//
+// Copyright 2026 Saki
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// The tab token values from Jetpack Compose Material 3
+// (PrimaryNavigationTabTokens and SecondaryNavigationTabTokens, in
+// tokens/versions/compose/values), under the web token names, so every public
+// `--md-primary-tab-*` and `--md-secondary-tab-*` token stays and defaults to
+// what Compose draws. Where Tab.kt and TabRow.kt draw something else than the
+// tokens say, they win:
+//
+// - Tab.kt colors the content (label and icon) with `LocalContentColor`,
+//   which TabTransition animates between `selectedContentColor` and
+//   `unselectedContentColor`. Both default to the tab row's content color:
+//   PrimaryNavigationTabTokens.ActiveLabelTextColor (primary) in a primary row,
+//   SecondaryNavigationTabTokens.ActiveLabelTextColor (on-surface) in a
+//   secondary row. So unselected tabs have the selected color, and hover,
+//   focus and pressed do not change the content color (they show only the
+//   ripple). The inactive and state color tokens default to the active ones; a
+//   page can still set each of them.
+// - The ripple of a tab is `ripple(color = selectedContentColor)`: the state
+//   layers use the active label color, also on unselected tabs.
+// - A primary tab with an icon above its label is LargeTabHeight (72dp), not
+//   the token's 64dp.
+// - SecondaryIndicator draws the primary tokens' ActiveIndicatorColor and
+//   ActiveIndicatorHeight (primary, 3dp), and has no shape.
+// - The divider is HorizontalDivider's (DividerTokens), not the secondary
+//   tab's DividerColor.
+
+@use 'sass:map';
+@use '../../tokens';
+@use '../../tokens/versions/compose/values/md-comp-primary-navigation-tab' as primary;
+@use '../../tokens/versions/compose/values/md-comp-secondary-navigation-tab' as secondary;
+
+$_label-states: 'hover-label-text-color', 'focus-label-text-color',
+  'pressed-label-text-color';
+$_icon-states: 'hover-icon-color', 'focus-icon-color', 'pressed-icon-color';
+$_state-layers: 'hover-state-layer-color', 'pressed-state-layer-color',
+  'active-hover-state-layer-color', 'active-pressed-state-layer-color';
+
+@function _var($prefix, $key, $fallback) {
+  @return var(#{$prefix}#{$key}, #{$fallback});
+}
+
+/// @param {String} $prefix The prefix of the custom properties.
+/// @param {Map} $web The web token values (`tokens.md-comp-*-tab-values()`).
+/// @param {Map} $compose The Compose token values of the tab's own tokens.
+/// @param {Map} $overrides Values for tokens where the Compose code differs
+///   from the tokens (a map of web token name to value).
+@function _values($prefix, $web, $compose, $overrides) {
+  $result: $web;
+
+  // What Compose has under the same name.
+  @each $key in 'container-color', 'container-elevation', 'container-height',
+    'icon-size', 'label-text-font', 'label-text-line-height',
+    'label-text-size', 'label-text-weight'
+  {
+    $result: map.set(
+      $result,
+      $key,
+      _var($prefix, $key, map.get($compose, $key))
+    );
+  }
+
+  // The tab's content color, selected.
+  $label: _var(
+    $prefix,
+    'active-label-text-color',
+    map.get($compose, 'active-label-text-color')
+  );
+  $icon: _var(
+    $prefix,
+    'active-icon-color',
+    map.get($compose, 'active-icon-color')
+  );
+  $result: map.set($result, 'active-label-text-color', $label);
+  $result: map.set($result, 'active-icon-color', $icon);
+
+  // Not selected, and the states: the same color.
+  $result: map.set(
+    $result,
+    'label-text-color',
+    _var($prefix, 'label-text-color', $label)
+  );
+  $result: map.set(
+    $result,
+    'icon-color',
+    _var($prefix, 'icon-color', $icon)
+  );
+  @each $key in 'active-hover-label-text-color',
+    'active-focus-label-text-color', 'active-pressed-label-text-color'
+  {
+    $result: map.set($result, $key, _var($prefix, $key, $label));
+  }
+  @each $key in 'active-hover-icon-color', 'active-focus-icon-color',
+    'active-pressed-icon-color'
+  {
+    $result: map.set($result, $key, _var($prefix, $key, $icon));
+  }
+  @each $key in $_label-states {
+    $result: map.set(
+      $result,
+      $key,
+      _var($prefix, $key, map.get($result, 'label-text-color'))
+    );
+  }
+  @each $key in $_icon-states {
+    $result: map.set(
+      $result,
+      $key,
+      _var($prefix, $key, map.get($result, 'icon-color'))
+    );
+  }
+
+  // The ripple.
+  @each $key in $_state-layers {
+    $result: map.set($result, $key, _var($prefix, $key, $label));
+  }
+
+  @each $key, $value in $overrides {
+    $result: map.set($result, $key, _var($prefix, $key, $value));
+  }
+
+  // The letter spacing of the label style (no public token).
+  @return map.set(
+    $result,
+    'label-text-tracking',
+    map.get($compose, 'label-text-tracking')
+  );
+}
+
+/// The values of `petal-primary-tab`.
+@function primary-values() {
+  @return _values(
+    '--md-primary-tab-',
+    tokens.md-comp-primary-tab-values(),
+    primary.$values,
+    (
+      'active-indicator-color': map.get(primary.$values, 'active-indicator-color'),
+      'active-indicator-height': map.get(primary.$values, 'active-indicator-height'),
+      // PrimaryIndicator: RoundedCornerShape(3dp) on a 3dp high indicator.
+      'active-indicator-shape': map.get(primary.$values, 'active-indicator-shape'),
+      // LargeTabHeight in Tab.kt.
+      'with-icon-and-label-text-container-height': 72px,
+    )
+  );
+}
+
+/// The values of `petal-secondary-tab`.
+@function secondary-values() {
+  @return _values(
+    '--md-secondary-tab-',
+    tokens.md-comp-secondary-tab-values(),
+    secondary.$values,
+    (
+      // SecondaryIndicator: the primary tokens, a plain rectangle.
+      'active-indicator-color': map.get(primary.$values, 'active-indicator-color'),
+      'active-indicator-height': map.get(primary.$values, 'active-indicator-height'),
+      'active-indicator-shape': 0,
+    )
+  );
+}

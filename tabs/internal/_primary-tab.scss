@@ -1,6 +1,7 @@
 //
 // Copyright 2023 Google LLC
 // SPDX-License-Identifier: Apache-2.0
+// Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
 //
 
 // go/keep-sorted start
@@ -9,6 +10,7 @@
 // go/keep-sorted end
 // go/keep-sorted start
 @use '../../tokens';
+@use './compose-values';
 // go/keep-sorted end
 
 @mixin theme($tokens) {
@@ -25,7 +27,7 @@
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-primary-tab-values();
+  $tokens: compose-values.primary-values();
 
   :host {
     // Only use the logical properties.
@@ -37,10 +39,16 @@
 
   .content.stacked {
     flex-direction: column;
-    gap: 2px;
   }
 
+  // TabBaselineLayout puts the icon 11dp from the top of a LargeTabHeight tab
+  // (24dp above the label's first baseline minus 20sp) and the label's
+  // baseline 17dp (14dp and the indicator) above the bottom; with the title
+  // small label that is 5dp between the icon and the label's line box.
   .content.stacked.has-icon.has-label {
-    height: var(--_with-icon-and-label-text-container-height);
+    gap: 5px;
+    justify-content: flex-start;
+    min-height: var(--_with-icon-and-label-text-container-height);
+    padding-top: 11px;
   }
 }
