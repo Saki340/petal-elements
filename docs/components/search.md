@@ -92,10 +92,11 @@ while the view is open.
 
 <!-- no-catalog-end -->
 
-The full screen view is `position: fixed` with a `z-index` of 1000
-(`--md-search-bar-z-index`). It is not in the browser's top layer, and an
-ancestor with a `transform`, `filter` or `contain` makes it fixed to that
-ancestor instead of to the window.
+The full screen view is a manual popover in the browser's top layer while it is
+open, so it covers the whole window, over other content (also a docked search
+bar after it) and also inside an ancestor with a `transform`, `filter` or
+`contain`. A docked view stays in the page with a `z-index` of 1000
+(`--md-search-bar-z-index`).
 
 ### Suggestions
 

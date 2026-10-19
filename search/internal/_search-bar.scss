@@ -118,6 +118,15 @@
 
     position: fixed;
     inset: 0;
+    // The view is a manual popover in the top layer (search-bar.ts); not the
+    // user agent's popover box.
+    width: auto;
+    height: auto;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
   }
 
   // Docked: the container stays under the bar and grows downward.

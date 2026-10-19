@@ -100,6 +100,9 @@
 
 #### Bug fixes
 
+* **search:** the full screen view is in the top layer (a manual popover)
+  while it is open, so content after it, such as a docked search bar, no
+  longer covers it, and a transformed ancestor no longer keeps it inside.
 * **chips:** the checkmark of a disabled selected filter chip has the disabled
   icon opacity once (0.38), not twice.
 * **button:** values checked against Jetpack Compose: disabled labels and

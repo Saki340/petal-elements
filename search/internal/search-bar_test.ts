@@ -379,6 +379,28 @@ describe('<petal-search-bar>', () => {
       expect(bar.expanded).toBeTrue();
       expect(getComputedStyle(part(bar, '.container')).position).toBe('fixed');
     });
+
+    it('is in the top layer, over the page and not inside a transformed ancestor', async () => {
+      const bar = await setupTest();
+      const form = bar.closest('form')!;
+      form.style.transform = 'translateZ(0)';
+      form.style.width = '200px';
+      await bar.expand();
+      await env.waitForStability();
+      const container = part(bar, '.container');
+      expect(container.matches(':popover-open')).toBeTrue();
+      expect(container.getBoundingClientRect().width).toBe(window.innerWidth);
+      await bar.collapse();
+      await env.waitForStability();
+      expect(container.hasAttribute('popover')).toBeFalse();
+    });
+
+    it('keeps a docked view out of the top layer', async () => {
+      const bar = await setupTest('layout=docked');
+      await bar.expand();
+      await env.waitForStability();
+      expect(part(bar, '.container').hasAttribute('popover')).toBeFalse();
+    });
   });
 
   describe('input', () => {

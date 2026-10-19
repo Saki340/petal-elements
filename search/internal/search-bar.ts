@@ -201,6 +201,7 @@ export class SearchBar extends searchBarBaseClass {
       <div
         class="container ${classMap(classes)}"
         part="container"
+        popover=${this.inTopLayer ? 'manual' : nothing}
         @click=${this.onContainerClick}
         @keydown=${this.onKeydown}>
         <petal-focus-ring
@@ -286,7 +287,20 @@ export class SearchBar extends searchBarBaseClass {
     if (this.expanded) this.shown = true;
   }
 
+  /**
+   * The full screen view is a manual popover while it is shown, so it is in
+   * the top layer: over everything else on the page (also a docked search
+   * bar after it) and not inside a transformed ancestor.
+   */
+  private get inTopLayer() {
+    return this.shown && this.layout === 'full-screen';
+  }
+
   protected override updated(changed: PropertyValues<this>) {
+    const container = this.container;
+    if (this.inTopLayer && container && !container.matches(':popover-open')) {
+      container.showPopover();
+    }
     if (!changed.has('expanded') || !this.start) return;
     const start = this.start;
     this.start = undefined;
