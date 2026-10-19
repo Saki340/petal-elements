@@ -57,9 +57,9 @@
   48px (was 56px) high with 16px at the sides and the label large text style
   (was body large).
 * **tabs:** tabs follow Compose's `PrimaryTabRow`, `SecondaryTabRow` and
-  `Tab`: unselected tabs have the selected content color (primary in primary
-  tabs, on-surface in secondary tabs; the inactive tokens still change it) and
-  hover, focus and press change only the ripple, which uses that color; the
+  `Tab`: unselected tabs are on-surface-variant (the Material 3 colors;
+  Compose's code gives them the selected color) and hover, focus and press
+  change only the ripple, which uses the selected color; the
   indicator is 3px high (secondary tabs: was 2px, in primary), primary tabs
   round all corners of it, and it is as wide as the label (24px at least),
   moving between tabs on the default spatial spring (was 250ms emphasized

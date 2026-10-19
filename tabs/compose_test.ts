@@ -127,12 +127,13 @@ describe('petal-tabs after Compose', () => {
       expect(getComputedStyle(divider).color).toBe(OUTLINE_VARIANT);
     });
 
-    it('tabs have the content color Primary, selected or not', async () => {
+    it('selected tabs are primary, unselected ones on-surface-variant', async () => {
       const {tabs, tab} = await setup(primaryRow);
       expect(tabs.activeTabIndex).toBe(0);
       expect(css(tab(0), 'color')).toBe(PRIMARY);
-      // unselectedContentColor = selectedContentColor.
-      expect(css(tab(1), 'color')).toBe(PRIMARY);
+      // A petal-elements choice: the inactive tokens (Compose's code gives
+      // unselected tabs the selected color).
+      expect(css(tab(1), 'color')).toBe('rgb(73, 69, 79)');
     });
 
     it('the inactive color can still be set with the token', async () => {
@@ -151,20 +152,29 @@ describe('petal-tabs after Compose', () => {
     it('does not change the content color on hover, focus or press (only the ripple)', async () => {
       const {tab} = await setup(primaryRow);
       const style = getComputedStyle(tab(1));
+      const color = (property: string) => {
+        const value = style.getPropertyValue(property).trim();
+        // The fallback in the var() chain, as resolved.
+        return value.match(/#[0-9a-f]{6}/i)?.[0] ?? value;
+      };
+      // Selected: the selected color in every state.
+      for (const property of [
+        '--_active-hover-label-text-color',
+        '--_active-focus-label-text-color',
+        '--_active-pressed-label-text-color',
+      ]) {
+        expect(color(property)).withContext(property).toBe('#6750a4');
+      }
+      // Unselected: the unselected color in every state.
       for (const property of [
         '--_hover-label-text-color',
         '--_focus-label-text-color',
         '--_pressed-label-text-color',
-        '--_active-hover-label-text-color',
-        '--_active-focus-label-text-color',
-        '--_active-pressed-label-text-color',
         '--_hover-icon-color',
         '--_focus-icon-color',
         '--_pressed-icon-color',
       ]) {
-        expect(style.getPropertyValue(property).trim())
-          .withContext(property)
-          .toBe('#6750a4');
+        expect(color(property)).withContext(property).toBe('#49454f');
       }
     });
 
@@ -254,10 +264,10 @@ describe('petal-tabs after Compose', () => {
       expect(rect.bottom).toBe(tab(0).getBoundingClientRect().bottom);
     });
 
-    it('tabs have the content color OnSurface, selected or not', async () => {
+    it('the selected tab is on-surface, the others on-surface-variant', async () => {
       const {tab} = await setup(secondaryRow);
       expect(css(tab(0), 'color')).toBe(ON_SURFACE);
-      expect(css(tab(1), 'color')).toBe(ON_SURFACE);
+      expect(css(tab(1), 'color')).toBe('rgb(73, 69, 79)');
     });
   });
 

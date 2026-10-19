@@ -17,8 +17,11 @@
 //   SecondaryNavigationTabTokens.ActiveLabelTextColor (on-surface) in a
 //   secondary row. So unselected tabs have the selected color, and hover,
 //   focus and pressed do not change the content color (they show only the
-//   ripple). The inactive and state color tokens default to the active ones; a
-//   page can still set each of them.
+//   ripple). A petal-elements choice: unselected tabs take the tokens'
+//   InactiveLabelTextColor and InactiveIconColor (on-surface-variant) instead,
+//   as in the Material 3 specification, so the selected tab stands out by its
+//   color too. The state color tokens default to the resting ones; a page can
+//   still set each of them.
 // - The ripple of a tab is `ripple(color = selectedContentColor)`: the state
 //   layers use the active label color, also on unselected tabs.
 // - A primary tab with an icon above its label is LargeTabHeight (72dp), not
@@ -77,16 +80,17 @@ $_state-layers: 'hover-state-layer-color', 'pressed-state-layer-color',
   $result: map.set($result, 'active-label-text-color', $label);
   $result: map.set($result, 'active-icon-color', $icon);
 
-  // Not selected, and the states: the same color.
+  // Not selected: the inactive tokens (see above). The states keep the
+  // resting colors.
   $result: map.set(
     $result,
     'label-text-color',
-    _var($prefix, 'label-text-color', $label)
+    _var($prefix, 'label-text-color', map.get($compose, 'inactive-label-text-color'))
   );
   $result: map.set(
     $result,
     'icon-color',
-    _var($prefix, 'icon-color', $icon)
+    _var($prefix, 'icon-color', map.get($compose, 'inactive-icon-color'))
   );
   @each $key in 'active-hover-label-text-color',
     'active-focus-label-text-color', 'active-pressed-label-text-color'

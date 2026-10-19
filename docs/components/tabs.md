@@ -228,11 +228,15 @@ Tabs follow Jetpack Compose Material 3 Expressive (`PrimaryTabRow`,
     least) and centered; the secondary indicator is as wide as the tab. Both
     move to the selected tab on the default spatial spring, offset and width
     together.
-*   The content color of tabs is the color of the row (primary for primary
-    tabs, on-surface for secondary tabs), selected or not, and does not change
-    on hover, focus or press, only the ripple does. Set the inactive tokens
-    (for example `--md-primary-tab-label-text-color`) for another color; the
-    color fades on the effects springs.
+*   The selected tab has the color of the row (primary for primary tabs,
+    on-surface for secondary tabs) and the others are on-surface-variant, as
+    in the Material 3 specification (Compose's code gives unselected tabs the
+    selected color; set `--md-primary-tab-label-text-color` and
+    `--md-primary-tab-icon-color` to the selected color for that). The color
+    does not change on hover, focus or press, only the ripple does, and it
+    fades on the effects springs when the selection changes.
+*   A scrollable row has the row's container color in its edge space too
+    (`--md-tabs-container-color`, surface).
 *   `scrollable` makes the row like Compose's scrollable tab rows: tabs as
     wide as their content (90dp at least) with 52dp of space at the start and
     the end. Change them with `--md-tabs-scrollable-min-tab-width` and
