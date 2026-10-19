@@ -73,6 +73,13 @@
   `--md-tabs-scrollable-edge-padding`); a row scrolls its selected tab to the
   center on a spring. The scroller is an inner element now: `scrollLeft` of
   `<petal-tabs>` itself no longer scrolls.
+* **progress:** circular progress follows Compose's
+  `CircularProgressIndicator`: 40px (was 48px) with a 4px round stroke; a
+  determinate indicator has a secondary-container track after a 4px gap; the
+  indeterminate indicator turns 1080 degrees in 6 seconds plus quarter turns,
+  with an arc between 10% and 87% of the circle.
+  `--md-circular-progress-active-indicator-width` is a length (4px) instead of
+  a percentage; new: `--md-circular-progress-track-color`.
 * **slider:** sliders follow Compose's Material 3 Expressive `Slider` and
   `RangeSlider`: a 4px x 44px bar handle (2px while pressed or focused)
   instead of a 20px circle, a 16px track that stops 6px before the handle,
@@ -146,6 +153,9 @@
 
 #### Features
 
+* **progress:** `wavy` on circular progress, after Compose's
+  `CircularWavyProgressIndicator`: 48px, a wave around the circle that moves
+  one wavelength per second, flat below 10% and from 95% when determinate.
 * **badge:** `petal-badge` (`badge/badge.js`), after Jetpack Compose `Badge`
   and `BadgedBox`: a 6px dot, or a 16px pill with a `value`. In the new
   `badge` slot of icon buttons and navigation bar and rail items it sits at

@@ -162,6 +162,9 @@ exists.
 - **Labs navigation is gone.** The old `labs/navigationbar`,
   `labs/navigationtab` and `labs/navigationdrawer` were removed; use
   `petal-navigation-bar`, `-rail` and `-drawer`.
+- **Circular progress** is 40px, not 48px; set
+  `--md-circular-progress-active-indicator-width` as a length (`4px`), not a
+  percentage.
 - **Sliders** have Compose's bar handle and gapped 16px track. The
   `*-state-layer-*`, `handle-elevation` and `*-track-shape` tokens are gone.
 - **The labs badge moved** to `petal-elements/badge/badge.js`

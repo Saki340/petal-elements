@@ -171,6 +171,34 @@ circular track in a clockwise direction.
 <petal-circular-progress value="0.6"></petal-circular-progress>
 ```
 
+Circular indicators follow Jetpack Compose Material 3
+(`CircularProgressIndicator`): 40px with a 4px stroke and round caps. A
+determinate indicator starts at 12 o'clock with its track
+(`--md-sys-color-secondary-container`) after a 4px gap. The indeterminate
+indicator has no track; it turns 1080 degrees in 6 seconds plus a quarter turn
+every 1.5 seconds while its arc grows from 10% to 87% of the circle and back.
+
+### Wavy circular
+
+`wavy` draws the indicator as a wave around the circle
+(`CircularWavyProgressIndicator`): 48px, waves of about 15px (as many as fit
+around the circle) that move one wavelength per second, and the track after a
+4px gap, also when indeterminate. Determinate waves flatten below 10% and from
+95%. With `prefers-reduced-motion`, the wave does not move.
+
+<!-- no-catalog-start -->
+
+![An indeterminate and a determinate wavy circular progress
+indicator](images/progress/usage-circular-wavy.webp)
+
+<!-- no-catalog-end -->
+<!-- catalog-include "figures/progress/usage-circular-wavy.html" -->
+
+```html
+<petal-circular-progress wavy indeterminate></petal-circular-progress>
+<petal-circular-progress wavy value="0.6"></petal-circular-progress>
+```
+
 ## Linear progress
 
 Linear progress indicators display progress by animating along the length of a
@@ -268,15 +296,17 @@ customized in terms of color.
 ### Circular progress tokens
 
 Token                                           | Default value
------------------------------------------------ | ------------------------
+----------------------------------------------- | ------------------------------------
 `--md-circular-progress-active-indicator-color` | `--md-sys-color-primary`
-`--md-circular-progress-size`                   | `48px`
-`--md-circular-progress-active-indicator-width` | `8.3333` (%)
+`--md-circular-progress-track-color`            | `--md-sys-color-secondary-container`
+`--md-circular-progress-size`                   | `40px`
+`--md-circular-progress-wavy-size`              | `48px`
+`--md-circular-progress-active-indicator-width` | `4px`
 
-> Note: the active indicator width must be specified as a unit-less percentage
-> of the size.
+> Note: the active indicator width is drawn in a 40px box that scales with
+> `--md-circular-progress-size`.
 
-*   [All tokens](https://github.com/Saki340/petal-elements/blob/main/tokens/_md-comp-circular-progress.scss)
+*   [All tokens](https://github.com/Saki340/petal-elements/blob/main/progress/internal/_circular-progress.scss)
     <!-- {.external} -->
 
 ### Circular progress example
@@ -300,7 +330,7 @@ Token                                           | Default value
       .styled-example {
         background-color: white;
         --md-circular-progress-size: 32px;
-        --md-circular-progress-active-indicator-width: 20;
+        --md-circular-progress-active-indicator-width: 6px;
         --md-sys-color-primary: #006A6A;
       }
     </style>
@@ -317,7 +347,7 @@ Token                                           | Default value
 <style>
 :root {
   --md-circular-progress-size: 32px;
-  --md-circular-progress-active-indicator-width: 20;
+  --md-circular-progress-active-indicator-width: 6px;
   --md-sys-color-primary: #006A6A;
 }
 </style>
@@ -420,6 +450,7 @@ Token                                          | Default value
 
 | Property | Attribute | Type | Default | Description |
 | --- | --- | --- | --- | --- |
+| `wavy` | `wavy` | `boolean` | `false` | Whether the indicator is wavy (`CircularWavyProgressIndicator`): 48px, the active indicator a wave that moves around the circle. |
 | `value` | `value` | `number` | `0` | Progress to display, a fraction between 0 and `max`. |
 | `max` | `max` | `number` | `1` | Maximum progress to display, defaults to 1. |
 | `indeterminate` | `indeterminate` | `boolean` | `false` | Whether or not to display indeterminate progress, which gives no indication to how long an activity will take. |
