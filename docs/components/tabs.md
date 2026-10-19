@@ -407,7 +407,7 @@ Token                                       | Default value
 | Property | Attribute | Type | Default | Description |
 | --- | --- | --- | --- | --- |
 | `autoActivate` | `auto-activate` | `boolean` | `false` | Whether or not to automatically select a tab when it is focused. |
-| `scrollable` | `scrollable` | `boolean` | `false` | Whether the tabs are as wide as their content (90px at least) with 52px of space at the start and the end, and the row scrolls, like Compose's scrollable tab rows. |
+| `scrollable` | `scrollable` | `boolean` | `false` | Whether the tabs are as wide as their content (90px at least) with 52px of space at the start and the end, and the row scrolls, like Compose's scrollable tab rows. Otherwise the tabs share the width equally. The selected tab scrolls to the center of the row either way, if the row overflows. |
 | `activeTabIndex` | `active-tab-index` | `number` | `undefined` |  |
 | `tabs` |  | `Tab[]` | `undefined` | The tabs of this tab bar. |
 | `activeTab` |  | `Tab` | `undefined` |  |
