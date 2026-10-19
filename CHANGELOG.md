@@ -97,6 +97,10 @@
 * **button, menu:** a button no longer renders twice on its first render, and
   a menu no longer renders again inside its own update when it opens (Lit's
   change-in-update warning). Tests now fail on this warning.
+* **menu:** opening a menu again during its close animation keeps it open,
+  instead of hiding the surface while `open` stays true.
+* **dialog:** `show()` (or `open = true`) during the close animation opens the
+  dialog again once the animation ends, instead of being ignored.
 * **button-group:** a press ends when the window loses focus, or when focus
   moves away during a key press, instead of keeping the group squeezed.
 

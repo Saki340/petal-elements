@@ -114,6 +114,8 @@ export class Dialog extends dialogBaseClass {
 
   private isOpen = false;
   private isOpening = false;
+  /** The close animation in progress, which an open waits for. */
+  private closing?: Promise<void>;
   // getIsConnectedPromise() immediately sets the resolve property.
   private isConnectedPromiseResolve!: () => void;
   private isConnectedPromise = this.getIsConnectedPromise();
@@ -183,6 +185,8 @@ export class Dialog extends dialogBaseClass {
     // wait until we're connected before calling `showModal()`.
     await this.isConnectedPromise;
     await this.updateComplete;
+    // Opened while closing: open again once the close animation is done.
+    await this.closing;
     const dialog = this.dialog!;
     // Check if already opened or if `dialog.close()` was called while awaiting.
     if (dialog.open || !this.isOpening) {
@@ -256,11 +260,20 @@ export class Dialog extends dialogBaseClass {
       return;
     }
 
-    await this.animateDialog(this.getCloseAnimation());
-    dialog.close(returnValue);
-    this.hideScrim();
-    this.open = false;
-    this.dispatchEvent(new Event('closed'));
+    const closing = (async () => {
+      await this.animateDialog(this.getCloseAnimation());
+      dialog.close(returnValue);
+      this.hideScrim();
+      // An open that waits for this close keeps `open`.
+      if (!this.isOpening) this.open = false;
+      this.dispatchEvent(new Event('closed'));
+    })();
+    this.closing = closing;
+    try {
+      await closing;
+    } finally {
+      if (this.closing === closing) this.closing = undefined;
+    }
   }
 
   override connectedCallback() {

@@ -33,6 +33,33 @@ describe('<petal-menu>', () => {
     root?.remove();
   });
 
+  it('stays open when opened again during its close animation', async () => {
+    render(
+      html`
+        <button>OpenMenu</button>
+        <petal-menu>
+          <petal-menu-item><div slot="headline">One</div></petal-menu-item>
+        </petal-menu>
+      `,
+      root,
+    );
+    const button = root.querySelector('button')!;
+    const menu = root.querySelector('petal-menu')!;
+    const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+    menu.anchorElement = button;
+    menu.open = true;
+    await wait(500);
+    // Closing animates; opening again before it ends must win.
+    menu.open = false;
+    await wait(30);
+    menu.open = true;
+    await wait(700);
+    const surface = menu.shadowRoot!.querySelector<HTMLElement>('.menu')!;
+    expect(menu.open).toBeTrue();
+    expect(getComputedStyle(surface).display).not.toBe('none');
+    expect(getComputedStyle(surface).opacity).toBe('1');
+  });
+
   it('escape on list root closes menu', async () => {
     render(
       html`

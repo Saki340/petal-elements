@@ -143,6 +143,12 @@ export class SurfacePositionController implements ReactiveController {
   };
   // Previous values stored for change detection. Open change detection is
   // calculated separately so initialize it here.
+  /**
+   * Counts the open and close changes, so a step that finishes after a newer
+   * change (an open during the close animation) does not undo it.
+   */
+  private generation = 0;
+
   private lastValues: SurfacePositionControllerProperties = {
     isOpen: false,
   } as SurfacePositionControllerProperties;
@@ -613,6 +619,7 @@ export class SurfacePositionController implements ReactiveController {
       // time on a useless reposition calculation. So save the other "dirty"
       // values until next time it opens.
       this.lastValues.isOpen = props.isOpen;
+      const generation = ++this.generation;
 
       if (props.isOpen) {
         // We are going to do a reposition, so save the prop values for future
@@ -623,9 +630,12 @@ export class SurfacePositionController implements ReactiveController {
         // update, not inside it (hostUpdated), so it is a new update.
         await null;
         await this.position();
+        if (generation !== this.generation) return;
         props.onOpen();
       } else if (openChanged) {
         await props.beforeClose();
+        // Opened again while the close animation ran: stay open.
+        if (generation !== this.generation) return;
         this.close();
         props.onClose();
       }
