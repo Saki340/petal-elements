@@ -9,7 +9,14 @@ import '../../../focus/md-focus-ring.js';
 import '../../../labs/item/item.js';
 import '../../../ripple/ripple.js';
 
-import {html, LitElement, nothing, PropertyValues, TemplateResult} from 'lit';
+import {
+  html,
+  isServer,
+  LitElement,
+  nothing,
+  PropertyValues,
+  TemplateResult,
+} from 'lit';
 import {property, query} from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 import {literal, html as staticHtml, StaticValue} from 'lit/static-html.js';
@@ -56,6 +63,26 @@ export class ListItemEl extends listItemBaseClass implements ListItem {
   @property({reflect: true}) type: ListItemType = 'text';
 
   /**
+   * Shows the item as selected (Compose's `ListItem(selected = ...)`): the
+   * secondary container color, on-secondary-container texts and icons, and
+   * rounded corners. It does not change by itself; set it from your
+   * selection logic.
+   */
+  @property({type: Boolean, reflect: true}) selected = false;
+
+  /**
+   * Only needed for SSR.
+   *
+   * Set automatically on items of three lines: with both overline and
+   * supporting text, or with supporting text on more than one line. Such an
+   * item is 88px high and its content is aligned to the top. Add this
+   * attribute to avoid a flash of unstyled content when rendering on the
+   * server.
+   */
+  @property({type: Boolean, reflect: true, attribute: 'three-line'})
+  threeLine = false;
+
+  /**
    * READONLY. Sets the `petal-list-item` attribute on the element.
    */
   @property({type: Boolean, attribute: 'petal-list-item', reflect: true})
@@ -90,12 +117,54 @@ export class ListItemEl extends listItemBaseClass implements ListItem {
     return this.disabled && this.type !== 'link';
   }
 
+  private resizeObserver?: ResizeObserver;
+
   protected override willUpdate(changed: PropertyValues<ListItemEl>) {
     if (this.href) {
       this.type = 'link';
     }
 
     super.willUpdate(changed);
+  }
+
+  override connectedCallback() {
+    super.connectedCallback();
+    // The width decides whether the supporting text wraps to a second line.
+    if (!isServer && typeof ResizeObserver !== 'undefined') {
+      this.resizeObserver = new ResizeObserver(() => this.updateThreeLine());
+      this.resizeObserver.observe(this);
+    }
+  }
+
+  override disconnectedCallback() {
+    super.disconnectedCallback();
+    this.resizeObserver?.disconnect();
+    this.resizeObserver = undefined;
+  }
+
+  /**
+   * An item of three lines (Compose's `ListItemType.ThreeLine`): overline and
+   * supporting text together, or supporting text higher than 30px (more than
+   * one line). It has a larger minimum height and aligns its content to the
+   * top.
+   */
+  private updateThreeLine() {
+    const slots = this.renderRoot?.querySelectorAll<HTMLSlotElement>(
+      'slot[name=overline], slot[name=supporting-text]',
+    );
+    if (!slots || slots.length < 2) {
+      return;
+    }
+
+    const [overline, supporting] = Array.from(slots).map((slot) =>
+      slot.assignedElements({flatten: true}),
+    );
+    const supportingHeight = supporting.reduce(
+      (height, element) => height + element.getBoundingClientRect().height,
+      0,
+    );
+    this.threeLine =
+      (overline.length > 0 && supporting.length > 0) || supportingHeight > 30;
   }
 
   protected override render() {
@@ -142,7 +211,9 @@ export class ListItemEl extends listItemBaseClass implements ListItem {
         tabindex="${this.isDisabled || !isInteractive ? -1 : 0}"
         ?disabled=${this.isDisabled}
         role="listitem"
-        aria-selected=${(this as ARIAMixinStrict).ariaSelected || nothing}
+        aria-selected=${this.selected
+          ? 'true'
+          : (this as ARIAMixinStrict).ariaSelected || nothing}
         aria-checked=${(this as ARIAMixinStrict).ariaChecked || nothing}
         aria-expanded=${(this as ARIAMixinStrict).ariaExpanded || nothing}
         aria-haspopup=${(this as ARIAMixinStrict).ariaHasPopup || nothing}
@@ -200,9 +271,15 @@ export class ListItemEl extends listItemBaseClass implements ListItem {
   protected renderBody() {
     return html`
       <slot></slot>
-      <slot name="overline" slot="overline"></slot>
+      <slot
+        name="overline"
+        slot="overline"
+        @slotchange=${this.updateThreeLine}></slot>
       <slot name="headline" slot="headline"></slot>
-      <slot name="supporting-text" slot="supporting-text"></slot>
+      <slot
+        name="supporting-text"
+        slot="supporting-text"
+        @slotchange=${this.updateThreeLine}></slot>
       <slot
         name="trailing-supporting-text"
         slot="trailing-supporting-text"></slot>

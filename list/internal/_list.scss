@@ -75,7 +75,9 @@
   }
 
   :host([segmented]) ::slotted([petal-list-item]) {
-    background-color: var(--_segmented-item-container-color);
+    // The item draws its own container: this color, or the selected one.
+    --md-list-item-container-color: var(--_segmented-item-container-color);
+
     border-radius: var(--_segmented-item-shape);
     transition: border-radius
       map.get(springs.$values, 'spring-fast-spatial-duration')
@@ -92,13 +94,45 @@
     border-end-end-radius: var(--_segmented-container-shape);
   }
 
-  :host([segmented]) ::slotted([petal-list-item]:not([disabled]):hover) {
-    border-radius: map.get($segmented, 'item-hovered-container-expressive-shape');
+  // The shape of the state, as in the item itself (pressed, selected, focused,
+  // hovered, in this order of priority; the specificity is the same, so the
+  // later rule wins).
+  :host([segmented])
+    ::slotted(
+      [petal-list-item]:is([type='button'], [type='link']):not([disabled]):hover
+    ) {
+    border-radius: var(
+      --md-list-item-hovered-container-shape,
+      #{map.get($segmented, 'item-hovered-container-expressive-shape')}
+    );
   }
 
-  :host([segmented]) ::slotted([petal-list-item]:not([disabled]):focus-within),
-  :host([segmented]) ::slotted([petal-list-item]:not([disabled]):active) {
-    border-radius: map.get($segmented, 'item-pressed-container-expressive-shape');
+  :host([segmented])
+    ::slotted(
+      [petal-list-item]:is([type='button'], [type='link']):not([disabled]):focus-within
+    ) {
+    border-radius: var(
+      --md-list-item-focused-container-shape,
+      #{map.get($segmented, 'item-focused-container-expressive-shape')}
+    );
+  }
+
+  :host([segmented])
+    ::slotted([petal-list-item][selected][selected][selected]) {
+    border-radius: var(
+      --md-list-item-selected-container-shape,
+      #{map.get($segmented, 'item-selected-container-expressive-shape')}
+    );
+  }
+
+  :host([segmented])
+    ::slotted(
+      [petal-list-item]:is([type='button'], [type='link']):not([disabled]):active
+    ) {
+    border-radius: var(
+      --md-list-item-pressed-container-shape,
+      #{map.get($segmented, 'item-pressed-container-expressive-shape')}
+    );
   }
 
   @media (prefers-reduced-motion: reduce) {

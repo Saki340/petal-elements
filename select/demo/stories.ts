@@ -25,7 +25,7 @@ export interface StoryKnobs {
   errorText: string;
   supportingText: string;
   error: boolean;
-  clampMenuWidth: boolean;
+  noClampMenuWidth: boolean;
   menuAlign: 'start' | 'end' | undefined;
   menuPositioning: 'absolute' | 'fixed' | 'popover' | undefined;
 
@@ -47,7 +47,7 @@ const selects: MaterialStoryInit<StoryKnobs> = {
           .disabled=${knobs.disabled}
           .errorText=${knobs.errorText}
           .supportingText=${knobs.supportingText}
-          .clampMenuWidth=${knobs.clampMenuWidth}
+          .noClampMenuWidth=${knobs.noClampMenuWidth}
           .menuAlign=${knobs.menuAlign!}
           .menuPositioning=${knobs.menuPositioning!}
           .typeaheadDelay=${knobs.typeaheadDelay}
@@ -65,7 +65,7 @@ const selects: MaterialStoryInit<StoryKnobs> = {
           .disabled=${knobs.disabled}
           .errorText=${knobs.errorText}
           .supportingText=${knobs.supportingText}
-          .clampMenuWidth=${knobs.clampMenuWidth}
+          .noClampMenuWidth=${knobs.noClampMenuWidth}
           .menuAlign=${knobs.menuAlign!}
           .menuPositioning=${knobs.menuPositioning!}
           .typeaheadDelay=${knobs.typeaheadDelay}

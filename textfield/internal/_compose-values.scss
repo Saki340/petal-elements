@@ -49,13 +49,27 @@
   @return _replace($key, 'hover-', '');
 }
 
-@function _values($variant, $web, $compose) {
-  $prefix: '--md-#{$variant}-text-field-';
+/// The token name without a prefix that the web token set has (`text-field-`
+/// in the select's token sets).
+@function _strip($key, $key-prefix) {
+  @if $key-prefix != '' and string.index($key, $key-prefix) == 1 {
+    @return string.slice($key, string.length($key-prefix) + 1);
+  }
+  @return $key;
+}
+
+/// @param {String} $prefix The prefix of the custom properties, up to the
+///   token name (`--md-filled-text-field-`).
+/// @param {String} $key-prefix A prefix of the token names in `$web` that
+///   Compose's names do not have.
+/// @param {Boolean} $caret Whether the tokens have a focus caret color.
+@function _values($prefix, $web, $compose, $key-prefix: '', $caret: true) {
   $result: $web;
 
   @each $key, $web-value in $web {
-    $compose-value: map.get($compose, _compose-key($key));
-    @if $compose-value != null and $key != 'container-shape' {
+    $name: _strip($key, $key-prefix);
+    $compose-value: map.get($compose, _compose-key($name));
+    @if $compose-value != null and $name != 'container-shape' {
       $result: map.set(
         $result,
         $key,
@@ -65,11 +79,13 @@
   }
 
   // The focus caret is the caret color.
-  $result: map.set(
-    $result,
-    'focus-caret-color',
-    var(#{$prefix}focus-caret-color, #{map.get($compose, 'caret-color')})
-  );
+  @if $caret {
+    $result: map.set(
+      $result,
+      'focus-caret-color',
+      var(#{$prefix}focus-caret-color, #{map.get($compose, 'caret-color')})
+    );
+  }
 
   // No hover state.
   @each $key, $web-value in $web {
@@ -94,7 +110,7 @@
 /// The values of `petal-filled-text-field`.
 @function filled-values() {
   $values: _values(
-    'filled',
+    '--md-filled-text-field-',
     tokens.md-comp-filled-text-field-values(),
     filled.$values
   );
@@ -114,8 +130,43 @@
 /// The values of `petal-outlined-text-field`.
 @function outlined-values() {
   @return _values(
-    'outlined',
+    '--md-outlined-text-field-',
     tokens.md-comp-outlined-text-field-values(),
     outlined.$values
+  );
+}
+
+/// The values of `petal-filled-select`: its `text-field-*` tokens, with the
+/// values of the filled text field. Compose's exposed dropdown menu draws a
+/// TextField (ExposedDropdownMenuDefaults.textFieldColors takes the colors of
+/// FilledAutocompleteTokens, which are the colors of FilledTextFieldTokens).
+@function filled-select-values() {
+  $values: _values(
+    '--md-filled-select-',
+    tokens.md-comp-filled-select-values(),
+    filled.$values,
+    $key-prefix: 'text-field-',
+    $caret: false
+  );
+  $container: map.get($values, 'text-field-container-color');
+  @return map.merge(
+    $values,
+    (
+      'text-field-disabled-container-color':
+        var(--md-filled-select-text-field-disabled-container-color, #{$container}),
+      'text-field-disabled-container-opacity':
+        var(--md-filled-select-text-field-disabled-container-opacity, 1),
+    )
+  );
+}
+
+/// The values of `petal-outlined-select`.
+@function outlined-select-values() {
+  @return _values(
+    '--md-outlined-select-',
+    tokens.md-comp-outlined-select-values(),
+    outlined.$values,
+    $key-prefix: 'text-field-',
+    $caret: false
   );
 }

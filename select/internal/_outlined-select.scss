@@ -1,6 +1,7 @@
 //
 // Copyright 2023 Google LLC
 // SPDX-License-Identifier: Apache-2.0
+// Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
 //
 
 // go/keep-sorted start
@@ -10,6 +11,7 @@
 // go/keep-sorted end
 // go/keep-sorted start
 @use '../../field/outlined-field';
+@use '../../textfield/internal/compose-values';
 @use '../../tokens';
 // go/keep-sorted end
 
@@ -27,7 +29,7 @@
 }
 
 @mixin styles() {
-  $tokens: tokens.md-comp-outlined-select-values();
+  $tokens: compose-values.outlined-select-values();
 
   :host {
     // Only use the logical properties.

@@ -191,6 +191,43 @@ Daisy.](images/list/usage-image.webp)
 </petal-list>
 ```
 
+## Compose
+
+List items follow Jetpack Compose Material 3 (`ListItem`, `ListItemDefaults`
+and `ListTokens`):
+
+*   Heights: 56px for one line, 72px for two lines (an overline or supporting
+    text), 88px for three lines (overline and supporting text, or supporting
+    text on two lines). One and two lines are centered; three lines are aligned
+    to the top. The item sets `three-line` itself; add it to items rendered on
+    the server to avoid a flash of the one line height.
+*   Padding: 16px at the sides, 10px above and below (Compose uses 12px for a
+    mouse pointer on desktop). The leading and trailing content are 12px from
+    the text.
+*   Texts: body large headline, body medium supporting text, label small
+    overline and trailing text, all with their letter spacing. Slotted leading
+    text, such as the initials of an avatar, is title medium. Compose does not
+    size avatars, images or videos, and neither does the list item; set the
+    size of what you slot.
+*   Shape: 4px corners. An interactive item (`type="button"` or `"link"`)
+    changes to 12px when hovered and 16px when focused or pressed; a `selected`
+    item is 16px. The shape changes on the fast spatial spring.
+*   `selected` draws the secondary container with `on-secondary-container`
+    texts and icons. It is a visual state (set it from your selection logic).
+    It sets `aria-selected`, but items have no selection behavior of their own.
+*   Disabled: texts and icons are `on-surface` at 38%; the container does not
+    fade. A disabled item shows no state layer.
+*   State layers are drawn in the color of the text (`on-surface`, or
+    `on-secondary-container` when selected): hover 8%, pressed 10%.
+*   The item is transparent, so the `petal-list` container color shows;
+    Compose draws `surface`, which is also the color of the list. In a
+    [segmented](#segmented) list each item draws its own surface.
+*   Compose's `SegmentedListItem` is the [segmented](#segmented) list; it
+    shares these values.
+
+Compose's dragged state (for reorderable lists) has no counterpart here, so
+its tokens are not used.
+
 ## Accessibility
 
 List can have its `role` and `tabindex` set via the `role` and `tabindex`
@@ -219,13 +256,30 @@ and can be customized in terms of color, typography, and shape.
 Token                                           | Default value
 ----------------------------------------------- | -------------
 `--md-list-container-color`                     | `--md-sys-color-surface`
-`--md-list-item-container-shape`                | `--md-sys-shape-corner-none`
+`--md-list-item-container-shape`                | `--md-sys-shape-corner-extra-small`
+`--md-list-item-hovered-container-shape`        | `--md-sys-shape-corner-medium`
+`--md-list-item-focused-container-shape`        | `--md-sys-shape-corner-large`
+`--md-list-item-pressed-container-shape`        | `--md-sys-shape-corner-large`
+`--md-list-item-selected-container-shape`       | `--md-sys-shape-corner-large`
+`--md-list-item-container-color`                | `transparent`
 `--md-list-item-label-text-color`               | `--md-sys-color-on-surface`
+`--md-list-item-overline-color`                 | `--md-sys-color-on-surface-variant`
 `--md-list-item-supporting-text-color`          | `--md-sys-color-on-surface-variant`
 `--md-list-item-trailing-supporting-text-color` | `--md-sys-color-on-surface-variant`
-`--md-list-item-label-text-font`                | `--md-sys-typescale-label-large-font`
+`--md-list-item-label-text-font`                | `--md-sys-typescale-body-large-font`
+`--md-list-item-overline-font`                  | `--md-sys-typescale-label-small-font`
 `--md-list-item-supporting-text-font`           | `--md-sys-typescale-body-medium-font`
 `--md-list-item-trailing-supporting-text-font`  | `--md-sys-typescale-label-small-font`
+`--md-list-item-one-line-container-height`      | `56px`
+`--md-list-item-two-line-container-height`      | `72px`
+`--md-list-item-three-line-container-height`    | `88px`
+`--md-list-item-top-space`, `-bottom-space`     | `10px`
+`--md-list-item-leading-space`, `-trailing-space` | `16px`
+`--md-list-item-between-space`                  | `12px`
+`--md-list-item-disabled-opacity`               | `0.38`
+`--md-list-item-selected-container-color`       | `--md-sys-color-secondary-container`
+`--md-list-item-selected-label-text-color`      | `--md-sys-color-on-secondary-container`
+`--md-list-item-selected-leading-icon-color`    | `--md-sys-color-on-secondary-container`
 
 *   [All List tokens](https://github.com/Saki340/petal-elements/blob/main/tokens/_md-comp-list.scss)
     <!-- {.external} -->
@@ -283,8 +337,9 @@ Token                                | Default value
 ------------------------------------ | -----------------------------------
 `--md-list-item-leading-icon-color`  | `--md-sys-color-on-surface-variant`
 `--md-list-item-trailing-icon-color` | `--md-sys-color-on-surface-variant`
-`--md-list-item-leading-icon-size`   | `18px`
-`--md-list-item-trailing-icon-size`  | `24px`
+
+Icons are as big as the icon you slot (24px for `petal-icon`); set
+`--md-icon-size` on them to change it.
 
 *   [All List Item tokens](https://github.com/Saki340/petal-elements/blob/main/tokens/_md-comp-list-item.scss)
     <!-- {.external} -->
@@ -307,8 +362,6 @@ applied](images/list/theming-icon.webp)
     --md-list-item-label-text-color: #161d1d;
     --md-list-item-leading-icon-color: #006a6a;
     --md-list-item-trailing-icon-color: #006a6a;
-    --md-list-item-leading-icon-size: 20px;
-    --md-list-item-trailing-icon-size: 20px;
   }
   petal-list-item.unhealthy {
     --md-list-item-trailing-icon-color: #ba1a1a;
@@ -333,29 +386,14 @@ applied](images/list/theming-icon.webp)
 </petal-list>
 ```
 
-### Avatar List Item
+### Avatar and Image List Items
 
-Token                                       | Default value
-------------------------------------------- | -------------
-`--md-list-item-leading-avatar-label-color` | `--md-sys-color-on-primary-container`
-`--md-list-item-leading-avatar-label-font`  | `--md-sys-typescale-title-medium-font`
-`--md-list-item-leading-avatar-color`       | `--md-sys-color-primary-container`
-`--md-list-item-leading-avatar-size`        | `40px`
-`--md-list-item-leading-avatar-shape`       | `--md-sys-shape-corner-full`
-
-*   [All List Item tokens](https://github.com/Saki340/petal-elements/blob/main/tokens/_md-comp-list-item.scss)
-    <!-- {.external} -->
-
-### Image List Item
-
-Token                                 | Default value
-------------------------------------- | -------------
-`--md-list-item-leading-image-height` | `56px`
-`--md-list-item-leading-image-width`  | `56px`
-`--md-list-item-leading-image-shape`  | `--md-sys-shape-corner-none`
-
-*   [All List Item tokens](https://github.com/Saki340/petal-elements/blob/main/tokens/_md-comp-list-item.scss)
-    <!-- {.external} -->
+Like Compose's `ListItem`, the list item does not size or shape what you put in
+the `start` slot; style your avatar, image or video yourself (Compose's avatar
+is 40px and round, its image 56px, its video 100px by 56px with 8px corners).
+Text in the `start` slot is title medium, which can be changed with
+`--md-list-item-leading-avatar-label-font`, `-size`, `-line-height`, `-weight`
+and `-tracking`.
 
 ### Image List Item Example
 
@@ -372,9 +410,6 @@ Token                                 | Default value
     background-color: #f4fbfa;
     --md-list-container-color: #f4fbfa;
     --md-list-item-label-text-color: #161d1d;
-    --md-list-item-leading-image-height: 50px;
-    --md-list-item-leading-image-width: 100px;
-    --md-list-item-leading-image-shape: 25px;
   }
   img {
     width: 40px;
@@ -432,6 +467,8 @@ Token                                 | Default value
 | --- | --- | --- | --- | --- |
 | `disabled` | `disabled` | `boolean` | `false` | Disables the item and makes it non-selectable and non-interactive. |
 | `type` | `type` | `ListItemType` | `'text'` | Sets the behavior of the list item, defaults to "text". Change to "link" or "button" for interactive items. |
+| `selected` | `selected` | `boolean` | `false` | Shows the item as selected (Compose's `ListItem(selected = ...)`): the secondary container color, on-secondary-container texts and icons, and rounded corners. It does not change by itself; set it from your selection logic. |
+| `threeLine` | `three-line` | `boolean` | `false` | Only needed for SSR.<br>Set automatically on items of three lines: with both overline and supporting text, or with supporting text on more than one line. Such an item is 88px high and its content is aligned to the top. Add this attribute to avoid a flash of unstyled content when rendering on the server. |
 | `href` | `href` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `href` resource attribute. |
 | `target` | `target` | `"" \| "_blank" \| "_parent" \| "_self" \| "_top"` | `''` | Sets the underlying `HTMLAnchorElement`'s `target` attribute when `href` is set. |
 | `rel` | `rel` | `string` | `''` | Sets the underlying `HTMLAnchorElement`'s `rel` attribute when `href` is set. |

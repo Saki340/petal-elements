@@ -22,7 +22,9 @@
 
   :host {
     color: unset;
-    min-width: 210px;
+    // TextFieldDefaults.MinWidth: the field of an ExposedDropdownMenuBox is a
+    // TextField.
+    min-width: 280px;
     display: flex;
   }
 
@@ -55,15 +57,13 @@
     justify-content: center;
   }
 
-  .icon.trailing :is(.up, .down) {
-    opacity: 0;
-    /* 75 ms is half of min(animate open duration, animate closed duration)*/
-    transition: opacity 75ms linear 75ms;
-  }
-
-  .select:not(.open) .down,
-  .select.open .up {
-    opacity: 1;
+  // Compose's ExposedDropdownMenuDefaults.TrailingIcon turns the arrow by 180
+  // degrees while the menu is expanded (`Modifier.rotate`, which is not
+  // animated).
+  .select.open .icon.trailing .arrow {
+    transform: rotate(180deg);
+    transform-box: fill-box;
+    transform-origin: center;
   }
 
   .field,
@@ -78,9 +78,35 @@
   petal-menu {
     // Not inherited because it is applied every time the menu opens
     min-width: var(--__menu-min-width);
-    // Inherits from `.menu-wrapper` because it is applied only when
-    // `clampMenuWidth` is true
+    // Inherits from `.menu-wrapper` when `noClampMenuWidth` is set
     max-width: var(--__menu-max-width, inherit);
+
+    // Compose's DropdownMenuItem in an ExposedDropdownMenu (Menu.kt,
+    // DropdownMenuItemContent): at least 48dp high, 16dp of content padding at
+    // the sides (ExposedDropdownMenuDefaults.ItemContentPadding; 12dp in a
+    // plain DropdownMenu) and none above and below, the label large text
+    // style. The options inherit these custom properties from the menu.
+    --md-menu-item-one-line-container-height: 48px;
+    --md-menu-item-top-space: 0px;
+    --md-menu-item-bottom-space: 0px;
+    --md-menu-item-leading-space: 16px;
+    --md-menu-item-trailing-space: 16px;
+    --md-menu-item-label-text-font: var(
+      --md-sys-typescale-label-large-font,
+      var(--md-ref-typeface-plain, sans-serif)
+    );
+    --md-menu-item-label-text-size: var(
+      --md-sys-typescale-label-large-size,
+      14px
+    );
+    --md-menu-item-label-text-line-height: var(
+      --md-sys-typescale-label-large-line-height,
+      20px
+    );
+    --md-menu-item-label-text-weight: var(
+      --md-sys-typescale-label-large-weight,
+      var(--md-ref-typeface-weight-medium, 500)
+    );
   }
 
   .menu-wrapper {

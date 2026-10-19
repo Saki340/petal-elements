@@ -36,6 +36,26 @@
   the disabled filled container keeps its color. The filled indicator is one
   line (`.active-indicator`) instead of two borders. This also changes
   `petal-select`, which shares the field.
+* **list:** `petal-list-item` follows Compose's `ListItem`: 10px (was 12px)
+  above and below the content, 12px (was 16px) between the leading or
+  trailing content and the text, three-line items (overline and supporting
+  text, or supporting text on two lines) are 88px high and aligned to the top,
+  letter spacing on all texts, 4px corners that become 12px on hover and 16px
+  when focused, pressed or selected (they were square), and a disabled item
+  fades its texts and icons to 38% of `on-surface` instead of fading the
+  whole item to 30%. New: the `selected` property and the `three-line`
+  attribute, and the `--md-list-item-overline-*`, `-selected-*`,
+  `-hovered-container-shape` and similar tokens.
+* **select:** `petal-filled-select` and `petal-outlined-select` follow
+  Compose's exposed dropdown menu. The field takes the text field values (2px
+  focused indicator and outline, letter spacing, no hover state, at least
+  280px wide instead of 210px); the trailing icon is one arrow turned by 180
+  degrees while the menu is open (it faded between two arrows); the menu is
+  as wide as the select (`clamp-menu-width` is the default now; set
+  `no-clamp-menu-width` for the old behavior) and at most as high as the
+  larger of the spaces above and below the select less 48px; options are
+  48px (was 56px) high with 16px at the sides and the label large text style
+  (was body large).
 
 #### Bug fixes
 

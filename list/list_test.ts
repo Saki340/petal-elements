@@ -1070,7 +1070,7 @@ describe('<petal-list-item> link', () => {
       </petal-list>`);
       await env.waitForStability();
       const item = root.querySelector('petal-list-item')!;
-      expect(radii(item)).toEqual(['0px', '0px', '0px', '0px']);
+      expect(radii(item)).toEqual(['4px', '4px', '4px', '4px']);
       expect(getComputedStyle(item).backgroundColor).toBe('rgba(0, 0, 0, 0)');
     });
   });

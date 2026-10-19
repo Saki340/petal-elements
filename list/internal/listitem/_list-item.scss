@@ -4,6 +4,29 @@
 // Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
 //
 
+// List item after Jetpack Compose Material 3 (ListItem.kt, the overloads with
+// `shapes`, `colors` and `contentPadding`; ListItemDefaults.kt; ListTokens).
+//
+// - Content padding: 16dp at the start and end, ListTokens.ItemTopSpace and
+//   ItemBottomSpace (10dp) above and below. (On desktop with a mouse,
+//   Compose uses 12dp; the web page does not know the pointer when it renders.)
+// - The leading and trailing content are 12dp (ItemBetweenSpace) from the text.
+// - Minimum height by lines of text: one line 56dp, two lines (overline or
+//   supporting text) 72dp, three lines (overline and supporting text, or
+//   supporting text on two lines) 88dp. Content is centered, and top-aligned in
+//   a three-line item (ListItemDefaults.verticalAlignment).
+// - Texts: body large headline, body medium supporting text, label small
+//   overline and trailing text; leading content in title medium.
+// - Disabled: the texts and icons are on-surface at 38%; the container is
+//   not faded (ListItemColors.disabled*).
+// - Selected (`selected`): secondary container with on-secondary-container
+//   texts and icons.
+// - Shape: 4dp; 12dp hovered; 16dp focused, selected and pressed (priority:
+//   pressed, selected, focused, hovered), on the fast spatial spring
+//   (ListItemDefaults.shapes). Colors change on the default effects spring.
+// - The container is transparent here, so the list's `container-color` shows
+//   (Compose draws `surface`; in a segmented list the items do).
+
 // go/keep-sorted start
 @use 'sass:list';
 @use 'sass:map';
@@ -13,10 +36,56 @@
 @use '../../../icon/icon';
 @use '../../../ripple/ripple';
 @use '../../../tokens';
+@use '../../../tokens/versions/compose/values/md-comp-list' as compose-list;
+@use '../../../tokens/versions/v34/values/md-sys-motion-springs' as springs;
 // go/keep-sorted end
 
+// Public tokens that exist only for the Compose values (the others are in
+// `tokens.$md-comp-list-item-supported-tokens`).
+$_compose-tokens: (
+  // go/keep-sorted start
+  'between-space',
+  'container-color',
+  'disabled-label-text-color',
+  'disabled-leading-icon-color',
+  'disabled-overline-color',
+  'disabled-supporting-text-color',
+  'disabled-trailing-icon-color',
+  'disabled-trailing-supporting-text-color',
+  'focused-container-shape',
+  'hovered-container-shape',
+  'label-text-tracking',
+  'leading-avatar-label-font',
+  'leading-avatar-label-line-height',
+  'leading-avatar-label-size',
+  'leading-avatar-label-tracking',
+  'leading-avatar-label-weight',
+  'overline-color',
+  'overline-font',
+  'overline-line-height',
+  'overline-size',
+  'overline-tracking',
+  'overline-weight',
+  'pressed-container-shape',
+  'selected-container-color',
+  'selected-container-shape',
+  'selected-label-text-color',
+  'selected-leading-icon-color',
+  'selected-overline-color',
+  'selected-supporting-text-color',
+  'selected-trailing-icon-color',
+  'selected-trailing-supporting-text-color',
+  'supporting-text-tracking',
+  'three-line-container-height',
+  'trailing-supporting-text-tracking',
+  // go/keep-sorted end
+);
+
 @mixin theme($tokens) {
-  $supported-tokens: tokens.$md-comp-list-item-supported-tokens;
+  $supported-tokens: list.join(
+    tokens.$md-comp-list-item-supported-tokens,
+    $_compose-tokens
+  );
 
   @each $token, $value in $tokens {
     @if list.index($supported-tokens, $token) == null {
@@ -29,8 +98,24 @@
   }
 }
 
+/// A public `--md-list-item-*` token with the Compose value as its default.
+@function _token($name, $compose-key) {
+  @return var(
+    --md-list-item-#{$name},
+    #{map.get(compose-list.$values, $compose-key)}
+  );
+}
+
 @mixin styles() {
-  $tokens: tokens.md-comp-list-item-values();
+  // The state layer opacities are the same as Compose's ripple (hover 8%,
+  // pressed 10%).
+  $web: tokens.md-comp-list-item-values();
+  $disabled-opacity: var(
+    --md-list-item-disabled-opacity,
+    #{map.get(compose-list.$values, 'item-disabled-label-text-opacity')}
+  );
+  // The on-surface color at the disabled opacity.
+  $disabled-percent: calc(#{$disabled-opacity} * 100%);
 
   // The hidden attribute, which `display` on the host would override.
   :host([hidden]) {
@@ -38,23 +123,64 @@
   }
 
   :host {
-    border-radius: map.get($tokens, 'container-shape');
+    --_shape: #{_token('container-shape', 'item-container-expressive-shape')};
+
+    background-color: var(--md-list-item-container-color, transparent);
+    border-radius: var(--_shape);
     display: flex;
-    gap: 16px;
+    gap: #{_token('between-space', 'item-between-space')};
     -webkit-tap-highlight-color: transparent;
+    transition:
+      border-radius map.get(springs.$values, 'spring-fast-spatial-duration')
+        map.get(springs.$values, 'spring-fast-spatial'),
+      background-color map.get(springs.$values, 'spring-default-effects-duration')
+        map.get(springs.$values, 'spring-default-effects');
 
     @include ripple.theme(
       (
-        hover-color: map.get($tokens, 'hover-state-layer-color'),
-        hover-opacity: map.get($tokens, 'hover-state-layer-opacity'),
-        pressed-color: map.get($tokens, 'pressed-state-layer-color'),
-        pressed-opacity: map.get($tokens, 'pressed-state-layer-opacity'),
+        hover-color: var(--md-list-item-hover-state-layer-color, currentColor),
+        hover-opacity: map.get($web, 'hover-state-layer-opacity'),
+        pressed-color: var(--md-list-item-pressed-state-layer-color, currentColor),
+        pressed-opacity: map.get($web, 'pressed-state-layer-opacity'),
       )
     );
   }
 
-  :host(:is([type='button']:not([disabled]), [type='link'])) {
+  // Shape by state. Compose picks the first that applies of pressed, selected,
+  // focused, hovered. All of these have the same specificity (the repeated
+  // `[selected]` raises that of the selected rule to that of the others), so
+  // the later one wins.
+  :host(:is([type='button'], [type='link']):not([disabled]):hover) {
+    --_shape: #{_token('hovered-container-shape', 'item-hovered-container-expressive-shape')};
+  }
+
+  :host(:is([type='button'], [type='link']):not([disabled]):focus-within) {
+    --_shape: #{_token('focused-container-shape', 'item-focused-container-expressive-shape')};
+  }
+
+  :host([selected][selected][selected]) {
+    --_shape: #{_token('selected-container-shape', 'item-selected-container-expressive-shape')};
+  }
+
+  :host(:is([type='button'], [type='link']):not([disabled]):active) {
+    --_shape: #{_token('pressed-container-shape', 'item-pressed-container-expressive-shape')};
+  }
+
+  // A disabled selected item has the container of the others
+  // (`disabledContainerColor`).
+  :host([selected]:not([disabled])) {
+    background-color: var(
+      --md-list-item-selected-container-color,
+      #{map.get(compose-list.$values, 'item-selected-container-color')}
+    );
+  }
+
+  :host(:is([type='button'], [type='link'])) {
     cursor: pointer;
+  }
+
+  :host([disabled]:not([type='link'])) {
+    cursor: default;
   }
 
   petal-focus-ring {
@@ -62,7 +188,7 @@
 
     @include focus-ring.theme(
       (
-        'shape': 8px,
+        'shape': var(--_shape),
       )
     );
   }
@@ -81,7 +207,20 @@
   }
 
   .list-item {
+    // The colors of the parts. The state layer takes the color of the text
+    // (Compose's ripple is drawn in the content color).
+    --_label-color: #{_token('label-text-color', 'item-label-text-color')};
+    --_overline-color: #{_token('overline-color', 'item-overline-color')};
+    --_supporting-color: #{_token('supporting-text-color', 'item-supporting-text-color')};
+    --_trailing-text-color: #{_token(
+        'trailing-supporting-text-color',
+        'item-trailing-supporting-text-color'
+      )};
+    --_leading-color: #{_token('leading-icon-color', 'item-leading-icon-color')};
+    --_trailing-color: #{_token('trailing-icon-color', 'item-trailing-icon-color')};
+
     border-radius: inherit;
+    color: var(--_label-color);
     display: flex;
     flex: 1;
     gap: inherit;
@@ -93,13 +232,68 @@
     width: 100%;
   }
 
-  .list-item.interactive {
-    cursor: pointer;
+  :host([selected]) .list-item {
+    --_label-color: #{_token('selected-label-text-color', 'item-selected-label-text-color')};
+    --_overline-color: #{_token('selected-overline-color', 'item-selected-overline-color')};
+    --_supporting-color: #{_token(
+        'selected-supporting-text-color',
+        'item-selected-supporting-text-color'
+      )};
+    --_trailing-text-color: #{_token(
+        'selected-trailing-supporting-text-color',
+        'item-selected-trailing-supporting-text-color'
+      )};
+    --_leading-color: #{_token('selected-leading-icon-color', 'item-selected-leading-icon-color')};
+    --_trailing-color: #{_token('selected-trailing-icon-color', 'item-selected-trailing-icon-color')};
   }
 
-  .list-item.disabled {
-    opacity: map.get($tokens, 'disabled-opacity');
+  // Disabled (also when selected): on-surface at 38%.
+  :host .list-item.disabled {
+    --_label-color: color-mix(
+      in srgb,
+      #{_token('disabled-label-text-color', 'item-disabled-label-text-color')}
+        #{$disabled-percent},
+      transparent
+    );
+    --_overline-color: color-mix(
+      in srgb,
+      #{_token('disabled-overline-color', 'item-disabled-overline-color')}
+        #{$disabled-percent},
+      transparent
+    );
+    --_supporting-color: color-mix(
+      in srgb,
+      #{_token('disabled-supporting-text-color', 'item-disabled-supporting-text-color')}
+        #{$disabled-percent},
+      transparent
+    );
+    --_trailing-text-color: color-mix(
+      in srgb,
+      #{_token(
+          'disabled-trailing-supporting-text-color',
+          'item-disabled-trailing-icon-color'
+        )}
+        #{$disabled-percent},
+      transparent
+    );
+    --_leading-color: color-mix(
+      in srgb,
+      #{_token('disabled-leading-icon-color', 'item-disabled-leading-icon-color')}
+        #{$disabled-percent},
+      transparent
+    );
+    --_trailing-color: color-mix(
+      in srgb,
+      #{_token('disabled-trailing-icon-color', 'item-disabled-trailing-icon-color')}
+        #{$disabled-percent},
+      transparent
+    );
+
     pointer-events: none;
+  }
+
+  .list-item.interactive {
+    cursor: pointer;
   }
 
   [slot='container'] {
@@ -108,55 +302,111 @@
 
   petal-ripple {
     border-radius: inherit;
+    // The state layer color is the text color.
+    color: var(--_label-color);
   }
 
   petal-item {
     border-radius: inherit;
     flex: 1;
     height: 100%;
-    color: map.get($tokens, 'label-text-color');
-    font-family: map.get($tokens, 'label-text-font');
-    font-size: map.get($tokens, 'label-text-size');
-    line-height: map.get($tokens, 'label-text-line-height');
-    font-weight: map.get($tokens, 'label-text-weight');
-    min-height: map.get($tokens, 'one-line-container-height');
-    padding-top: map.get($tokens, 'top-space');
-    padding-bottom: map.get($tokens, 'bottom-space');
-    padding-inline-start: map.get($tokens, 'leading-space');
-    padding-inline-end: map.get($tokens, 'trailing-space');
+    color: var(--_label-color);
+    font-family: #{_token('label-text-font', 'item-label-text-font')};
+    font-size: #{_token('label-text-size', 'item-label-text-size')};
+    line-height: #{_token('label-text-line-height', 'item-label-text-line-height')};
+    font-weight: #{_token('label-text-weight', 'item-label-text-weight')};
+    letter-spacing: #{_token('label-text-tracking', 'item-label-text-tracking')};
+    min-height: #{_token('one-line-container-height', 'item-one-line-container-height')};
+    padding-top: #{_token('top-space', 'item-top-space')};
+    padding-bottom: #{_token('bottom-space', 'item-bottom-space')};
+    padding-inline-start: #{_token('leading-space', 'item-leading-space')};
+    padding-inline-end: #{_token('trailing-space', 'item-trailing-space')};
     gap: inherit;
+    transition: color map.get(springs.$values, 'spring-default-effects-duration')
+      map.get(springs.$values, 'spring-default-effects');
   }
 
   petal-item[multiline] {
-    min-height: map.get($tokens, 'two-line-container-height');
+    min-height: #{_token('two-line-container-height', 'item-two-line-container-height')};
+  }
+
+  // Three lines: overline and supporting text, or supporting text on two lines.
+  // The content sits at the top then (ListItemDefaults.verticalAlignment).
+  :host([three-line]) petal-item {
+    align-items: flex-start;
+    min-height: #{_token('three-line-container-height', 'item-three-line-container-height')};
+  }
+
+  [slot='overline'] {
+    color: var(--_overline-color);
+    font-family: #{_token('overline-font', 'item-overline-font')};
+    font-size: #{_token('overline-size', 'item-overline-size')};
+    line-height: #{_token('overline-line-height', 'item-overline-line-height')};
+    font-weight: #{_token('overline-weight', 'item-overline-weight')};
+    letter-spacing: #{_token('overline-tracking', 'item-overline-tracking')};
   }
 
   [slot='supporting-text'] {
-    color: map.get($tokens, 'supporting-text-color');
-    font-family: map.get($tokens, 'supporting-text-font');
-    font-size: map.get($tokens, 'supporting-text-size');
-    line-height: map.get($tokens, 'supporting-text-line-height');
-    font-weight: map.get($tokens, 'supporting-text-weight');
+    color: var(--_supporting-color);
+    font-family: #{_token('supporting-text-font', 'item-supporting-text-font')};
+    font-size: #{_token('supporting-text-size', 'item-supporting-text-size')};
+    line-height: #{_token('supporting-text-line-height', 'item-supporting-text-line-height')};
+    font-weight: #{_token('supporting-text-weight', 'item-supporting-text-weight')};
+    letter-spacing: #{_token('supporting-text-tracking', 'item-supporting-text-tracking')};
   }
 
   [slot='trailing-supporting-text'] {
-    color: map.get($tokens, 'trailing-supporting-text-color');
-    font-family: map.get($tokens, 'trailing-supporting-text-font');
-    font-size: map.get($tokens, 'trailing-supporting-text-size');
-    line-height: map.get($tokens, 'trailing-supporting-text-line-height');
-    font-weight: map.get($tokens, 'trailing-supporting-text-weight');
+    color: var(--_trailing-text-color);
+    font-family: #{_token(
+        'trailing-supporting-text-font',
+        'item-trailing-supporting-text-font'
+      )};
+    font-size: #{_token('trailing-supporting-text-size', 'item-trailing-supporting-text-size')};
+    line-height: #{_token(
+        'trailing-supporting-text-line-height',
+        'item-trailing-supporting-text-line-height'
+      )};
+    font-weight: #{_token(
+        'trailing-supporting-text-weight',
+        'item-trailing-supporting-text-weight'
+      )};
+    letter-spacing: #{_token(
+        'trailing-supporting-text-tracking',
+        'item-trailing-supporting-text-tracking'
+      )};
   }
 
   :is([slot='start'], [slot='end'])::slotted(*) {
     fill: currentColor;
   }
 
+  // Leading content: title medium text (the avatar's initials), 24dp icons.
   [slot='start'] {
-    color: map.get($tokens, 'leading-icon-color');
+    color: var(--_leading-color);
+    font-family: #{_token('leading-avatar-label-font', 'item-leading-avatar-label-font')};
+    font-size: #{_token('leading-avatar-label-size', 'item-leading-avatar-label-size')};
+    line-height: #{_token('leading-avatar-label-line-height', 'item-leading-avatar-label-line-height')};
+    font-weight: #{_token('leading-avatar-label-weight', 'item-leading-avatar-label-weight')};
+    letter-spacing: #{_token('leading-avatar-label-tracking', 'item-leading-avatar-label-tracking')};
   }
 
   [slot='end'] {
-    color: map.get($tokens, 'trailing-icon-color');
+    color: var(--_trailing-color);
+  }
+
+  [slot='start'],
+  [slot='end'] {
+    transition: color map.get(springs.$values, 'spring-default-effects-duration')
+      map.get(springs.$values, 'spring-default-effects');
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :host,
+    petal-item,
+    [slot='start'],
+    [slot='end'] {
+      transition: none;
+    }
   }
 
   @media (forced-colors: active) {
@@ -166,7 +416,6 @@
 
     .list-item.disabled {
       color: GrayText;
-      opacity: 1;
     }
   }
 }

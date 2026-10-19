@@ -87,6 +87,32 @@ Indicate that a selection is mandatory by adding the `required` attribute.
 </petal-filled-select>
 ```
 
+## Compose
+
+Select follows Jetpack Compose Material 3's exposed dropdown menu
+(`ExposedDropdownMenuBox`, `ExposedDropdownMenu` and
+`ExposedDropdownMenuDefaults`):
+
+*   The field is a text field with the values of `petal-filled-text-field` and
+    `petal-outlined-text-field`: at least 280px wide, 56px high, a 2px focused
+    indicator or outline, letter spacing on text, and no hover state.
+*   The trailing icon is the arrow drop down icon, turned by 180 degrees while
+    the menu is open. Compose does not animate the turn, and neither does the
+    select. A `trailing-icon` slot replaces the arrow.
+*   The menu is exactly as wide as the select (`matchAnchorWidth`) and starts
+    at the bottom of the field, with no gap; above the field if there is no
+    room below. It is at most as high as the larger of the spaces above and
+    below the field, less 48px (`MenuVerticalMargin`), and scrolls. Set
+    `no-clamp-menu-width` to let the menu be wider than the select.
+*   Options are the items of a `DropdownMenu`: at least 48px high, with 16px of
+    padding at the sides (`ExposedDropdownMenuDefaults.ItemContentPadding`;
+    12px in a plain menu), and the label large text style. The menu itself is
+    `petal-menu`, which opens by scaling from 80% like `DropdownMenu`.
+
+Compose's exposed dropdown has no selected option state; `petal-select-option`
+keeps showing the selected option with the secondary container, as a native
+`<select>` does.
+
 <!--
 ## Accessibility
 
@@ -222,7 +248,8 @@ petal-outlined-select::part(menu) {
 | `supportingText` | `supporting-text` | `string` | `''` | Conveys additional information below the select, such as how it should be used. |
 | `error` | `error` | `boolean` | `false` | Gets or sets whether or not the select is in a visually invalid state.<br>This error state overrides the error state controlled by `reportValidity()`. |
 | `menuPositioning` | `menu-positioning` | `"absolute" \| "fixed" \| "popover"` | `'popover'` | Whether or not the underlying petal-menu should be position: fixed to display in a top-level manner, or position: absolute.<br>position:fixed is useful for cases where select is inside of another element with stacking context and hidden overflows such as `petal-dialog`. |
-| `clampMenuWidth` | `clamp-menu-width` | `boolean` | `false` | Clamps the menu-width to the width of the select. |
+| `clampMenuWidth` | `clamp-menu-width` | `boolean` | `true` | Deprecated: the menu is as wide as the select by default, as Compose's `ExposedDropdownMenu` (`matchAnchorWidth`). Setting this changes nothing; use `noClampMenuWidth` to let the menu be wider than the select. |
+| `noClampMenuWidth` | `no-clamp-menu-width` | `boolean` | `false` | Lets the menu be wider than the select when its options are. By default the menu is exactly as wide as the select (Compose's `ExposedDropdownMenu`, `matchAnchorWidth`). |
 | `typeaheadDelay` | `typeahead-delay` | `number` | `DEFAULT_TYPEAHEAD_BUFFER_TIME` | The max time between the keystrokes of the typeahead select / menu behavior before it clears the typeahead buffer. |
 | `hasLeadingIcon` | `has-leading-icon` | `boolean` | `false` | Whether or not the text field has a leading icon. Used for SSR. |
 | `displayText` | `display-text` | `string` | `''` | Text to display in the field. Only set for SSR. |
@@ -292,7 +319,8 @@ petal-outlined-select::part(menu) {
 | `supportingText` | `supporting-text` | `string` | `''` | Conveys additional information below the select, such as how it should be used. |
 | `error` | `error` | `boolean` | `false` | Gets or sets whether or not the select is in a visually invalid state.<br>This error state overrides the error state controlled by `reportValidity()`. |
 | `menuPositioning` | `menu-positioning` | `"absolute" \| "fixed" \| "popover"` | `'popover'` | Whether or not the underlying petal-menu should be position: fixed to display in a top-level manner, or position: absolute.<br>position:fixed is useful for cases where select is inside of another element with stacking context and hidden overflows such as `petal-dialog`. |
-| `clampMenuWidth` | `clamp-menu-width` | `boolean` | `false` | Clamps the menu-width to the width of the select. |
+| `clampMenuWidth` | `clamp-menu-width` | `boolean` | `true` | Deprecated: the menu is as wide as the select by default, as Compose's `ExposedDropdownMenu` (`matchAnchorWidth`). Setting this changes nothing; use `noClampMenuWidth` to let the menu be wider than the select. |
+| `noClampMenuWidth` | `no-clamp-menu-width` | `boolean` | `false` | Lets the menu be wider than the select when its options are. By default the menu is exactly as wide as the select (Compose's `ExposedDropdownMenu`, `matchAnchorWidth`). |
 | `typeaheadDelay` | `typeahead-delay` | `number` | `DEFAULT_TYPEAHEAD_BUFFER_TIME` | The max time between the keystrokes of the typeahead select / menu behavior before it clears the typeahead buffer. |
 | `hasLeadingIcon` | `has-leading-icon` | `boolean` | `false` | Whether or not the text field has a leading icon. Used for SSR. |
 | `displayText` | `display-text` | `string` | `''` | Text to display in the field. Only set for SSR. |

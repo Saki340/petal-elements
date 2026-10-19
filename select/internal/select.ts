@@ -50,6 +50,34 @@ import {getSelectedItems, SelectOptionRecord} from './shared.js';
 
 const VALUE = Symbol('value');
 
+/**
+ * Compose's `MenuVerticalMargin`: the menu stays this far from the top and the
+ * bottom of the window.
+ */
+const MENU_VERTICAL_MARGIN = 48;
+
+/**
+ * The tallest the menu of an exposed dropdown may be (Compose's
+ * `calculateMaxHeight` in ExposedDropdownMenu.kt): the larger of the spaces
+ * above and below the anchor, less `MenuVerticalMargin` at the edge of the
+ * window. The whole window less the margins when the anchor is out of it.
+ *
+ * @param anchor The select's bounding rect.
+ * @param windowHeight The height of the window.
+ */
+export function getMenuMaxHeight(
+  anchor: {top: number; bottom: number},
+  windowHeight: number,
+) {
+  const top = MENU_VERTICAL_MARGIN;
+  const bottom = windowHeight - MENU_VERTICAL_MARGIN;
+  const available =
+    anchor.top > windowHeight || anchor.bottom < 0
+      ? bottom - top
+      : Math.max(anchor.top - top, bottom - anchor.bottom);
+  return Math.max(Math.round(available), 0);
+}
+
 // Separate variable needed for closure.
 const selectBaseClass = mixinDelegatesAria(
   mixinOnReportValidity(
@@ -136,10 +164,22 @@ export abstract class Select extends selectBaseClass {
   menuPositioning: 'absolute' | 'fixed' | 'popover' = 'popover';
 
   /**
-   * Clamps the menu-width to the width of the select.
+   * Deprecated: the menu is as wide as the select by default, as Compose's
+   * `ExposedDropdownMenu` (`matchAnchorWidth`). Setting this changes nothing;
+   * use `noClampMenuWidth` to let the menu be wider than the select.
+   *
+   * @deprecated
    */
   @property({type: Boolean, attribute: 'clamp-menu-width'})
-  clampMenuWidth = false;
+  clampMenuWidth = true;
+
+  /**
+   * Lets the menu be wider than the select when its options are. By default
+   * the menu is exactly as wide as the select (Compose's
+   * `ExposedDropdownMenu`, `matchAnchorWidth`).
+   */
+  @property({type: Boolean, attribute: 'no-clamp-menu-width'})
+  noClampMenuWidth = false;
 
   /**
    * The max time between the keystrokes of the typeahead select / menu behavior
@@ -264,6 +304,7 @@ export abstract class Select extends selectBaseClass {
   // cannot be tracked in PropertyValues<this> map.
   private prevOpen = this.open;
   private selectWidth = 0;
+  private menuMaxHeight = 0;
 
   constructor() {
     super();
@@ -345,6 +386,7 @@ export abstract class Select extends selectBaseClass {
     if (this.prevOpen !== this.open && this.open) {
       const selectRect = this.getBoundingClientRect();
       this.selectWidth = selectRect.width;
+      this.menuMaxHeight = getMenuMaxHeight(selectRect, window.innerHeight);
     }
 
     this.prevOpen = this.open;
@@ -443,17 +485,14 @@ export abstract class Select extends selectBaseClass {
     return html`
       <span class="icon trailing" slot="end">
         <slot name="trailing-icon" @slotchange=${this.handleIconChange}>
+          <!-- Compose's ExposedDropdownMenuDefaults.TrailingIcon: the arrow
+               drop down icon, turned by 180 degrees while expanded. -->
           <svg height="5" viewBox="7 10 10 5" focusable="false">
             <polygon
-              class="down"
+              class="arrow"
               stroke="none"
               fill-rule="evenodd"
               points="7 10 12 15 17 10"></polygon>
-            <polygon
-              class="up"
-              stroke="none"
-              fill-rule="evenodd"
-              points="7 15 12 10 17 15"></polygon>
           </svg>
         </slot>
       </span>
@@ -481,8 +520,11 @@ export abstract class Select extends selectBaseClass {
         anchor="field"
         style=${styleMap({
           '--__menu-min-width': `${this.selectWidth}px`,
-          '--__menu-max-width': this.clampMenuWidth
-            ? `${this.selectWidth}px`
+          '--__menu-max-width': this.noClampMenuWidth
+            ? undefined
+            : `${this.selectWidth}px`,
+          'max-height': this.menuMaxHeight
+            ? `${this.menuMaxHeight}px`
             : undefined,
         })}
         no-navigation-wrap
