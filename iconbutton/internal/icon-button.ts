@@ -233,13 +233,14 @@ export class IconButton extends iconButtonBaseClass {
   }
 
   private renderIcon() {
-    return html`<span class="icon"><slot></slot></span>`;
+    return html`<span class="icon"><slot></slot><slot name="badge"></slot></span>`;
   }
 
   private renderSelectedIcon() {
     // Use default slot as fallback to not require specifying multiple icons
     return html`<span class="icon icon--selected"
       ><slot name="selected"><slot></slot></slot
+      ><slot name="badge"></slot
     ></span>`;
   }
 

@@ -115,6 +115,7 @@ export abstract class NavigationItem extends LitElement {
       <div class="icon">
         <slot name="icon"></slot>
         <slot name="selected-icon" @slotchange=${this.onSelectedIconSlotChange}></slot>
+        <span class="badge-anchor"><slot name="badge"></slot></span>
       </div>
       <div class="label"><slot @slotchange=${this.onLabelSlotChange}></slot></div>
       ${this.renderExtra()}

@@ -136,6 +136,11 @@
 
 #### Features
 
+* **badge:** `petal-badge` (`badge/badge.js`), after Jetpack Compose `Badge`
+  and `BadgedBox`: a 6px dot, or a 16px pill with a `value`. In the new
+  `badge` slot of icon buttons and navigation bar and rail items it sits at
+  the end of the icon's top edge, as `BadgedBox` places it. Replaces the labs
+  badge.
 * **chips:** `expressive` on filter and input chips: Compose's expressive chip
   shapes (12px corners, fully rounded when selected, 8px while pressed,
   morphing on the fast spatial spring), 4px between an icon and the label and

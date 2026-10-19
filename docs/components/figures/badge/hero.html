@@ -1,0 +1,38 @@
+<!--
+  @license
+  Copyright 2026 Saki
+  SPDX-License-Identifier: Apache-2.0
+-->
+<div class="figure-wrapper">
+  <figure
+      style="justify-content: center; gap: 32px; padding-block: 24px"
+      title="Badges"
+      aria-label="Icon buttons with a dot badge and a badge with the count 3, and a navigation bar with badges on two items.">
+    <div style="display: flex; gap: 16px; align-items: center">
+      <petal-icon-button aria-label="Notifications, new">
+        <petal-icon>notifications</petal-icon>
+        <petal-badge slot="badge"></petal-badge>
+      </petal-icon-button>
+      <petal-icon-button aria-label="Mail, 3 unread">
+        <petal-icon>mail</petal-icon>
+        <petal-badge slot="badge" value="3"></petal-badge>
+      </petal-icon-button>
+    </div>
+    <petal-navigation-bar style="width: 320px">
+      <petal-navigation-bar-item selected>
+        <petal-icon slot="icon">inbox</petal-icon>
+        <petal-badge slot="badge" value="12"></petal-badge>
+        Inbox
+      </petal-navigation-bar-item>
+      <petal-navigation-bar-item>
+        <petal-icon slot="icon">chat</petal-icon>
+        <petal-badge slot="badge"></petal-badge>
+        Chat
+      </petal-navigation-bar-item>
+      <petal-navigation-bar-item>
+        <petal-icon slot="icon">settings</petal-icon>
+        Settings
+      </petal-navigation-bar-item>
+    </petal-navigation-bar>
+  </figure>
+</div>

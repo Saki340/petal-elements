@@ -135,6 +135,19 @@ An item without a label shows only the icon. Give it an `aria-label`.
 sides that depends on how many items there are (Compose's
 `ShortNavigationBarArrangement.Centered`). The default is `equal-weight`.
 
+### Badges
+
+Put a [badge](./badge.md) in the `badge` slot of an item. It sits at the end
+of the icon's top edge. Say what it means in the item's `aria-label`.
+
+```html
+<petal-navigation-bar-item aria-label="Inbox, 12 unread">
+  <petal-icon slot="icon">inbox</petal-icon>
+  <petal-badge slot="badge" value="12"></petal-badge>
+  Inbox
+</petal-navigation-bar-item>
+```
+
 ## Accessibility
 
 As in Compose, the bar is a `tablist` (`selectableGroup`) and its items are

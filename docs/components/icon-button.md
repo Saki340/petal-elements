@@ -205,6 +205,18 @@ Colors follow Compose's `IconButtonDefaults`: an unselected filled toggle is
 is `secondary-container`, and `secondary` with `on-secondary` when selected;
 the outlined border takes the icon color.
 
+### Badges
+
+Put a [badge](./badge.md) in the `badge` slot. It sits at the end of the
+icon's top edge.
+
+```html
+<petal-icon-button aria-label="Mail, 3 unread">
+  <petal-icon>mail</petal-icon>
+  <petal-badge slot="badge" value="3"></petal-badge>
+</petal-icon-button>
+```
+
 ## Accessibility
 
 Add an

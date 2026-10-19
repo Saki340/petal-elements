@@ -1,0 +1,28 @@
+<!--
+  @license
+  Copyright 2026 Saki
+  SPDX-License-Identifier: Apache-2.0
+-->
+<div class="figure-wrapper">
+  <figure
+      style="justify-content: center"
+      title="Badges in a navigation bar"
+      aria-label="A navigation bar with a badge with the count 12 on Inbox and a dot badge on Chat.">
+    <petal-navigation-bar style="width: 360px">
+      <petal-navigation-bar-item selected aria-label="Inbox, 12 unread">
+        <petal-icon slot="icon">inbox</petal-icon>
+        <petal-badge slot="badge" value="12"></petal-badge>
+        Inbox
+      </petal-navigation-bar-item>
+      <petal-navigation-bar-item aria-label="Chat, new messages">
+        <petal-icon slot="icon">chat</petal-icon>
+        <petal-badge slot="badge"></petal-badge>
+        Chat
+      </petal-navigation-bar-item>
+      <petal-navigation-bar-item>
+        <petal-icon slot="icon">settings</petal-icon>
+        Settings
+      </petal-navigation-bar-item>
+    </petal-navigation-bar>
+  </figure>
+</div>

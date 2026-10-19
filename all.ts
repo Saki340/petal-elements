@@ -15,6 +15,7 @@
 // LINT.IfChange(imports)
 // go/keep-sorted start
 import './appbar/top-app-bar.js';
+import './badge/badge.js';
 import './button/elevated-button.js';
 import './button/filled-button.js';
 import './button/filled-tonal-button.js';
@@ -86,6 +87,7 @@ import './tooltip/tooltip.js';
 // LINT.IfChange(exports)
 // go/keep-sorted start
 export * from './appbar/top-app-bar.js';
+export * from './badge/badge.js';
 export * from './button/elevated-button.js';
 export * from './button/filled-button.js';
 export * from './button/filled-tonal-button.js';

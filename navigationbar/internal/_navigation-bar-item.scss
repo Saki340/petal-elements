@@ -163,7 +163,18 @@
     pointer-events: none;
   }
 
-  .icon ::slotted(*) {
+  // A badge (slot="badge") places itself at the end of the top edge of this
+  // box, which covers the icon.
+  .badge-anchor {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: var(--_icon-size);
+    height: var(--_icon-size);
+    translate: -50% -50%;
+  }
+
+  .icon ::slotted(:not([slot='badge'])) {
     display: inline-flex;
     width: var(--_icon-size);
     height: var(--_icon-size);

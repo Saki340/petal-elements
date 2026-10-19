@@ -1,8 +1,7 @@
 /**
  * @license
- * Copyright 2022 Google LLC
+ * Copyright 2026 Saki
  * SPDX-License-Identifier: Apache-2.0
- * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {CSSResultOrNative} from 'lit';
@@ -18,6 +17,8 @@ declare global {
 }
 
 /**
+ * @summary Badges show a notification dot or a short count on an icon.
+ *
  * @final
  * @suppress {visibility}
  */

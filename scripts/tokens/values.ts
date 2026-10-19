@@ -57,6 +57,7 @@ export const COMPOSE_VALUE_MODULES = [
   'AppBarMediumFlexible',
   'AppBarSmall',
   'AssistChip',
+  'Badge',
   'BaselineButton',
   'ButtonLarge',
   'ButtonMedium',

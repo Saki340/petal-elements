@@ -26,6 +26,7 @@ const COMPONENTS = [
   'snackbar',
   'tooltip',
   'progress',
+  'badge',
   'tabs',
 ];
 

@@ -162,6 +162,9 @@ exists.
 - **Labs navigation is gone.** The old `labs/navigationbar`,
   `labs/navigationtab` and `labs/navigationdrawer` were removed; use
   `petal-navigation-bar`, `-rail` and `-drawer`.
+- **The labs badge moved** to `petal-elements/badge/badge.js`
+  (`petal-badge`, still with `value`). Put it in the `badge` slot of an icon
+  button or a navigation item instead of positioning it yourself.
 - **Tooltips** show on focus only when the anchor shows a focus ring
   (`:focus-visible`), not after a pointer choice.
 - **Text fields** forward `enterkeyhint`, `spellcheck` and `autocapitalize`;

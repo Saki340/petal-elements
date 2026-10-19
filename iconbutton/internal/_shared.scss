@@ -73,7 +73,8 @@
   }
 
   .icon {
-    ::slotted(*) {
+    // A badge (slot="badge") places itself at the end of the icon's top edge.
+    ::slotted(:not([slot='badge'])) {
       font-size: var(--_icon-size);
       height: var(--_icon-size);
       width: var(--_icon-size);
@@ -95,6 +96,7 @@
 
   .icon {
     display: inline-flex;
+    position: relative;
   }
 
   .link {

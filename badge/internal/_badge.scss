@@ -1,0 +1,82 @@
+//
+// Copyright 2026 Saki
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// A badge, after Jetpack Compose Material 3 (Badge.kt, BadgeTokens at
+// androidx commit df73c24):
+//
+// - a dot is BadgeTokens.Size (6dp) and fully rounded; with a value it is at
+//   least LargeSize (16dp) high and wide, with BadgeWithContentHorizontalPadding
+//   (4dp) on the sides and the LabelSmall type;
+// - BadgedBox places a dot BadgeOffset (6dp) from the end of the anchor, with
+//   its bottom 6dp below the top; a badge with a value
+//   BadgeWithContentHorizontalOffset (12dp) from the end, with its bottom
+//   BadgeWithContentVerticalOffset (14dp) below the top.
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use '../../tokens/versions/compose/values/md-comp-badge' as compose;
+// go/keep-sorted end
+
+@mixin styles() {
+  :host {
+    @each $token, $value in compose.$values {
+      --_#{$token}: var(--md-badge-#{$token}, #{$value});
+    }
+
+    display: inline-flex;
+    vertical-align: middle;
+  }
+
+  :host([hidden]) {
+    display: none;
+  }
+
+  .badge {
+    background-color: var(--_color);
+    block-size: var(--_size);
+    border-radius: var(--_shape);
+    box-sizing: border-box;
+    inline-size: var(--_size);
+  }
+
+  :host([value]:not([value=''])) .badge {
+    align-items: center;
+    background-color: var(--_large-color);
+    block-size: var(--_large-size);
+    border-radius: var(--_large-shape);
+    color: var(--_large-label-text-color);
+    display: inline-flex;
+    font-family: var(--_large-label-text-font);
+    font-size: var(--_large-label-text-size);
+    font-weight: var(--_large-label-text-weight);
+    inline-size: auto;
+    justify-content: center;
+    letter-spacing: var(--_large-label-text-tracking);
+    line-height: var(--_large-label-text-line-height);
+    min-inline-size: var(--_large-size);
+    padding-inline: 4px;
+    white-space: nowrap;
+  }
+
+  // BadgedBox.
+  :host([slot='badge']) {
+    inset-block-start: 6px;
+    inset-inline-start: calc(100% - 6px);
+    pointer-events: none;
+    position: absolute;
+    translate: 0 -100%;
+  }
+
+  :host([slot='badge'][value]:not([value=''])) {
+    inset-block-start: 14px;
+    inset-inline-start: calc(100% - 12px);
+  }
+
+  @media (forced-colors: active) {
+    .badge {
+      background-color: CanvasText;
+      color: Canvas;
+    }
+  }
+}

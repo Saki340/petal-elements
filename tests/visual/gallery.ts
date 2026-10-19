@@ -443,6 +443,18 @@ const galleries: Record<string, Gallery> = {
     })),
   },
 
+  badge: {
+    states: ['default'],
+    rows: [
+      {name: 'dot', render: () => html`<petal-badge></petal-badge>`},
+      {name: 'value', render: () => html`<petal-badge value="3"></petal-badge>`},
+      {name: 'long value', render: () => html`<petal-badge value="999+"></petal-badge>`},
+      {name: 'icon button dot', render: () => html`<petal-icon-button aria-label="Icon">${icon()}<petal-badge slot="badge"></petal-badge></petal-icon-button>`},
+      {name: 'icon button value', render: () => html`<petal-icon-button aria-label="Icon">${icon()}<petal-badge slot="badge" value="12"></petal-badge></petal-icon-button>`},
+      {name: 'navigation item', render: () => html`<petal-navigation-bar style="width: 120px"><petal-navigation-bar-item selected>${icon('icon')}<petal-badge slot="badge" value="5"></petal-badge>Inbox</petal-navigation-bar-item></petal-navigation-bar>`},
+    ],
+  },
+
   progress: {
     states: ['default'],
     rows: [

@@ -115,6 +115,19 @@ item and fires a `change` event. Read `selectedIndex` or `selectedItem` in the
 handler, and cancel the event to keep the previous item selected. Items can be
 links with `href`.
 
+### Badges
+
+Put a [badge](./badge.md) in the `badge` slot of an item. It sits at the end
+of the icon's top edge. Say what it means in the item's `aria-label`.
+
+```html
+<petal-navigation-rail-item aria-label="Inbox, 12 unread">
+  <petal-icon slot="icon">inbox</petal-icon>
+  <petal-badge slot="badge" value="12"></petal-badge>
+  Inbox
+</petal-navigation-rail-item>
+```
+
 ## Accessibility
 
 As in Compose, the rail is a `tablist` (`selectableGroup`, vertical) and its
