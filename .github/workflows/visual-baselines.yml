@@ -22,11 +22,11 @@ jobs:
     container: mcr.microsoft.com/playwright:v1.56.1-noble
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - run: npm ci
       - run: npm run build
       - run: npm run test:visual -- --update-snapshots
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: visual-baselines-linux
           path: tests/visual/__screenshots__/linux/

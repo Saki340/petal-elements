@@ -15,9 +15,13 @@ How a version of petal-elements is published. Only maintainers do this.
         catalog, `.github/workflows/catalog.yml`).
     *   Environments: create `npm`, and add required reviewers so that every
         publish waits for approval.
-    *   Secrets: add an npm automation token as `NPM_TOKEN`.
     *   Security: turn on private vulnerability reporting (see SECURITY.md).
-2.  Run the "Visual baselines" workflow once and commit the Linux baseline it
+2.  On npmjs.com, in the package settings, add a Trusted Publisher: GitHub
+    Actions, user `Saki340`, repository `petal-elements`, workflow
+    `release.yml`, environment `npm`, with `npm publish` allowed. The release
+    workflow then publishes with OIDC, and no npm token is stored on GitHub.
+    Publish within 2 days of saving it, or the setting expires.
+3.  Run the "Visual baselines" workflow once and commit the Linux baseline it
     produces (see [Visual testing](visual-testing.md)).
 
 ## Each release
@@ -42,13 +46,14 @@ How a version of petal-elements is published. Only maintainers do this.
 4.  Commit, then tag and push:
 
     ```sh
-    git tag v0.1.0
-    git push origin main v0.1.0
+    git tag v0.2.0
+    git push origin main v0.2.0
     ```
 
 5.  The "Release" workflow (`.github/workflows/release.yml`) runs the checks
-    again and publishes to npm with provenance, after approval in the `npm`
-    environment. It fails if the tag does not match `package.json`.
+    again and publishes to npm through trusted publishing, after approval in
+    the `npm` environment; npm adds provenance itself. It fails if the tag
+    does not match `package.json`.
 6.  Create a GitHub release for the tag with the changelog entries.
 
 ## What is published
