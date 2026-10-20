@@ -11,6 +11,11 @@
 
 #### Features
 
+* **appbar:** `petal-bottom-app-bar`, after Jetpack Compose `BottomAppBar` and
+  `FlexibleBottomAppBar`: 80px with actions and a shadowless floating action
+  button, or 64px with the content spread out; `hide-on-scroll` moves it out
+  of the way as the content scrolls down and settles it on the fast spatial
+  spring.
 * **timepicker:** `petal-time-picker` and `petal-time-picker-dialog`, after
   Jetpack Compose `TimePicker`, `TimeInput` and `TimePickerDialog`: the hour
   and minute, an AM and PM toggle, and a clock dial whose handle turns on the

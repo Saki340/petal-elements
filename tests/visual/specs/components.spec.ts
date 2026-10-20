@@ -30,6 +30,7 @@ const COMPONENTS = [
   'date-picker',
   'standard-bottom-sheet',
   'time-picker',
+  'bottom-app-bar',
   'badge',
   'slider',
   'tabs',

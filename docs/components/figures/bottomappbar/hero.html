@@ -1,0 +1,32 @@
+<!--
+  @license
+  Copyright 2026 Saki
+  SPDX-License-Identifier: Apache-2.0
+-->
+<div class="figure-wrapper">
+  <figure
+      style="justify-content: center; padding-block: 24px"
+      title="Bottom app bar"
+      aria-label="A bottom app bar with four actions and a floating action button, and a flexible one with five actions spread out.">
+    <div style="display: flex; flex-direction: column; gap: 16px">
+    <div style="position: relative; width: 360px; height: 200px; overflow: hidden; border-radius: 16px; background: var(--md-sys-color-surface, #fef7ff); outline: 1px solid var(--md-sys-color-outline-variant, #cac4d0)">
+      <petal-bottom-app-bar style="position: absolute; inset: auto 0 0">
+        <petal-icon-button aria-label="Mark as done"><petal-icon>check_box</petal-icon></petal-icon-button>
+        <petal-icon-button aria-label="Edit"><petal-icon>edit</petal-icon></petal-icon-button>
+        <petal-icon-button aria-label="Record"><petal-icon>mic</petal-icon></petal-icon-button>
+        <petal-icon-button aria-label="Add an image"><petal-icon>image</petal-icon></petal-icon-button>
+        <petal-fab slot="fab" variant="secondary" aria-label="New note"><petal-icon slot="icon">add</petal-icon></petal-fab>
+      </petal-bottom-app-bar>
+    </div>
+    <div style="position: relative; width: 360px; height: 200px; overflow: hidden; border-radius: 16px; background: var(--md-sys-color-surface, #fef7ff); outline: 1px solid var(--md-sys-color-outline-variant, #cac4d0)">
+      <petal-bottom-app-bar flexible style="position: absolute; inset: auto 0 0">
+        <petal-icon-button aria-label="Back"><petal-icon>arrow_back</petal-icon></petal-icon-button>
+        <petal-icon-button aria-label="Forward"><petal-icon>arrow_forward</petal-icon></petal-icon-button>
+        <petal-icon-button aria-label="New tab"><petal-icon>add</petal-icon></petal-icon-button>
+        <petal-icon-button aria-label="Share"><petal-icon>share</petal-icon></petal-icon-button>
+        <petal-icon-button aria-label="More"><petal-icon>more_vert</petal-icon></petal-icon-button>
+      </petal-bottom-app-bar>
+    </div>
+    </div>
+  </figure>
+</div>

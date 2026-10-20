@@ -479,6 +479,14 @@ const galleries: Record<string, Gallery> = {
     })),
   },
 
+  'bottom-app-bar': {
+    states: ['default'],
+    rows: [
+      {name: 'standard', render: () => html`<petal-bottom-app-bar style="width: 360px">${[1, 2, 3].map((i) => html`<petal-icon-button aria-label=${`Action ${i}`}>${icon()}</petal-icon-button>`)}<petal-fab slot="fab" variant="secondary" aria-label="Add">${icon('icon')}</petal-fab></petal-bottom-app-bar>`},
+      {name: 'flexible', render: () => html`<petal-bottom-app-bar flexible style="width: 360px">${[1, 2, 3, 4].map((i) => html`<petal-icon-button aria-label=${`Action ${i}`}>${icon()}</petal-icon-button>`)}</petal-bottom-app-bar>`},
+    ],
+  },
+
   'time-picker': {
     states: ['default'],
     rows: [

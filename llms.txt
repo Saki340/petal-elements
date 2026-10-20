@@ -47,6 +47,7 @@ before using it; do not guess attributes.
 - [Navigation drawer](docs/components/navigation-drawer.md): `navigationdrawer/{navigation-drawer,navigation-drawer-item}.js`, `petal-navigation-drawer` (`type`: modal, dismissible, standard)
 - [Navigation rail](docs/components/navigation-rail.md): `navigationrail/{navigation-rail,navigation-rail-item}.js`, `petal-navigation-rail`
 - [Top app bar](docs/components/top-app-bar.md): `appbar/top-app-bar.js`, `petal-top-app-bar`
+- [Bottom app bar](docs/components/bottom-app-bar.md): `appbar/bottom-app-bar.js`, `petal-bottom-app-bar` (`fab` slot, `flexible`, `hide-on-scroll`)
 - [Pull to refresh](docs/components/pull-to-refresh.md): `pulltorefresh/pull-to-refresh.js`
 - [Progress](docs/components/progress.md): `progress/{linear,circular}-progress.js`
 - [Loading indicator](docs/components/loading-indicator.md): `loadingindicator/loading-indicator.js`

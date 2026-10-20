@@ -10,6 +10,7 @@
  */
 export const COMPONENT_CUSTOM_ELEMENTS = {
   appBar: ['appbar/top-app-bar.ts'],
+  bottomAppBar: ['appbar/bottom-app-bar.ts'],
   badge: ['badge/badge.ts'],
   button: [
     'button/elevated-button.ts',

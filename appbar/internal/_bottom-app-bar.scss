@@ -1,0 +1,99 @@
+//
+// Copyright 2026 Saki
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// The bottom app bar after Jetpack Compose Material 3 (AppBar.kt,
+// BottomAppBarTokens, DockedToolbarTokens): 80dp high on surface-container,
+// no shadow (BottomAppBarDefaults.ContainerElevation is 0), 4dp of padding at
+// the top and sides (16dp minus the icon buttons' 12dp), the actions centered
+// at the start, and the floating action button 12dp from the top and 16dp
+// from the end without a shadow (bottomAppBarFabElevation). The flexible bar
+// is 64dp high with 16dp at the ends and its content spread out. The bottom
+// safe area adds to the height (windowInsets). Hiding moves the bar down by
+// its height.
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'sass:map';
+@use '../../tokens/versions/compose/values/md-comp-bottom-app-bar' as bar;
+@use '../../tokens/versions/compose/values/md-comp-docked-toolbar' as docked;
+// go/keep-sorted end
+
+@mixin styles() {
+  :host([hidden]) {
+    display: none;
+  }
+
+  :host {
+    display: block;
+    translate: 0 var(--_offset, 0px);
+    color: var(--md-bottom-app-bar-content-color, var(--md-sys-color-on-surface-variant, #49454f));
+  }
+
+  .bar {
+    box-sizing: content-box;
+    display: flex;
+    height: calc(var(--md-bottom-app-bar-container-height, #{map.get(bar.$values, 'container-height')}) - 4px);
+    padding: 4px 4px env(safe-area-inset-bottom, 0px);
+    border-radius: var(
+      --md-bottom-app-bar-container-shape,
+      #{map.get(bar.$values, 'container-shape')}
+    );
+    background-color: var(
+      --md-bottom-app-bar-container-color,
+      #{map.get(bar.$values, 'container-color')}
+    );
+    touch-action: pan-x;
+  }
+
+  .actions {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    min-width: 0;
+  }
+
+  .fab {
+    display: none;
+    flex: none;
+    align-items: flex-start;
+    // FABVerticalPadding and FABHorizontalPadding.
+    padding: 8px 12px 0 0;
+  }
+
+  .has-fab .fab {
+    display: flex;
+  }
+
+  ::slotted([slot='fab']) {
+    --md-fab-container-elevation: 0;
+    --md-fab-hover-container-elevation: 0;
+    --md-fab-focus-container-elevation: 0;
+    --md-fab-pressed-container-elevation: 0;
+  }
+
+  :host([flexible]) .bar {
+    height: var(--md-bottom-app-bar-container-height, #{map.get(docked.$values, 'container-height')});
+    padding: 0 map.get(docked.$values, 'container-trailing-space') env(safe-area-inset-bottom, 0px)
+      map.get(docked.$values, 'container-leading-space');
+    background-color: var(
+      --md-bottom-app-bar-container-color,
+      #{map.get(docked.$values, 'container-color')}
+    );
+  }
+
+  // FlexibleHorizontalArrangement: Arrangement.SpaceBetween.
+  :host([flexible]) .actions {
+    justify-content: space-between;
+  }
+
+  :host([flexible]) .fab {
+    display: none;
+  }
+
+  @media (forced-colors: active) {
+    .bar {
+      border-top: 1px solid CanvasText;
+    }
+  }
+}
