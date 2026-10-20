@@ -16,6 +16,7 @@
 // go/keep-sorted start
 import './appbar/bottom-app-bar.js';
 import './appbar/top-app-bar.js';
+import './carousel/carousel.js';
 import './badge/badge.js';
 import './button/elevated-button.js';
 import './button/filled-button.js';
@@ -97,6 +98,7 @@ import './tooltip/tooltip.js';
 // go/keep-sorted start
 export * from './appbar/bottom-app-bar.js';
 export * from './appbar/top-app-bar.js';
+export * from './carousel/carousel.js';
 export * from './badge/badge.js';
 export * from './button/elevated-button.js';
 export * from './button/filled-button.js';

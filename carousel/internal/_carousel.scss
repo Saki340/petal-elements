@@ -1,0 +1,78 @@
+//
+// Copyright 2026 Saki
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// The carousel after Jetpack Compose Material 3 (Carousel.kt). It has no
+// container or scrollbar of its own. Items are clipped to their mask with the
+// extra large corner the Compose samples give `maskClip`
+// (MaterialTheme.shapes.extraLarge) and are 221dp high, the samples' height.
+// The scroller is a native one: the track is as wide as the items laid end to
+// end at the large size, the items sit in a layer that stays in view, and
+// snap points mark the scroll offsets at which items rest.
+
+@mixin styles() {
+  :host([hidden]) {
+    display: none;
+  }
+
+  :host {
+    --_item-shape: var(--md-carousel-item-shape, var(--md-sys-shape-corner-extra-large, 28px));
+
+    display: block;
+    height: var(--md-carousel-height, 221px);
+  }
+
+  .scroller {
+    height: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    outline: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    &:focus-visible {
+      outline: 3px solid var(--md-focus-ring-color, var(--md-sys-color-secondary, #625b71));
+      outline-offset: 2px;
+    }
+  }
+
+  .snaps {
+    scroll-snap-type: x mandatory;
+  }
+
+  .track {
+    position: relative;
+    height: 100%;
+  }
+
+  .snap {
+    position: absolute;
+    top: 0;
+    width: 1px;
+    height: 1px;
+    scroll-snap-align: start;
+    // One item at a time, as the multi-browse and hero flings.
+    scroll-snap-stop: always;
+  }
+
+  .stage {
+    position: sticky;
+    inset-inline-start: 0;
+    height: 100%;
+  }
+
+  ::slotted(*) {
+    position: absolute;
+    top: 0;
+    box-sizing: border-box;
+    width: var(--_item-size);
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+  }
+}

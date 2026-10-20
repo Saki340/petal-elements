@@ -11,6 +11,12 @@
 
 #### Features
 
+* **carousel:** `petal-carousel`, after Jetpack Compose
+  `HorizontalMultiBrowseCarousel`, `HorizontalUncontainedCarousel` and
+  `HorizontalCenteredHeroCarousel`: Compose's keylines and arrangements on a
+  native scroller, with items masked and moved as they scroll, snapping one
+  item at a time (except `uncontained`), and the mask's width and fraction
+  for item content.
 * **tooltip:** `petal-rich-tooltip`, after Jetpack Compose `RichTooltip`: a
   title, supporting text and an action in a 320px card, placed above its
   anchor (or below, or aligned at the viewport's edges), with an optional

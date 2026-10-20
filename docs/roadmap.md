@@ -54,8 +54,8 @@ need something that is not here.
 
 Roughly in this order:
 
-*   Missing components, after Compose: carousel, date ranges for the date
-    picker, and the Expressive time picker styles.
+*   Missing components, after Compose: date ranges for the date picker, and
+    the Expressive time picker styles.
 *   Expressive details for the mouse: hover states that hint at the press,
     for desktop pages.
 *   Public springs: the spring motion the components use, for your own

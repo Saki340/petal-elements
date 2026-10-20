@@ -32,6 +32,7 @@ const COMPONENTS = [
   'time-picker',
   'bottom-app-bar',
   'rich-tooltip',
+  'carousel',
   'badge',
   'slider',
   'tabs',

@@ -20,6 +20,7 @@ export const COMPONENT_CUSTOM_ELEMENTS = {
     'button/text-button.ts',
   ],
   buttonGroup: ['buttongroup/button-group.ts'],
+  carousel: ['carousel/carousel.ts'],
   card: ['card/filled-card.ts', 'card/elevated-card.ts', 'card/outlined-card.ts'],
   checkbox: ['checkbox/checkbox.ts'],
   chips: [

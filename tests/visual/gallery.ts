@@ -55,6 +55,13 @@ const square = html`<svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 5h1
 const icon = (slot?: string, svg = plus) =>
   html`<petal-icon slot=${slot ?? nothing}>${svg}</petal-icon>`;
 
+/** Carousel items in tonal colors, numbered. */
+const carouselItems = (count: number) =>
+  Array.from({length: count}, (_, i) => {
+    const color = ['primary', 'secondary', 'tertiary'][i % 3];
+    return html`<div style=${`display: flex; align-items: flex-end; padding: 16px; background: var(--md-sys-color-${color}-container); color: var(--md-sys-color-on-${color}-container); font: 500 16px/24px sans-serif`}>${i + 1}</div>`;
+  });
+
 const buttons = ['filled', 'outlined', 'text', 'elevated', 'filled-tonal'];
 
 const galleries: Record<string, Gallery> = {
@@ -484,6 +491,15 @@ const galleries: Record<string, Gallery> = {
     rows: [
       {name: 'title and action', render: () => html`<petal-rich-tooltip persistent caret style="display: block; position: static"><span slot="title">Title</span>Supporting text that explains the anchor in a sentence or two.<petal-text-button slot="action">Action</petal-text-button></petal-rich-tooltip>`},
       {name: 'text only', render: () => html`<petal-rich-tooltip style="display: block; position: static">Supporting text only</petal-rich-tooltip>`},
+    ],
+  },
+
+  'carousel': {
+    states: ['default'],
+    rows: [
+      {name: 'multi-browse', render: () => html`<petal-carousel item-width="186" item-spacing="8" style="width: 380px; height: 200px">${carouselItems(6)}</petal-carousel>`},
+      {name: 'uncontained', render: () => html`<petal-carousel variant="uncontained" item-width="150" item-spacing="8" style="width: 380px; height: 200px">${carouselItems(6)}</petal-carousel>`},
+      {name: 'hero', render: () => html`<petal-carousel variant="hero" item-spacing="8" style="width: 380px; height: 200px">${carouselItems(6)}</petal-carousel>`},
     ],
   },
 
