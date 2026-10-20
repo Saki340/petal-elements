@@ -80,7 +80,7 @@ export class CircularProgress extends Progress {
         </div>
       </div>`;
     }
-    const {active, track} = determinateArcs(this.value / this.max);
+    const {active, track} = determinateArcs(this.fraction);
     // Dashes in degrees (pathLength 360), clockwise from 3 o'clock.
     return html`<svg viewBox="0 0 40 40" aria-hidden="true">
       ${track.sweep > 0
@@ -145,7 +145,7 @@ export class CircularProgress extends Progress {
       rotation = frame.rotation + 90;
       amplitude = 1;
     } else {
-      progress = Math.min(1, Math.max(0, this.value / this.max || 0));
+      progress = this.fraction;
       amplitude = this.determinateAmplitude(progress, now);
     }
     const period = WAVE_PERIOD_MS_PER_VERTEX * wavyShapes().vertices;

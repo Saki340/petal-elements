@@ -108,7 +108,7 @@ export class LinearProgress extends Progress {
         <div class="segment track track-3"></div>
       `;
     }
-    const progress = Math.min(1, Math.max(0, this.value / this.max || 0));
+    const progress = this.fraction;
     // The buffer (a petal-elements addition) ends the track; dots follow it.
     const buffer = this.buffer > 0 ? Math.min(1, this.buffer / this.max) : 1;
     const styles = {'--_p': String(progress), '--_b': String(buffer)};
@@ -166,7 +166,7 @@ export class LinearProgress extends Progress {
       amplitude = 1;
       wavelength = INDETERMINATE_WAVELENGTH;
     } else {
-      const progress = Math.min(1, Math.max(0, this.value / this.max || 0));
+      const progress = this.fraction;
       fractions = [0, progress];
       amplitude = this.determinateAmplitude(progress, now);
       wavelength = DETERMINATE_WAVELENGTH;

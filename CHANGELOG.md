@@ -162,6 +162,9 @@
 
 #### Features
 
+* **progress:** `animate-value` on linear and circular progress: a change of
+  `value` moves the indicator on the slow spatial spring (it overshoots a
+  little), following new values on the way; reduced motion jumps.
 * **progress:** `wavy` on circular progress, after Compose's
   `CircularWavyProgressIndicator`: 48px, a wave around the circle that moves
   one wavelength per second, flat below 10% and from 95% when determinate.

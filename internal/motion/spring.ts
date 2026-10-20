@@ -69,11 +69,21 @@ export class Spring {
   velocity = 0;
   target = 0;
 
-  constructor(public spec: SpringSpec) {}
+  /**
+   * @param threshold The distance and speed below which the spring is at
+   *     rest (Compose's visibilityThreshold).
+   */
+  constructor(
+    public spec: SpringSpec,
+    private readonly threshold = THRESHOLD,
+  ) {}
 
   /** Whether the value has settled on its target. */
   get atRest() {
-    return Math.abs(this.value - this.target) < THRESHOLD && Math.abs(this.velocity) < THRESHOLD;
+    return (
+      Math.abs(this.value - this.target) < this.threshold &&
+      Math.abs(this.velocity) < this.threshold
+    );
   }
 
   /** Moves the value `ms` milliseconds forward. */
