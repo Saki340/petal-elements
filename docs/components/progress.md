@@ -230,6 +230,18 @@ fixed, visible track.
 <petal-linear-progress value="0.6"></petal-linear-progress>
 ```
 
+Linear indicators follow Jetpack Compose Material 3 (`LinearProgressIndicator`):
+4px lines with round caps, the track (`--md-sys-color-secondary-container`)
+after a 4px gap, and a 4px stop indicator at the end of a determinate
+indicator. The indeterminate indicator moves two lines along the track, with
+the same gaps. For a thicker indicator (Material 3 Expressive's 8px), set
+`--md-linear-progress-track-height`; the gap stays 4px and the stop indicator
+4px.
+
+```html
+<petal-linear-progress value="0.6" style="--md-linear-progress-track-height: 8px"></petal-linear-progress>
+```
+
 ### Buffer
 
 Linear progress indicators may show a buffer to communicate both determinate and
@@ -359,11 +371,11 @@ Token                                           | Default value
 
 Token                                          | Default value
 ---------------------------------------------- | -------------
-`--md-linear-progress-track-color`             | `--md-sys-color-surface-container-highest`
+`--md-linear-progress-track-color`             | `--md-sys-color-secondary-container`
 `--md-linear-progress-track-height`            | `4px`
-`--md-linear-progress-track-shape`             | `--md-sys-shape-corner-none`
+`--md-linear-progress-track-shape`             | `--md-sys-shape-corner-full`
 `--md-linear-progress-active-indicator-color`  | `--md-sys-color-primary`
-`--md-linear-progress-active-indicator-height` | `4px`
+`--md-linear-progress-active-indicator-height` | `--md-linear-progress-track-height`
 
 *   [All tokens](https://github.com/Saki340/petal-elements/blob/main/tokens/_md-comp-linear-progress.scss)
     <!-- {.external} -->

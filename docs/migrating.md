@@ -162,6 +162,9 @@ exists.
 - **Labs navigation is gone.** The old `labs/navigationbar`,
   `labs/navigationtab` and `labs/navigationdrawer` were removed; use
   `petal-navigation-bar`, `-rail` and `-drawer`.
+- **Linear progress** has round lines, a 4px gap before the track and a stop
+  indicator; the track is secondary-container. Set
+  `--md-linear-progress-track-height: 8px` for the thick Expressive look.
 - **Circular progress** is 40px, not 48px; set
   `--md-circular-progress-active-indicator-width` as a length (`4px`), not a
   percentage.

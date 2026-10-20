@@ -5,7 +5,7 @@
  * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
-import {html, isServer, PropertyValues, svg} from 'lit';
+import {html, isServer, nothing, PropertyValues, svg} from 'lit';
 import {property, query} from 'lit/decorators.js';
 import {styleMap} from 'lit/directives/style-map.js';
 
@@ -24,8 +24,26 @@ import {
   WAVE_PERIOD_MS,
 } from './wavy.js';
 
+// The heads and tails of the indeterminate lines, 0 to 1, as registered
+// properties so that CSS keyframes animate them (the flat indicator).
+if (!isServer && 'registerProperty' in CSS) {
+  for (const line of ['head-1', 'tail-1', 'head-2', 'tail-2']) {
+    try {
+      CSS.registerProperty({
+        name: `--petal-linear-progress-${line}`,
+        syntax: '<number>',
+        inherits: true,
+        initialValue: '0',
+      });
+    } catch {
+      // Already registered.
+    }
+  }
+}
+
 /**
- * A linear progress component.
+ * A linear progress component, after Jetpack Compose Material 3
+ * (`LinearProgressIndicator` and `LinearWavyProgressIndicator`).
  */
 export class LinearProgress extends Progress {
   /**
@@ -81,33 +99,25 @@ export class LinearProgress extends Progress {
           <circle class="wavy-stop" r="0"></circle>`}
       </svg>`;
     }
-    const progressStyles = {
-      transform: `scaleX(${
-        (this.indeterminate ? 1 : this.value / this.max) * 100
-      }%)`,
-    };
-
-    const bufferValue = this.buffer ?? 0;
-    const hasBuffer = bufferValue > 0;
-
-    const dotSize = this.indeterminate || !hasBuffer ? 1 : bufferValue / this.max;
-
-    const dotStyles = {
-      transform: `scaleX(${dotSize * 100}%)`,
-    };
-
-    // Only display dots when visible - this prevents invisible infinite
-    // animation.
-    const hideDots =
-      this.indeterminate || !hasBuffer || bufferValue >= this.max || this.value >= this.max;
+    if (this.indeterminate) {
+      return html`
+        <div class="segment track track-1"></div>
+        <div class="segment active line-1"></div>
+        <div class="segment track track-2"></div>
+        <div class="segment active line-2"></div>
+        <div class="segment track track-3"></div>
+      `;
+    }
+    const progress = Math.min(1, Math.max(0, this.value / this.max || 0));
+    // The buffer (a petal-elements addition) ends the track; dots follow it.
+    const buffer = this.buffer > 0 ? Math.min(1, this.buffer / this.max) : 1;
+    const styles = {'--_p': String(progress), '--_b': String(buffer)};
     return html`
-      <div class="dots" ?hidden=${hideDots}></div>
-      <div class="inactive-track" style=${styleMap(dotStyles)}></div>
-      <div class="bar primary-bar" style=${styleMap(progressStyles)}>
-        <div class="bar-inner"></div>
-      </div>
-      <div class="bar secondary-bar">
-        <div class="bar-inner"></div>
+      <div class="lines" style=${styleMap(styles)}>
+        ${buffer < 1 ? html`<div class="dots"></div>` : nothing}
+        <div class="segment track"></div>
+        ${progress > 0 ? html`<div class="segment active"></div>` : nothing}
+        <div class="stop"></div>
       </div>
     `;
   }

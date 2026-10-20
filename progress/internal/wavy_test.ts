@@ -94,11 +94,11 @@ describe('<petal-linear-progress wavy>', () => {
     expect(getComputedStyle(active).strokeWidth).toBe('4px');
   });
 
-  it('keeps the bars without wavy', async () => {
+  it('draws flat lines without wavy', async () => {
     const root = env.render(html`<petal-linear-progress value="0.5"></petal-linear-progress>`);
     const progress = root.querySelector('petal-linear-progress')!;
     await env.waitForStability();
     expect(progress.shadowRoot!.querySelector('svg.wavy')).toBeNull();
-    expect(progress.shadowRoot!.querySelector('.bar')).not.toBeNull();
+    expect(progress.shadowRoot!.querySelector('.segment.active')).not.toBeNull();
   });
 });

@@ -73,6 +73,12 @@
   `--md-tabs-scrollable-edge-padding`); a row scrolls its selected tab to the
   center on a spring. The scroller is an inner element now: `scrollLeft` of
   `<petal-tabs>` itself no longer scrolls.
+* **progress:** linear progress follows Compose's `LinearProgressIndicator`:
+  round lines, a secondary-container track (was surface-container-highest)
+  after a 4px gap, a stop indicator at the end, and Compose's two-line
+  indeterminate motion. The buffer dots follow the track, which ends at the
+  buffer. `--md-linear-progress-active-indicator-height` defaults to the
+  track height.
 * **progress:** circular progress follows Compose's
   `CircularProgressIndicator`: 40px (was 48px) with a 4px round stroke; a
   determinate indicator has a secondary-container track after a 4px gap; the
