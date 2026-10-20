@@ -42,6 +42,8 @@ $_tokens: (
   'item-last-child-shape': map.get(segmented.$values, 'item-last-child-shape'),
   'item-selected-shape': map.get(segmented.$values, 'item-selected-shape'),
   'item-height': map.get(segmented.$values, 'item'),
+  'item-leading-icon-size': map.get(segmented.$values, 'item-leading-icon-size'),
+  'item-trailing-icon-size': map.get(segmented.$values, 'item-trailing-icon-size'),
 );
 
 // The first and last shown children: hidden groups and items do not count.
@@ -73,8 +75,10 @@ $_transition: border-radius
     transition: $_transition;
 
     // Compose's selectable menu item: labelLarge text, 44dp high, 12dp
-    // content padding.
+    // content padding, 20dp icons.
     --md-menu-item-container-color: transparent;
+    --md-menu-item-leading-icon-size: var(--_item-leading-icon-size);
+    --md-menu-item-trailing-icon-size: var(--_item-trailing-icon-size);
     --md-menu-item-one-line-container-height: var(--_item-height);
     --md-menu-item-top-space: 12px;
     --md-menu-item-bottom-space: 12px;

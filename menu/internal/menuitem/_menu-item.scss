@@ -15,7 +15,7 @@
 @use '../../../list/list-item';
 @use '../../../ripple/ripple';
 @use '../../../tokens';
-@use '../../../tokens/versions/compose/values/md-comp-segmented-menu' as segmented-menu;
+@use '../../../tokens/versions/compose/values/md-comp-list' as compose-list;
 @use '../../../tokens/versions/compose/values/md-comp-standard-menu' as standard-menu;
 @use '../../../tokens/versions/v34/values/md-sys-motion-springs' as springs;
 // go/keep-sorted end
@@ -39,8 +39,31 @@
     map.get(springs.$values, 'spring-#{$name}');
 }
 
+// Compose's plain DropdownMenuItem (Menu.kt, DropdownMenuItemContent): at
+// least 48dp high (MenuListItemContainerHeight), 12dp of content padding at the
+// sides (DropdownMenuItemHorizontalPadding) and none above and below, 12dp
+// between the icons and the label, the label large text style. Items in a
+// petal-menu-group and select options set their own.
+$_compose-values: (
+  'one-line-container-height': 48px,
+  'top-space': 0px,
+  'bottom-space': 0px,
+  'leading-space': 12px,
+  'trailing-space': 12px,
+  'label-text-font':
+    var(--md-sys-typescale-label-large-font, var(--md-ref-typeface-plain, sans-serif)),
+  'label-text-size': var(--md-sys-typescale-label-large-size, 14px),
+  'label-text-line-height': var(--md-sys-typescale-label-large-line-height, 20px),
+  'label-text-weight':
+    var(--md-sys-typescale-label-large-weight, var(--md-ref-typeface-weight-medium, 500)),
+);
+
 @mixin styles() {
   $tokens: tokens.md-comp-menu-item-values();
+
+  @each $token, $value in $_compose-values {
+    $tokens: map.set($tokens, $token, var(--md-menu-item-#{$token}, #{$value}));
+  }
 
   // The hidden attribute, which `display` on the host would override.
   :host([hidden]) {
@@ -50,7 +73,7 @@
   :host {
     border-radius: map.get($tokens, 'container-shape');
     display: flex;
-    gap: 16px;
+    gap: 12px;
 
     @include ripple.theme(
       (
@@ -153,19 +176,19 @@
     fill: currentColor;
   }
 
-  // Icons are 20dp in menus (SegmentedMenuTokens.ItemLeadingIconSize and
-  // ItemTrailingIconSize), not the 24dp of icons elsewhere.
+  // Icons: 24dp (ListTokens.ItemLeadingIconSize and ItemTrailingIconSize);
+  // petal-menu-group makes them 20dp (SegmentedMenuTokens).
   [slot='start']::slotted(*) {
     --md-icon-size: var(
       --md-menu-item-leading-icon-size,
-      #{map.get(segmented-menu.$values, 'item-leading-icon-size')}
+      #{map.get(compose-list.$values, 'item-leading-icon-size')}
     );
   }
 
   [slot='end']::slotted(*) {
     --md-icon-size: var(
       --md-menu-item-trailing-icon-size,
-      #{map.get(segmented-menu.$values, 'item-trailing-icon-size')}
+      #{map.get(compose-list.$values, 'item-trailing-icon-size')}
     );
   }
 
@@ -181,7 +204,7 @@
   [name='checked-icon']::slotted(*) {
     --md-icon-size: var(
       --md-menu-item-leading-icon-size,
-      #{map.get(segmented-menu.$values, 'item-leading-icon-size')}
+      #{map.get(compose-list.$values, 'item-leading-icon-size')}
     );
     fill: currentColor;
   }
@@ -209,7 +232,7 @@
   .has-checked-icon.checked:not(.has-start-icon) .checked-icon {
     width: var(
       --md-menu-item-leading-icon-size,
-      #{map.get(segmented-menu.$values, 'item-leading-icon-size')}
+      #{map.get(compose-list.$values, 'item-leading-icon-size')}
     );
     opacity: 1;
   }

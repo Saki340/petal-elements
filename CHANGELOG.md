@@ -20,6 +20,11 @@
 * **menu:** menus open and close by scaling from 80% and fading, from the
   corner next to the anchor, as Compose's `DropdownMenu`, instead of growing
   in height with staggered items.
+* **menu:** menu items follow Compose's `DropdownMenuItem`: 48px high instead
+  of 56px, 12px of padding at the sides instead of 16px, 12px between the
+  icons and the label instead of 16px, and the label large text style (14px,
+  medium) instead of body large. Items in a `petal-menu-group` keep Compose's
+  selectable item sizes (44px high, 8px between the icon and the label).
 * **dialog:** 16px under the headline instead of 24px, and buttons that do not
   fit stack with the last one on top (Compose's `AlertDialog`). The dialog
   opens by scaling up from 80% and fading in on the motion scheme springs, and
@@ -106,7 +111,7 @@
 
 #### Bug fixes
 
-* **menu:** icons in menu items are 20px (Compose's
+* **menu:** icons in items of a `petal-menu-group` are 20px (Compose's
   `SegmentedMenuTokens.ItemLeadingIconSize` and `ItemTrailingIconSize`), not
   24px; new tokens `--md-menu-item-leading-icon-size` and
   `--md-menu-item-trailing-icon-size`.

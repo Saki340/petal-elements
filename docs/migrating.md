@@ -125,7 +125,11 @@ exists.
 - **Button groups:** pressing a button widens it and squeezes its neighbours,
   in both standard and connected groups. Do not add your own press animation.
 - **Menus** scale in from 80% and fade, from the corner next to the anchor,
-  not by growing in height. Remove custom open animations.
+  not by growing in height. Remove custom open animations. Menu items are
+  48px high with 12px side padding and 14px medium text (Compose's
+  `DropdownMenuItem`); to keep the old 56px items, set
+  `--md-menu-item-one-line-container-height: 56px` and the
+  `--md-menu-item-*-space` and `--md-menu-item-label-text-*` tokens.
 - **Motion is the expressive spring scheme by default**
   (`--md-sys-motion-spring-*`), as in Compose's `MaterialExpressiveTheme`.
   For the calmer standard springs, load `tokens/css/motion-standard.css`
