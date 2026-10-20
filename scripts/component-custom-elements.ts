@@ -84,5 +84,5 @@ export const COMPONENT_CUSTOM_ELEMENTS = {
     'textfield/filled-text-field.ts',
     'textfield/outlined-text-field.ts',
   ],
-  tooltip: ['tooltip/tooltip.ts'],
+  tooltip: ['tooltip/tooltip.ts', 'tooltip/rich-tooltip.ts'],
 } as const;

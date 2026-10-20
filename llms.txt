@@ -41,7 +41,7 @@ before using it; do not guess attributes.
 - [Search bar](docs/components/search.md): `search/search-bar.js`, `petal-search-bar`
 - [Bottom sheet](docs/components/bottom-sheet.md): `sheet/bottom-sheet.js`, `petal-bottom-sheet` (modal); `sheet/standard-bottom-sheet.js`, `petal-standard-bottom-sheet` (docked, page stays usable)
 - [Split button](docs/components/split-button.md): `splitbutton/split-button.js`, `petal-split-button`
-- [Tooltip](docs/components/tooltip.md): `tooltip/tooltip.js`, `petal-tooltip`
+- [Tooltip](docs/components/tooltip.md): `tooltip/tooltip.js`, `petal-tooltip`; `tooltip/rich-tooltip.js`, `petal-rich-tooltip` (`title` and `action` slots, `persistent`)
 - [Menu](docs/components/menu.md): `menu/{menu,menu-item,sub-menu,menu-group}.js`
 - [Navigation bar](docs/components/navigation-bar.md): `navigationbar/{navigation-bar,navigation-bar-item}.js`, `petal-navigation-bar`
 - [Navigation drawer](docs/components/navigation-drawer.md): `navigationdrawer/{navigation-drawer,navigation-drawer-item}.js`, `petal-navigation-drawer` (`type`: modal, dismissible, standard)

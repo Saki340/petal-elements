@@ -6,4 +6,6 @@
 
 import 'petal-elements/icon/icon.js';
 import 'petal-elements/iconbutton/icon-button.js';
+import 'petal-elements/button/text-button.js';
+import 'petal-elements/tooltip/rich-tooltip.js';
 import 'petal-elements/tooltip/tooltip.js';

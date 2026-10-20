@@ -115,6 +115,7 @@ export const COMPOSE_VALUE_MODULES = [
   'PlainTooltip',
   'PrimaryNavigationTab',
   'ProgressIndicator',
+  'RichTooltip',
   'RadioButton',
   'Scrim',
   'SecondaryNavigationTab',

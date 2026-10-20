@@ -31,6 +31,7 @@ const COMPONENTS = [
   'standard-bottom-sheet',
   'time-picker',
   'bottom-app-bar',
+  'rich-tooltip',
   'badge',
   'slider',
   'tabs',

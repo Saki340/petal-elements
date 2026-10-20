@@ -1,0 +1,214 @@
+//
+// Copyright 2026 Saki
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// Rich tooltip, after Jetpack Compose Material 3 (RichTooltip in Tooltip.kt,
+// RichTooltipTokens): surface-container, the medium shape and a level 2
+// shadow, 40dp by 24dp at least and 320dp at most wide
+// (richTooltipMaxWidth), 16dp at the sides. The title's first baseline is
+// 28dp from the top (HeightToSubheadFirstLine) and the text's 24dp below the
+// title (HeightFromSubheadToTextFirstLine), with 16dp under the text
+// (TextBottomPadding); the action row is at least 36dp with 8dp under it.
+// Without a title or an action, the text has the plain tooltip's 4dp above
+// and below. The optional caret is 16 by 8dp. It shows and hides like the
+// plain tooltip: opacity on the fast effects spring, scale from 0.8 on the
+// fast spatial spring.
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'sass:map';
+@use '../../elevation/elevation';
+@use '../../tokens/versions/compose/values/md-comp-rich-tooltip' as tooltip;
+@use '../../tokens/versions/v34/values/md-sys-motion-springs' as springs;
+// go/keep-sorted end
+
+@mixin _type($prefix) {
+  font-family: var(--_#{$prefix}-font);
+  font-size: var(--_#{$prefix}-size);
+  font-weight: var(--_#{$prefix}-weight);
+  line-height: var(--_#{$prefix}-line-height);
+  letter-spacing: var(--_#{$prefix}-tracking);
+}
+
+// An empty inline block (the strut) sits its bottom on the baseline, and an
+// inline flex box sits its first line's baseline there (an inline block
+// would use its last line), so the first baseline is `$height` from the top
+// whatever the font (paddingFromBaseline).
+@mixin _baseline-from-top($height) {
+  .strut {
+    display: inline-block;
+    height: $height;
+  }
+}
+
+@mixin styles() {
+  :host {
+    @each $token, $value in tooltip.$values {
+      --_#{$token}: var(--md-rich-tooltip-#{$token}, #{$value});
+    }
+
+    // A manual popover in the top layer; rich-tooltip.ts sets left and top.
+    position: fixed;
+    inset: auto;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    overflow: visible;
+    color: inherit;
+  }
+
+  :host(:not(:popover-open)) {
+    display: none;
+  }
+
+  .tooltip {
+    position: relative;
+    box-sizing: border-box;
+    min-width: 40px;
+    max-width: 320px;
+    min-height: 24px;
+    border-radius: var(--_container-shape);
+    background-color: var(--_container-color);
+    transform-origin: var(--_origin, center bottom);
+    animation:
+      fade-in map.get(springs.$values, 'spring-fast-effects-duration')
+        map.get(springs.$values, 'spring-fast-effects'),
+      grow map.get(springs.$values, 'spring-fast-spatial-duration')
+        map.get(springs.$values, 'spring-fast-spatial');
+
+    @include elevation.theme(
+      (
+        'level': map.get(tooltip.$values, 'container-elevation'),
+      )
+    );
+  }
+
+  petal-elevation {
+    border-radius: inherit;
+  }
+
+  .tooltip.closing {
+    animation:
+      fade-out map.get(springs.$values, 'spring-fast-effects-duration')
+        map.get(springs.$values, 'spring-fast-effects') forwards,
+      shrink map.get(springs.$values, 'spring-fast-spatial-duration')
+        map.get(springs.$values, 'spring-fast-spatial') forwards;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    padding: 0 16px;
+  }
+
+  .title,
+  .text,
+  .action {
+    display: block;
+  }
+
+  [hidden] {
+    display: none !important;
+  }
+
+  .strut {
+    display: none;
+  }
+
+  .lines {
+    display: inline-flex;
+    width: 100%;
+  }
+
+  .flow {
+    display: block;
+    min-width: 0;
+  }
+
+  .title {
+    color: var(--_subhead-color);
+    @include _type('subhead');
+    @include _baseline-from-top(28px);
+  }
+
+  .text {
+    padding: 4px 0;
+    color: var(--_supporting-text-color);
+    @include _type('supporting-text');
+  }
+
+  .has-title .text,
+  .has-action .text {
+    padding: 0 0 16px;
+    @include _baseline-from-top(24px);
+  }
+
+  .action {
+    display: flex;
+    align-items: flex-start;
+    min-height: 36px;
+    padding-bottom: 8px;
+    color: var(--_action-label-text-color);
+    @include _type('action-label-text');
+    // Text buttons in the action take its color.
+    --md-text-button-label-text-color: var(--_action-label-text-color);
+    --md-text-button-hover-label-text-color: var(--_action-hover-label-text-color);
+    --md-text-button-focus-label-text-color: var(--_action-focus-label-text-color);
+    --md-text-button-pressed-label-text-color: var(--_action-pressed-label-text-color);
+  }
+
+  // The caret: a 16 by 8dp triangle pointing at the anchor.
+  .caret {
+    position: absolute;
+    top: 100%;
+    left: calc(var(--_caret-x, 50%) - 8px);
+    width: 16px;
+    height: 8px;
+    background-color: var(--_container-color);
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+  }
+
+  .below .caret {
+    top: auto;
+    bottom: 100%;
+    clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+  }
+
+  @keyframes fade-out {
+    to {
+      opacity: 0;
+    }
+  }
+
+  @keyframes grow {
+    from {
+      transform: scale(0.8);
+    }
+  }
+
+  @keyframes shrink {
+    to {
+      transform: scale(0.8);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tooltip,
+    .tooltip.closing {
+      animation-duration: 0s;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .tooltip {
+      outline: 1px solid CanvasText;
+    }
+  }
+}

@@ -11,6 +11,10 @@
 
 #### Features
 
+* **tooltip:** `petal-rich-tooltip`, after Jetpack Compose `RichTooltip`: a
+  title, supporting text and an action in a 320px card, placed above its
+  anchor (or below, or aligned at the viewport's edges), with an optional
+  caret; `persistent` keeps it until something outside it is pressed.
 * **appbar:** `petal-bottom-app-bar`, after Jetpack Compose `BottomAppBar` and
   `FlexibleBottomAppBar`: 80px with actions and a shadowless floating action
   button, or 64px with the content spread out; `hide-on-scroll` moves it out

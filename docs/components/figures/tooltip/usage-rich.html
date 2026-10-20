@@ -1,0 +1,33 @@
+<!--
+  @license
+  Copyright 2026 Saki
+  SPDX-License-Identifier: Apache-2.0
+-->
+<div class="figure-wrapper">
+  <figure
+      class="rich-tooltip-figure"
+      style="justify-content: center; padding-block: 24px"
+      title="A rich tooltip"
+      aria-label="A rich tooltip titled Camera settings, with two lines of text and a Learn more button, above an info icon button.">
+    <style>
+      .rich-tooltip-figure .stack {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+      }
+      .rich-tooltip-figure petal-rich-tooltip {
+        display: block;
+        position: static;
+      }
+    </style>
+    <div class="stack">
+      <petal-rich-tooltip persistent caret>
+        <span slot="title">Camera settings</span>
+        Choose the resolution and frame rate for new videos.
+        <petal-text-button slot="action">Learn more</petal-text-button>
+      </petal-rich-tooltip>
+      <petal-icon-button aria-label="About camera settings"><petal-icon>info</petal-icon></petal-icon-button>
+    </div>
+  </figure>
+</div>

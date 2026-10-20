@@ -479,6 +479,14 @@ const galleries: Record<string, Gallery> = {
     })),
   },
 
+  'rich-tooltip': {
+    states: ['default'],
+    rows: [
+      {name: 'title and action', render: () => html`<petal-rich-tooltip persistent caret style="display: block; position: static"><span slot="title">Title</span>Supporting text that explains the anchor in a sentence or two.<petal-text-button slot="action">Action</petal-text-button></petal-rich-tooltip>`},
+      {name: 'text only', render: () => html`<petal-rich-tooltip style="display: block; position: static">Supporting text only</petal-rich-tooltip>`},
+    ],
+  },
+
   'bottom-app-bar': {
     states: ['default'],
     rows: [

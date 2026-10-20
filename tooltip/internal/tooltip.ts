@@ -37,8 +37,8 @@ export class Tooltip extends LitElement {
   @property({reflect: true}) for = '';
 
   /** Whether the tooltip is showing. */
-  @state() private open = false;
-  @state() private closing = false;
+  @state() protected open = false;
+  @state() protected closing = false;
 
   private anchorElement: HTMLElement | null = null;
   private pressTimer?: ReturnType<typeof setTimeout>;
@@ -66,7 +66,7 @@ export class Tooltip extends LitElement {
     super.connectedCallback();
     if (isServer) return;
     if (!this.id) this.id = `petal-tooltip-${++ids}`;
-    this.setAttribute('role', 'tooltip');
+    if (!this.hasAttribute('role')) this.setAttribute('role', 'tooltip');
     this.setAttribute('popover', 'manual');
     // Wait for the anchor, which may come later in the document.
     queueMicrotask(() => this.attach());
@@ -98,8 +98,20 @@ export class Tooltip extends LitElement {
       this.closing = false;
       this.dispatchEvent(new Event('open'));
       document.addEventListener('keydown', this.onKeydown);
+      this.opened();
     }
     this.position(anchor);
+  }
+
+  /** Called when the tooltip starts showing, for subclasses. */
+  protected opened() {}
+
+  /** Called when the tooltip starts hiding, for subclasses. */
+  protected closed() {}
+
+  /** Whether hover and focus leaving the anchor hide the tooltip. */
+  protected get hidesOnLeave() {
+    return true;
   }
 
   /** Hides the tooltip. */
@@ -111,6 +123,7 @@ export class Tooltip extends LitElement {
     this.open = false;
     this.closing = true;
     document.removeEventListener('keydown', this.onKeydown);
+    this.closed();
     this.dispatchEvent(new Event('close'));
   }
 
@@ -126,7 +139,7 @@ export class Tooltip extends LitElement {
    * Above the anchor, centered; below it when there is no room above
    * (Compose's plain tooltip position provider). Kept inside the viewport.
    */
-  private position(anchor: HTMLElement) {
+  protected position(anchor: HTMLElement) {
     const box = anchor.getBoundingClientRect();
     const width = this.offsetWidth;
     const height = this.offsetHeight;
@@ -181,8 +194,13 @@ export class Tooltip extends LitElement {
   };
 
   private readonly onPointerLeave = (event: PointerEvent) => {
-    if (event.pointerType !== 'touch') this.hide();
+    if (event.pointerType !== 'touch' && this.hidesOnLeave) this.leave();
   };
+
+  /** The pointer left the anchor; the tooltip hides. */
+  protected leave() {
+    this.hide();
+  }
 
   // A touch long press shows it for LONG_PRESS_SHOW_MS.
   private readonly onPointerDown = (event: PointerEvent) => {
@@ -216,16 +234,18 @@ export class Tooltip extends LitElement {
     return !!(this.anchor?.matches(':focus-visible') || focused?.matches(':focus-visible'));
   }
 
-  private readonly onFocusOut = () => {
+  private readonly onFocusOut = (event: FocusEvent) => {
     this.pointerFocus = false;
-    this.hide();
+    // Focus moving into the tooltip keeps it (a rich tooltip's action).
+    if (event.relatedTarget instanceof Node && this.contains(event.relatedTarget)) return;
+    if (this.hidesOnLeave) this.hide();
   };
 
   private readonly onKeydown = (event: KeyboardEvent) => {
     if (event.key === 'Escape') this.hide();
   };
 
-  private onAnimationEnd() {
+  protected onAnimationEnd() {
     if (!this.closing) return;
     const running = this.shadowRoot
       ?.querySelector('.tooltip')
