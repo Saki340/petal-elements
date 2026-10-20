@@ -91,6 +91,18 @@ const DEFAULT_MESSAGES = {
   invalidNotAllowed: 'Date not allowed: %1',
 };
 
+/**
+ * A language tag Intl accepts: without a POSIX `@` part (some systems report
+ * `en-US@posix`), canonical, else `en-US`.
+ */
+function validLocale(tag: string | null | undefined) {
+  try {
+    return Intl.getCanonicalLocales((tag ?? '').split('@')[0])[0] ?? 'en-US';
+  } catch {
+    return 'en-US';
+  }
+}
+
 function fill(template: string, ...values: string[]) {
   return values.reduce((text, value, i) => text.replace(`%${i + 1}`, value), template);
 }
@@ -299,17 +311,17 @@ export class DatePicker extends datePickerBaseClass {
   // Locale and formats.
 
   private get resolvedLocale() {
-    if (this.locale) return this.locale;
+    if (this.locale) return validLocale(this.locale);
     if (isServer) return 'en-US';
     // The closest `lang`, also across shadow roots (as in a dialog).
     let node: Element | null = this;
     while (node) {
       const lang = node.closest('[lang]')?.getAttribute('lang');
-      if (lang) return lang;
+      if (lang) return validLocale(lang);
       const root = node.getRootNode();
       node = root instanceof ShadowRoot ? root.host : null;
     }
-    return navigator.language || 'en-US';
+    return validLocale(navigator.language);
   }
 
   private get text() {

@@ -89,6 +89,16 @@ describe('petal-date-picker', () => {
       expect(monthYear(picker)).toBe('Oktober 2026');
     });
 
+    it('falls back to en-US for tags Intl rejects, such as en-US@posix', async () => {
+      const picker = await setup(html`<petal-date-picker
+        locale="en-US@posix"
+        value="2026-10-21"></petal-date-picker>`);
+      expect(monthYear(picker)).toBe('October 2026');
+      picker.locale = 'not a language';
+      await picker.updateComplete;
+      expect(monthYear(picker)).toBe('October 2026');
+    });
+
     it('marks the selected day and today', async () => {
       const picker = await setup(html`<petal-date-picker
         value=${formatIso(today() + 1 > today() ? today() : today())}></petal-date-picker>`);
