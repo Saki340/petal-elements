@@ -106,6 +106,12 @@
 
 #### Bug fixes
 
+* **menu:** icons in menu items are 20px (Compose's
+  `SegmentedMenuTokens.ItemLeadingIconSize` and `ItemTrailingIconSize`), not
+  24px; new tokens `--md-menu-item-leading-icon-size` and
+  `--md-menu-item-trailing-icon-size`.
+* **textfield:** date and time fields are 56px high like other fields; Chrome
+  made them 2px taller.
 * **search:** the full screen view is in the top layer (a manual popover)
   while it is open, so content after it, such as a docked search bar, no
   longer covers it, and a transformed ancestor no longer keeps it inside.

@@ -400,4 +400,12 @@ describe('text fields, after Compose', () => {
       ).toBeTrue();
     });
   });
+
+  it('keeps a date field 56px high (Chrome makes date inputs taller)', async () => {
+    for (const variant of ['filled', 'outlined'] as const) {
+      const {host} = await setup(variant, 'type=date');
+      expect(host.getBoundingClientRect().height).withContext(variant).toBe(56);
+    }
+  });
 });
+

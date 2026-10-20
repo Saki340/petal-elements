@@ -59,6 +59,12 @@
     width: 100%;
   }
 
+  // Chrome's date and time inputs are a line plus 2px high, which made the
+  // field 2px taller than 56dp (OutlinedTextFieldDefaults.MinHeight).
+  .picker .input {
+    height: 1lh;
+  }
+
   // Optionally remove number input's spinner
   .no-spinner .input {
     &::-webkit-inner-spin-button,
