@@ -117,6 +117,9 @@
   `--md-menu-item-trailing-icon-size`.
 * **textfield:** date and time fields are 56px high like other fields; Chrome
   made them 2px taller.
+* **textfield:** several icons or icon buttons in the `leading-icon` or
+  `trailing-icon` slot sit side by side, 48px apart, as in Compose, instead of
+  on top of each other. A single icon stays where it was.
 * **search:** the full screen view is in the top layer (a manual popover)
   while it is open, so content after it, such as a docked search bar, no
   longer covers it, and a transformed ancestor no longer keeps it inside.

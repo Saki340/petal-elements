@@ -1,6 +1,7 @@
 //
 // Copyright 2022 Google LLC
 // SPDX-License-Identifier: Apache-2.0
+// Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
 //
 
 @mixin styles() {
@@ -16,21 +17,32 @@
   .icon ::slotted(*) {
     // Remove excess whitespace below inline elements
     display: flex;
-    // Absolutely position the icons within their `icon-size` container. This
-    // supports icon buttons whose actual width and height is greater than the
-    // 24px `icon-size` due to their 40px ripple.
-    position: absolute;
+  }
+
+  // As Compose's TextField (TextFieldImpl.kt): each icon is centered in a
+  // 48dp box (the minimum interactive size), and the boxes sit side by side,
+  // so several icons or icon buttons in one slot line up instead of
+  // overlapping. The boxes reach 12dp ((48 - 24) / 2) past the icon-size
+  // space, so a single icon is where it was. The row is as high as an icon:
+  // larger children such as icon buttons overflow it without making the field
+  // taller.
+  [has-start] .icon.leading,
+  [has-end] .icon.trailing {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-rows: var(--_icon-size);
+    grid-auto-columns: calc(var(--_icon-size) + 24px);
+    place-items: center;
+    margin-inline: -12px;
+    font-size: var(--_icon-size);
+    height: var(--_icon-size);
   }
 
   [has-start] .icon.leading {
-    font-size: var(--_leading-icon-size);
-    height: var(--_leading-icon-size);
-    width: var(--_leading-icon-size);
+    --_icon-size: var(--_leading-icon-size);
   }
 
   [has-end] .icon.trailing {
-    font-size: var(--_trailing-icon-size);
-    height: var(--_trailing-icon-size);
-    width: var(--_trailing-icon-size);
+    --_icon-size: var(--_trailing-icon-size);
   }
 }

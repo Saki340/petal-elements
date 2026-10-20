@@ -12,6 +12,7 @@
 import '../filled-text-field.js';
 import '../outlined-text-field.js';
 import '../../icon/icon.js';
+import '../../iconbutton/icon-button.js';
 
 import {html} from 'lit';
 
@@ -398,6 +399,59 @@ describe('text fields, after Compose', () => {
       expect(
         fieldRoot.querySelector('.label.resting')?.classList.contains('hidden'),
       ).toBeTrue();
+    });
+  });
+
+  describe('icons (TextFieldImpl: 48dp boxes side by side)', () => {
+    async function setup(trailing: unknown) {
+      const root = env.render(html`
+        <petal-outlined-text-field label="Amount" style="width: 320px">
+          ${trailing}
+        </petal-outlined-text-field>
+      `);
+      await env.waitForStability();
+      const field = root.firstElementChild as TextField;
+      const centers = [...field.querySelectorAll('[slot="trailing-icon"]')].map(
+        (el) => {
+          const box = el.getBoundingClientRect();
+          return box.left + box.width / 2;
+        },
+      );
+      return {field, right: field.getBoundingClientRect().right, centers};
+    }
+
+    it('keeps a single icon 24px in from the end', async () => {
+      const {field, right, centers} = await setup(
+        html`<petal-icon slot="trailing-icon">search</petal-icon>`,
+      );
+      expect(right - centers[0]).toBe(24);
+      expect(field.getBoundingClientRect().height).toBe(56);
+    });
+
+    it('keeps a single icon button 24px in from the end', async () => {
+      const {right, centers} = await setup(
+        html`<petal-icon-button slot="trailing-icon"
+          ><petal-icon>close</petal-icon></petal-icon-button
+        >`,
+      );
+      expect(right - centers[0]).toBe(24);
+    });
+
+    it('puts several icon buttons side by side, 48px apart', async () => {
+      const {field, right, centers} = await setup(html`
+        <petal-icon-button slot="trailing-icon"
+          ><petal-icon>close</petal-icon></petal-icon-button
+        >
+        <petal-icon-button slot="trailing-icon"
+          ><petal-icon>bookmark</petal-icon></petal-icon-button
+        >
+      `);
+      expect(right - centers[1]).toBe(24);
+      expect(centers[1] - centers[0]).toBe(48);
+      expect(field.getBoundingClientRect().height).toBe(56);
+      // The text stops 16px before the first icon.
+      const input = field.shadowRoot!.querySelector('.input')!;
+      expect(centers[0] - 12 - input.getBoundingClientRect().right).toBe(16);
     });
   });
 

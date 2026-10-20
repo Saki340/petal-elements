@@ -221,6 +221,20 @@ available](images/textfield/usage-icons.webp)
 </petal-outlined-text-field>
 ```
 
+A slot can hold several icons or icon buttons. As in Compose, each one is
+centered in a 48px box and the boxes sit side by side.
+
+```html
+<petal-outlined-text-field label="Amount" type="number">
+  <petal-icon-button slot="trailing-icon" aria-label="Clear">
+    <petal-icon>close</petal-icon>
+  </petal-icon-button>
+  <petal-icon-button slot="trailing-icon" aria-label="Save">
+    <petal-icon>bookmark_add</petal-icon>
+  </petal-icon-button>
+</petal-outlined-text-field>
+```
+
 ### Prefix and suffix
 
 Add `prefix-text` and `suffix-text` attributes to text fields to display
