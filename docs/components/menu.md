@@ -537,6 +537,8 @@ Token                                     | Default value
 `--md-menu-container-shape`               | `--md-sys-shape-corner-extra-small`
 `--md-menu-item-container-color`          | `--md-sys-color-surface-container`
 `--md-menu-item-selected-container-color` | `--md-sys-color-secondary-container`
+`--md-menu-item-leading-icon-size`        | `20px`
+`--md-menu-item-trailing-icon-size`       | `20px`
 
 *   [Menu tokens](https://github.com/Saki340/petal-elements/blob/main/tokens/_md-comp-menu.scss)
     <!-- {.external} -->
