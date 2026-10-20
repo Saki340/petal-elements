@@ -177,6 +177,9 @@ exists.
 - **`labs/gb` and `labs/aria` are gone** (`petal-gb-*`, `petal-aria-*`).
   Use the stable components: `petal-button`, `petal-menu`, `petal-tabs` and
   so on.
+- **Behaviors and `petal-item` left labs:** import
+  `petal-elements/behaviors/*.js` and `petal-elements/item/item.js`. The old
+  `labs/behaviors/` and `labs/item/` paths re-export them until 1.0.
 - **The labs badge moved** to `petal-elements/badge/badge.js`
   (`petal-badge`, still with `value`). Put it in the `badge` slot of an icon
   button or a navigation item instead of positioning it yourself.

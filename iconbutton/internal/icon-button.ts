@@ -21,9 +21,9 @@ import {
   afterDispatch,
   setupDispatchHooks,
 } from '../../internal/events/dispatch-hooks.js';
-import {mixinElementInternals} from '../../labs/behaviors/element-internals.js';
-import {mixinFormAssociated} from '../../labs/behaviors/form-associated.js';
-import {mixinFormSubmitter} from '../../labs/behaviors/form-submitter.js';
+import {mixinElementInternals} from '../../behaviors/element-internals.js';
+import {mixinFormAssociated} from '../../behaviors/form-associated.js';
+import {mixinFormSubmitter} from '../../behaviors/form-submitter.js';
 
 type LinkTarget = '_blank' | '_parent' | '_self' | '_top';
 

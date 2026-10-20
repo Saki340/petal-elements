@@ -21,17 +21,17 @@ import {
   createValidator,
   getValidityAnchor,
   mixinConstraintValidation,
-} from '../../labs/behaviors/constraint-validation.js';
-import {mixinElementInternals} from '../../labs/behaviors/element-internals.js';
+} from '../../behaviors/constraint-validation.js';
+import {mixinElementInternals} from '../../behaviors/element-internals.js';
 import {
   getFormValue,
   mixinFormAssociated,
-} from '../../labs/behaviors/form-associated.js';
+} from '../../behaviors/form-associated.js';
 import {
   mixinOnReportValidity,
   onReportValidity,
-} from '../../labs/behaviors/on-report-validity.js';
-import {SelectValidator} from '../../labs/behaviors/validators/select-validator.js';
+} from '../../behaviors/on-report-validity.js';
+import {SelectValidator} from '../../behaviors/validators/select-validator.js';
 import {getActiveItem} from '../../list/internal/list-navigation-helpers.js';
 import {
   CloseMenuEvent,

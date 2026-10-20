@@ -20,11 +20,11 @@ import {
   isActivationClick,
 } from '../../internal/events/form-label-activation.js';
 import {redispatchEvent} from '../../internal/events/redispatch-event.js';
-import {mixinElementInternals} from '../../labs/behaviors/element-internals.js';
+import {mixinElementInternals} from '../../behaviors/element-internals.js';
 import {
   getFormValue,
   mixinFormAssociated,
-} from '../../labs/behaviors/form-associated.js';
+} from '../../behaviors/form-associated.js';
 
 // Disable warning for classMap with destructuring
 // tslint:disable:no-implicit-dictionary-conversion

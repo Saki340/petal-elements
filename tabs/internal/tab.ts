@@ -24,7 +24,7 @@ import {
   springEasing,
   springFromCss,
 } from '../../internal/motion/spring.js';
-import {mixinFocusable} from '../../labs/behaviors/focusable.js';
+import {mixinFocusable} from '../../behaviors/focusable.js';
 
 /**
  * Symbol used by the tab bar to request a tab to animate its indicator from a

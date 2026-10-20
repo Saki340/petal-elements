@@ -9,7 +9,7 @@
 import {html, LitElement} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
-import {Environment} from '../../testing/environment.js';
+import {Environment} from '../testing/environment.js';
 
 import {isFocusable, mixinFocusable} from './focusable.js';
 

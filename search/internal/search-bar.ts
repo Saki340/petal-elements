@@ -21,8 +21,8 @@ import {
   springEasing,
   springFromCss,
 } from '../../internal/motion/spring.js';
-import {mixinElementInternals} from '../../labs/behaviors/element-internals.js';
-import {getFormValue, mixinFormAssociated} from '../../labs/behaviors/form-associated.js';
+import {mixinElementInternals} from '../../behaviors/element-internals.js';
+import {getFormValue, mixinFormAssociated} from '../../behaviors/form-associated.js';
 
 /**
  * How the search bar opens: `full-screen` covers the window, as Compose's

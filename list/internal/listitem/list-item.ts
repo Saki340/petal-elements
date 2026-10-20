@@ -6,7 +6,7 @@
  */
 
 import '../../../focus/md-focus-ring.js';
-import '../../../labs/item/item.js';
+import '../../../item/item.js';
 import '../../../ripple/ripple.js';
 
 import {

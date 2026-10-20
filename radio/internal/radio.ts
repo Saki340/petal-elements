@@ -22,18 +22,18 @@ import {
   createValidator,
   getValidityAnchor,
   mixinConstraintValidation,
-} from '../../labs/behaviors/constraint-validation.js';
+} from '../../behaviors/constraint-validation.js';
 import {
   internals,
   mixinElementInternals,
-} from '../../labs/behaviors/element-internals.js';
-import {mixinFocusable} from '../../labs/behaviors/focusable.js';
+} from '../../behaviors/element-internals.js';
+import {mixinFocusable} from '../../behaviors/focusable.js';
 import {
   getFormState,
   getFormValue,
   mixinFormAssociated,
-} from '../../labs/behaviors/form-associated.js';
-import {RadioValidator} from '../../labs/behaviors/validators/radio-validator.js';
+} from '../../behaviors/form-associated.js';
+import {RadioValidator} from '../../behaviors/validators/radio-validator.js';
 
 import {SingleSelectionController} from './single-selection-controller.js';
 

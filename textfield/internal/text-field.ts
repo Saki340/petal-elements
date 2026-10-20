@@ -21,18 +21,18 @@ import {
   createValidator,
   getValidityAnchor,
   mixinConstraintValidation,
-} from '../../labs/behaviors/constraint-validation.js';
-import {mixinElementInternals} from '../../labs/behaviors/element-internals.js';
+} from '../../behaviors/constraint-validation.js';
+import {mixinElementInternals} from '../../behaviors/element-internals.js';
 import {
   getFormValue,
   mixinFormAssociated,
-} from '../../labs/behaviors/form-associated.js';
+} from '../../behaviors/form-associated.js';
 import {
   mixinOnReportValidity,
   onReportValidity,
-} from '../../labs/behaviors/on-report-validity.js';
-import {TextFieldValidator} from '../../labs/behaviors/validators/text-field-validator.js';
-import {Validator} from '../../labs/behaviors/validators/validator.js';
+} from '../../behaviors/on-report-validity.js';
+import {TextFieldValidator} from '../../behaviors/validators/text-field-validator.js';
+import {Validator} from '../../behaviors/validators/validator.js';
 
 /**
  * Input types that are compatible with the text field.

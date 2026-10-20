@@ -9,7 +9,7 @@
 import {LitElement, html, render} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 
-import {Environment} from '../../testing/environment.js';
+import {Environment} from '../testing/environment.js';
 
 import {internals, mixinElementInternals} from './element-internals.js';
 import {

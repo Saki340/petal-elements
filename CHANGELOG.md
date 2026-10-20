@@ -179,6 +179,9 @@
 
 #### Features
 
+* **behaviors, item:** the behaviors (form association, validation,
+  focus) and `petal-item` are stable at `petal-elements/behaviors/` and
+  `petal-elements/item/`; the `labs/` paths re-export them until 1.0.
 * **menu:** a `checked-icon` slot on menu items (Compose's
   `checkedLeadingIcon`): shown while the item is checked, instead of the start
   icon or growing in from the start on a spring.

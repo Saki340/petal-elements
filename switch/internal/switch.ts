@@ -26,14 +26,14 @@ import {
   createValidator,
   getValidityAnchor,
   mixinConstraintValidation,
-} from '../../labs/behaviors/constraint-validation.js';
-import {mixinElementInternals} from '../../labs/behaviors/element-internals.js';
+} from '../../behaviors/constraint-validation.js';
+import {mixinElementInternals} from '../../behaviors/element-internals.js';
 import {
   getFormState,
   getFormValue,
   mixinFormAssociated,
-} from '../../labs/behaviors/form-associated.js';
-import {CheckboxValidator} from '../../labs/behaviors/validators/checkbox-validator.js';
+} from '../../behaviors/form-associated.js';
+import {CheckboxValidator} from '../../behaviors/validators/checkbox-validator.js';
 
 // Separate variable needed for closure.
 const switchBaseClass = mixinDelegatesAria(

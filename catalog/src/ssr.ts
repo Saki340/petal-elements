@@ -15,4 +15,4 @@ import './components/theme-changer.js';
 import './components/top-app-bar.js';
 import './components/drag-playground.js';
 // 🤫
-import 'petal-elements/labs/item/item.js';
+import 'petal-elements/item/item.js';

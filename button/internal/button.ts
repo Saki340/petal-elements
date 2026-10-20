@@ -28,9 +28,9 @@ import {
   dispatchActivationClick,
   isActivationClick,
 } from '../../internal/events/form-label-activation.js';
-import {mixinElementInternals} from '../../labs/behaviors/element-internals.js';
-import {mixinFormAssociated} from '../../labs/behaviors/form-associated.js';
-import {mixinFormSubmitter} from '../../labs/behaviors/form-submitter.js';
+import {mixinElementInternals} from '../../behaviors/element-internals.js';
+import {mixinFormAssociated} from '../../behaviors/form-associated.js';
+import {mixinFormSubmitter} from '../../behaviors/form-submitter.js';
 
 /**
  * Material 3 Expressive button sizes. Without a size, the button keeps its

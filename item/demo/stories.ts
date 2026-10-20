@@ -6,7 +6,7 @@
  */
 
 import 'petal-elements/icon/icon.js';
-import 'petal-elements/labs/item/item.js';
+import 'petal-elements/item/item.js';
 
 import {MaterialStoryInit} from './material-collection.js';
 import {css, html, nothing} from 'lit';
