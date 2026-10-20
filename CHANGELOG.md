@@ -2,7 +2,7 @@
 
 ## petal-elements
 
-### Unreleased
+### 0.2.0 (2026-10-20)
 
 #### Breaking changes
 

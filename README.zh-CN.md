@@ -10,7 +10,7 @@
 
 ## 状态
 
-0.1.0 版本准备中，尚未发布到 npm。1.0 之前 API 可能变动。
+0.2.0 版本把所有组件改为 Jetpack Compose 的数值，并新增了许多组件，见 [roadmap](docs/roadmap.md)（英文）和 [CHANGELOG](CHANGELOG.md)。1.0 之前 API 可能变动。
 
 官网：[petal.anontokyo.vip](https://petal.anontokyo.vip/)。文档和在线示例：[catalog](https://petal.anontokyo.vip/catalog/) 和 [docs/](docs/intro.md)（英文）。
 
@@ -56,9 +56,9 @@ Google 的 Material Web 项目
 petal-elements 在 Material Web 代码库（保留完整 git 历史）的基础上继续开发，目标是 Material 3 Expressive：
 
 - 组件沿用 Material Web 的基础设施：ripple、焦点环、状态层、通过 `ElementInternals` 的表单关联和无障碍支持。
-- 设计令牌的数值来自 Material Web 仓库自带的 Material Design Web 令牌（v34），并与 Jetpack Compose Material 3 源码交叉核对。数值一律以源码为准，不凭目测估计。详见 [docs/tokens.md](docs/tokens.md)。
+- 尺寸、颜色、形状和动效取自固定提交的 Jetpack Compose Material 3 源码，Material Design Web 令牌（v34）作为后备。数值一律以源码为准，不凭目测估计。详见 [docs/tokens.md](docs/tokens.md)。
 - 逐步补上缺失的 Expressive 规格和组件（形状变形、弹簧动效、按钮组等），并用视觉回归测试验证。
-- 持续跟进上游并合并其修复，包括上游 `labs/` 中的 Expressive 工作。
+- 持续跟进上游并合并其修复。上游实验性的 `labs/gb` 和 `labs/aria` 组件不包含在内，petal 自己的组件已经覆盖。
 
 ## 与 Material Web 的区别
 

@@ -10,9 +10,9 @@ Community-maintained web components for Material 3 Expressive.
 
 ## Status
 
-Version 0.1.0 is on npm. 0.2, which moves every component to Jetpack Compose's
-values and adds many components, is in preparation; see the
-[roadmap](docs/roadmap.md). APIs may change before 1.0.
+Version 0.2.0 moves every component to Jetpack Compose's values and adds many
+components; see the [roadmap](docs/roadmap.md) and the
+[changelog](CHANGELOG.md). APIs may change before 1.0.
 
 Website: [petal.anontokyo.vip](https://petal.anontokyo.vip/). Documentation and
 live examples: the [catalog](https://petal.anontokyo.vip/catalog/) and
