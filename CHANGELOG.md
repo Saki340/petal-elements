@@ -6,6 +6,9 @@
 
 #### Breaking changes
 
+* **labs:** `labs/gb` (`petal-gb-*`) and `labs/aria` (`petal-aria-*`) are
+  removed. They were upstream experiments that petal's stable components
+  replace.
 * **icon:** icons set `font-variation-settings: 'FILL' var(--md-icon-fill)`
   instead of inheriting `font-variation-settings`. To fill icons from a parent,
   set `--md-icon-fill: 1` on it.

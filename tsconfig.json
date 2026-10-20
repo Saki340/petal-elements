@@ -7,7 +7,6 @@
     "_site",
     "**/demo",
     "scripts/",
-    "labs/gb/",
     "tests/visual/specs/",
     "tests/visual/playwright.config.ts",
     "tests/visual/global-setup.ts"

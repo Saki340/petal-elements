@@ -73,8 +73,9 @@ history, and works towards Material 3 Expressive:
 - Missing Expressive specs and components (shape morphing, spring motion,
   button groups, …) are added step by step and checked with visual regression
   tests.
-- We follow upstream and merge its fixes, including its Expressive work in
-  `labs/`.
+- We follow upstream and merge its fixes. Upstream's experimental `labs/gb`
+  and `labs/aria` components are not included: petal's own components cover
+  them.
 
 ## Differences from Material Web
 

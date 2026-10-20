@@ -122,8 +122,7 @@
     },
     "build:ts": {
       "dependencies": [
-        "build:ts:main",
-        "build:ts:labs-gb"
+        "build:ts:main"
       ]
     },
     "build:ts:main": {
@@ -134,7 +133,6 @@
         "**/*.ts",
         "!**/*.d.ts",
         "!**/*.cssresult.ts",
-        "!labs/gb/**",
         "!catalog/",
         "!landing/",
         "!_site/",
@@ -149,31 +147,11 @@
         "!web-test-runner.config.js",
         "!commitlint.config.js",
         "!types/",
-        "!labs/gb/**",
         "!catalog/",
         "!landing/",
         "!_site/",
         "!scripts/",
         "!.claude/**"
-      ],
-      "clean": "if-file-deleted",
-      "dependencies": [
-        "build:css-to-ts"
-      ]
-    },
-    "build:ts:labs-gb": {
-      "command": "tsc --pretty -p labs/gb/tsconfig.json",
-      "files": [
-        "tsconfig.base.json",
-        "labs/gb/tsconfig.json",
-        "labs/gb/**/*.ts",
-        "!labs/gb/**/*.d.ts"
-      ],
-      "output": [
-        ".tsbuildinfo",
-        "labs/gb/**/*.js",
-        "labs/gb/**/*.js.map",
-        "labs/gb/**/*.d.ts"
       ],
       "clean": "if-file-deleted",
       "dependencies": [

@@ -2,6 +2,7 @@
  * @license
  * Copyright 2026 Google LLC
  * SPDX-License-Identifier: Apache-2.0
+ * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
 import {
@@ -11,25 +12,11 @@ import {
 import {generateManifest} from '@lit-labs/gen-manifest';
 import {writeFileTree} from '@lit-labs/gen-utils/lib/file-utils.js';
 import type {Package as Manifest, Module} from 'custom-elements-manifest';
-import * as path from 'path';
 
 const ROOT = process.cwd() as AbsolutePath;
 
 const mainManifest = await generateManifestFromTsconfig(ROOT);
-const gbManifest = await generateManifestFromTsconfig(
-  path.resolve(ROOT, 'labs/gb') as AbsolutePath,
-);
 
-const modulePathsAdded = new Set<string>(
-  mainManifest.modules.map((module) => module.path),
-);
-const combinedModules = [...mainManifest.modules];
-for (const module of gbManifest.modules) {
-  if (!modulePathsAdded.has(module.path)) {
-    modulePathsAdded.add(module.path);
-    combinedModules.push(module);
-  }
-}
 function includedModules(module: Module) {
   const isTestFile =
     module.path.includes('_test') ||
@@ -45,7 +32,7 @@ function includedModules(module: Module) {
 }
 const manifest = {
   ...mainManifest,
-  modules: combinedModules.filter(includedModules),
+  modules: mainManifest.modules.filter(includedModules),
 };
 
 await writeFileTree(ROOT, {

@@ -174,6 +174,9 @@ exists.
   percentage.
 - **Sliders** have Compose's bar handle and gapped 16px track. The
   `*-state-layer-*`, `handle-elevation` and `*-track-shape` tokens are gone.
+- **`labs/gb` and `labs/aria` are gone** (`petal-gb-*`, `petal-aria-*`).
+  Use the stable components: `petal-button`, `petal-menu`, `petal-tabs` and
+  so on.
 - **The labs badge moved** to `petal-elements/badge/badge.js`
   (`petal-badge`, still with `value`). Put it in the `badge` slot of an icon
   button or a navigation item instead of positioning it yourself.

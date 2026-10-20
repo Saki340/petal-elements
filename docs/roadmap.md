@@ -44,6 +44,3 @@ Roughly in this order:
 *   Components that are missing, for example navigation bar and rail, top app
     bar, snackbar, card, badge, tooltip, search, date and time pickers.
 *   Comparing the renderings with Jetpack Compose Material 3 screenshots.
-
-Expressive components that upstream builds in `labs/gb` are a reference for
-this work; we follow upstream and do not duplicate it where it can be reused.

@@ -10,9 +10,6 @@
  * (it reads the compiled component CSS).
  *
  *     node scripts/tokens/check-usage.js
- *
- * labs/ is reported but does not fail the check: labs/gb uses a different
- * naming scheme (e.g. --md-sys-shape-corner-md).
  */
 
 import * as fs from 'fs';
