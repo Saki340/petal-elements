@@ -466,6 +466,16 @@ const galleries: Record<string, Gallery> = {
     ],
   },
 
+  // Months away from today, so the today outline never shows.
+  'date-picker': {
+    states: ['default'],
+    rows: [
+      {name: 'calendar', render: () => html`<petal-date-picker lang="en-US" value="2030-05-15"></petal-date-picker>`},
+      {name: 'limits', render: () => html`<petal-date-picker lang="en-US" value="2030-05-15" min="2030-05-08" max="2030-05-24"></petal-date-picker>`},
+      {name: 'input', render: () => html`<petal-date-picker lang="en-US" display-mode="input" value="2030-05-15"></petal-date-picker>`},
+    ],
+  },
+
   'segmented-button': {
     states: ['default'],
     rows: [

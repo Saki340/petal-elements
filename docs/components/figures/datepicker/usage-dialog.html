@@ -1,0 +1,18 @@
+<!--
+  @license
+  Copyright 2026 Saki
+  SPDX-License-Identifier: Apache-2.0
+-->
+<div class="figure-wrapper">
+  <figure
+      style="justify-content: center; gap: 16px"
+      title="Date picker dialog"
+      aria-label="A button that opens a date picker dialog with Cancel and OK.">
+    <petal-filled-tonal-button id="pick-date">Pick a date</petal-filled-tonal-button>
+    <petal-date-picker-dialog lang="en-US" id="date-dialog" value="2026-10-21"></petal-date-picker-dialog>
+    <script type="module">
+      const dialog = document.getElementById('date-dialog');
+      document.getElementById('pick-date').addEventListener('click', () => dialog.show());
+    </script>
+  </figure>
+</div>

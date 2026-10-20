@@ -129,8 +129,8 @@ function press(target: string) {
 }
 
 /** Shows a modal dialog in a small viewport and captures the viewport. */
-async function showDialog(page: Page) {
-  await page.setViewportSize({width: 480, height: 320});
+async function showDialog(page: Page, viewport = {width: 480, height: 320}) {
+  await page.setViewportSize(viewport);
   await page.waitForTimeout(500);
   // No focus ring on the first button.
   await page.evaluate(() => {
@@ -142,13 +142,26 @@ async function showDialog(page: Page) {
   return 'viewport' as const;
 }
 
+/** Opens the figure's date picker dialog in a phone-sized viewport. */
+async function openDatePickerDialog(page: Page) {
+  await page.setViewportSize({width: 412, height: 640});
+  await page.evaluate(async () => {
+    const dialog = document.querySelector<HTMLElement & {show(): Promise<void>}>(
+      '#root petal-date-picker-dialog',
+    )!;
+    await dialog.show();
+  });
+  return showDialog(page, {width: 412, height: 640});
+}
+
 /**
  * Extra steps for figures whose interesting state needs interaction, by image
  * path. Run after the figure is rendered and its animations finished. Return
  * `'viewport'` to capture the whole viewport instead of the figure.
  */
 const SETUP: Record<string, (page: Page) => Promise<void | 'viewport'>> = {
-  'images/dialog/hero.webp': showDialog,
+  'images/dialog/hero.webp': (page) => showDialog(page),
+  'images/datepicker/usage-dialog.webp': openDatePickerDialog,
   'images/ripple/hero.webp': press('.ripple-container'),
   'images/ripple/usage.webp': press('.ripple-container'),
   'images/ripple/theming.webp': press('.ripple-container'),

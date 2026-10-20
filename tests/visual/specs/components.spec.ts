@@ -27,6 +27,7 @@ const COMPONENTS = [
   'tooltip',
   'progress',
   'segmented-button',
+  'date-picker',
   'badge',
   'slider',
   'tabs',

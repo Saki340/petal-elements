@@ -1,0 +1,48 @@
+//
+// Copyright 2026 Saki
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// The date picker dialog after Jetpack Compose Material 3
+// (DatePickerDialog.android.kt, DatePickerModalTokens): 360dp wide, at most
+// 568dp high, the extra large shape on surface-container-high, with the
+// picker edge to edge and the buttons 8dp apart, 6dp from the end and 8dp
+// from the bottom.
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'sass:map';
+@use '../../tokens/versions/compose/values/md-comp-date-picker-modal' as compose;
+// go/keep-sorted end
+
+@function _token($name) {
+  @return var(--md-date-picker-#{$name}, #{map.get(compose.$values, $name)});
+}
+
+@mixin styles() {
+  :host {
+    display: contents;
+  }
+
+  petal-dialog {
+    --md-dialog-container-color: #{_token('container-color')};
+    --md-dialog-container-shape: #{_token('container-shape')};
+    width: _token('container-width');
+    max-width: 100%;
+    max-height: min(#{_token('container-height')}, 100%);
+  }
+
+  // These win over the dialog's own padding for its slots.
+  petal-date-picker {
+    width: 100%;
+    padding: 0;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap-reverse;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 0 6px 8px 0;
+    padding-inline: 0 6px;
+  }
+}

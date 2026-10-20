@@ -2,6 +2,17 @@
 
 ## petal-elements
 
+### Unreleased
+
+#### Features
+
+* **datepicker:** `petal-date-picker` and `petal-date-picker-dialog`, after
+  Jetpack Compose `DatePicker` and `DatePickerDialog`: the header, a calendar
+  that slides between months by swiping or with the arrows, a year grid, and
+  a text input mode with Compose's errors. The value is an ISO date, with
+  `min`, `max` and `isDateSelectable`; month names, the week's first day and
+  the typed format follow the locale. The picker takes part in forms.
+
 ### 0.2.0 (2026-10-20)
 
 #### Breaking changes

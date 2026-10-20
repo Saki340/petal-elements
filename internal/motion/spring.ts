@@ -43,6 +43,12 @@ export const FAST_SPATIAL: SpringSpec = {dampingRatio: 0.6, stiffness: 800};
 /** ExpressiveMotionTokens.SpringSlowSpatial: damping 0.8, stiffness 200. */
 export const SLOW_SPATIAL: SpringSpec = {dampingRatio: 0.8, stiffness: 200};
 
+/** ExpressiveMotionTokens.SpringDefaultEffects: damping 1, stiffness 1600. */
+export const DEFAULT_EFFECTS: SpringSpec = {dampingRatio: 1, stiffness: 1600};
+
+/** ExpressiveMotionTokens.SpringFastEffects: damping 1, stiffness 3800. */
+export const FAST_EFFECTS: SpringSpec = {dampingRatio: 1, stiffness: 3800};
+
 /**
  * The spring from 0 to 1 as a CSS `linear()` easing and its duration, for the
  * Web Animations API.

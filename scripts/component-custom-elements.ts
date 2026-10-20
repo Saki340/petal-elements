@@ -28,6 +28,7 @@ export const COMPONENT_CUSTOM_ELEMENTS = {
     'chips/input-chip.ts',
     'chips/suggestion-chip.ts',
   ],
+  datePicker: ['datepicker/date-picker.ts', 'datepicker/date-picker-dialog.ts'],
   dialog: ['dialog/dialog.ts'],
   divider: ['divider/divider.ts'],
   elevation: ['elevation/elevation.ts'],

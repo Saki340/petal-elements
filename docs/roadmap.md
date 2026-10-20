@@ -54,8 +54,9 @@ need something that is not here.
 
 Roughly in this order:
 
-*   Missing components, after Compose: date picker, non-modal bottom sheet,
-    time picker, bottom app bar, rich tooltip and carousel.
+*   Missing components, after Compose: non-modal bottom sheet, time picker,
+    bottom app bar, rich tooltip, carousel, and date ranges for the date
+    picker.
 *   Expressive details for the mouse: hover states that hint at the press,
     for desktop pages.
 *   Public springs: the spring motion the components use, for your own

@@ -20,6 +20,7 @@ export const docsToElementMapping: {[key: string]: readonly string[]} = {
   'card.md': COMPONENT_CUSTOM_ELEMENTS.card,
   'checkbox.md': COMPONENT_CUSTOM_ELEMENTS.checkbox,
   'chip.md': COMPONENT_CUSTOM_ELEMENTS.chips,
+  'date-picker.md': COMPONENT_CUSTOM_ELEMENTS.datePicker,
   'dialog.md': COMPONENT_CUSTOM_ELEMENTS.dialog,
   'divider.md': COMPONENT_CUSTOM_ELEMENTS.divider,
   'elevation.md': COMPONENT_CUSTOM_ELEMENTS.elevation,

@@ -66,6 +66,8 @@ export const COMPOSE_VALUE_MODULES = [
   'ButtonXSmall',
   'Checkbox',
   'Chips',
+  'DateInputModal',
+  'DatePickerModal',
   'Divider',
   'ElevatedButton',
   'ElevatedCard',

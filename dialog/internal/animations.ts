@@ -7,8 +7,9 @@
 
 import {EASING} from '../../internal/motion/animation.js';
 import {
+  DEFAULT_EFFECTS,
   DEFAULT_SPATIAL,
-  SpringSpec,
+  FAST_EFFECTS,
   springEasing,
   springFromCss,
 } from '../../internal/motion/spring.js';
@@ -171,12 +172,6 @@ export const DIALOG_DEFAULT_CLOSE_ANIMATION: DialogAnimation = {
 // animation to the platform, so the dialog moves like the menu (Compose's
 // DropdownMenu): it scales from 80% and fades, on the springs of the page's
 // motion scheme.
-
-/** MotionSchemeKeyTokens.DefaultEffects (both schemes). */
-const DEFAULT_EFFECTS: SpringSpec = {dampingRatio: 1, stiffness: 1600};
-
-/** MotionSchemeKeyTokens.FastEffects (both schemes). */
-const FAST_EFFECTS: SpringSpec = {dampingRatio: 1, stiffness: 3800};
 
 /** The scale the dialog opens from and closes to. */
 const START_SCALE = 'scale(0.8)';
