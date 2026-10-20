@@ -1,0 +1,25 @@
+<!--
+  @license
+  Copyright 2026 Saki
+  SPDX-License-Identifier: Apache-2.0
+-->
+<div class="figure-wrapper">
+  <figure
+      style="justify-content: center; padding-block: 24px"
+      title="A standard bottom sheet"
+      aria-label="A page with a list of places in a standard bottom sheet docked at its bottom, partly covering the page. Drag the sheet or its handle to move it.">
+    <div style="position: relative; width: 360px; height: 420px; overflow: hidden; border-radius: 16px; background: var(--md-sys-color-surface-container-highest, #e6e0e9); color: var(--md-sys-color-on-surface, #1d1b20)">
+      <p style="margin: 24px">The page stays usable while the sheet is open.</p>
+      <petal-standard-bottom-sheet contained value="expanded" aria-label="Nearby places">
+        <div style="padding: 0 24px 24px">
+          <h2 style="margin: 0 0 8px; font: var(--md-sys-typescale-title-large-weight, 400) var(--md-sys-typescale-title-large-size, 22px) / var(--md-sys-typescale-title-large-line-height, 28px) var(--md-sys-typescale-title-large-font, sans-serif)">Nearby places</h2>
+          <div style="display: flex; flex-direction: column; align-items: flex-start">
+            <petal-text-button>Café</petal-text-button>
+            <petal-text-button>Library</petal-text-button>
+            <petal-text-button>Park</petal-text-button>
+          </div>
+        </div>
+      </petal-standard-bottom-sheet>
+    </div>
+  </figure>
+</div>

@@ -7,6 +7,7 @@
 import {
   BOUNDARY_DAMPENING_ZONE,
   calculateAnchors,
+  calculateStandardAnchors,
   closestAnchor,
   computeTarget,
   dampenFlingVelocity,
@@ -200,6 +201,33 @@ describe('sheet physics', () => {
       const tracker = new VelocityTracker();
       tracker.addPosition(0, 0);
       expect(tracker.velocity(10)).toBe(0);
+    });
+  });
+
+  describe('calculateStandardAnchors (BottomSheetScaffold)', () => {
+    it('rests at the peek and fully shown, without hidden', () => {
+      expect(calculateStandardAnchors(800, 300, 56, false)).toEqual([
+        {value: 'partially-expanded', position: 744},
+        {value: 'expanded', position: 500},
+      ]);
+    });
+
+    it('adds hidden when the sheet may hide', () => {
+      expect(calculateStandardAnchors(800, 300, 56, true).map((a) => a.value)).toEqual([
+        'hidden',
+        'partially-expanded',
+        'expanded',
+      ]);
+    });
+
+    it('drops the peek when it is the whole sheet, and hides without a peek', () => {
+      expect(calculateStandardAnchors(800, 56, 56, false).map((a) => a.value)).toEqual([
+        'expanded',
+      ]);
+      expect(calculateStandardAnchors(800, 300, 0, false).map((a) => a.value)).toEqual([
+        'hidden',
+        'expanded',
+      ]);
     });
   });
 });

@@ -466,6 +466,19 @@ const galleries: Record<string, Gallery> = {
     ],
   },
 
+  // In 360 by 300px pages; quick, so the sheets are at rest.
+  'standard-bottom-sheet': {
+    states: ['default'],
+    rows: ['partially-expanded', 'expanded'].map((value) => ({
+      name: value,
+      render: () => html`<div style="position: relative; width: 360px; height: 300px; overflow: hidden; background: var(--md-sys-color-surface-container-highest)">
+        <petal-standard-bottom-sheet contained quick value=${value}>
+          <div style="height: 160px; padding: 0 24px">Content</div>
+        </petal-standard-bottom-sheet>
+      </div>`,
+    })),
+  },
+
   // Months away from today, so the today outline never shows.
   'date-picker': {
     states: ['default'],

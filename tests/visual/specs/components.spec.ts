@@ -28,6 +28,7 @@ const COMPONENTS = [
   'progress',
   'segmented-button',
   'date-picker',
+  'standard-bottom-sheet',
   'badge',
   'slider',
   'tabs',

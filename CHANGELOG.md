@@ -4,8 +4,17 @@
 
 ### Unreleased
 
+#### Bug fixes
+
+* **datepicker:** language tags that `Intl` rejects, such as `en-US@posix`
+  from some Linux browsers, fall back to `en-US` instead of throwing.
+
 #### Features
 
+* **sheet:** `petal-standard-bottom-sheet`, a standard (non-modal) bottom
+  sheet after Jetpack Compose `BottomSheetScaffold`: docked at the bottom with
+  the page usable, peeking 56px, dragged or set between partially expanded,
+  expanded and (with `hideable`) hidden on Compose's springs and thresholds.
 * **datepicker:** `petal-date-picker` and `petal-date-picker-dialog`, after
   Jetpack Compose `DatePicker` and `DatePickerDialog`: the header, a calendar
   that slides between months by swiping or with the arrows, a year grid, and

@@ -38,7 +38,7 @@ before using it; do not guess attributes.
 - [Date picker](docs/components/date-picker.md): `datepicker/{date-picker,date-picker-dialog}.js`, `petal-date-picker` (inline), `petal-date-picker-dialog` (value: ISO date)
 - [Snackbar](docs/components/snackbar.md): `snackbar/snackbar.js`, `petal-snackbar`
 - [Search bar](docs/components/search.md): `search/search-bar.js`, `petal-search-bar`
-- [Bottom sheet](docs/components/bottom-sheet.md): `sheet/bottom-sheet.js`, `petal-bottom-sheet`
+- [Bottom sheet](docs/components/bottom-sheet.md): `sheet/bottom-sheet.js`, `petal-bottom-sheet` (modal); `sheet/standard-bottom-sheet.js`, `petal-standard-bottom-sheet` (docked, page stays usable)
 - [Split button](docs/components/split-button.md): `splitbutton/split-button.js`, `petal-split-button`
 - [Tooltip](docs/components/tooltip.md): `tooltip/tooltip.js`, `petal-tooltip`
 - [Menu](docs/components/menu.md): `menu/{menu,menu-item,sub-menu,menu-group}.js`

@@ -1,0 +1,185 @@
+//
+// Copyright 2026 Saki
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// Standard bottom sheet, after Jetpack Compose Material 3
+// (BottomSheetScaffold.kt, SheetDefaults.kt): docked at the bottom of the
+// viewport (or of its positioned parent with `contained`), at most 640dp
+// wide (SheetMaxWidth) and centered, at least the peek height tall, the
+// extra large top shape on surface-container-low, with a level 1 shadow
+// (DockedStandardContainerElevation). The page behind it stays usable: no
+// scrim, and only the sheet takes pointer events. The drag handle is the
+// modal sheet's.
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'sass:map';
+@use '../../elevation/elevation';
+@use '../../focus/focus-ring';
+@use '../../tokens/versions/compose/values/md-comp-sheet-bottom' as sheet;
+// go/keep-sorted end
+
+@mixin styles() {
+  :host([hidden]) {
+    display: none;
+  }
+
+  :host {
+    --_container-color: var(
+      --md-bottom-sheet-container-color,
+      #{map.get(sheet.$values, 'docked-container-color')}
+    );
+    --_container-shape: var(
+      --md-bottom-sheet-container-shape,
+      #{map.get(sheet.$values, 'docked-container-shape')}
+    );
+    --_content-color: var(--md-bottom-sheet-content-color, var(--md-sys-color-on-surface, #1d1b20));
+    --_drag-handle-color: var(
+      --md-bottom-sheet-drag-handle-color,
+      #{map.get(sheet.$values, 'docked-drag-handle-color')}
+    );
+    --_drag-handle-height: var(
+      --md-bottom-sheet-drag-handle-height,
+      #{map.get(sheet.$values, 'docked-drag-handle-height')}
+    );
+    --_drag-handle-width: var(
+      --md-bottom-sheet-drag-handle-width,
+      #{map.get(sheet.$values, 'docked-drag-handle-width')}
+    );
+    --_focus-indicator-color: var(
+      --md-bottom-sheet-focus-indicator-color,
+      #{map.get(sheet.$values, 'focus-indicator-color')}
+    );
+    --_max-width: var(--md-bottom-sheet-max-width, 640px);
+
+    position: fixed;
+    inset: 0;
+    z-index: var(--md-standard-bottom-sheet-z-index, 1);
+    display: block;
+    pointer-events: none;
+  }
+
+  :host([contained]) {
+    position: absolute;
+  }
+
+  .layer {
+    position: absolute;
+    inset: 0;
+    overflow: clip;
+  }
+
+  .sheet {
+    position: absolute;
+    top: 0;
+    inset-inline: 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: var(--_max-width);
+    min-height: var(--_peek-height, 56px);
+    max-height: 100%;
+    margin-inline: auto;
+    border-radius: var(--_container-shape);
+    background-color: var(--_container-color);
+    color: var(--_content-color);
+    // Below the layer until the element positions it.
+    transform: translateY(100vh);
+    transform-origin: top center;
+    pointer-events: auto;
+    touch-action: none;
+    will-change: transform;
+
+    @include elevation.theme(
+      (
+        'level': map.get(sheet.$values, 'docked-standard-container-elevation'),
+      )
+    );
+  }
+
+  .sheet.at-rest-hidden {
+    visibility: hidden;
+  }
+
+  petal-elevation {
+    border-radius: inherit;
+  }
+
+  .sheet.dragging {
+    cursor: grabbing;
+    user-select: none;
+  }
+
+  .content {
+    position: relative;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-height: 0;
+    overflow: hidden;
+    border-radius: inherit;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    transform-origin: top center;
+  }
+
+  .drag-handle {
+    all: unset;
+    box-sizing: border-box;
+    display: flex;
+    flex: none;
+    align-items: center;
+    align-self: center;
+    justify-content: center;
+    min-width: 48px;
+    // 22dp + the handle's 4dp + 22dp.
+    min-height: calc(var(--_drag-handle-height) + 44px);
+    cursor: pointer;
+    touch-action: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .handle-bounds {
+    position: relative;
+    display: flex;
+  }
+
+  .handle {
+    width: var(--_drag-handle-width);
+    height: var(--_drag-handle-height);
+    border-radius: var(--md-sys-shape-corner-extra-large, 28px);
+    background-color: var(--_drag-handle-color);
+  }
+
+  petal-focus-ring {
+    @include focus-ring.theme(
+      (
+        'color': var(--_focus-indicator-color),
+        'shape': var(--md-sys-shape-corner-extra-large, 28px),
+      )
+    );
+  }
+
+  .body {
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+    overscroll-behavior: contain;
+    touch-action: none;
+  }
+
+  .sheet.scrolls .body {
+    overflow-y: auto;
+    touch-action: pan-y;
+  }
+
+  @media (forced-colors: active) {
+    .sheet {
+      outline: 1px solid CanvasText;
+    }
+
+    .handle {
+      background-color: CanvasText;
+    }
+  }
+}

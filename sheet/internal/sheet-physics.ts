@@ -65,6 +65,33 @@ export function calculateAnchors(
   return anchors;
 }
 
+/**
+ * The anchors of a standard sheet, as StandardBottomSheet's
+ * `draggableAnchors` in BottomSheetScaffold.kt: `PartiallyExpanded` with
+ * `peekHeight` showing, unless that is the whole sheet; `Hidden` at the
+ * bottom when the sheet may hide, or when there is no peek or no sheet;
+ * `Expanded` with the sheet fully shown. Ordered hidden, partially expanded,
+ * expanded.
+ */
+export function calculateStandardAnchors(
+  fullHeight: number,
+  sheetHeight: number,
+  peekHeight: number,
+  hideable: boolean,
+): Anchor[] {
+  const anchors: Anchor[] = [];
+  if (sheetHeight === 0 || peekHeight === 0 || hideable) {
+    anchors.push({value: 'hidden', position: fullHeight});
+  }
+  if (peekHeight > 0 && peekHeight !== sheetHeight) {
+    anchors.push({value: 'partially-expanded', position: fullHeight - peekHeight});
+  }
+  if (sheetHeight > 0) {
+    anchors.push({value: 'expanded', position: Math.max(0, fullHeight - sheetHeight)});
+  }
+  return anchors;
+}
+
 /** The position of a value, or `undefined` when it is not an anchor. */
 export function positionOf(anchors: Anchor[], value: SheetValue): number | undefined {
   return anchors.find((anchor) => anchor.value === value)?.position;
