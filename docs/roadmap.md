@@ -32,15 +32,34 @@ need something that is not here.
 *   Pixel-exact visual regression tests (Playwright) and doc images rendered
     from the components.
 
+### 0.2 (next release)
+
+*   Every component follows Jetpack Compose Material 3: sizes, colors, shapes
+    and motion are read from the Compose source (pinned commit), not from the
+    web token tables. This changes many components; see the
+    [changelog](https://github.com/Saki340/petal-elements/blob/main/CHANGELOG.md)<!-- {.external} -->
+    and [Using in an existing site](migrating.md).
+*   New components: navigation bar, rail and drawer, top app bar, bottom
+    sheet, search bar, snackbar, tooltip, badge, split button, floating
+    toolbar, FAB menu, loading indicator, pull to refresh, grouped menus and
+    segmented lists.
+*   Out of labs: cards, segmented buttons, and the form behaviors and
+    `petal-item` the components build on. Upstream's experimental `labs/gb`
+    and `labs/aria` are removed.
+*   Motion: the expressive spring scheme by default, shape morphing on
+    springs, a press ripple from the pointer, a circular theme transition
+    (`transitionTheme()`), wavy progress indicators and `animate-value`.
+
 ## Next
 
 Roughly in this order:
 
-*   Move the remaining components (dialog, list, menu, select, slider, ...) to
-    the v34 token values.
-*   More Expressive components and features, checked against Compose:
-    split button, toolbar, loading indicator, FAB menu, the new FAB sizes,
-    shape morphing for icon buttons.
-*   Components that are missing, for example navigation bar and rail, top app
-    bar, snackbar, card, badge, tooltip, search, date and time pickers.
-*   Comparing the renderings with Jetpack Compose Material 3 screenshots.
+*   Missing components, after Compose: date picker, non-modal bottom sheet,
+    time picker, bottom app bar, rich tooltip and carousel.
+*   Expressive details for the mouse: hover states that hint at the press,
+    for desktop pages.
+*   Public springs: the spring motion the components use, for your own
+    animations.
+*   Shapes: the Material 3 Expressive shape set and morphing between shapes.
+*   Page transitions with the View Transitions API, in the same motion as the
+    components.

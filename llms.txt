@@ -33,6 +33,7 @@ before using it; do not guess attributes.
 - [FAB menu](docs/components/fab-menu.md): `fabmenu/{fab-menu,fab-menu-item,toggle-fab}.js`, `petal-fab-menu`, `petal-fab-menu-item`, `petal-toggle-fab`
 - [Icon](docs/components/icon.md): `icon/icon.js`, `petal-icon`
 - [Card](docs/components/card.md): `card/{filled,elevated,outlined}-card.js`
+- [Badge](docs/components/badge.md): `badge/badge.js`, `petal-badge` (in the `badge` slot of icon buttons and navigation items)
 - [Dialog](docs/components/dialog.md): `dialog/dialog.js`, `petal-dialog`
 - [Snackbar](docs/components/snackbar.md): `snackbar/snackbar.js`, `petal-snackbar`
 - [Search bar](docs/components/search.md): `search/search-bar.js`, `petal-search-bar`
@@ -51,6 +52,7 @@ before using it; do not guess attributes.
 - [Text field](docs/components/text-field.md): `textfield/{filled,outlined}-text-field.js`
 - [Select](docs/components/select.md): `select/{filled,outlined}-select.js`, `select/select-option.js`
 - [Checkbox](docs/components/checkbox.md), [radio](docs/components/radio.md), [switch](docs/components/switch.md), [slider](docs/components/slider.md)
+- [Segmented button](docs/components/segmented-button.md): `segmentedbutton/{segmented-button-set,segmented-button}.js`, `petal-segmented-button-set`, `petal-segmented-button`
 - [Tabs](docs/components/tabs.md): `tabs/{tabs,primary-tab,secondary-tab}.js`
 - [Chips](docs/components/chip.md): `chips/{assist,filter,input,suggestion}-chip.js`, `chips/chip-set.js`
 - [Divider](docs/components/divider.md), [elevation](docs/components/elevation.md), [focus ring](docs/components/focus-ring.md), [ripple](docs/components/ripple.md)
@@ -59,6 +61,7 @@ before using it; do not guess attributes.
 
 - [custom-elements.json](custom-elements.json): every element's attributes, properties, events, slots and CSS parts
 - `.d.ts` files sit next to every `.js` module
+- Building your own form element: `behaviors/*.js` (form association, validation, focus)
 
 ## Optional
 

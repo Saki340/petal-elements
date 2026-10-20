@@ -10,8 +10,9 @@ Community-maintained web components for Material 3 Expressive.
 
 ## Status
 
-Version 0.1.0 is being prepared and has not been published to npm yet. APIs may
-change before 1.0.
+Version 0.1.0 is on npm. 0.2, which moves every component to Jetpack Compose's
+values and adds many components, is in preparation; see the
+[roadmap](docs/roadmap.md). APIs may change before 1.0.
 
 Website: [petal.anontokyo.vip](https://petal.anontokyo.vip/). Documentation and
 live examples: the [catalog](https://petal.anontokyo.vip/catalog/) and
@@ -66,10 +67,10 @@ history, and works towards Material 3 Expressive:
 
 - Components are built on Material Web's foundations: ripple, focus ring,
   state layers, form association through `ElementInternals`, and accessibility.
-- Design token values come from the Material Design web tokens (v34) that ship
-  in the Material Web repository, cross-checked against the Jetpack Compose
-  Material 3 sources. Values are taken from source, never estimated by eye.
-  See [docs/tokens.md](docs/tokens.md).
+- Sizes, colors, shapes and motion come from the Jetpack Compose Material 3
+  source at a pinned commit, with the Material Design web tokens (v34) as the
+  fallback. Values are taken from source, never estimated by eye. See
+  [docs/tokens.md](docs/tokens.md).
 - Missing Expressive specs and components (shape morphing, spring motion,
   button groups, …) are added step by step and checked with visual regression
   tests.
