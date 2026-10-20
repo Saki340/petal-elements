@@ -1,0 +1,266 @@
+//
+// Copyright 2026 Saki
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// Segmented buttons after Jetpack Compose Material 3 (SegmentedButton.kt,
+// OutlinedSegmentedButtonTokens): at least 58dp wide and 40dp high
+// (ButtonDefaults.MinWidth and MinHeight), 12dp of padding at the sides, an
+// 18dp icon 8dp before the label, and a 1dp outline.
+//
+// The icon space is always there. While it is empty (an unselected button, or
+// no-checkmark, without an icon) the label moves back half of it, so it is
+// centered, and it slides on the fast spatial spring when the checkmark comes
+// in (SegmentedButtonContentMeasurePolicy). The checkmark grows from its
+// bottom start corner on the fast spatial spring and fades in on the default
+// effects spring, and goes at once; with an icon, the two cross-fade on the
+// default effects spring (SegmentedButtonDefaults.Icon).
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'sass:map';
+@use '../../tokens/versions/compose/values/md-comp-outlined-segmented-button' as compose;
+@use '../../tokens/versions/v34/values/md-sys-motion-springs' as springs;
+// go/keep-sorted end
+
+$_icon-spacing: 8px;
+
+@function _spring($name) {
+  @return map.get(springs.$values, 'spring-#{$name}-duration')
+    map.get(springs.$values, 'spring-#{$name}');
+}
+
+@function _token($name) {
+  @return var(
+    --md-segmented-button-#{$name},
+    #{map.get(compose.$values, $name)}
+  );
+}
+
+@function _faded($color, $opacity) {
+  @return color-mix(in srgb, #{$color} calc(#{$opacity} * 100%), transparent);
+}
+
+@mixin styles() {
+  :host([hidden]) {
+    display: none;
+  }
+
+  :host {
+    --_icon-size: #{_token('icon-size')};
+    --_content-color: #{_token('unselected-label-text-color')};
+    --_icon-color: #{_token('unselected-icon-color')};
+    --_container-color: transparent;
+    --_outline-color: #{_token('outline-color')};
+
+    display: flex;
+    position: relative;
+    // Compose's interactionZIndex: a selected button is drawn over its
+    // neighbours (5), and a focused or pressed one is one higher.
+    z-index: 0;
+    min-width: 58px;
+    height: #{_token('container-height')};
+    font-family: #{_token('label-text-font')};
+    font-size: #{_token('label-text-size')};
+    line-height: #{_token('label-text-line-height')};
+    letter-spacing: #{_token('label-text-tracking')};
+    font-weight: #{_token('label-text-weight')};
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  :host([selected]) {
+    --_content-color: #{_token('selected-label-text-color')};
+    --_icon-color: #{_token('selected-icon-color')};
+    --_container-color: #{_token('selected-container-color')};
+    z-index: 5;
+  }
+
+  :host(:focus-within),
+  :host(:active) {
+    z-index: 1;
+  }
+
+  :host([selected]:focus-within),
+  :host([selected]:active) {
+    z-index: 6;
+  }
+
+  :host([disabled]) {
+    --_content-color: #{_faded(
+        _token('disabled-label-text-color'),
+        _token('disabled-label-text-opacity')
+      )};
+    --_icon-color: #{_faded(
+        _token('disabled-icon-color'),
+        _token('disabled-icon-opacity')
+      )};
+    --_outline-color: #{_faded(
+        _token('disabled-outline-color'),
+        _token('disabled-outline-opacity')
+      )};
+    pointer-events: none;
+  }
+
+  .button {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0 12px;
+    border: none;
+    border-radius: inherit;
+    outline: none;
+    background-color: var(--_container-color);
+    color: var(--_content-color);
+    font: inherit;
+    letter-spacing: inherit;
+    cursor: pointer;
+    --md-ripple-hover-color: var(--_content-color);
+    --md-ripple-pressed-color: var(--_content-color);
+    --md-focus-ring-shape-start-start: var(--_start-start, 0px);
+    --md-focus-ring-shape-end-start: var(--_end-start, 0px);
+    --md-focus-ring-shape-start-end: var(--_start-end, 0px);
+    --md-focus-ring-shape-end-end: var(--_end-end, 0px);
+  }
+
+  .button:disabled {
+    cursor: default;
+  }
+
+  petal-ripple {
+    border-radius: inherit;
+  }
+
+  .outline {
+    position: absolute;
+    inset: 0;
+    border: #{_token('outline-width')} solid var(--_outline-color);
+    border-radius: inherit;
+    pointer-events: none;
+  }
+
+  // At least 48px high to touch.
+  .touch {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 48px;
+    translate: 0 -50%;
+  }
+
+  .content {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: $_icon-spacing;
+    min-width: 0;
+  }
+
+  .icon {
+    display: grid;
+    flex: none;
+    width: var(--_icon-size);
+    height: var(--_icon-size);
+    color: var(--_icon-color);
+  }
+
+  .checkmark,
+  .slotted-icon {
+    grid-area: 1 / 1;
+    width: var(--_icon-size);
+    height: var(--_icon-size);
+  }
+
+  .slotted-icon {
+    display: flex;
+    --md-icon-size: var(--_icon-size);
+  }
+
+  .checkmark {
+    fill: currentColor;
+    opacity: 0;
+    scale: 0;
+    transform-origin: 0 100%;
+  }
+
+  :host(:dir(rtl)) .checkmark {
+    transform-origin: 100% 100%;
+  }
+
+  .selected .checkmark {
+    opacity: 1;
+    scale: 1;
+    transition:
+      scale _spring('fast-spatial'),
+      opacity _spring('default-effects');
+  }
+
+  // With an icon: the icon until selected, then the checkmark, cross-fading.
+  .has-icon .checkmark {
+    scale: 1;
+    transition: opacity _spring('default-effects');
+  }
+
+  .has-icon:not(.no-checkmark) .slotted-icon {
+    transition: opacity _spring('default-effects');
+  }
+
+  .has-icon.selected:not(.no-checkmark) .slotted-icon {
+    opacity: 0;
+  }
+
+  .label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    transition: translate _spring('fast-spatial');
+  }
+
+  // No icon to show: the label moves back half the icon space.
+  .button:not(.has-icon):is(:not(.selected), .no-checkmark) .label {
+    translate: calc((var(--_icon-size) + #{$_icon-spacing}) / -2) 0;
+  }
+
+  :host(:dir(rtl))
+    .button:not(.has-icon):is(:not(.selected), .no-checkmark)
+    .label {
+    translate: calc((var(--_icon-size) + #{$_icon-spacing}) / 2) 0;
+  }
+
+  // Without a label: only the icon, centered.
+  .button:not(.has-label) .content {
+    gap: 0;
+  }
+
+  .button:not(.has-label) .label {
+    display: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .checkmark,
+    .slotted-icon,
+    .label {
+      transition: none !important;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .outline {
+      border-color: ButtonText;
+    }
+
+    .selected {
+      forced-color-adjust: none;
+      background-color: Highlight;
+      color: HighlightText;
+    }
+
+    :host([disabled]) .button {
+      color: GrayText;
+    }
+  }
+}

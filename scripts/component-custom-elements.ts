@@ -62,6 +62,10 @@ export const COMPONENT_CUSTOM_ELEMENTS = {
   radio: ['radio/radio.ts'],
   ripple: ['ripple/ripple.ts'],
   search: ['search/search-bar.ts'],
+  segmentedButton: [
+    'segmentedbutton/segmented-button-set.ts',
+    'segmentedbutton/segmented-button.ts',
+  ],
   select: [
     'select/filled-select.ts',
     'select/outlined-select.ts',

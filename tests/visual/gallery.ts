@@ -466,6 +466,16 @@ const galleries: Record<string, Gallery> = {
     ],
   },
 
+  'segmented-button': {
+    states: ['default'],
+    rows: [
+      {name: 'single', render: () => html`<petal-segmented-button-set><petal-segmented-button label="Day" selected></petal-segmented-button><petal-segmented-button label="Week"></petal-segmented-button><petal-segmented-button label="Month"></petal-segmented-button></petal-segmented-button-set>`},
+      {name: 'multiselect', render: () => html`<petal-segmented-button-set multiselect><petal-segmented-button label="$" selected></petal-segmented-button><petal-segmented-button label="$$" selected></petal-segmented-button><petal-segmented-button label="$$$"></petal-segmented-button><petal-segmented-button label="$$$$" disabled></petal-segmented-button></petal-segmented-button-set>`},
+      {name: 'icons', render: () => html`<petal-segmented-button-set><petal-segmented-button label="Walk">${icon('icon')}</petal-segmented-button><petal-segmented-button label="Ride" selected>${icon('icon')}</petal-segmented-button><petal-segmented-button label="Drive" disabled selected>${icon('icon')}</petal-segmented-button></petal-segmented-button-set>`},
+      {name: 'icon only', render: () => html`<petal-segmented-button-set><petal-segmented-button no-checkmark aria-label="A">${icon('icon')}</petal-segmented-button><petal-segmented-button no-checkmark selected aria-label="B">${icon('icon')}</petal-segmented-button><petal-segmented-button no-checkmark aria-label="C">${icon('icon')}</petal-segmented-button></petal-segmented-button-set>`},
+    ],
+  },
+
   progress: {
     states: ['default'],
     rows: [

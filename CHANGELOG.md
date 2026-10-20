@@ -179,6 +179,13 @@
 
 #### Features
 
+* **segmentedbutton:** `petal-segmented-button-set` and
+  `petal-segmented-button` leave labs and follow Compose's `SegmentedButton`:
+  40px high, buttons as wide as the widest, overlapping 1px outlines, an 18px
+  checkmark that grows in on the fast spatial spring while the label slides
+  aside, and a cross-fade with the icon. A single-select set is a radio group
+  with arrow keys; `multiselect` makes toggle buttons. The labs
+  `petal-outlined-segmented-button(-set)` tags still work until 1.0.
 * **behaviors, item:** the behaviors (form association, validation,
   focus) and `petal-item` are stable at `petal-elements/behaviors/` and
   `petal-elements/item/`; the `labs/` paths re-export them until 1.0.

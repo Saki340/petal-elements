@@ -1,0 +1,28 @@
+<!--
+  @license
+  Copyright 2026 Saki
+  SPDX-License-Identifier: Apache-2.0
+-->
+<div class="figure-wrapper">
+  <figure
+      style="justify-content: center; flex-direction: column; align-items: center; gap: 24px; padding-block: 24px"
+      title="Segmented buttons"
+      aria-label="A row of three segmented buttons, Day, Week and Month, with Day selected and checked, and a row with Walk, Transit and Drive icons with Transit selected.">
+    <petal-segmented-button-set aria-label="Range">
+      <petal-segmented-button label="Day" selected></petal-segmented-button>
+      <petal-segmented-button label="Week"></petal-segmented-button>
+      <petal-segmented-button label="Month"></petal-segmented-button>
+    </petal-segmented-button-set>
+    <petal-segmented-button-set aria-label="Travel mode">
+      <petal-segmented-button label="Walk">
+        <petal-icon slot="icon">directions_walk</petal-icon>
+      </petal-segmented-button>
+      <petal-segmented-button label="Transit" selected>
+        <petal-icon slot="icon">train</petal-icon>
+      </petal-segmented-button>
+      <petal-segmented-button label="Drive">
+        <petal-icon slot="icon">directions_car</petal-icon>
+      </petal-segmented-button>
+    </petal-segmented-button-set>
+  </figure>
+</div>

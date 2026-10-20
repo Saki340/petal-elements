@@ -1,0 +1,34 @@
+<!--
+  @license
+  Copyright 2026 Saki
+  SPDX-License-Identifier: Apache-2.0
+-->
+<div class="figure-wrapper">
+  <figure
+      style="justify-content: center; flex-direction: column; align-items: center; gap: 24px"
+      title="Segmented buttons with icons"
+      aria-label="Walk, Transit and Drive with icons and Transit selected, and icon-only dark, auto and light theme buttons with auto selected.">
+    <petal-segmented-button-set aria-label="Travel mode">
+      <petal-segmented-button label="Walk">
+        <petal-icon slot="icon">directions_walk</petal-icon>
+      </petal-segmented-button>
+      <petal-segmented-button label="Transit" selected>
+        <petal-icon slot="icon">train</petal-icon>
+      </petal-segmented-button>
+      <petal-segmented-button label="Drive">
+        <petal-icon slot="icon">directions_car</petal-icon>
+      </petal-segmented-button>
+    </petal-segmented-button-set>
+    <petal-segmented-button-set aria-label="Theme">
+      <petal-segmented-button no-checkmark aria-label="Dark">
+        <petal-icon slot="icon">dark_mode</petal-icon>
+      </petal-segmented-button>
+      <petal-segmented-button no-checkmark aria-label="Auto" selected>
+        <petal-icon slot="icon">brightness_medium</petal-icon>
+      </petal-segmented-button>
+      <petal-segmented-button no-checkmark aria-label="Light">
+        <petal-icon slot="icon">light_mode</petal-icon>
+      </petal-segmented-button>
+    </petal-segmented-button-set>
+  </figure>
+</div>

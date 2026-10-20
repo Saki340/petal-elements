@@ -106,6 +106,7 @@ export const COMPOSE_VALUE_MODULES = [
   'OutlinedButton',
   'OutlinedCard',
   'OutlinedIconButton',
+  'OutlinedSegmentedButton',
   'OutlinedTextField',
   'PlainTooltip',
   'PrimaryNavigationTab',

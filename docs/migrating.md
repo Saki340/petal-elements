@@ -67,7 +67,7 @@ exists.
 | Site has | Use |
 | --- | --- |
 | Primary, secondary, tonal, outlined, text buttons | `petal-filled-button`, `petal-filled-tonal-button`, `petal-outlined-button`, `petal-text-button`, `petal-elevated-button`; `size` and `shape` for Expressive sizes, `toggle` for toggle buttons |
-| Segmented or connected buttons | `petal-button-group` |
+| Segmented buttons | `petal-segmented-button-set` with `petal-segmented-button`, or a connected `petal-button-group` for the Expressive look |
 | Split button (action plus dropdown arrow) | `petal-split-button` with a `petal-menu` |
 | Icon buttons | `petal-icon-button` and the filled, tonal, outlined variants; `size` (`xsmall` to `xlarge`), `width`, `shape` |
 | Floating action button | `petal-fab` (`size`, `variant`, `label` for extended, `expanded` to shrink to the icon), `petal-branded-fab` |

@@ -1,16 +1,19 @@
 /**
  * @license
- * Copyright 2022 Google LLC
+ * Copyright 2026 Saki
  * SPDX-License-Identifier: Apache-2.0
- * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
-import {CSSResultOrNative} from 'lit';
+/**
+ * @fileoverview The segmented button set left labs: use
+ * petal-elements/segmentedbutton/segmented-button-set.js
+ * (`petal-segmented-button-set`). This module keeps the old
+ * `petal-outlined-segmented-button-set` tag working until 1.0.
+ */
+
 import {customElement} from 'lit/decorators.js';
 
-import {OutlinedSegmentedButtonSet} from './internal/outlined-segmented-button-set.js';
-import {styles as outlinedStyles} from './internal/outlined-styles.cssresult.js';
-import {styles as sharedStyles} from './internal/shared-styles.cssresult.js';
+import {PetalSegmentedButtonSet} from '../../segmentedbutton/segmented-button-set.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -19,12 +22,8 @@ declare global {
 }
 
 /**
- * PetalOutlinedSegmentedButtonSet is the custom element for the Material
- * Design outlined segmented button set component.
- * @final
+ * @deprecated Use `petal-segmented-button-set`.
  * @suppress {visibility}
  */
 @customElement('petal-outlined-segmented-button-set')
-export class PetalOutlinedSegmentedButtonSet extends OutlinedSegmentedButtonSet {
-  static override styles: CSSResultOrNative[] = [sharedStyles, outlinedStyles];
-}
+export class PetalOutlinedSegmentedButtonSet extends PetalSegmentedButtonSet {}

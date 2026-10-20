@@ -1,0 +1,61 @@
+//
+// Copyright 2026 Saki
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// A row of segmented buttons after Jetpack Compose Material 3
+// (SingleChoiceSegmentedButtonRow, MultiChoiceSegmentedButtonRow and
+// SegmentedButtonDefaults.itemShape): every button as wide as the widest one
+// (IntrinsicSize.Min with equal weights), at least 40dp high, the outlines
+// overlapping by their width, and the ends of the row in the full shape.
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'sass:map';
+@use '../../tokens/versions/compose/values/md-comp-outlined-segmented-button' as compose;
+// go/keep-sorted end
+
+@mixin styles() {
+  :host([hidden]) {
+    display: none;
+  }
+
+  :host {
+    --_shape: var(
+      --md-segmented-button-shape,
+      #{map.get(compose.$values, 'shape')}
+    );
+    --_outline-width: var(
+      --md-segmented-button-outline-width,
+      #{map.get(compose.$values, 'outline-width')}
+    );
+
+    display: inline-flex;
+    vertical-align: middle;
+  }
+
+  .set {
+    display: grid;
+    grid-auto-columns: 1fr;
+    grid-auto-flow: column;
+    width: 100%;
+    min-height: #{map.get(compose.$values, 'container-height')};
+  }
+
+  ::slotted(:not(:first-child)) {
+    margin-inline-start: calc(-1 * var(--_outline-width));
+  }
+
+  ::slotted(:first-child) {
+    --_start-start: var(--_shape);
+    --_end-start: var(--_shape);
+    border-start-start-radius: var(--_shape);
+    border-end-start-radius: var(--_shape);
+  }
+
+  ::slotted(:last-child) {
+    --_start-end: var(--_shape);
+    --_end-end: var(--_shape);
+    border-start-end-radius: var(--_shape);
+    border-end-end-radius: var(--_shape);
+  }
+}

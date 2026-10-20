@@ -7,12 +7,12 @@
 
 import 'petal-elements/focus/md-focus-ring.js';
 import 'petal-elements/icon/icon.js';
-import 'petal-elements/labs/segmentedbutton/outlined-segmented-button.js';
-import 'petal-elements/labs/segmentedbuttonset/outlined-segmented-button-set.js';
+import 'petal-elements/segmentedbutton/segmented-button-set.js';
+import 'petal-elements/segmentedbutton/segmented-button.js';
 import './copy-code-button.js';
 import './hct-slider.js';
 
-import type {PetalOutlinedSegmentedButton} from 'petal-elements/labs/segmentedbutton/outlined-segmented-button.js';
+import type {PetalSegmentedButton} from 'petal-elements/segmentedbutton/segmented-button.js';
 import {css, html, LitElement} from 'lit';
 import {customElement, query, queryAll, state} from 'lit/decorators.js';
 import {live} from 'lit/directives/live.js';
@@ -137,13 +137,13 @@ export class ThemeChanger extends LitElement {
    * Renders the color mode segmented button set picker.
    */
   private renderColorModePicker() {
-    return html`<petal-outlined-segmented-button-set
+    return html`<petal-segmented-button-set
       @segmented-button-set-selection=${this.onColorModeSelection}
       aria-label="Color mode">
       ${this.renderModeButton('dark', 'dark_mode')}
       ${this.renderModeButton('auto', 'brightness_medium')}
       ${this.renderModeButton('light', 'light_mode')}
-    </petal-outlined-segmented-button-set>`;
+    </petal-segmented-button-set>`;
   }
 
   /**
@@ -154,13 +154,14 @@ export class ThemeChanger extends LitElement {
    * @param icon The icon to display in the button.
    */
   private renderModeButton(mode: ColorMode, icon: string) {
-    return html`<petal-outlined-segmented-button
+    return html`<petal-segmented-button
+      no-checkmark
       data-value=${mode}
       title=${mode}
       aria-label="${mode} color scheme"
       .selected=${this.selectedColorMode === mode}>
       <petal-icon slot="icon">${icon}</petal-icon>
-    </petal-outlined-segmented-button>`;
+    </petal-segmented-button>`;
   }
 
   private onSliderInput() {
@@ -206,7 +207,7 @@ export class ThemeChanger extends LitElement {
 
   private onColorModeSelection(
     e: CustomEvent<{
-      button: PetalOutlinedSegmentedButton;
+      button: PetalSegmentedButton;
       selected: boolean;
       index: number;
     }>,
