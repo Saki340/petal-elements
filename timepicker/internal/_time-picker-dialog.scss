@@ -1,0 +1,61 @@
+//
+// Copyright 2026 Saki
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// The time picker dialog after Jetpack Compose Material 3
+// (TimePickerDialog.kt, TimePickerCustomLayout): the dialog's container color
+// and shape, as wide as the picker plus 24dp at each side; the LabelMedium
+// title 24dp from the top and start with 20dp below it; the actions 8dp
+// apart, as wide as the picker, with 24dp below them.
+
+@mixin styles() {
+  :host {
+    display: contents;
+  }
+
+  petal-dialog {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  // These win over the dialog's own padding for its slot.
+  .layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px;
+  }
+
+  .title {
+    align-self: stretch;
+    padding-bottom: 20px;
+    color: var(--md-sys-color-on-surface, #1d1b20);
+    font-family: var(--md-sys-typescale-label-medium-font, var(--md-ref-typeface-plain, sans-serif));
+    font-size: var(--md-sys-typescale-label-medium-size, 0.75rem);
+    line-height: var(--md-sys-typescale-label-medium-line-height, 1rem);
+    letter-spacing: var(--md-sys-typescale-label-medium-tracking, 0.03125rem);
+    font-weight: var(--md-sys-typescale-label-medium-weight, 500);
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    align-self: stretch;
+  }
+
+  .spacer {
+    flex: 1;
+  }
+
+  .mode-toggle {
+    color: var(--md-sys-color-on-surface-variant, #49454f);
+  }
+
+  .mode-toggle svg {
+    width: 24px;
+    height: 24px;
+    fill: currentColor;
+  }
+}

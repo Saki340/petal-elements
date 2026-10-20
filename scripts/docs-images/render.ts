@@ -142,16 +142,18 @@ async function showDialog(page: Page, viewport = {width: 480, height: 320}) {
   return 'viewport' as const;
 }
 
-/** Opens the figure's date picker dialog in a phone-sized viewport. */
-async function openDatePickerDialog(page: Page) {
-  await page.setViewportSize({width: 412, height: 640});
-  await page.evaluate(async () => {
-    const dialog = document.querySelector<HTMLElement & {show(): Promise<void>}>(
-      '#root petal-date-picker-dialog',
-    )!;
-    await dialog.show();
-  });
-  return showDialog(page, {width: 412, height: 640});
+/** Opens the figure's date or time picker dialog in a phone-sized viewport. */
+function openPickerDialog(tag: string, height = 640) {
+  return async (page: Page) => {
+    await page.setViewportSize({width: 412, height});
+    await page.evaluate(async (tag) => {
+      const dialog = document.querySelector<HTMLElement & {show(): Promise<void>}>(
+        `#root ${tag}`,
+      )!;
+      await dialog.show();
+    }, tag);
+    return showDialog(page, {width: 412, height});
+  };
 }
 
 /**
@@ -161,7 +163,8 @@ async function openDatePickerDialog(page: Page) {
  */
 const SETUP: Record<string, (page: Page) => Promise<void | 'viewport'>> = {
   'images/dialog/hero.webp': (page) => showDialog(page),
-  'images/datepicker/usage-dialog.webp': openDatePickerDialog,
+  'images/datepicker/usage-dialog.webp': openPickerDialog('petal-date-picker-dialog'),
+  'images/timepicker/usage-dialog.webp': openPickerDialog('petal-time-picker-dialog', 720),
   'images/ripple/hero.webp': press('.ripple-container'),
   'images/ripple/usage.webp': press('.ripple-container'),
   'images/ripple/theming.webp': press('.ripple-container'),

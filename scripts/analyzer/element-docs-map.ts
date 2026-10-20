@@ -43,6 +43,7 @@ export const docsToElementMapping: {[key: string]: readonly string[]} = {
   'switch.md': COMPONENT_CUSTOM_ELEMENTS.switch,
   'tabs.md': COMPONENT_CUSTOM_ELEMENTS.tabs,
   'text-field.md': COMPONENT_CUSTOM_ELEMENTS.textField,
+  'time-picker.md': COMPONENT_CUSTOM_ELEMENTS.timePicker,
   'tooltip.md': COMPONENT_CUSTOM_ELEMENTS.tooltip,
   'segmented-button.md': COMPONENT_CUSTOM_ELEMENTS.segmentedButton,
   'select.md': COMPONENT_CUSTOM_ELEMENTS.select,

@@ -29,6 +29,7 @@ const COMPONENTS = [
   'segmented-button',
   'date-picker',
   'standard-bottom-sheet',
+  'time-picker',
   'badge',
   'slider',
   'tabs',

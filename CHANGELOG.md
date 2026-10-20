@@ -11,6 +11,12 @@
 
 #### Features
 
+* **timepicker:** `petal-time-picker` and `petal-time-picker-dialog`, after
+  Jetpack Compose `TimePicker`, `TimeInput` and `TimePickerDialog`: the hour
+  and minute, an AM and PM toggle, and a clock dial whose handle turns on the
+  default spatial spring, or two text fields with Compose's errors. The value
+  is `HH:MM`; 12 or 24 hours follow the locale (`hour-cycle` to choose), with
+  an inner circle for 24 hours, and a vertical or horizontal layout.
 * **sheet:** `petal-standard-bottom-sheet`, a standard (non-modal) bottom
   sheet after Jetpack Compose `BottomSheetScaffold`: docked at the bottom with
   the page usable, peeking 56px, dragged or set between partially expanded,

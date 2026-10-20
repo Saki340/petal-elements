@@ -1,0 +1,431 @@
+//
+// Copyright 2026 Saki
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// The time picker after Jetpack Compose Material 3 (TimePicker.kt,
+// TimePickerTokens, TimeInputTokens).
+//
+// Picker: the hour and minute in 96 by 80dp DisplayLarge boxes with a 24dp
+// colon, the AM and PM toggle 4dp after them (52 by 80dp, two toggle buttons
+// 4dp apart; 216 by 38dp below them, 16dp away, when horizontal), and 36dp
+// further the 256dp dial (24dp below it when vertical; 238 or 200dp in a
+// short horizontal layout, as ClockFaceSizeModifier). On the dial, numbers on
+// circles 101 and 69/256 across, a 48dp handle on a 2dp track from an 8dp
+// center; the numbers under the handle are drawn in on-primary. The hours and
+// minutes cross-fade on the default effects spring; the handle turns on the
+// default spatial spring.
+//
+// Input: 96 by 72dp DisplayMedium fields, outlined 1dp (2dp focused) while
+// selected, with BodySmall supporting text 7dp below; the toggle 52 by 72dp.
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'sass:map';
+@use '../../tokens/versions/compose/values/md-comp-time-input' as input;
+@use '../../tokens/versions/compose/values/md-comp-time-picker' as picker;
+@use '../../tokens/versions/v34/values/md-sys-motion-springs' as springs;
+// go/keep-sorted end
+
+@function _spring($name) {
+  @return map.get(springs.$values, 'spring-#{$name}-duration')
+    map.get(springs.$values, 'spring-#{$name}');
+}
+
+@function _p($name) {
+  @return var(--md-time-picker-#{$name}, #{map.get(picker.$values, $name)});
+}
+
+@function _i($name) {
+  @return var(--md-time-input-#{$name}, #{map.get(input.$values, $name)});
+}
+
+@mixin _type($tokens, $prefix) {
+  font-family: map.get($tokens, '#{$prefix}-font');
+  font-size: map.get($tokens, '#{$prefix}-size');
+  line-height: map.get($tokens, '#{$prefix}-line-height');
+  letter-spacing: map.get($tokens, '#{$prefix}-tracking');
+  font-weight: map.get($tokens, '#{$prefix}-weight');
+}
+
+// HorizontalTimePicker.
+@mixin _horizontal() {
+  .picker-mode {
+    flex-direction: row;
+  }
+
+  .picker-mode .display {
+    flex-direction: column;
+  }
+
+  .picker-mode .period {
+    flex-direction: row;
+    width: _p('period-selector-horizontal-container-width');
+    height: _p('period-selector-horizontal-container-height');
+    margin: 16px 0 0;
+  }
+
+  .dial {
+    margin: 0 0 0 36px;
+  }
+}
+
+@mixin styles() {
+  :host([hidden]) {
+    display: none;
+  }
+
+  :host {
+    --_dial-size: #{_p('clock-dial-container-size')};
+    --_selector: #{_p('clock-dial-selector-handle-container-color')};
+    display: inline-block;
+    color: var(--md-sys-color-on-surface, #1d1b20);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  :host([layout='horizontal']) {
+    @include _horizontal;
+  }
+
+  @media (orientation: landscape) and (max-height: 599px) {
+    :host([layout='auto']) {
+      @include _horizontal;
+    }
+  }
+
+  // ClockFaceSizeModifier: 256dp from 384dp of height, 238dp from 330dp,
+  // else 200dp; here, of the viewport.
+  @media (orientation: landscape) and (max-height: 383px) {
+    :host([layout='auto']),
+    :host([layout='horizontal']) {
+      --_dial-size: 238px;
+    }
+  }
+
+  @media (orientation: landscape) and (max-height: 329px) {
+    :host([layout='auto']),
+    :host([layout='horizontal']) {
+      --_dial-size: 200px;
+    }
+  }
+
+  .time-picker {
+    display: flex;
+    align-items: center;
+  }
+
+  .picker-mode {
+    flex-direction: column;
+  }
+
+  .display,
+  .numbers,
+  .input {
+    display: flex;
+  }
+
+  button {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+    background: none;
+    color: inherit;
+    font: inherit;
+    letter-spacing: inherit;
+    cursor: pointer;
+  }
+
+  petal-ripple {
+    border-radius: inherit;
+  }
+
+  // Time selectors (TimeSelector).
+
+  .time-selector {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: _p('time-selector-container-width');
+    height: _p('time-selector-container-height');
+    border-radius: _p('time-selector-container-shape');
+    background-color: _p('time-selector-unselected-container-color');
+    color: _p('time-selector-unselected-label-text-color');
+    @include _type(picker.$values, 'time-selector-label-text');
+    --md-ripple-hover-color: currentColor;
+    --md-ripple-pressed-color: currentColor;
+  }
+
+  .time-selector.selected {
+    background-color: _p('time-selector-selected-container-color');
+    color: _p('time-selector-selected-label-text-color');
+  }
+
+  .separator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: _p('period-selector-vertical-container-height');
+    color: _p('time-selector-separator-color');
+    @include _type(picker.$values, 'time-selector-separator');
+  }
+
+  .separator {
+    // DisplaySeparator's offset(y = -4.dp).
+    translate: 0 -4px;
+  }
+
+  // AM and PM (PeriodToggleImpl with ToggleButtons, 4dp apart).
+
+  .period {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: _p('period-selector-vertical-container-width');
+    height: _p('period-selector-vertical-container-height');
+    margin-inline-start: 4px;
+  }
+
+  .period-item {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    min-height: 0;
+    border-radius: 9999px;
+    background-color: var(
+      --md-time-picker-period-selector-unselected-container-color,
+      var(--md-sys-color-surface-container-lowest, #ffffff)
+    );
+    color: _p('period-selector-unselected-label-text-color');
+    @include _type(picker.$values, 'period-selector-label-text');
+    transition: border-radius _spring('fast-spatial');
+    --md-ripple-hover-color: currentColor;
+    --md-ripple-pressed-color: currentColor;
+  }
+
+  // ToggleButtonShapes: round, 12dp while checked or pressed.
+  .period-item:active,
+  .period-item.checked {
+    border-radius: 12px;
+  }
+
+  .period-item.checked {
+    background-color: var(
+      --md-time-picker-period-selector-selected-container-color,
+      var(--md-sys-color-primary-container, #eaddff)
+    );
+    color: var(
+      --md-time-picker-period-selector-selected-label-text-color,
+      var(--md-sys-color-on-primary-container, #4f378b)
+    );
+    font-weight: 700;
+  }
+
+  // Clock dial (ClockFace, drawSelector, ClockText).
+
+  .dial {
+    position: relative;
+    flex: none;
+    width: var(--_dial-size);
+    height: var(--_dial-size);
+    margin: 36px 0 24px;
+    border-radius: _p('clock-dial-shape');
+    background-color: _p('clock-dial-color');
+    touch-action: none;
+    user-select: none;
+    cursor: pointer;
+    @include _type(picker.$values, 'clock-dial-label-text');
+  }
+
+  .face,
+  .selector,
+  .selected-labels {
+    position: absolute;
+    inset: 0;
+  }
+
+  .face {
+    opacity: 0;
+    transition: opacity _spring('default-effects');
+  }
+
+  .face.active {
+    opacity: 1;
+  }
+
+  .dial-number {
+    position: absolute;
+    left: calc(50% + var(--_x) * var(--_dial-size) - 24px);
+    top: calc(50% + var(--_y) * var(--_dial-size) - 24px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    color: _p('clock-dial-unselected-label-text-color');
+    // The dial takes pointers; the numbers take the keyboard.
+    pointer-events: none;
+  }
+
+  .selector {
+    pointer-events: none;
+    --_handle: calc(var(--_dial-size) * 48 / 256);
+  }
+
+  .handle {
+    position: absolute;
+    left: calc(50% + var(--_sx, 0) * var(--_dial-size) - var(--_handle) / 2);
+    top: calc(50% + var(--_sy, -0.39453) * var(--_dial-size) - var(--_handle) / 2);
+    width: var(--_handle);
+    height: var(--_handle);
+    border-radius: _p('clock-dial-selector-handle-container-shape');
+    background-color: var(--_selector);
+  }
+
+  .track {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: calc(var(--_ratio, 0.39453) * var(--_dial-size) - var(--_handle) / 2);
+    height: _p('clock-dial-selector-track-container-width');
+    translate: 0 -50%;
+    rotate: var(--_angle, -90deg);
+    transform-origin: 0 50%;
+    background-color: var(--_selector);
+  }
+
+  .center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: _p('clock-dial-selector-center-container-size');
+    height: _p('clock-dial-selector-center-container-size');
+    translate: -50% -50%;
+    border-radius: _p('clock-dial-selector-center-container-shape');
+    background-color: var(--_selector);
+  }
+
+  .selected-labels {
+    pointer-events: none;
+    clip-path: circle(
+      calc(var(--_handle) / 2) at calc(50% + var(--_sx, 0) * var(--_dial-size))
+        calc(50% + var(--_sy, -0.39453) * var(--_dial-size))
+    );
+    --_handle: calc(var(--_dial-size) * 48 / 256);
+  }
+
+  .selected-labels .face {
+    opacity: 1;
+    transition: none;
+  }
+
+  .selected-labels .dial-number {
+    color: _p('clock-dial-selected-label-text-color');
+  }
+
+  // Text input (TimeInputImpl, TimePickerTextField, SupportingText).
+
+  .input {
+    align-items: flex-start;
+  }
+
+  .input .separator {
+    height: _i('period-selector-container-height');
+    @include _type(input.$values, 'time-field-label-text');
+  }
+
+  .input .period {
+    width: _i('period-selector-container-width');
+    height: _i('period-selector-container-height');
+  }
+
+  .field-column {
+    display: flex;
+    flex-direction: column;
+    width: _i('time-field-container-width');
+  }
+
+  .time-field {
+    box-sizing: border-box;
+    width: _i('time-field-container-width');
+    height: _i('time-field-container-height');
+    margin: 0;
+    padding: 0;
+    border: none;
+    border-radius: _i('time-field-container-shape');
+    outline: none;
+    background-color: _p('time-selector-unselected-container-color');
+    color: _p('time-selector-unselected-label-text-color');
+    caret-color: var(--md-sys-color-primary, #6750a4);
+    text-align: center;
+    @include _type(input.$values, 'time-field-label-text');
+  }
+
+  .time-field.selected {
+    background-color: _p('time-selector-selected-container-color');
+    color: _p('time-selector-selected-label-text-color');
+    box-shadow: inset 0 0 0 1px var(--md-sys-color-outline, #79747e);
+  }
+
+  .time-field.selected:focus {
+    box-shadow: inset 0 0 0 2px var(--md-sys-color-outline, #79747e);
+  }
+
+  .time-field.invalid {
+    background-color: var(--md-sys-color-error-container, #f9dedc);
+    color: var(--md-sys-color-error, #b3261e);
+    box-shadow: inset 0 0 0 1px var(--md-sys-color-error, #b3261e);
+  }
+
+  .time-field.invalid:focus {
+    box-shadow: inset 0 0 0 2px var(--md-sys-color-error, #b3261e);
+  }
+
+  .support {
+    // minLines = 2.
+    min-height: calc(2 * #{map.get(input.$values, 'time-field-supporting-text-line-height')});
+    padding-top: 7px;
+    color: _i('time-field-supporting-text-color');
+    @include _type(input.$values, 'time-field-supporting-text');
+  }
+
+  .support.error {
+    color: var(--md-sys-color-error, #b3261e);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .face,
+    .period-item {
+      transition: none;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .dial,
+    .time-selector,
+    .time-field {
+      outline: 1px solid CanvasText;
+    }
+
+    .handle,
+    .track,
+    .center {
+      background-color: Highlight;
+    }
+
+    .selected-labels .dial-number {
+      color: HighlightText;
+    }
+
+    .time-selector.selected,
+    .period-item.checked {
+      forced-color-adjust: none;
+      background-color: Highlight;
+      color: HighlightText;
+    }
+  }
+}

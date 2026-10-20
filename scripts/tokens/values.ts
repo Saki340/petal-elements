@@ -133,6 +133,8 @@ export const COMPOSE_VALUE_MODULES = [
   'State',
   'SuggestionChip',
   'Switch',
+  'TimeInput',
+  'TimePicker',
   'TextButton',
   'TonalButton',
   'XLargeIconButton',

@@ -1,0 +1,18 @@
+<!--
+  @license
+  Copyright 2026 Saki
+  SPDX-License-Identifier: Apache-2.0
+-->
+<div class="figure-wrapper">
+  <figure
+      style="justify-content: center"
+      title="Time picker dialog"
+      aria-label="A button that opens a time picker dialog with a mode switch, Cancel and OK.">
+    <petal-filled-tonal-button id="pick-time">Pick a time</petal-filled-tonal-button>
+    <petal-time-picker-dialog lang="en-US" id="time-dialog" value="07:45" layout="vertical"></petal-time-picker-dialog>
+    <script type="module">
+      const dialog = document.getElementById('time-dialog');
+      document.getElementById('pick-time').addEventListener('click', () => dialog.show());
+    </script>
+  </figure>
+</div>

@@ -78,6 +78,7 @@ export const COMPONENT_CUSTOM_ELEMENTS = {
   splitButton: ['splitbutton/split-button.ts'],
   switch: ['switch/switch.ts'],
   tabs: ['tabs/tabs.ts', 'tabs/primary-tab.ts', 'tabs/secondary-tab.ts'],
+  timePicker: ['timepicker/time-picker.ts', 'timepicker/time-picker-dialog.ts'],
   textField: [
     'textfield/filled-text-field.ts',
     'textfield/outlined-text-field.ts',

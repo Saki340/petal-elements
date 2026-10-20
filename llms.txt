@@ -35,6 +35,7 @@ before using it; do not guess attributes.
 - [Card](docs/components/card.md): `card/{filled,elevated,outlined}-card.js`
 - [Badge](docs/components/badge.md): `badge/badge.js`, `petal-badge` (in the `badge` slot of icon buttons and navigation items)
 - [Dialog](docs/components/dialog.md): `dialog/dialog.js`, `petal-dialog`
+- [Time picker](docs/components/time-picker.md): `timepicker/{time-picker,time-picker-dialog}.js`, `petal-time-picker` (inline), `petal-time-picker-dialog` (value: `HH:MM`)
 - [Date picker](docs/components/date-picker.md): `datepicker/{date-picker,date-picker-dialog}.js`, `petal-date-picker` (inline), `petal-date-picker-dialog` (value: ISO date)
 - [Snackbar](docs/components/snackbar.md): `snackbar/snackbar.js`, `petal-snackbar`
 - [Search bar](docs/components/search.md): `search/search-bar.js`, `petal-search-bar`

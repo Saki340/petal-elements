@@ -479,6 +479,15 @@ const galleries: Record<string, Gallery> = {
     })),
   },
 
+  'time-picker': {
+    states: ['default'],
+    rows: [
+      {name: '12 hours', render: () => html`<petal-time-picker lang="en-US" layout="vertical" value="14:30"></petal-time-picker>`},
+      {name: '24 hours', render: () => html`<petal-time-picker lang="en-US" layout="vertical" hour-cycle="24" value="14:30"></petal-time-picker>`},
+      {name: 'input', render: () => html`<petal-time-picker lang="en-US" display-mode="input" value="09:05"></petal-time-picker>`},
+    ],
+  },
+
   // Months away from today, so the today outline never shows.
   'date-picker': {
     states: ['default'],
