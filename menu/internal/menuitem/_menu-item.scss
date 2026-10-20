@@ -17,6 +17,7 @@
 @use '../../../tokens';
 @use '../../../tokens/versions/compose/values/md-comp-segmented-menu' as segmented-menu;
 @use '../../../tokens/versions/compose/values/md-comp-standard-menu' as standard-menu;
+@use '../../../tokens/versions/v34/values/md-sys-motion-springs' as springs;
 // go/keep-sorted end
 
 @mixin theme($tokens) {
@@ -31,6 +32,11 @@
       --md-menu-item-#{$token}: #{$value};
     }
   }
+}
+
+@function _spring($name) {
+  @return map.get(springs.$values, 'spring-#{$name}-duration')
+    map.get(springs.$values, 'spring-#{$name}');
 }
 
 @mixin styles() {
@@ -161,6 +167,57 @@
       --md-menu-item-trailing-icon-size,
       #{map.get(segmented-menu.$values, 'item-trailing-icon-size')}
     );
+  }
+
+  // The checked icon (Compose's checkedLeadingIcon): instead of the start
+  // icon while checked; without a start icon it grows in from the start on the
+  // fast spatial spring and fades in on the fast effects spring, and goes
+  // away the same way (DropdownMenuItemContent). The space before the label
+  // stays, as in Compose's MenuArrangement.
+  .checked-icon {
+    display: none;
+  }
+
+  [name='checked-icon']::slotted(*) {
+    --md-icon-size: var(
+      --md-menu-item-leading-icon-size,
+      #{map.get(segmented-menu.$values, 'item-leading-icon-size')}
+    );
+    fill: currentColor;
+  }
+
+  .has-checked-icon .checked-icon {
+    display: flex;
+    align-items: center;
+    flex: none;
+    overflow: hidden;
+  }
+
+  .has-checked-icon.has-start-icon:not(.checked) .checked-icon,
+  .has-checked-icon.has-start-icon.checked slot[name='start'] {
+    display: none;
+  }
+
+  .has-checked-icon:not(.has-start-icon) .checked-icon {
+    width: 0;
+    opacity: 0;
+    transition:
+      width _spring('fast-spatial'),
+      opacity _spring('fast-effects');
+  }
+
+  .has-checked-icon.checked:not(.has-start-icon) .checked-icon {
+    width: var(
+      --md-menu-item-leading-icon-size,
+      #{map.get(segmented-menu.$values, 'item-leading-icon-size')}
+    );
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .checked-icon {
+      transition: none !important;
+    }
   }
 
   [slot='start'] {

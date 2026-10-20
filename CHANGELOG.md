@@ -168,6 +168,9 @@
 
 #### Features
 
+* **menu:** a `checked-icon` slot on menu items (Compose's
+  `checkedLeadingIcon`): shown while the item is checked, instead of the start
+  icon or growing in from the start on a spring.
 * **progress:** `animate-value` on linear and circular progress: a change of
   `value` moves the indicator on the slow spatial spring (it overshoots a
   little), following new values on the way; reduced motion jumps.

@@ -15,6 +15,7 @@ import {
   query,
   queryAssignedElements,
   queryAssignedNodes,
+  state,
 } from 'lit/decorators.js';
 import {ClassInfo, classMap} from 'lit/directives/class-map.js';
 import {literal, html as staticHtml, StaticValue} from 'lit/static-html.js';
@@ -96,6 +97,10 @@ export class MenuItemEl extends menuItemBaseClass implements MenuItem {
    */
   @property({type: Boolean, reflect: true}) checked = false;
 
+  // Whether the start and checked-icon slots have content (from slotchange).
+  @state() private hasStartIcon = false;
+  @state() private hasCheckedIcon = false;
+
   @query('.list-item') protected readonly listItemRoot!: HTMLElement | null;
 
   @queryAssignedElements({slot: 'headline'})
@@ -137,7 +142,10 @@ export class MenuItemEl extends menuItemBaseClass implements MenuItem {
         <div slot="container">
           ${this.renderRipple()} ${this.renderFocusRing()}
         </div>
-        <slot name="start" slot="start"></slot>
+        <slot name="start" slot="start" @slotchange=${this.onStartSlotChange}></slot>
+        <span class="checked-icon" slot="start"
+          ><slot name="checked-icon" @slotchange=${this.onCheckedIconSlotChange}></slot
+        ></span>
         <slot name="end" slot="end"></slot>
         ${this.renderBody()}
       </petal-item>
@@ -282,7 +290,17 @@ export class MenuItemEl extends menuItemBaseClass implements MenuItem {
       'disabled': this.disabled,
       'selected': this.selected,
       'checked': this.checked,
+      'has-start-icon': this.hasStartIcon,
+      'has-checked-icon': this.hasCheckedIcon,
     };
+  }
+
+  private onStartSlotChange(event: Event) {
+    this.hasStartIcon = (event.target as HTMLSlotElement).assignedElements().length > 0;
+  }
+
+  private onCheckedIconSlotChange(event: Event) {
+    this.hasCheckedIcon = (event.target as HTMLSlotElement).assignedElements().length > 0;
   }
 
   /**

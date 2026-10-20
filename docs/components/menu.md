@@ -235,6 +235,19 @@ with Enter or Space, checks it and unchecks the other radio items of its group
 (or of the menu, outside groups); choosing a checkbox item toggles it. Both fire
 `change`. Checked items are tertiary container colored with rounder corners.
 
+To mark the checked item with an icon, such as a checkmark, put it in the
+`checked-icon` slot of each item (Compose's `checkedLeadingIcon`). An item
+without a `start` icon shows it only while checked: it grows in from the start
+and fades in, and goes away the same way; the space before the label stays. An
+item with a `start` icon shows the checked icon instead of it while checked.
+
+```html
+<petal-menu-item type="menuitemradio" checked>
+  <petal-icon slot="checked-icon">check</petal-icon>
+  <div slot="headline">Follow the device</div>
+</petal-menu-item>
+```
+
 Each `<petal-menu-group>` is its own set of radio items: choosing a radio item
 does not uncheck radio items in other groups. If one choice spans groups, such
 as "Follow the device" in one group and the languages in another, set
