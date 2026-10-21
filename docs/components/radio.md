@@ -89,6 +89,20 @@ Associate a label with a radio using the `<label>` element.
 > Note: do not wrap radios inside of a `<label>`, which stops screen readers
 > from correctly announcing the number of radios in a group.
 
+### Forms and events
+
+Radios with the same `name` form a group, in the same form or document. The
+checked radio's `value` is submitted with the form; `required` on a radio of
+the group makes the form invalid until one is checked. Arrow keys move the
+selection within the group. A radio fires `input` and `change` when the user
+checks it; read `checked` and `value`.
+
+```js
+form.addEventListener('change', (event) => {
+  if (event.target.name === 'animals') console.log(event.target.value);
+});
+```
+
 ## Accessibility
 
 Add an

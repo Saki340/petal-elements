@@ -100,7 +100,41 @@ has keyboard focus. For range sliders, each handle has its own label.
 <petal-slider labeled></petal-slider>
 ```
 
-<!-- TODO(b/318567101): ## Accessibility -->
+`value-label` replaces the number shown in the label, for example with a
+unit; set it as the value changes. A range slider takes `value-label-start`
+and `value-label-end`.
+
+```js
+const slider = document.querySelector('petal-slider');
+slider.addEventListener('input', () => {
+  slider.valueLabel = `${slider.value}%`;
+});
+```
+
+### Value, forms and events
+
+`value` is a number between `min` and `max`, on multiples of `step`; a range
+slider has `value-start` and `value-end` instead. The slider fires `input`
+while it is dragged and `change` when it is let go, like a native range input.
+
+It is form-associated: with a `name` it submits `value`. A range slider
+submits two values: under `name-start` and `name-end`, or both under `name`.
+
+```html
+<form>
+  <petal-slider name="volume" value="40" labeled></petal-slider>
+  <petal-slider range name-start="min-price" name-end="max-price"
+      min="0" max="500" step="10" value-start="100" value-end="300"></petal-slider>
+</form>
+```
+
+## Accessibility
+
+Name the slider with `aria-label` (or a `<label>`). A range slider names its
+handles with `aria-label-start` and `aria-label-end`, and can read out other
+text than the number with `aria-valuetext-start` and `aria-valuetext-end`
+(`aria-valuetext` for a single handle). The arrow keys move the handle by
+`step`; Page Up and Page Down by a larger amount; Home and End to the ends.
 
 ## Compose behavior
 

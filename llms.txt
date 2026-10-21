@@ -1,74 +1,149 @@
 # petal-elements
 
-> Community-maintained Material 3 Expressive web components (Lit), forked from
-> material-web. Tags are `petal-*`, classes `Petal*`, CSS custom properties
-> `--md-*`. Values follow Jetpack Compose. Not an official Google project.
+> Community-maintained Material 3 Expressive web components (Lit custom
+> elements), continued from material-web. Tags are `petal-*`, classes
+> `Petal*`, CSS custom properties `--md-*`. Sizes, colors and motion follow
+> Jetpack Compose Material 3. Works in plain HTML and any framework. Not an
+> official Google project.
 
-Install: `npm install petal-elements`. Import one component per module,
-for example `import 'petal-elements/button/filled-button.js'`, or everything
-with `import 'petal-elements/all.js'`. Load `petal-elements/tokens/css/sys.css`
-once in the page head; set `--md-ref-typeface-brand` and
-`--md-ref-typeface-plain` for fonts. Icons need the Material Symbols font.
+Docs ship in the package under `docs/` (`node_modules/petal-elements/docs/`).
+Each component page has usage, accessibility, Compose behavior, theming tokens
+and, at the end, an API section with tables of properties (and their
+attributes), methods, events and slots. Read the page of every component you
+use before writing markup; do not guess attribute or slot names.
 
-Docs are shipped in the package under `docs/`. Read the doc of a component
-before using it; do not guess attributes.
+## Setup
+
+```html
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0..1,0&display=block">
+<link rel="stylesheet" href="node_modules/petal-elements/tokens/css/sys.css">
+<style>
+  :root { color-scheme: light dark; --md-ref-typeface-brand: Roboto; --md-ref-typeface-plain: Roboto; }
+  body { margin: 0; background: var(--md-sys-color-surface); color: var(--md-sys-color-on-surface); font: var(--md-sys-typescale-body-large); }
+  :not(:defined) { visibility: hidden; }
+</style>
+<script type="module">
+  import 'petal-elements/button/filled-button.js'; // one import per component used
+</script>
+```
+
+- `npm install petal-elements`; bare imports work with any bundler. Without a
+  bundler, map `petal-elements/` and `lit` with an import map (see
+  docs/quick-start.md), or import `petal-elements/all.js` for everything.
+- `sys.css` defines all `--md-sys-*` / `--md-ref-*` tokens; colors use
+  `light-dark()`, so set `color-scheme` on `:root`.
+- `<petal-icon>name</petal-icon>` shows a Material Symbols icon by name; an
+  `<svg>` works instead.
+- Own text: `font: var(--md-sys-typescale-<display|headline|title|body|label>-<large|medium|small>)`.
+
+## Rules
+
+- Use only attributes, slots and events listed in the component's doc.
+  Content goes in named slots (`slot="headline"`, `slot="icon"`, ...).
+- Name icon-only controls with `aria-label`; give fields a `label`.
+- `petal-*-button` and `petal-icon-button` submit their `<form>` by default;
+  add `type="button"` for script-only buttons.
+- Form controls (text fields, selects, checkbox, radio, switch, slider, date
+  and time pickers) are form-associated: use `name`, `value`, `required` and
+  `new FormData(form)` as with native inputs.
+- Style through `--md-*` custom properties (each doc's *Theming* section) and
+  `--md-sys-*` tokens; do not pierce shadow DOM; do not add transitions or
+  animations to components (they move on springs by themselves).
+- Layout: navigation bar under 600px wide, navigation rail from 600px
+  (expanded from 840px), FAB fixed 16px from the bottom end.
+- Do not set `role`/`aria-*` to change a component's role: they are moved to
+  the inner element at runtime (`data-role`, `data-aria-*` on the host).
 
 ## Guides
 
-- [Using in an existing site](docs/migrating.md): steps, mapping from hand-written parts, pitfalls
-- [Quick start](docs/quick-start.md): install, import, tokens, build
-- [Expressive features](docs/expressive.md): sizes, shape morphing, springs, button groups
-- [Tokens](docs/tokens.md): system tokens and their sources
-- [Colors](docs/theming/color.md), [shape](docs/theming/shape.md), [typography](docs/theming/typography.md)
-- [Theme transition](docs/theming/README.md#theme-transition): `theme/theme-transition.js`, `transitionTheme(apply, event)` for a circular light/dark switch
-- [Changelog](CHANGELOG.md)
+- [Building pages](docs/building-pages.md): page setup, colors and surfaces, responsive app shell (bar, rail, drawer), FAB placement, settings / form / dialog / search / list-detail screens, an events table, frameworks (React, Vue, Angular), rules
+- [Motion](docs/motion.md): motion schemes, the six springs as CSS (`--md-sys-motion-spring-<fast|default|slow>-<spatial|effects>` + `-duration`), what each component animates, mouse hover previews, `transitionTheme()`, View Transitions, reduced motion
+- [Using in an existing site](docs/migrating.md): from material-web (`md-` to `petal-`), from hand-written components (mapping table), things that surprise people
+- [Quick start](docs/quick-start.md): CDN, install, import, build
+- [Material 3 Expressive features](docs/expressive.md): button sizes and shapes, toggle buttons, button groups, filled FABs
+- [Theming](docs/theming/README.md), [color](docs/theming/color.md) (incl. generating a scheme from one color), [typography](docs/theming/typography.md), [shape](docs/theming/shape.md), [tokens](docs/tokens.md)
+- [Changelog](CHANGELOG.md), [support and browsers](docs/support.md)
 
-## Components (import path, tags)
+## Components
 
-- [Button](docs/components/button.md): `button/{filled,filled-tonal,outlined,elevated,text}-button.js`
-- [Button group](docs/components/button-group.md): `buttongroup/button-group.js`, `petal-button-group`
-- [Icon button](docs/components/icon-button.md): `iconbutton/{icon,filled-icon,filled-tonal-icon,outlined-icon}-button.js`
-- [FAB](docs/components/fab.md): `fab/fab.js`, `fab/branded-fab.js`
-- [Floating toolbar](docs/components/floating-toolbar.md): `floatingtoolbar/floating-toolbar.js`, `petal-floating-toolbar`
-- [FAB menu](docs/components/fab-menu.md): `fabmenu/{fab-menu,fab-menu-item,toggle-fab}.js`, `petal-fab-menu`, `petal-fab-menu-item`, `petal-toggle-fab`
-- [Icon](docs/components/icon.md): `icon/icon.js`, `petal-icon`
-- [Card](docs/components/card.md): `card/{filled,elevated,outlined}-card.js`
-- [Badge](docs/components/badge.md): `badge/badge.js`, `petal-badge` (in the `badge` slot of icon buttons and navigation items)
-- [Dialog](docs/components/dialog.md): `dialog/dialog.js`, `petal-dialog`
-- [Time picker](docs/components/time-picker.md): `timepicker/{time-picker,time-picker-dialog}.js`, `petal-time-picker` (inline), `petal-time-picker-dialog` (value: `HH:MM`)
-- [Date picker](docs/components/date-picker.md): `datepicker/{date-picker,date-picker-dialog}.js`, `petal-date-picker` (inline), `petal-date-picker-dialog` (value: ISO date)
-- [Snackbar](docs/components/snackbar.md): `snackbar/snackbar.js`, `petal-snackbar`
-- [Search bar](docs/components/search.md): `search/search-bar.js`, `petal-search-bar`
-- [Bottom sheet](docs/components/bottom-sheet.md): `sheet/bottom-sheet.js`, `petal-bottom-sheet` (modal); `sheet/standard-bottom-sheet.js`, `petal-standard-bottom-sheet` (docked, page stays usable)
-- [Split button](docs/components/split-button.md): `splitbutton/split-button.js`, `petal-split-button`
-- [Carousel](docs/components/carousel.md): `carousel/carousel.js`, `petal-carousel` (`variant` multi-browse, uncontained or hero; `item-width`, `item-spacing`)
-- [Tooltip](docs/components/tooltip.md): `tooltip/tooltip.js`, `petal-tooltip`; `tooltip/rich-tooltip.js`, `petal-rich-tooltip` (`title` and `action` slots, `persistent`)
-- [Menu](docs/components/menu.md): `menu/{menu,menu-item,sub-menu,menu-group}.js`
-- [Navigation bar](docs/components/navigation-bar.md): `navigationbar/{navigation-bar,navigation-bar-item}.js`, `petal-navigation-bar`
-- [Navigation drawer](docs/components/navigation-drawer.md): `navigationdrawer/{navigation-drawer,navigation-drawer-item}.js`, `petal-navigation-drawer` (`type`: modal, dismissible, standard)
-- [Navigation rail](docs/components/navigation-rail.md): `navigationrail/{navigation-rail,navigation-rail-item}.js`, `petal-navigation-rail`
-- [Top app bar](docs/components/top-app-bar.md): `appbar/top-app-bar.js`, `petal-top-app-bar`
-- [Bottom app bar](docs/components/bottom-app-bar.md): `appbar/bottom-app-bar.js`, `petal-bottom-app-bar` (`fab` slot, `flexible`, `hide-on-scroll`)
-- [Pull to refresh](docs/components/pull-to-refresh.md): `pulltorefresh/pull-to-refresh.js`
-- [Progress](docs/components/progress.md): `progress/{linear,circular}-progress.js`
-- [Loading indicator](docs/components/loading-indicator.md): `loadingindicator/loading-indicator.js`
-- [List](docs/components/list.md): `list/list.js`, `list/list-item.js`
-- [Text field](docs/components/text-field.md): `textfield/{filled,outlined}-text-field.js`
-- [Select](docs/components/select.md): `select/{filled,outlined}-select.js`, `select/select-option.js`
-- [Checkbox](docs/components/checkbox.md), [radio](docs/components/radio.md), [switch](docs/components/switch.md), [slider](docs/components/slider.md)
-- [Segmented button](docs/components/segmented-button.md): `segmentedbutton/{segmented-button-set,segmented-button}.js`, `petal-segmented-button-set`, `petal-segmented-button`
-- [Tabs](docs/components/tabs.md): `tabs/{tabs,primary-tab,secondary-tab}.js`
-- [Chips](docs/components/chip.md): `chips/{assist,filter,input,suggestion}-chip.js`, `chips/chip-set.js`
-- [Divider](docs/components/divider.md), [elevation](docs/components/elevation.md), [focus ring](docs/components/focus-ring.md), [ripple](docs/components/ripple.md)
+Format: doc — import path(s) — tags — key attributes; slots; events.
+
+### Actions
+
+- [Button](docs/components/button.md) — `button/{filled,filled-tonal,outlined,elevated,text}-button.js` — `petal-filled-button` etc. — `size` (xsmall…xlarge), `shape` (round|square), `toggle`, `selected`, `trailing-icon`, `href`, `type` (submit|button|reset), `disabled`, `soft-disabled`; slots: default label, `icon`; events: `click`, `change` (toggle)
+- [Icon button](docs/components/icon-button.md) — `iconbutton/{icon,filled-icon,filled-tonal-icon,outlined-icon}-button.js` — `petal-icon-button` etc. — `size`, `width` (narrow|default|wide), `shape`, `toggle`, `selected`, `href`, `icon-motion`, `flip-icon-in-rtl`, `aria-label-selected`; slots: default icon, `selected`, `badge`; events: `click`, `change`
+- [Button group](docs/components/button-group.md) — `buttongroup/button-group.js` — `petal-button-group` — `size`, `connected`, `single-select`; slot: buttons (toggle buttons for selection)
+- [Split button](docs/components/split-button.md) — `splitbutton/split-button.js` — `petal-split-button` — `variant` (filled|tonal|elevated|outlined), `size`, `checked`, `trailing-label`; slots: default label, `icon`, `trailing-icon`; events: `click` (main action), `change` (menu toggle; anchor a `petal-menu` to it)
+- [Segmented button](docs/components/segmented-button.md) — `segmentedbutton/{segmented-button-set,segmented-button}.js` — `petal-segmented-button-set` (`multiselect`), `petal-segmented-button` (`label`, `selected`, `icon` slot); event: `segmented-button-set-selection` (`detail.index`, `detail.selected`)
+- [FAB](docs/components/fab.md) — `fab/fab.js`, `fab/branded-fab.js` — `petal-fab` — `variant` (primary|secondary|tertiary|surface|filled-primary|filled-secondary|filled-tertiary), `size` (small|baseline|medium|large), `label` (extended), `expanded`, `lowered`, `follow-pointer`; slot: `icon`
+- [FAB menu](docs/components/fab-menu.md) — `fabmenu/{fab-menu,fab-menu-item,toggle-fab}.js` — `petal-fab-menu` (`expanded`, `items-label`; slots: items, `button`), `petal-fab-menu-item` (default label, `icon`), `petal-toggle-fab` (`checked`; `icon`, `checked-icon`)
+- [Floating toolbar](docs/components/floating-toolbar.md) — `floatingtoolbar/floating-toolbar.js` — `petal-floating-toolbar` — `orientation`, `expanded`, `colors` (standard|vibrant), `fab-position`; slots: default, `leading`, `trailing`, `fab`
+- [Chips](docs/components/chip.md) — `chips/{assist,filter,input,suggestion}-chip.js`, `chips/chip-set.js` — `petal-chip-set` > `petal-assist-chip` | `petal-filter-chip` | `petal-input-chip` | `petal-suggestion-chip` — `label`, `elevated`, `selected` and `removable` (filter), `href`; slot: `icon`; events: `click`, `remove` (cancelable)
+
+### Navigation
+
+- [Top app bar](docs/components/top-app-bar.md) — `appbar/top-app-bar.js` — `petal-top-app-bar` — `headline`, `subtitle`, `size` (small|medium|large), `centered`, `heading-level`, `scroll-target`; slots: `navigation`, `actions`, `headline`, `subtitle`, `collapsed-headline`, `collapsed-subtitle`; sticks to the top, collapses on scroll
+- [Bottom app bar](docs/components/bottom-app-bar.md) — `appbar/bottom-app-bar.js` — `petal-bottom-app-bar` — `flexible`, `hide-on-scroll`, `scroll-target`; slots: default actions, `fab`; event: `hide-change`
+- [Navigation bar](docs/components/navigation-bar.md) — `navigationbar/{navigation-bar,navigation-bar-item}.js` — `petal-navigation-bar` (`selected-index`; event `change`) > `petal-navigation-bar-item` (`selected`, `href`, `icon-position`; slots: default label, `icon`, `selected-icon`, `badge`); 64px, position it yourself
+- [Navigation rail](docs/components/navigation-rail.md) — `navigationrail/{navigation-rail,navigation-rail-item}.js` — `petal-navigation-rail` (`expanded`, `selected-index`; slots: items, `header`; event `change`) > `petal-navigation-rail-item` (as bar items)
+- [Navigation drawer](docs/components/navigation-drawer.md) — `navigationdrawer/{navigation-drawer,navigation-drawer-item}.js` — `petal-navigation-drawer` (`type` modal|dismissible|standard, `open`; `show()`, `close()`; events `change`, `open`, `opened`, `close`, `closed`) > `petal-navigation-drawer-item` (slots: label, `icon`, `selected-icon`, `badge` = trailing count)
+- [Tabs](docs/components/tabs.md) — `tabs/{tabs,primary-tab,secondary-tab}.js` — `petal-tabs` (`active-tab-index`, `scrollable`, `auto-activate`; event `change`) > `petal-primary-tab` | `petal-secondary-tab` (`active`, `inline-icon`; slots: label, `icon`); show the panels yourself
+- [Search](docs/components/search.md) — `search/search-bar.js` — `petal-search-bar` — `value`, `placeholder`, `layout` (full-screen|docked), `expanded`; slots: default results (e.g. a `petal-list`), `leading`, `trailing`; events: `input`, `search` (Enter), `open`, `close`
+
+### Containment and overlays
+
+- [Card](docs/components/card.md) — `card/{filled,elevated,outlined}-card.js` — `petal-filled-card` etc. — `clickable`, `href`, `target`, `disabled`, `dragged`; slot: content (no padding); give clickable cards an `aria-label`
+- [Carousel](docs/components/carousel.md) — `carousel/carousel.js` — `petal-carousel` — `variant` (multi-browse|uncontained|hero), `item-width`, `item-spacing`; children are the items; height 221px by default; `scrollToItem(i)`, `currentIndex`
+- [Dialog](docs/components/dialog.md) — `dialog/dialog.js` — `petal-dialog` — `open`, `type="alert"`, `quick`; slots: `icon`, `headline`, `content` (a `<form method="dialog">`), `actions`; `show()`, `close()`, `returnValue`; events: `open`, `opened`, `close` (cancelable), `closed`, `cancel`
+- [Bottom sheet](docs/components/bottom-sheet.md) — `sheet/bottom-sheet.js`, `sheet/standard-bottom-sheet.js` — `petal-bottom-sheet` (modal; `open`, `skip-partially-expanded`; `show()`, `close()`, `expand()`) and `petal-standard-bottom-sheet` (docked; `value` partially-expanded|expanded|hidden, `peek-height`, `hideable`; event `change`); slots: content, `drag-handle`
+- [Menu](docs/components/menu.md) — `menu/{menu,menu-item,sub-menu,menu-group}.js` — `petal-menu` (`anchor` = id, `open`, `positioning` absolute|fixed|document|popover, `anchor-corner`, `menu-corner`, `single-radio`; events `opening`, `opened`, `closing`, `closed`, `close-menu`) > `petal-menu-item` (`type` menuitem|menuitemcheckbox|menuitemradio, `checked`, `keep-open`, `href`, `disabled`; slots: `headline`, `supporting-text`, `start`, `end`), `petal-sub-menu` (slots `item`, `menu`), `petal-menu-group`
+- [Tooltip](docs/components/tooltip.md) — `tooltip/tooltip.js`, `tooltip/rich-tooltip.js` — `petal-tooltip` (`for` = anchor id; text) and `petal-rich-tooltip` (`for`, `persistent`, `caret`; slots: text, `title`, `action`)
+- [Snackbar](docs/components/snackbar.md) — `snackbar/snackbar.js` — `petal-snackbar` — message text, `action`, `dismissible`, `duration`, `action-on-new-line`; `await show()` resolves `action` | `timeout` | `dismiss` | `close`
+- [Badge](docs/components/badge.md) — `badge/badge.js` — `petal-badge` (`value`; empty = dot) in the `badge` slot of an icon button or navigation item
+- [Divider](docs/components/divider.md) — `divider/divider.js` — `petal-divider` (`inset`, `inset-start`, `inset-end`)
+
+### Lists
+
+- [List](docs/components/list.md) — `list/list.js`, `list/list-item.js` — `petal-list` (`segmented`) > `petal-list-item` (`type` text|button|link, `href`, `selected`, `three-line`; slots: default/`headline`, `overline`, `supporting-text`, `trailing-supporting-text`, `start`, `end`)
+
+### Inputs
+
+- [Text field](docs/components/text-field.md) — `textfield/{filled,outlined}-text-field.js` — `petal-filled-text-field`, `petal-outlined-text-field` — `label`, `value`, `type` (text|email|number|password|search|tel|url|textarea|…), `required`, `error`, `error-text`, `supporting-text`, `prefix-text`, `suffix-text`, `placeholder`, `readonly`, `maxlength`, `min`, `max`, `step`, `pattern`, `autocomplete`, `rows`; slots: `leading-icon`, `trailing-icon`; events: `input`, `change`
+- [Select](docs/components/select.md) — `select/{filled,outlined}-select.js`, `select/select-option.js` — `petal-outlined-select` > `petal-select-option` (`value`, `selected`; slot `headline`) — `label`, `value`, `required`, `error`, `error-text`, `supporting-text`; slots: options, `leading-icon`; events: `change`, `input`
+- [Checkbox](docs/components/checkbox.md) — `checkbox/checkbox.js` — `petal-checkbox` — `checked`, `indeterminate`, `name`, `value`, `required`; event `change`; wrap in `<label>`
+- [Radio](docs/components/radio.md) — `radio/radio.js` — `petal-radio` — `name` (group), `value`, `checked`; event `change`
+- [Switch](docs/components/switch.md) — `switch/switch.js` — `petal-switch` — `selected`, `icons`, `show-only-selected-icon`, `name`, `value`; event `change`
+- [Slider](docs/components/slider.md) — `slider/slider.js` — `petal-slider` — `min`, `max`, `step`, `value`, `ticks`, `labeled`, `value-label`, `range` with `value-start`/`value-end`; events `input` (drag), `change` (release)
+- [Date picker](docs/components/date-picker.md) — `datepicker/{date-picker,date-picker-dialog}.js` — `petal-date-picker` (inline) and `petal-date-picker-dialog` (`show()`) — `value` (ISO `2026-10-21`), `min`, `max`, `locale`, `display-mode` (picker|input), `isDateSelectable`; event `change` (dialog: on OK)
+- [Time picker](docs/components/time-picker.md) — `timepicker/{time-picker,time-picker-dialog}.js` — `petal-time-picker`, `petal-time-picker-dialog` — `value` (`HH:MM`, 24 h), `hour-cycle` (12|24), `locale`, `display-mode` (picker|input), `layout`; event `change`
+
+### Feedback
+
+- [Progress](docs/components/progress.md) — `progress/{linear,circular}-progress.js` — `petal-linear-progress`, `petal-circular-progress` — `value` (0–`max`, default max 1), `indeterminate`, `wavy`, `buffer` (linear), `four-color`, `animate-value`
+- [Loading indicator](docs/components/loading-indicator.md) — `loadingindicator/loading-indicator.js` — `petal-loading-indicator` — `contained`, `value` (determinate)
+- [Pull to refresh](docs/components/pull-to-refresh.md) — `pulltorefresh/pull-to-refresh.js` — `petal-pull-to-refresh` — `refreshing`, `scroll-target`; event `refresh` (set `refreshing = false` when done)
+
+### Building blocks
+
+- [Icon](docs/components/icon.md) — `icon/icon.js` — `petal-icon` — ligature text or `<svg>`, `filled`
+- [Elevation](docs/components/elevation.md) — `elevation/elevation.js` — `petal-elevation` in a `position: relative` parent, `--md-elevation-level` 0–5
+- [Focus ring](docs/components/focus-ring.md), [ripple](docs/components/ripple.md) — `focus/md-focus-ring.js` (`petal-focus-ring`), `ripple/ripple.js` (`petal-ripple`) for your own controls
+- Form behaviors for your own form elements: `behaviors/*.js`
+
+## Motion and theme APIs
+
+- Springs as CSS: `transition: transform var(--md-sys-motion-spring-default-spatial-duration) var(--md-sys-motion-spring-default-spatial)`; standard (calmer) scheme: load `tokens/css/motion-standard.css` after `sys.css` — see docs/motion.md
+- `transitionTheme(apply, event)` from `petal-elements/theme/theme-transition.js`: switch light/dark with a circle from the clicked control
+- Mouse hover previews the press automatically; touch keeps Compose's look; `prefers-reduced-motion` turns movement off
 
 ## Machine-readable API
 
-- [custom-elements.json](custom-elements.json): every element's attributes, properties, events, slots and CSS parts
-- `.d.ts` files sit next to every `.js` module
-- Building your own form element: `behaviors/*.js` (form association, validation, focus)
+- `.d.ts` next to every `.js`; tags are declared in `HTMLElementTagNameMap`
+- [custom-elements.json](custom-elements.json): a custom elements manifest. Each `petal-*` class extends a base class in an `internal/` module, and the inherited attributes, members, events and slots are on those base declarations (follow `superclass`)
 
 ## Optional
 
 - [Support and browsers](docs/support.md)
 - [Breaking changes in v2 (aria attributes)](migrations/v2/README.md)
-- Source: https://github.com/Saki340/petal-elements — catalog: https://petal.anontokyo.vip/
+- Source: https://github.com/Saki340/petal-elements — catalog: https://petal.anontokyo.vip/catalog/

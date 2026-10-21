@@ -1,7 +1,7 @@
 <!-- catalog-only-start --><!-- ---
 name: Visual testing
 title: Visual testing
-order: 10
+order: 13
 -----><!-- catalog-only-end -->
 
 # Visual regression tests

@@ -1,7 +1,7 @@
 <!-- catalog-only-start --><!-- ---
 name: Licensing
 title: Licensing
-order: 9
+order: 12
 -----><!-- catalog-only-end -->
 
 # Licensing

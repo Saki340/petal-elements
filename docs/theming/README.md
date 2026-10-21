@@ -117,7 +117,8 @@ springs, for example for shape morphing.
 
 The springs are the expressive motion scheme by default. Load
 `tokens/css/motion-standard.css` to switch to the standard scheme. See
-[Material 3 Expressive features](../expressive.md#motion).
+[Motion](../motion.md) for every spring, what each component animates and how
+to use the springs in your own CSS and script.
 
 ### Component
 
@@ -135,7 +136,7 @@ petal-filled-button.error {
 }
 ```
 
-Refer to each [components' documentation](../components/) for available tokens.
+Refer to each [components' documentation](../components/button.md) for available tokens.
 
 > Note: unlike `--md-ref-*` and `--md-sys-*` tokens, which are prefixed with
 > `ref` and `sys`, component tokens are *not* prefixed with `comp`.

@@ -112,6 +112,12 @@ and write the confirmed date into it:
 </script>
 ```
 
+The dialog fires `change` only when OK is pressed, and `open`, `opened`,
+`close`, `closed` and `cancel` like [`petal-dialog`](dialog.md); `returnValue`
+is `confirm` after OK, `dismiss` after Cancel, and empty after Escape or a
+click outside. `quick` opens and closes it without the
+animation. Labels of the buttons are `confirm-label` and `dismiss-label`.
+
 ### Text input
 
 The pencil button switches to a text field for typing the date, and the

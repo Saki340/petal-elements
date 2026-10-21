@@ -1,30 +1,62 @@
 <!-- catalog-only-start --><!-- ---
 name: Using in an existing site
 title: Using in an existing site
-order: 12
+order: 6
 -----><!-- catalog-only-end -->
 
 # Using petal-elements in an existing site
 
 <!-- [TOC] -->
 
-This guide is for moving a site that has its own hand-written Material 3
-components (or another UI kit) to petal-elements, one component at a time. It
-is written to be read by people and by coding assistants. The package ships
-with it: `node_modules/petal-elements/docs/migrating.md`.
+This guide is for moving a site to petal-elements: from material-web, or
+from hand-written Material 3 components or another UI kit, one component at a
+time. It is written to be read by people and by coding assistants. The
+package ships with it: `node_modules/petal-elements/docs/migrating.md`.
+
+For new pages, start with [Building pages](building-pages.md).
 
 ## Where to look things up
 
 | What | Where |
 | --- | --- |
 | Component list and import paths | `node_modules/petal-elements/llms.txt` |
-| Properties, events, slots, tokens of one component | `node_modules/petal-elements/docs/components/<name>.md` |
-| Exact types | `node_modules/petal-elements/custom-elements.json`, or the `.d.ts` next to each `.js` |
+| Page setup, layouts, common screens, events | `node_modules/petal-elements/docs/building-pages.md` |
+| Springs, component motion, page transitions, reduced motion | `node_modules/petal-elements/docs/motion.md` |
+| Properties, methods, events, slots, tokens of one component | `node_modules/petal-elements/docs/components/<name>.md` (the *API* section at the end) |
+| Exact types | the `.d.ts` next to each `.js`, or `node_modules/petal-elements/custom-elements.json` |
 | What changed between versions | `node_modules/petal-elements/CHANGELOG.md` |
 
 Read the component's doc before writing markup. Do not guess attribute names:
 they follow the docs, which follow Jetpack Compose where a Compose component
 exists.
+
+## From material-web
+
+petal-elements is a continuation of material-web (`@material/web`).
+
+| material-web | petal-elements |
+| --- | --- |
+| `<md-filled-button>`, `MdFilledButton` | `<petal-filled-button>`, `PetalFilledButton` |
+| `import '@material/web/button/filled-button.js'` | `import 'petal-elements/button/filled-button.js'` (same paths) |
+| `@material/web/all.js` | `petal-elements/all.js` |
+| `--md-*` custom properties | the same names |
+| Typescale styles `@material/web/typography/md-typescale-styles.js` | `petal-elements/typography/md-typescale-styles.js` (same `md-typescale-*` classes) |
+| No system token stylesheet; tokens set by hand or generated | `petal-elements/tokens/css/sys.css`, loaded once |
+| `labs/navigationbar`, `labs/navigationtab`, `labs/navigationdrawer` | `petal-navigation-bar`, `petal-navigation-rail`, `petal-navigation-drawer` |
+| `labs/segmentedbutton` | `segmentedbutton/` (`petal-segmented-button-set`) |
+| `labs/card` | `card/` (`petal-filled-card`, ...) |
+| `labs/badge` | `badge/badge.js` (`petal-badge`) |
+| `labs/behaviors`, `labs/item` | `behaviors/`, `item/` (the labs paths re-export them until 1.0) |
+
+1.  Replace `md-` with `petal-` in tags and `Md` with `Petal` in class names,
+    and `@material/web/` with `petal-elements/` in imports. CSS stays.
+2.  Load `tokens/css/sys.css` and set `color-scheme` on `:root` (see
+    [Building pages](building-pages.md#page-setup)).
+3.  Expect the components to look and move like Jetpack Compose Material 3:
+    newer token values (v34), springs, sizes and the Expressive features. See
+    [Token update v0.192 → v34](token-update-v34.md) and the list below.
+4.  Remove workarounds for things the components now do: press animations,
+    custom ripples, menu and dialog animations, badge positioning.
 
 ## Steps
 
@@ -92,6 +124,14 @@ exists.
 | Checkbox, radio, switch, slider | `petal-checkbox`, `petal-radio`, `petal-switch`, `petal-slider` |
 | Tabs | `petal-tabs` with `petal-primary-tab` or `petal-secondary-tab` |
 | Chips | `petal-assist-chip`, `petal-filter-chip`, `petal-input-chip`, `petal-suggestion-chip` in a `petal-chip-set` |
+| Date input or calendar | `petal-date-picker` (inline) or `petal-date-picker-dialog` opened from a read-only text field; `value` is an ISO date |
+| Time input or clock | `petal-time-picker` or `petal-time-picker-dialog`; `value` is `HH:MM` |
+| Image slider or featured row | `petal-carousel` (`variant` multi-browse, uncontained or hero) |
+| Bottom toolbar with actions | `petal-bottom-app-bar` (`fab` slot, `hide-on-scroll`) |
+| Popover with a title and a link | `petal-rich-tooltip` (`persistent` when it has an action) |
+| Panel docked at the bottom, page still usable (maps) | `petal-standard-bottom-sheet` |
+| Count or dot on an icon | `petal-badge` in the `badge` slot of an icon button or navigation item |
+| Hover effects | Built in: components preview their press with a mouse (see [Motion](motion.md#mouse-hover)); remove hand-written hover transforms |
 
 ## Things that surprise people
 
@@ -187,6 +227,18 @@ exists.
   (`:focus-visible`), not after a pointer choice.
 - **Text fields** forward `enterkeyhint`, `spellcheck` and `autocapitalize`;
   use `no-counter` to hide the character counter.
+
+- **Buttons submit forms.** A `petal-*-button` inside a `<form>` is a submit
+  button unless it has `type="button"`, as with `<button>`.
+- **Slots tell content apart.** List items, menu items and select options take
+  `headline`, `supporting-text`, `start` and `end`; dialogs take `headline`,
+  `content` and `actions`. Each component's *Slots* table lists them.
+- **Mouse hover previews the press.** With a mouse, sized buttons, icon
+  buttons, button groups, switches and clickable cards change toward their
+  pressed look while hovered, and icon buttons move their icon by its name
+  (`icon-motion="none"` turns that off). Remove hand-written hover transforms.
+- **The carousel needs a height.** `petal-carousel` is 221px high by default;
+  set `height` (or `--md-carousel-height`). Its children are the items.
 
 ## Prompts that work well for coding assistants
 

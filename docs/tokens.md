@@ -1,7 +1,7 @@
 <!-- catalog-only-start --><!-- ---
 name: Design tokens
 title: Design tokens
-order: 7
+order: 10
 -----><!-- catalog-only-end -->
 
 # Design tokens

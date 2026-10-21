@@ -89,6 +89,25 @@ Associate a label with a checkbox using the `<label>` element.
 <label for="checkbox-two">Checkbox two</label>
 ```
 
+### Forms and events
+
+A checkbox is form-associated like `<input type="checkbox">`: with a `name`, a
+checked checkbox submits its `value` (`on` by default), and `required` makes
+the form invalid until it is checked. It fires `input` and `change` when the
+user toggles it. `indeterminate` shows a dash (for a "select all" box) until
+the user toggles it.
+
+```html
+<form>
+  <label><petal-checkbox name="terms" required></petal-checkbox> I agree</label>
+  <label><petal-checkbox name="topics" value="news" checked></petal-checkbox> News</label>
+</form>
+```
+
+```js
+checkbox.addEventListener('change', () => console.log(checkbox.checked));
+```
+
 ## Accessibility
 
 Add an

@@ -4,6 +4,26 @@
 
 ### Unreleased
 
+#### Documentation
+
+* New guides: [Building pages](docs/building-pages.md) (page setup, colors,
+  responsive navigation, common screens, an events table, frameworks) and
+  [Motion](docs/motion.md) (the springs as CSS, what each component animates,
+  hover, page transitions, reduced motion). The migration guide covers
+  material-web and the newer components.
+* Every component's API section lists its slots, and `custom-elements.json`
+  includes them (`@slot` on each element class).
+* `llms.txt` is a short index with each component's key attributes, slots and
+  events; `llms-full.txt` holds all the guides and component docs in one
+  file. Both ship in the package and are on the site at `/llms.txt` and
+  `/llms-full.txt`.
+* Usage added for select (errors, value, events, icons), slider (range,
+  forms, labels), text field (native attributes), menu (items, placement,
+  focus), dialog (events, forms), tabs, tooltip, navigation drawer and rail,
+  chips, form controls, and buttons as links and form buttons.
+* The catalog shows the chip page in full again; a stray marker had hidden
+  most of it.
+
 #### Bug fixes
 
 * **card:** cards that are neither links nor clickable no longer take the

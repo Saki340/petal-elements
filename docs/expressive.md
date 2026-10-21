@@ -1,7 +1,7 @@
 <!-- catalog-only-start --><!-- ---
 name: Material 3 Expressive
 title: Material 3 Expressive
-order: 3
+order: 4
 -----><!-- catalog-only-end -->
 
 # Material 3 Expressive features
@@ -121,3 +121,13 @@ same as for the other variants.
 Compose has no solid FAB tokens: `FloatingActionButton` takes any
 `containerColor` with `contentColorFor()` (`primary` gives `onPrimary`), which
 matches these tokens.
+
+## More
+
+*   [Motion](motion.md): the springs, what each component animates, mouse
+    hover and reduced motion.
+*   Components with their own Expressive styles: [button group](components/button-group.md),
+    [FAB menu](components/fab-menu.md), [floating toolbar](components/floating-toolbar.md),
+    [split button](components/split-button.md), [loading indicator](components/loading-indicator.md),
+    [wavy progress](components/progress.md), [carousel](components/carousel.md),
+    [segmented lists](components/list.md) and [Expressive chips](components/chip.md#expressive).

@@ -27,7 +27,7 @@
  * file names and import paths (`md-focus-ring.js`), generated tokens in
  * tokens/versions/, CHANGELOG.md, and our own files that name the upstream
  * project on purpose (README, NOTICE, docs/licensing.md, docs/intro.md,
- * landing/index.html).
+ * docs/migrating.md, landing/index.html).
  */
 
 import {execFileSync} from 'child_process';
@@ -46,6 +46,7 @@ const SKIP = [
   /^README(\.[\w-]+)?\.md$/,
   /^docs\/licensing\.md$/,
   /^docs\/intro\.md$/,
+  /^docs\/migrating\.md$/,
   /^landing\/index\.html$/,
 ];
 

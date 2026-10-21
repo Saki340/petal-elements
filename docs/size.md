@@ -1,7 +1,7 @@
 <!-- catalog-only-start --><!-- ---
 name: Bundle Sizes
 title: Bundle Sizes
-order: 6
+order: 9
 hasToc: false
 -----><!-- catalog-only-end -->
 

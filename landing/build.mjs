@@ -46,6 +46,29 @@ fs.copyFileSync('catalog/site/images/favicon.svg', `${OUT}/favicon.svg`);
 for (const image of fs.readdirSync('landing/images')) {
   fs.copyFileSync(`landing/images/${image}`, `${OUT}/assets/${image}`);
 }
+
+// llms.txt and llms-full.txt at the site root, for coding assistants, with
+// links to the package's docs pointing at the catalog pages instead.
+const REPO = 'https://github.com/Saki340/petal-elements/blob/main/';
+const LINK =
+  /\]\(((?:docs|migrations)\/[^)#\s]+|CHANGELOG\.md|custom-elements\.json)(#[^)]*)?\)/g;
+function catalogPage(file) {
+  const name = path.basename(file, '.md');
+  if (file === 'docs/theming/README.md') return 'theming/material-theming';
+  if (/^docs\/theming\/[\w-]+\.md$/.test(file)) return `theming/${name}`;
+  if (/^docs\/components\/[\w-]+\.md$/.test(file)) return `components/${name}`;
+  if (/^docs\/[\w-]+\.md$/.test(file)) return `about/${name}`;
+  return null;
+}
+function siteLinks(text) {
+  return text.replace(LINK, (all, file, hash = '') => {
+    const page = catalogPage(file);
+    return page ? `](/catalog/${page}/${hash})` : `](${REPO}${file}${hash})`;
+  });
+}
+for (const file of ['llms.txt', 'llms-full.txt']) {
+  fs.writeFileSync(`${OUT}/${file}`, siteLinks(fs.readFileSync(file, 'utf8')));
+}
 console.log(`Landing page in ${OUT}/`);
 
 if (process.argv.includes('--site')) {

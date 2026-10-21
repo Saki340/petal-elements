@@ -1,7 +1,7 @@
 <!-- catalog-only-start --><!-- ---
 name: Releasing
 title: Releasing
-order: 11
+order: 14
 -----><!-- catalog-only-end -->
 
 # Releasing

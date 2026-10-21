@@ -45,7 +45,8 @@
     "test:visual": "wireit",
     "docs:images": "wireit",
     "build:landing": "wireit",
-    "build:site": "wireit"
+    "build:site": "wireit",
+    "update-docs:llms": "wireit"
   },
   "type": "module",
   "customElements": "custom-elements.json",
@@ -58,6 +59,7 @@
     "**/*.css.map",
     "custom-elements.json",
     "llms.txt",
+    "llms-full.txt",
     "CHANGELOG.md",
     "docs/**/*.md",
     "migrations/**/*.md",
@@ -258,7 +260,8 @@
     "update-docs": {
       "dependencies": [
         "update-docs:components",
-        "update-docs:sass-ext"
+        "update-docs:sass-ext",
+        "update-docs:llms"
       ]
     },
     "update-docs:components": {
@@ -371,12 +374,15 @@
     "build:landing": {
       "command": "node landing/build.mjs",
       "dependencies": [
-        "build:ts"
+        "build:ts",
+        "update-docs:llms"
       ],
       "files": [
         "landing/**",
         "!landing/_site/**",
-        "tokens/css/*.css"
+        "tokens/css/*.css",
+        "llms.txt",
+        "llms-full.txt"
       ],
       "output": [
         "landing/_site/**"
@@ -385,9 +391,25 @@
     "build:site": {
       "command": "node landing/build.mjs --site",
       "dependencies": [
-        "build:ts"
+        "build:ts",
+        "update-docs:llms"
       ],
       "output": []
+    },
+    "update-docs:llms": {
+      "command": "node scripts/llms-full.js",
+      "files": [
+        "llms.txt",
+        "docs/**/*.md",
+        "scripts/llms-full.js"
+      ],
+      "output": [
+        "llms-full.txt"
+      ],
+      "dependencies": [
+        "update-docs:components",
+        "build:scripts"
+      ]
     }
   }
 }

@@ -73,9 +73,6 @@ Choose the type of chip based on its purpose and author.
 -   **Suggestion** chips represent dynamic suggestions for user input, such as
     text message replies.
 
-<!-- no-catalog-start -->
-<!-- Need to add image -->
-<!-- no-catalog-end -->
 <!-- Need to add catalog-include "figures/<component>/usage.html" -->
 
 ```html
@@ -93,9 +90,6 @@ Chips should always appear in a set. Chip sets are
 [toolbars](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/toolbar_role)<!-- {.external} -->
 that can display any type of chip or other toolbar items.
 
-<!-- no-catalog-start -->
-<!-- Need to add image -->
-<!-- no-catalog-end -->
 <!-- Need to add catalog-include "figures/<component>/usage.html" -->
 
 ```html
@@ -111,12 +105,6 @@ that can display any type of chip or other toolbar items.
 
 All chips may display an optional icon. Input chips can specify if an avatar
 picture is displayed.
-
-<!-- no-catalog-start -->
-<!-- Need to add image -->
-<!-- no-catalog-end -->
-<!-- Need to add catalog-include "figures/<component>/usage-scenario-one.html" -->
-<!-- catalog-only-end -->
 
 ```html
 <petal-chip-set>
@@ -135,12 +123,6 @@ picture is displayed.
 Assist, filter, and suggestion chips can be elevated if the placement requires
 protection, such as on top of an image.
 
-<!-- no-catalog-start -->
-<!-- Need to add image -->
-<!-- no-catalog-end -->
-<!-- Need to add catalog-include "figures/<component>/usage-scenario-one.html" -->
-<!-- catalog-only-end -->
-
 ```html
 <div>
   <img src="...">
@@ -149,6 +131,27 @@ protection, such as on top of an image.
     <petal-suggestion-chip label="Favorite" elevated></petal-suggestion-chip>
   </petal-chip-set>
 </div>
+```
+
+### Selection, removal and links
+
+A filter chip toggles `selected` when clicked; listen for `click` and read
+`selected` (calling `preventDefault()` on the click keeps the old state).
+Input chips, and filter chips with `removable`, have a remove button: it fires
+a cancelable `remove` event, then takes the chip out of the page. Name the
+remove button with `aria-label-remove`. Assist and suggestion chips with
+`href` (and `target`) are links.
+
+```js
+const chips = document.querySelector('petal-chip-set');
+chips.addEventListener('click', () => {
+  const filters = [...chips.querySelectorAll('petal-filter-chip[selected]')]
+      .map((chip) => chip.label);
+  console.log(filters);
+});
+chips.addEventListener('remove', (event) => {
+  // event.target is the chip; preventDefault() keeps it.
+});
 ```
 
 ## Accessibility
@@ -198,12 +201,6 @@ offer a related action, such as adding an event to a calendar.
 Assist chips function as though the user asked an assistant to complete the
 action. They should appear dynamically and contextually in a UI.
 
-<!-- no-catalog-start -->
-<!-- Need to add image -->
-<!-- no-catalog-end -->
-<!-- Need to add catalog-include "figures/<component>/usage-scenario-one.html" -->
-<!-- catalog-only-end -->
-
 ```html
 <h3>A restaraunt location</h3>
 <petal-chip-set>
@@ -222,12 +219,6 @@ action. They should appear dynamically and contextually in a UI.
 narrow down content with tags or keywords. They can replace a row of toggle
 buttons or checkboxes.
 
-<!-- no-catalog-start -->
-<!-- Need to add image -->
-<!-- no-catalog-end -->
-<!-- Need to add catalog-include "figures/<component>/usage-scenario-one.html" -->
-<!-- catalog-only-end -->
-
 ```html
 <h3>Choose where to share</h3>
 <petal-chip-set>
@@ -242,12 +233,6 @@ buttons or checkboxes.
 
 Filter chips can optionally be removable from the chip set. Removable chips have
 a trailing remove icon.
-
-<!-- no-catalog-start -->
-<!-- Need to add image -->
-<!-- no-catalog-end -->
-<!-- Need to add catalog-include "figures/<component>/usage-scenario-one.html" -->
-<!-- catalog-only-end -->
 
 ```html
 <h3>Colors</h3>
@@ -268,12 +253,6 @@ terms.
 Input chips whose icons are user images may add the `avatar` attribute to
 display the image in a larger circle.
 
-<!-- no-catalog-start -->
-<!-- Need to add image -->
-<!-- no-catalog-end -->
-<!-- Need to add catalog-include "figures/<component>/usage-scenario-one.html" -->
-<!-- catalog-only-end -->
-
 ```html
 <petal-outlined-text-field label="Attendees" type="email"></petal-outlined-text-field>
 
@@ -292,12 +271,6 @@ display the image in a larger circle.
 All input chips are removable. If an input chip does not have an action
 associated with clicking on it, it may be marked as `remove-only`.
 
-<!-- no-catalog-start -->
-<!-- Need to add image -->
-<!-- no-catalog-end -->
-<!-- Need to add catalog-include "figures/<component>/usage-scenario-one.html" -->
-<!-- catalog-only-end -->
-
 ```html
 <h3>Favorite movies</h3>
 <petal-chip-set>
@@ -310,12 +283,6 @@ associated with clicking on it, it may be marked as `remove-only`.
 
 [Suggestion chips](https://m3.material.io/components/chips/guidelines#36d7bb16-a9bf-4cf6-a73d-8e05510d66a7)<!-- {.external} -->
 offer generated suggestions, such as quick replies or search refinements.
-
-<!-- no-catalog-start -->
-<!-- Need to add image -->
-<!-- no-catalog-end -->
-<!-- Need to add catalog-include "figures/<component>/usage-scenario-one.html" -->
-<!-- catalog-only-end -->
 
 ```html
 <h3>Suggested reply</h3>
@@ -380,9 +347,6 @@ Token                               | Default value
 
 ### Assist chip example
 
-<!-- no-catalog-start -->
-<!-- Need to add image -->
-<!-- no-catalog-end -->
 <!-- Need to add catalog-include "figures/<component>/theming.html" -->
 
 ```html
@@ -414,9 +378,6 @@ Token                                       | Default value
 
 ### Filter chip example
 
-<!-- no-catalog-start -->
-<!-- Need to add image -->
-<!-- no-catalog-end -->
 <!-- Need to add catalog-include "figures/<component>/theming.html" -->
 
 ```html
@@ -448,9 +409,6 @@ Token                              | Default value
 
 ### Input chip example
 
-<!-- no-catalog-start -->
-<!-- Need to add image -->
-<!-- no-catalog-end -->
 <!-- Need to add catalog-include "figures/<component>/theming.html" -->
 
 ```html
@@ -481,9 +439,6 @@ Token                                   | Default value
 
 ### Suggestion chip example
 
-<!-- no-catalog-start -->
-<!-- Need to add image -->
-<!-- no-catalog-end -->
 <!-- Need to add catalog-include "figures/<component>/theming.html" -->
 
 ```html
@@ -513,6 +468,16 @@ Token                                   | Default value
 | Property | Attribute | Type | Default | Description |
 | --- | --- | --- | --- | --- |
 | `chips` |  | `Chip[]` | `undefined` |  |
+
+<!-- mdformat on(autogenerated might break rendering in catalog) -->
+
+#### Slots
+
+<!-- mdformat off(autogenerated might break rendering in catalog) -->
+
+| Slot | Description |
+| --- | --- |
+| _default_ | The chips. |
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 
@@ -548,6 +513,17 @@ Token                                   | Default value
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 
+#### Slots
+
+<!-- mdformat off(autogenerated might break rendering in catalog) -->
+
+| Slot | Description |
+| --- | --- |
+| _default_ | The label text. |
+| `icon` | A leading icon (`<petal-icon slot="icon">`) or, for input chips, an avatar image. |
+
+<!-- mdformat on(autogenerated might break rendering in catalog) -->
+
 ### PetalFilterChip <code>&lt;petal-filter-chip&gt;</code>
 
 #### Properties
@@ -579,6 +555,18 @@ Token                                   | Default value
 | --- | --- | --- | --- | --- |
 | `remove` | `Event` | No | No | Dispatched when the remove button is clicked. |
 | `update-focus` | `Event` | Yes | No | Dispatched when `disabled` is toggled. |
+
+<!-- mdformat on(autogenerated might break rendering in catalog) -->
+
+#### Slots
+
+<!-- mdformat off(autogenerated might break rendering in catalog) -->
+
+| Slot | Description |
+| --- | --- |
+| `selected-icon` | The icon shown while selected, instead of the check mark. |
+| _default_ | The label text. |
+| `icon` | A leading icon (`<petal-icon slot="icon">`) or, for input chips, an avatar image. |
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 
@@ -619,6 +607,17 @@ Token                                   | Default value
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 
+#### Slots
+
+<!-- mdformat off(autogenerated might break rendering in catalog) -->
+
+| Slot | Description |
+| --- | --- |
+| _default_ | The label text. |
+| `icon` | A leading icon (`<petal-icon slot="icon">`) or, for input chips, an avatar image. |
+
+<!-- mdformat on(autogenerated might break rendering in catalog) -->
+
 ### PetalSuggestionChip <code>&lt;petal-suggestion-chip&gt;</code>
 
 #### Properties
@@ -648,6 +647,17 @@ Token                                   | Default value
 | Event | Type | [Bubbles](https://developer.mozilla.org/en-US/docs/Web/API/Event/bubbles) | [Composed](https://developer.mozilla.org/en-US/docs/Web/API/Event/composed) | Description |
 | --- | --- | --- | --- | --- |
 | `update-focus` | `Event` | Yes | No | Dispatched when `disabled` is toggled. |
+
+<!-- mdformat on(autogenerated might break rendering in catalog) -->
+
+#### Slots
+
+<!-- mdformat off(autogenerated might break rendering in catalog) -->
+
+| Slot | Description |
+| --- | --- |
+| _default_ | The label text. |
+| `icon` | A leading icon (`<petal-icon slot="icon">`) or, for input chips, an avatar image. |
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 

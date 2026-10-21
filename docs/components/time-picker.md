@@ -106,6 +106,10 @@ as the hour is clear, and show Compose's errors for a number out of range.
 <petal-time-picker display-mode="input" value="09:05"></petal-time-picker>
 ```
 
+In the dialog, a button switches between the dial and the text fields;
+`hide-mode-toggle` removes it. `is24Hour` reads whether the picker uses 24
+hours (from `hour-cycle` or the locale).
+
 ### Dialog
 
 `petal-time-picker-dialog` shows the picker in a modal dialog with a title, a
@@ -130,6 +134,12 @@ fires. Open it with `show()` or `open`.
   dialog.addEventListener('change', () => console.log(dialog.value));
 </script>
 ```
+
+The dialog fires `change` only when OK is pressed, and `open`, `opened`,
+`close`, `closed` and `cancel` like [`petal-dialog`](dialog.md); `returnValue`
+is `confirm` after OK, `dismiss` after Cancel, and empty after Escape or a
+click outside. `quick` opens and closes it without the
+animation. Labels of the buttons are `confirm-label` and `dismiss-label`.
 
 ### Forms
 

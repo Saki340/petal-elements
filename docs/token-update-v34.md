@@ -1,7 +1,7 @@
 <!-- catalog-only-start --><!-- ---
 name: Token update v34
 title: Token update v34
-order: 8
+order: 11
 -----><!-- catalog-only-end -->
 
 # Token update: v0.192 → v34
