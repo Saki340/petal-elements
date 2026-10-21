@@ -17,6 +17,38 @@ Please follow our [code of conduct](CODE_OF_CONDUCT.md).
   changes, consider reporting it
   [upstream](https://github.com/material-components/material-web/issues) too.
 
+## Development
+
+Requires Node.js 22 or later. Works on Linux, macOS and Windows.
+
+```sh
+npm ci
+npm run build
+npx playwright install chromium
+npm test
+npm run check:licenses   # licenses of all dependencies
+npm run check:rebrand    # no md-* tags left after an upstream merge
+npm run check:tokens     # generated tokens up to date
+npm run test:visual      # pixel-exact screenshots (Playwright)
+npm run docs:images      # render the images in docs/components
+npm run update-docs      # API sections of the docs, and llms-full.txt
+npm run build:catalog    # the documentation site, in catalog/_prod
+```
+
+See [Design tokens](docs/tokens.md) for the token pipeline,
+[Visual testing](docs/visual-testing.md) for the screenshot tests and
+[Releasing](docs/releasing.md) for publishing a version.
+
+### Merging upstream
+
+petal-elements follows Google's Material Web and merges its fixes:
+
+```sh
+git fetch upstream
+git merge upstream/main
+node scripts/rebrand.js   # rename new md-* tags; safe to run again
+```
+
 ## Pull requests
 
 - Open an issue or discussion first for anything bigger than a small fix.

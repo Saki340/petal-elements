@@ -2,122 +2,140 @@
 
 English | [简体中文](README.zh-CN.md)
 
-Community-maintained web components for Material 3 Expressive.
+[![npm](https://img.shields.io/npm/v/petal-elements)](https://www.npmjs.com/package/petal-elements)
+[![CI](https://github.com/Saki340/petal-elements/actions/workflows/ci.yml/badge.svg)](https://github.com/Saki340/petal-elements/actions/workflows/ci.yml)
+[![License](https://img.shields.io/npm/l/petal-elements)](LICENSE)
 
-> **petal-elements is not an official Google project and is not affiliated
-> with Google.** It is an independent, community-maintained modified version of
-> [material-components/material-web](https://github.com/material-components/material-web).
+Material 3 Expressive web components for plain HTML and any framework. They
+take their sizes, colors and spring motion from Jetpack Compose, and they are
+accessible and work in native forms.
 
-## Status
+![Cards built from petal-elements: a reservation form with date and time fields, notification switches, account security fields, a savings goal, a carousel of trip ideas, a chat and an inbox](https://raw.githubusercontent.com/Saki340/petal-elements/main/docs/images/readme-examples.webp)
 
-Version 0.2.0 moves every component to Jetpack Compose's values and adds many
-components; see the [roadmap](docs/roadmap.md) and the
-[changelog](CHANGELOG.md). APIs may change before 1.0.
+[Website](https://petal.anontokyo.vip/) ·
+[Components](https://petal.anontokyo.vip/catalog/components/button/) ·
+[Docs](https://petal.anontokyo.vip/catalog/about/intro/)
 
-Website: [petal.anontokyo.vip](https://petal.anontokyo.vip/). Documentation and
-live examples: the [catalog](https://petal.anontokyo.vip/catalog/) and
-[docs/](docs/intro.md).
+- **Expressive, from the source.** Button sizes and shapes that morph,
+  button groups, wavy progress, carousels, date and time pickers, FAB menus,
+  all with values read from the Jetpack Compose Material 3 source, not
+  estimated by eye.
+- **Motion on springs.** Components move on Compose's spring curves, preview
+  their press on mouse hover, and keep still with reduced motion.
+- **Standard custom elements.** Plain HTML, React, Vue, Svelte, Angular or a
+  static site; form controls take part in `<form>` and `FormData`.
+- **Ready for AI assistants.** [`llms.txt`](llms.txt) and
+  [`llms-full.txt`](llms-full.txt) describe every component, so coding
+  assistants build pages with the real API.
 
-## Quick start
+## Example
+
+```html
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/petal-elements/tokens/css/sys.css">
+<script type="importmap">
+  {"imports": {"petal-elements/": "https://esm.run/petal-elements/"}}
+</script>
+<script type="module">
+  import 'petal-elements/buttongroup/button-group.js';
+  import 'petal-elements/button/filled-tonal-button.js';
+  import 'petal-elements/switch/switch.js';
+</script>
+
+<petal-button-group connected single-select size="medium" aria-label="View">
+  <petal-filled-tonal-button toggle selected>Day</petal-filled-tonal-button>
+  <petal-filled-tonal-button toggle>Week</petal-filled-tonal-button>
+  <petal-filled-tonal-button toggle>Month</petal-filled-tonal-button>
+</petal-button-group>
+
+<label>Notifications <petal-switch selected></petal-switch></label>
+```
+
+Save it as an HTML file and open it: the buttons widen when pressed and the
+selected one changes shape, on Compose's springs.
+
+## Install
 
 ```sh
 npm install petal-elements
 ```
 
+Load the tokens once, then import the components you use:
+
 ```html
 <link rel="stylesheet" href="node_modules/petal-elements/tokens/css/sys.css">
+<style>:root { color-scheme: light dark; }</style>
 <script type="module">
   import 'petal-elements/button/filled-button.js';
-  import 'petal-elements/buttongroup/button-group.js';
 </script>
-
-<petal-filled-button>Save</petal-filled-button>
-
-<!-- Material 3 Expressive, opt-in -->
-<petal-button-group connected single-select size="medium">
-  <petal-filled-tonal-button toggle selected>Day</petal-filled-tonal-button>
-  <petal-filled-tonal-button toggle>Week</petal-filled-tonal-button>
-</petal-button-group>
 ```
 
-See [Quick start](docs/quick-start.md) for bundling and theming.
+Bare imports work with any bundler (Vite, esbuild, webpack).
+`petal-elements/all.js` imports every component. Icons use the
+[Material Symbols](https://fonts.google.com/icons) font. See
+[Quick start](docs/quick-start.md) and [Building pages](docs/building-pages.md).
 
-## What's in 0.1
+## Components
 
-- All Material Web components, renamed to `petal-*`.
-- Token values from the Material Design web tokens v34 for the core components
-  (buttons, icon buttons, FAB, checkbox, radio, switch, text fields, chips,
-  progress, tabs); see [Token update v0.192 → v34](docs/token-update-v34.md).
-- Generated token stylesheets in `tokens/css/`: system tokens with light and
-  dark colors, contrast variants, and the expressive motion scheme.
-- Material 3 Expressive, opt-in: button sizes `xsmall`–`xlarge`, round and
-  square shapes, toggle buttons, shape morphing with spring motion, button
-  groups, solid FABs. See [Material 3 Expressive features](docs/expressive.md).
+| Kind | Components |
+| --- | --- |
+| Actions | [Buttons](docs/components/button.md), [icon buttons](docs/components/icon-button.md), [button groups](docs/components/button-group.md), [split buttons](docs/components/split-button.md), [segmented buttons](docs/components/segmented-button.md), [FAB](docs/components/fab.md), [FAB menu](docs/components/fab-menu.md), [floating toolbar](docs/components/floating-toolbar.md), [chips](docs/components/chip.md) |
+| Communication | [Badges](docs/components/badge.md), [progress](docs/components/progress.md), [loading indicator](docs/components/loading-indicator.md), [snackbar](docs/components/snackbar.md), [tooltips](docs/components/tooltip.md), [pull to refresh](docs/components/pull-to-refresh.md) |
+| Containment | [Cards](docs/components/card.md), [carousel](docs/components/carousel.md), [dialog](docs/components/dialog.md), [bottom sheets](docs/components/bottom-sheet.md), [lists](docs/components/list.md), [divider](docs/components/divider.md) |
+| Navigation | [Top app bar](docs/components/top-app-bar.md), [bottom app bar](docs/components/bottom-app-bar.md), [navigation bar](docs/components/navigation-bar.md), [rail](docs/components/navigation-rail.md), [drawer](docs/components/navigation-drawer.md), [tabs](docs/components/tabs.md), [search](docs/components/search.md), [menus](docs/components/menu.md) |
+| Selection | [Checkbox](docs/components/checkbox.md), [radio](docs/components/radio.md), [switch](docs/components/switch.md), [slider](docs/components/slider.md), [date picker](docs/components/date-picker.md), [time picker](docs/components/time-picker.md) |
+| Text input | [Text fields](docs/components/text-field.md), [select](docs/components/select.md) |
 
-## Background
+Every component has a live page in the
+[catalog](https://petal.anontokyo.vip/catalog/components/button/).
 
-Google's Material Web project
-[is in maintenance mode](https://github.com/material-components/material-web/discussions/5642).
-In that discussion, its maintainer
-[wrote](https://github.com/material-components/material-web/discussions/5642#discussioncomment-13724284):
-"Forks and different directions are always welcome in open source!"
+## Documentation
 
-petal-elements continues from the Material Web codebase, with its full git
-history, and works towards Material 3 Expressive:
+- [Building pages](docs/building-pages.md): page setup, responsive navigation,
+  forms, dialogs and other common screens
+- [Motion](docs/motion.md): the springs, what each component animates, and
+  using them in your own CSS
+- [Theming](docs/theming/README.md): colors (including a theme from one
+  color), typography and shape
+- [Material 3 Expressive features](docs/expressive.md)
+- For coding assistants: [`llms.txt`](llms.txt) (an index) and
+  [`llms-full.txt`](llms-full.txt) (everything in one file), also at
+  [petal.anontokyo.vip/llms.txt](https://petal.anontokyo.vip/llms.txt)
 
-- Components are built on Material Web's foundations: ripple, focus ring,
-  state layers, form association through `ElementInternals`, and accessibility.
-- Sizes, colors, shapes and motion come from the Jetpack Compose Material 3
-  source at a pinned commit, with the Material Design web tokens (v34) as the
-  fallback. Values are taken from source, never estimated by eye. See
-  [docs/tokens.md](docs/tokens.md).
-- Missing Expressive specs and components (shape morphing, spring motion,
-  button groups, …) are added step by step and checked with visual regression
-  tests.
-- We follow upstream and merge its fixes. Upstream's experimental `labs/gb`
-  and `labs/aria` components are not included: petal's own components cover
-  them.
+## Coming from Material Web
 
-## Differences from Material Web
+petal-elements continues Google's
+[Material Web](https://github.com/material-components/material-web), which is
+[in maintenance mode](https://github.com/material-components/material-web/discussions/5642),
+with its full history.
 
 | | Material Web | petal-elements |
-|---|---|---|
-| Package | `@material/web` | `petal-elements` |
+| --- | --- | --- |
+| Package | `@material/web` | `petal-elements` (same paths) |
 | Tags | `<md-filled-button>` | `<petal-filled-button>` |
 | Classes | `MdFilledButton` | `PetalFilledButton` |
-| CSS custom properties | `--md-sys-*`, `--md-filled-button-*` | unchanged, to ease migration |
+| CSS custom properties | `--md-*` | unchanged |
 
-## Development
+See [Using in an existing site](docs/migrating.md) for the steps and what
+changed.
 
-Requires Node.js 22 or later. Works on Linux, macOS and Windows.
+## Status
 
-```sh
-npm ci
-npm run build
-npx playwright install chromium
-npm test
-npm run check:licenses   # licenses of all dependencies
-npm run check:rebrand    # no md-* tags left after an upstream merge
-npm run check:tokens     # generated tokens up to date
-npm run test:visual      # pixel-exact screenshots (Playwright)
-npm run docs:images      # render the images in docs/components
-npm run build:catalog    # the documentation site, in catalog/_prod
-```
+Version 0.3. APIs may change before 1.0; the [changelog](CHANGELOG.md) lists
+every change and the [roadmap](docs/roadmap.md) what comes next. Supported
+browsers: [Support](docs/support.md).
 
-See [Design tokens](docs/tokens.md) and [Visual testing](docs/visual-testing.md)
-for the token pipeline and the screenshot tests.
+petal-elements is not an official Google project and is not affiliated with
+Google. It is an independent, community-maintained modified version of
+Material Web.
 
-### Merging upstream
+## Contributing
 
-```sh
-git fetch upstream
-git merge upstream/main
-node scripts/rebrand.js   # rename new md-* tags; safe to run again
-```
+Issues, discussions and pull requests are welcome: see
+[CONTRIBUTING.md](CONTRIBUTING.md) for setup, tests and the rules for token
+values.
 
 ## License
 
-Apache License 2.0. See [LICENSE](LICENSE) and [NOTICE](NOTICE) for
-attribution and the list of modifications. Details on file headers,
-third-party assets and dependency checks are in
-[docs/licensing.md](docs/licensing.md).
+[Apache License 2.0](LICENSE). See [NOTICE](NOTICE) for attribution and the
+list of modifications, and [docs/licensing.md](docs/licensing.md) for file
+headers and third-party assets.
