@@ -23,6 +23,10 @@ const ITEM_END_PADDING = 20;
  * is as wide as its widest item (between 220px and 360px) with the icon before
  * the label. The width, the items and their labels animate between the two.
  * The `header` slot holds a menu button or a floating action button.
+ *
+ * @slot - The `petal-navigation-rail-item`s.
+ * @slot header - Content above the items: a menu icon button that expands the
+ *     rail, and a FAB.
  */
 export class NavigationRail extends NavigationContainer {
   protected readonly orientation = 'vertical';

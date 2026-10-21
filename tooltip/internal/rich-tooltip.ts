@@ -33,6 +33,10 @@ const LEAVE_DELAY = 150;
  *
  * @fires open {Event} The tooltip was shown.
  * @fires close {Event} The tooltip was hidden.
+ *
+ * @slot - The supporting text.
+ * @slot title - An optional title.
+ * @slot action - Text buttons at the bottom; clicking one closes the tooltip.
  */
 export class RichTooltip extends Tooltip {
   /** Keeps the tooltip shown until it is dismissed (Compose's `isPersistent`). */

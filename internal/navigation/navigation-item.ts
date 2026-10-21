@@ -42,6 +42,12 @@ if (!isServer && 'registerProperty' in CSS) {
  * the label in the default slot. An item with `href` is a link. The bar or
  * rail keeps one item selected and gives it the `tab` role in a `tablist`, as
  * Compose's `Role.Tab` inside `selectableGroup`.
+ *
+ * @slot - The label text.
+ * @slot icon - The icon (`<petal-icon slot="icon">`).
+ * @slot selected-icon - The icon while selected, for example a filled one; the
+ *     `icon` slot's icon when empty.
+ * @slot badge - A `petal-badge` on the icon.
  */
 export abstract class NavigationItem extends LitElement {
   /** Whether the item is the current destination. */

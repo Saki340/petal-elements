@@ -36,7 +36,9 @@ const FAST_EFFECTS = {dampingRatio: 1, stiffness: 3800};
 // Separate variable needed for closure.
 const fabBaseClass = mixinDelegatesAria(LitElement);
 
-// tslint:disable-next-line:enforce-comments-on-exported-symbols
+/**
+ * @slot icon - The icon (`<petal-icon slot="icon">`).
+ */
 export abstract class SharedFab extends fabBaseClass {
   /** @nocollapse */
   static override shadowRootOptions: ShadowRootInit = {

@@ -100,6 +100,10 @@ const selectBaseClass = mixinDelegatesAria(
  * @fires closing {Event} Fired when the select's menu is about to close.
  * @fires closed {Event} Fired when the select's menu has finished animations
  * and closed.
+ *
+ * @slot - The `petal-select-option`s.
+ * @slot leading-icon - An icon at the start of the field.
+ * @slot trailing-icon - Replaces the dropdown arrow at the end.
  */
 export abstract class Select extends selectBaseClass {
   /** @nocollapse */

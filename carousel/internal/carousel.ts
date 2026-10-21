@@ -35,6 +35,9 @@ export type CarouselVariant = 'multi-browse' | 'uncontained' | 'hero';
  * 10px, and 1 at the largest)
  * for content that should follow the mask, as Compose's
  * `CarouselItemDrawInfo`.
+ *
+ * @slot - The items, one element each: images or blocks with a background. Each
+ *     fills the carousel's height and is masked to its keyline.
  */
 export class Carousel extends LitElement {
   /** `multi-browse`, `uncontained` or `hero` (centered). */

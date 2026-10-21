@@ -44,6 +44,8 @@ const DURATION_MS: Record<SnackbarDuration, number> = {
  * (the close button) or `close` (`close()` was called).
  * @fires action {Event} The action button was clicked. Cancel it to keep the
  * snackbar open.
+ *
+ * @slot - The message text.
  */
 export class Snackbar extends LitElement {
   /** Whether the snackbar is shown. */

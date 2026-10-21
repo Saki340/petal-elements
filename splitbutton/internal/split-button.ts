@@ -42,6 +42,10 @@ const splitButtonBaseClass = mixinDelegatesAria(LitElement);
  * @fires change {Event} Dispatched when the trailing button toggles --bubbles
  * @fires trailing-click {Event} Dispatched when an `uncheckable` trailing
  * button is clicked --bubbles --composed
+ *
+ * @slot - The label of the leading button.
+ * @slot icon - An icon in the leading button, before the label.
+ * @slot trailing-icon - Replaces the chevron of the trailing button.
  */
 export class SplitButton extends splitButtonBaseClass {
   /** @nocollapse */

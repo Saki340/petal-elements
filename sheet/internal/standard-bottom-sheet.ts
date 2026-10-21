@@ -54,6 +54,9 @@ const standardBottomSheetBaseClass = mixinDelegatesAria(LitElement);
  * `expand()`, `partialExpand()`, `show()` and `hide()` move it.
  *
  * @fires change {Event} The sheet came to rest at another value. --bubbles
+ *
+ * @slot - The sheet's content.
+ * @slot drag-handle - Replaces the default 32px by 4px drag handle.
  */
 export class StandardBottomSheet extends standardBottomSheetBaseClass {
   /**

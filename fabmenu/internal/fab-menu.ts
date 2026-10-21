@@ -27,6 +27,9 @@ const SLOW_EFFECTS: SpringSpec = {dampingRatio: 1, stiffness: 800};
  * slow effects spring, rounded, and each item that becomes visible or hidden
  * animates its own width and opacity. Items appear from the one closest to the
  * button upward and disappear from the top.
+ *
+ * @slot - The `petal-fab-menu-item`s.
+ * @slot button - The `petal-toggle-fab` that opens and closes the menu.
  */
 export class FabMenu extends LitElement {
   /**

@@ -47,6 +47,11 @@ const switchBaseClass = mixinDelegatesAria(
  * interaction (bubbles and composed).
  * @fires change {Event} Fired whenever `selected` changes due to user
  * interaction (bubbles).
+ *
+ * @slot on-icon - The icon in the thumb while selected (with `icons`); a check
+ *     mark by default.
+ * @slot off-icon - The icon in the thumb while not selected (with `icons` and
+ *     without `show-only-selected-icon`); a cross by default.
  */
 export class Switch extends switchBaseClass {
   /** @nocollapse */

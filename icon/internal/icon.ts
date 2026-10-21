@@ -25,6 +25,8 @@ if (!isServer && 'registerProperty' in CSS) {
 
 /**
  * An icon element.
+ *
+ * @slot - The icon: a Material Symbols ligature name (`search`) or an `<svg>`.
  */
 export class Icon extends LitElement {
   /**

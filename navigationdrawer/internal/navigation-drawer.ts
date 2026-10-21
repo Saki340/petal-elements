@@ -62,6 +62,9 @@ const navigationDrawerBaseClass = mixinDelegatesAria(LitElement);
  * @fires closed {Event} Dispatched when the drawer has closed, after any
  * animations.
  * @fires change {Event} Dispatched when the user selects an item. Cancelable.
+ *
+ * @slot - The drawer's content: `petal-navigation-drawer-item`s, headings and
+ *     `petal-divider`s.
  */
 export class NavigationDrawer extends navigationDrawerBaseClass {
   /** How the drawer shows. */

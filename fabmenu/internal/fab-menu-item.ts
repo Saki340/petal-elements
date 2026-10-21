@@ -28,6 +28,9 @@ const FAST_EFFECTS: SpringSpec = {dampingRatio: 1, stiffness: 3800};
  * a pill with an icon and a label. When it appears its width grows from 0 on
  * the fast spatial spring and its opacity on the fast effects spring, and the
  * contents stay aligned like the menu's items.
+ *
+ * @slot - The label text.
+ * @slot icon - The leading icon.
  */
 export class FabMenuItem extends LitElement {
   /** @nocollapse */

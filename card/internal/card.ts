@@ -26,6 +26,8 @@ const cardBaseClass = mixinDelegatesAria(LitElement);
  *
  * With a mouse, a clickable card lifts 3px while hovered, and its state
  * layer is a soft light around the pointer (a petal-elements addition).
+ *
+ * @slot - The card's content. Put your own padding inside it.
  */
 export class Card extends cardBaseClass {
   /** @nocollapse */

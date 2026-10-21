@@ -37,6 +37,16 @@ const menuItemBaseClass = mixinDelegatesAria(LitElement);
  * Closes the encapsulating menu on closable interaction. --bubbles --composed
  * @fires change {Event} A checkbox or radio item was checked or unchecked by
  * the user. --bubbles
+ *
+ * @slot - The headline, as text (the same as the `headline` slot).
+ * @slot headline - The main line of text.
+ * @slot overline - A short line above the headline.
+ * @slot supporting-text - Lines below the headline.
+ * @slot trailing-supporting-text - Short text at the end, such as a count or a time.
+ * @slot start - Content at the start: an icon, an avatar, an image or a control.
+ * @slot end - Content at the end: an icon or a control.
+ * @slot checked-icon - The icon of a checked `menuitemcheckbox` or
+ *     `menuitemradio`, instead of the check mark.
  */
 export class MenuItemEl extends menuItemBaseClass implements MenuItem {
   /** @nocollapse */

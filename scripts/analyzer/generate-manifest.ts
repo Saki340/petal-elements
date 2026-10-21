@@ -35,6 +35,16 @@ const manifest = {
   modules: mainManifest.modules.filter(includedModules),
 };
 
+// The analyzer reads `@slot - description` as a slot named "-"; the default
+// slot has the empty name in the manifest schema.
+for (const module of manifest.modules) {
+  for (const declaration of module.declarations ?? []) {
+    for (const slot of (declaration as {slots?: Array<{name: string}>}).slots ?? []) {
+      if (slot.name === '-') slot.name = '';
+    }
+  }
+}
+
 await writeFileTree(ROOT, {
   'custom-elements.json': JSON.stringify(manifest, null, 2),
 });

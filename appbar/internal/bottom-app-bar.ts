@@ -26,6 +26,9 @@ const TOUCH_SLOP = 8;
  * comes back as it scrolls up (`BottomAppBarDefaults.exitAlwaysScrollBehavior`).
  *
  * @fires hide-change {Event} The hidden fraction changed.
+ *
+ * @slot - The actions: icon buttons, at the start (spread out when `flexible`).
+ * @slot fab - A floating action button at the end (not with `flexible`).
  */
 export class BottomAppBar extends LitElement {
   /**

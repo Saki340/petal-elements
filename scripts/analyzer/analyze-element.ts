@@ -32,6 +32,16 @@ export interface MdModuleInfo {
   methods: MdMethodInfo[];
   superClass?: MdModuleInfo;
   events: MdEventInfo[];
+  slots: MdSlotInfo[];
+}
+
+/**
+ * Describes a slot of an element, from an `@slot name - description` JSDoc
+ * tag on its class (`@slot - description` for the default slot).
+ */
+export interface MdSlotInfo {
+  name: string;
+  description?: string;
 }
 
 /**
@@ -127,8 +137,14 @@ export function analyzeElementApi(
   );
   const methods = analyzeMethods(customElementModule);
   let events: MdEventInfo[] = [];
+  let slots: MdSlotInfo[] = [];
   if (customElementModule.isLitElementDeclaration()) {
     events = analyzeEvents(customElementModule);
+    slots = [...customElementModule.slots.values()].map((slot) => ({
+      // The analyzer reads `@slot - description` as a slot named "-".
+      name: slot.name === '-' ? '' : slot.name,
+      description: makeMarkdownFriendly(slot.description),
+    }));
   }
 
   const superclass = customElementModule.heritage.superClass;
@@ -144,6 +160,7 @@ export function analyzeElementApi(
     reactiveProperties,
     methods,
     events,
+    slots,
   };
 
   let nextSuperClass: MdModuleInfo | undefined = undefined;
@@ -286,6 +303,7 @@ export function analyzeMixin(
     reactiveProperties: mixinReactiveProperties,
     methods: mixinMethods,
     events: [],
+    slots: [],
     superClass: nextSuperClass,
   };
 }

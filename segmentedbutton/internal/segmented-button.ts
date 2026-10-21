@@ -27,6 +27,8 @@ const segmentedButtonBaseClass = mixinDelegatesAria(LitElement);
  * @fires segmented-button-selected-change {Event} Dispatched when `selected`
  * changes, so the set can update which button is in the tab order.
  * --bubbles --composed
+ *
+ * @slot icon - An icon before the label.
  */
 export class SegmentedButton extends segmentedButtonBaseClass {
   /** Whether the button is disabled. */

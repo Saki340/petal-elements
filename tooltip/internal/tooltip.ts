@@ -31,6 +31,8 @@ let ids = 0;
  *
  * @fires open {Event} The tooltip was shown.
  * @fires close {Event} The tooltip was hidden.
+ *
+ * @slot - The tooltip text.
  */
 export class Tooltip extends LitElement {
   /** The id of the anchor element, in the same document or shadow root. */

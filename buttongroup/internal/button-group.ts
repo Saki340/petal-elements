@@ -36,6 +36,8 @@ const RELEASE_AT = 0.75;
  * With a mouse, a hovered button goes 30% of the way to its press: it widens
  * by 30% of the pressed share, and connected inner corners go 30% of the way
  * to their pressed size.
+ *
+ * @slot - The buttons: `petal-*-button` elements, toggle buttons for selection.
  */
 export class ButtonGroup extends LitElement {
   /** Size of the group and of buttons that have no size of their own. */

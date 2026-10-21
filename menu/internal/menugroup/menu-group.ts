@@ -17,6 +17,8 @@ import {property} from 'lit/decorators.js';
  * first and last groups are larger. Once the pointer has hovered a group and
  * left it, the group takes the smaller inactive shape on all corners, as in
  * Compose, until the menu opens again.
+ *
+ * @slot - The group's `petal-menu-item`s.
  */
 export class MenuGroup extends LitElement {
   /**

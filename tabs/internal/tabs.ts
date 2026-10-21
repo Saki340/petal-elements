@@ -41,6 +41,8 @@ import {ANIMATE_INDICATOR, Tab} from './tab.js';
  *   }
  * });
  *
+ *
+ * @slot - The `petal-primary-tab`s or `petal-secondary-tab`s.
  */
 export class Tabs extends LitElement {
   /**

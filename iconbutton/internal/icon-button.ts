@@ -76,6 +76,11 @@ const iconButtonBaseClass = mixinDelegatesAria(
  * @fires input {InputEvent} Dispatched when a toggle button toggles --bubbles
  * --composed
  * @fires change {Event} Dispatched when a toggle button toggles --bubbles
+ *
+ * @slot - The icon: a `<petal-icon>` or an `<svg>`.
+ * @slot selected - The icon of a selected toggle button; the default slot's icon
+ *     when empty.
+ * @slot badge - A `petal-badge`, placed on the icon's top end.
  */
 export class IconButton extends iconButtonBaseClass {
   /** @nocollapse */

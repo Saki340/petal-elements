@@ -131,6 +131,7 @@ function generateTableSection(
   const propertiesTable = generateFieldMarkdownTable(elementDoc);
   const methodsTable = generateMethodMarkdownTable(elementDoc);
   const eventsTable = generateEventsMarkdownTable(elementDoc);
+  const slotsTable = generateSlotsMarkdownTable(elementDoc);
 
   if (propertiesTable.rows.length > 0) {
     tables.push({name: 'Properties', table: propertiesTable});
@@ -142,6 +143,10 @@ function generateTableSection(
 
   if (eventsTable.rows.length > 0) {
     tables.push({name: 'Events', table: eventsTable});
+  }
+
+  if (slotsTable.rows.length > 0) {
+    tables.push({name: 'Slots', table: slotsTable});
   }
 
   return {
@@ -414,6 +419,31 @@ function generateEventsMarkdownTable(element: MdModuleInfo): MarkdownTable {
   }
 
   return eventsTable;
+}
+
+/**
+ * Generates a markdown table of the slots of an element and its superclasses,
+ * from their `@slot` JSDoc tags. A subclass's slot replaces its superclass's.
+ *
+ * @param element The analyzed element documentation module.
+ * @returns A Markdown table where the rows are the slots of the element.
+ */
+function generateSlotsMarkdownTable(element: MdModuleInfo): MarkdownTable {
+  const slotsTable = new MarkdownTable(['Slot', 'Description']);
+  const seen = new Set<string>();
+  let currentClass: MdModuleInfo | undefined = element;
+  while (currentClass) {
+    for (const slot of currentClass.slots) {
+      if (seen.has(slot.name)) continue;
+      seen.add(slot.name);
+      slotsTable.addRow([
+        slot.name ? `\`${slot.name}\`` : '_default_',
+        slot.description ?? '',
+      ]);
+    }
+    currentClass = currentClass.superClass;
+  }
+  return slotsTable;
 }
 
 /**

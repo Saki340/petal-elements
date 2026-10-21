@@ -97,6 +97,9 @@ const textFieldBaseClass = mixinDelegatesAria(
  * @fires input {InputEvent} The native `input` event on
  * [`<input>`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/input_event)
  * --bubbles --composed
+ *
+ * @slot leading-icon - Icons or icon buttons at the start, each in a 48px box.
+ * @slot trailing-icon - Icons or icon buttons at the end, each in a 48px box.
  */
 export abstract class TextField extends textFieldBaseClass {
   /** @nocollapse */

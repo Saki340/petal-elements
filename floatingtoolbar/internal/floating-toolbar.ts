@@ -56,6 +56,13 @@ const FRAME_MS = 1000 / 60;
  * orientation), Home and End move focus between the actions; every action
  * stays in the tab order. The actions that a collapsed toolbar hides are
  * `inert`.
+ *
+ * @slot - The toolbar's content: icon buttons or buttons.
+ * @slot leading - Content before the main content, shown only while expanded
+ *     (Compose's `leadingContent`; not with a FAB).
+ * @slot trailing - Content after the main content, shown only while expanded
+ *     (Compose's `trailingContent`; not with a FAB).
+ * @slot fab - A `petal-fab` beside the toolbar (Compose's FAB toolbar).
  */
 export class FloatingToolbar extends floatingToolbarBaseClass {
   /** `horizontal` (a row) or `vertical` (a column). */

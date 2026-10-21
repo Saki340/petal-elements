@@ -17,7 +17,9 @@ interface ListItem extends SharedListItem {
   type: 'text' | 'button' | 'link';
 }
 
-// tslint:disable-next-line:enforce-comments-on-exported-symbols
+/**
+ * @slot - The `petal-list-item`s, and `petal-divider`s between them.
+ */
 export class List extends LitElement {
   /**
    * Segmented list (Material 3 Expressive): items are separate surfaces 2px

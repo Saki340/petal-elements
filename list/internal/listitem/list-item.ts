@@ -43,6 +43,14 @@ const listItemBaseClass = mixinDelegatesAria(LitElement);
  * applications do not need to listen for this event. It is exposed for
  * authors building their own list-item replacements or wrapping items in a
  * custom controller. --bubbles --composed
+ *
+ * @slot - The headline, as text (the same as the `headline` slot).
+ * @slot headline - The main line of text.
+ * @slot overline - A short line above the headline.
+ * @slot supporting-text - Lines below the headline.
+ * @slot trailing-supporting-text - Short text at the end, such as a count or a time.
+ * @slot start - Content at the start: an icon, an avatar, an image or a control.
+ * @slot end - Content at the end: an icon or a control.
  */
 export class ListItemEl extends listItemBaseClass implements ListItem {
   /** @nocollapse */

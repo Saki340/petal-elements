@@ -74,6 +74,9 @@ const bottomSheetBaseClass = mixinDelegatesAria(LitElement);
  * animations.
  * @fires cancel {Event} Dispatched when the user asks to dismiss the sheet
  * with Escape or the scrim. Cancelable.
+ *
+ * @slot - The sheet's content.
+ * @slot drag-handle - Replaces the default 32px by 4px drag handle.
  */
 export class BottomSheet extends bottomSheetBaseClass {
   /**

@@ -52,6 +52,10 @@ const buttonBaseClass = mixinDelegatesAria(
  * @fires input {InputEvent} Dispatched when a toggle button toggles --bubbles
  * --composed
  * @fires change {Event} Dispatched when a toggle button toggles --bubbles
+ *
+ * @slot - The label text.
+ * @slot icon - An icon (`<petal-icon slot="icon">`), before the label, or
+ *     after it with `trailing-icon`.
  */
 export abstract class Button extends buttonBaseClass {
   /** @nocollapse */

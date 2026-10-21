@@ -38,6 +38,8 @@ function resist(raw: number) {
  *
  * @fires refresh {Event} The user pulled past the threshold and released.
  * `refreshing` is already true. --bubbles --composed
+ *
+ * @slot - The content that scrolls and is pulled down.
  */
 export class PullToRefresh extends LitElement {
   /** Whether a refresh is in progress. Set it to false when it is done. */

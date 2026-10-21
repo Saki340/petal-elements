@@ -96,6 +96,12 @@ interface Start {
  * --bubbles --composed
  * @fires open {Event} The view started to open.
  * @fires close {Event} The view started to close.
+ *
+ * @slot - The suggestions or results shown in the open view, for example a
+ *     `petal-list`.
+ * @slot leading - Replaces the search icon of the closed bar, for example a menu
+ *     button.
+ * @slot trailing - An element at the end, such as an avatar image (30px, round).
  */
 export class SearchBar extends searchBarBaseClass {
   /** The text in the input. */

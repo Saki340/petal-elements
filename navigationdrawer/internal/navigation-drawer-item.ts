@@ -22,6 +22,8 @@ import {
  * the label in the default slot, and a badge (for example a count) in the
  * `badge` slot. An item with `href` is a link. The selected item is the
  * current page (`aria-current="page"`).
+ *
+ * @slot badge - Text at the end of the item, such as an unread count.
  */
 export class NavigationDrawerItem extends NavigationItem {
   constructor() {

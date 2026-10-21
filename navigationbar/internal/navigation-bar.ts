@@ -22,6 +22,8 @@ export type NavigationBarArrangement = 'equal-weight' | 'centered';
  *
  * The bar keeps one of its items selected and fires `change` when the user
  * picks another.
+ *
+ * @slot - The `petal-navigation-bar-item`s (three to five).
  */
 export class NavigationBar extends NavigationContainer {
   protected readonly orientation = 'horizontal';

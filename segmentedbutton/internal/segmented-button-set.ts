@@ -29,6 +29,8 @@ const segmentedButtonSetBaseClass = mixinDelegatesAria(LitElement);
  * Dispatched when a button is selected programmatically with the
  * `setButtonSelected` method as well as on user interaction. --bubbles
  * --composed
+ *
+ * @slot - The `petal-segmented-button`s.
  */
 export class SegmentedButtonSet extends segmentedButtonSetBaseClass {
   /** Allows several buttons to be selected. */

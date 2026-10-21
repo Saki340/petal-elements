@@ -39,6 +39,9 @@ const toggleFabBaseClass = mixinDelegatesAria(LitElement);
  * (FloatingActionButtonMenu.kt): when it is toggled its container animates its
  * size, corner radius and color, and its icon its size and color, driven by a
  * `checkedProgress` from 0 to 1 that follows the fast spatial spring.
+ *
+ * @slot icon - The icon while closed; an add icon by default.
+ * @slot checked-icon - The icon while open; a close icon by default.
  */
 export class ToggleFab extends toggleFabBaseClass {
   /** @nocollapse */
