@@ -245,7 +245,7 @@ h3 {
 
 .features {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
 }
 
@@ -498,6 +498,51 @@ thead th {
 
 .progress-demo petal-loading-indicator[hidden] {
   display: none;
+}
+
+.carousel-demo petal-carousel {
+  width: 100%;
+  --md-carousel-height: 180px;
+}
+
+.color-item {
+  display: flex;
+  align-items: flex-end;
+  padding: 16px;
+  box-sizing: border-box;
+  background: var(--tone);
+  color: var(--on-tone);
+  font: var(--md-sys-typescale-title-medium);
+}
+
+/* Labels fade in as items reach the large size (the carousel's mask fraction). */
+.color-item span {
+  opacity: calc((var(--carousel-item-mask-fraction, 1) - 0.6) * 2.5);
+}
+
+.pickers-demo,
+.tooltip-demo {
+  flex-wrap: wrap;
+}
+
+.hover-demo {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.hover-demo .row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.hover-card {
+  display: grid;
+  place-items: center;
+  height: 96px;
+  color: var(--md-sys-color-on-surface-variant);
+  font: var(--md-sys-typescale-label-large);
 }
 
 /* ---------- Example pages ---------- */
@@ -828,24 +873,7 @@ thead th {
   position: relative;
 }
 
-.badge {
-  position: absolute;
-  top: 2px;
-  inset-inline-end: 2px;
-  min-width: 16px;
-  height: 16px;
-  padding-inline: 4px;
-  box-sizing: border-box;
-  border-radius: 8px;
-  background: var(--md-sys-color-error);
-  color: var(--md-sys-color-on-error);
-  font: var(--md-sys-typescale-label-small);
-  line-height: 16px;
-  text-align: center;
-  pointer-events: none;
-}
-
-.badge[hidden] {
+petal-badge[hidden] {
   display: none;
 }
 
@@ -855,6 +883,50 @@ thead th {
 
 .shop-filters {
   padding: 16px 24px 0;
+}
+
+.shop-section {
+  margin: 0;
+  padding: 24px 24px 12px;
+  font: var(--md-sys-typescale-title-medium);
+}
+
+.shop-featured {
+  flex: none;
+  margin-inline: 24px;
+  --md-carousel-height: 200px;
+}
+
+.featured-item {
+  display: grid;
+  place-items: center;
+  background: linear-gradient(
+    160deg,
+    var(--md-sys-color-surface-container-high),
+    color-mix(in srgb, var(--tint) 35%, var(--md-sys-color-surface-container-high))
+  );
+}
+
+.featured-item svg {
+  width: 96px;
+}
+
+/* The caption fades in as the item reaches the large size. */
+.featured-caption {
+  position: absolute;
+  inset: auto 0 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 12px 16px;
+  color: var(--md-sys-color-on-surface);
+  font: var(--md-sys-typescale-label-large);
+  opacity: calc((var(--carousel-item-mask-fraction, 1) - 0.6) * 2.5);
+  white-space: nowrap;
+}
+
+.featured-caption span {
+  color: var(--md-sys-color-on-surface-variant);
 }
 
 .products {

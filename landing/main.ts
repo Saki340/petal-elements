@@ -5,6 +5,7 @@
  */
 
 // Components used on the landing page, from this repository.
+import 'petal-elements/badge/badge.js';
 import 'petal-elements/button/elevated-button.js';
 import 'petal-elements/button/filled-button.js';
 import 'petal-elements/button/filled-tonal-button.js';
@@ -14,9 +15,11 @@ import 'petal-elements/buttongroup/button-group.js';
 import 'petal-elements/card/elevated-card.js';
 import 'petal-elements/card/filled-card.js';
 import 'petal-elements/card/outlined-card.js';
+import 'petal-elements/carousel/carousel.js';
 import 'petal-elements/checkbox/checkbox.js';
 import 'petal-elements/chips/chip-set.js';
 import 'petal-elements/chips/filter-chip.js';
+import 'petal-elements/datepicker/date-picker-dialog.js';
 import 'petal-elements/dialog/dialog.js';
 import 'petal-elements/fab/fab.js';
 import 'petal-elements/fabmenu/fab-menu.js';
@@ -48,6 +51,8 @@ import 'petal-elements/tabs/primary-tab.js';
 import 'petal-elements/tabs/secondary-tab.js';
 import 'petal-elements/tabs/tabs.js';
 import 'petal-elements/textfield/outlined-text-field.js';
+import 'petal-elements/timepicker/time-picker-dialog.js';
+import 'petal-elements/tooltip/rich-tooltip.js';
 import 'petal-elements/tooltip/tooltip.js';
 
 import {transitionTheme} from 'petal-elements/theme/theme-transition.js';
@@ -506,9 +511,24 @@ shopTabs.addEventListener('change', () => {
 });
 showProducts('Bouquets');
 
+// This week's flowers: a carousel of every category's first flowers.
+{
+  const featured = byId('shop-featured');
+  for (const product of Object.values(PRODUCTS).flatMap((list) => list.slice(0, 2))) {
+    const [name, price, colors] = product;
+    const item = document.createElement('div');
+    item.className = 'featured-item';
+    item.style.setProperty('--tint', colors[1]);
+    item.innerHTML = `${flower(colors)}<span class="featured-caption"><b></b><span>${yen(price)}</span></span>`;
+    item.querySelector('b')!.textContent = name;
+    item.setAttribute('aria-label', name);
+    featured.append(item);
+  }
+}
+
 const count = byId('shop-count');
 function updateCart() {
-  count.textContent = String(cart.length);
+  count.setAttribute('value', String(cart.length));
   count.hidden = cart.length === 0;
 }
 
@@ -527,6 +547,28 @@ function openCart() {
   cartDialog.show();
 }
 byId('shop-cart').addEventListener('click', openCart);
+
+// Delivery date: from tomorrow, picked in the date picker dialog.
+{
+  const field = byId<HTMLElement & {value: string}>('cart-date');
+  const dialog = byId<HTMLElement & {value: string; min: string; show(): void}>('cart-date-dialog');
+  const iso = (date: Date) =>
+    `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  dialog.min = iso(tomorrow);
+  const pick = () => dialog.show();
+  byId('cart-date-button').addEventListener('click', pick);
+  field.addEventListener('click', pick);
+  dialog.addEventListener('change', () => {
+    const [year, month, day] = dialog.value.split('-').map(Number);
+    field.value = new Date(year, month - 1, day).toLocaleDateString('en-US', {
+      weekday: 'short',
+      month: 'short',
+      day: 'numeric',
+    });
+  });
+}
 byId('cart-close').addEventListener('click', () => cartDialog.close());
 
 // Checkout: the split button pays, its arrow picks how.
@@ -575,4 +617,56 @@ checkout.addEventListener('click', () => {
     };
     requestAnimationFrame(step);
   });
+}
+
+// ---------- Carousel demo ----------
+
+{
+  const carousel = document.getElementById('demo-carousel')!;
+  const tones = ['primary', 'secondary', 'tertiary'];
+  const names = ['Morning', 'Noon', 'Dusk', 'Night', 'Dawn', 'Rain', 'Snow', 'Bloom'];
+  names.forEach((name, i) => {
+    const item = document.createElement('div');
+    const tone = tones[i % tones.length];
+    item.className = 'color-item';
+    item.style.setProperty('--tone', `var(--md-sys-color-${tone}-container)`);
+    item.style.setProperty('--on-tone', `var(--md-sys-color-on-${tone}-container)`);
+    item.append(Object.assign(document.createElement('span'), {textContent: name}));
+    carousel.append(item);
+  });
+}
+
+// ---------- Date and time picker demo ----------
+
+{
+  type PickerDialog = HTMLElement & {value: string; show(): void};
+  const dateDialog = document.getElementById('demo-date-dialog') as PickerDialog;
+  const timeDialog = document.getElementById('demo-time-dialog') as PickerDialog;
+  const dateLabel = document.getElementById('demo-date-label')!;
+  const timeLabel = document.getElementById('demo-time-label')!;
+  document.getElementById('demo-date-button')!.addEventListener('click', () => dateDialog.show());
+  document.getElementById('demo-time-button')!.addEventListener('click', () => timeDialog.show());
+  dateDialog.addEventListener('change', () => {
+    const [year, month, day] = dateDialog.value.split('-').map(Number);
+    dateLabel.textContent = new Date(year, month - 1, day).toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+    });
+  });
+  timeDialog.addEventListener('change', () => {
+    const [hours, minutes] = timeDialog.value.split(':').map(Number);
+    timeLabel.textContent = new Date(2000, 0, 1, hours, minutes).toLocaleTimeString('en-US', {
+      hour: 'numeric',
+      minute: '2-digit',
+    });
+  });
+}
+
+// ---------- Rich tooltip demo ----------
+
+{
+  // Hover or focus shows it; a tap or click does too, for touch screens.
+  const tooltip = document.getElementById('demo-rich') as HTMLElement & {show(): void};
+  document.getElementById('demo-rich-anchor')!.addEventListener('click', () => tooltip.show());
 }

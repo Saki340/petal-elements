@@ -11,7 +11,7 @@
     <title>petal-elements · Material 3 Expressive web components</title>
     <meta
       name="description"
-      content="Community-maintained Material 3 Expressive web components: navigation, sheets, dialogs, forms and buttons that morph and move on Jetpack Compose's springs. Works with any framework." />
+      content="Community-maintained Material 3 Expressive web components: navigation, sheets, dialogs, date and time pickers, carousels, forms and buttons that morph and move on Jetpack Compose's springs. Works with any framework." />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -56,10 +56,9 @@
           <p class="eyebrow">Web components · Material 3 Expressive</p>
           <h1>Expressive Material&nbsp;3, for&nbsp;the&nbsp;web.</h1>
           <p class="lead">
-            petal-elements brings Material 3 Expressive to plain HTML and any
-            framework: navigation rails and drawers, sheets, dialogs, menus,
-            form controls and buttons that morph when pressed, all moving on
-            Jetpack Compose's springs, accessible and form-ready.
+            Material 3 Expressive components for plain HTML and any framework.
+            They morph and move on Jetpack Compose's springs, accessible and
+            form-ready.
           </p>
           <div class="actions">
             <petal-filled-button size="medium" href="#start">Get started</petal-filled-button>
@@ -91,7 +90,7 @@
               <petal-icon slot="selected">favorite</petal-icon>
             </petal-filled-icon-button>
           </div>
-          <p class="hint">These are the real components. Press, toggle, tab through them.</p>
+          <p class="hint">These are the real components. Hover, press, toggle, tab through them.</p>
         </div>
       </section>
 
@@ -229,8 +228,7 @@
                 </span>
                 <petal-search-bar class="shop-search" layout="docked" placeholder="Search flowers"></petal-search-bar>
                 <span class="cart">
-                  <petal-icon-button id="shop-cart" aria-label="Cart"><petal-icon>shopping_bag</petal-icon></petal-icon-button>
-                  <span class="badge" id="shop-count" hidden>0</span>
+                  <petal-icon-button id="shop-cart" aria-label="Cart"><petal-icon>shopping_bag</petal-icon><petal-badge slot="badge" id="shop-count" hidden></petal-badge></petal-icon-button>
                 </span>
               </header>
               <petal-tabs id="shop-tabs" class="shop-tabs" aria-label="Category">
@@ -243,6 +241,8 @@
                 <petal-filter-chip label="Under ¥5,000"></petal-filter-chip>
                 <petal-filter-chip label="Eco packaging"></petal-filter-chip>
               </petal-chip-set>
+              <h3 class="shop-section">This week's flowers</h3>
+              <petal-carousel id="shop-featured" class="shop-featured" item-width="220" item-spacing="8" aria-label="This week's flowers"></petal-carousel>
               <div class="products" id="shop-products"></div>
             </div>
 
@@ -253,7 +253,7 @@
         <div class="scene-notes">
           <p class="notes" data-scene="dashboard"><b>Try it:</b> expand the rail with the menu button, filter the orders with the chips, search them, open the account menu, and add an order. In the mobile width the rail turns into a navigation bar.</p>
           <p class="notes" data-scene="form" hidden><b>Try it:</b> submit the empty form to see the errors, show the password, pick a plan and a country, drag the team size, then create the account.</p>
-          <p class="notes" data-scene="shop" hidden><b>Try it:</b> switch the category tabs, save a flower (hover the heart for its tooltip), add flowers to the cart and open the cart.</p>
+          <p class="notes" data-scene="shop" hidden><b>Try it:</b> swipe or scroll this week's flowers, switch the category tabs, save a flower (hover the heart for its tooltip), add flowers to the cart, then open the cart and pick a delivery date.</p>
         </div>
 
         <petal-dialog id="order-dialog">
@@ -281,11 +281,16 @@
           </div>
         </petal-dialog>
 
+        <petal-date-picker-dialog id="cart-date-dialog" picker-title="Delivery date"></petal-date-picker-dialog>
+
         <petal-dialog id="cart-dialog">
           <div slot="headline">Your cart</div>
           <div slot="content" class="cart-content">
             <petal-list id="cart-list" aria-label="Cart"></petal-list>
             <p class="cart-total" id="cart-total"></p>
+            <petal-outlined-text-field id="cart-date" label="Delivery date" readonly>
+              <petal-icon-button slot="trailing-icon" id="cart-date-button" aria-label="Pick a delivery date"><petal-icon>calendar_month</petal-icon></petal-icon-button>
+            </petal-outlined-text-field>
           </div>
           <div slot="actions">
             <petal-text-button id="cart-close">Keep shopping</petal-text-button>
@@ -423,6 +428,55 @@
               </span>
               <petal-loading-indicator id="demo-loading" hidden></petal-loading-indicator>
               <petal-linear-progress id="demo-progress" class="fill" wavy value="0"></petal-linear-progress>
+            </div>
+          </article>
+
+          <article class="feature surface">
+            <h3>Carousels</h3>
+            <p>Items grow as they reach the large place and shrink as they leave, on Compose's keylines. Swipe, scroll or use the arrow keys.</p>
+            <div class="demo carousel-demo">
+              <petal-carousel id="demo-carousel" item-width="180" item-spacing="8" aria-label="Colors"></petal-carousel>
+            </div>
+          </article>
+
+          <article class="feature surface">
+            <h3>Date and time pickers</h3>
+            <p>A calendar that slides between months, a year grid and a clock dial, in dialogs or on the page, with typed input as well.</p>
+            <div class="demo pickers-demo">
+              <petal-filled-tonal-button id="demo-date-button"><petal-icon slot="icon">calendar_month</petal-icon><span id="demo-date-label">Pick a date</span></petal-filled-tonal-button>
+              <petal-filled-tonal-button id="demo-time-button"><petal-icon slot="icon">schedule</petal-icon><span id="demo-time-label">Pick a time</span></petal-filled-tonal-button>
+              <petal-date-picker-dialog id="demo-date-dialog"></petal-date-picker-dialog>
+              <petal-time-picker-dialog id="demo-time-dialog"></petal-time-picker-dialog>
+            </div>
+          </article>
+
+          <article class="feature surface">
+            <h3>Made for the mouse too</h3>
+            <p>Hovering previews the press: shapes go part of the way, icons move by what they mean, and clickable cards lift into a light that follows the pointer. Touch screens keep Compose's look.</p>
+            <div class="demo hover-demo">
+              <div class="row">
+                <petal-filled-icon-button size="small" aria-label="Next"><petal-icon>arrow_forward</petal-icon></petal-filled-icon-button>
+                <petal-icon-button aria-label="Download"><petal-icon>download</petal-icon></petal-icon-button>
+                <petal-icon-button aria-label="Settings"><petal-icon>settings</petal-icon></petal-icon-button>
+                <petal-icon-button aria-label="Refresh"><petal-icon>refresh</petal-icon></petal-icon-button>
+                <petal-icon-button aria-label="Favorite"><petal-icon>favorite</petal-icon></petal-icon-button>
+              </div>
+              <petal-filled-card class="hover-card" clickable aria-label="A clickable card">
+                <span>Hover me</span>
+              </petal-filled-card>
+            </div>
+          </article>
+
+          <article class="feature surface">
+            <h3>Rich tooltips</h3>
+            <p>A title, a few lines and an action, placed above the anchor, or kept open until something else is pressed.</p>
+            <div class="demo tooltip-demo">
+              <petal-filled-tonal-button id="demo-rich-anchor"><petal-icon slot="icon">info</petal-icon>What's new</petal-filled-tonal-button>
+              <petal-rich-tooltip id="demo-rich" for="demo-rich-anchor" persistent caret>
+                <span slot="title">Pickers and carousels</span>
+                Pick dates and times from a calendar or a dial, and browse items in a carousel.
+                <petal-text-button slot="action" href="catalog/components/carousel/">Learn more</petal-text-button>
+              </petal-rich-tooltip>
             </div>
           </article>
 
