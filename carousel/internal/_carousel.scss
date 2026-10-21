@@ -24,6 +24,7 @@
   }
 
   .scroller {
+    position: relative;
     height: 100%;
     overflow-x: auto;
     overflow-y: hidden;
@@ -45,9 +46,12 @@
     scroll-snap-type: x mandatory;
   }
 
+  // Out of flow, so the track scrolls but does not size the carousel (in a
+  // flex or grid item, its width would be the carousel's smallest width).
   .track {
-    position: relative;
-    height: 100%;
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
   }
 
   .snap {

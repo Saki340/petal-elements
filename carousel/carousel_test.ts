@@ -204,6 +204,21 @@ describe('petal-carousel', () => {
     expect(host.right - (box.left + box.width / 2)).toBeCloseTo(expected.center, 1);
   });
 
+  it('does not grow its flex container with its scroll track', async () => {
+    render(
+      html`<div style="display: flex; width: 380px">
+        <petal-carousel item-width="186" item-spacing="8" style="width: 100%">${items(10)}</petal-carousel>
+      </div>`,
+      root,
+    );
+    const carousel = root.querySelector('petal-carousel') as PetalCarousel;
+    await carousel.updateComplete;
+    await wait(0);
+    await frame();
+    expect(carousel.getBoundingClientRect().width).toBe(380);
+    expect(scroller(carousel).scrollWidth - 380).toBe(max);
+  });
+
   it('lays out again when it is resized', async () => {
     const carousel = await multiBrowse();
     carousel.style.width = '600px';
