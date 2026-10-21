@@ -32,7 +32,7 @@ need something that is not here.
 *   Pixel-exact visual regression tests (Playwright) and doc images rendered
     from the components.
 
-### 0.2 (next release)
+### 0.2 (2026-10-20)
 
 *   Every component follows Jetpack Compose Material 3: sizes, colors, shapes
     and motion are read from the Compose source (pinned commit), not from the
@@ -50,16 +50,28 @@ need something that is not here.
     springs, a press ripple from the pointer, a circular theme transition
     (`transitionTheme()`), wavy progress indicators and `animate-value`.
 
+### 0.3 (2026-10-21)
+
+*   New components, after Compose: date picker and time picker (inline and in
+    a dialog), standard bottom sheet, bottom app bar, rich tooltip and
+    carousel.
+*   Mouse hover that previews the press: shapes, button groups, switches,
+    clickable cards, icon motion and a FAB that follows the pointer. See
+    [Motion](motion.md#mouse-hover).
+*   Loading indicators and wavy progress stop drawing out of view; text
+    fields submit their form on Enter.
+*   Docs for building pages: [Building pages](building-pages.md),
+    [Motion](motion.md), a slots table in every component's API, and
+    `llms.txt` and `llms-full.txt` for coding assistants.
+
 ## Next
 
 Roughly in this order:
 
-*   Missing components, after Compose: date ranges for the date picker, and
-    the Expressive time picker styles.
-*   Expressive details for the mouse: hover states that hint at the press,
-    for desktop pages.
 *   Public springs: the spring motion the components use, for your own
     animations.
 *   Shapes: the Material 3 Expressive shape set and morphing between shapes.
 *   Page transitions with the View Transitions API, in the same motion as the
     components.
+*   Missing components, after Compose: date ranges for the date picker, and
+    the Expressive time picker styles.
