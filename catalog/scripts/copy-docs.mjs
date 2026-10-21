@@ -129,6 +129,17 @@ async function transformReadmes(filepaths, outdir = '', replacements = []) {
     let readme = await readFile(entry, 'utf8');
     console.log(`Transforming ${entry}`);
 
+    // An end marker without a start leaves the comment before it open, which
+    // hides the rest of the page in the catalog.
+    const count = (marker) => readme.split(marker).length - 1;
+    for (const kind of ['catalog-only', 'no-catalog']) {
+      const starts = count(`<!-- ${kind}-start -->`);
+      const ends = count(`<!-- ${kind}-end -->`);
+      if (starts !== ends) {
+        throw new Error(`${entry}: ${starts} ${kind}-start and ${ends} ${kind}-end markers`);
+      }
+    }
+
     transforms.forEach((transform) => {
       readme = readme.replaceAll(transform.before, transform.after);
     });

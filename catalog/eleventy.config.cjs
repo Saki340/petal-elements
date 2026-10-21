@@ -70,11 +70,14 @@ module.exports = function (eleventyConfig) {
     ],
     // Pages from docs/*.md, linked from any page.
     [
-      /^(?:\.\.\/)?(intro|quick-start|expressive|roadmap|support|size|tokens|token-update-v34|licensing|visual-testing|releasing)\.md$/,
+      /^(?:\.\.\/)?(intro|quick-start|building-pages|expressive|motion|migrating|roadmap|support|size|tokens|token-update-v34|licensing|visual-testing|releasing)\.md$/,
       '/about/$1/',
     ],
+    // Component and theming pages linked from the guides.
+    [/^(?:\.\.\/)?components\/([\w-]+)\.md$/, '/components/$1/'],
+    [/^(?:\.\.\/)?theming\/README\.md$/, '/theming/material-theming/'],
+    [/^(?:\.\.\/)?theming\/([\w-]+)\.md$/, '/theming/$1/'],
     ['../theming/README.md', '/theming/material-theming/'],
-    ['./list', '/components/list'],
     [/theming\/README/, '/theming/'],
     [/^typography\.md/, '/theming/typography/'],
     [/^color\.md/, '/theming/color/'],
