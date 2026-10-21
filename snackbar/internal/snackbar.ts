@@ -70,7 +70,7 @@ export class Snackbar extends LitElement {
 
   @query('.snackbar') private readonly container!: HTMLElement | null;
 
-  private timer?: ReturnType<typeof setTimeout>;
+  private timer?: number;
   private closing = false;
   private closedByMethod = false;
   private result?: Promise<SnackbarCloseReason>;
@@ -177,7 +177,7 @@ export class Snackbar extends LitElement {
     clearTimeout(this.timer);
     const duration = this.duration ?? (this.action ? 'indefinite' : 'short');
     const ms = DURATION_MS[duration];
-    if (ms !== Infinity) this.timer = setTimeout(() => this.close('timeout'), ms);
+    if (ms !== Infinity) this.timer = window.setTimeout(() => this.close('timeout'), ms);
   }
 
   private onAction(event: Event) {

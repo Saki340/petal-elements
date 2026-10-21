@@ -45,7 +45,7 @@ export class RichTooltip extends Tooltip {
   @state() private hasAction = false;
   @state() private below = false;
 
-  private leaveTimer?: ReturnType<typeof setTimeout>;
+  private leaveTimer?: number;
 
   protected override get hidesOnLeave() {
     return !this.persistent;
@@ -153,7 +153,7 @@ export class RichTooltip extends Tooltip {
   // The pointer can cross from the anchor onto the tooltip.
   protected override leave() {
     clearTimeout(this.leaveTimer);
-    this.leaveTimer = setTimeout(() => this.hide(), LEAVE_DELAY);
+    this.leaveTimer = window.setTimeout(() => this.hide(), LEAVE_DELAY);
   }
 
   private readonly onTooltipEnter = () => {

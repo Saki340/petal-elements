@@ -41,8 +41,8 @@ export class Tooltip extends LitElement {
   @state() protected closing = false;
 
   private anchorElement: HTMLElement | null = null;
-  private pressTimer?: ReturnType<typeof setTimeout>;
-  private hideTimer?: ReturnType<typeof setTimeout>;
+  private pressTimer?: number;
+  private hideTimer?: number;
   private pointerFocus = false;
 
   /** The anchor element. Set it to use an element instead of `for`. */
@@ -207,9 +207,9 @@ export class Tooltip extends LitElement {
     this.pointerFocus = true;
     if (event.pointerType !== 'touch') return;
     clearTimeout(this.pressTimer);
-    this.pressTimer = setTimeout(() => {
+    this.pressTimer = window.setTimeout(() => {
       this.show();
-      this.hideTimer = setTimeout(() => this.hide(), LONG_PRESS_SHOW_MS);
+      this.hideTimer = window.setTimeout(() => this.hide(), LONG_PRESS_SHOW_MS);
     }, LONG_PRESS_MS);
   };
 

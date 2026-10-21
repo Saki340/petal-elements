@@ -152,7 +152,7 @@ export class Checkbox extends checkboxBaseClass {
   private markFrame = 0;
   private markTime = 0;
   private markFrames = 0;
-  private markDelay?: ReturnType<typeof setTimeout>;
+  private markDelay?: number;
 
   constructor() {
     super();
@@ -221,7 +221,7 @@ export class Checkbox extends checkboxBaseClass {
       // Keep the mark as it is, remove it after the delay.
       this.draw.target = this.draw.value;
       this.gravitation.target = this.gravitation.value;
-      this.markDelay = setTimeout(() => {
+      this.markDelay = window.setTimeout(() => {
         this.markDelay = undefined;
         this.snapMark(0, 0);
       }, SNAP_DELAY_MS);
