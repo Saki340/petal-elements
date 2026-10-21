@@ -555,7 +555,7 @@ Token                                          | Default value
 | `autocomplete` | `autocomplete` | `string` | `''` | Describes what, if any, type of autocomplete functionality the input should provide.<br>https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete |
 | `name` | `name` | `string` | `undefined` | The HTML name to use in form submission. |
 | `disabled` | `disabled` | `boolean` | `undefined` | Whether or not the element is disabled. |
-| `selectionDirection` |  | `"none" \| "forward" \| "backward"` | `undefined` |  |
+| `selectionDirection` |  | `"forward" \| "none" \| "backward"` | `undefined` |  |
 | `selectionEnd` |  | `number` | `undefined` |  |
 | `selectionStart` |  | `number` | `undefined` |  |
 | `valueAsNumber` |  | `number` | `undefined` |  |
@@ -640,7 +640,7 @@ Token                                          | Default value
 | `autocomplete` | `autocomplete` | `string` | `''` | Describes what, if any, type of autocomplete functionality the input should provide.<br>https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete |
 | `name` | `name` | `string` | `undefined` | The HTML name to use in form submission. |
 | `disabled` | `disabled` | `boolean` | `undefined` | Whether or not the element is disabled. |
-| `selectionDirection` |  | `"none" \| "forward" \| "backward"` | `undefined` |  |
+| `selectionDirection` |  | `"forward" \| "none" \| "backward"` | `undefined` |  |
 | `selectionEnd` |  | `number` | `undefined` |  |
 | `selectionStart` |  | `number` | `undefined` |  |
 | `valueAsNumber` |  | `number` | `undefined` |  |

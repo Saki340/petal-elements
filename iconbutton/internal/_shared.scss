@@ -13,6 +13,7 @@
 // go/keep-sorted start
 @use '../../focus/focus-ring';
 @use '../../icon/icon';
+@use '../../internal/motion/hover';
 @use '../../tokens';
 // go/keep-sorted end
 
@@ -116,6 +117,53 @@
 
   :host([touch-target='none']) .touch {
     display: none;
+  }
+
+  // With a mouse, the icon moves by what it means (icon-button.ts picks the
+  // motion; a petal-elements addition), entering on the fast spatial spring and leaving on the default
+  // spatial one; a press brings it back.
+  @include hover.fine-pointer-motion {
+    .icon {
+      transition-property: translate, rotate, scale;
+      transition-duration: #{hover.$leave-duration};
+      transition-timing-function: #{hover.$leave-easing};
+    }
+
+    :host(:hover:not(:active, [disabled], [soft-disabled])) .icon {
+      transition-duration: #{hover.$enter-duration};
+      transition-timing-function: #{hover.$enter-easing};
+    }
+
+    :host(:hover:not(:active, [disabled], [soft-disabled])) {
+      .motion-forward .icon {
+        translate: 3px 0;
+      }
+
+      .motion-down .icon {
+        translate: 0 2px;
+      }
+
+      .motion-external .icon {
+        translate: 2px -2px;
+      }
+
+      .motion-turn .icon {
+        rotate: 60deg;
+      }
+
+      .motion-spin .icon {
+        rotate: 90deg;
+      }
+
+      .motion-grow .icon {
+        scale: 1.15;
+      }
+    }
+
+    // A flipped arrow points the other way.
+    :host(:hover:not(:active, [disabled], [soft-disabled])) .flip-icon.motion-forward .icon {
+      translate: -3px 0;
+    }
   }
 
   @media (forced-colors: active) {

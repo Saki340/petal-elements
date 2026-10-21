@@ -8,6 +8,7 @@
 @use 'sass:map';
 // go/keep-sorted end
 // go/keep-sorted start
+@use '../../internal/motion/hover';
 @use '../../ripple/ripple';
 @use '../../tokens/versions/v34/values/md-sys-motion-springs' as springs;
 // go/keep-sorted end
@@ -16,6 +17,9 @@
 // with MotionSchemeKeyTokens.FastSpatial (a spring that overshoots in the
 // expressive scheme). Pressing snaps to the pressed size (SnapSpec), releasing
 // springs back. Colors and icons change instantly.
+// With a mouse, a hovered thumb goes 30% of the way to its pressed size
+// (internal/motion/_hover.scss; a petal-elements addition), on the thumb's
+// own spring.
 $_thumb-spring: map.get(springs.$values, 'spring-fast-spatial-duration')
   map.get(springs.$values, 'spring-fast-spatial');
 
@@ -88,6 +92,26 @@ $_thumb-spring: map.get(springs.$values, 'spring-fast-spatial-duration')
       width: map.get($tokens, 'pressed-handle-width');
       // Compose snaps to the pressed size (SnapSpec).
       transition: none;
+    }
+
+    @include hover.fine-pointer {
+      $pressed-height: map.get($tokens, 'pressed-handle-height');
+      $pressed-width: map.get($tokens, 'pressed-handle-width');
+
+      .unselected:not(.disabled):hover:not(:active) .handle {
+        height: hover.toward(map.get($tokens, 'handle-height'), $pressed-height);
+        width: hover.toward(map.get($tokens, 'handle-width'), $pressed-width);
+      }
+
+      .selected:not(.disabled):hover:not(:active) .handle {
+        height: hover.toward(map.get($tokens, 'selected-handle-height'), $pressed-height);
+        width: hover.toward(map.get($tokens, 'selected-handle-width'), $pressed-width);
+      }
+
+      :is(.selected, .unselected):not(.disabled):hover:not(:active) .handle.with-icon {
+        height: hover.toward(map.get($tokens, 'with-icon-handle-height'), $pressed-height);
+        width: hover.toward(map.get($tokens, 'with-icon-handle-width'), $pressed-width);
+      }
     }
 
     .selected .handle::before {

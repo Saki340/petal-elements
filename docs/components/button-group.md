@@ -116,6 +116,15 @@ medium](images/buttongroup/usage-sizes.webp)
 </div>
 ```
 
+### Mouse hover
+
+With a mouse or trackpad, the hovered button goes 30% of the way to its
+press: it widens by 30% of the pressed share, its neighbors make room, and in
+connected groups its inner corners go 30% of the way to the pressed ones. It
+widens on the fast spatial spring and goes back on the default spatial one.
+This is a petal-elements addition; touch screens and reduced motion keep
+Compose's behavior.
+
 ## Accessibility
 
 The group has `role="group"`. Give it an accessible name with `aria-label` or

@@ -10,6 +10,7 @@
 // go/keep-sorted start
 @use '../../elevation/elevation';
 @use '../../focus/focus-ring';
+@use '../../internal/motion/hover';
 @use '../../ripple/ripple';
 @use '../../tokens';
 @use './fab';
@@ -183,6 +184,30 @@ $_md-sys-motion: tokens.md-sys-motion-values();
     // TODO: replace duration with animation tokens
     transition-duration: 280ms;
     transition-timing-function: map.get($_md-sys-motion, 'easing-emphasized');
+  }
+
+  // follow-pointer: shared.ts sets the offset toward a mouse pointer; it
+  // moves on the fast spatial spring and goes back on the default spatial
+  // one (a petal-elements addition).
+  :host([follow-pointer]) .fab {
+    --_follow-x: 0px;
+    --_follow-y: 0px;
+  }
+
+  @include hover.fine-pointer-motion {
+    :host([follow-pointer]) .fab {
+      translate: var(--_follow-x) var(--_follow-y);
+      transition-property: background-color, translate;
+      transition-duration: 280ms, #{hover.$leave-duration};
+      transition-timing-function: map.get($_md-sys-motion, 'easing-emphasized'),
+        #{hover.$leave-easing};
+    }
+
+    :host([follow-pointer]) .fab.following {
+      transition-duration: 280ms, #{hover.$enter-duration};
+      transition-timing-function: map.get($_md-sys-motion, 'easing-emphasized'),
+        #{hover.$enter-easing};
+    }
   }
 
   .fab,

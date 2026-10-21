@@ -68,8 +68,8 @@ describe('Icon button (Expressive)', () => {
     `);
     const radius = (el: HTMLElement) =>
       getComputedStyle(el.shadowRoot!.querySelector('.icon-button')!).borderTopLeftRadius;
-    // corner-full: 50%, or 9999px from sys.css.
-    expect(['50%', '9999px']).toContain(radius(round));
+    // corner-full: half the smaller side, so the press morph is gradual.
+    expect(radius(round)).toBe('28px');
     // corner-large.
     expect(radius(square)).toBe('16px');
     expect(radius(selected)).toBe('16px');

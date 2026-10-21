@@ -100,6 +100,13 @@ Associate a label with a switch using the `<label>` element.
 <petal-switch id="switch"></petal-switch>
 ```
 
+### Mouse hover
+
+With a mouse or trackpad, the hovered thumb goes 30% of the way to its pressed
+size (28px): from 16px to about 20px when off, from 24px to about 25px when on.
+It moves on the thumb's own spring. This is a petal-elements addition; touch
+screens keep Compose's look.
+
 ## Accessibility
 
 Add an

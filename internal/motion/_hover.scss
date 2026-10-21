@@ -1,0 +1,50 @@
+//
+// Copyright 2026 Saki
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// Hover as a preview of the press, for mice and trackpads (a petal-elements
+// addition: Compose has no hover shapes or motion). A hovered component goes
+// $fraction of the way from its resting value to its pressed one, entering on
+// the fast spatial spring and leaving on the default spatial one. Touch
+// screens keep Compose's look. With reduced motion, shapes switch without
+// moving and nothing slides or turns.
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'sass:map';
+@use '../../tokens/versions/v34/values/md-sys-motion-springs' as springs;
+// go/keep-sorted end
+
+/// How far toward the pressed value a hover goes.
+$fraction: 0.3;
+
+/// Entering a hover: the fast spatial spring.
+$enter-easing: map.get(springs.$values, 'spring-fast-spatial');
+$enter-duration: map.get(springs.$values, 'spring-fast-spatial-duration');
+
+/// Leaving a hover: the default spatial spring.
+$leave-easing: map.get(springs.$values, 'spring-default-spatial');
+$leave-duration: map.get(springs.$values, 'spring-default-spatial-duration');
+
+/// Colors and opacity: the fast effects spring.
+$effects-easing: map.get(springs.$values, 'spring-fast-effects');
+$effects-duration: map.get(springs.$values, 'spring-fast-effects-duration');
+
+/// The value $fraction of the way from $rest to $pressed.
+@function toward($rest, $pressed, $amount: $fraction) {
+  @return calc(#{$rest} + (#{$pressed} - #{$rest}) * #{$amount});
+}
+
+/// Styles for pointers that hover: a mouse or trackpad.
+@mixin fine-pointer() {
+  @media (hover: hover) and (pointer: fine) {
+    @content;
+  }
+}
+
+/// Styles for pointers that hover, without reduced motion.
+@mixin fine-pointer-motion() {
+  @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    @content;
+  }
+}

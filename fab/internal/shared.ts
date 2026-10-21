@@ -9,12 +9,13 @@ import '../../elevation/elevation.js';
 import '../../focus/md-focus-ring.js';
 import '../../ripple/ripple.js';
 
-import {html, LitElement, nothing, PropertyValues} from 'lit';
+import {html, isServer, LitElement, nothing, PropertyValues} from 'lit';
 import {property, query} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 import {mixinDelegatesAria} from '../../internal/aria/delegate.js';
+import {hasFinePointer, prefersReducedMotion} from '../../internal/motion/hover.js';
 import {FAST_SPATIAL, Spring, springFromCss} from '../../internal/motion/spring.js';
 
 /**
@@ -23,6 +24,11 @@ import {FAST_SPATIAL, Spring, springFromCss} from '../../internal/motion/spring.
  * high for `small` and `baseline`, 80px for `medium` and 96px for `large`.
  */
 export type FabSize = 'small' | 'baseline' | 'medium' | 'large';
+
+/** How near a mouse pointer draws a following FAB, in px from its edges. */
+const FOLLOW_REACH = 28;
+/** How far a following FAB moves toward the pointer, at most, in px. */
+const FOLLOW_DISTANCE = 4;
 
 /** MotionSchemeKeyTokens.FastEffects, the same in both schemes. */
 const FAST_EFFECTS = {dampingRatio: 1, stiffness: 3800};
@@ -61,6 +67,14 @@ export abstract class SharedFab extends fabBaseClass {
    */
   @property({type: Boolean}) expanded = true;
 
+  /**
+   * Moves the FAB up to 4px toward a mouse pointer within 28px of it, and
+   * back when the pointer leaves (a petal-elements addition). Meant for the
+   * page's main FAB only.
+   */
+  @property({type: Boolean, reflect: true, attribute: 'follow-pointer'})
+  followPointer = false;
+
   @query('.fab') private readonly fab!: HTMLElement | null;
   @query('.label') private readonly labelElement!: HTMLElement | null;
 
@@ -71,6 +85,8 @@ export abstract class SharedFab extends fabBaseClass {
   private alpha?: Spring;
   private frame = 0;
   private lastFrame = 0;
+  /** The offset toward the pointer, as `--_follow-x` and `-y` on `.fab`. */
+  private follow = {x: 0, y: 0};
 
   protected override render() {
     // Needed for closure conformance
@@ -101,13 +117,74 @@ export abstract class SharedFab extends fabBaseClass {
     };
   }
 
+  override connectedCallback() {
+    super.connectedCallback();
+    if (this.followPointer) this.listenToPointer(true);
+  }
+
   override disconnectedCallback() {
     super.disconnectedCallback();
     cancelAnimationFrame(this.frame);
     this.frame = 0;
+    this.listenToPointer(false);
+  }
+
+  private listenToPointer(on: boolean) {
+    if (isServer) return;
+    window.removeEventListener('pointermove', this.handlePointerMove);
+    document.documentElement.removeEventListener('pointerleave', this.handlePointerLeave);
+    if (on) {
+      window.addEventListener('pointermove', this.handlePointerMove, {passive: true});
+      document.documentElement.addEventListener('pointerleave', this.handlePointerLeave);
+    } else {
+      this.setFollow(0, 0);
+    }
+  }
+
+  private readonly handlePointerMove = (event: PointerEvent) => {
+    if (event.pointerType !== 'mouse' || !hasFinePointer() || prefersReducedMotion()) {
+      this.setFollow(0, 0);
+      return;
+    }
+    // The FAB's box where it rests.
+    const box = (this.fab ?? this).getBoundingClientRect();
+    const left = box.left - this.follow.x;
+    const top = box.top - this.follow.y;
+    const dx = event.clientX - (left + box.width / 2);
+    const dy = event.clientY - (top + box.height / 2);
+    // How far the pointer is outside the FAB.
+    const outsideX = Math.max(0, Math.abs(dx) - box.width / 2);
+    const outsideY = Math.max(0, Math.abs(dy) - box.height / 2);
+    const distance = Math.hypot(dx, dy);
+    if (Math.hypot(outsideX, outsideY) > FOLLOW_REACH || distance === 0) {
+      this.setFollow(0, 0);
+      return;
+    }
+    // Toward the pointer, the full distance from the FAB's edge outward.
+    const edge = Math.hypot(Math.min(Math.abs(dx), box.width / 2), Math.min(Math.abs(dy), box.height / 2));
+    const amount = FOLLOW_DISTANCE * Math.min(1, edge > 0 ? distance / edge : 1);
+    this.setFollow((dx / distance) * amount, (dy / distance) * amount);
+  };
+
+  private readonly handlePointerLeave = () => {
+    this.setFollow(0, 0);
+  };
+
+  private setFollow(x: number, y: number) {
+    const fab = this.fab;
+    if (!fab || (x === this.follow.x && y === this.follow.y)) return;
+    this.follow = {x, y};
+    // Not render classes or properties, so that they change without an
+    // update.
+    fab.classList.toggle('following', x !== 0 || y !== 0);
+    fab.style.setProperty('--_follow-x', `${x}px`);
+    fab.style.setProperty('--_follow-y', `${y}px`);
   }
 
   protected override updated(changed: PropertyValues<this>) {
+    if (changed.has('followPointer') && (this.followPointer || changed.get('followPointer'))) {
+      this.listenToPointer(this.followPointer);
+    }
     if (!changed.has('expanded') && !changed.has('label') && !changed.has('size')) {
       return;
     }

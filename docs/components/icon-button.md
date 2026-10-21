@@ -217,6 +217,23 @@ icon's top edge.
 </petal-icon-button>
 ```
 
+### Mouse hover
+
+With a mouse or trackpad, a sized icon button's corners go 30% of the way to
+the pressed shape while hovered, as [buttons](button.md#mouse-hover) do. The
+icon also moves by what it means: `arrow_forward` 3px forward (backward when
+flipped), `download` 2px down, `open_in_new` 2px out, `settings` turns 60°,
+`refresh` 90°, and `favorite` and `star` grow to 1.15 times. The motion comes
+from the icon's name; set `icon-motion` to choose one (`forward`, `down`,
+`external`, `turn`, `spin`, `grow`) or `none`. These are petal-elements
+additions; touch screens and reduced motion keep the icon still.
+
+```html
+<petal-icon-button icon-motion="forward" aria-label="Next">
+  <svg viewBox="0 0 24 24">...</svg>
+</petal-icon-button>
+```
+
 ## Accessibility
 
 Add an
@@ -519,6 +536,7 @@ Token                                        | Default value
 | `size` | `size` | `IconButtonSize` | `undefined` | Material 3 Expressive size (Compose's XSmall…XLargeIconButtonTokens): `xsmall` (32px), `small` (40px), `medium` (56px), `large` (96px) or `xlarge` (136px) high. Sized icon buttons morph their shape when pressed or selected. Without it, the button keeps its original 40px look. |
 | `width` | `width` | `"narrow" \| "default" \| "wide"` | `undefined` | The width of a sized icon button (Compose's `IconButtonWidthOption`): `narrow`, `default` or `wide`. |
 | `shape` | `shape` | `"round" \| "square"` | `undefined` | The shape of a sized icon button: `round` (default) or `square`. |
+| `iconMotion` | `icon-motion` | `IconMotion` | `undefined` | How the icon moves while a mouse hovers the button. Without it, the motion follows the icon's name (`arrow_forward` moves forward, `download` down, `open_in_new` out, `settings` turns, `refresh` spins, `favorite` and `star` grow); `none` keeps it still. |
 | `name` | `name` | `string` | `undefined` | The HTML name to use in form submission. |
 | `disabled` | `disabled` | `boolean` | `undefined` | Whether or not the element is disabled. |
 | `type` | `type` | `string` | `'submit'` | A string indicating the form submission behavior of the element.<br>- submit: The element submits the form. This is the default value if the attribute is not specified, or if it is dynamically changed to an empty or invalid value. - reset: The element resets the form. - button: The element does nothing. |
@@ -560,6 +578,7 @@ Token                                        | Default value
 | `size` | `size` | `IconButtonSize` | `undefined` | Material 3 Expressive size (Compose's XSmall…XLargeIconButtonTokens): `xsmall` (32px), `small` (40px), `medium` (56px), `large` (96px) or `xlarge` (136px) high. Sized icon buttons morph their shape when pressed or selected. Without it, the button keeps its original 40px look. |
 | `width` | `width` | `"narrow" \| "default" \| "wide"` | `undefined` | The width of a sized icon button (Compose's `IconButtonWidthOption`): `narrow`, `default` or `wide`. |
 | `shape` | `shape` | `"round" \| "square"` | `undefined` | The shape of a sized icon button: `round` (default) or `square`. |
+| `iconMotion` | `icon-motion` | `IconMotion` | `undefined` | How the icon moves while a mouse hovers the button. Without it, the motion follows the icon's name (`arrow_forward` moves forward, `download` down, `open_in_new` out, `settings` turns, `refresh` spins, `favorite` and `star` grow); `none` keeps it still. |
 | `name` | `name` | `string` | `undefined` | The HTML name to use in form submission. |
 | `disabled` | `disabled` | `boolean` | `undefined` | Whether or not the element is disabled. |
 | `type` | `type` | `string` | `'submit'` | A string indicating the form submission behavior of the element.<br>- submit: The element submits the form. This is the default value if the attribute is not specified, or if it is dynamically changed to an empty or invalid value. - reset: The element resets the form. - button: The element does nothing. |
@@ -601,6 +620,7 @@ Token                                        | Default value
 | `size` | `size` | `IconButtonSize` | `undefined` | Material 3 Expressive size (Compose's XSmall…XLargeIconButtonTokens): `xsmall` (32px), `small` (40px), `medium` (56px), `large` (96px) or `xlarge` (136px) high. Sized icon buttons morph their shape when pressed or selected. Without it, the button keeps its original 40px look. |
 | `width` | `width` | `"narrow" \| "default" \| "wide"` | `undefined` | The width of a sized icon button (Compose's `IconButtonWidthOption`): `narrow`, `default` or `wide`. |
 | `shape` | `shape` | `"round" \| "square"` | `undefined` | The shape of a sized icon button: `round` (default) or `square`. |
+| `iconMotion` | `icon-motion` | `IconMotion` | `undefined` | How the icon moves while a mouse hovers the button. Without it, the motion follows the icon's name (`arrow_forward` moves forward, `download` down, `open_in_new` out, `settings` turns, `refresh` spins, `favorite` and `star` grow); `none` keeps it still. |
 | `name` | `name` | `string` | `undefined` | The HTML name to use in form submission. |
 | `disabled` | `disabled` | `boolean` | `undefined` | Whether or not the element is disabled. |
 | `type` | `type` | `string` | `'submit'` | A string indicating the form submission behavior of the element.<br>- submit: The element submits the form. This is the default value if the attribute is not specified, or if it is dynamically changed to an empty or invalid value. - reset: The element resets the form. - button: The element does nothing. |
@@ -642,6 +662,7 @@ Token                                        | Default value
 | `size` | `size` | `IconButtonSize` | `undefined` | Material 3 Expressive size (Compose's XSmall…XLargeIconButtonTokens): `xsmall` (32px), `small` (40px), `medium` (56px), `large` (96px) or `xlarge` (136px) high. Sized icon buttons morph their shape when pressed or selected. Without it, the button keeps its original 40px look. |
 | `width` | `width` | `"narrow" \| "default" \| "wide"` | `undefined` | The width of a sized icon button (Compose's `IconButtonWidthOption`): `narrow`, `default` or `wide`. |
 | `shape` | `shape` | `"round" \| "square"` | `undefined` | The shape of a sized icon button: `round` (default) or `square`. |
+| `iconMotion` | `icon-motion` | `IconMotion` | `undefined` | How the icon moves while a mouse hovers the button. Without it, the motion follows the icon's name (`arrow_forward` moves forward, `download` down, `open_in_new` out, `settings` turns, `refresh` spins, `favorite` and `star` grow); `none` keeps it still. |
 | `name` | `name` | `string` | `undefined` | The HTML name to use in form submission. |
 | `disabled` | `disabled` | `boolean` | `undefined` | Whether or not the element is disabled. |
 | `type` | `type` | `string` | `'submit'` | A string indicating the form submission behavior of the element.<br>- submit: The element submits the form. This is the default value if the attribute is not specified, or if it is dynamically changed to an empty or invalid value. - reset: The element resets the form. - button: The element does nothing. |

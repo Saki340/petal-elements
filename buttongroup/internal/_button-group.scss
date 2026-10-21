@@ -6,6 +6,9 @@
 // Button group: standard (spaced) and connected (2px apart, inner corners);
 // in both, the pressed item widens, taking space from its neighbors. Values from md.comp.button-group.* (web tokens
 // v34); shapes follow Compose's ButtonGroupDefaults.connected*ButtonShapes.
+// With a mouse, a hovered item goes 30% of the way to its press
+// (internal/motion/_hover.scss): button-group.ts widens it, and connected
+// inner corners go 30% of the way to their pressed size.
 
 // go/keep-sorted start by_regex='(.+) prefix_order=sass:
 @use 'sass:list';
@@ -22,6 +25,7 @@
 @use '../../tokens/versions/v34/values/md-comp-button-group-standard-xlarge' as standard-xlarge;
 @use '../../tokens/versions/v34/values/md-comp-button-group-standard-xsmall' as standard-xsmall;
 @use '../../tokens/versions/v34/values/md-sys-motion-springs' as springs;
+@use '../../internal/motion/hover';
 // go/keep-sorted end
 
 $_sizes: (
@@ -91,19 +95,20 @@ $_outer: calc(var(--_container-height) / 2);
   // While an item is pressed, button-group.ts animates the items' inline
   // padding with a spring, every frame.
 
-  // Connected: outer corners full, inner corners small. Pressed inner corners
-  // are smaller; a selected (checked) item is fully rounded. Pressed wins over
-  // selected, as in Compose's ToggleButton.
+  // Connected: outer corners full, inner corners (--_group-inner) small.
+  // Pressed inner corners are smaller; a selected (checked) item is fully
+  // rounded. Pressed wins over selected, as in Compose's ToggleButton.
   :host([connected]) ::slotted(*) {
-    @include _corners(var(--_inner), var(--_inner));
+    --_group-inner: var(--_inner);
+    @include _corners(var(--_group-inner), var(--_group-inner));
   }
 
   :host([connected]) ::slotted(:first-child) {
-    @include _corners($_outer, var(--_inner));
+    @include _corners($_outer, var(--_group-inner));
   }
 
   :host([connected]) ::slotted(:last-child) {
-    @include _corners(var(--_inner), $_outer);
+    @include _corners(var(--_group-inner), $_outer);
   }
 
   :host([connected]) ::slotted(:first-child:last-child) {
@@ -111,19 +116,21 @@ $_outer: calc(var(--_container-height) / 2);
   }
 
   :host([connected]) ::slotted([selected]) {
-    @include _corners($_outer, $_outer);
+    --_group-inner: #{$_outer};
+  }
+
+  @include hover.fine-pointer {
+    :host([connected]) ::slotted(:hover:not(:active, [disabled], [soft-disabled])) {
+      --_group-inner: #{hover.toward(var(--_inner), var(--_inner-pressed))};
+    }
+
+    :host([connected]) ::slotted([selected]:hover:not(:active, [disabled], [soft-disabled])) {
+      --_group-inner: #{hover.toward($_outer, var(--_inner-pressed))};
+    }
   }
 
   :host([connected]) ::slotted(:active) {
-    @include _corners(var(--_inner-pressed), var(--_inner-pressed));
-  }
-
-  :host([connected]) ::slotted(:first-child:active) {
-    @include _corners($_outer, var(--_inner-pressed));
-  }
-
-  :host([connected]) ::slotted(:last-child:active) {
-    @include _corners(var(--_inner-pressed), $_outer);
+    --_group-inner: var(--_inner-pressed);
   }
 
   @media (prefers-reduced-motion: reduce) {

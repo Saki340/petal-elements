@@ -88,6 +88,14 @@ A clickable card is one target: links and buttons inside it cannot be
 clicked. Use a plain card with its own buttons when the card has several
 actions.
 
+### Mouse hover
+
+With a mouse or trackpad, a clickable card lifts 3px while hovered, and its
+hover layer is a soft light around the pointer (10% at the pointer, 2% at
+180px) instead of an even one. Its elevation follows Compose (an elevated card
+goes from level 1 to 2). These are petal-elements additions; with reduced
+motion, the card lights without lifting.
+
 ### Moved from labs
 
 The cards used to be in `petal-elements/labs/card/`. Those modules now

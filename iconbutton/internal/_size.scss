@@ -13,10 +13,17 @@
 //   selected (shapeByInteraction);
 // - the morph runs on the default effects spring: "MotionSchemeKeyTokens
 //   .DefaultEffects is intentional here to prevent any bounce" (IconButton.kt).
+// - a full corner is half the smaller side (Compose's CircleShape) rather
+//   than 9999px, so the morph to and from it is gradual.
+// With a mouse, a hovered icon button goes 30% of the way to its pressed shape
+// (internal/motion/_hover.scss).
 // Without `size`, the icon button keeps its original look.
 
 // go/keep-sorted start by_regex='(.+) prefix_order=sass:
 @use 'sass:map';
+@use 'sass:meta';
+@use 'sass:string';
+@use '../../internal/motion/hover';
 @use '../../tokens/versions/compose/values/md-comp-large-icon-button' as large;
 @use '../../tokens/versions/compose/values/md-comp-medium-icon-button' as medium;
 @use '../../tokens/versions/compose/values/md-comp-small-icon-button' as small;
@@ -39,6 +46,14 @@ $sizes: (
   // LargeIconButtonTokens names the default width "uniform".
   @if $value == null {
     $value: map.get($values, str-replace-default($key));
+  }
+  @return $value;
+}
+
+// A full corner as half the smaller side.
+@function _shape($value) {
+  @if string.index(meta.inspect($value), '--md-sys-shape-corner-full') {
+    @return calc(min(var(--_container-height), var(--_container-width)) / 2);
   }
   @return $value;
 }
@@ -74,11 +89,11 @@ $sizes: (
       @if $outlined {
         --_outline-width: #{_get($size, 'outlined-outline-width')};
       }
-      --_shape-round: #{_get($size, 'container-shape-round')};
-      --_shape-square: #{_get($size, 'container-shape-square')};
-      --_shape-pressed: #{_get($size, 'pressed-container-shape')};
-      --_shape-selected-round: #{_get($size, 'selected-container-shape-round')};
-      --_shape-selected-square: #{_get($size, 'selected-container-shape-square')};
+      --_shape-round: #{_shape(_get($size, 'container-shape-round'))};
+      --_shape-square: #{_shape(_get($size, 'container-shape-square'))};
+      --_shape-pressed: #{_shape(_get($size, 'pressed-container-shape'))};
+      --_shape-selected-round: #{_shape(_get($size, 'selected-container-shape-round'))};
+      --_shape-selected-square: #{_shape(_get($size, 'selected-container-shape-square'))};
     }
 
     :host([size='#{$size}'][width='narrow']) {
@@ -91,7 +106,10 @@ $sizes: (
   }
 
   :host([size]) {
-    --_shape: var(--_shape-round);
+    --_shape-rest: var(--_shape-round);
+    --_shape: var(--_shape-rest);
+    --_shape-easing: #{map.get(springs.$values, 'spring-default-effects')};
+    --_shape-duration: #{map.get(springs.$values, 'spring-default-effects-duration')};
     --_container-shape-start-start: var(--_shape);
     --_container-shape-start-end: var(--_shape);
     --_container-shape-end-end: var(--_shape);
@@ -106,15 +124,15 @@ $sizes: (
   }
 
   :host([size][shape='square']) {
-    --_shape: var(--_shape-square);
+    --_shape-rest: var(--_shape-square);
   }
 
   :host([size][selected]) {
-    --_shape: var(--_shape-selected-round);
+    --_shape-rest: var(--_shape-selected-round);
   }
 
   :host([size][selected][shape='square']) {
-    --_shape: var(--_shape-selected-square);
+    --_shape-rest: var(--_shape-selected-square);
   }
 
   // Pressed wins over selected.
@@ -123,8 +141,21 @@ $sizes: (
     --_shape: var(--_shape-pressed);
   }
 
-  $_transition: map.get(springs.$values, 'spring-default-effects-duration')
-    map.get(springs.$values, 'spring-default-effects');
+  @include hover.fine-pointer {
+    :host([size]:hover:not(:active, [disabled], [soft-disabled])) {
+      --_shape: #{hover.toward(var(--_shape-rest), var(--_shape-pressed))};
+      --_shape-easing: #{hover.$enter-easing};
+      --_shape-duration: #{hover.$enter-duration};
+    }
+
+    // Leaving the hover; presses keep Compose's spring.
+    :host([size]:not(:hover, :active)) {
+      --_shape-easing: #{hover.$leave-easing};
+      --_shape-duration: #{hover.$leave-duration};
+    }
+  }
+
+  $_transition: var(--_shape-duration) var(--_shape-easing);
 
   :host([size]) :is(.icon-button, petal-ripple) {
     transition:

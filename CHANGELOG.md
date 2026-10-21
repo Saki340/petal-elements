@@ -6,11 +6,23 @@
 
 #### Bug fixes
 
+* **card:** cards that are neither links nor clickable no longer take the
+  hover, focus and pressed elevations (the reflected `href=""` matched).
+* **iconbutton:** a fully rounded sized icon button morphs gradually to its
+  pressed shape (half its size instead of 9999px).
 * **datepicker:** language tags that `Intl` rejects, such as `en-US@posix`
   from some Linux browsers, fall back to `en-US` instead of throwing.
 
 #### Features
 
+* **hover:** with a mouse or trackpad, components preview their press, going
+  30% of the way to it on the fast spatial spring and back on the default
+  spatial one (petal-elements additions; touch screens and reduced motion keep
+  Compose's behavior): sized buttons' and icon buttons' corners, the hovered
+  item of a button group (wider, with tighter inner corners), the switch
+  thumb, and clickable cards (a 3px lift and a light around the pointer).
+  Icon buttons move their icon by its name (`icon-motion` to choose), and
+  `follow-pointer` moves a FAB up to 4px toward the pointer.
 * **carousel:** `petal-carousel`, after Jetpack Compose
   `HorizontalMultiBrowseCarousel`, `HorizontalUncontainedCarousel` and
   `HorizontalCenteredHeroCarousel`: Compose's keylines and arrangements on a

@@ -9,6 +9,12 @@ import {property, queryAssignedElements} from 'lit/decorators.js';
 
 import {Button, ButtonSize} from '../../button/internal/button.js';
 import {
+  hasFinePointer,
+  HOVER_FRACTION,
+  prefersReducedMotion,
+} from '../../internal/motion/hover.js';
+import {
+  DEFAULT_SPATIAL,
   Spring,
   springFromCss,
   FAST_SPATIAL,
@@ -26,6 +32,10 @@ const RELEASE_AT = 0.75;
  * small inner corners, as in Compose's connected button group shapes.
  *
  * Buttons without a `size` get the group's size.
+ *
+ * With a mouse, a hovered button goes 30% of the way to its press: it widens
+ * by 30% of the pressed share, and connected inner corners go 30% of the way
+ * to their pressed size.
  */
 export class ButtonGroup extends LitElement {
   /** Size of the group and of buttons that have no size of their own. */
@@ -53,6 +63,8 @@ export class ButtonGroup extends LitElement {
 
   /** The press of each item, a spring from 0 (released) to 1 (pressed). */
   private readonly presses = new Map<HTMLElement, Spring>();
+  /** The item under a mouse pointer. */
+  private hovered: HTMLElement | null = null;
   /** Items released before their press reached RELEASE_AT. */
   private readonly releasing = new Set<HTMLElement>();
   /** Paddings and widths of the items at rest, while presses animate. */
@@ -72,6 +84,12 @@ export class ButtonGroup extends LitElement {
         this.startPress(event);
       }
       this.handleArrowKey(event);
+    });
+    this.addEventListener('pointerover', (event) => {
+      if (event.pointerType === 'mouse') this.hover(this.itemOf(event));
+    });
+    this.addEventListener('pointerleave', () => {
+      this.hover(null);
     });
     this.addEventListener('keyup', () => {
       this.endPress();
@@ -220,9 +238,10 @@ export class ButtonGroup extends LitElement {
 
     let spring = this.presses.get(item);
     if (!spring) {
-      spring = new Spring(springFromCss(this, 'fast-spatial', FAST_SPATIAL));
+      spring = new Spring(FAST_SPATIAL);
       this.presses.set(item, spring);
     }
+    spring.spec = springFromCss(this, 'fast-spatial', FAST_SPATIAL);
     spring.target = 1;
     this.releasing.delete(item);
     this.animatePresses();
@@ -238,9 +257,51 @@ export class ButtonGroup extends LitElement {
   private endPress(item?: HTMLElement) {
     for (const [pressed, spring] of this.presses) {
       if (item && pressed !== item) continue;
-      if (spring.target === 0) continue;
-      if (spring.value >= RELEASE_AT) spring.target = 0;
+      if (spring.target !== 1) continue;
+      if (spring.value >= RELEASE_AT) spring.target = this.restingTarget(pressed);
       else this.releasing.add(pressed);
+    }
+    this.animatePresses();
+  }
+
+  /** Where an item's spring goes when not pressed: hovered or at rest. */
+  private restingTarget(item: HTMLElement) {
+    return item === this.hovered ? HOVER_FRACTION : 0;
+  }
+
+  /**
+   * Moves the hover to `item`: it goes HOVER_FRACTION of the way to its press
+   * on the fast spatial spring, and the item it leaves goes back on the
+   * default spatial one (a petal-elements addition for mice).
+   */
+  private hover(item: HTMLElement | null) {
+    if (item === this.hovered) return;
+    const left = this.hovered;
+    this.hovered = item;
+    if (left) {
+      const spring = this.presses.get(left);
+      if (spring && spring.target === HOVER_FRACTION) {
+        spring.spec = springFromCss(this, 'default-spatial', DEFAULT_SPATIAL);
+        spring.target = 0;
+      }
+    }
+    if (
+      item &&
+      this.items.length > 1 &&
+      hasFinePointer() &&
+      !prefersReducedMotion() &&
+      !item.hasAttribute('disabled') &&
+      !item.hasAttribute('soft-disabled')
+    ) {
+      let spring = this.presses.get(item);
+      if (!spring) {
+        spring = new Spring(FAST_SPATIAL);
+        this.presses.set(item, spring);
+      }
+      if (spring.target !== 1) {
+        spring.spec = springFromCss(this, 'fast-spatial', FAST_SPATIAL);
+        spring.target = HOVER_FRACTION;
+      }
     }
     this.animatePresses();
   }
@@ -254,21 +315,34 @@ export class ButtonGroup extends LitElement {
       const ms = Math.min(now - this.lastTime, 64);
       this.lastTime = now;
       let moving = false;
+      let held = false;
       for (const [item, spring] of this.presses) {
         spring.step(ms);
         if (this.releasing.has(item) && spring.value >= RELEASE_AT) {
           this.releasing.delete(item);
-          spring.target = 0;
+          spring.spec = springFromCss(this, 'fast-spatial', FAST_SPATIAL);
+          spring.target = this.restingTarget(item);
         }
-        if (!spring.atRest || spring.target !== 0) moving = true;
+        if (spring.atRest) {
+          // Exactly on the target, so items rest at the same width each time.
+          spring.value = spring.target;
+          spring.velocity = 0;
+        } else {
+          moving = true;
+        }
+        if (this.releasing.has(item)) moving = true;
+        if (spring.target !== 0) held = true;
       }
       this.layoutPresses();
       if (moving) {
         this.frame = requestAnimationFrame(tick);
       } else {
+        // Pressed or hovered items stay as they are until that changes.
         this.frame = 0;
-        this.presses.clear();
-        this.resetPaddings();
+        if (!held) {
+          this.presses.clear();
+          this.resetPaddings();
+        }
       }
     };
     this.frame = requestAnimationFrame(tick);

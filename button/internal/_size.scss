@@ -18,6 +18,8 @@
 // - the pressed morph of a plain button uses the default effects spring, so it
 //   does not bounce (Button.kt); toggle buttons use fast spatial
 //   (ToggleButton.kt).
+// With a mouse, a hovered button goes 30% of the way to its pressed shape
+// (internal/motion/_hover.scss).
 
 // go/keep-sorted start by_regex='(.+) prefix_order=sass:
 @use 'sass:map';
@@ -29,6 +31,7 @@
 @use '../../tokens/versions/v34/values/md-comp-button-xlarge' as xlarge;
 @use '../../tokens/versions/v34/values/md-comp-button-xsmall' as xsmall;
 @use '../../tokens/versions/v34/values/md-sys-motion-springs' as springs;
+@use '../../internal/motion/hover';
 // go/keep-sorted end
 
 $sizes: (
@@ -100,7 +103,8 @@ $_overrides: (
   }
 
   :host([size]) {
-    --_shape: var(--_shape-round);
+    --_shape-rest: var(--_shape-round);
+    --_shape: var(--_shape-rest);
     --_container-shape-start-start: var(--_shape);
     --_container-shape-start-end: var(--_shape);
     --_container-shape-end-end: var(--_shape);
@@ -123,15 +127,21 @@ $_overrides: (
   }
 
   :host([size][shape='square']) {
-    --_shape: var(--_shape-square);
+    --_shape-rest: var(--_shape-square);
   }
 
   :host([size][toggle][selected]) {
-    --_shape: var(--_shape-selected-round);
+    --_shape-rest: var(--_shape-selected-round);
   }
 
   :host([size][toggle][selected][shape='square']) {
-    --_shape: var(--_shape-selected-square);
+    --_shape-rest: var(--_shape-selected-square);
+  }
+
+  // Compose's small ToggleButton presses to 6dp (ToggleButtonDefaults
+  // .pressedShape), not ButtonSmallTokens.PressedContainerShape.
+  :host([size='small'][toggle]) {
+    --_shape-pressed: 6px;
   }
 
   :host([size]:active:not([disabled], [soft-disabled])) {
@@ -143,10 +153,19 @@ $_overrides: (
     --_shape: var(--_shape-pressed);
   }
 
-  // Compose's small ToggleButton presses to 6dp (ToggleButtonDefaults
-  // .pressedShape), not ButtonSmallTokens.PressedContainerShape.
-  :host([size='small'][toggle]:active:not([disabled], [soft-disabled])) {
-    --_shape: 6px;
+  @include hover.fine-pointer {
+    :host([size]:hover:not(:active, [disabled], [soft-disabled])) {
+      --_shape: #{hover.toward(var(--_shape-rest), var(--_shape-pressed))};
+      --_shape-easing: #{hover.$enter-easing};
+      --_shape-duration: #{hover.$enter-duration};
+    }
+
+    // Leaving the hover. Presses keep Compose's springs, and toggle buttons
+    // their fast spatial one.
+    :host([size]:not([toggle], :hover, :active)) {
+      --_shape-easing: #{hover.$leave-easing};
+      --_shape-duration: #{hover.$leave-duration};
+    }
   }
 
   // Parts that draw the shape follow the host's (animated) radius.

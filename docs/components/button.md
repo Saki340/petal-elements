@@ -315,6 +315,15 @@ See [Material 3 Expressive features](../expressive.md) for the values, the
 motion and where they follow Compose rather than the tokens. Several buttons
 can be put in a [button group](button-group.md).
 
+### Mouse hover
+
+With a mouse or trackpad, a sized button previews its press: hovered, its
+corners go 30% of the way to the pressed shape (a medium round button, 28px,
+goes to about 23px), on the fast spatial spring, and back on the default
+spatial one. This is a petal-elements addition; Compose has no hover shapes.
+Touch screens keep Compose's look, and with reduced motion the shape changes
+without moving.
+
 ## Accessibility
 
 Add an

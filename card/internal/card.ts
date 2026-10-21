@@ -8,7 +8,7 @@ import '../../elevation/elevation.js';
 import '../../focus/md-focus-ring.js';
 import '../../ripple/ripple.js';
 
-import {html, LitElement, nothing} from 'lit';
+import {html, isServer, LitElement, nothing} from 'lit';
 import {property} from 'lit/decorators.js';
 
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
@@ -23,6 +23,9 @@ const cardBaseClass = mixinDelegatesAria(LitElement);
  * Content goes in the default slot. With `href` or `clickable`, the whole
  * card is one link or button, with a state layer and elevation by state; give
  * it an `aria-label`.
+ *
+ * With a mouse, a clickable card lifts 3px while hovered, and its state
+ * layer is a soft light around the pointer (a petal-elements addition).
  */
 export class Card extends cardBaseClass {
   /** @nocollapse */
@@ -46,10 +49,23 @@ export class Card extends cardBaseClass {
   /** Shows the dragged elevation, while the card is being dragged. */
   @property({type: Boolean, reflect: true}) dragged = false;
 
+  constructor() {
+    super();
+    if (isServer) return;
+    // The hover light follows a mouse pointer (styles in _card.scss).
+    this.addEventListener('pointermove', (event) => {
+      if (event.pointerType !== 'mouse') return;
+      const box = this.getBoundingClientRect();
+      this.style.setProperty('--_pointer-x', `${event.clientX - box.left}px`);
+      this.style.setProperty('--_pointer-y', `${event.clientY - box.top}px`);
+    });
+  }
+
   protected override render() {
     return html`
       <petal-elevation part="elevation"></petal-elevation>
       <div class="background"></div>
+      <div class="light"></div>
       ${this.renderAction()}
       <slot></slot>
       <div class="outline"></div>

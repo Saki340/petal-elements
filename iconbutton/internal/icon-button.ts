@@ -31,6 +31,41 @@ type LinkTarget = '_blank' | '_parent' | '_self' | '_top';
 /** Material 3 Expressive icon button sizes. */
 export type IconButtonSize = 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge';
 
+/**
+ * How the icon moves while a mouse hovers the button (a petal-elements
+ * addition): `forward` 3px toward the inline end, `down` 2px, `external` 2px
+ * up and toward the end, `turn` 60°, `spin` 90°, `grow` to 1.15 times, or
+ * `none`.
+ */
+export type IconMotion = 'forward' | 'down' | 'external' | 'turn' | 'spin' | 'grow' | 'none';
+
+/** Material Symbols names and the motion they suggest. */
+const ICON_MOTIONS: {[name: string]: IconMotion} = {
+  'arrow_forward': 'forward',
+  'arrow_forward_ios': 'forward',
+  'arrow_right_alt': 'forward',
+  'chevron_right': 'forward',
+  'navigate_next': 'forward',
+  'east': 'forward',
+  'send': 'forward',
+  'download': 'down',
+  'file_download': 'down',
+  'arrow_downward': 'down',
+  'open_in_new': 'external',
+  'launch': 'external',
+  'arrow_outward': 'external',
+  'north_east': 'external',
+  'settings': 'turn',
+  'refresh': 'spin',
+  'autorenew': 'spin',
+  'sync': 'spin',
+  'favorite': 'grow',
+  'favorite_border': 'grow',
+  'star': 'grow',
+  'star_border': 'grow',
+  'thumb_up': 'grow',
+};
+
 const iconButtonBaseClass = mixinDelegatesAria(
   mixinFormSubmitter(mixinFormAssociated(mixinElementInternals(LitElement))),
 );
@@ -129,7 +164,18 @@ export class IconButton extends iconButtonBaseClass {
   /** The shape of a sized icon button: `round` (default) or `square`. */
   @property({reflect: true}) shape?: 'round' | 'square';
 
+  /**
+   * How the icon moves while a mouse hovers the button. Without it, the motion
+   * follows the icon's name (`arrow_forward` moves forward, `download` down,
+   * `open_in_new` out, `settings` turns, `refresh` spins, `favorite` and
+   * `star` grow); `none` keeps it still.
+   */
+  @property({attribute: 'icon-motion'}) iconMotion?: IconMotion;
+
   @state() private flipIcon = isRtl(this, this.flipIconInRtl);
+
+  /** The motion the slotted icon's name suggests. */
+  @state() private namedMotion: IconMotion = 'none';
 
   constructor() {
     super();
@@ -229,11 +275,15 @@ export class IconButton extends iconButtonBaseClass {
     return {
       'flip-icon': this.flipIcon,
       'selected': this.toggle && this.selected,
+      [`motion-${this.iconMotion ?? this.namedMotion}`]: true,
     };
   }
 
   private renderIcon() {
-    return html`<span class="icon"><slot></slot><slot name="badge"></slot></span>`;
+    return html`<span class="icon"
+      ><slot @slotchange=${this.handleIconChange}></slot
+      ><slot name="badge"></slot
+    ></span>`;
   }
 
   private renderSelectedIcon() {
@@ -242,6 +292,13 @@ export class IconButton extends iconButtonBaseClass {
       ><slot name="selected"><slot></slot></slot
       ><slot name="badge"></slot
     ></span>`;
+  }
+
+  private handleIconChange(event: Event) {
+    const slot = event.target as HTMLSlotElement;
+    const icon = slot.assignedElements({flatten: true})[0];
+    const name = icon?.textContent?.trim().toLowerCase() ?? '';
+    this.namedMotion = ICON_MOTIONS[name] ?? 'none';
   }
 
   private renderTouchTarget() {

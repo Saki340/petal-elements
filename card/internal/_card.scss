@@ -7,9 +7,13 @@
 // outlined, from FilledCardTokens, ElevatedCardTokens and OutlinedCardTokens
 // (tokens/versions/compose/values), with CardDefaults where it overrides
 // them (outlined cards keep their elevation on hover, focus and press).
+// With a mouse, a clickable card lifts 3px while hovered and its state layer
+// is a light around the pointer, 10% at the pointer to 2% at 180px
+// (internal/motion/_hover.scss; a petal-elements addition).
 
 // go/keep-sorted start by_regex='(.+) prefix_order=sass:
 @use 'sass:map';
+@use '../../internal/motion/hover';
 @use '../../tokens/versions/compose/values/md-comp-elevated-card' as elevated;
 @use '../../tokens/versions/compose/values/md-comp-filled-card' as filled;
 @use '../../tokens/versions/compose/values/md-comp-outlined-card' as outlined;
@@ -41,6 +45,7 @@ $_variants: (
 
   petal-elevation,
   .background,
+  .light,
   .outline,
   .action {
     position: absolute;
@@ -50,8 +55,13 @@ $_variants: (
 
   petal-elevation,
   .background,
+  .light,
   .outline {
     pointer-events: none;
+  }
+
+  .light {
+    display: none;
   }
 
   .background {
@@ -99,17 +109,17 @@ $_variants: (
 
   // Elevation by state, for clickable cards that are not disabled.
   :host([clickable]:not([disabled]):hover),
-  :host([href]:hover) {
+  :host([href]:not([href='']):hover) {
     --md-elevation-level: var(--_hover-container-elevation);
   }
 
   :host([clickable]:not([disabled]):focus-within),
-  :host([href]:focus-within) {
+  :host([href]:not([href='']):focus-within) {
     --md-elevation-level: var(--_focus-container-elevation);
   }
 
   :host([clickable]:not([disabled]):active),
-  :host([href]:active) {
+  :host([href]:not([href='']):active) {
     --md-elevation-level: var(--_pressed-container-elevation);
   }
 
@@ -131,6 +141,49 @@ $_variants: (
   // Compose, this colors text and icons, not images).
   :host([disabled]) {
     color: color-mix(in srgb, var(--md-sys-color-on-surface, #1d1b20) 38%, transparent);
+  }
+
+  @include hover.fine-pointer {
+    $clickable: ':host([clickable]:not([disabled]))';
+    $link: ":host([href]:not([href='']):not([disabled]))";
+
+    // The light takes the place of the ripple's even hover layer.
+    #{$clickable} petal-ripple,
+    #{$link} petal-ripple {
+      --md-ripple-hover-opacity: 0;
+    }
+
+    #{$clickable} .light,
+    #{$link} .light {
+      $color: var(--md-ripple-hover-color, var(--md-sys-color-on-surface, #1d1b20));
+      display: block;
+      z-index: 1;
+      opacity: 0;
+      background: radial-gradient(
+        circle 180px at var(--_pointer-x, 50%) var(--_pointer-y, 50%),
+        color-mix(in srgb, #{$color} 10%, transparent),
+        color-mix(in srgb, #{$color} 2%, transparent)
+      );
+      transition: opacity #{hover.$effects-duration} #{hover.$effects-easing};
+    }
+
+    :host([clickable]:not([disabled]):hover) .light,
+    :host([href]:not([href='']):not([disabled]):hover) .light {
+      opacity: 1;
+    }
+  }
+
+  @include hover.fine-pointer-motion {
+    :host([clickable]),
+    :host([href]:not([href=''])) {
+      transition: translate #{hover.$leave-duration} #{hover.$leave-easing};
+    }
+
+    :host([clickable]:not([disabled], [dragged]):hover:not(:active)),
+    :host([href]:not([href='']):not([disabled], [dragged]):hover:not(:active)) {
+      translate: 0 -3px;
+      transition: translate #{hover.$enter-duration} #{hover.$enter-easing};
+    }
   }
 
   @media (forced-colors: active) {

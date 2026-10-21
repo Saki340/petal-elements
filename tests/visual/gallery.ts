@@ -44,6 +44,8 @@ interface Gallery {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   harness?: new (element: any) => Harness;
   rows: Row[];
+  /** Milliseconds for springs run by script (not CSS) to come to rest. */
+  springMs?: number;
 }
 
 const disabled = (state: State) => state === 'disabled';
@@ -161,6 +163,8 @@ const galleries: Record<string, Gallery> = {
   'button-group': {
     states: ['default', 'hover', 'focus', 'pressed'],
     harness: ButtonHarness,
+    // The hovered and pressed items widen on springs.
+    springMs: 1500,
     rows: [
       {
         name: 'standard',
@@ -634,6 +638,7 @@ async function main() {
 
   await updateAll(root);
   await document.fonts.ready;
+  if (gallery.springMs) await new Promise((resolve) => setTimeout(resolve, gallery.springMs));
   await settle();
   // End every animation and transition (shadow roots included): finite ones
   // jump to their end state, infinite ones (indeterminate progress) are
