@@ -23,12 +23,24 @@
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0..1,0&display=block" />
     <link rel="stylesheet" href="assets/sys.css" />
     <link rel="stylesheet" href="assets/styles.css" />
+    <script>
+      // Motion classes before the first paint, so the hero does not flash in
+      // before its entrance. If the page script does not start, show
+      // everything as it is.
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.documentElement.classList.add('motion');
+        setTimeout(() => {
+          if (!window.landingReady) document.documentElement.classList.remove('motion');
+        }, 4000);
+      }
+    </script>
     <script type="module" src="assets/main.js"></script>
   </head>
   <body>
     <a class="skip" href="#main">Skip to content</a>
 
     <header class="top-bar">
+      <petal-icon-button class="menu-button" id="menu-button" aria-label="Open menu"><petal-icon>menu</petal-icon></petal-icon-button>
       <a class="brand" href="./" aria-label="petal-elements home">
         <svg viewBox="0 0 36 36" aria-hidden="true">
           <ellipse cx="18" cy="10" rx="5" ry="8" fill="#F48FB1" />
@@ -37,479 +49,768 @@
           <ellipse cx="10" cy="18" rx="8" ry="5" fill="#F8BBD0" />
           <circle cx="18" cy="18" r="4" fill="#FFD54F" />
         </svg>
-        <span>petal-elements</span>
+        <span>petal</span>
       </a>
-      <nav aria-label="Main">
+      <nav class="main-nav" aria-label="Main">
         <a href="catalog/about/intro/">Docs</a>
-        <a href="catalog/components/button/">Components</a>
-        <a href="https://github.com/Saki340/petal-elements">GitHub</a>
-        <a href="https://www.npmjs.com/package/petal-elements">npm</a>
+        <a href="#examples">Examples</a>
+        <a href="#components">Components</a>
+        <a href="catalog/about/building-pages/">Guides</a>
+        <a href="catalog/theming/material-theming/">Theming</a>
+        <a href="https://github.com/Saki340/petal-elements/blob/main/CHANGELOG.md">Changelog</a>
       </nav>
+      <button class="search-button" id="search-button" type="button" aria-label="Search the docs" aria-keyshortcuts="Control+K Meta+K">
+        <petal-icon>search</petal-icon>
+        <span class="search-label">Search docs…</span>
+        <kbd>Ctrl K</kbd>
+      </button>
+      <a class="github" href="https://github.com/Saki340/petal-elements" aria-label="petal-elements on GitHub">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        <span id="github-stars" class="stars-count"></span>
+      </a>
       <petal-icon-button id="scheme-toggle" aria-label="Switch to dark mode" title="Switch to dark mode">
         <petal-icon>dark_mode</petal-icon>
       </petal-icon-button>
+      <petal-filled-button class="header-cta" size="small" href="#start">Get started</petal-filled-button>
     </header>
 
+    <petal-navigation-drawer id="menu-drawer" aria-label="Menu">
+      <p class="drawer-heading">Menu</p>
+      <petal-navigation-drawer-item href="catalog/about/intro/"><petal-icon slot="icon">menu_book</petal-icon>Docs</petal-navigation-drawer-item>
+      <petal-navigation-drawer-item href="#examples"><petal-icon slot="icon">dashboard</petal-icon>Examples</petal-navigation-drawer-item>
+      <petal-navigation-drawer-item href="#components"><petal-icon slot="icon">widgets</petal-icon>Components</petal-navigation-drawer-item>
+      <petal-navigation-drawer-item href="catalog/about/building-pages/"><petal-icon slot="icon">school</petal-icon>Guides</petal-navigation-drawer-item>
+      <petal-navigation-drawer-item href="catalog/theming/material-theming/"><petal-icon slot="icon">palette</petal-icon>Theming</petal-navigation-drawer-item>
+      <petal-navigation-drawer-item href="https://github.com/Saki340/petal-elements/blob/main/CHANGELOG.md"><petal-icon slot="icon">history</petal-icon>Changelog</petal-navigation-drawer-item>
+      <petal-divider></petal-divider>
+      <p class="drawer-heading">Sections</p>
+      <petal-navigation-drawer-item href="#start"><petal-icon slot="icon">rocket_launch</petal-icon>Get started</petal-navigation-drawer-item>
+      <petal-navigation-drawer-item href="#agents"><petal-icon slot="icon">smart_toy</petal-icon>For AI assistants</petal-navigation-drawer-item>
+      <petal-navigation-drawer-item href="#theme"><petal-icon slot="icon">format_color_fill</petal-icon>Theme from a color</petal-navigation-drawer-item>
+    </petal-navigation-drawer>
+
+    <petal-dialog id="search-dialog" class="search-dialog" aria-label="Search the docs">
+      <div slot="content" class="search-content">
+        <petal-outlined-text-field id="search-field" label="Search docs" autocomplete="off" enterkeyhint="go">
+          <petal-icon slot="leading-icon">search</petal-icon>
+        </petal-outlined-text-field>
+        <petal-list id="search-results" class="search-results" aria-label="Results"></petal-list>
+      </div>
+    </petal-dialog>
+
     <main id="main">
-      <section class="hero">
-        <div class="hero-text">
-          <p class="eyebrow">Web components · Material 3 Expressive</p>
-          <h1>Expressive Material&nbsp;3, for&nbsp;the&nbsp;web.</h1>
-          <p class="lead">
-            Material 3 Expressive components for plain HTML and any framework.
-            They morph and move on Jetpack Compose's springs, accessible and
-            form-ready.
-          </p>
-          <div class="actions">
-            <petal-filled-button size="medium" href="#start">Get started</petal-filled-button>
-            <petal-outlined-button size="medium" href="catalog/components/button/">Browse components</petal-outlined-button>
+      <section class="hero" id="hero">
+        <div class="hero-art" id="hero-art" aria-hidden="true">
+          <div class="aurora"><i class="blob blob-1"></i><i class="blob blob-2"></i><i class="blob blob-3"></i></div>
+          <div class="petals">
+            <i class="petal" style="--x: 6%; --y: 18%; --r: 165deg; --s: 0.8; --c: #F48FB1; --d: 15s; --delay: -0s"><b></b></i>
+            <i class="petal" style="--x: 14%; --y: 62%; --r: 37deg; --s: 1.4; --c: #EC407A; --d: 10s; --delay: -5s"><b></b></i>
+            <i class="petal" style="--x: 22%; --y: 34%; --r: 298deg; --s: 0.6; --c: #F06292; --d: 12s; --delay: -0s"><b></b></i>
+            <i class="petal" style="--x: 9%; --y: 82%; --r: 44deg; --s: 1.2; --c: #F8BBD0; --d: 15s; --delay: -1s"><b></b></i>
+            <i class="petal" style="--x: 30%; --y: 12%; --r: 123deg; --s: 0.6; --c: #CE93D8; --d: 15s; --delay: -0s"><b></b></i>
+            <i class="petal" style="--x: 70%; --y: 14%; --r: 289deg; --s: 0.6; --c: #FFD54F; --d: 12s; --delay: -9s"><b></b></i>
+            <i class="petal" style="--x: 78%; --y: 44%; --r: 31deg; --s: 1.4; --c: #F48FB1; --d: 15s; --delay: -0s"><b></b></i>
+            <i class="petal" style="--x: 88%; --y: 24%; --r: 113deg; --s: 0.6; --c: #EC407A; --d: 11s; --delay: -4s"><b></b></i>
+            <i class="petal" style="--x: 93%; --y: 66%; --r: 214deg; --s: 0.8; --c: #F06292; --d: 10s; --delay: -9s"><b></b></i>
+            <i class="petal" style="--x: 64%; --y: 78%; --r: 157deg; --s: 1.4; --c: #F8BBD0; --d: 11s; --delay: -1s"><b></b></i>
+            <i class="petal" style="--x: 84%; --y: 86%; --r: 297deg; --s: 1.4; --c: #CE93D8; --d: 12s; --delay: -5s"><b></b></i>
+            <i class="petal" style="--x: 40%; --y: 90%; --r: 49deg; --s: 1.4; --c: #FFD54F; --d: 10s; --delay: -9s"><b></b></i>
+            <i class="petal" style="--x: 52%; --y: 8%; --r: 30deg; --s: 1.4; --c: #F48FB1; --d: 12s; --delay: -7s"><b></b></i>
+            <i class="petal" style="--x: 18%; --y: 8%; --r: 348deg; --s: 1.4; --c: #EC407A; --d: 15s; --delay: -5s"><b></b></i>
           </div>
-          <p class="fine">
-            Open source, Apache-2.0. A community-maintained continuation of
-            material-web. Not an official Google project.
-          </p>
         </div>
-
-        <div class="hero-demo surface" aria-label="Live components">
-          <petal-button-group connected single-select size="medium" aria-label="Calendar view">
-            <petal-filled-tonal-button toggle>Day</petal-filled-tonal-button>
-            <petal-filled-tonal-button toggle selected>Week</petal-filled-tonal-button>
-            <petal-filled-tonal-button toggle>Month</petal-filled-tonal-button>
-          </petal-button-group>
-          <div class="row">
-            <petal-filled-button size="large">Press me</petal-filled-button>
-            <petal-fab variant="filled-tertiary" size="large" aria-label="Add">
-              <petal-icon slot="icon">add</petal-icon>
-            </petal-fab>
-          </div>
-          <div class="row">
-            <petal-outlined-button size="small" toggle>Follow</petal-outlined-button>
-            <petal-switch selected icons aria-label="Notifications"></petal-switch>
-            <petal-filled-icon-button toggle aria-label="Favorite">
-              <petal-icon>favorite</petal-icon>
-              <petal-icon slot="selected">favorite</petal-icon>
-            </petal-filled-icon-button>
-          </div>
-          <p class="hint">These are the real components. Hover, press, toggle, tab through them.</p>
+        <a class="news" href="https://github.com/Saki340/petal-elements/blob/main/CHANGELOG.md">
+          <span class="news-tag">New</span>
+          Carousels, date and time pickers, mouse hover
+          <petal-icon>arrow_forward</petal-icon>
+        </a>
+        <h1><span class="word">Expressive</span> <span class="word">Material&nbsp;3,</span> <span class="word">for&nbsp;the</span> <span class="word">web.</span></h1>
+        <p class="lead">
+          Material 3 Expressive components for plain HTML and any framework.
+          They morph and move on Jetpack Compose's springs, accessible and
+          form-ready.
+        </p>
+        <div class="actions">
+          <petal-filled-button size="medium" href="#start" data-magnetic>Get started</petal-filled-button>
+          <petal-outlined-button size="medium" href="#components" data-magnetic>View components</petal-outlined-button>
         </div>
+        <dl class="stats">
+          <div><dt>Components</dt><dd><span data-count="40">40</span>+</dd></div>
+          <div><dt>Frameworks</dt><dd>Any</dd></div>
+          <div><dt>For AI agents</dt><dd><a href="llms.txt">llms.txt</a></dd></div>
+        </dl>
       </section>
 
-      <section class="section showcase" id="showcase" aria-labelledby="showcase-title">
-        <h2 id="showcase-title">See it on a real page</h2>
-        <p class="section-lead">
-          Three web pages made only of petal-elements components. Everything in
-          the window is live: click, type and scroll. Switch to the mobile width
-          to see the same page adapt.
-        </p>
-
-        <div class="showcase-controls">
-          <petal-tabs id="scene-tabs" aria-label="Example page">
-            <petal-primary-tab inline-icon data-scene="dashboard"><petal-icon slot="icon">dashboard</petal-icon>Dashboard</petal-primary-tab>
-            <petal-primary-tab inline-icon data-scene="form"><petal-icon slot="icon">assignment</petal-icon>Sign-up form</petal-primary-tab>
-            <petal-primary-tab inline-icon data-scene="shop"><petal-icon slot="icon">storefront</petal-icon>Shop</petal-primary-tab>
-          </petal-tabs>
-          <petal-button-group id="width-toggle" class="width-toggle" connected single-select size="xsmall" aria-label="Window width">
-            <petal-filled-tonal-button toggle selected data-width="desktop"><petal-icon slot="icon">desktop_windows</petal-icon>Desktop</petal-filled-tonal-button>
-            <petal-filled-tonal-button toggle data-width="mobile"><petal-icon slot="icon">smartphone</petal-icon>Mobile</petal-filled-tonal-button>
-          </petal-button-group>
-        </div>
-
-        <div class="browser" id="browser">
-          <div class="browser-bar" aria-hidden="true">
-            <span class="dots"><i></i><i></i><i></i></span>
-            <span class="address"><petal-icon>lock</petal-icon><span id="address">app.example.com/orders</span></span>
-          </div>
-          <div class="viewport" id="viewport">
-
-            <!-- Dashboard -->
-            <div class="page dashboard" data-scene="dashboard">
-              <petal-navigation-rail id="dash-rail" class="dash-rail" aria-label="Main">
-                <petal-icon-button slot="header" id="dash-rail-toggle" aria-label="Expand navigation"><petal-icon>menu</petal-icon></petal-icon-button>
-                <petal-navigation-rail-item><petal-icon slot="icon">home</petal-icon>Home</petal-navigation-rail-item>
-                <petal-navigation-rail-item selected><petal-icon slot="icon">receipt_long</petal-icon>Orders</petal-navigation-rail-item>
-                <petal-navigation-rail-item><petal-icon slot="icon">group</petal-icon>Customers</petal-navigation-rail-item>
-                <petal-navigation-rail-item><petal-icon slot="icon">bar_chart</petal-icon>Reports</petal-navigation-rail-item>
-              </petal-navigation-rail>
-              <div class="dash-main scroll">
-                <header class="dash-header">
-                  <h3 class="page-title">Orders</h3>
-                  <petal-search-bar id="dash-search" class="dash-search" layout="docked" placeholder="Search orders"></petal-search-bar>
-                  <span class="anchor-wrap">
-                    <petal-icon-button id="dash-account" aria-label="Account"><petal-icon>account_circle</petal-icon></petal-icon-button>
-                    <petal-menu id="dash-account-menu" anchor="dash-account" anchor-corner="end-end" menu-corner="start-end">
-                      <petal-menu-group>
-                        <petal-menu-item><petal-icon slot="start">person</petal-icon><div slot="headline">Profile</div></petal-menu-item>
-                        <petal-menu-item><petal-icon slot="start">settings</petal-icon><div slot="headline">Settings</div></petal-menu-item>
-                      </petal-menu-group>
-                      <petal-menu-group>
-                        <petal-menu-item id="dash-sign-out"><petal-icon slot="start">logout</petal-icon><div slot="headline">Sign out</div></petal-menu-item>
-                      </petal-menu-group>
-                    </petal-menu>
-                  </span>
-                </header>
-                <div class="stats">
-                  <petal-filled-card class="stat"><span class="stat-label">Revenue</span><strong>¥1,284,500</strong><span class="trend up"><petal-icon>trending_up</petal-icon>12% this month</span></petal-filled-card>
-                  <petal-filled-card class="stat"><span class="stat-label">Orders</span><strong id="dash-count">128</strong><span class="trend up"><petal-icon>trending_up</petal-icon>8 today</span></petal-filled-card>
-                  <petal-filled-card class="stat"><span class="stat-label">Refunds</span><strong>3</strong><span class="trend down"><petal-icon>trending_down</petal-icon>2 fewer</span></petal-filled-card>
-                </div>
-                <div class="toolbar-row">
-                  <petal-chip-set id="dash-filters" aria-label="Status">
-                    <petal-filter-chip label="All" selected data-status=""></petal-filter-chip>
-                    <petal-filter-chip label="Paid" data-status="Paid"></petal-filter-chip>
-                    <petal-filter-chip label="Pending" data-status="Pending"></petal-filter-chip>
-                    <petal-filter-chip label="Refunded" data-status="Refunded"></petal-filter-chip>
-                  </petal-chip-set>
-                  <petal-filled-button id="dash-new"><petal-icon slot="icon">add</petal-icon>New order</petal-filled-button>
-                </div>
-                <petal-outlined-card class="orders">
-                  <petal-list id="dash-orders" aria-label="Orders"></petal-list>
-                </petal-outlined-card>
-              </div>
-              <petal-navigation-bar class="dash-bar" aria-label="Main">
-                <petal-navigation-bar-item><petal-icon slot="icon">home</petal-icon>Home</petal-navigation-bar-item>
-                <petal-navigation-bar-item selected><petal-icon slot="icon">receipt_long</petal-icon>Orders</petal-navigation-bar-item>
-                <petal-navigation-bar-item><petal-icon slot="icon">group</petal-icon>Customers</petal-navigation-bar-item>
-                <petal-navigation-bar-item><petal-icon slot="icon">bar_chart</petal-icon>Reports</petal-navigation-bar-item>
-              </petal-navigation-bar>
-            </div>
-
-            <!-- Sign-up form -->
-            <div class="page form-page scroll" data-scene="form" hidden>
-              <petal-outlined-card class="form-card">
-                <petal-linear-progress id="signup-progress" class="form-progress" wavy indeterminate hidden></petal-linear-progress>
-                <form id="signup" class="signup" novalidate>
-                  <h3 class="page-title">Create your account</h3>
-                  <p class="muted">Start a 30-day trial. No card needed.</p>
-                  <div class="two">
-                    <petal-outlined-text-field id="signup-name" label="Full name" required autocomplete="off" error-text="Enter your name"></petal-outlined-text-field>
-                    <petal-outlined-text-field label="Company" autocomplete="off"></petal-outlined-text-field>
-                  </div>
-                  <petal-outlined-text-field id="signup-email" label="Work email" type="email" required autocomplete="off" supporting-text="We send the sign-in link here" error-text="Enter a valid email address"></petal-outlined-text-field>
-                  <petal-outlined-text-field id="signup-password" label="Password" type="password" required minlength="8" autocomplete="off" supporting-text="At least 8 characters" error-text="Use at least 8 characters">
-                    <petal-icon-button id="signup-show" slot="trailing-icon" toggle aria-label="Show password">
-                      <petal-icon>visibility</petal-icon>
-                      <petal-icon slot="selected">visibility_off</petal-icon>
-                    </petal-icon-button>
-                  </petal-outlined-text-field>
-                  <fieldset class="plans">
-                    <legend>Plan</legend>
-                    <label class="plan"><petal-radio name="plan" value="Free" checked></petal-radio><span><b>Free</b> · 3 projects</span></label>
-                    <label class="plan"><petal-radio name="plan" value="Pro"></petal-radio><span><b>Pro</b> · ¥1,200 / month</span></label>
-                    <label class="plan"><petal-radio name="plan" value="Team"></petal-radio><span><b>Team</b> · ¥4,800 / month</span></label>
-                  </fieldset>
-                  <div class="two">
-                    <petal-outlined-select id="signup-country" label="Country">
-                      <petal-select-option value="jp" selected><div slot="headline">Japan</div></petal-select-option>
-                      <petal-select-option value="cn"><div slot="headline">China</div></petal-select-option>
-                      <petal-select-option value="us"><div slot="headline">United States</div></petal-select-option>
-                      <petal-select-option value="de"><div slot="headline">Germany</div></petal-select-option>
-                    </petal-outlined-select>
-                    <div class="slider-field">
-                      <span class="field-label">Team size: <b id="team-size-value">5</b></span>
-                      <petal-slider id="signup-team" min="1" max="50" value="5" labeled aria-label="Team size"></petal-slider>
-                    </div>
-                  </div>
-                  <label class="check"><petal-checkbox checked></petal-checkbox>Send me product updates</label>
-                  <label class="check"><petal-switch id="signup-2fa" selected></petal-switch>Two-step verification</label>
-                  <div class="form-actions">
-                    <petal-text-button type="reset">Clear</petal-text-button>
-                    <petal-filled-button id="signup-submit" type="submit">Create account</petal-filled-button>
-                  </div>
-                </form>
-              </petal-outlined-card>
-            </div>
-
-            <!-- Shop -->
-            <div class="page shop scroll" data-scene="shop" hidden>
-              <header class="shop-header">
-                <span class="shop-brand">
-                  <svg viewBox="0 0 36 36" aria-hidden="true"><ellipse cx="18" cy="10" rx="5" ry="8" fill="#F48FB1" /><ellipse cx="26" cy="18" rx="8" ry="5" fill="#EC407A" /><ellipse cx="18" cy="26" rx="5" ry="8" fill="#F06292" /><ellipse cx="10" cy="18" rx="8" ry="5" fill="#F8BBD0" /><circle cx="18" cy="18" r="4" fill="#FFD54F" /></svg>
-                  Petal Florist
-                </span>
-                <petal-search-bar class="shop-search" layout="docked" placeholder="Search flowers"></petal-search-bar>
-                <span class="cart">
-                  <petal-icon-button id="shop-cart" aria-label="Cart"><petal-icon>shopping_bag</petal-icon><petal-badge slot="badge" id="shop-count" hidden></petal-badge></petal-icon-button>
-                </span>
-              </header>
-              <petal-tabs id="shop-tabs" class="shop-tabs" aria-label="Category">
-                <petal-secondary-tab>Bouquets</petal-secondary-tab>
-                <petal-secondary-tab>Plants</petal-secondary-tab>
-                <petal-secondary-tab>Gifts</petal-secondary-tab>
-              </petal-tabs>
-              <petal-chip-set class="shop-filters" aria-label="Filters">
-                <petal-filter-chip label="Same-day delivery"></petal-filter-chip>
-                <petal-filter-chip label="Under ¥5,000"></petal-filter-chip>
-                <petal-filter-chip label="Eco packaging"></petal-filter-chip>
-              </petal-chip-set>
-              <h3 class="shop-section">This week's flowers</h3>
-              <petal-carousel id="shop-featured" class="shop-featured" item-width="220" item-spacing="8" aria-label="This week's flowers"></petal-carousel>
-              <div class="products" id="shop-products"></div>
-            </div>
-
-            <petal-snackbar id="page-snackbar"></petal-snackbar>
-          </div>
-        </div>
-
-        <div class="scene-notes">
-          <p class="notes" data-scene="dashboard"><b>Try it:</b> expand the rail with the menu button, filter the orders with the chips, search them, open the account menu, and add an order. In the mobile width the rail turns into a navigation bar.</p>
-          <p class="notes" data-scene="form" hidden><b>Try it:</b> submit the empty form to see the errors, show the password, pick a plan and a country, drag the team size, then create the account.</p>
-          <p class="notes" data-scene="shop" hidden><b>Try it:</b> swipe or scroll this week's flowers, switch the category tabs, save a flower (hover the heart for its tooltip), add flowers to the cart, then open the cart and pick a delivery date.</p>
-        </div>
-
-        <petal-dialog id="order-dialog">
-          <div slot="headline">New order</div>
-          <form slot="content" id="order-form" method="dialog" class="dialog-form">
-            <petal-outlined-text-field id="order-customer" label="Customer" value="Mei Chen" autocomplete="off"></petal-outlined-text-field>
-            <petal-outlined-text-field id="order-amount" label="Amount" type="number" prefix-text="¥" value="8400"></petal-outlined-text-field>
-            <petal-outlined-select id="order-status" label="Status">
-              <petal-select-option value="Paid" selected><div slot="headline">Paid</div></petal-select-option>
-              <petal-select-option value="Pending"><div slot="headline">Pending</div></petal-select-option>
-            </petal-outlined-select>
-          </form>
-          <div slot="actions">
-            <petal-text-button form="order-form" value="cancel">Cancel</petal-text-button>
-            <petal-filled-button form="order-form" value="save">Save order</petal-filled-button>
-          </div>
-        </petal-dialog>
-
-        <petal-dialog id="welcome-dialog">
-          <petal-icon slot="icon">celebration</petal-icon>
-          <div slot="headline" id="welcome-title">Welcome!</div>
-          <form slot="content" id="welcome-form" method="dialog">Your account is ready. We sent a sign-in link to your email.</form>
-          <div slot="actions">
-            <petal-filled-button form="welcome-form" value="ok">Get started</petal-filled-button>
-          </div>
-        </petal-dialog>
-
-        <petal-date-picker-dialog id="cart-date-dialog" picker-title="Delivery date"></petal-date-picker-dialog>
-
-        <petal-dialog id="cart-dialog">
-          <div slot="headline">Your cart</div>
-          <div slot="content" class="cart-content">
-            <petal-list id="cart-list" aria-label="Cart"></petal-list>
-            <p class="cart-total" id="cart-total"></p>
-            <petal-outlined-text-field id="cart-date" label="Delivery date" readonly>
-              <petal-icon-button slot="trailing-icon" id="cart-date-button" aria-label="Pick a delivery date"><petal-icon>calendar_month</petal-icon></petal-icon-button>
+      <section class="blocks" id="examples" aria-label="Examples built with petal-elements">
+        <div class="blocks-column">
+          <!-- Reserve a table -->
+          <petal-outlined-card class="block">
+            <h3>Reserve a table</h3>
+            <p class="muted">Sakura Kitchen · Kyoto</p>
+            <petal-outlined-text-field id="block-date" label="Date" readonly value="Fri, Oct 24">
+              <petal-icon-button slot="trailing-icon" id="block-date-button" aria-label="Pick a date"><petal-icon>calendar_month</petal-icon></petal-icon-button>
             </petal-outlined-text-field>
-          </div>
-          <div slot="actions">
-            <petal-text-button id="cart-close">Keep shopping</petal-text-button>
-            <petal-split-button id="cart-checkout" size="small" trailing-label="Payment method">Checkout</petal-split-button>
-            <petal-menu id="cart-pay-menu" anchor="cart-checkout" single-radio anchor-corner="end-end" menu-corner="start-end">
-              <petal-menu-item type="menuitemradio" checked><petal-icon slot="start">credit_card</petal-icon><div slot="headline">Card</div></petal-menu-item>
-              <petal-menu-item type="menuitemradio"><petal-icon slot="start">account_balance</petal-icon><div slot="headline">Bank transfer</div></petal-menu-item>
-            </petal-menu>
-          </div>
-        </petal-dialog>
-      </section>
+            <petal-outlined-text-field id="block-time" label="Time" readonly value="7:30 PM">
+              <petal-icon-button slot="trailing-icon" id="block-time-button" aria-label="Pick a time"><petal-icon>schedule</petal-icon></petal-icon-button>
+            </petal-outlined-text-field>
+            <p class="label">Guests</p>
+            <petal-segmented-button-set aria-label="Guests" class="fill">
+              <petal-segmented-button label="2" selected></petal-segmented-button>
+              <petal-segmented-button label="4"></petal-segmented-button>
+              <petal-segmented-button label="6"></petal-segmented-button>
+              <petal-segmented-button label="8+"></petal-segmented-button>
+            </petal-segmented-button-set>
+            <petal-filled-button id="block-reserve">Reserve</petal-filled-button>
+            <petal-date-picker-dialog id="block-date-dialog" value="2026-10-24"></petal-date-picker-dialog>
+            <petal-time-picker-dialog id="block-time-dialog" value="19:30"></petal-time-picker-dialog>
+          </petal-outlined-card>
 
-      <section class="section production" aria-labelledby="production-title">
-        <h2 id="production-title">Used in production</h2>
-        <div class="case surface">
-          <div class="case-text">
-            <p class="eyebrow">rate.anontokyo.vip</p>
-            <h3>JPY ⇄ CNY exchange rates</h3>
-            <p>
-              A live currency site built with petal-elements: today's rate and its
-              trend, a converter, saved amounts and historical rates, in
-              Japanese, Chinese and English, light and dark. It uses about twenty
-              components, from the top app bar and pull to refresh to button
-              groups, menu groups, dialogs and the theme transition.
-            </p>
-            <ul class="case-components" aria-label="Components it uses">
-              <li>Top app bar</li><li>Pull to refresh</li><li>Cards</li><li>Button group</li>
-              <li>Menu groups</li><li>Text fields</li><li>Dialog</li><li>Snackbar</li>
-              <li>Tooltip</li><li>Assist chips</li><li>Loading indicator</li><li>Theme transition</li>
-            </ul>
-            <div class="actions">
-              <petal-filled-button href="https://rate.anontokyo.vip/" target="_blank"><petal-icon slot="icon">open_in_new</petal-icon>Open the site</petal-filled-button>
-              <petal-outlined-button href="https://github.com/Saki340/cny-jpy-rate" target="_blank">Source code</petal-outlined-button>
+          <!-- Savings goal -->
+          <petal-outlined-card class="block">
+            <div class="block-head">
+              <h3>Trip to Hokkaido</h3>
+              <petal-icon-button id="block-goal-more" aria-label="More options"><petal-icon>more_vert</petal-icon></petal-icon-button>
             </div>
-          </div>
-          <div class="case-shots">
-            <figure class="shot-desktop">
-              <img class="shot light" src="assets/rate-desktop-light.webp" width="1280" height="800" loading="lazy" alt="rate.anontokyo.vip on a desktop: today's JPY to CNY rate, a converter, and the rate trend." />
-              <img class="shot dark" src="assets/rate-desktop-dark.webp" width="1280" height="800" loading="lazy" alt="rate.anontokyo.vip on a desktop in the dark theme." />
-            </figure>
-            <figure class="shot-mobile">
-              <img class="shot light" src="assets/rate-mobile-light.webp" width="390" height="844" loading="lazy" alt="rate.anontokyo.vip on a phone." />
-              <img class="shot dark" src="assets/rate-mobile-dark.webp" width="390" height="844" loading="lazy" alt="rate.anontokyo.vip on a phone in the dark theme." />
-            </figure>
-          </div>
+            <p class="big">¥184,000 <span class="muted">of ¥230,000</span></p>
+            <petal-linear-progress class="thick" value="0.8" aria-label="Saved 80%"></petal-linear-progress>
+            <p class="muted">80% saved · on track for February</p>
+            <petal-button-group connected single-select size="xsmall" class="fill" aria-label="Period">
+              <petal-filled-tonal-button toggle>Week</petal-filled-tonal-button>
+              <petal-filled-tonal-button toggle selected>Month</petal-filled-tonal-button>
+              <petal-filled-tonal-button toggle>Year</petal-filled-tonal-button>
+            </petal-button-group>
+            <div class="bars" aria-hidden="true">
+              <i style="--h: 40%"></i><i style="--h: 55%"></i><i style="--h: 35%"></i><i style="--h: 70%"></i><i style="--h: 60%"></i><i style="--h: 85%"></i>
+            </div>
+          </petal-outlined-card>
+
+          <!-- Music player -->
+          <petal-outlined-card class="block">
+            <div class="art" aria-hidden="true"><petal-icon>music_note</petal-icon></div>
+            <div class="block-head">
+              <div>
+                <h3>Evening Tide</h3>
+                <p class="muted">Harbor Lights</p>
+              </div>
+              <petal-icon-button toggle selected aria-label="Like"><petal-icon>favorite</petal-icon><petal-icon slot="selected" filled>favorite</petal-icon></petal-icon-button>
+            </div>
+            <petal-slider value="38" aria-label="Position" aria-valuetext="1:24 of 3:42"></petal-slider>
+            <div class="times muted"><span>1:24</span><span>3:42</span></div>
+            <div class="player">
+              <petal-icon-button aria-label="Shuffle"><petal-icon>shuffle</petal-icon></petal-icon-button>
+              <petal-filled-tonal-icon-button size="medium" aria-label="Previous"><petal-icon>skip_previous</petal-icon></petal-filled-tonal-icon-button>
+              <petal-filled-icon-button size="large" width="wide" toggle selected aria-label="Pause" aria-label-selected="Play"><petal-icon>play_arrow</petal-icon><petal-icon slot="selected">pause</petal-icon></petal-filled-icon-button>
+              <petal-filled-tonal-icon-button size="medium" aria-label="Next"><petal-icon>skip_next</petal-icon></petal-filled-tonal-icon-button>
+              <petal-icon-button aria-label="Repeat"><petal-icon>repeat</petal-icon></petal-icon-button>
+            </div>
+          </petal-outlined-card>
+
+          <!-- Filters -->
+          <petal-outlined-card class="block">
+            <h3>Filters</h3>
+            <p class="label">Price per night</p>
+            <petal-slider range labeled min="0" max="500" step="10" value-start="80" value-end="260" aria-label-start="Minimum price" aria-label-end="Maximum price"></petal-slider>
+            <p class="label">Amenities</p>
+            <petal-chip-set aria-label="Amenities">
+              <petal-filter-chip label="Wi-Fi" selected></petal-filter-chip>
+              <petal-filter-chip label="Kitchen"></petal-filter-chip>
+              <petal-filter-chip label="Onsen" selected></petal-filter-chip>
+              <petal-filter-chip label="Parking"></petal-filter-chip>
+            </petal-chip-set>
+            <div class="row-end">
+              <petal-text-button>Clear</petal-text-button>
+              <petal-filled-button>Show 128 stays</petal-filled-button>
+            </div>
+          </petal-outlined-card>
         </div>
+
+        <div class="blocks-column">
+          <!-- Notifications -->
+          <petal-outlined-card class="block flush">
+            <h3>Notifications</h3>
+            <petal-list aria-label="Notifications">
+              <petal-list-item>
+                <petal-icon slot="start">notifications_active</petal-icon>
+                <div slot="headline">Push</div>
+                <div slot="supporting-text">Messages and mentions</div>
+                <petal-switch slot="end" selected aria-label="Push"></petal-switch>
+              </petal-list-item>
+              <petal-list-item>
+                <petal-icon slot="start">mail</petal-icon>
+                <div slot="headline">Email digest</div>
+                <div slot="supporting-text">Every Monday</div>
+                <petal-switch slot="end" aria-label="Email digest"></petal-switch>
+              </petal-list-item>
+              <petal-list-item>
+                <petal-icon slot="start">bedtime</petal-icon>
+                <div slot="headline">Quiet hours</div>
+                <div slot="supporting-text">10 PM – 7 AM</div>
+                <petal-switch slot="end" selected aria-label="Quiet hours"></petal-switch>
+              </petal-list-item>
+            </petal-list>
+          </petal-outlined-card>
+
+          <!-- Places carousel -->
+          <petal-outlined-card class="block">
+            <div class="block-head">
+              <h3>Trip ideas</h3>
+              <petal-text-button size="small">See all</petal-text-button>
+            </div>
+            <petal-carousel id="block-carousel" class="block-carousel" variant="hero" item-spacing="8" aria-label="Trip ideas"></petal-carousel>
+          </petal-outlined-card>
+
+          <!-- Chat -->
+          <petal-outlined-card class="block">
+            <div class="block-head">
+              <div class="who">
+                <span class="avatar" aria-hidden="true">MC</span>
+                <div><h3>Mei Chen</h3><p class="muted">Active now</p></div>
+              </div>
+              <petal-icon-button aria-label="Call"><petal-icon>call</petal-icon></petal-icon-button>
+            </div>
+            <div class="chat" id="block-chat">
+              <p class="bubble">Are we still on for dinner?</p>
+              <p class="bubble mine">Yes! I booked a table for 7:30 🌸</p>
+            </div>
+            <form class="send" id="block-send">
+              <petal-outlined-text-field id="block-message" label="Message" class="grow"></petal-outlined-text-field>
+              <petal-filled-icon-button type="submit" aria-label="Send"><petal-icon>send</petal-icon></petal-filled-icon-button>
+            </form>
+          </petal-outlined-card>
+
+          <!-- Uploads -->
+          <petal-outlined-card class="block">
+            <div class="block-head">
+              <h3>Uploading 3 files</h3>
+              <petal-loading-indicator class="small" aria-label="Uploading"></petal-loading-indicator>
+            </div>
+            <div class="file">
+              <petal-icon>image</petal-icon>
+              <div class="grow"><p>kyoto-01.jpg</p><petal-linear-progress wavy value="1" aria-label="kyoto-01.jpg"></petal-linear-progress></div>
+              <petal-icon class="ok">check_circle</petal-icon>
+            </div>
+            <div class="file">
+              <petal-icon>image</petal-icon>
+              <div class="grow"><p>kyoto-02.jpg</p><petal-linear-progress wavy value="0.6" aria-label="kyoto-02.jpg"></petal-linear-progress></div>
+              <petal-icon-button aria-label="Cancel kyoto-02.jpg"><petal-icon>close</petal-icon></petal-icon-button>
+            </div>
+            <div class="file">
+              <petal-icon>movie</petal-icon>
+              <div class="grow"><p>arashiyama.mp4</p><petal-linear-progress wavy indeterminate aria-label="arashiyama.mp4"></petal-linear-progress></div>
+              <petal-icon-button aria-label="Cancel arashiyama.mp4"><petal-icon>close</petal-icon></petal-icon-button>
+            </div>
+          </petal-outlined-card>
+        </div>
+
+        <div class="blocks-column">
+          <!-- Account security -->
+          <petal-outlined-card class="block">
+            <h3>Account security</h3>
+            <petal-outlined-text-field label="Email" type="email" value="ana@example.com"></petal-outlined-text-field>
+            <petal-outlined-text-field id="block-password" label="Password" type="password" value="petal-elements">
+              <petal-icon-button slot="trailing-icon" id="block-password-toggle" toggle aria-label="Show password"><petal-icon>visibility</petal-icon><petal-icon slot="selected">visibility_off</petal-icon></petal-icon-button>
+            </petal-outlined-text-field>
+            <petal-outlined-select label="Recovery">
+              <petal-select-option value="phone" selected><div slot="headline">Phone · •••• 2048</div></petal-select-option>
+              <petal-select-option value="email"><div slot="headline">Backup email</div></petal-select-option>
+            </petal-outlined-select>
+            <label class="check"><petal-switch selected aria-label="Two-step verification"></petal-switch>Two-step verification</label>
+            <petal-filled-tonal-button>Update security</petal-filled-tonal-button>
+          </petal-outlined-card>
+
+          <!-- Inbox -->
+          <petal-outlined-card class="block flush">
+            <petal-tabs aria-label="Inbox">
+              <petal-primary-tab active>Primary</petal-primary-tab>
+              <petal-primary-tab>Updates</petal-primary-tab>
+            </petal-tabs>
+            <petal-list aria-label="Messages">
+              <petal-list-item type="button">
+                <span slot="start" class="avatar" aria-hidden="true">KS</span>
+                <div slot="headline">Kai Sato</div>
+                <div slot="supporting-text">Photos from the weekend</div>
+                <div slot="trailing-supporting-text">9:41</div>
+              </petal-list-item>
+              <petal-list-item type="button">
+                <span slot="start" class="avatar tertiary" aria-hidden="true">AL</span>
+                <div slot="headline">Ana López</div>
+                <div slot="supporting-text">Draft for Thursday's review</div>
+                <div slot="trailing-supporting-text">Yesterday</div>
+              </petal-list-item>
+            </petal-list>
+          </petal-outlined-card>
+
+          <!-- Payment -->
+          <petal-outlined-card class="block">
+            <h3>Payment</h3>
+            <label class="option"><petal-radio name="block-pay" value="card" checked></petal-radio><petal-icon>credit_card</petal-icon>Card ending 4242</label>
+            <label class="option"><petal-radio name="block-pay" value="bank"></petal-radio><petal-icon>account_balance</petal-icon>Bank transfer</label>
+            <petal-divider></petal-divider>
+            <div class="total"><span>Total</span><b>¥12,400</b></div>
+            <label class="check small"><petal-checkbox checked></petal-checkbox>Save for next time</label>
+            <petal-filled-button id="block-pay">Pay ¥12,400</petal-filled-button>
+          </petal-outlined-card>
+
+          <!-- Feedback -->
+          <petal-outlined-card class="block">
+            <h3>How was your stay?</h3>
+            <div class="stars" id="block-stars" role="radiogroup" aria-label="Rating">
+              <petal-icon-button toggle selected aria-label="1 star"><petal-icon>star</petal-icon><petal-icon slot="selected" filled>star</petal-icon></petal-icon-button>
+              <petal-icon-button toggle selected aria-label="2 stars"><petal-icon>star</petal-icon><petal-icon slot="selected" filled>star</petal-icon></petal-icon-button>
+              <petal-icon-button toggle selected aria-label="3 stars"><petal-icon>star</petal-icon><petal-icon slot="selected" filled>star</petal-icon></petal-icon-button>
+              <petal-icon-button toggle selected aria-label="4 stars"><petal-icon>star</petal-icon><petal-icon slot="selected" filled>star</petal-icon></petal-icon-button>
+              <petal-icon-button toggle aria-label="5 stars"><petal-icon>star</petal-icon><petal-icon slot="selected" filled>star</petal-icon></petal-icon-button>
+            </div>
+            <petal-outlined-text-field type="textarea" rows="3" label="Tell us more"></petal-outlined-text-field>
+            <div class="row-end">
+              <petal-text-button>Skip</petal-text-button>
+              <petal-filled-button id="block-feedback">Send</petal-filled-button>
+            </div>
+          </petal-outlined-card>
+      
+        </div>
+
+        <petal-snackbar id="block-snackbar"></petal-snackbar>
       </section>
 
-      <section class="section" aria-labelledby="expressive-title">
-        <h2 id="expressive-title">Material 3 Expressive, built in</h2>
+      <section class="section gallery" id="components" aria-labelledby="gallery-title">
+        <h2 id="gallery-title">Every component</h2>
         <p class="section-lead">
-          Sizes, shapes and motion read from the Jetpack Compose sources. The
-          expressive motion scheme is the default: things move on springs and
-          overshoot a little.
+          All of them, live. Filter by kind, try them here, and open a
+          component's page for its full API.
         </p>
 
-        <div class="features">
-          <article class="feature surface">
-            <h3>Five button sizes</h3>
-            <p>From <code>xsmall</code> to <code>xlarge</code>, round or square. Pressed corners morph with a spring.</p>
-            <div class="demo sizes">
-              <petal-filled-button size="xsmall">XS</petal-filled-button>
-              <petal-filled-button size="small">S</petal-filled-button>
-              <petal-filled-button size="medium">M</petal-filled-button>
-              <petal-filled-button size="large">L</petal-filled-button>
+        <petal-chip-set id="gallery-filter" class="gallery-filter" aria-label="Kind of component">
+          <petal-filter-chip label="All" selected data-kind="all"></petal-filter-chip>
+          <petal-filter-chip label="Actions" data-kind="actions"></petal-filter-chip>
+          <petal-filter-chip label="Communication" data-kind="communication"></petal-filter-chip>
+          <petal-filter-chip label="Containment" data-kind="containment"></petal-filter-chip>
+          <petal-filter-chip label="Navigation" data-kind="navigation"></petal-filter-chip>
+          <petal-filter-chip label="Selection" data-kind="selection"></petal-filter-chip>
+          <petal-filter-chip label="Text input" data-kind="text"></petal-filter-chip>
+        </petal-chip-set>
+
+        <div class="tiles" id="tiles">
+
+          <!-- Actions -->
+          <article class="tile" data-kind="actions">
+            <a class="tile-name" href="catalog/components/button/">Buttons</a>
+            <div class="tile-demo wrap">
+              <petal-filled-button size="small">Filled</petal-filled-button>
+              <petal-filled-tonal-button size="small">Tonal</petal-filled-tonal-button>
+              <petal-outlined-button size="small">Outlined</petal-outlined-button>
+              <petal-text-button size="small">Text</petal-text-button>
             </div>
           </article>
-
-          <article class="feature surface">
-            <h3>Toggle buttons and groups</h3>
-            <p>Buttons that stay selected and change shape. Standard groups make room for the pressed button.</p>
-            <div class="demo">
-              <petal-button-group size="small" aria-label="Text style">
-                <petal-filled-tonal-button toggle>Bold</petal-filled-tonal-button>
-                <petal-filled-tonal-button toggle selected>Italic</petal-filled-tonal-button>
-                <petal-filled-tonal-button toggle>Underline</petal-filled-tonal-button>
+          <article class="tile" data-kind="actions">
+            <a class="tile-name" href="catalog/components/icon-button/">Icon buttons</a>
+            <div class="tile-demo">
+              <petal-icon-button aria-label="Next"><petal-icon>arrow_forward</petal-icon></petal-icon-button>
+              <petal-filled-icon-button size="small" aria-label="Edit"><petal-icon>edit</petal-icon></petal-filled-icon-button>
+              <petal-filled-tonal-icon-button size="small" toggle aria-label="Favorite"><petal-icon>favorite</petal-icon><petal-icon slot="selected" filled>favorite</petal-icon></petal-filled-tonal-icon-button>
+              <petal-outlined-icon-button size="small" aria-label="Settings"><petal-icon>settings</petal-icon></petal-outlined-icon-button>
+            </div>
+          </article>
+          <article class="tile" data-kind="actions">
+            <a class="tile-name" href="catalog/components/fab/">Floating action buttons</a>
+            <div class="tile-demo">
+              <petal-fab size="small" aria-label="Add"><petal-icon slot="icon">add</petal-icon></petal-fab>
+              <petal-fab variant="tertiary" label="Compose"><petal-icon slot="icon">edit</petal-icon></petal-fab>
+            </div>
+          </article>
+          <article class="tile" data-kind="actions">
+            <a class="tile-name" href="catalog/components/button-group/">Button groups</a>
+            <div class="tile-demo">
+              <petal-button-group connected single-select size="small" aria-label="View">
+                <petal-filled-tonal-button toggle selected>Day</petal-filled-tonal-button>
+                <petal-filled-tonal-button toggle>Week</petal-filled-tonal-button>
+                <petal-filled-tonal-button toggle>Month</petal-filled-tonal-button>
               </petal-button-group>
             </div>
           </article>
-
-          <article class="feature surface">
-            <h3>Spring motion</h3>
-            <p>Presses run on Compose's springs: buttons morph, groups make room, menus scale in. Expressive springs overshoot; compare them with the standard scheme.</p>
-            <div class="demo springs" id="springs">
-              <petal-button-group id="scheme" connected single-select size="xsmall" aria-label="Motion scheme">
-                <petal-filled-tonal-button toggle selected data-scheme="expressive">Expressive</petal-filled-tonal-button>
-                <petal-filled-tonal-button toggle data-scheme="standard">Standard</petal-filled-tonal-button>
-              </petal-button-group>
-              <p class="hint">Press and hold:</p>
-              <petal-button-group class="fill" connected size="small" aria-label="Press demo">
-                <petal-filled-button>Day</petal-filled-button>
-                <petal-filled-button>Week</petal-filled-button>
-                <petal-filled-button>Month</petal-filled-button>
-              </petal-button-group>
-              <petal-filled-tonal-button size="medium">Press me</petal-filled-tonal-button>
+          <article class="tile" data-kind="actions">
+            <a class="tile-name" href="catalog/components/split-button/">Split buttons</a>
+            <div class="tile-demo">
+              <span class="anchor-wrap">
+                <petal-split-button id="tile-split" size="small" trailing-label="More send options"><petal-icon slot="icon">send</petal-icon>Send</petal-split-button>
+                <petal-menu id="tile-split-menu" anchor="tile-split" positioning="popover" anchor-corner="end-end" menu-corner="start-end">
+                  <petal-menu-item><div slot="headline">Schedule send</div></petal-menu-item>
+                  <petal-menu-item><div slot="headline">Send without sound</div></petal-menu-item>
+                </petal-menu>
+              </span>
             </div>
           </article>
-
-          <article class="feature surface">
-            <h3>Tabs that slide</h3>
-            <p>The indicator moves and resizes on a spring, under the label. Scrollable rows center the selected tab.</p>
-            <div class="demo tabs-demo">
-              <petal-tabs aria-label="Travel">
-                <petal-primary-tab><petal-icon slot="icon">flight</petal-icon>Flights</petal-primary-tab>
-                <petal-primary-tab active><petal-icon slot="icon">hotel</petal-icon>Hotels</petal-primary-tab>
-                <petal-primary-tab><petal-icon slot="icon">explore</petal-icon>Explore</petal-primary-tab>
-              </petal-tabs>
+          <article class="tile" data-kind="actions">
+            <a class="tile-name" href="catalog/components/segmented-button/">Segmented buttons</a>
+            <div class="tile-demo">
+              <petal-segmented-button-set aria-label="Size">
+                <petal-segmented-button label="S"></petal-segmented-button>
+                <petal-segmented-button label="M" selected></petal-segmented-button>
+                <petal-segmented-button label="L"></petal-segmented-button>
+              </petal-segmented-button-set>
             </div>
           </article>
-
-          <article class="feature surface">
-            <h3>FAB menu</h3>
-            <p>The button morphs into a close button while the actions come in one after another.</p>
-            <div class="demo fab-menu-demo">
+          <article class="tile" data-kind="actions">
+            <a class="tile-name" href="catalog/components/floating-toolbar/">Floating toolbars</a>
+            <div class="tile-demo">
+              <petal-floating-toolbar expanded aria-label="Text style">
+                <petal-icon-button aria-label="Bold"><petal-icon>format_bold</petal-icon></petal-icon-button>
+                <petal-icon-button aria-label="Italic"><petal-icon>format_italic</petal-icon></petal-icon-button>
+                <petal-icon-button aria-label="Underline"><petal-icon>format_underlined</petal-icon></petal-icon-button>
+              </petal-floating-toolbar>
+            </div>
+          </article>
+          <article class="tile" data-kind="actions">
+            <a class="tile-name" href="catalog/components/chip/">Chips</a>
+            <div class="tile-demo">
+              <petal-chip-set aria-label="Chips">
+                <petal-assist-chip label="Directions"><petal-icon slot="icon">directions</petal-icon></petal-assist-chip>
+                <petal-filter-chip label="Open now" selected></petal-filter-chip>
+                <petal-input-chip label="Kyoto"></petal-input-chip>
+              </petal-chip-set>
+            </div>
+          </article>
+          <article class="tile" data-kind="actions">
+            <a class="tile-name" href="catalog/components/fab-menu/">FAB menus</a>
+            <div class="tile-demo tall end">
               <petal-fab-menu items-label="Create">
                 <petal-fab-menu-item><petal-icon slot="icon">edit_note</petal-icon>Note</petal-fab-menu-item>
-                <petal-fab-menu-item><petal-icon slot="icon">checklist</petal-icon>List</petal-fab-menu-item>
                 <petal-fab-menu-item><petal-icon slot="icon">photo_camera</petal-icon>Photo</petal-fab-menu-item>
                 <petal-toggle-fab slot="button" aria-label="Create"></petal-toggle-fab>
               </petal-fab-menu>
             </div>
           </article>
 
-          <article class="feature surface">
-            <h3>Split buttons and progress</h3>
-            <p>A main action with a menu of options, and wavy progress and the loading indicator while it runs.</p>
-            <div class="demo progress-demo">
-              <span class="anchor-wrap">
-                <petal-split-button id="demo-split" size="medium" trailing-label="Format"><petal-icon slot="icon">download</petal-icon>Download</petal-split-button>
-                <petal-menu id="demo-split-menu" anchor="demo-split" single-radio anchor-corner="end-end" menu-corner="start-end">
-                  <petal-menu-item type="menuitemradio" checked><div slot="headline">PDF</div></petal-menu-item>
-                  <petal-menu-item type="menuitemradio"><div slot="headline">Word</div></petal-menu-item>
-                  <petal-menu-item type="menuitemradio"><div slot="headline">Markdown</div></petal-menu-item>
-                </petal-menu>
-              </span>
-              <petal-loading-indicator id="demo-loading" hidden></petal-loading-indicator>
-              <petal-linear-progress id="demo-progress" class="fill" wavy value="0"></petal-linear-progress>
+          <!-- Communication -->
+          <article class="tile" data-kind="communication">
+            <a class="tile-name" href="catalog/components/badge/">Badges</a>
+            <div class="tile-demo">
+              <petal-icon-button aria-label="Mail, 3 new"><petal-icon>mail</petal-icon><petal-badge slot="badge" value="3"></petal-badge></petal-icon-button>
+              <petal-icon-button aria-label="Notifications, new"><petal-icon>notifications</petal-icon><petal-badge slot="badge"></petal-badge></petal-icon-button>
             </div>
           </article>
-
-          <article class="feature surface">
-            <h3>Carousels</h3>
-            <p>Items grow as they reach the large place and shrink as they leave, on Compose's keylines. Swipe, scroll or use the arrow keys.</p>
-            <div class="demo carousel-demo">
-              <petal-carousel id="demo-carousel" item-width="180" item-spacing="8" aria-label="Colors"></petal-carousel>
+          <article class="tile" data-kind="communication">
+            <a class="tile-name" href="catalog/components/progress/">Progress indicators</a>
+            <div class="tile-demo column">
+              <petal-linear-progress wavy indeterminate aria-label="Loading"></petal-linear-progress>
+              <petal-linear-progress value="0.6" aria-label="Upload"></petal-linear-progress>
+              <petal-circular-progress wavy indeterminate aria-label="Loading"></petal-circular-progress>
             </div>
           </article>
-
-          <article class="feature surface">
-            <h3>Date and time pickers</h3>
-            <p>A calendar that slides between months, a year grid and a clock dial, in dialogs or on the page, with typed input as well.</p>
-            <div class="demo pickers-demo">
-              <petal-filled-tonal-button id="demo-date-button"><petal-icon slot="icon">calendar_month</petal-icon><span id="demo-date-label">Pick a date</span></petal-filled-tonal-button>
-              <petal-filled-tonal-button id="demo-time-button"><petal-icon slot="icon">schedule</petal-icon><span id="demo-time-label">Pick a time</span></petal-filled-tonal-button>
-              <petal-date-picker-dialog id="demo-date-dialog"></petal-date-picker-dialog>
-              <petal-time-picker-dialog id="demo-time-dialog"></petal-time-picker-dialog>
+          <article class="tile" data-kind="communication">
+            <a class="tile-name" href="catalog/components/loading-indicator/">Loading indicators</a>
+            <div class="tile-demo">
+              <petal-loading-indicator aria-label="Loading"></petal-loading-indicator>
+              <petal-loading-indicator contained aria-label="Loading"></petal-loading-indicator>
             </div>
           </article>
-
-          <article class="feature surface">
-            <h3>Made for the mouse too</h3>
-            <p>Hovering previews the press: shapes go part of the way, icons move by what they mean, and clickable cards lift into a light that follows the pointer. Touch screens keep Compose's look.</p>
-            <div class="demo hover-demo">
-              <div class="row">
-                <petal-filled-icon-button size="small" aria-label="Next"><petal-icon>arrow_forward</petal-icon></petal-filled-icon-button>
-                <petal-icon-button aria-label="Download"><petal-icon>download</petal-icon></petal-icon-button>
-                <petal-icon-button aria-label="Settings"><petal-icon>settings</petal-icon></petal-icon-button>
-                <petal-icon-button aria-label="Refresh"><petal-icon>refresh</petal-icon></petal-icon-button>
-                <petal-icon-button aria-label="Favorite"><petal-icon>favorite</petal-icon></petal-icon-button>
-              </div>
-              <petal-filled-card class="hover-card" clickable aria-label="A clickable card">
-                <span>Hover me</span>
-              </petal-filled-card>
+          <article class="tile" data-kind="communication">
+            <a class="tile-name" href="catalog/components/snackbar/">Snackbars</a>
+            <div class="tile-demo">
+              <petal-filled-tonal-button id="tile-snackbar-button">Archive</petal-filled-tonal-button>
+              <petal-snackbar id="tile-snackbar" action="Undo">Conversation archived</petal-snackbar>
             </div>
           </article>
-
-          <article class="feature surface">
-            <h3>Rich tooltips</h3>
-            <p>A title, a few lines and an action, placed above the anchor, or kept open until something else is pressed.</p>
-            <div class="demo tooltip-demo">
-              <petal-filled-tonal-button id="demo-rich-anchor"><petal-icon slot="icon">info</petal-icon>What's new</petal-filled-tonal-button>
-              <petal-rich-tooltip id="demo-rich" for="demo-rich-anchor" persistent caret>
-                <span slot="title">Pickers and carousels</span>
-                Pick dates and times from a calendar or a dial, and browse items in a carousel.
-                <petal-text-button slot="action" href="catalog/components/carousel/">Learn more</petal-text-button>
+          <article class="tile" data-kind="communication">
+            <a class="tile-name" href="catalog/components/tooltip/">Tooltips</a>
+            <div class="tile-demo">
+              <petal-icon-button id="tile-tooltip" aria-label="Share"><petal-icon>share</petal-icon></petal-icon-button>
+              <petal-tooltip for="tile-tooltip">Share</petal-tooltip>
+              <petal-text-button id="tile-rich-tooltip">About sync</petal-text-button>
+              <petal-rich-tooltip for="tile-rich-tooltip" persistent caret>
+                <span slot="title">Sync</span>
+                Your notes are saved to all your devices.
+                <petal-text-button slot="action">Got it</petal-text-button>
               </petal-rich-tooltip>
             </div>
           </article>
+          <article class="tile" data-kind="communication">
+            <a class="tile-name" href="catalog/components/pull-to-refresh/">Pull to refresh</a>
+            <div class="tile-demo flush">
+              <petal-pull-to-refresh id="tile-refresh" class="tile-refresh" label="Refresh messages">
+                <petal-list aria-label="Messages">
+                  <petal-list-item><div slot="headline">Pull this list down</div></petal-list-item>
+                  <petal-list-item><div slot="headline">Ana: See you at 6</div></petal-list-item>
+                  <petal-list-item><div slot="headline">Kai: Photos are up</div></petal-list-item>
+                  <petal-list-item><div slot="headline">Mei: Thanks!</div></petal-list-item>
+                </petal-list>
+              </petal-pull-to-refresh>
+            </div>
+          </article>
 
+          <!-- Containment -->
+          <article class="tile" data-kind="containment">
+            <a class="tile-name" href="catalog/components/card/">Cards</a>
+            <div class="tile-demo">
+              <petal-filled-card class="mini-card">Filled</petal-filled-card>
+              <petal-elevated-card class="mini-card">Elevated</petal-elevated-card>
+              <petal-outlined-card class="mini-card" clickable aria-label="Outlined card">Outlined</petal-outlined-card>
+            </div>
+          </article>
+          <article class="tile wide" data-kind="containment">
+            <a class="tile-name" href="catalog/components/carousel/">Carousels</a>
+            <div class="tile-demo flush">
+              <petal-carousel id="tile-carousel" class="tile-carousel" item-width="140" item-spacing="8" aria-label="Places"></petal-carousel>
+            </div>
+          </article>
+          <article class="tile" data-kind="containment">
+            <a class="tile-name" href="catalog/components/dialog/">Dialogs</a>
+            <div class="tile-demo">
+              <petal-filled-tonal-button id="tile-dialog-button">Delete draft</petal-filled-tonal-button>
+              <petal-dialog id="tile-dialog" type="alert">
+                <div slot="headline">Delete this draft?</div>
+                <form slot="content" id="tile-dialog-form" method="dialog">It will be gone for good.</form>
+                <div slot="actions">
+                  <petal-text-button form="tile-dialog-form" value="cancel">Cancel</petal-text-button>
+                  <petal-text-button form="tile-dialog-form" value="delete">Delete</petal-text-button>
+                </div>
+              </petal-dialog>
+            </div>
+          </article>
+          <article class="tile" data-kind="containment">
+            <a class="tile-name" href="catalog/components/bottom-sheet/">Bottom sheets</a>
+            <div class="tile-demo">
+              <petal-filled-tonal-button id="tile-sheet-button">Share</petal-filled-tonal-button>
+              <petal-bottom-sheet id="tile-sheet" aria-label="Share">
+                <petal-list aria-label="Share to">
+                  <petal-list-item type="button"><petal-icon slot="start">link</petal-icon><div slot="headline">Copy link</div></petal-list-item>
+                  <petal-list-item type="button"><petal-icon slot="start">mail</petal-icon><div slot="headline">Email</div></petal-list-item>
+                  <petal-list-item type="button"><petal-icon slot="start">qr_code</petal-icon><div slot="headline">QR code</div></petal-list-item>
+                </petal-list>
+              </petal-bottom-sheet>
+            </div>
+          </article>
+          <article class="tile" data-kind="containment">
+            <a class="tile-name" href="catalog/components/list/">Lists</a>
+            <div class="tile-demo flush">
+              <petal-list aria-label="Contacts">
+                <petal-list-item>
+                  <petal-icon slot="start">person</petal-icon>
+                  <div slot="headline">Ana López</div>
+                  <div slot="supporting-text">Design</div>
+                </petal-list-item>
+                <petal-divider></petal-divider>
+                <petal-list-item>
+                  <petal-icon slot="start">person</petal-icon>
+                  <div slot="headline">Kai Sato</div>
+                  <div slot="supporting-text">Engineering</div>
+                </petal-list-item>
+              </petal-list>
+            </div>
+          </article>
+
+          <!-- Navigation -->
+          <article class="tile" data-kind="navigation">
+            <a class="tile-name" href="catalog/components/top-app-bar/">Top app bars</a>
+            <div class="tile-demo flush">
+              <petal-top-app-bar class="tile-bar" headline="Inbox">
+                <petal-icon-button slot="navigation" aria-label="Menu"><petal-icon>menu</petal-icon></petal-icon-button>
+                <petal-icon-button slot="actions" aria-label="Search"><petal-icon>search</petal-icon></petal-icon-button>
+              </petal-top-app-bar>
+            </div>
+          </article>
+          <article class="tile" data-kind="navigation">
+            <a class="tile-name" href="catalog/components/bottom-app-bar/">Bottom app bars</a>
+            <div class="tile-demo flush">
+              <petal-bottom-app-bar class="tile-bar">
+                <petal-icon-button aria-label="Done"><petal-icon>check_box</petal-icon></petal-icon-button>
+                <petal-icon-button aria-label="Draw"><petal-icon>brush</petal-icon></petal-icon-button>
+                <petal-icon-button aria-label="Voice"><petal-icon>mic</petal-icon></petal-icon-button>
+                <petal-fab slot="fab" variant="secondary" aria-label="New"><petal-icon slot="icon">add</petal-icon></petal-fab>
+              </petal-bottom-app-bar>
+            </div>
+          </article>
+          <article class="tile" data-kind="navigation">
+            <a class="tile-name" href="catalog/components/navigation-bar/">Navigation bars</a>
+            <div class="tile-demo flush">
+              <petal-navigation-bar class="tile-bar" aria-label="Sections">
+                <petal-navigation-bar-item selected><petal-icon slot="icon">home</petal-icon>Home</petal-navigation-bar-item>
+                <petal-navigation-bar-item><petal-icon slot="icon">explore</petal-icon>Explore</petal-navigation-bar-item>
+                <petal-navigation-bar-item><petal-icon slot="icon">person</petal-icon><petal-badge slot="badge"></petal-badge>Profile</petal-navigation-bar-item>
+              </petal-navigation-bar>
+            </div>
+          </article>
+          <article class="tile" data-kind="navigation">
+            <a class="tile-name" href="catalog/components/navigation-rail/">Navigation rails</a>
+            <div class="tile-demo flush start tall">
+              <petal-navigation-rail class="tile-rail" aria-label="Sections">
+                <petal-navigation-rail-item selected><petal-icon slot="icon">inbox</petal-icon>Inbox</petal-navigation-rail-item>
+                <petal-navigation-rail-item><petal-icon slot="icon">star</petal-icon>Starred</petal-navigation-rail-item>
+                <petal-navigation-rail-item><petal-icon slot="icon">send</petal-icon>Sent</petal-navigation-rail-item>
+              </petal-navigation-rail>
+            </div>
+          </article>
+          <article class="tile" data-kind="navigation">
+            <a class="tile-name" href="catalog/components/navigation-drawer/">Navigation drawers</a>
+            <div class="tile-demo">
+              <petal-filled-tonal-button id="tile-drawer-button"><petal-icon slot="icon">menu</petal-icon>Open drawer</petal-filled-tonal-button>
+              <petal-navigation-drawer id="tile-drawer" aria-label="Mail">
+                <h2 class="drawer-title">Mail</h2>
+                <petal-navigation-drawer-item selected><petal-icon slot="icon">inbox</petal-icon>Inbox<span slot="badge">24</span></petal-navigation-drawer-item>
+                <petal-navigation-drawer-item><petal-icon slot="icon">send</petal-icon>Sent</petal-navigation-drawer-item>
+                <petal-navigation-drawer-item><petal-icon slot="icon">drafts</petal-icon>Drafts</petal-navigation-drawer-item>
+              </petal-navigation-drawer>
+            </div>
+          </article>
+          <article class="tile" data-kind="navigation">
+            <a class="tile-name" href="catalog/components/tabs/">Tabs</a>
+            <div class="tile-demo flush">
+              <petal-tabs class="tile-tabs" aria-label="Media">
+                <petal-primary-tab active>Photos</petal-primary-tab>
+                <petal-primary-tab>Videos</petal-primary-tab>
+                <petal-primary-tab>Albums</petal-primary-tab>
+              </petal-tabs>
+            </div>
+          </article>
+          <article class="tile" data-kind="navigation">
+            <a class="tile-name" href="catalog/components/search/">Search</a>
+            <div class="tile-demo">
+              <petal-search-bar id="tile-search" layout="docked" placeholder="Search places">
+                <petal-list aria-label="Suggestions">
+                  <petal-list-item type="button"><petal-icon slot="start">history</petal-icon><div slot="headline">Kyoto station</div></petal-list-item>
+                  <petal-list-item type="button"><petal-icon slot="start">history</petal-icon><div slot="headline">Osaka castle</div></petal-list-item>
+                </petal-list>
+              </petal-search-bar>
+            </div>
+          </article>
+          <article class="tile" data-kind="navigation">
+            <a class="tile-name" href="catalog/components/menu/">Menus</a>
+            <div class="tile-demo">
+              <span class="anchor-wrap">
+                <petal-outlined-button id="tile-menu-button" trailing-icon>Sort<petal-icon slot="icon">arrow_drop_down</petal-icon></petal-outlined-button>
+                <petal-menu id="tile-menu" anchor="tile-menu-button" positioning="popover">
+                  <petal-menu-item type="menuitemradio" checked><div slot="headline">Newest</div></petal-menu-item>
+                  <petal-menu-item type="menuitemradio"><div slot="headline">Oldest</div></petal-menu-item>
+                  <petal-menu-item type="menuitemradio"><div slot="headline">Name</div></petal-menu-item>
+                </petal-menu>
+              </span>
+            </div>
+          </article>
+
+          <!-- Selection -->
+          <article class="tile" data-kind="selection">
+            <a class="tile-name" href="catalog/components/checkbox/">Checkboxes</a>
+            <div class="tile-demo">
+              <label class="check"><petal-checkbox checked></petal-checkbox>Milk</label>
+              <label class="check"><petal-checkbox></petal-checkbox>Eggs</label>
+              <label class="check"><petal-checkbox indeterminate></petal-checkbox>All</label>
+            </div>
+          </article>
+          <article class="tile" data-kind="selection">
+            <a class="tile-name" href="catalog/components/radio/">Radio buttons</a>
+            <div class="tile-demo">
+              <label class="check"><petal-radio name="tile-size" value="s" checked></petal-radio>Small</label>
+              <label class="check"><petal-radio name="tile-size" value="l"></petal-radio>Large</label>
+            </div>
+          </article>
+          <article class="tile" data-kind="selection">
+            <a class="tile-name" href="catalog/components/switch/">Switches</a>
+            <div class="tile-demo">
+              <petal-switch selected icons aria-label="Wi-Fi"></petal-switch>
+              <petal-switch aria-label="Bluetooth"></petal-switch>
+            </div>
+          </article>
+          <article class="tile" data-kind="selection">
+            <a class="tile-name" href="catalog/components/slider/">Sliders</a>
+            <div class="tile-demo column">
+              <petal-slider labeled value="40" aria-label="Volume"></petal-slider>
+              <petal-slider range ticks step="10" value-start="20" value-end="70" aria-label-start="Minimum" aria-label-end="Maximum"></petal-slider>
+            </div>
+          </article>
+          <article class="tile" data-kind="selection">
+            <a class="tile-name" href="catalog/components/date-picker/">Date pickers</a>
+            <div class="tile-demo">
+              <petal-filled-tonal-button id="tile-date-button"><petal-icon slot="icon">calendar_month</petal-icon><span id="tile-date-label">Pick a date</span></petal-filled-tonal-button>
+              <petal-date-picker-dialog id="tile-date"></petal-date-picker-dialog>
+            </div>
+          </article>
+          <article class="tile" data-kind="selection">
+            <a class="tile-name" href="catalog/components/time-picker/">Time pickers</a>
+            <div class="tile-demo">
+              <petal-filled-tonal-button id="tile-time-button"><petal-icon slot="icon">schedule</petal-icon><span id="tile-time-label">Pick a time</span></petal-filled-tonal-button>
+              <petal-time-picker-dialog id="tile-time"></petal-time-picker-dialog>
+            </div>
+          </article>
+
+          <!-- Text inputs -->
+          <article class="tile" data-kind="text">
+            <a class="tile-name" href="catalog/components/text-field/">Text fields</a>
+            <div class="tile-demo column">
+              <petal-filled-text-field label="Name" value="Ana"></petal-filled-text-field>
+              <petal-outlined-text-field label="Price" prefix-text="¥" type="number"></petal-outlined-text-field>
+            </div>
+          </article>
+          <article class="tile" data-kind="text">
+            <a class="tile-name" href="catalog/components/select/">Selects</a>
+            <div class="tile-demo column">
+              <petal-outlined-select label="Country">
+                <petal-select-option value="jp" selected><div slot="headline">Japan</div></petal-select-option>
+                <petal-select-option value="cn"><div slot="headline">China</div></petal-select-option>
+                <petal-select-option value="kr"><div slot="headline">Korea</div></petal-select-option>
+              </petal-outlined-select>
+            </div>
+          </article>
         </div>
       </section>
 
-      <section class="section" aria-labelledby="why-title">
-        <h2 id="why-title">Why petal-elements</h2>
-        <div class="reasons">
-          <article class="reason">
-            <petal-icon>code</petal-icon>
-            <h3>Works anywhere</h3>
-            <p>Standard custom elements built with Lit. Use them in plain HTML, React, Vue, Svelte, Astro or a static site.</p>
-          </article>
-          <article class="reason">
-            <petal-icon>accessibility_new</petal-icon>
-            <h3>Forms and accessibility</h3>
-            <p>Fields, checkboxes and buttons take part in native <code>&lt;form&gt;</code>s, with keyboard support and screen reader semantics.</p>
-          </article>
-          <article class="reason">
-            <petal-icon>palette</petal-icon>
-            <h3>Themed with CSS</h3>
-            <p>Every color, shape and type style is a CSS custom property. Light and dark come built in.</p>
-          </article>
-          <article class="reason">
-            <petal-icon>straighten</petal-icon>
-            <h3>Values from source</h3>
-            <p>Sizes, colors and motion come from the published Material design tokens and Jetpack Compose sources, not from eyeballing.</p>
-          </article>
+      <section class="section agents" id="agents" aria-labelledby="agents-title">
+        <div class="agents-text">
+          <h2 id="agents-title">Made for AI coding assistants</h2>
+          <p class="section-lead">
+            Point Claude Code, Cursor or any assistant at the docs, ask for a
+            page, and get markup that uses the components as they are meant to
+            be used.
+          </p>
+          <ul class="agent-points">
+            <li>
+              <petal-icon>list_alt</petal-icon>
+              <div><b><a href="llms.txt">llms.txt</a></b> — a short index: every component with its import, key attributes, slots and events, and the rules for a correct page.</div>
+            </li>
+            <li>
+              <petal-icon>menu_book</petal-icon>
+              <div><b><a href="llms-full.txt">llms-full.txt</a></b> — every guide and component page in one file, for assistants that read a single source.</div>
+            </li>
+            <li>
+              <petal-icon>dashboard_customize</petal-icon>
+              <div><b><a href="catalog/about/building-pages/">Building pages</a></b> — page setup, responsive navigation and common screens, written to be followed step by step.</div>
+            </li>
+          </ul>
+          <div class="actions">
+            <petal-filled-tonal-button id="copy-llms"><petal-icon slot="icon">content_copy</petal-icon>Copy llms.txt link</petal-filled-tonal-button>
+          </div>
+        </div>
+
+        <div class="agent-demo surface" aria-label="An assistant building a settings page">
+          <div class="agent-window" aria-hidden="true">
+            <div class="agent-bar"><span class="dots"><i></i><i></i><i></i></span><span>settings.html</span></div>
+            <p class="agent-prompt"><span class="agent-you">&gt;</span> <span id="agent-prompt-text"></span><span class="caret"></span></p>
+            <pre class="agent-code"><code id="agent-code"></code></pre>
+          </div>
+          <div class="agent-result" id="agent-result">
+            <p class="agent-result-label">Result</p>
+            <petal-list aria-label="Settings">
+              <petal-list-item>
+                <petal-icon slot="start">wifi</petal-icon>
+                <div slot="headline">Wi-Fi</div>
+                <div slot="supporting-text">Home network</div>
+                <petal-switch slot="end" selected aria-label="Wi-Fi"></petal-switch>
+              </petal-list-item>
+              <petal-list-item>
+                <petal-icon slot="start">dark_mode</petal-icon>
+                <div slot="headline">Dark theme</div>
+                <petal-switch slot="end" aria-label="Dark theme"></petal-switch>
+              </petal-list-item>
+              <petal-list-item type="button">
+                <petal-icon slot="start">language</petal-icon>
+                <div slot="headline">Language</div>
+                <div slot="supporting-text">English</div>
+              </petal-list-item>
+            </petal-list>
+          </div>
         </div>
       </section>
 
-      <section class="section" aria-labelledby="theme-title">
+      <section class="section" id="theme" aria-labelledby="theme-title">
         <h2 id="theme-title">One color, a whole theme</h2>
         <p class="section-lead">
           Pick a source color. The color scheme is generated for light and dark,
@@ -581,21 +882,12 @@
         </p>
       </section>
 
-      <section class="section" aria-labelledby="migrate-title">
-        <h2 id="migrate-title">Coming from material-web</h2>
-        <p class="section-lead">Same components and CSS custom properties, new names.</p>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr><th scope="col"></th><th scope="col">material-web</th><th scope="col">petal-elements</th></tr>
-            </thead>
-            <tbody>
-              <tr><th scope="row">Package</th><td><code>@material/web</code></td><td><code>petal-elements</code></td></tr>
-              <tr><th scope="row">Tags</th><td><code>&lt;md-filled-button&gt;</code></td><td><code>&lt;petal-filled-button&gt;</code></td></tr>
-              <tr><th scope="row">Classes</th><td><code>MdFilledButton</code></td><td><code>PetalFilledButton</code></td></tr>
-              <tr><th scope="row">CSS properties</th><td><code>--md-sys-*</code></td><td>unchanged</td></tr>
-            </tbody>
-          </table>
+      <section class="cta" aria-labelledby="cta-title">
+        <h2 id="cta-title">Build your next page with petal-elements</h2>
+        <p>Free and open source. Plain HTML or any framework.</p>
+        <div class="actions">
+          <petal-filled-button size="medium" href="#start" data-magnetic>Get started</petal-filled-button>
+          <petal-outlined-button size="medium" href="https://github.com/Saki340/petal-elements" data-magnetic><petal-icon slot="icon">star</petal-icon>Star on GitHub</petal-outlined-button>
         </div>
       </section>
     </main>
@@ -610,6 +902,9 @@
       </p>
       <p>
         <a href="catalog/about/intro/">Docs</a> ·
+        <a href="catalog/components/button/">Components</a> ·
+        <a href="https://github.com/Saki340/petal-elements/blob/main/CHANGELOG.md">Changelog</a> ·
+        <a href="llms.txt">llms.txt</a> ·
         <a href="https://github.com/Saki340/petal-elements">GitHub</a> ·
         <a href="https://www.npmjs.com/package/petal-elements">npm</a> ·
         <a href="https://github.com/Saki340/petal-elements/blob/main/NOTICE">NOTICE</a>

@@ -5,6 +5,8 @@
  */
 
 // Components used on the landing page, from this repository.
+import 'petal-elements/appbar/bottom-app-bar.js';
+import 'petal-elements/appbar/top-app-bar.js';
 import 'petal-elements/badge/badge.js';
 import 'petal-elements/button/elevated-button.js';
 import 'petal-elements/button/filled-button.js';
@@ -17,32 +19,45 @@ import 'petal-elements/card/filled-card.js';
 import 'petal-elements/card/outlined-card.js';
 import 'petal-elements/carousel/carousel.js';
 import 'petal-elements/checkbox/checkbox.js';
+import 'petal-elements/chips/assist-chip.js';
 import 'petal-elements/chips/chip-set.js';
 import 'petal-elements/chips/filter-chip.js';
+import 'petal-elements/chips/input-chip.js';
 import 'petal-elements/datepicker/date-picker-dialog.js';
 import 'petal-elements/dialog/dialog.js';
+import 'petal-elements/divider/divider.js';
 import 'petal-elements/fab/fab.js';
-import 'petal-elements/fabmenu/fab-menu.js';
 import 'petal-elements/fabmenu/fab-menu-item.js';
+import 'petal-elements/fabmenu/fab-menu.js';
 import 'petal-elements/fabmenu/toggle-fab.js';
+import 'petal-elements/floatingtoolbar/floating-toolbar.js';
 import 'petal-elements/icon/icon.js';
 import 'petal-elements/iconbutton/filled-icon-button.js';
+import 'petal-elements/iconbutton/filled-tonal-icon-button.js';
 import 'petal-elements/iconbutton/icon-button.js';
-import 'petal-elements/list/list.js';
+import 'petal-elements/iconbutton/outlined-icon-button.js';
 import 'petal-elements/list/list-item.js';
+import 'petal-elements/list/list.js';
 import 'petal-elements/loadingindicator/loading-indicator.js';
-import 'petal-elements/menu/menu.js';
 import 'petal-elements/menu/menu-group.js';
 import 'petal-elements/menu/menu-item.js';
-import 'petal-elements/navigationbar/navigation-bar.js';
+import 'petal-elements/menu/menu.js';
 import 'petal-elements/navigationbar/navigation-bar-item.js';
-import 'petal-elements/navigationrail/navigation-rail.js';
+import 'petal-elements/navigationbar/navigation-bar.js';
+import 'petal-elements/navigationdrawer/navigation-drawer-item.js';
+import 'petal-elements/navigationdrawer/navigation-drawer.js';
 import 'petal-elements/navigationrail/navigation-rail-item.js';
+import 'petal-elements/navigationrail/navigation-rail.js';
+import 'petal-elements/progress/circular-progress.js';
 import 'petal-elements/progress/linear-progress.js';
+import 'petal-elements/pulltorefresh/pull-to-refresh.js';
 import 'petal-elements/radio/radio.js';
 import 'petal-elements/search/search-bar.js';
+import 'petal-elements/segmentedbutton/segmented-button-set.js';
+import 'petal-elements/segmentedbutton/segmented-button.js';
 import 'petal-elements/select/outlined-select.js';
 import 'petal-elements/select/select-option.js';
+import 'petal-elements/sheet/bottom-sheet.js';
 import 'petal-elements/slider/slider.js';
 import 'petal-elements/snackbar/snackbar.js';
 import 'petal-elements/splitbutton/split-button.js';
@@ -50,6 +65,7 @@ import 'petal-elements/switch/switch.js';
 import 'petal-elements/tabs/primary-tab.js';
 import 'petal-elements/tabs/secondary-tab.js';
 import 'petal-elements/tabs/tabs.js';
+import 'petal-elements/textfield/filled-text-field.js';
 import 'petal-elements/textfield/outlined-text-field.js';
 import 'petal-elements/timepicker/time-picker-dialog.js';
 import 'petal-elements/tooltip/rich-tooltip.js';
@@ -214,16 +230,6 @@ picker.addEventListener('keydown', (event) => {
   next.click();
 });
 
-// ---------- Spring demo ----------
-
-// The springs are expressive by default; "Standard" switches the demo to the
-// standard scheme.
-const springs = document.getElementById('springs')!;
-document.getElementById('scheme')!.addEventListener('change', (event) => {
-  const scheme = (event.target as HTMLElement).dataset['scheme'];
-  springs.classList.toggle('standard', scheme === 'standard');
-});
-
 // ---------- Copy buttons ----------
 
 for (const button of document.querySelectorAll<HTMLElement>('.code .copy')) {
@@ -244,429 +250,567 @@ for (const button of document.querySelectorAll<HTMLElement>('.code .copy')) {
   });
 }
 
-// ---------- Example pages ----------
-// Web pages in a browser frame, made of the real components.
+// ---------- Every component ----------
 
-interface Snackbar extends HTMLElement {
-  action: string;
-  show(): Promise<string>;
-}
-type Dialog = HTMLElement & {show(): void; close(): void; returnValue: string};
-type Props = HTMLElement & Record<string, unknown>;
-
-function byId<T extends HTMLElement = Props>(id: string) {
-  return document.getElementById(id) as unknown as T;
-}
-
-const snackbar = byId<Snackbar>('page-snackbar');
-
-/** Shows a message at the bottom of the example page. */
-function notify(message: string, action = '') {
-  snackbar.textContent = message;
-  snackbar.action = action;
-  return snackbar.show();
-}
-
-function slotted(tag: string, slot: string, text: string) {
-  const element = document.createElement(tag);
-  element.slot = slot;
-  element.textContent = text;
-  return element;
-}
-
-// ----- Page and width -----
-
-const ADDRESSES: Record<string, string> = {
-  dashboard: 'app.example.com/orders',
-  form: 'example.com/signup',
-  shop: 'shop.example.com/bouquets',
-};
-const pages = [...document.querySelectorAll<HTMLElement>('#viewport .page')];
-const notes = [...document.querySelectorAll<HTMLElement>('.scene-notes .notes')];
-const sceneTabs = byId<HTMLElement & {activeTab: HTMLElement | null}>('scene-tabs');
-sceneTabs.addEventListener('change', () => {
-  const scene = sceneTabs.activeTab?.dataset['scene'] ?? 'dashboard';
-  for (const element of [...pages, ...notes]) {
-    element.hidden = element.dataset['scene'] !== scene;
-  }
-  byId('address').textContent = ADDRESSES[scene];
-});
-
-const browser = byId('browser');
-byId('width-toggle').addEventListener('change', (event) => {
-  const width = (event.target as HTMLElement).dataset['width'];
-  browser.classList.toggle('mobile', width === 'mobile');
-});
-
-// ----- Dashboard -----
-
-type Order = [id: string, customer: string, amount: number, status: string, when: string];
-const ORDERS: Order[] = [
-  ['#1048', 'Aiko Tanaka', 12800, 'Paid', 'Today 10:42'],
-  ['#1047', 'Lucas Martin', 4500, 'Pending', 'Today 9:15'],
-  ['#1046', 'Mei Chen', 23600, 'Paid', 'Yesterday'],
-  ['#1045', 'Sam Rivera', 7200, 'Refunded', 'Yesterday'],
-  ['#1044', 'Noah Weber', 15900, 'Paid', 'Mon'],
-  ['#1043', 'Hana Suzuki', 3300, 'Pending', 'Mon'],
-  ['#1042', 'Omar Haddad', 9800, 'Paid', 'Sun'],
-  ['#1041', 'Lina Park', 18400, 'Paid', 'Sat'],
-];
-const STATUS_ICON: Record<string, string> = {
-  Paid: 'check_circle',
-  Pending: 'schedule',
-  Refunded: 'undo',
-};
-const yen = (amount: number) => `¥${amount.toLocaleString('en-US')}`;
-
-const orderList = byId('dash-orders');
-function orderItem([id, customer, amount, status, when]: Order) {
-  const item = document.createElement('petal-list-item');
-  item.setAttribute('type', 'button');
-  item.dataset['status'] = status;
-  item.dataset['search'] = `${id} ${customer} ${status}`.toLowerCase();
-  const icon = slotted('petal-icon', 'start', STATUS_ICON[status]);
-  icon.className = `status ${status.toLowerCase()}`;
-  item.append(
-    icon,
-    slotted('div', 'headline', `${customer} · ${id}`),
-    slotted('div', 'supporting-text', `${status} · ${when}`),
-    slotted('div', 'trailing-supporting-text', yen(amount)),
-  );
-  item.addEventListener('click', () => void notify(`Order ${id} opened`));
-  return item;
-}
-ORDERS.forEach((order) => orderList.append(orderItem(order)));
-
-// Filters and search together.
-const statusChips = [
-  ...document.querySelectorAll<HTMLElement & {selected: boolean}>('#dash-filters petal-filter-chip'),
-];
-const dashSearch = byId<HTMLElement & {value: string}>('dash-search');
-let status = '';
-function filterOrders() {
-  const query = dashSearch.value.trim().toLowerCase();
-  for (const item of orderList.querySelectorAll<HTMLElement>('petal-list-item')) {
-    item.hidden =
-      (!!status && item.dataset['status'] !== status) ||
-      (!!query && !item.dataset['search']!.includes(query));
-  }
-}
-// The chips act as one choice; the chip toggles itself after the click.
-for (const chip of statusChips) {
-  chip.addEventListener('click', () => {
-    setTimeout(() => {
-      status = chip.dataset['status'] ?? '';
-      for (const other of statusChips) other.selected = other === chip;
-      filterOrders();
-    });
+{
+  // The filter chips choose one kind at a time; "All" shows every tile.
+  const filter = document.getElementById('gallery-filter')!;
+  const chips = [...filter.querySelectorAll<HTMLElement & {selected: boolean}>('petal-filter-chip')];
+  const tiles = [...document.querySelectorAll<HTMLElement>('#tiles .tile')];
+  filter.addEventListener('click', (event) => {
+    const chip = (event.target as HTMLElement).closest<HTMLElement & {selected: boolean}>('petal-filter-chip');
+    if (!chip) return;
+    for (const other of chips) other.selected = other === chip;
+    const kind = chip.dataset['kind'];
+    for (const tile of tiles) tile.hidden = kind !== 'all' && tile.dataset['kind'] !== kind;
   });
-}
-dashSearch.addEventListener('input', filterOrders);
 
-// The rail's menu button expands it.
-const rail = byId<HTMLElement & {expanded: boolean}>('dash-rail');
-const railToggle = byId('dash-rail-toggle');
-railToggle.addEventListener('click', () => {
-  rail.expanded = !rail.expanded;
-  railToggle.setAttribute('aria-label', rail.expanded ? 'Collapse navigation' : 'Expand navigation');
-  railToggle.querySelector('petal-icon')!.textContent = rail.expanded ? 'menu_open' : 'menu';
-});
+  const byId = <T extends HTMLElement = HTMLElement & Record<string, unknown>>(id: string) =>
+    document.getElementById(id) as unknown as T;
+  type Opens = HTMLElement & {show(): unknown; open: boolean; value: string};
 
-// Account menu.
-const accountMenu = byId<HTMLElement & {open: boolean}>('dash-account-menu');
-byId('dash-account').addEventListener('click', () => {
-  accountMenu.open = !accountMenu.open;
-});
-byId('dash-sign-out').addEventListener('click', () => void notify('Signed out (not really)'));
+  // Buttons that open things.
+  const opener = (button: string, target: string) =>
+    byId(button).addEventListener('click', () => void byId<Opens>(target).show());
+  opener('tile-snackbar-button', 'tile-snackbar');
+  opener('tile-dialog-button', 'tile-dialog');
+  opener('tile-sheet-button', 'tile-sheet');
+  opener('tile-drawer-button', 'tile-drawer');
+  opener('tile-date-button', 'tile-date');
+  opener('tile-time-button', 'tile-time');
+  const menu = byId<Opens>('tile-menu');
+  byId('tile-menu-button').addEventListener('click', () => (menu.open = !menu.open));
 
-// New order dialog.
-const orderDialog = byId<Dialog>('order-dialog');
-let nextOrder = 1049;
-byId('dash-new').addEventListener('click', () => orderDialog.show());
-orderDialog.addEventListener('close', () => {
-  if (orderDialog.returnValue !== 'save') return;
-  const customer = byId<HTMLInputElement>('order-customer').value.trim() || 'New customer';
-  const amount = Number(byId<HTMLInputElement>('order-amount').value) || 0;
-  const orderStatus = byId<HTMLElement & {value: string}>('order-status').value;
-  const id = `#${nextOrder++}`;
-  orderList.prepend(orderItem([id, customer, amount, orderStatus, 'Just now']));
-  filterOrders();
-  const count = byId('dash-count');
-  count.textContent = String(Number(count.textContent) + 1);
-  void notify(`Order ${id} saved`);
-});
+  // The split button's arrow opens its menu.
+  const split = byId<HTMLElement & {checked: boolean}>('tile-split');
+  const splitMenu = byId<Opens>('tile-split-menu');
+  split.addEventListener('change', () => (splitMenu.open = split.checked));
+  splitMenu.addEventListener('closed', () => (split.checked = false));
 
-// ----- Sign-up form -----
-
-type Field = HTMLElement & {
-  value: string;
-  type: string;
-  error: boolean;
-  checkValidity(): boolean;
-  reportValidity(): boolean;
-};
-
-const signup = byId<HTMLFormElement>('signup');
-const showPassword = byId<HTMLElement & {selected: boolean}>('signup-show');
-const password = byId<Field>('signup-password');
-showPassword.addEventListener('change', () => {
-  password.type = showPassword.selected ? 'text' : 'password';
-});
-const teamSize = byId<HTMLElement & {value: number}>('signup-team');
-teamSize.addEventListener('input', () => {
-  byId('team-size-value').textContent = String(teamSize.value);
-});
-signup.addEventListener('reset', () => {
-  setTimeout(() => (byId('team-size-value').textContent = String(teamSize.value)));
-});
-const progress = byId('signup-progress');
-const submit = byId<HTMLElement & {disabled: boolean}>('signup-submit');
-signup.addEventListener('submit', (event) => {
-  event.preventDefault();
-  const fields = [...signup.querySelectorAll<Field>('petal-outlined-text-field')];
-  // Shows every error, and focuses the first one.
-  const valid = fields.map((field) => field.reportValidity()).every(Boolean);
-  if (!valid) {
-    fields.find((field) => !field.checkValidity())?.focus();
-    return;
-  }
-  progress.hidden = false;
-  submit.disabled = true;
-  setTimeout(() => {
-    progress.hidden = true;
-    submit.disabled = false;
-    const name = byId<Field>('signup-name').value.trim().split(/\s+/)[0];
-    byId('welcome-title').textContent = `Welcome, ${name}!`;
-    byId<Dialog>('welcome-dialog').show();
-  }, 1600);
-});
-
-// ----- Shop -----
-
-type Product = [name: string, price: number, colors: string[], note: string];
-const PRODUCTS: Record<string, Product[]> = {
-  Bouquets: [
-    ['Rose bouquet', 4800, ['#F48FB1', '#EC407A', '#F06292', '#F8BBD0'], 'Same-day delivery'],
-    ['Sunny tulips', 3600, ['#FFD54F', '#FFB300', '#FFCA28', '#FFE082'], 'Eco packaging'],
-    ['Lavender mix', 5200, ['#CE93D8', '#AB47BC', '#BA68C8', '#E1BEE7'], 'Same-day delivery'],
-    ['Peony cloud', 6800, ['#F8BBD0', '#F48FB1', '#FCE4EC', '#F06292'], 'Limited'],
-  ],
-  Plants: [
-    ['Monstera', 7400, ['#81C784', '#43A047', '#66BB6A', '#A5D6A7'], 'Eco packaging'],
-    ['Olive tree', 9800, ['#AED581', '#7CB342', '#9CCC65', '#C5E1A5'], 'Large'],
-    ['Cactus trio', 2400, ['#80CBC4', '#26A69A', '#4DB6AC', '#B2DFDB'], 'Same-day delivery'],
-  ],
-  Gifts: [
-    ['Flower box', 5600, ['#FFAB91', '#FF7043', '#FF8A65', '#FFCCBC'], 'Gift card included'],
-    ['Dried wreath', 4200, ['#BCAAA4', '#8D6E63', '#A1887F', '#D7CCC8'], 'Eco packaging'],
-    ['Candle & bloom', 3900, ['#90CAF9', '#42A5F5', '#64B5F6', '#BBDEFB'], 'Same-day delivery'],
-  ],
-};
-
-function flower(colors: string[]) {
-  const [a, b, c, d] = colors;
-  return `<svg viewBox="0 0 120 120" aria-hidden="true"><ellipse cx="60" cy="34" rx="16" ry="26" fill="${a}"/><ellipse cx="86" cy="60" rx="26" ry="16" fill="${b}"/><ellipse cx="60" cy="86" rx="16" ry="26" fill="${c}"/><ellipse cx="34" cy="60" rx="26" ry="16" fill="${d}"/><circle cx="60" cy="60" r="13" fill="#FFD54F"/></svg>`;
-}
-
-const cart: Product[] = [];
-const products = byId('shop-products');
-let tooltipId = 0;
-function showProducts(category: string) {
-  products.replaceChildren();
-  for (const product of PRODUCTS[category]) {
-    const [name, price, colors, note] = product;
-    const card = document.createElement('petal-elevated-card');
-    card.className = 'product';
-    const save = `save-${tooltipId++}`;
-    card.innerHTML = `
-      <div class="product-image">${flower(colors)}</div>
-      <div class="product-body">
-        <div class="product-title"><b></b><span class="price">${yen(price)}</span></div>
-        <span class="muted"></span>
-        <div class="product-actions">
-          <petal-filled-tonal-button class="add" aria-label="Add to cart"><petal-icon slot="icon">add_shopping_cart</petal-icon><span class="add-label">Add to cart</span></petal-filled-tonal-button>
-          <petal-icon-button id="${save}" toggle aria-label="Save">
-            <petal-icon>favorite</petal-icon>
-            <petal-icon slot="selected" class="filled">favorite</petal-icon>
-          </petal-icon-button>
-          <petal-tooltip for="${save}">Save for later</petal-tooltip>
-        </div>
-      </div>`;
-    card.querySelector('b')!.textContent = name;
-    card.querySelector('.muted')!.textContent = note;
-    card.querySelector('.add')!.addEventListener('click', async () => {
-      cart.push(product);
-      updateCart();
-      const reason = await notify(`${name} added to the cart`, 'View cart');
-      if (reason === 'action') openCart();
-    });
-    products.append(card);
-  }
-}
-const shopTabs = byId<HTMLElement & {activeTab: HTMLElement | null}>('shop-tabs');
-shopTabs.addEventListener('change', () => {
-  const category = shopTabs.activeTab?.textContent?.trim() ?? 'Bouquets';
-  byId('address').textContent = `shop.example.com/${category.toLowerCase()}`;
-  showProducts(category);
-});
-showProducts('Bouquets');
-
-// This week's flowers: a carousel of every category's first flowers.
-{
-  const featured = byId('shop-featured');
-  for (const product of Object.values(PRODUCTS).flatMap((list) => list.slice(0, 2))) {
-    const [name, price, colors] = product;
-    const item = document.createElement('div');
-    item.className = 'featured-item';
-    item.style.setProperty('--tint', colors[1]);
-    item.innerHTML = `${flower(colors)}<span class="featured-caption"><b></b><span>${yen(price)}</span></span>`;
-    item.querySelector('b')!.textContent = name;
-    item.setAttribute('aria-label', name);
-    featured.append(item);
-  }
-}
-
-const count = byId('shop-count');
-function updateCart() {
-  count.setAttribute('value', String(cart.length));
-  count.hidden = cart.length === 0;
-}
-
-const cartDialog = byId<Dialog>('cart-dialog');
-const cartList = byId('cart-list');
-function openCart() {
-  cartList.replaceChildren(
-    ...cart.map(([name, price]) => {
-      const item = document.createElement('petal-list-item');
-      item.append(slotted('div', 'headline', name), slotted('div', 'trailing-supporting-text', yen(price)));
-      return item;
-    }),
-  );
-  const total = cart.reduce((sum, [, price]) => sum + price, 0);
-  byId('cart-total').textContent = cart.length ? `Total ${yen(total)}` : 'Your cart is empty.';
-  cartDialog.show();
-}
-byId('shop-cart').addEventListener('click', openCart);
-
-// Delivery date: from tomorrow, picked in the date picker dialog.
-{
-  const field = byId<HTMLElement & {value: string}>('cart-date');
-  const dialog = byId<HTMLElement & {value: string; min: string; show(): void}>('cart-date-dialog');
-  const iso = (date: Date) =>
-    `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
-  const tomorrow = new Date();
-  tomorrow.setDate(tomorrow.getDate() + 1);
-  dialog.min = iso(tomorrow);
-  const pick = () => dialog.show();
-  byId('cart-date-button').addEventListener('click', pick);
-  field.addEventListener('click', pick);
-  dialog.addEventListener('change', () => {
-    const [year, month, day] = dialog.value.split('-').map(Number);
-    field.value = new Date(year, month - 1, day).toLocaleDateString('en-US', {
-      weekday: 'short',
+  // Picked dates and times show on their buttons.
+  const date = byId<Opens>('tile-date');
+  date.addEventListener('change', () => {
+    const [y, m, d] = date.value.split('-').map(Number);
+    byId('tile-date-label').textContent = new Date(y, m - 1, d).toLocaleDateString('en-US', {
       month: 'short',
       day: 'numeric',
     });
   });
-}
-byId('cart-close').addEventListener('click', () => cartDialog.close());
-
-// Checkout: the split button pays, its arrow picks how.
-const checkout = byId<HTMLElement & {checked: boolean}>('cart-checkout');
-const payMenu = byId<HTMLElement & {open: boolean}>('cart-pay-menu');
-checkout.addEventListener('change', () => {
-  payMenu.open = checkout.checked;
-});
-payMenu.addEventListener('closed', () => {
-  checkout.checked = false;
-});
-checkout.addEventListener('click', () => {
-  cartDialog.close();
-  if (!cart.length) return;
-  cart.length = 0;
-  updateCart();
-  void notify('Order placed. Thank you!');
-});
-
-// ---------- Split button and progress demo ----------
-
-{
-  const split = document.getElementById('demo-split') as HTMLElement & {checked: boolean};
-  const menu = document.getElementById('demo-split-menu') as HTMLElement & {open: boolean};
-  const loading = document.getElementById('demo-loading')!;
-  const progress = document.getElementById('demo-progress') as HTMLElement & {value: number};
-  split.addEventListener('change', () => {
-    menu.open = split.checked;
+  const time = byId<Opens>('tile-time');
+  time.addEventListener('change', () => {
+    const [h, m] = time.value.split(':').map(Number);
+    byId('tile-time-label').textContent = new Date(2000, 0, 1, h, m).toLocaleTimeString('en-US', {
+      hour: 'numeric',
+      minute: '2-digit',
+    });
   });
-  menu.addEventListener('closed', () => {
-    split.checked = false;
-  });
-  // The main action: a download that takes two seconds.
-  split.addEventListener('click', () => {
-    if (!loading.hidden) return;
-    loading.hidden = false;
-    const start = performance.now();
-    const step = (now: number) => {
-      progress.value = Math.min(1, (now - start) / 2000);
-      if (progress.value < 1) {
-        requestAnimationFrame(step);
-        return;
-      }
-      loading.hidden = true;
-      setTimeout(() => (progress.value = 0), 800);
-    };
-    requestAnimationFrame(step);
-  });
-}
 
-// ---------- Carousel demo ----------
+  // Pull to refresh: a pretend reload.
+  const refresh = byId<HTMLElement & {refreshing: boolean}>('tile-refresh');
+  refresh.addEventListener('refresh', () => {
+    setTimeout(() => (refresh.refreshing = false), 1500);
+  });
 
-{
-  const carousel = document.getElementById('demo-carousel')!;
+  // Carousel items: places in tonal colors, the name fading with the mask.
+  const carousel = byId('tile-carousel');
   const tones = ['primary', 'secondary', 'tertiary'];
-  const names = ['Morning', 'Noon', 'Dusk', 'Night', 'Dawn', 'Rain', 'Snow', 'Bloom'];
-  names.forEach((name, i) => {
+  ['Kyoto', 'Nara', 'Osaka', 'Kobe', 'Nagoya', 'Tokyo'].forEach((name, i) => {
     const item = document.createElement('div');
-    const tone = tones[i % tones.length];
     item.className = 'color-item';
-    item.style.setProperty('--tone', `var(--md-sys-color-${tone}-container)`);
-    item.style.setProperty('--on-tone', `var(--md-sys-color-on-${tone}-container)`);
+    item.style.setProperty('--tone', `var(--md-sys-color-${tones[i % 3]}-container)`);
+    item.style.setProperty('--on-tone', `var(--md-sys-color-on-${tones[i % 3]}-container)`);
     item.append(Object.assign(document.createElement('span'), {textContent: name}));
     carousel.append(item);
   });
 }
 
-// ---------- Date and time picker demo ----------
+// ---------- Made for AI coding assistants ----------
 
 {
-  type PickerDialog = HTMLElement & {value: string; show(): void};
-  const dateDialog = document.getElementById('demo-date-dialog') as PickerDialog;
-  const timeDialog = document.getElementById('demo-time-dialog') as PickerDialog;
-  const dateLabel = document.getElementById('demo-date-label')!;
-  const timeLabel = document.getElementById('demo-time-label')!;
-  document.getElementById('demo-date-button')!.addEventListener('click', () => dateDialog.show());
-  document.getElementById('demo-time-button')!.addEventListener('click', () => timeDialog.show());
+  const copy = document.getElementById('copy-llms')!;
+  copy.addEventListener('click', async () => {
+    const url = new URL('llms.txt', location.href).href;
+    try {
+      await navigator.clipboard.writeText(url);
+      copy.lastChild!.textContent = 'Copied';
+    } catch {
+      copy.lastChild!.textContent = url;
+    }
+  });
+
+  // The assistant types its answer once the window scrolls into view.
+  const PROMPT =
+    'Read https://petal.anontokyo.vip/llms.txt, then build a settings page with Wi-Fi, a dark theme switch and the language.';
+  const CODE = `<petal-list aria-label="Settings">
+  <petal-list-item>
+    <petal-icon slot="start">wifi</petal-icon>
+    <div slot="headline">Wi-Fi</div>
+    <div slot="supporting-text">Home network</div>
+    <petal-switch slot="end" selected aria-label="Wi-Fi"></petal-switch>
+  </petal-list-item>
+  <petal-list-item>
+    <petal-icon slot="start">dark_mode</petal-icon>
+    <div slot="headline">Dark theme</div>
+    <petal-switch slot="end" aria-label="Dark theme"></petal-switch>
+  </petal-list-item>
+  <petal-list-item type="button">
+    <petal-icon slot="start">language</petal-icon>
+    <div slot="headline">Language</div>
+    <div slot="supporting-text">English</div>
+  </petal-list-item>
+</petal-list>`;
+  const promptText = document.getElementById('agent-prompt-text')!;
+  const code = document.getElementById('agent-code')!;
+  const demo = document.querySelector('.agent-demo')!;
+
+  // Every line is there from the start, hidden, so the window keeps its
+  // height while the lines appear; the result has its place too.
+  const lines = CODE.split('\n').map((text) =>
+    Object.assign(document.createElement('span'), {className: 'line', textContent: `${text}\n`}),
+  );
+  code.replaceChildren(...lines);
+
+  const finish = () => {
+    promptText.textContent = PROMPT;
+    for (const line of lines) line.classList.add('shown');
+    demo.classList.add('done');
+  };
+
+  const play = async () => {
+    const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+    for (let i = 1; i <= PROMPT.length; i++) {
+      promptText.textContent = PROMPT.slice(0, i);
+      await wait(18);
+    }
+    await wait(400);
+    for (const line of lines) {
+      line.classList.add('shown');
+      await wait(70);
+    }
+    await wait(300);
+    finish();
+  };
+
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    finish();
+  } else {
+    const observer = new IntersectionObserver((entries) => {
+      if (!entries.some((entry) => entry.isIntersecting)) return;
+      observer.disconnect();
+      void play();
+    }, {threshold: 0.4});
+    observer.observe(demo);
+  }
+}
+
+// ---------- Header: menu, search, GitHub ----------
+
+{
+  // On small screens the links move into a modal navigation drawer.
+  const drawer = document.getElementById('menu-drawer') as HTMLElement & {
+    show(): void;
+    close(): Promise<void>;
+  };
+  document.getElementById('menu-button')!.addEventListener('click', () => drawer.show());
+  drawer.addEventListener('click', async (event) => {
+    const item = (event.target as HTMLElement).closest('petal-navigation-drawer-item');
+    if (!item) return;
+    const href = item.getAttribute('href') ?? '';
+    if (!href.startsWith('#')) {
+      void drawer.close();
+      return;
+    }
+    // The open modal drawer would keep the page from scrolling: close it,
+    // then go to the section.
+    event.preventDefault();
+    await drawer.close();
+    history.pushState(null, '', href);
+    document.querySelector(href)?.scrollIntoView();
+  });
+
+  // Search: a palette of the docs pages, filtered as you type.
+  const COMPONENTS = [
+    'Badge', 'Bottom app bar', 'Bottom sheet', 'Button', 'Button group', 'Card', 'Carousel',
+    'Checkbox', 'Chip', 'Date picker', 'Dialog', 'Divider', 'Elevation', 'FAB', 'FAB menu',
+    'Floating toolbar', 'Focus ring', 'Icon', 'Icon button', 'List', 'Loading indicator', 'Menu',
+    'Navigation bar', 'Navigation drawer', 'Navigation rail', 'Progress', 'Pull to refresh',
+    'Radio', 'Ripple', 'Search', 'Segmented button', 'Select', 'Slider', 'Snackbar',
+    'Split button', 'Switch', 'Tabs', 'Text field', 'Time picker', 'Tooltip', 'Top app bar',
+  ];
+  const PAGES: Array<[title: string, kind: string, href: string]> = [
+    ['Introduction', 'Guide', 'catalog/about/intro/'],
+    ['Quick start', 'Guide', 'catalog/about/quick-start/'],
+    ['Building pages', 'Guide', 'catalog/about/building-pages/'],
+    ['Material 3 Expressive', 'Guide', 'catalog/about/expressive/'],
+    ['Motion', 'Guide', 'catalog/about/motion/'],
+    ['Using in an existing site', 'Guide', 'catalog/about/migrating/'],
+    ['Theming', 'Theming', 'catalog/theming/material-theming/'],
+    ['Color', 'Theming', 'catalog/theming/color/'],
+    ['Typography', 'Theming', 'catalog/theming/typography/'],
+    ['Shape', 'Theming', 'catalog/theming/shape/'],
+    ['llms.txt', 'For AI assistants', 'llms.txt'],
+    ['llms-full.txt', 'For AI assistants', 'llms-full.txt'],
+    ...COMPONENTS.map((name): [string, string, string] => [
+      name,
+      'Component',
+      `catalog/components/${name.toLowerCase().replaceAll(' ', '-')}/`,
+    ]),
+  ];
+  const dialog = document.getElementById('search-dialog') as HTMLElement & {
+    show(): Promise<void>;
+  };
+  const field = document.getElementById('search-field') as HTMLElement & {value: string};
+  const results = document.getElementById('search-results')!;
+
+  const render = () => {
+    const query = field.value.trim().toLowerCase();
+    const matches = PAGES.filter(([title, kind]) =>
+      `${title} ${kind}`.toLowerCase().includes(query),
+    );
+    if (!matches.length) {
+      results.replaceChildren(
+        Object.assign(document.createElement('p'), {className: 'no-results', textContent: 'No results'}),
+      );
+      return;
+    }
+    // One line each, the kind at the end, as in a command palette.
+    results.replaceChildren(
+      ...matches.map(([title, kind, href]) => {
+        const item = document.createElement('petal-list-item');
+        item.setAttribute('type', 'link');
+        item.setAttribute('href', href);
+        item.append(
+          Object.assign(document.createElement('div'), {slot: 'headline', textContent: title}),
+          Object.assign(document.createElement('div'), {
+            slot: 'trailing-supporting-text',
+            textContent: kind,
+          }),
+        );
+        return item;
+      }),
+    );
+    results.scrollTop = 0;
+  };
+  const open = async () => {
+    field.value = '';
+    render();
+    await dialog.show();
+    field.focus();
+  };
+  document.getElementById('search-button')!.addEventListener('click', () => void open());
+  document.addEventListener('keydown', (event) => {
+    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
+      event.preventDefault();
+      void open();
+    }
+  });
+  field.addEventListener('input', render);
+  // Enter opens the first result.
+  field.addEventListener('keydown', (event) => {
+    if (event.key !== 'Enter') return;
+    const first = results.querySelector('petal-list-item');
+    if (first) location.href = first.getAttribute('href')!;
+  });
+  if (/Mac|iPhone|iPad/.test(navigator.platform)) {
+    document.querySelector('.search-button kbd')!.textContent = '⌘K';
+  }
+
+  // The repository's star count, kept for the session.
+  const stars = document.getElementById('github-stars')!;
+  // A count only once there is something to show.
+  const show = (count: number) => {
+    if (count < 100) return;
+    stars.textContent = count >= 1000 ? `${(count / 1000).toFixed(1)}k` : String(count);
+  };
+  let cached: string | null = null;
+  try {
+    cached = sessionStorage.getItem('stars');
+  } catch {
+    // Storage is blocked.
+  }
+  if (cached) {
+    show(Number(cached));
+  } else {
+    fetch('https://api.github.com/repos/Saki340/petal-elements')
+      .then((response) => (response.ok ? response.json() : null))
+      .then((repo: {stargazers_count?: number} | null) => {
+        if (typeof repo?.stargazers_count !== 'number') return;
+        show(repo.stargazers_count);
+        try {
+          sessionStorage.setItem('stars', String(repo.stargazers_count));
+        } catch {
+          // Storage is blocked.
+        }
+      })
+      .catch(() => {});
+  }
+}
+
+// ---------- Examples ----------
+
+{
+  type Picker = HTMLElement & {value: string; show(): void};
+  const byId = <T extends HTMLElement = HTMLElement & Record<string, unknown>>(id: string) =>
+    document.getElementById(id) as unknown as T;
+  const snackbar = byId<HTMLElement & {show(): Promise<string>}>('block-snackbar');
+  const notify = (message: string) => {
+    snackbar.textContent = message;
+    return snackbar.show();
+  };
+
+  // Reserve a table: the date and time come from the picker dialogs.
+  const dateDialog = byId<Picker>('block-date-dialog');
+  const timeDialog = byId<Picker>('block-time-dialog');
+  const dateField = byId<HTMLElement & {value: string}>('block-date');
+  const timeField = byId<HTMLElement & {value: string}>('block-time');
+  byId('block-date-button').addEventListener('click', () => dateDialog.show());
+  byId('block-time-button').addEventListener('click', () => timeDialog.show());
   dateDialog.addEventListener('change', () => {
-    const [year, month, day] = dateDialog.value.split('-').map(Number);
-    dateLabel.textContent = new Date(year, month - 1, day).toLocaleDateString('en-US', {
+    const [y, m, d] = dateDialog.value.split('-').map(Number);
+    dateField.value = new Date(y, m - 1, d).toLocaleDateString('en-US', {
+      weekday: 'short',
       month: 'short',
       day: 'numeric',
-      year: 'numeric',
     });
   });
   timeDialog.addEventListener('change', () => {
-    const [hours, minutes] = timeDialog.value.split(':').map(Number);
-    timeLabel.textContent = new Date(2000, 0, 1, hours, minutes).toLocaleTimeString('en-US', {
+    const [h, m] = timeDialog.value.split(':').map(Number);
+    timeField.value = new Date(2000, 0, 1, h, m).toLocaleTimeString('en-US', {
       hour: 'numeric',
       minute: '2-digit',
     });
   });
+  byId('block-reserve').addEventListener('click', () =>
+    notify(`Table reserved for ${dateField.value}, ${timeField.value}`),
+  );
+
+  // Trip ideas: places in tonal colors, the names fading with the mask.
+  const carousel = byId('block-carousel');
+  const tones = ['tertiary', 'primary', 'secondary'];
+  ['Hakodate', 'Otaru', 'Furano', 'Biei', 'Niseko'].forEach((name, i) => {
+    const item = document.createElement('div');
+    item.className = 'color-item';
+    item.style.setProperty('--tone', `var(--md-sys-color-${tones[i % 3]}-container)`);
+    item.style.setProperty('--on-tone', `var(--md-sys-color-on-${tones[i % 3]}-container)`);
+    item.append(Object.assign(document.createElement('span'), {textContent: name}));
+    carousel.append(item);
+  });
+
+  // Chat: sent messages join the thread.
+  const chat = byId('block-chat');
+  const message = byId<HTMLElement & {value: string}>('block-message');
+  byId('block-send').addEventListener('submit', (event) => {
+    event.preventDefault();
+    const text = message.value.trim();
+    if (!text) return;
+    chat.append(Object.assign(document.createElement('p'), {className: 'bubble mine', textContent: text}));
+    message.value = '';
+    chat.scrollTop = chat.scrollHeight;
+  });
+
+  // Account security: show or hide the password.
+  const password = byId<HTMLElement & {type: string}>('block-password');
+  const toggle = byId<HTMLElement & {selected: boolean}>('block-password-toggle');
+  toggle.addEventListener('change', () => {
+    password.type = toggle.selected ? 'text' : 'password';
+    toggle.setAttribute('aria-label', toggle.selected ? 'Hide password' : 'Show password');
+  });
+
+  // Rating: the stars up to the chosen one are on.
+  const stars = [
+    ...byId('block-stars').querySelectorAll<HTMLElement & {selected: boolean}>('petal-icon-button'),
+  ];
+  stars.forEach((star, index) => {
+    star.addEventListener('click', (event) => {
+      event.preventDefault(); // The rating sets the stars, not each toggle.
+      stars.forEach((other, i) => (other.selected = i <= index));
+    });
+  });
+
+  byId('block-pay').addEventListener('click', () => void notify('Payment sent'));
+  byId('block-feedback').addEventListener('click', () => void notify('Thanks for your feedback'));
 }
 
-// ---------- Rich tooltip demo ----------
+// ---------- Motion ----------
+// The page's own motion (styles.css, "Motion"): only transforms and opacity,
+// pointer effects only with a mouse, nothing with reduced motion.
+
+declare global {
+  interface Window {
+    landingReady?: boolean;
+  }
+}
+window.landingReady = true;
 
 {
-  // Hover or focus shows it; a tap or click does too, for touch screens.
-  const tooltip = document.getElementById('demo-rich') as HTMLElement & {show(): void};
-  document.getElementById('demo-rich-anchor')!.addEventListener('click', () => tooltip.show());
+  const motion = document.documentElement.classList.contains('motion');
+  const mouse = matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+  // Cards, tiles and sections rise into view, a little after one another.
+  const targets = [
+    ...document.querySelectorAll<HTMLElement>(
+      '.block, .tile, .section > h2, .section > .section-lead, .gallery-filter, .agents-text, .agent-demo, .theme-picker, .theme-preview, .steps, .cta',
+    ),
+  ];
+  for (const column of document.querySelectorAll('.blocks-column')) {
+    [...column.children].forEach((card, i) => (card as HTMLElement).style.setProperty('--i', String(i)));
+  }
+  document.querySelectorAll<HTMLElement>('#tiles .tile').forEach((tile, i) => {
+    tile.style.setProperty('--i', String(i % 3));
+  });
+  if (motion) {
+    const reveal = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          entry.target.classList.add('in');
+          reveal.unobserve(entry.target);
+        }
+      },
+      {rootMargin: '0px 0px -8% 0px'},
+    );
+    for (const target of targets) reveal.observe(target);
+  } else {
+    for (const target of targets) target.classList.add('in');
+  }
+
+  // The component count runs up the first time it is seen.
+  const count = document.querySelector<HTMLElement>('[data-count]')!;
+  if (motion) {
+    const to = Number(count.dataset['count']);
+    count.textContent = '0';
+    const counter = new IntersectionObserver((entries) => {
+      if (!entries.some((entry) => entry.isIntersecting)) return;
+      counter.disconnect();
+      const start = performance.now();
+      const step = (now: number) => {
+        const t = Math.min(1, (now - start) / 900);
+        // Ease out: fast at first, settling on the number.
+        count.textContent = String(Math.round(to * (1 - (1 - t) ** 3)));
+        if (t < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    });
+    counter.observe(count);
+  }
+
+  // The hero's petals and light, which follow and flee the mouse.
+  const art = document.getElementById('hero-art')!;
+  const petals = [...art.querySelectorAll<HTMLElement>('.petal')];
+  // Pause the drifting while the hero is out of view.
+  new IntersectionObserver((entries) => {
+    art.classList.toggle('paused', !entries[0].isIntersecting);
+  }).observe(art);
+
+  if (motion && mouse) {
+    let frame = 0;
+    let pointer: {x: number; y: number} | null = null;
+    // Each petal's resting place as fractions of the hero.
+    const rests = petals.map((petal) => ({
+      petal,
+      x: parseFloat(petal.style.getPropertyValue('--x')) / 100,
+      y: parseFloat(petal.style.getPropertyValue('--y')) / 100,
+    }));
+    // How far each blob of light follows the mouse, in px at the hero's edge.
+    const blobs = [...art.querySelectorAll<HTMLElement>('.blob')].map((blob, i) => ({
+      blob,
+      depth: [40, -56, 28][i],
+    }));
+    // Transforms are set on the moving elements themselves, not through
+    // inherited custom properties, so a move restyles only those elements.
+    const update = () => {
+      frame = 0;
+      if (!pointer) {
+        for (const {blob} of blobs) blob.style.translate = '';
+        for (const {petal} of rests) petal.style.translate = '';
+        return;
+      }
+      const box = art.getBoundingClientRect();
+      // The light leans toward the mouse: -1 to 1 across the hero.
+      const mx = ((pointer.x - box.left) / box.width) * 2 - 1;
+      const my = ((pointer.y - box.top) / box.height) * 2 - 1;
+      for (const {blob, depth} of blobs) {
+        blob.style.translate = `${(mx * depth).toFixed(1)}px ${(my * depth).toFixed(1)}px`;
+      }
+      // Petals within 160px move away from the mouse, the nearest the most.
+      // Where a petal rests comes from its place in the hero (no layout
+      // reads per petal).
+      for (const {petal, x, y} of rests) {
+        const dx = box.left + x * box.width - pointer.x;
+        const dy = box.top + y * box.height - pointer.y;
+        const distance = Math.hypot(dx, dy);
+        if (distance > 160 || distance === 0) {
+          petal.style.translate = '';
+          continue;
+        }
+        const push = ((160 - distance) / 160) * 56;
+        petal.style.translate = `${((dx / distance) * push).toFixed(1)}px ${((dy / distance) * push).toFixed(1)}px`;
+      }
+    };
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    // The light and petals span the window, so follow the mouse anywhere,
+    // while the hero is in view.
+    document.addEventListener('pointermove', (event) => {
+      if (event.pointerType !== 'mouse' || art.classList.contains('paused')) return;
+      pointer = {x: event.clientX, y: event.clientY};
+      schedule();
+    });
+    document.documentElement.addEventListener('pointerleave', () => {
+      pointer = null;
+      schedule();
+    });
+  }
+
+  // Buttons pulled a little toward the mouse.
+  if (motion && mouse) {
+    for (const button of document.querySelectorAll<HTMLElement>('[data-magnetic]')) {
+      button.addEventListener('pointermove', (event) => {
+        if (event.pointerType !== 'mouse') return;
+        const box = button.getBoundingClientRect();
+        const x = (event.clientX - box.left - box.width / 2) * 0.18;
+        const y = (event.clientY - box.top - box.height / 2) * 0.3;
+        button.style.translate = `${x.toFixed(1)}px ${y.toFixed(1)}px`;
+      });
+      button.addEventListener('pointerleave', () => {
+        button.style.translate = '';
+      });
+    }
+  }
+
+  // Example cards lean toward the mouse, at most 3 degrees; not while a
+  // button is held (dragging a slider).
+  if (motion && mouse) {
+    for (const card of document.querySelectorAll<HTMLElement>('.block')) {
+      let frame = 0;
+      let last: PointerEvent | null = null;
+      const lean = () => {
+        frame = 0;
+        if (!last) return;
+        const box = card.getBoundingClientRect();
+        const x = (last.clientX - box.left) / box.width - 0.5;
+        const y = (last.clientY - box.top) / box.height - 0.5;
+        card.style.transform = `perspective(900px) rotateX(${(-y * 6).toFixed(2)}deg) rotateY(${(x * 6).toFixed(2)}deg)`;
+      };
+      card.addEventListener('pointermove', (event) => {
+        if (event.pointerType !== 'mouse') return;
+        if (event.buttons) {
+          card.classList.remove('leaning');
+          card.style.transform = '';
+          return;
+        }
+        card.classList.add('leaning');
+        last = event;
+        if (!frame) frame = requestAnimationFrame(lean);
+      });
+      card.addEventListener('pointerleave', () => {
+        last = null;
+        cancelAnimationFrame(frame);
+        frame = 0;
+        card.classList.remove('leaning');
+        card.style.transform = '';
+      });
+    }
+  }
 }
