@@ -5,7 +5,7 @@
  * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
-import {LitElement, PropertyValues, html, nothing} from 'lit';
+import {LitElement, PropertyValues, html, isServer, nothing} from 'lit';
 import {property, query, queryAssignedElements, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 import {live} from 'lit/directives/live.js';
@@ -16,6 +16,10 @@ import {Field} from '../../field/internal/field.js';
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 import {mixinDelegatesAria} from '../../internal/aria/delegate.js';
 import {stringConverter} from '../../internal/controller/string-converter.js';
+import {
+  afterDispatch,
+  setupDispatchHooks,
+} from '../../internal/events/dispatch-hooks.js';
 import {redispatchEvent} from '../../internal/events/redispatch-event.js';
 import {
   createValidator,
@@ -549,6 +553,13 @@ export abstract class TextField extends textFieldBaseClass {
     this.nativeErrorText = '';
   }
 
+  constructor() {
+    super();
+    if (isServer) return;
+    setupDispatchHooks(this, 'keydown');
+    this.addEventListener('keydown', (event) => this.handleKeydown(event));
+  }
+
   override attributeChangedCallback(
     attribute: string,
     newValue: string | null,
@@ -763,6 +774,20 @@ export abstract class TextField extends textFieldBaseClass {
 
   private redispatchEvent(event: Event) {
     redispatchEvent(this, event);
+  }
+
+  /**
+   * Enter in a single-line field submits its form, as in a native input
+   * (implicit submission), unless a listener cancels the key or it ends an
+   * IME composition.
+   */
+  private handleKeydown(event: KeyboardEvent) {
+    if (event.key !== 'Enter' || event.isComposing || this.type === 'textarea') return;
+    // Not for Enter on slotted icon buttons.
+    if (event.composedPath()[0] !== this.inputOrTextarea) return;
+    afterDispatch(event, () => {
+      if (!event.defaultPrevented) this.form?.requestSubmit();
+    });
   }
 
   private getInputOrTextarea() {

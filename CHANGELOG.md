@@ -26,6 +26,8 @@
 
 #### Bug fixes
 
+* **textfield:** Enter in a single-line text field submits its form, as in
+  a native input (implicit submission); not while an IME composition ends.
 * **card:** cards that are neither links nor clickable no longer take the
   hover, focus and pressed elevations (the reflected `href=""` matched).
 * **iconbutton:** a fully rounded sized icon button morphs gradually to its

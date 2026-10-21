@@ -386,7 +386,9 @@ work as on native inputs: `name`, `value`, `placeholder`, `required`,
 `type="number"` field.
 
 It is form-associated: with a `name`, its `value` is submitted with its form,
-and `type="reset"` buttons reset it. It fires `input` while typing, `change`
+and `type="reset"` buttons reset it. Enter in a single-line field submits the
+form, as in a native input (not while an IME composition ends, and not when a
+`keydown` listener cancels the key). It fires `input` while typing, `change`
 when the value is committed, and `select` when text is selected.
 
 The input's methods and properties are on the element too: `select()`,

@@ -749,4 +749,62 @@ describe('TextField', () => {
       expect(fieldEl.populated).toBeFalse();
     });
   });
+  describe('Enter key', () => {
+    async function setupForm(field = html`<petal-test-text-field name="q"></petal-test-text-field>`) {
+      const root = env.render(html`<form>${field}</form>`);
+      await env.waitForStability();
+      const form = root.querySelector('form')!;
+      const element = root.querySelector('petal-test-text-field')!;
+      const submits: Event[] = [];
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        submits.push(event);
+      });
+      const control = element.renderRoot.querySelector<HTMLElement>('input, textarea')!;
+      const press = (init: KeyboardEventInit = {}) =>
+        control.dispatchEvent(
+          new KeyboardEvent('keydown', {
+            key: 'Enter',
+            bubbles: true,
+            composed: true,
+            cancelable: true,
+            ...init,
+          }),
+        );
+      return {element, submits, press};
+    }
+
+    it('submits the form, as a native input does', async () => {
+      const {submits, press} = await setupForm();
+      press();
+      expect(submits.length).toBe(1);
+    });
+
+    it('does not submit when a listener cancels the key', async () => {
+      const {element, submits, press} = await setupForm();
+      element.addEventListener('keydown', (event) => event.preventDefault());
+      press();
+      expect(submits.length).toBe(0);
+    });
+
+    it('does not submit while an IME composition ends', async () => {
+      const {submits, press} = await setupForm();
+      press({isComposing: true});
+      expect(submits.length).toBe(0);
+    });
+
+    it('adds a new line in a textarea instead', async () => {
+      const {submits, press} = await setupForm(
+        html`<petal-test-text-field type="textarea"></petal-test-text-field>`,
+      );
+      press();
+      expect(submits.length).toBe(0);
+    });
+
+    it('does not submit for other keys', async () => {
+      const {submits, press} = await setupForm();
+      press({key: 'a'});
+      expect(submits.length).toBe(0);
+    });
+  });
 });
