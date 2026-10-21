@@ -7,6 +7,7 @@
 import {html, isServer, LitElement, nothing, PropertyValues} from 'lit';
 import {property, query} from 'lit/decorators.js';
 
+import {observeVisibility} from '../../internal/motion/visibility.js';
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 import {mixinDelegatesAria} from '../../internal/aria/delegate.js';
 
@@ -35,14 +36,29 @@ export class LoadingIndicator extends baseClass {
 
   private frame = 0;
   private start = 0;
+  /** Whether the indicator is in the viewport; it draws only then. */
+  private visible = true;
+  private unobserve?: () => void;
 
   override connectedCallback() {
     super.connectedCallback();
+    if (!isServer) {
+      this.unobserve = observeVisibility(this, (visible) => {
+        this.visible = visible;
+        if (visible) {
+          this.startAnimation();
+        } else {
+          cancelAnimationFrame(this.frame);
+          this.frame = 0;
+        }
+      });
+    }
     this.startAnimation();
   }
 
   override disconnectedCallback() {
     super.disconnectedCallback();
+    this.unobserve?.();
     cancelAnimationFrame(this.frame);
     this.frame = 0;
   }
@@ -79,7 +95,7 @@ export class LoadingIndicator extends baseClass {
   }
 
   private startAnimation() {
-    if (isServer || this.value !== undefined || this.frame || !this.isConnected) {
+    if (isServer || this.value !== undefined || this.frame || !this.isConnected || !this.visible) {
       if (this.value !== undefined) {
         cancelAnimationFrame(this.frame);
         this.frame = 0;

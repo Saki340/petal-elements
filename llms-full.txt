@@ -737,6 +737,9 @@ motion (see below).
 | Ripple | A circle grows from the pointer on press. |
 | Lists, menus with groups | Item corners grow on hover, focus and selection on fast spatial. |
 
+Endless animations (loading indicators, wavy progress) draw only while they
+are in the viewport, and pick up again when they scroll back into view.
+
 Each component's page describes its motion in detail under *Compose behavior*
 or *Motion*. Methods that open and close (`show()`, `close()`) return promises
 that resolve after the animation, and `quick` skips the animation where a
@@ -8484,7 +8487,9 @@ work as on native inputs: `name`, `value`, `placeholder`, `required`,
 `type="number"` field.
 
 It is form-associated: with a `name`, its `value` is submitted with its form,
-and `type="reset"` buttons reset it. It fires `input` while typing, `change`
+and `type="reset"` buttons reset it. Enter in a single-line field submits the
+form, as in a native input (not while an IME composition ends, and not when a
+`keydown` listener cancels the key). It fires `input` while typing, `change`
 when the value is committed, and `select` when text is selected.
 
 The input's methods and properties are on the element too: `select()`,

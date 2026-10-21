@@ -26,6 +26,9 @@
 
 #### Bug fixes
 
+* **progress, loadingindicator:** loading indicators and wavy progress
+  indicators stop drawing while they are out of view, so pages with several
+  of them no longer keep the main thread busy.
 * **textfield:** Enter in a single-line text field submits its form, as in
   a native input (implicit submission); not while an IME composition ends.
 * **card:** cards that are neither links nor clickable no longer take the

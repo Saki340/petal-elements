@@ -146,6 +146,9 @@ motion (see below).
 | Ripple | A circle grows from the pointer on press. |
 | Lists, menus with groups | Item corners grow on hover, focus and selection on fast spatial. |
 
+Endless animations (loading indicators, wavy progress) draw only while they
+are in the viewport, and pick up again when they scroll back into view.
+
 Each component's page describes its motion in detail under *Compose behavior*
 or *Motion*. Methods that open and close (`show()`, `close()`) return promises
 that resolve after the animation, and `quick` skips the animation where a

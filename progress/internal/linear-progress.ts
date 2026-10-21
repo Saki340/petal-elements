@@ -9,6 +9,8 @@ import {html, isServer, nothing, PropertyValues, svg} from 'lit';
 import {property, query} from 'lit/decorators.js';
 import {styleMap} from 'lit/directives/style-map.js';
 
+import {observeVisibility} from '../../internal/motion/visibility.js';
+
 import {Progress} from './progress.js';
 import {
   AMPLITUDE_DURATION_MS,
@@ -71,13 +73,30 @@ export class LinearProgress extends Progress {
   private amplitudeTo = 0;
   private amplitudeStart = 0;
 
+  /** Whether the indicator is in the viewport; the wave moves only then. */
+  private visible = true;
+  private unobserve?: () => void;
+
   override connectedCallback() {
     super.connectedCallback();
-    if (this.hasUpdated) this.startWavy();
+    if (!isServer) {
+      this.unobserve = observeVisibility(this, (visible) => {
+        this.visible = visible;
+        if (!this.wavy || !this.hasUpdated) return;
+        if (visible) {
+          this.startWavy();
+        } else {
+          cancelAnimationFrame(this.frame);
+          this.frame = 0;
+        }
+      });
+    }
+    if (this.hasUpdated && this.wavy) this.startWavy();
   }
 
   override disconnectedCallback() {
     super.disconnectedCallback();
+    this.unobserve?.();
     this.stopWavy();
   }
 
@@ -131,7 +150,7 @@ export class LinearProgress extends Progress {
       });
       this.resizeObserver.observe(this);
     }
-    if (this.frame) return;
+    if (this.frame || !this.visible) return;
     this.start = performance.now();
     const tick = () => {
       this.drawWavy(performance.now());

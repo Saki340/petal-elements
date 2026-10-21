@@ -8,6 +8,8 @@
 import {html, isServer, nothing, PropertyValues, svg} from 'lit';
 import {property, query} from 'lit/decorators.js';
 
+import {observeVisibility} from '../../internal/motion/visibility.js';
+
 import {
   determinateArcs,
   indeterminateFrame,
@@ -49,13 +51,25 @@ export class CircularProgress extends Progress {
   private amplitudeStart = 0;
   private outlines = new Map<number, MeasuredPath>();
 
+  /** Whether the indicator is in the viewport; the wave moves only then. */
+  private visible = true;
+  private unobserve?: () => void;
+
   override connectedCallback() {
     super.connectedCallback();
+    if (!isServer) {
+      this.unobserve = observeVisibility(this, (visible) => {
+        this.visible = visible;
+        if (visible && this.wavy && this.hasUpdated) this.startWavy();
+        else if (!visible) this.stopWavy();
+      });
+    }
     if (this.hasUpdated && this.wavy) this.startWavy();
   }
 
   override disconnectedCallback() {
     super.disconnectedCallback();
+    this.unobserve?.();
     this.stopWavy();
   }
 
@@ -97,7 +111,7 @@ export class CircularProgress extends Progress {
   }
 
   private startWavy() {
-    if (isServer || !this.isConnected) return;
+    if (isServer || !this.isConnected || !this.visible) return;
     if (this.frame) return;
     this.start = performance.now();
     const tick = () => {
