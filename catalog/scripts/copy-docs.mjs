@@ -117,6 +117,47 @@ async function fileIncludeTransform(filepath, fileContents) {
 }
 
 /**
+ * Adds a `description` to the front matter, for the page's meta description
+ * (search results), from the first plain paragraph after the title. Pages that
+ * set their own `description` are left as they are.
+ *
+ * @param {string} readme The transformed markdown, with front matter.
+ * @return The markdown with a `description` in its front matter.
+ */
+function addDescription(readme) {
+  const front = /^---\n([\s\S]*?)\n---/.exec(readme);
+  if (!front || /^description:/m.test(front[1])) return readme;
+  const body = readme.slice(front[0].length);
+  const title = body.search(/^# .*$/m);
+  if (title < 0) return readme;
+
+  const paragraph = [];
+  let inFence = false;
+  for (const line of body.slice(title).split('\n').slice(1)) {
+    if (line.startsWith('```')) inFence = !inFence;
+    const text = line.trim();
+    const plain = !inFence && text && !/^(<|#|\||-|\*|\d+\.|```|!\[)/.test(text);
+    if (plain) {
+      paragraph.push(text);
+    } else if (paragraph.length) {
+      break;
+    }
+  }
+  let description = paragraph
+    .join(' ')
+    .replace(/<!--.*?-->/g, '')
+    .replace(/!?\[([^\]]*)\]\([^)]*\)/g, '$1')
+    .replace(/[`*_]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+  if (!description) return readme;
+  if (description.length > 155) {
+    description = description.slice(0, 155).replace(/\s+\S*$/, '') + '…';
+  }
+  return `${front[0].slice(0, -3)}description: ${JSON.stringify(description)}\n---${body}`;
+}
+
+/**
  * Applies the transforms to readme files at the given filepaths and outputs the
  * result to /catalog/site/components/<component-name>.md
  *
@@ -145,6 +186,7 @@ async function transformReadmes(filepaths, outdir = '', replacements = []) {
     });
 
     readme = await fileIncludeTransform(entry, readme);
+    readme = addDescription(readme);
 
     // The `components/<component-name>.md` path.
     let localPath = relative(join('..', 'docs'), entry);

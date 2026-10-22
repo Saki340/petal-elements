@@ -26,6 +26,7 @@ import * as path from 'path';
 const OUT = 'landing/_site';
 const SITE = '_site';
 const CATALOG = 'catalog/_prod';
+const ORIGIN = 'https://petal.anontokyo.vip';
 
 fs.rmSync(OUT, {recursive: true, force: true});
 fs.mkdirSync(`${OUT}/assets`, {recursive: true});
@@ -110,5 +111,41 @@ if (process.argv.includes('--site')) {
     }
   };
   walk(CATALOG);
+
+  // robots.txt and sitemap.xml for search engines. The sitemap lists the
+  // catalog's documentation pages, not the story pages (those are iframe
+  // content for the demos) or the old-path redirect stubs.
+  const urls = [`${ORIGIN}/`, `${ORIGIN}/catalog/`];
+  const collect = (dir) => {
+    for (const entry of fs.readdirSync(dir, {withFileTypes: true})) {
+      const file = path.join(dir, entry.name);
+      if (entry.isDirectory()) {
+        if (entry.name !== 'stories' && entry.name !== 'assets') collect(file);
+      } else if (entry.name === 'index.html' && dir !== CATALOG) {
+        const page = path.relative(CATALOG, dir).split(path.sep).join('/');
+        urls.push(`${ORIGIN}/catalog/${page}/`);
+      }
+    }
+  };
+  collect(CATALOG);
+  const lastmod = new Date().toISOString().slice(0, 10);
+  fs.writeFileSync(
+    `${SITE}/sitemap.xml`,
+    `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urls.map((url) => `  <url><loc>${url}</loc><lastmod>${lastmod}</lastmod></url>`).join('\n')}
+</urlset>
+`,
+  );
+  fs.writeFileSync(
+    `${SITE}/robots.txt`,
+    `User-agent: *
+Allow: /
+Disallow: /catalog/assets/
+
+Sitemap: ${ORIGIN}/sitemap.xml
+`,
+  );
+  console.log(`Sitemap with ${urls.length} URLs`);
   console.log(`Site in ${SITE}/ (catalog in /catalog/, ${redirects} redirects)`);
 }
