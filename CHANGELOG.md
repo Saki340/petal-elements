@@ -12,6 +12,12 @@
   `springFromCss()`, `expressiveSprings` and `standardSprings`, and the
   `Spring` class for motion that keeps its speed. See
   [Motion](docs/motion.md#in-script).
+* **shape:** `<petal-shape>` clips its content to one of the 35 Material 3
+  Expressive shapes of Compose's `MaterialShapes` and morphs between them on
+  springs: on `shape` changes, with `hover-shape` under a mouse and with
+  `pressed-shape` when pressed. `petal-elements/shapes/shapes.js` has the
+  shapes as polygons and writes shapes and morphs as SVG path data. See
+  [Shape](docs/components/shape.md).
 
 ### 0.3.0 (2026-10-21)
 

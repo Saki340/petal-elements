@@ -10,10 +10,10 @@
 // internal/CircularWavyProgressModifiers.kt). Sizes:
 // CircularProgressIndicatorTokens.
 
-import {Cubic} from '../../loadingindicator/internal/shapes/cubic.js';
-import {circle, star} from '../../loadingindicator/internal/shapes/material-shapes.js';
-import {Morph} from '../../loadingindicator/internal/shapes/morph.js';
-import {CornerRounding, RoundedPolygon} from '../../loadingindicator/internal/shapes/rounded-polygon.js';
+import {Cubic} from '../../internal/shapes/cubic.js';
+import {circle, star} from '../../internal/shapes/material-shapes.js';
+import {Morph} from '../../internal/shapes/morph.js';
+import {CornerRounding, RoundedPolygon} from '../../internal/shapes/rounded-polygon.js';
 
 import {STANDARD} from './wavy.js';
 

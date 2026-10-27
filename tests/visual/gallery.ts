@@ -17,6 +17,8 @@
 
 import '../../all.js';
 
+import {shapeNames} from '../../shapes/shapes.js';
+
 import {html, nothing, render, TemplateResult} from 'lit';
 
 import {ButtonHarness} from '../../button/harness.js';
@@ -504,6 +506,25 @@ const galleries: Record<string, Gallery> = {
       {name: 'multi-browse', render: () => html`<petal-carousel item-width="186" item-spacing="8" style="width: 380px; height: 200px">${carouselItems(6)}</petal-carousel>`},
       {name: 'uncontained', render: () => html`<petal-carousel variant="uncontained" item-width="150" item-spacing="8" style="width: 380px; height: 200px">${carouselItems(6)}</petal-carousel>`},
       {name: 'hero', render: () => html`<petal-carousel variant="hero" item-spacing="8" style="width: 380px; height: 200px">${carouselItems(6)}</petal-carousel>`},
+    ],
+  },
+
+  // The 35 shapes, seven a row, and one stretched.
+  shape: {
+    states: ['default'],
+    rows: [
+      ...Array.from({length: 5}, (_, row) => ({
+        name: shapeNames[row * 7],
+        render: () =>
+          html`<div style="display: flex; gap: 8px; --md-shape-color: var(--md-sys-color-primary-container)">
+            ${shapeNames.slice(row * 7, row * 7 + 7).map((name) => html`<petal-shape shape=${name}></petal-shape>`)}
+          </div>`,
+      })),
+      {
+        name: 'stretched',
+        render: () =>
+          html`<petal-shape shape="cookie-9-sided" style="width: 120px; height: 64px; --md-shape-color: var(--md-sys-color-tertiary)"></petal-shape>`,
+      },
     ],
   },
 

@@ -8,9 +8,10 @@
 // LoadingIndicator.kt (LoadingIndicatorDefaults, IndeterminateLoadingIndicator,
 // DeterminateLoadingIndicator) and SpringEstimation.kt.
 
-import {MaterialShapes, rotateZ} from './shapes/material-shapes.js';
-import {Morph} from './shapes/morph.js';
-import {RoundedPolygon} from './shapes/rounded-polygon.js';
+import {MaterialShapes, rotateZ} from '../../internal/shapes/material-shapes.js';
+import {Morph} from '../../internal/shapes/morph.js';
+import {cubicsPath} from '../../internal/shapes/path.js';
+import {RoundedPolygon} from '../../internal/shapes/rounded-polygon.js';
 
 /** LoadingIndicatorTokens: 48dp container, 38dp active indicator. */
 export const CONTAINER_SIZE = 48;
@@ -127,29 +128,7 @@ export interface Frame {
  */
 function path(morph: Morph, progress: number, scale: number) {
   const size = CONTAINER_SIZE * scale;
-  const cubics = morph.asCubics(progress);
-  let minX = Infinity;
-  let minY = Infinity;
-  let maxX = -Infinity;
-  let maxY = -Infinity;
-  for (const cubic of cubics) {
-    for (let i = 0; i < 8; i += 2) {
-      minX = Math.min(minX, cubic.points[i]);
-      maxX = Math.max(maxX, cubic.points[i]);
-      minY = Math.min(minY, cubic.points[i + 1]);
-      maxY = Math.max(maxY, cubic.points[i + 1]);
-    }
-  }
-  const dx = CONTAINER_SIZE / 2 - ((minX + maxX) / 2) * size;
-  const dy = CONTAINER_SIZE / 2 - ((minY + maxY) / 2) * size;
-  const x = (v: number) => (v * size + dx).toFixed(2);
-  const y = (v: number) => (v * size + dy).toFixed(2);
-  const first = cubics[0];
-  let d = `M${x(first.anchor0X)} ${y(first.anchor0Y)}`;
-  for (const c of cubics) {
-    d += `C${x(c.control0X)} ${y(c.control0Y)} ${x(c.control1X)} ${y(c.control1Y)} ${x(c.anchor1X)} ${y(c.anchor1Y)}`;
-  }
-  return `${d}Z`;
+  return cubicsPath(morph.asCubics(progress), size, size, CONTAINER_SIZE, CONTAINER_SIZE);
 }
 
 /**

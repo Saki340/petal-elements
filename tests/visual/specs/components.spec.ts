@@ -33,6 +33,7 @@ const COMPONENTS = [
   'bottom-app-bar',
   'rich-tooltip',
   'carousel',
+  'shape',
   'badge',
   'slider',
   'tabs',

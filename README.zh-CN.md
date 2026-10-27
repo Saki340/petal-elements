@@ -67,7 +67,7 @@ npm install petal-elements
 | --- | --- |
 | 操作 | [按钮](docs/components/button.md)、[图标按钮](docs/components/icon-button.md)、[按钮组](docs/components/button-group.md)、[分割按钮](docs/components/split-button.md)、[分段按钮](docs/components/segmented-button.md)、[FAB](docs/components/fab.md)、[FAB 菜单](docs/components/fab-menu.md)、[浮动工具栏](docs/components/floating-toolbar.md)、[chip](docs/components/chip.md) |
 | 反馈 | [徽章](docs/components/badge.md)、[进度条](docs/components/progress.md)、[加载指示器](docs/components/loading-indicator.md)、[snackbar](docs/components/snackbar.md)、[提示](docs/components/tooltip.md)、[下拉刷新](docs/components/pull-to-refresh.md) |
-| 容器 | [卡片](docs/components/card.md)、[轮播](docs/components/carousel.md)、[对话框](docs/components/dialog.md)、[底部面板](docs/components/bottom-sheet.md)、[列表](docs/components/list.md)、[分隔线](docs/components/divider.md) |
+| 容器 | [卡片](docs/components/card.md)、[轮播](docs/components/carousel.md)、[对话框](docs/components/dialog.md)、[底部面板](docs/components/bottom-sheet.md)、[列表](docs/components/list.md)、[分隔线](docs/components/divider.md)、[形状](docs/components/shape.md) |
 | 导航 | [顶部应用栏](docs/components/top-app-bar.md)、[底部应用栏](docs/components/bottom-app-bar.md)、[导航栏](docs/components/navigation-bar.md)、[侧边导航栏](docs/components/navigation-rail.md)、[导航抽屉](docs/components/navigation-drawer.md)、[标签页](docs/components/tabs.md)、[搜索](docs/components/search.md)、[菜单](docs/components/menu.md) |
 | 选择 | [复选框](docs/components/checkbox.md)、[单选框](docs/components/radio.md)、[开关](docs/components/switch.md)、[滑块](docs/components/slider.md)、[日期选择器](docs/components/date-picker.md)、[时间选择器](docs/components/time-picker.md) |
 | 文本输入 | [文本框](docs/components/text-field.md)、[下拉选择](docs/components/select.md) |

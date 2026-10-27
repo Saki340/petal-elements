@@ -64,13 +64,18 @@ need something that is not here.
     [Motion](motion.md), a slots table in every component's API, and
     `llms.txt` and `llms-full.txt` for coding assistants.
 
+### Unreleased
+
+*   Public springs: the springs the components move on, for your own
+    animations (`petal-elements/motion/spring.js`).
+*   Shapes: the 35 Material 3 Expressive shapes in `<petal-shape>`, morphing
+    on springs with hover and pressed shapes, and as SVG path data for your
+    own drawing (`petal-elements/shapes/shapes.js`).
+
 ## Next
 
 Roughly in this order:
 
-*   Public springs: the spring motion the components use, for your own
-    animations.
-*   Shapes: the Material 3 Expressive shape set and morphing between shapes.
 *   Page transitions with the View Transitions API, in the same motion as the
     components.
 *   Missing components, after Compose: date ranges for the date picker, and

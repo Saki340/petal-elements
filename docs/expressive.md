@@ -130,4 +130,5 @@ matches these tokens.
     [FAB menu](components/fab-menu.md), [floating toolbar](components/floating-toolbar.md),
     [split button](components/split-button.md), [loading indicator](components/loading-indicator.md),
     [wavy progress](components/progress.md), [carousel](components/carousel.md),
-    [segmented lists](components/list.md) and [Expressive chips](components/chip.md#expressive).
+    [segmented lists](components/list.md), [Expressive chips](components/chip.md#expressive)
+    and [shapes](components/shape.md).

@@ -126,6 +126,7 @@ Format: doc — import path(s) — tags — key attributes; slots; events.
 
 ### Building blocks
 
+- [Shape](docs/components/shape.md) — `shapes/shape.js` — `petal-shape` — `shape` (35 names, e.g. `cookie-9-sided`, `clover-4-leaf`, `heart`; default `circle`), `hover-shape`, `pressed-shape`; `--md-shape-color`; morphs on springs; size with width/height
 - [Icon](docs/components/icon.md) — `icon/icon.js` — `petal-icon` — ligature text or `<svg>`, `filled`
 - [Elevation](docs/components/elevation.md) — `elevation/elevation.js` — `petal-elevation` in a `position: relative` parent, `--md-elevation-level` 0–5
 - [Focus ring](docs/components/focus-ring.md), [ripple](docs/components/ripple.md) — `focus/md-focus-ring.js` (`petal-focus-ring`), `ripple/ripple.js` (`petal-ripple`) for your own controls
@@ -135,6 +136,7 @@ Format: doc — import path(s) — tags — key attributes; slots; events.
 
 - Springs as CSS: `transition: transform var(--md-sys-motion-spring-default-spatial-duration) var(--md-sys-motion-spring-default-spatial)`; standard (calmer) scheme: load `tokens/css/motion-standard.css` after `sys.css` — see docs/motion.md
 - Springs in script: `petal-elements/motion/spring.js` — `animateSpring(element, keyframes, 'default-spatial' | {dampingRatio, stiffness}, options)` (Web Animation on the page's spring; jumps with reduced motion), `springEasing(spec)` → `{easing, duration}`, `springFromCss(element, name)`, `expressiveSprings` / `standardSprings`, `Spring` (step it yourself for drags)
+- Shapes in script: `petal-elements/shapes/shapes.js` — `materialShape(name)` (normalized `RoundedPolygon`), `shapeNames`, `shapePath(polygon, width, height?)` and `morphPath(new Morph(a, b), progress, width, height?)` → SVG path data for `<path d>`, `clip-path: path()` or `Path2D`
 - `transitionTheme(apply, event)` from `petal-elements/theme/theme-transition.js`: switch light/dark with a circle from the clicked control
 - Mouse hover previews the press automatically; touch keeps Compose's look; `prefers-reduced-motion` turns movement off
 

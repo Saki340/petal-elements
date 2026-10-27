@@ -17,9 +17,9 @@ import {
   springProgress,
 } from './animation.js';
 import {LoadingIndicator} from './loading-indicator.js';
-import {Cubic} from './shapes/cubic.js';
-import {MaterialShapes} from './shapes/material-shapes.js';
-import {Morph} from './shapes/morph.js';
+import {Cubic} from '../../internal/shapes/cubic.js';
+import {MaterialShapes} from '../../internal/shapes/material-shapes.js';
+import {Morph} from '../../internal/shapes/morph.js';
 
 describe('<petal-loading-indicator>', () => {
   const env = new Environment();

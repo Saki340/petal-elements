@@ -1,0 +1,40 @@
+//
+// Copyright 2026 Saki
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// A container clipped to a Material shape (shape.ts sets the clip-path).
+
+:host([hidden]) {
+  display: none;
+}
+
+:host {
+  display: inline-block;
+  flex: none;
+  width: 48px;
+  height: 48px;
+  vertical-align: middle;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.shape {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  // Before the first clip, the circle.
+  clip-path: circle(50%);
+  background: var(--md-shape-color, none);
+  color: inherit;
+}
+
+::slotted(img),
+::slotted(video) {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
