@@ -8,15 +8,9 @@ import {html, isServer, LitElement, nothing, PropertyValues} from 'lit';
 import {property, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 
-import {Spring, SpringSpec} from '../../internal/motion/spring.js';
+import {SLOW_EFFECTS, Spring} from '../../internal/motion/spring.js';
 
 import {FabMenuAlignment, FabMenuItem} from './fab-menu-item.js';
-
-/**
- * MotionSchemeKeyTokens.SlowEffects, the same in both schemes (damping 1,
- * stiffness 800): the spring of the stagger.
- */
-const SLOW_EFFECTS: SpringSpec = {dampingRatio: 1, stiffness: 800};
 
 /**
  * A FAB menu after Jetpack Compose's `FloatingActionButtonMenu`: a column of

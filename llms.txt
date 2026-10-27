@@ -134,6 +134,7 @@ Format: doc — import path(s) — tags — key attributes; slots; events.
 ## Motion and theme APIs
 
 - Springs as CSS: `transition: transform var(--md-sys-motion-spring-default-spatial-duration) var(--md-sys-motion-spring-default-spatial)`; standard (calmer) scheme: load `tokens/css/motion-standard.css` after `sys.css` — see docs/motion.md
+- Springs in script: `petal-elements/motion/spring.js` — `animateSpring(element, keyframes, 'default-spatial' | {dampingRatio, stiffness}, options)` (Web Animation on the page's spring; jumps with reduced motion), `springEasing(spec)` → `{easing, duration}`, `springFromCss(element, name)`, `expressiveSprings` / `standardSprings`, `Spring` (step it yourself for drags)
 - `transitionTheme(apply, event)` from `petal-elements/theme/theme-transition.js`: switch light/dark with a circle from the clicked control
 - Mouse hover previews the press automatically; touch keeps Compose's look; `prefers-reduced-motion` turns movement off
 

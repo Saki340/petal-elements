@@ -16,8 +16,8 @@ import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 import {mixinDelegatesAria} from '../../internal/aria/delegate.js';
 import {redispatchEvent} from '../../internal/events/redispatch-event.js';
 import {
+  DEFAULT_SPATIAL,
   SLOW_SPATIAL,
-  SpringSpec,
   springEasing,
   springFromCss,
 } from '../../internal/motion/spring.js';
@@ -30,13 +30,6 @@ import {getFormValue, mixinFormAssociated} from '../../behaviors/form-associated
  * `ExpandedDockedSearchBar`.
  */
 export type SearchBarLayout = 'full-screen' | 'docked';
-
-/**
- * ExpressiveMotionTokens.SpringDefaultSpatial: damping 0.8, stiffness 380.
- * `rememberSearchBarState` collapses with it and expands with the slow spatial
- * spring.
- */
-const DEFAULT_SPATIAL: SpringSpec = {dampingRatio: 0.8, stiffness: 380};
 
 /** SearchBarVerticalPadding: 8dp above and below the input field in the view. */
 const VIEW_PADDING_TOP = 'calc(8px + env(safe-area-inset-top, 0px))';

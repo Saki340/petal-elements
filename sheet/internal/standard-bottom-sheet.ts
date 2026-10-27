@@ -17,8 +17,9 @@ import {
   DEFAULT_SPATIAL,
   FAST_EFFECTS,
   Spring,
-  SpringSpec,
   springFromCss,
+  SpringName,
+  SpringSpec,
 } from '../../internal/motion/spring.js';
 
 import {
@@ -323,7 +324,7 @@ export class StandardBottomSheet extends standardBottomSheetBaseClass {
 
   // Motion -------------------------------------------------------------------
 
-  private spring(name: string, fallback: SpringSpec) {
+  private spring(name: SpringName, fallback: SpringSpec) {
     return springFromCss(this, name, fallback);
   }
 

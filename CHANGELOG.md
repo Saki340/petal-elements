@@ -2,6 +2,17 @@
 
 ## petal-elements
 
+### Unreleased
+
+#### Features
+
+* **motion:** public springs in `petal-elements/motion/spring.js`:
+  `animateSpring()` runs a Web Animation on the page's spring of a name (or a
+  spring of your own) and jumps with reduced motion; `springEasing()`,
+  `springFromCss()`, `expressiveSprings` and `standardSprings`, and the
+  `Spring` class for motion that keeps its speed. See
+  [Motion](docs/motion.md#in-script).
+
 ### 0.3.0 (2026-10-21)
 
 #### Documentation

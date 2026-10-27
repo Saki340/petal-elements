@@ -10,18 +10,10 @@ import '../../ripple/ripple.js';
 import {html, LitElement} from 'lit';
 import {property, query} from 'lit/decorators.js';
 
-import {
-  FAST_SPATIAL,
-  Spring,
-  SpringSpec,
-  springFromCss,
-} from '../../internal/motion/spring.js';
+import {FAST_EFFECTS, FAST_SPATIAL, Spring, springFromCss} from '../../internal/motion/spring.js';
 
 /** The horizontal alignment of the items of a FAB menu. */
 export type FabMenuAlignment = 'start' | 'center' | 'end';
-
-/** MotionSchemeKeyTokens.FastEffects, the same in both schemes. */
-const FAST_EFFECTS: SpringSpec = {dampingRatio: 1, stiffness: 3800};
 
 /**
  * An item of a FAB menu after Jetpack Compose's `FloatingActionButtonMenuItem`:

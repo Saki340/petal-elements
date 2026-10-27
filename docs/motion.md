@@ -88,21 +88,72 @@ open-close changes this is not noticeable.
 
 ### In script
 
-For the Web Animations API, read the same properties:
+`petal-elements/motion/spring.js` has the same springs for script.
+
+`animateSpring(element, keyframes, spring, options)` runs a Web Animation on
+a spring: the page's spring of that name (it follows the motion scheme of the
+element), or a spring of your own. With reduced motion it jumps to the end.
+`options` go to `element.animate()`.
 
 ```js
-const style = getComputedStyle(document.documentElement);
-element.animate(
-  [{transform: 'scale(0.8)', opacity: 0}, {transform: 'none', opacity: 1}],
-  {
-    duration: parseFloat(style.getPropertyValue('--md-sys-motion-spring-default-spatial-duration')),
-    easing: style.getPropertyValue('--md-sys-motion-spring-default-spatial'),
-  },
-);
+import {animateSpring} from 'petal-elements/motion/spring.js';
+
+// Slide a panel in on the default spatial spring.
+panel.style.translate = '0 0'; // the end state stays after the animation
+animateSpring(panel, {translate: ['0 100%', '0 0']}, 'default-spatial');
+
+// Fade on an effects spring, and wait for the end.
+await animateSpring(toast, {opacity: [1, 0]}, 'fast-effects').finished;
 ```
 
-`-damping` and `-stiffness` give the spring's physics, for animations that
-follow a drag or must keep their speed when the target changes.
+The spring names are `fast-spatial`, `default-spatial`, `slow-spatial`,
+`fast-effects`, `default-effects` and `slow-effects`.
+
+For a spring of your own, pass its damping ratio and stiffness, as in
+Compose's `spring()`:
+
+```js
+animateSpring(badge, {scale: [0.5, 1]}, {dampingRatio: 0.4, stiffness: 600});
+```
+
+| Export | What it is |
+| --- | --- |
+| `expressiveSprings`, `standardSprings` | Each scheme's six springs as `{dampingRatio, stiffness}`, by camelCase name (`fastSpatial`, ...) |
+| `springFromCss(element, name)` | The spring the page uses for an element, read from its `--md-sys-motion-spring-<name>-damping` and `-stiffness`; the expressive one without them |
+| `springEasing(spring)` | `{easing, duration}`: the spring as a `linear()` easing and the milliseconds it takes to settle, for `element.animate()` or a CSS transition set from script |
+| `animateSpring(...)` | A Web Animation on a spring, as above; returns the `Animation` |
+| `Spring` | A spring you step yourself, for motion that keeps its speed |
+
+A Web Animation restarts from where it is when it is replaced, but not with
+its speed. For motion that follows a drag, or that must keep its speed when
+its target changes, step a `Spring` each frame:
+
+```js
+import {Spring, springFromCss} from 'petal-elements/motion/spring.js';
+
+const spring = new Spring(springFromCss(card, 'default-spatial'));
+let last = performance.now();
+
+function frame(now) {
+  spring.step(Math.min(now - last, 64)); // ms; capped after a pause
+  last = now;
+  card.style.translate = `${spring.value}px 0`;
+  if (!spring.atRest) requestAnimationFrame(frame);
+}
+
+// On release: settle where the drag points, keeping the drag's speed.
+function release(target, velocity) {
+  spring.target = target;
+  spring.velocity = velocity; // px per second
+  last = performance.now();
+  requestAnimationFrame(frame);
+}
+```
+
+`spring.value` moves toward `spring.target`; changing the target mid-way keeps
+`spring.velocity`. `atRest` turns true when the value is within 0.01 of the
+target and nearly still (a second argument to `new Spring()` sets that
+threshold).
 
 ### Older easing tokens
 

@@ -17,18 +17,47 @@ export interface SpringSpec {
 /** Compose's default visibility threshold for floats (Spring.DefaultDisplacementThreshold). */
 const THRESHOLD = 0.01;
 
+/** The springs of a motion scheme, by their token names. */
+export type SpringName =
+  | 'fast-spatial'
+  | 'default-spatial'
+  | 'slow-spatial'
+  | 'fast-effects'
+  | 'default-effects'
+  | 'slow-effects';
+
+/** The six springs of a motion scheme (Compose's `MotionScheme`). */
+export interface MotionSchemeSprings {
+  fastSpatial: SpringSpec;
+  defaultSpatial: SpringSpec;
+  slowSpatial: SpringSpec;
+  fastEffects: SpringSpec;
+  defaultEffects: SpringSpec;
+  slowEffects: SpringSpec;
+}
+
 /**
  * Reads a `--md-sys-motion-spring-<name>-damping` and `-stiffness` pair from
- * an element, e.g. `fast-spatial`, falling back to `fallback`. Pages switch
- * the scheme by setting these properties (tokens/css/motion-standard.css).
+ * an element, e.g. `fast-spatial`, falling back to `fallback` (by default the
+ * expressive spring of that name). Pages switch the scheme by setting these
+ * properties (tokens/css/motion-standard.css).
  */
-export function springFromCss(element: Element, name: string, fallback: SpringSpec): SpringSpec {
+export function springFromCss(
+  element: Element,
+  name: SpringName,
+  fallback: SpringSpec = EXPRESSIVE[camelName(name)],
+): SpringSpec {
   const style = getComputedStyle(element);
   const read = (suffix: string) =>
     parseFloat(style.getPropertyValue(`--md-sys-motion-spring-${name}-${suffix}`));
   const dampingRatio = read('damping');
   const stiffness = read('stiffness');
   return dampingRatio > 0 && stiffness > 0 ? {dampingRatio, stiffness} : fallback;
+}
+
+/** `fast-spatial` -> `fastSpatial`. */
+function camelName(name: SpringName) {
+  return name.replace(/-(\w)/, (_, letter: string) => letter.toUpperCase()) as keyof MotionSchemeSprings;
 }
 
 // Fallbacks when the page has no spring tokens: the expressive scheme, the
@@ -49,11 +78,47 @@ export const DEFAULT_EFFECTS: SpringSpec = {dampingRatio: 1, stiffness: 1600};
 /** ExpressiveMotionTokens.SpringFastEffects: damping 1, stiffness 3800. */
 export const FAST_EFFECTS: SpringSpec = {dampingRatio: 1, stiffness: 3800};
 
+/** ExpressiveMotionTokens.SpringSlowEffects: damping 1, stiffness 800. */
+export const SLOW_EFFECTS: SpringSpec = {dampingRatio: 1, stiffness: 800};
+
+/** The expressive motion scheme (ExpressiveMotionTokens), the default. */
+export const EXPRESSIVE: MotionSchemeSprings = {
+  fastSpatial: FAST_SPATIAL,
+  defaultSpatial: DEFAULT_SPATIAL,
+  slowSpatial: SLOW_SPATIAL,
+  fastEffects: FAST_EFFECTS,
+  defaultEffects: DEFAULT_EFFECTS,
+  slowEffects: SLOW_EFFECTS,
+};
+
+/** The standard motion scheme (StandardMotionTokens). */
+export const STANDARD: MotionSchemeSprings = {
+  fastSpatial: {dampingRatio: 0.9, stiffness: 1400},
+  defaultSpatial: {dampingRatio: 0.9, stiffness: 700},
+  slowSpatial: {dampingRatio: 0.9, stiffness: 300},
+  fastEffects: {dampingRatio: 1, stiffness: 3800},
+  defaultEffects: {dampingRatio: 1, stiffness: 1600},
+  slowEffects: {dampingRatio: 1, stiffness: 800},
+};
+
+const easings = new Map<string, SpringEasing>();
+
+/** A spring as a CSS easing and the time it takes to settle. */
+export interface SpringEasing {
+  /** A `linear()` easing from 0 to 1. */
+  easing: string;
+  /** In milliseconds. */
+  duration: number;
+}
+
 /**
  * The spring from 0 to 1 as a CSS `linear()` easing and its duration, for the
- * Web Animations API.
+ * Web Animations API and CSS transitions. Results are cached.
  */
-export function springEasing(spec: SpringSpec) {
+export function springEasing(spec: SpringSpec): SpringEasing {
+  const key = `${spec.dampingRatio}/${spec.stiffness}`;
+  const cached = easings.get(key);
+  if (cached) return cached;
   const spring = new Spring(spec);
   spring.target = 1;
   const frameMs = 1000 / 60;
@@ -63,10 +128,12 @@ export function springEasing(spec: SpringSpec) {
     points.push(Number(spring.value.toFixed(4)));
   }
   points[points.length - 1] = 1;
-  return {
+  const result = {
     easing: `linear(${points.join(', ')})`,
     duration: Math.round((points.length - 1) * frameMs),
   };
+  easings.set(key, result);
+  return result;
 }
 
 /** A value driven by a spring. */

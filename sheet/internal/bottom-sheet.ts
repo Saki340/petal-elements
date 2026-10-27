@@ -12,7 +12,15 @@ import {classMap} from 'lit/directives/class-map.js';
 
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 import {mixinDelegatesAria} from '../../internal/aria/delegate.js';
-import {Spring, SpringSpec, springFromCss} from '../../internal/motion/spring.js';
+import {
+  DEFAULT_EFFECTS,
+  DEFAULT_SPATIAL,
+  FAST_EFFECTS,
+  Spring,
+  springFromCss,
+  SpringName,
+  SpringSpec,
+} from '../../internal/motion/spring.js';
 
 import {
   Anchor,
@@ -31,15 +39,6 @@ export type {SheetValue} from './sheet-physics.js';
 
 // ExpressiveMotionTokens (MotionScheme.expressive(), the default scheme), the
 // fallbacks when the page has no `--md-sys-motion-spring-*` properties.
-
-/** MotionSchemeKeyTokens.DefaultSpatial: shows and settles the sheet. */
-const DEFAULT_SPATIAL: SpringSpec = {dampingRatio: 0.8, stiffness: 380};
-
-/** MotionSchemeKeyTokens.DefaultEffects: fades the scrim. */
-const DEFAULT_EFFECTS: SpringSpec = {dampingRatio: 1, stiffness: 1600};
-
-/** MotionSchemeKeyTokens.FastEffects: hides and collapses the sheet. */
-const FAST_EFFECTS: SpringSpec = {dampingRatio: 1, stiffness: 3800};
 
 /**
  * How far a pointer moves before it drags the sheet: Android's touch slop,
@@ -476,7 +475,7 @@ export class BottomSheet extends bottomSheetBaseClass {
 
   // Motion -------------------------------------------------------------------
 
-  private spring(name: string, fallback: SpringSpec) {
+  private spring(name: SpringName, fallback: SpringSpec) {
     return springFromCss(this, name, fallback);
   }
 

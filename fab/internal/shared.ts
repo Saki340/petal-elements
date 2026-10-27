@@ -16,7 +16,7 @@ import {classMap} from 'lit/directives/class-map.js';
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 import {mixinDelegatesAria} from '../../internal/aria/delegate.js';
 import {hasFinePointer, prefersReducedMotion} from '../../internal/motion/hover.js';
-import {FAST_SPATIAL, Spring, springFromCss} from '../../internal/motion/spring.js';
+import {FAST_EFFECTS, FAST_SPATIAL, Spring, springFromCss} from '../../internal/motion/spring.js';
 
 /**
  * FAB sizes, as in Compose: `small` (40px), `baseline` (56px, the default),
@@ -29,9 +29,6 @@ export type FabSize = 'small' | 'baseline' | 'medium' | 'large';
 const FOLLOW_REACH = 28;
 /** How far a following FAB moves toward the pointer, at most, in px. */
 const FOLLOW_DISTANCE = 4;
-
-/** MotionSchemeKeyTokens.FastEffects, the same in both schemes. */
-const FAST_EFFECTS = {dampingRatio: 1, stiffness: 3800};
 
 // Separate variable needed for closure.
 const fabBaseClass = mixinDelegatesAria(LitElement);

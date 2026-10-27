@@ -9,7 +9,14 @@ import {property, query, queryAssignedElements} from 'lit/decorators.js';
 
 import {ARIAMixinStrict} from '../../internal/aria/aria.js';
 import {mixinDelegatesAria} from '../../internal/aria/delegate.js';
-import {Spring, SpringSpec, springFromCss} from '../../internal/motion/spring.js';
+import {
+  DEFAULT_SPATIAL,
+  FAST_EFFECTS,
+  Spring,
+  springFromCss,
+  SpringName,
+  SpringSpec,
+} from '../../internal/motion/spring.js';
 import {ITEM_SELECTED_EVENT} from '../../internal/navigation/navigation-item.js';
 import {VelocityTracker} from '../../sheet/internal/sheet-physics.js';
 
@@ -23,12 +30,6 @@ export type NavigationDrawerType = 'modal' | 'dismissible' | 'standard';
 
 // ExpressiveMotionTokens (the default scheme), the fallbacks when the page has
 // no `--md-sys-motion-spring-*` properties.
-
-/** MotionSchemeKeyTokens.DefaultSpatial: opens the drawer and settles drags. */
-const DEFAULT_SPATIAL: SpringSpec = {dampingRatio: 0.8, stiffness: 380};
-
-/** MotionSchemeKeyTokens.FastEffects: closes the drawer. */
-const FAST_EFFECTS: SpringSpec = {dampingRatio: 1, stiffness: 3800};
 
 /** DrawerPositionalThreshold: past half of the way, a drag settles there. */
 const POSITIONAL_THRESHOLD = 0.5;
@@ -299,7 +300,7 @@ export class NavigationDrawer extends navigationDrawerBaseClass {
 
   // Motion -------------------------------------------------------------------
 
-  private spring(name: string, fallback: SpringSpec) {
+  private spring(name: SpringName, fallback: SpringSpec) {
     return springFromCss(this, name, fallback);
   }
 
