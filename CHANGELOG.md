@@ -19,6 +19,13 @@
   shapes as polygons and writes shapes and morphs as SVG path data. See
   [Shape](docs/components/shape.md).
 
+#### Bug Fixes
+
+* **theme:** `transitionTheme()` called again while a transition runs skips
+  the running one and cancels its circle animation, and the skipped one no
+  longer clears the new one's class and center. Toggling the theme quickly
+  could crash the tab in Chrome on Windows (`STATUS_BREAKPOINT`).
+
 ### 0.3.0 (2026-10-21)
 
 #### Documentation

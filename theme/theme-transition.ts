@@ -96,6 +96,23 @@ function pointOf(origin: ThemeTransitionOrigin | undefined) {
   return {x: innerWidth / 2, y: innerHeight / 2};
 }
 
+interface Run {
+  transition: ViewTransition;
+  animation?: Animation;
+}
+
+/** The running theme transition, if any. */
+let current: Run | undefined;
+
+/** Skips the running theme transition and cancels its animation. */
+function stopCurrent() {
+  if (!current) return;
+  const run = current;
+  current = undefined;
+  run.animation?.cancel();
+  run.transition.skipTransition();
+}
+
 /**
  * Changes the theme with a circle that grows from `origin` until it covers the
  * page, revealing the new theme (View Transitions API). `apply` changes the
@@ -128,13 +145,20 @@ export async function transitionTheme(
   const radius = corner + SOFT_EDGE;
   const values = reveal(springFromCss(root, 'slow-spatial', SLOW_SPATIAL));
 
+  // A new transition skips the running one. Its animation is cancelled first:
+  // left running on a pseudo-element that is gone, it can crash Chrome's
+  // compositor.
+  stopCurrent();
   root.classList.add(ACTIVE);
   root.style.setProperty(X, `${x}px`);
   root.style.setProperty(Y, `${y}px`);
-  const transition = document.startViewTransition(apply);
+  const run: Run = {transition: document.startViewTransition(apply)};
+  current = run;
   try {
-    await transition.ready;
-    root.animate(
+    await run.transition.ready;
+    // Skipped while getting ready.
+    if (current !== run) return;
+    run.animation = root.animate(
       {[RADIUS]: values.map((value) => `${value * radius}px`)},
       {
         duration: ((values.length - 1) * 1000) / 60,
@@ -145,12 +169,17 @@ export async function transitionTheme(
         pseudoElement: '::view-transition-new(root)',
       },
     );
-    await transition.finished;
+    await run.transition.finished;
   } catch {
     // The transition was skipped; the theme has still changed.
   } finally {
-    root.classList.remove(ACTIVE);
-    root.style.removeProperty(X);
-    root.style.removeProperty(Y);
+    run.animation?.cancel();
+    // A newer transition owns the class and the center now.
+    if (current === run) {
+      current = undefined;
+      root.classList.remove(ACTIVE);
+      root.style.removeProperty(X);
+      root.style.removeProperty(Y);
+    }
   }
 }

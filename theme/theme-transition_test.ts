@@ -64,6 +64,31 @@ describe('transitionTheme()', () => {
     expect(radii[last] - radii[last - 1]).toBeLessThan((radii[2] - radii[1]) / 10);
   });
 
+  it('skips the running transition and cancels its animation', async () => {
+    const root = document.documentElement;
+    const animate = spyOn(root, 'animate').and.callThrough();
+    const first = transitionTheme(() => {}, {x: 0, y: 0});
+    // Wait until the first circle is animating.
+    while (!animate.calls.count()) {
+      await new Promise((resolve) => requestAnimationFrame(resolve));
+    }
+    const animation = animate.calls.mostRecent().returnValue;
+    const second = transitionTheme(() => {
+      root.classList.add('dark-test');
+    }, {x: 30, y: 40});
+    expect(animation.playState).toBe('idle');
+    await first;
+    // The first one leaves the second one's state alone.
+    expect(root.classList.contains('petal-theme-transition')).toBeTrue();
+    expect(root.style.getPropertyValue('--petal-theme-transition-x')).toBe('30px');
+    await second;
+    expect(root.classList.contains('dark-test')).toBeTrue();
+    expect(root.classList.contains('petal-theme-transition')).toBeFalse();
+    expect(root.style.getPropertyValue('--petal-theme-transition-x')).toBe('');
+    // Nothing is left running on the gone pseudo-elements.
+    expect(root.getAnimations({subtree: true}).length).toBe(0);
+  });
+
   it('follows the slow spatial spring of the page', async () => {
     const root = document.documentElement;
     const animate = spyOn(root, 'animate').and.callThrough();
