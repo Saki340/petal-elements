@@ -247,35 +247,76 @@ toggle.addEventListener('click', (event) => {
 View Transitions support, or with reduced motion, it applies the change at
 once. See [Theming](theming/README.md#theme-transition).
 
-### Your own page transitions
+### Between views
 
-For changes between views of a single-page app, use the View Transitions API
-with the springs:
+`transitionPage(update, options)` from `motion/page-transition.js` changes the
+view of a single-page app with the View Transitions API. Position and size
+follow the default spatial spring of the page's motion scheme, and fades are
+linear and short. `update` changes the page and may be async.
 
 ```js
-function go(render) {
-  if (!document.startViewTransition || matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    render();
-    return;
-  }
-  document.startViewTransition(render);
-}
+import {transitionPage} from 'petal-elements/motion/page-transition.js';
+
+// Top-level destinations: the old view fades out, the new one fades in.
+transitionPage(() => show('saved'), {page: 'main'});
+
+// Steps of a flow: views slide along the X axis.
+transitionPage(() => showStep(2), {type: 'forward', page: 'main'});
+transitionPage(() => showStep(1), {type: 'back', page: 'main'});
 ```
+
+`type`                | Use it for                                      | What moves
+--------------------- | ----------------------------------------------- | ----------
+`fade` (default)      | Views that are not related                      | The old view fades out, the new one fades in and grows from 92%
+`forward`, `back`     | Steps of a flow; mirrored right to left         | Both views slide 30px and fade
+`container`           | A card that opens into a detail view, and back  | The card grows into the new view, with its image and title
+
+`page` is the part that changes, so that bars around it stay in place: a
+selector, an element, or a function that returns one. It is looked up before
+and after `update`, so the element can be replaced. Without `page`, the whole
+page moves.
+
+For `container`, name the elements on both sides. `from` is read before
+`update`, and `to` is a function that runs after it:
+
+```js
+const parts = (element) => ({
+  container: element,
+  media: element.querySelector('img'),
+  title: element.querySelector('h2'),
+});
+
+// Open.
+transitionPage(() => showDetail(id), {
+  type: 'container',
+  from: parts(card),
+  to: () => parts(document.querySelector('.detail')),
+});
+
+// Back.
+transitionPage(() => showGrid(), {
+  type: 'container',
+  from: parts(document.querySelector('.detail')),
+  to: () => parts(document.querySelector(`[data-id="${id}"]`)),
+});
+```
+
+`media` and `title` are optional. Corners move with the box: from each
+element's `border-radius`, and for `media` from the `container`'s where it sits
+in the container's corners. A new transition skips the running one, and
+`transitionTheme()` and `transitionPage()` skip each other; `update` still runs.
+The returned promise resolves when the transition ends, and rejects if `update`
+does. Without View Transitions support, or with reduced motion, `update` just
+runs.
+
+An element with a `view-transition-name` of your own moves on the same spring
+during `transitionPage()`, for example a bar that should not fade:
 
 ```css
-::view-transition-group(*) {
-  animation-duration: var(--md-sys-motion-spring-default-spatial-duration);
-  animation-timing-function: var(--md-sys-motion-spring-default-spatial);
-}
-
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation-duration: var(--md-sys-motion-spring-default-effects-duration);
+.app-bar {
+  view-transition-name: app-bar;
 }
 ```
-
-Give shared elements (a card and the detail page's header) the same
-`view-transition-name` so that one grows into the other.
 
 ## Reduced motion
 

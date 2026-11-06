@@ -18,6 +18,10 @@
   `pressed-shape` when pressed. `petal-elements/shapes/shapes.js` has the
   shapes as polygons and writes shapes and morphs as SVG path data. See
   [Shape](docs/components/shape.md).
+* **motion:** `transitionPage()` in `petal-elements/motion/page-transition.js`
+  changes the view with the View Transitions API on the page's springs: `fade`,
+  the shared axis (`forward`, `back`) and `container` for a card that opens
+  into a detail view. See [Motion](docs/motion.md#between-views).
 
 #### Bug Fixes
 
@@ -25,6 +29,7 @@
   the running one and cancels its circle animation, and the skipped one no
   longer clears the new one's class and center. Toggling the theme quickly
   could crash the tab in Chrome on Windows (`STATUS_BREAKPOINT`).
+  `transitionPage()` stops it the same way.
 
 ### 0.3.0 (2026-10-21)
 

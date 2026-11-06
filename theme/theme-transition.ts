@@ -10,6 +10,12 @@ import {
   springFromCss,
   type SpringSpec,
 } from '../internal/motion/spring.js';
+import {
+  finishViewTransition,
+  isRunning,
+  startViewTransitionRun,
+  stopViewTransition,
+} from '../internal/motion/view-transition.js';
 
 /** Where the new theme starts: a pointer event, an element or a point. */
 export type ThemeTransitionOrigin = Event | Element | {x: number; y: number};
@@ -96,23 +102,6 @@ function pointOf(origin: ThemeTransitionOrigin | undefined) {
   return {x: innerWidth / 2, y: innerHeight / 2};
 }
 
-interface Run {
-  transition: ViewTransition;
-  animation?: Animation;
-}
-
-/** The running theme transition, if any. */
-let current: Run | undefined;
-
-/** Skips the running theme transition and cancels its animation. */
-function stopCurrent() {
-  if (!current) return;
-  const run = current;
-  current = undefined;
-  run.animation?.cancel();
-  run.transition.skipTransition();
-}
-
 /**
  * Changes the theme with a circle that grows from `origin` until it covers the
  * page, revealing the new theme (View Transitions API). `apply` changes the
@@ -145,19 +134,20 @@ export async function transitionTheme(
   const radius = corner + SOFT_EDGE;
   const values = reveal(springFromCss(root, 'slow-spatial', SLOW_SPATIAL));
 
-  // A new transition skips the running one. Its animation is cancelled first:
-  // left running on a pseudo-element that is gone, it can crash Chrome's
-  // compositor.
-  stopCurrent();
+  // A new transition skips the running one, of the theme or of a page.
+  stopViewTransition();
   root.classList.add(ACTIVE);
   root.style.setProperty(X, `${x}px`);
   root.style.setProperty(Y, `${y}px`);
-  const run: Run = {transition: document.startViewTransition(apply)};
-  current = run;
+  const run = startViewTransitionRun(apply, () => {
+    root.classList.remove(ACTIVE);
+    root.style.removeProperty(X);
+    root.style.removeProperty(Y);
+  });
   try {
     await run.transition.ready;
     // Skipped while getting ready.
-    if (current !== run) return;
+    if (!isRunning(run)) return;
     run.animation = root.animate(
       {[RADIUS]: values.map((value) => `${value * radius}px`)},
       {
@@ -173,13 +163,6 @@ export async function transitionTheme(
   } catch {
     // The transition was skipped; the theme has still changed.
   } finally {
-    run.animation?.cancel();
-    // A newer transition owns the class and the center now.
-    if (current === run) {
-      current = undefined;
-      root.classList.remove(ACTIVE);
-      root.style.removeProperty(X);
-      root.style.removeProperty(Y);
-    }
+    finishViewTransition(run);
   }
 }

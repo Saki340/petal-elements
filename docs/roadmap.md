@@ -71,12 +71,13 @@ need something that is not here.
 *   Shapes: the 35 Material 3 Expressive shapes in `<petal-shape>`, morphing
     on springs with hover and pressed shapes, and as SVG path data for your
     own drawing (`petal-elements/shapes/shapes.js`).
+*   Page transitions: fade, shared axis and container transform with the View
+    Transitions API, in the same motion as the components
+    (`petal-elements/motion/page-transition.js`).
 
 ## Next
 
 Roughly in this order:
 
-*   Page transitions with the View Transitions API, in the same motion as the
-    components.
 *   Missing components, after Compose: date ranges for the date picker, and
     the Expressive time picker styles.
