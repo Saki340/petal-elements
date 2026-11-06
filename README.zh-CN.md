@@ -99,7 +99,7 @@ Google 的 [Material Web](https://github.com/material-components/material-web) �
 
 ## 状态
 
-当前版本 0.3。1.0 之前 API 可能变动；每次改动见 [CHANGELOG](CHANGELOG.md)，后续计划见 [roadmap](docs/roadmap.md)，支持的浏览器见 [Support](docs/support.md)（均为英文）。
+当前版本 0.4。1.0 之前 API 可能变动；每次改动见 [CHANGELOG](CHANGELOG.md)，后续计划见 [roadmap](docs/roadmap.md)，支持的浏览器见 [Support](docs/support.md)（均为英文）。
 
 petal-elements 不是 Google 官方项目，与 Google 没有关联。它是 Material Web 的一个独立的、由社区维护的修改版本。
 

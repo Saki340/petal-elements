@@ -120,7 +120,7 @@ changed.
 
 ## Status
 
-Version 0.3. APIs may change before 1.0; the [changelog](CHANGELOG.md) lists
+Version 0.4. APIs may change before 1.0; the [changelog](CHANGELOG.md) lists
 every change and the [roadmap](docs/roadmap.md) what comes next. Supported
 browsers: [Support](docs/support.md).
 

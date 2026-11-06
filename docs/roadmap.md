@@ -64,7 +64,7 @@ need something that is not here.
     [Motion](motion.md), a slots table in every component's API, and
     `llms.txt` and `llms-full.txt` for coding assistants.
 
-### Unreleased
+### 0.4 (2026-11-07)
 
 *   Public springs: the springs the components move on, for your own
     animations (`petal-elements/motion/spring.js`).
