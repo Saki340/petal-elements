@@ -1,3 +1,8 @@
+<!-- catalog-only-start --><!-- ---
+name: Elevation
+dirname: elevation
+-----><!-- catalog-only-end -->
+
 # Elevation
 
 <!-- [TOC] -->
@@ -15,6 +20,18 @@ UI’s elevation story.
 *   [API Documentation](#api)
 *   [Source code](https://github.com/Saki340/petal-elements/tree/main/elevation)
     <!-- {.external} -->
+
+<!-- catalog-only-start -->
+
+<!--
+
+## Interactive Demo
+
+{% playgroundexample dirname=dirname %}
+
+-->
+
+<!-- catalog-only-end -->
 
 ## Usage
 

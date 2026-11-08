@@ -42,6 +42,18 @@ This is the Material 3 Expressive wide navigation rail. The values follow
 Jetpack Compose Material 3 (`WideNavigationRail`, `WideNavigationRailItem`,
 `NavigationRailCollapsedTokens`, `NavigationRailExpandedTokens`).
 
+<!-- catalog-only-start -->
+
+<!--
+
+## Interactive Demo
+
+{% playgroundexample dirname=dirname %}
+
+-->
+
+<!-- catalog-only-end -->
+
 ## Usage
 
 Put `petal-navigation-rail-item` elements in a `petal-navigation-rail`. The

@@ -41,6 +41,18 @@ optional action.
 The values follow Jetpack Compose Material 3 (`SnackbarTokens`, `Snackbar`,
 `SnackbarHost`).
 
+<!-- catalog-only-start -->
+
+<!--
+
+## Interactive Demo
+
+{% playgroundexample dirname=dirname %}
+
+-->
+
+<!-- catalog-only-end -->
+
 ## Usage
 
 Put the message in the snackbar and call `show()`. It is fixed to the bottom

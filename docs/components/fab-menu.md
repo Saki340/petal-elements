@@ -42,6 +42,18 @@ The values and the motion follow Jetpack Compose Material 3
 (`FloatingActionButtonMenu`, `FloatingActionButtonMenuItem`,
 `ToggleFloatingActionButton` and `FabMenuBaselineTokens`).
 
+<!-- catalog-only-start -->
+
+<!--
+
+## Interactive Demo
+
+{% playgroundexample dirname=dirname %}
+
+-->
+
+<!-- catalog-only-end -->
+
 ## Usage
 
 `<petal-fab-menu>` holds the items in its default slot and the button in the

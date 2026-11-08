@@ -42,6 +42,18 @@ The values and the motion follow Jetpack Compose Material 3
 (`HorizontalFloatingToolbar`, `VerticalFloatingToolbar`,
 `FloatingToolbarDefaults`, `FloatingToolbarTokens`).
 
+<!-- catalog-only-start -->
+
+<!--
+
+## Interactive Demo
+
+{% playgroundexample dirname=dirname %}
+
+-->
+
+<!-- catalog-only-end -->
+
 ## Usage
 
 `<petal-floating-toolbar>` is a row of actions. Put icon buttons (or any

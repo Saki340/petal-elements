@@ -32,7 +32,9 @@ function applyTheme(theme: string) {
  * Apply the theme every time a postdoc pessage is received.
  */
 const onMessage = (e: MessageEvent<string>) => {
-  if (e.origin !== window.location.origin) {
+  // Messages of the channel to the page have no origin; anything else did not
+  // come through it. The sandbox has another origin than the page.
+  if (e.origin) {
     return;
   }
   applyTheme(e.data);

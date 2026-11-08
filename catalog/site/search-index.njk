@@ -1,0 +1,19 @@
+---
+permalink: /search-index.json
+eleventyExcludeFromCollections: true
+---
+[
+{%- set first = true -%}
+{%- for group in collections.componentGroups -%}
+  {%- for file in group.pages -%}
+    {%- if not first %},{% endif %}{% set first = false %}
+    {"name": {{ file.data.name | dump | safe }}, "kind": {{ group.name | dump | safe }}, "url": {{ file.url | dump | safe }}, "description": {{ (file.data.description or "") | dump | safe }}}
+  {%- endfor -%}
+{%- endfor -%}
+{%- for file in collections.about | filtersort('data.order') -%}
+  ,{"name": {{ file.data.name | dump | safe }}, "kind": "Guide", "url": {{ file.url | dump | safe }}, "description": {{ (file.data.description or "") | dump | safe }}}
+{%- endfor -%}
+{%- for file in collections.theming | filtersort('data.order') -%}
+  ,{"name": {{ file.data.name | dump | safe }}, "kind": "Theming", "url": {{ file.url | dump | safe }}, "description": {{ (file.data.description or "") | dump | safe }}}
+{%- endfor %}
+]

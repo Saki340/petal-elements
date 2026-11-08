@@ -6,45 +6,62 @@
  */
 
 :root {
-  font-family: Roboto, system-ui;
-  --md-ref-typeface-plain: Roboto, system-ui;
+  --catalog-font: 'Roboto Flex', Roboto, system-ui, sans-serif;
+  font-family: var(--catalog-font);
+  --md-ref-typeface-plain: var(--catalog-font);
+  --md-ref-typeface-brand: var(--catalog-font);
   background-color: var(--md-sys-color-surface-container);
   color: var(--md-sys-color-on-surface);
-  /* These values are copied from mio */
-  --catalog-display-xl-font-size: 88px;
-  --catalog-display-m-font-size: 45px;
+  --catalog-display-xl-font-size: clamp(56px, 8.4vw, 124px);
+  --catalog-display-l-font-size: clamp(44px, 5.6vw, 76px);
+  --catalog-display-m-font-size: clamp(32px, 3.6vw, 48px);
   --catalog-title-l-font-size: 22px;
   --catalog-title-m-font-size: 16px;
   --catalog-title-s-font-size: 14px;
   --catalog-body-l-font-size: 16px;
   --catalog-body-m-font-size: 14px;
   --catalog-headline-s-font-size: 24px;
-  --catalog-label-s-font-size: 11px;
+  --catalog-label-s-font-size: 12px;
+  --catalog-shape-2xl: 48px;
   --catalog-shape-xl: 28px;
   --catalog-shape-l: 16px;
   --catalog-shape-m: 12px;
   --catalog-shape-s: 8px;
   --catalog-shape-xs: 4px;
+  --catalog-spacing-2xl: 56px;
   --catalog-spacing-xl: 28px;
   --catalog-spacing-l: 16px;
   --catalog-spacing-m: 12px;
   --catalog-spacing-s: 8px;
+  --catalog-drawer-width: 284px;
   --catalog-top-app-bar-height: calc(48px + 2 * var(--catalog-spacing-m));
-  scroll-padding-block-start: calc(
-    var(--catalog-top-app-bar-height) + var(--catalog-top-app-bar-padding-block) *
-      2
-  );
+  /* Replaced by the springs of the components in src/pages/global.ts. */
+  --catalog-spring: cubic-bezier(0.3, 0, 0, 1);
+  --catalog-spring-duration: 500ms;
+  --catalog-spring-fast: cubic-bezier(0.3, 0, 0, 1);
+  --catalog-spring-fast-duration: 300ms;
+  --catalog-effects: linear;
+  --catalog-effects-duration: 150ms;
+  scroll-padding-block-start: var(--catalog-top-app-bar-height);
 }
 
 @media screen and (max-width: 600px) {
   :root {
-    --catalog-display-xl-font-size: 55px;
-    --catalog-title-l-font-size: 16px;
-    --catalog-body-l-font-size: 14px;
-    --catalog-body-m-font-size: 12px;
+    --catalog-title-l-font-size: 18px;
+    --catalog-body-l-font-size: 15px;
+    --catalog-body-m-font-size: 13px;
     /* Mostly to accommodate content padding on small screens */
+    --catalog-spacing-2xl: 36px;
     --catalog-spacing-xl: 16px;
     --catalog-spacing-l: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --catalog-spring-duration: 1ms;
+    --catalog-spring-fast-duration: 1ms;
+    --catalog-effects-duration: 1ms;
   }
 }
 
@@ -55,6 +72,7 @@ strong {
 body {
   margin: 0;
   font-size: var(--catalog-body-l-font-size);
+  line-height: 1.6;
 }
 
 a {
@@ -67,60 +85,126 @@ a:focus-visible {
   text-decoration: underline;
 }
 
-nav-drawer petal-list.nav petal-list-item[href][selected] {
-  background-color: var(--md-sys-color-surface-container-highest);
+h1,
+h2,
+h3 {
+  font-stretch: 112%;
+  line-height: 1.08;
+  letter-spacing: -0.015em;
 }
 
-nav-drawer petal-list.nav petal-list-item::part(focus-ring) {
-  --md-focus-ring-shape: var(--catalog-shape-xl);
+h1 {
+  font-size: var(--catalog-display-l-font-size);
+  font-weight: 700;
+  margin-block: 0 var(--catalog-spacing-l);
+}
+
+kbd {
+  font: inherit;
+}
+
+/* The navigation drawer. */
+
+nav.nav {
+  display: block;
+  padding: var(--catalog-spacing-s) var(--catalog-spacing-m)
+    var(--catalog-spacing-2xl);
+}
+
+nav.nav petal-list {
+  --md-list-container-color: transparent;
+  --md-list-item-container-color: transparent;
+  --md-list-item-one-line-container-height: 44px;
+  --md-list-item-top-space: 8px;
+  --md-list-item-bottom-space: 8px;
+  --md-list-item-label-text-size: var(--catalog-body-m-font-size);
+  display: block;
+  min-width: unset;
+  padding: 0;
+}
+
+nav.nav petal-list-item {
+  display: block;
+  border-radius: 22px;
+  overflow: hidden;
+  --md-focus-ring-shape: 22px;
+  transition: border-radius var(--catalog-spring-fast-duration)
+    var(--catalog-spring-fast);
+}
+
+nav.nav petal-list-item:hover {
+  border-radius: 12px;
+}
+
+nav.nav petal-list-item[selected] {
+  background-color: var(--md-sys-color-secondary-container);
+  --md-list-item-label-text-color: var(--md-sys-color-on-secondary-container);
+  --md-list-item-label-text-weight: 600;
+  --md-list-item-leading-icon-color: var(--md-sys-color-on-secondary-container);
+  border-radius: 22px;
+}
+
+.nav-label,
+.nav-section summary {
+  font-size: var(--catalog-label-s-font-size);
+  font-weight: 700;
+  font-stretch: 100%;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--md-sys-color-on-surface-variant);
+  margin: var(--catalog-spacing-xl) 16px var(--catalog-spacing-s);
+}
+
+.nav-section {
+  margin-block-start: var(--catalog-spacing-s);
+}
+
+.nav-section summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 44px;
+  margin: 0;
+  padding-inline: 16px 10px;
+  border-radius: 22px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.nav-section summary::-webkit-details-marker {
+  display: none;
+}
+
+.nav-section summary:hover {
+  background-color: color-mix(
+    in srgb,
+    var(--md-sys-color-on-surface) 8%,
+    transparent
+  );
+}
+
+.nav-section summary petal-icon {
+  --md-icon-size: 20px;
+  transition: rotate var(--catalog-spring-fast-duration)
+    var(--catalog-spring-fast);
+}
+
+.nav-section[open] summary petal-icon {
+  rotate: 180deg;
 }
 
 @media (forced-colors: active) {
-  nav-drawer petal-list.nav petal-list-item[href][selected] {
+  nav.nav petal-list-item[selected] {
     border: 4px double CanvasText;
   }
 
-  nav-drawer petal-list.nav petal-list-item[href] {
-    border-radius: var(--catalog-shape-xl);
+  nav.nav petal-list-item {
     border: 1px solid CanvasText;
   }
 }
 
-nav-drawer petal-list.nav {
-  --md-list-container-color: transparent;
-  display: block;
-  margin-inline: var(--catalog-spacing-m);
-  min-width: unset;
-}
-
-nav-drawer petal-list.nav petal-list-item[href] {
-  margin-block: var(--catalog-spacing-m);
-  display: block;
-  --md-focus-ring-shape: var(--catalog-shape-xl);
-  border-radius: var(--catalog-shape-xl);
-}
-
-nav-drawer petal-list.nav petal-item [slot="headline"] {
-  /* shadow root slot has overflow:hidden, it's cutting some text off */
-  padding-block: 2px;
-}
-
-nav-drawer petal-list.nav petal-item:first-of-type {
-  padding-block: 0;
-}
-
-nav-drawer petal-list.nav petal-item {
-  font-size: var(--catalog-headline-s-font-size);
-  padding-block-end: 0;
-}
-
-nav-drawer petal-list.nav petal-item + petal-list-item[href] {
-  margin-block-start: 0;
-}
-
-h1 {
-  font-size: var(--catalog-display-xl-font-size);
-}
+/* The table of contents. */
 
 .toc ol {
   list-style-type: none;
@@ -132,10 +216,18 @@ h1 {
 }
 
 .toc > ol ol {
-  list-style-type: circle;
-  padding-inline-start: var(--catalog-spacing-xl);
+  list-style-type: none;
+  padding-inline-start: var(--catalog-spacing-l);
 }
 
 .toc ol li {
   margin-block: var(--catalog-spacing-m);
+}
+
+.toc a {
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.toc a:hover {
+  color: var(--md-sys-color-primary);
 }

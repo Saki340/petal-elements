@@ -40,6 +40,18 @@ let people select a date or a range of dates.
 This follows Jetpack Compose Material 3 (`DatePicker`, `DatePickerDialog`,
 `DateInput`, `DateRangePicker`, `DatePickerModalTokens`).
 
+<!-- catalog-only-start -->
+
+<!--
+
+## Interactive Demo
+
+{% playgroundexample dirname=dirname %}
+
+-->
+
+<!-- catalog-only-end -->
+
 ## Usage
 
 `petal-date-picker` is the calendar with its header. Its `value` is an ISO

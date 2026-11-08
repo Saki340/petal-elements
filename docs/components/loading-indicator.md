@@ -1,6 +1,6 @@
 <!-- catalog-only-start --><!-- ---
 name: Loading indicator
-dirname: loading-indicator
+dirname: loadingindicator
 -----><!-- catalog-only-end -->
 
 <catalog-component-header>
@@ -43,6 +43,18 @@ This follows Jetpack Compose Material 3 (`LoadingIndicator`,
 morphing are a TypeScript port of Android's graphics-shapes library
 (`RoundedPolygon`, `Morph`) and Compose's `MaterialShapes`, so they match
 Compose exactly.
+
+<!-- catalog-only-start -->
+
+<!--
+
+## Interactive Demo
+
+{% playgroundexample dirname=dirname %}
+
+-->
+
+<!-- catalog-only-end -->
 
 ## Usage
 

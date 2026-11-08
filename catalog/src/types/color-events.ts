@@ -18,8 +18,13 @@ export interface Theme {
 export class ChangeColorEvent extends Event {
   /**
    * @param color The new source color to apply.
+   * @param origin Where the theme transition grows from. Without one the
+   *     theme changes at once, for colors that change while dragging.
    */
-  constructor(public color: string) {
+  constructor(
+    public color: string,
+    public origin?: Event | Element,
+  ) {
     super('change-color', {bubbles: true, composed: true});
   }
 }
@@ -31,8 +36,12 @@ export class ChangeColorEvent extends Event {
 export class ChangeDarkModeEvent extends Event {
   /**
    * @param mode The new color mode to apply.
+   * @param origin Where the theme transition grows from.
    */
-  constructor(public mode: 'light' | 'dark' | 'auto') {
+  constructor(
+    public mode: 'light' | 'dark' | 'auto',
+    public origin?: Event | Element,
+  ) {
     super('change-mode', {bubbles: true, composed: true});
   }
 }

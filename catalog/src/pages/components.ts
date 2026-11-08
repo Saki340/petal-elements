@@ -5,12 +5,10 @@
  * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
-import 'petal-elements/iconbutton/outlined-icon-button.js';
-
-import {PetalOutlinedIconButton} from 'petal-elements/iconbutton/outlined-icon-button.js';
 import type {PlaygroundPreview} from 'playground-elements/playground-preview.js';
 import {PostDoc} from 'postdoc-lib';
 
+import {PAGE_CHANGE} from '../utils/router.js';
 import {getCurrentThemeString} from '../utils/theme.js';
 
 /**
@@ -32,11 +30,24 @@ async function updateMessageTargetOnIframeLoad(
   });
 }
 
+// Stops the listeners of the playground of the previous page.
+let teardown: AbortController | undefined;
+
 /**
  * Synchronizes the playground's theme with the material theme applied to the
  * current page every time the playground reloads.
  */
 async function syncPlaygroundThemeWithPage() {
+  teardown?.abort();
+  const controller = new AbortController();
+  teardown = controller;
+
+  const previewEl = document.querySelector('playground-preview');
+
+  if (!previewEl) {
+    return;
+  }
+
   async function onPlaygroundMessage(e: MessageEvent) {
     // if the playground is requesting a new theme, send it the current one
     // from localStorage
@@ -52,54 +63,20 @@ async function syncPlaygroundThemeWithPage() {
     onMessage: onPlaygroundMessage,
   });
 
-  const previewEl = document.querySelector('playground-preview');
-
-  if (!previewEl) {
-    return;
-  }
-
   await customElements.whenDefined('playground-preview');
   await updateMessageTargetOnIframeLoad(postdoc, previewEl);
   await postdoc.handshake;
 
   // Whenever the theme changes, send it to the playground iframe.
-  window.addEventListener('theme-changed', async () => {
-    await postdoc.handshake;
-    postdoc.postMessage(localStorage.getItem('material-theme'));
-  });
+  window.addEventListener(
+    'theme-changed',
+    async () => {
+      await postdoc.handshake;
+      postdoc.postMessage(getCurrentThemeString());
+    },
+    {signal: controller.signal},
+  );
 }
 
-/**
- * Synchronizes the state of the native <details> for the demo dropdown with the
- * slotted <petal-outlined-icon-button>. Also deals with some quicks of buttons in
- * <summary> elements
- */
-function demoDropdown() {
-  const detailsEl = document.querySelector('details');
-
-  // tslint:disable:no-unnecessary-type-assertion TSC externally seems to differ
-  // from internal here and needs these type assertions
-  const expandButton = detailsEl?.querySelector(
-    'summary petal-outlined-icon-button',
-  ) as PetalOutlinedIconButton;
-  // tslint:enable:no-unnecessary-type-assertion
-
-  // Synchronize details open state with toggle button
-  detailsEl?.addEventListener('toggle', () => {
-    expandButton!.selected = detailsEl.open;
-  });
-
-  // Toggles the details element because buttons "eat up" the <summary> click
-  // except on Safari. So we have to setTimeout to check if the details element
-  // has updated.
-  expandButton?.addEventListener('click', () => {
-    setTimeout(() => {
-      if (detailsEl?.open !== expandButton.selected) {
-        detailsEl!.toggleAttribute('open');
-      }
-    });
-  });
-}
-
-syncPlaygroundThemeWithPage();
-demoDropdown();
+window.addEventListener(PAGE_CHANGE, () => void syncPlaygroundThemeWithPage());
+void syncPlaygroundThemeWithPage();

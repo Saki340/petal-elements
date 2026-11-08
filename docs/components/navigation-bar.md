@@ -42,6 +42,18 @@ This is the Material 3 Expressive "short" navigation bar. The values follow
 Jetpack Compose Material 3 (`ShortNavigationBar`, `ShortNavigationBarItem`,
 `NavigationBarTokens`).
 
+<!-- catalog-only-start -->
+
+<!--
+
+## Interactive Demo
+
+{% playgroundexample dirname=dirname %}
+
+-->
+
+<!-- catalog-only-end -->
+
 ## Usage
 
 Put `petal-navigation-bar-item` elements in a `petal-navigation-bar`. The

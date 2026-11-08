@@ -41,6 +41,18 @@ The values and the motion follow Jetpack Compose Material 3
 (`SplitButtonLayout`, `SplitButtonDefaults`, `SplitButtonXSmallTokens` to
 `SplitButtonXLargeTokens`).
 
+<!-- catalog-only-start -->
+
+<!--
+
+## Interactive Demo
+
+{% playgroundexample dirname=dirname %}
+
+-->
+
+<!-- catalog-only-end -->
+
 ## Usage
 
 `<petal-split-button>` has a leading button for the main action and a trailing

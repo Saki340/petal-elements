@@ -1,6 +1,6 @@
 <!-- catalog-only-start --><!-- ---
 name: Top app bar
-dirname: top-app-bar
+dirname: appbar-top
 -----><!-- catalog-only-end -->
 
 <catalog-component-header>
@@ -40,6 +40,18 @@ show the title of a screen with navigation and actions at the top of the page.
 The values follow Jetpack Compose Material 3 (`AppBarTokens`,
 `AppBarSmallTokens`, `AppBarMediumFlexibleTokens`,
 `AppBarLargeFlexibleTokens`, and the layout in `AppBar.kt`).
+
+<!-- catalog-only-start -->
+
+<!--
+
+## Interactive Demo
+
+{% playgroundexample dirname=dirname %}
+
+-->
+
+<!-- catalog-only-end -->
 
 ## Usage
 

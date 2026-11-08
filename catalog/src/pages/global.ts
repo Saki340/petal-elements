@@ -13,6 +13,14 @@
  */
 
 import {
+  expressiveSprings,
+  springEasing,
+} from 'petal-elements/motion/spring.js';
+import {transitionTheme} from 'petal-elements/theme/theme-transition.js';
+
+import type {SiteSearch} from '../components/site-search.js';
+import {startRouter} from '../utils/router.js';
+import {
   changeColor,
   changeColorAndMode,
   changeColorMode,
@@ -29,11 +37,19 @@ import {
  */
 function applyColorThemeListeners() {
   document.body.addEventListener('change-color', (event) => {
-    changeColor(event.color);
+    if (event.origin) {
+      void transitionTheme(() => {
+        changeColor(event.color);
+      }, event.origin);
+    } else {
+      changeColor(event.color);
+    }
   });
 
   document.body.addEventListener('change-mode', (event) => {
-    changeColorMode(event.mode);
+    void transitionTheme(() => {
+      changeColorMode(event.mode);
+    }, event.origin);
   });
 
   // Listen for system color change and applies the new theme if the current
@@ -50,15 +66,53 @@ function applyColorThemeListeners() {
 }
 
 /**
- * Sets color and mode to '#81ea6c' and 'auto' respectively if there is no
- * material theme saved to localStorage. This is the case in initial navigation
- * to the catalog.
+ * Sets color and mode to the petal amber and 'auto' respectively if there is
+ * no material theme saved to localStorage. This is the case in initial
+ * navigation to the catalog.
  */
 function initializeTheme() {
   if (!getCurrentThemeString()) {
-    // Generates a primary color close to GM3 baseline primary color.
     changeColorAndMode('#ECAA2E', 'auto');
   }
+}
+
+/**
+ * Gives the CSS of the catalog the springs of the components, as `linear()`
+ * easings (see global.css).
+ */
+function applySprings() {
+  const root = document.documentElement.style;
+  const set = (name: string, spring: {dampingRatio: number; stiffness: number}) => {
+    const {easing, duration} = springEasing(spring);
+    root.setProperty(`--catalog-${name}`, easing);
+    root.setProperty(`--catalog-${name}-duration`, `${duration}ms`);
+  };
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  set('spring', expressiveSprings.defaultSpatial);
+  set('spring-fast', expressiveSprings.fastSpatial);
+  set('effects', expressiveSprings.defaultEffects);
+}
+
+/**
+ * Opens the search palette from the top app bar and with Ctrl/⌘ K. The palette
+ * is only loaded when it is first used.
+ */
+function applySearchListeners() {
+  let search: SiteSearch | undefined;
+  const open = async () => {
+    await import('../components/site-search.js');
+    search ??= document.body.appendChild(document.createElement('site-search'));
+    await search.updateComplete;
+    await search.open();
+  };
+
+  document.body.addEventListener('open-site-search', () => void open());
+  document.addEventListener('keydown', (event) => {
+    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
+      event.preventDefault();
+      void open();
+    }
+  });
 }
 
 /**
@@ -88,3 +142,6 @@ function determinePageNavigationAutoMode() {
 applyColorThemeListeners();
 initializeTheme();
 determinePageNavigationAutoMode();
+applySprings();
+applySearchListeners();
+startRouter();

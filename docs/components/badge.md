@@ -40,6 +40,18 @@ show notifications, counts or status on navigation items and icons.
 This follows Jetpack Compose Material 3 (`Badge`, `BadgedBox`,
 `BadgeTokens`).
 
+<!-- catalog-only-start -->
+
+<!--
+
+## Interactive Demo
+
+{% playgroundexample dirname=dirname %}
+
+-->
+
+<!-- catalog-only-end -->
+
 ## Usage
 
 Without `value`, a badge is a small dot that says there is something new. With

@@ -54,9 +54,8 @@ export class CatalogComponentHeader extends LitElement {
     }
 
     .image {
-      /* Color needs to differ from top-app-bar and sidebar */
-      background-color: var(--md-sys-color-surface-variant);
-      border-radius: var(--catalog-image-border-radius);
+      background-color: var(--md-sys-color-primary-container);
+      border-radius: var(--catalog-shape-2xl);
       overflow: hidden;
       margin-block-start: 16px;
       aspect-ratio: 3 / 2;
@@ -70,7 +69,7 @@ export class CatalogComponentHeader extends LitElement {
     }
 
     .image::slotted(*) {
-      --catalog-image-border-radius: 0px;
+      --catalog-image-border-radius: var(--catalog-shape-xl);
       --catalog-header-image-height: 100%;
       --catalog-header-image-width: auto;
       display: flex;
@@ -81,8 +80,8 @@ export class CatalogComponentHeader extends LitElement {
     @container (width > 1000px) {
       div {
         display: grid;
-        grid-gap: 8px;
-        gap: 8px;
+        gap: 32px;
+        align-items: center;
         grid-template-columns: repeat(2, 1fr);
         grid-auto-flow: row;
       }

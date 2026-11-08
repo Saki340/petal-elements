@@ -1,34 +1,112 @@
 {% extends 'default.html' %}
 
 {% block head %}
-  <script type="module" src="/js/pages/home-page.js"></script>
   <link rel="stylesheet" href="/css/home-page.css">
 {% endblock %}
 
 {% block content %}
+<lit-island on:idle import="/js/hydration-entrypoints/home.js" class="home">
+  <section class="hero">
+    <div class="hero-copy">
+      <p class="eyebrow">Material 3 Expressive for the web</p>
+      <h1>petal<br>elements</h1>
+      <p class="lede">
+        Web components with the shapes, sizes and springs of Jetpack Compose.
+        They work with any framework, or none.
+      </p>
+      <div class="hero-actions">
+        <petal-filled-button size="large" href="/components/">Browse components</petal-filled-button>
+        <petal-filled-tonal-button size="large" href="/about/quick-start/">Quick start</petal-filled-tonal-button>
+      </div>
+      <copy-code-button class="install" label="Copy the install command" button-title="Copy"><pre><code>npm i petal-elements</code></pre></copy-code-button>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <petal-shape class="a" shape="flower" hover-shape="cookie-12-sided" pressed-shape="burst"></petal-shape>
+      <petal-shape class="b" shape="cookie-9-sided" hover-shape="sunny" pressed-shape="gem"></petal-shape>
+      <petal-shape class="c" shape="arch" hover-shape="heart" pressed-shape="circle"></petal-shape>
+      <petal-shape class="d" shape="sunny" hover-shape="puffy" pressed-shape="pentagon"></petal-shape>
+    </div>
+  </section>
 
-<h1>petal-elements</h1>
-<div class="subtitle">
-  <p>
-    <code>petal-elements</code> is a library of Material 3
-    <a href="https://developer.mozilla.org/en-US/docs/Web/Web_Components" target="_blank">web components</a>,
-    with the Material 3 Expressive additions: button sizes, shape morphing,
-    spring motion and button groups.
-  </p>
+  <section class="bento" aria-label="Live components">
+    <div class="tile wide primary">
+      <h2>Button groups share their spring</h2>
+      <petal-button-group connected single-select>
+        <petal-filled-tonal-button toggle>Day</petal-filled-tonal-button>
+        <petal-filled-tonal-button toggle selected>Week</petal-filled-tonal-button>
+        <petal-filled-tonal-button toggle>Month</petal-filled-tonal-button>
+      </petal-button-group>
+    </div>
+    <div class="tile tertiary center">
+      <petal-loading-indicator contained aria-label="Loading"></petal-loading-indicator>
+    </div>
+    <div class="tile secondary">
+      <h2>Controls</h2>
+      <petal-slider value="64" aria-label="Volume"></petal-slider>
+      <div class="row">
+        <petal-switch selected aria-label="Wi-Fi"></petal-switch>
+        <petal-checkbox checked aria-label="Sync"></petal-checkbox>
+        <petal-radio checked aria-label="Option"></petal-radio>
+      </div>
+    </div>
+    <div class="tile surface center">
+      <petal-shape class="tile-shape" shape="circle" hover-shape="cookie-9-sided" pressed-shape="sunny" aria-hidden="true">
+        <petal-icon>favorite</petal-icon>
+      </petal-shape>
+    </div>
+    <div class="tile wide surface">
+      <h2>Five button sizes</h2>
+      <div class="row end">
+        <petal-filled-button size="xsmall">XS</petal-filled-button>
+        <petal-filled-button size="small">Small</petal-filled-button>
+        <petal-filled-button size="medium">Medium</petal-filled-button>
+        <petal-filled-button size="large">Large</petal-filled-button>
+      </div>
+    </div>
+  </section>
 
-  <p>
+  <section class="features">
+    <h2>What makes it petal</h2>
+    <div class="feature-grid">
+      <a class="feature" href="/about/motion/">
+        <petal-shape shape="cookie-12-sided" aria-hidden="true"></petal-shape>
+        <h3>Springs</h3>
+        <p>The motion scheme of Compose, public for your own animations.</p>
+      </a>
+      <a class="feature" href="/components/shape/">
+        <petal-shape shape="flower" aria-hidden="true"></petal-shape>
+        <h3>Shapes</h3>
+        <p>35 Material shapes that morph on a spring.</p>
+      </a>
+      <a class="feature" href="/about/motion/">
+        <petal-shape shape="arrow" aria-hidden="true"></petal-shape>
+        <h3>Page transitions</h3>
+        <p>View Transitions on the same springs. This site uses them.</p>
+      </a>
+      <a class="feature" href="/about/expressive/">
+        <petal-shape shape="sunny" aria-hidden="true"></petal-shape>
+        <h3>Expressive</h3>
+        <p>Everything Material 3 Expressive adds, and how to use it.</p>
+      </a>
+    </div>
+  </section>
+
+  <section class="browse">
+    <h2>Browse by purpose</h2>
+    <div class="browse-grid">
+      {% for group in collections.componentGroups %}
+        <a class="browse-card" href="/components/#{{ group.id }}">
+          <span class="browse-name">{{ group.name }}</span>
+          <span class="browse-count">{{ group.pages.length }}</span>
+        </a>
+      {% endfor %}
+    </div>
+  </section>
+
+  <p class="fineprint">
     A community-maintained continuation of
-    <a href="https://github.com/material-components/material-web" target="_blank">material-web</a>.
+    <a href="https://github.com/material-components/material-web" target="_blank" rel="noopener">material-web</a>.
     Not an official Google project and not affiliated with Google.
   </p>
-
-  <p>
-    <a href="https://petal.anontokyo.vip/">Website</a> ·
-    <a href="/about/quick-start/">Quick start</a> ·
-    <a href="/about/expressive/">Expressive features</a> ·
-    <a href="/components/button/">Components</a> ·
-    <a href="https://github.com/Saki340/petal-elements" target="_blank">GitHub</a>
-  </p>
-</div>
-
+</lit-island>
 {% endblock %}

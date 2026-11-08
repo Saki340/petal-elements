@@ -5,8 +5,6 @@
  * Modified for petal-elements; modifications Copyright 2026 Saki. See NOTICE.
  */
 
-import {animate, fadeIn, fadeOut} from '@lit-labs/motion';
-import {EASING} from 'petal-elements/internal/motion/animation.js';
 import {LitElement, PropertyValues, css, html, nothing} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
 
@@ -41,52 +39,15 @@ export class NavDrawer extends SignalElement(LitElement) {
   render() {
     const showModal = this.isCollapsible && drawerOpenSignal.value;
 
-    // Values taken from internal material motion spec
-    const drawerSlideAnimationDuration = showModal ? 500 : 150;
-    const drawerContentOpacityDuration = showModal ? 300 : 150;
-    const scrimOpacityDuration = 150;
-
-    const drawerSlideAnimationEasing = showModal
-      ? EASING.EMPHASIZED
-      : EASING.EMPHASIZED_ACCELERATE;
-
     return html`
       <div class="root">
         <slot name="top-app-bar"></slot>
         <div class="body  ${drawerOpenSignal.value ? 'open' : ''}">
           <div class="spacer" ?inert=${inertSidebarSignal.value}>
-            ${showModal
-              ? html`<div
-                  class="scrim"
-                  @click=${this.onScrimClick}
-                  ${animate({
-                    properties: ['opacity'],
-                    keyframeOptions: {
-                      duration: scrimOpacityDuration,
-                      easing: 'linear',
-                    },
-                    in: fadeIn,
-                    out: fadeOut,
-                  })}></div>`
-              : nothing}
-            <aside
-              ?inert=${this.isCollapsible && !drawerOpenSignal.value}
-              ${animate({
-                properties: ['transform'],
-                keyframeOptions: {
-                  duration: drawerSlideAnimationDuration,
-                  easing: drawerSlideAnimationEasing,
-                },
-              })}>
+            <div class="scrim" @click=${this.onScrimClick}></div>
+            <aside ?inert=${this.isCollapsible && !drawerOpenSignal.value}>
               <div class="scroll-wrapper">
-                <slot
-                  ${animate({
-                    properties: ['opacity'],
-                    keyframeOptions: {
-                      duration: drawerContentOpacityDuration,
-                      easing: 'linear',
-                    },
-                  })}></slot>
+                <slot></slot>
               </div>
             </aside>
           </div>
@@ -127,6 +88,17 @@ export class NavDrawer extends SignalElement(LitElement) {
   }
 
   /**
+   * Scrolls the page content back to the top, after a navigation.
+   */
+  scrollContentToTop() {
+    for (const scroller of this.renderRoot.querySelectorAll(
+      '.pane, .pane .scroll-wrapper',
+    )) {
+      scroller.scrollTop = 0;
+    }
+  }
+
+  /**
    * Closes the drawer on scrim click.
    */
   private onScrimClick() {
@@ -134,7 +106,7 @@ export class NavDrawer extends SignalElement(LitElement) {
   }
 
   firstUpdated() {
-    const queryResult = window.matchMedia('(max-width: 1500px)');
+    const queryResult = window.matchMedia('(max-width: 1200px)');
     this.isCollapsible = queryResult.matches;
 
     // Listen for page resizes to mark the drawer as collapsible.
@@ -151,9 +123,8 @@ export class NavDrawer extends SignalElement(LitElement) {
       this.isCollapsible
     ) {
       (
-        this.querySelector(
-          'petal-list.nav petal-list-item[tabindex="0"]',
-        ) as HTMLElement
+        (this.querySelector('nav.nav petal-list-item[selected]') ??
+          this.querySelector('nav.nav petal-list-item')) as HTMLElement
       )?.focus();
     }
   }
@@ -182,7 +153,7 @@ export class NavDrawer extends SignalElement(LitElement) {
 
     .spacer {
       position: relative;
-      transition: min-width 0.5s cubic-bezier(0.3, 0, 0, 1);
+      transition: min-width var(--catalog-spring-duration) var(--catalog-spring);
     }
 
     .spacer,
@@ -201,13 +172,12 @@ export class NavDrawer extends SignalElement(LitElement) {
           var(--_pane-margin-block-end)
       );
       background-color: var(--md-sys-color-surface);
-      border-radius: var(--catalog-shape-xl);
+      border-radius: var(--catalog-shape-2xl);
     }
 
     .pane,
     .panes {
-      /* emphasized – duration matching render fn for sidebar */
-      transition: 0.5s cubic-bezier(0.3, 0, 0, 1);
+      transition: var(--catalog-spring-duration) var(--catalog-spring);
       transition-property: margin, height, border-radius, max-width, width;
     }
 
@@ -265,7 +235,7 @@ export class NavDrawer extends SignalElement(LitElement) {
     }
 
     aside {
-      transition: transform 0.5s cubic-bezier(0.3, 0, 0, 1);
+      transition: transform var(--catalog-spring-duration) var(--catalog-spring);
       position: fixed;
       isolation: isolate;
       inset: var(--catalog-top-app-bar-height) 0 0 0;
@@ -290,7 +260,11 @@ export class NavDrawer extends SignalElement(LitElement) {
     }
 
     .scrim {
+      display: none;
       background-color: rgba(0, 0, 0, 0.32);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--catalog-effects-duration) var(--catalog-effects);
     }
 
     @media (max-width: 900px) {
@@ -299,7 +273,7 @@ export class NavDrawer extends SignalElement(LitElement) {
       }
     }
 
-    @media (max-width: 1500px) {
+    @media (max-width: 1200px) {
       .spacer {
         min-width: 0px;
       }
@@ -317,14 +291,19 @@ export class NavDrawer extends SignalElement(LitElement) {
       }
 
       .scrim {
+        display: block;
         position: fixed;
         inset: 0;
+        z-index: 11;
       }
 
       aside {
-        transition: unset;
         transform: translateX(-100%);
         border-radius: 0 var(--catalog-shape-xl) var(--catalog-shape-xl) 0;
+        visibility: hidden;
+        transition:
+          transform var(--catalog-spring-duration) var(--catalog-spring),
+          visibility 0s var(--catalog-spring-duration);
       }
 
       :host {
@@ -333,19 +312,13 @@ export class NavDrawer extends SignalElement(LitElement) {
 
       .open aside {
         transform: translateX(0);
-      }
-
-      aside slot {
-        opacity: 0;
-      }
-
-      .open aside slot {
-        opacity: 1;
+        visibility: visible;
+        transition: transform var(--catalog-spring-duration) var(--catalog-spring);
       }
 
       .open .scrim {
-        inset: 0;
-        z-index: 11;
+        opacity: 1;
+        pointer-events: auto;
       }
     }
 
@@ -401,7 +374,7 @@ export class NavDrawer extends SignalElement(LitElement) {
         border: 1px solid CanvasText;
       }
 
-      @media (max-width: 1500px) {
+      @media (max-width: 1200px) {
         aside {
           box-sizing: border-box;
           border: 1px solid CanvasText;

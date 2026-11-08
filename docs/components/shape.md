@@ -1,6 +1,6 @@
 <!-- catalog-only-start --><!-- ---
 name: Shape
-dirname: shape
+dirname: shapes
 -----><!-- catalog-only-end -->
 
 <catalog-component-header>
@@ -45,6 +45,18 @@ This follows Jetpack Compose Material 3 (`MaterialShapes`,
 of Android's graphics-shapes library (`RoundedPolygon`, `Morph`) with the
 values of Compose's `MaterialShapes`, the same code the
 [loading indicator](loading-indicator.md) morphs with.
+
+<!-- catalog-only-start -->
+
+<!--
+
+## Interactive Demo
+
+{% playgroundexample dirname=dirname %}
+
+-->
+
+<!-- catalog-only-end -->
 
 ## Usage
 

@@ -37,6 +37,18 @@ open a list of options and show the selected option in a field.
 *   [Source code](https://github.com/Saki340/petal-elements/tree/main/select)
     <!-- {.external} -->
 
+<!-- catalog-only-start -->
+
+<!--
+
+## Interactive Demo
+
+{% playgroundexample dirname=dirname %}
+
+-->
+
+<!-- catalog-only-end -->
+
 ## Usage
 
 Select (also referred to as a dropdown menu) allows choosing a value from a

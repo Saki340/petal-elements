@@ -1,3 +1,8 @@
+<!-- catalog-only-start --><!-- ---
+name: Icon
+dirname: icon
+-----><!-- catalog-only-end -->
+
 # Icon
 
 <!-- [TOC] -->
@@ -12,6 +17,18 @@ font in three styles with adjustable weight, fill, grade and optical size.
 *   [API Documentation](#api)
 *   [Source code](https://github.com/Saki340/petal-elements/tree/main/icon)
     <!-- {.external} -->
+
+<!-- catalog-only-start -->
+
+<!--
+
+## Interactive Demo
+
+{% playgroundexample dirname=dirname %}
+
+-->
+
+<!-- catalog-only-end -->
 
 ## Usage
 

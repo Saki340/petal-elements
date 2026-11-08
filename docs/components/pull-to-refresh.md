@@ -1,6 +1,6 @@
 <!-- catalog-only-start --><!-- ---
 name: Pull to refresh
-dirname: pull-to-refresh
+dirname: pulltorefresh
 -----><!-- catalog-only-end -->
 
 <catalog-component-header>
@@ -38,6 +38,18 @@ while refreshing.
     <!-- {.external} -->
 
 This component is petal-elements' own and is not part of Material 3.
+
+<!-- catalog-only-start -->
+
+<!--
+
+## Interactive Demo
+
+{% playgroundexample dirname=dirname %}
+
+-->
+
+<!-- catalog-only-end -->
 
 ## Usage
 

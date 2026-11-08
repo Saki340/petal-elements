@@ -40,6 +40,18 @@ briefly describe an element, such as the action of an icon button.
 The values follow Jetpack Compose Material 3 (`PlainTooltipTokens`,
 `PlainTooltip`).
 
+<!-- catalog-only-start -->
+
+<!--
+
+## Interactive Demo
+
+{% playgroundexample dirname=dirname %}
+
+-->
+
+<!-- catalog-only-end -->
+
 ## Usage
 
 Give the anchor an id and point the tooltip at it with `for`. The tooltip shows

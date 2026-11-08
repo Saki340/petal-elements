@@ -1,0 +1,39 @@
+---
+permalink: /components/
+name: All components
+description: Every petal-elements component, grouped by what it does.
+---
+{% extends 'default.html' %}
+
+{% block head %}
+  <link rel="stylesheet" href="/css/components-index.css" />
+{% endblock %}
+
+{% block content %}
+<lit-island on:idle import="/js/hydration-entrypoints/components-index.js" class="index">
+  <header class="index-head">
+    <h1>Components</h1>
+    <p>{{ collections.component.length }} components, on the numbers and springs of Jetpack Compose Material 3.</p>
+  </header>
+
+  {% for group in collections.componentGroups %}
+    <section class="group tint-{{ group.tint }}" id="{{ group.id }}" aria-labelledby="group-{{ group.id }}">
+      <div class="group-head">
+        <petal-shape shape="{{ group.shape }}" aria-hidden="true"></petal-shape>
+        <div>
+          <h2 id="group-{{ group.id }}">{{ group.name }}</h2>
+          <p>{{ group.blurb }}</p>
+        </div>
+      </div>
+      <div class="cards">
+        {% for file in group.pages %}
+          <a class="card" href="{{ file.url }}" data-slug="{{ file.fileSlug }}">
+            <div class="thumb" aria-hidden="true" inert>{{ thumbs[file.fileSlug] | safe }}</div>
+            <span class="card-name">{{ file.data.name }}</span>
+          </a>
+        {% endfor %}
+      </div>
+    </section>
+  {% endfor %}
+</lit-island>
+{% endblock %}

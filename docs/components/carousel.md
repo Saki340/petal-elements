@@ -42,6 +42,18 @@ This follows Jetpack Compose Material 3 (`HorizontalMultiBrowseCarousel`,
 `CarouselDefaults`, and the keylines, arrangements and snapping of the
 carousel package).
 
+<!-- catalog-only-start -->
+
+<!--
+
+## Interactive Demo
+
+{% playgroundexample dirname=dirname %}
+
+-->
+
+<!-- catalog-only-end -->
+
 ## Usage
 
 The children of `petal-carousel` are its items. Give the carousel a width and

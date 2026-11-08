@@ -7,14 +7,11 @@
       name="viewport"
       content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes"
     />
-    {% if isComponent %}
-      {% set pageTitle = title or name %}
-    {% else %}
-      {% set pageTitle = title %}
-    {% endif %}
+    {% set pageTitle = title or name %}
     <!-- Use the 11ty data system to set the title -->
     <title>petal-elements{% if pageTitle %} - {{ pageTitle }}{% endif %}</title>
     <meta name="description" content="{{ description or 'petal-elements: Material 3 Expressive web components that work with any framework.' }}">
+    <meta name="catalog-base" content="{{ base }}">
     <link rel="canonical" href="https://petal.anontokyo.vip/catalog{{ page.url }}">
     <!-- Set the color of the url bar on mobile to match theme -->
     <meta name="theme-color" content="#251f16" />
@@ -31,6 +28,11 @@
     <noscript>
       <link rel="stylesheet" href="/css/no-js.css" />
     </noscript>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght@8..144,100..125,300..900&display=swap"
+    />
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&display=swap"
@@ -67,49 +69,48 @@
 
         <main id="main-content" slot="app-content" tabindex="0">
           <!-- this is the content of the page -->
-          <!-- unrelated change to components -->
           {% block content %}{{ content | mdMarkdown | safe }}{% endblock %}
         </main>
-        <petal-list
-            aria-label="List of pages and components"
-            role="menubar"
-            class="nav">
-          <!-- About section -->
-          <petal-item><div slot="headline">About</div></petal-item>
-          {% for file in collections.about|filtersort('data.order') %}
-            <petal-list-item
-              href="{{ file.url }}"
-              role="menuitem"
-              {% if file.url == page.url %}selected{% endif %}
-              type="link"
-              tabindex="{% if file.url == page.url %}0{% else %}-1{% endif %}"
-            >{{ file.data.name }}</petal-list-item>
+
+        <nav class="nav" aria-label="Pages and components">
+          <petal-list aria-label="Start">
+            <petal-list-item href="/" type="link" {% if page.url == '/' %}selected{% endif %}>
+              <petal-icon slot="start" aria-hidden="true">home</petal-icon>
+              Home
+            </petal-list-item>
+            <petal-list-item href="/components/" type="link" {% if page.url == '/components/' %}selected{% endif %}>
+              <petal-icon slot="start" aria-hidden="true">apps</petal-icon>
+              All components
+            </petal-list-item>
+          </petal-list>
+
+          <details class="nav-section" {% if '/about/' in page.url %}open{% endif %}>
+            <summary>Guides<petal-icon aria-hidden="true">expand_more</petal-icon></summary>
+            <petal-list aria-label="Guides">
+              {% for file in collections.about|filtersort('data.order') %}
+                <petal-list-item href="{{ file.url }}" type="link" {% if file.url == page.url %}selected{% endif %}>{{ file.data.name }}</petal-list-item>
+              {% endfor %}
+            </petal-list>
+          </details>
+
+          <details class="nav-section" {% if '/theming/' in page.url %}open{% endif %}>
+            <summary>Theming<petal-icon aria-hidden="true">expand_more</petal-icon></summary>
+            <petal-list aria-label="Theming">
+              {% for file in collections.theming|filtersort('data.order') %}
+                <petal-list-item href="{{ file.url }}" type="link" {% if file.url == page.url %}selected{% endif %}>{{ file.data.name }}</petal-list-item>
+              {% endfor %}
+            </petal-list>
+          </details>
+
+          {% for group in collections.componentGroups %}
+            <h2 class="nav-label">{{ group.name }}</h2>
+            <petal-list aria-label="{{ group.name }}">
+              {% for file in group.pages %}
+                <petal-list-item href="{{ file.url }}" type="link" {% if file.url == page.url %}selected{% endif %}>{{ file.data.name }}</petal-list-item>
+              {% endfor %}
+            </petal-list>
           {% endfor %}
-          <petal-divider role="separator"></petal-divider>
-          <!-- Theming section -->
-          <petal-item><div slot="headline">Theming</div></petal-item>
-          {% for file in collections.theming|filtersort('data.order') %}
-            <petal-list-item
-              href="{{ file.url }}"
-              type="menuitem"
-              {% if file.url == page.url %}selected{% endif %}
-              type="link"
-              tabindex="{% if file.url == page.url %}0{% else %}-1{% endif %}"
-            >{{ file.data.name }}</petal-list-item>
-          {% endfor %}
-          <petal-divider role="separator"></petal-divider>
-          <!-- Components section -->
-          <petal-item><div slot="headline">Components</div></petal-item>
-          {% for file in collections.component|filtersort('data.name') %}
-            <petal-list-item
-              href="{{ file.url }}"
-              role="menuitem"
-              {% if file.url == page.url %}selected{% endif %}
-              type="link"
-              tabindex="{% if file.url == page.url %}0{% else %}-1{% endif %}"
-            >{{ file.data.name }}</petal-list-item>
-          {% endfor %}
-        </petal-list>
+        </nav>
       </nav-drawer>
     </lit-island>
   </body>

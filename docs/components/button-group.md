@@ -1,6 +1,6 @@
 <!-- catalog-only-start --><!-- ---
 name: Button group
-dirname: button-group
+dirname: buttongroup
 -----><!-- catalog-only-end -->
 
 <catalog-component-header>
@@ -35,6 +35,18 @@ arrange related buttons in a row. A Material 3 Expressive component.
 *   [API Documentation](#api)
 *   [Source code](https://github.com/Saki340/petal-elements/tree/main/buttongroup)
     <!-- {.external} -->
+
+<!-- catalog-only-start -->
+
+<!--
+
+## Interactive Demo
+
+{% playgroundexample dirname=dirname %}
+
+-->
+
+<!-- catalog-only-end -->
 
 ## Usage
 

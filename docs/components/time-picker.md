@@ -42,6 +42,18 @@ This follows Jetpack Compose Material 3 (`TimePicker`, `TimeInput`,
 styles (the vibrant colors and shapes, and the scroll wheel `TimeScroll`) are
 not available yet.
 
+<!-- catalog-only-start -->
+
+<!--
+
+## Interactive Demo
+
+{% playgroundexample dirname=dirname %}
+
+-->
+
+<!-- catalog-only-end -->
+
 ## Usage
 
 `petal-time-picker` shows the hour and minute, an AM and PM toggle in 12-hour

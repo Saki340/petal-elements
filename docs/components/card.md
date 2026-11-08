@@ -40,6 +40,18 @@ content and actions about one subject.
 The values follow Jetpack Compose Material 3 (`FilledCardTokens`,
 `ElevatedCardTokens`, `OutlinedCardTokens` and `CardDefaults`).
 
+<!-- catalog-only-start -->
+
+<!--
+
+## Interactive Demo
+
+{% playgroundexample dirname=dirname %}
+
+-->
+
+<!-- catalog-only-end -->
+
 ## Types
 
 There are three cards: filled, elevated and outlined. Content goes in the

@@ -68,6 +68,15 @@ export class TopAppBar extends SignalElement(LitElement) {
           </a>
 
           <section class="end">
+            <button
+              class="search"
+              type="button"
+              aria-label="Search the docs"
+              @click=${this.onSearchClick}>
+              <petal-icon aria-hidden="true">search</petal-icon>
+              <span class="search-label">Search</span>
+              <kbd>Ctrl K</kbd>
+            </button>
             <lit-island
               on:interaction="pointerenter,focusin,pointerdown"
               import="/js/hydration-entrypoints/menu.js"
@@ -114,6 +123,18 @@ export class TopAppBar extends SignalElement(LitElement) {
         <slot></slot>
       </header>
     `;
+  }
+
+  firstUpdated() {
+    if (/Mac|iPhone|iPad/.test(navigator.platform)) {
+      this.renderRoot.querySelector('kbd')!.textContent = '⌘K';
+    }
+  }
+
+  private onSearchClick() {
+    this.dispatchEvent(
+      new Event('open-site-search', {bubbles: true, composed: true}),
+    );
   }
 
   /**
@@ -191,8 +212,11 @@ export class TopAppBar extends SignalElement(LitElement) {
     }
 
     a {
-      color: var(--md-sys-color-primary);
+      color: var(--md-sys-color-on-surface);
       font-size: max(var(--catalog-title-l-font-size), 22px);
+      font-weight: 800;
+      font-stretch: 112%;
+      letter-spacing: -0.01em;
       text-decoration: none;
       padding-inline: 12px;
       position: relative;
@@ -211,7 +235,56 @@ export class TopAppBar extends SignalElement(LitElement) {
     .end {
       flex-grow: 1;
       display: flex;
+      align-items: center;
       justify-content: flex-end;
+      gap: var(--catalog-spacing-s);
+    }
+
+    .search {
+      appearance: none;
+      display: flex;
+      align-items: center;
+      gap: var(--catalog-spacing-s);
+      height: 44px;
+      width: min(260px, 26vw);
+      padding-inline: 14px;
+      border: 0;
+      border-radius: 22px;
+      background-color: var(--md-sys-color-surface-container-highest);
+      color: var(--md-sys-color-on-surface-variant);
+      font: inherit;
+      font-size: var(--catalog-body-m-font-size);
+      cursor: pointer;
+      transition: border-radius var(--catalog-spring-fast-duration)
+        var(--catalog-spring-fast);
+      --md-icon-size: 20px;
+    }
+
+    .search:hover {
+      border-radius: 12px;
+    }
+
+    .search:focus-visible {
+      outline: 2px solid var(--md-sys-color-secondary);
+    }
+
+    .search kbd {
+      margin-inline-start: auto;
+      font: inherit;
+      font-size: var(--catalog-label-s-font-size);
+      opacity: 0.8;
+    }
+
+    @media (max-width: 600px) {
+      .search {
+        width: 44px;
+        padding-inline: 12px;
+      }
+
+      .search-label,
+      .search kbd {
+        display: none;
+      }
     }
 
     #menu-island {
@@ -233,7 +306,7 @@ export class TopAppBar extends SignalElement(LitElement) {
       pointer-events: auto;
     }
 
-    @media (max-width: 1500px) {
+    @media (max-width: 1200px) {
       .start .home-button {
         display: none;
       }

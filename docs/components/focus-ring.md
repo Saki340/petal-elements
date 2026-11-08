@@ -1,3 +1,8 @@
+<!-- catalog-only-start --><!-- ---
+name: Focus ring
+dirname: focus
+-----><!-- catalog-only-end -->
+
 # Focus ring
 
 <!-- [TOC] -->
@@ -13,6 +18,18 @@ to determine when they are visible.
 *   [API Documentation](#api)
 *   [Source code](https://github.com/Saki340/petal-elements/tree/main/focus)
     <!-- {.external} -->
+
+<!-- catalog-only-start -->
+
+<!--
+
+## Interactive Demo
+
+{% playgroundexample dirname=dirname %}
+
+-->
+
+<!-- catalog-only-end -->
 
 ## Usage
 

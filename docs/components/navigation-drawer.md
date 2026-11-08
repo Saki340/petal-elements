@@ -42,6 +42,18 @@ The values and motion follow Jetpack Compose Material 3
 (`ModalNavigationDrawer`, `DismissibleNavigationDrawer`,
 `PermanentNavigationDrawer`, `NavigationDrawerItem`, `NavigationDrawerTokens`).
 
+<!-- catalog-only-start -->
+
+<!--
+
+## Interactive Demo
+
+{% playgroundexample dirname=dirname %}
+
+-->
+
+<!-- catalog-only-end -->
+
 ## Usage
 
 Put `petal-navigation-drawer-item` elements in a `petal-navigation-drawer`.

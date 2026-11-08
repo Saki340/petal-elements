@@ -1,6 +1,6 @@
 <!-- catalog-only-start --><!-- ---
 name: Bottom app bar
-dirname: bottomappbar
+dirname: appbar-bottom
 -----><!-- catalog-only-end -->
 
 <catalog-component-header>
@@ -40,6 +40,18 @@ show navigation and key actions at the bottom of the screen.
 This follows Jetpack Compose Material 3 (`BottomAppBar`,
 `FlexibleBottomAppBar`, `BottomAppBarDefaults`, `BottomAppBarTokens`,
 `DockedToolbarTokens`).
+
+<!-- catalog-only-start -->
+
+<!--
+
+## Interactive Demo
+
+{% playgroundexample dirname=dirname %}
+
+-->
+
+<!-- catalog-only-end -->
 
 ## Usage
 

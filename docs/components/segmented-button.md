@@ -44,6 +44,18 @@ This follows Jetpack Compose Material 3 (`SegmentedButton`,
 For a row of separate buttons that change shape when pressed, the Expressive
 alternative, use a connected [button group](button-group.md).
 
+<!-- catalog-only-start -->
+
+<!--
+
+## Interactive Demo
+
+{% playgroundexample dirname=dirname %}
+
+-->
+
+<!-- catalog-only-end -->
+
 ## Usage
 
 Put two to five `petal-segmented-button`s in a `petal-segmented-button-set`.

@@ -9,6 +9,7 @@ import 'petal-elements/focus/md-focus-ring.js';
 import 'petal-elements/icon/icon.js';
 import 'petal-elements/segmentedbutton/segmented-button-set.js';
 import 'petal-elements/segmentedbutton/segmented-button.js';
+import 'petal-elements/shapes/shape.js';
 import './copy-code-button.js';
 import './hct-slider.js';
 
@@ -27,6 +28,16 @@ import {
 } from '../utils/theme.js';
 
 import type {HCTSlider} from './hct-slider.js';
+
+/** The colors offered directly, each on a shape of its own. */
+const PRESETS = [
+  {name: 'Amber', color: '#ecaa2e', shape: 'flower'},
+  {name: 'Rose', color: '#d6476b', shape: 'heart'},
+  {name: 'Violet', color: '#7b5bd6', shape: 'gem'},
+  {name: 'Blue', color: '#3d7bff', shape: 'cookie-9-sided'},
+  {name: 'Teal', color: '#0b9a8d', shape: 'sunny'},
+  {name: 'Green', color: '#5aa62f', shape: 'puffy'},
+];
 
 /**
  * A small set of controls that allows the user to change the theme and preview
@@ -73,16 +84,48 @@ export class ThemeChanger extends LitElement {
   render() {
     return html`
       <div id="head-wrapper">
-        <h2> Theme Controls </h2>
+        <h2>Theme</h2>
         <copy-code-button
           button-title="Copy current theme to clipboard"
           label="Copy current theme"
           .getCopyText=${getCurrentThemeString}>
         </copy-code-button>
       </div>
-      ${this.renderHexPicker()} ${this.renderHctPicker()}
-      ${this.renderColorModePicker()}
+      ${this.renderPresets()} ${this.renderColorModePicker()}
+      <details>
+        <summary>
+          Custom color
+          <petal-icon aria-hidden="true">expand_more</petal-icon>
+        </summary>
+        ${this.renderHexPicker()} ${this.renderHctPicker()}
+      </details>
     `;
+  }
+
+  /**
+   * Renders the preset colors.
+   */
+  private renderPresets() {
+    const current = this.hexColor.toLowerCase();
+    return html`<div class="presets" role="group" aria-label="Preset colors">
+      ${PRESETS.map(
+        ({name, color, shape}) => html`
+          <button
+            type="button"
+            title=${name}
+            aria-label=${name}
+            aria-pressed=${current === color ? 'true' : 'false'}
+            @click=${(event: Event) => {
+              this.onPresetClick(color, event);
+            }}>
+            <petal-shape
+              shape=${shape}
+              hover-shape="circle"
+              style="--md-shape-color: ${color}"></petal-shape>
+          </button>
+        `,
+      )}
+    </div>`;
   }
 
   /**
@@ -164,6 +207,12 @@ export class ThemeChanger extends LitElement {
     </petal-segmented-button>`;
   }
 
+  private onPresetClick(color: string, event: Event) {
+    this.hexColor = color;
+    this.updateHctFromHex(color);
+    this.dispatchEvent(new ChangeColorEvent(color, event));
+  }
+
   private onSliderInput() {
     for (const slider of this.sliders) {
       this[slider.type] = slider.value;
@@ -215,7 +264,7 @@ export class ThemeChanger extends LitElement {
     const {button} = e.detail;
     const value = button.dataset.value as ColorMode;
     this.selectedColorMode = value;
-    this.dispatchEvent(new ChangeDarkModeEvent(value));
+    this.dispatchEvent(new ChangeDarkModeEvent(value, button));
   }
 
   static styles = css`
@@ -228,6 +277,8 @@ export class ThemeChanger extends LitElement {
       position: relative;
       display: flex;
       flex-direction: column;
+      width: 320px;
+      max-width: calc(100vw - 64px);
       margin: var(--catalog-spacing-m) var(--catalog-spacing-l);
     }
 
@@ -267,9 +318,64 @@ export class ThemeChanger extends LitElement {
 
     h2 {
       margin: 0;
-      text-align: center;
       position: relative;
       height: var(--_copy-button-icon-size);
+      font-size: 22px;
+      font-weight: 700;
+      line-height: var(--_copy-button-icon-size);
+    }
+
+    .presets {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 4px;
+    }
+
+    .presets button {
+      appearance: none;
+      display: block;
+      width: 100%;
+      aspect-ratio: 1;
+      padding: 4px;
+      border: 0;
+      border-radius: 50%;
+      background: none;
+      cursor: pointer;
+      outline: 2px solid transparent;
+      outline-offset: -2px;
+    }
+
+    .presets button:focus-visible,
+    .presets button[aria-pressed='true'] {
+      outline-color: var(--md-sys-color-on-surface);
+    }
+
+    .presets petal-shape {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    details > summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 40px;
+      font-weight: 500;
+      cursor: pointer;
+      list-style: none;
+    }
+
+    details > summary::-webkit-details-marker {
+      display: none;
+    }
+
+    details[open] > summary petal-icon {
+      rotate: 180deg;
+    }
+
+    details > div {
+      margin-block-start: var(--catalog-spacing-m);
     }
 
     copy-code-button {

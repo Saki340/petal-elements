@@ -46,6 +46,18 @@ The values and the behavior follow Jetpack Compose Material 3
 and `ScrimTokens`). Compose has no stable side sheet component and no side
 sheet tokens, so there is no `petal-side-sheet`.
 
+<!-- catalog-only-start -->
+
+<!--
+
+## Interactive Demo
+
+{% playgroundexample dirname=dirname %}
+
+-->
+
+<!-- catalog-only-end -->
+
 ## Usage
 
 Put the content in the sheet and call `show()`. The sheet slides up from the

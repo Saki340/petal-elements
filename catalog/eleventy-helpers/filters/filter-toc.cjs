@@ -5,7 +5,7 @@
  */
 
 /**
- * A filter that sanitizes <md-*> tags in a string so that they can be rendered
+ * A filter that sanitizes <petal-*> tags in a string so that they can be rendered
  * as text in the TOC.
  *
  * @example
@@ -20,7 +20,7 @@
  */
 function filterToc(eleventyConfig) {
   eleventyConfig.addFilter('filterToc', function (text) {
-    const mdTagName = /<(md-.+?)>/g;
+    const mdTagName = /<((?:md|petal)-.+?)>/g;
     return text.replace(mdTagName, function (match, tagName) {
       return `&lt;${tagName}&gt;`;
     });

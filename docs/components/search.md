@@ -42,6 +42,18 @@ The values and the motion follow Jetpack Compose Material 3 (`SearchBar`,
 `ExpandedFullScreenSearchBar`, `ExpandedDockedSearchBar`, `SearchBarDefaults`,
 `SearchBarTokens`, `SearchViewTokens`).
 
+<!-- catalog-only-start -->
+
+<!--
+
+## Interactive Demo
+
+{% playgroundexample dirname=dirname %}
+
+-->
+
+<!-- catalog-only-end -->
+
 ## Usage
 
 `<petal-search-bar>` is the collapsed bar: a search icon, an input and an

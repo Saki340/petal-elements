@@ -7,5 +7,6 @@
 
 import 'petal-elements/list/list.js';
 import 'petal-elements/list/list-item.js';
+import 'petal-elements/icon/icon.js';
 import '../components/nav-drawer.js';
 import '../components/top-app-bar.js';
