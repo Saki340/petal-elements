@@ -79,5 +79,4 @@ need something that is not here.
 
 Roughly in this order:
 
-*   Missing components, after Compose: date ranges for the date picker, and
-    the Expressive time picker styles.
+*   Missing components, after Compose: the Expressive time picker styles.

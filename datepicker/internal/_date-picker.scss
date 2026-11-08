@@ -11,92 +11,22 @@
 // grid of three 72 by 36dp years 16dp apart that unfolds over the calendar;
 // and a text field padded 24dp at the sides, 10dp above and 16dp below.
 //
-// Selection colors change on the default effects spring. The year grid
-// unfolds downwards on the default effects spring and fades in from 60%, and
-// folds back fading out on the fast effects spring.
+// The year grid unfolds downwards on the default effects spring and fades in
+// from 60%, and folds back fading out on the fast effects spring.
 
 // go/keep-sorted start by_regex='(.+) prefix_order=sass:
-@use 'sass:map';
-@use '../../tokens/versions/compose/values/md-comp-date-picker-modal' as compose;
-@use '../../tokens/versions/v34/values/md-sys-motion-springs' as springs;
+@use 'date-entry' as entry;
 // go/keep-sorted end
 
-/** RecommendedSizeForAccessibility. */
-$_cell: 48px;
-
-@function _spring($name) {
-  @return map.get(springs.$values, 'spring-#{$name}-duration')
-    map.get(springs.$values, 'spring-#{$name}');
-}
-
-@function _spring-duration($name) {
-  @return map.get(springs.$values, 'spring-#{$name}-duration');
-}
-
-@function _token($name) {
-  @return var(--md-date-picker-#{$name}, #{map.get(compose.$values, $name)});
-}
-
-@function _faded($color) {
-  // DisabledAlpha.
-  @return color-mix(in srgb, #{$color} 38%, transparent);
-}
-
-@mixin _type($prefix) {
-  font-family: _token('#{$prefix}-font');
-  font-size: _token('#{$prefix}-size');
-  line-height: _token('#{$prefix}-line-height');
-  letter-spacing: _token('#{$prefix}-tracking');
-  font-weight: _token('#{$prefix}-weight');
-}
-
 @mixin styles() {
-  :host([hidden]) {
-    display: none;
-  }
-
-  :host {
-    --_container-color: #{_token('container-color')};
-    --_navigation-color: var(
-      --md-date-picker-navigation-content-color,
-      var(--md-sys-color-on-surface-variant, #49454f)
-    );
-
-    // DatePickerModalTokens.ContainerWidth; set a width to make it wider.
-    display: block;
-    box-sizing: border-box;
-    width: _token('container-width');
-    max-width: 100%;
-    background-color: var(--_container-color);
-    color: _token('date-unselected-label-text-color');
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  .date-picker {
-    display: flex;
-    flex-direction: column;
-  }
-
-  // Header (DatePickerHeader, DateEntryContainer).
+  @include entry.styles();
 
   .header {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    min-height: _token('header-container-height');
-    color: _token('header-headline-color');
+    min-height: entry.token('header-container-height');
   }
 
   .title {
     padding: 16px 12px 0 24px;
-    color: _token('header-supporting-text-color');
-    @include _type('header-supporting-text');
-  }
-
-  .headline-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
   }
 
   .headline {
@@ -106,39 +36,7 @@ $_cell: 48px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    @include _type('header-headline');
-  }
-
-  .mode-toggle {
-    flex: none;
-    margin: 0 12px 12px 0;
-  }
-
-  .icon {
-    width: 24px;
-    height: 24px;
-    fill: currentColor;
-  }
-
-  petal-divider {
-    --md-divider-color: var(
-      --md-date-picker-divider-color,
-      var(--md-sys-color-outline-variant, #cac4d0)
-    );
-  }
-
-  .panes {
-    position: relative;
-    overflow: clip;
-  }
-
-  .pane[hidden] {
-    display: none;
-  }
-
-  .pane.leaving {
-    position: absolute;
-    inset: 0 0 auto;
+    @include entry.type('header-headline');
   }
 
   // Months navigation (MonthsNavigation).
@@ -186,7 +84,7 @@ $_cell: 48px;
     scale: -1 1;
   }
 
-  // Calendar (WeekDays, HorizontalMonthsList, Month, Day).
+  // Calendar (HorizontalMonthsList).
 
   .calendar {
     position: relative;
@@ -194,28 +92,6 @@ $_cell: 48px;
 
   .grid {
     padding: 0 12px;
-  }
-
-  .weekdays,
-  .week {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-  }
-
-  .weekdays {
-    min-height: $_cell;
-    color: _token('weekdays-label-text-color');
-    @include _type('weekdays-label-text');
-  }
-
-  .weekday,
-  .cell {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: $_cell;
-    height: $_cell;
   }
 
   .viewport {
@@ -233,68 +109,11 @@ $_cell: 48px;
     flex: 0 0 100%;
     flex-direction: column;
     justify-content: space-evenly;
-    height: $_cell * 6;
+    height: entry.$cell * 6;
   }
 
   :host(:dir(rtl)) .track {
     translate: calc(100% + var(--_offset, 0px)) 0;
-  }
-
-  .day,
-  .year {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0;
-    padding: 0;
-    border: none;
-    outline: none;
-    background-color: transparent;
-    color: var(--_content-color);
-    cursor: pointer;
-    font: inherit;
-    letter-spacing: inherit;
-    transition:
-      background-color _spring('default-effects'),
-      color _spring('default-effects');
-    --md-ripple-hover-color: var(--_content-color);
-    --md-ripple-pressed-color: var(--_content-color);
-  }
-
-  .day {
-    --_content-color: #{_token('date-unselected-label-text-color')};
-    width: _token('date-container-width');
-    height: _token('date-container-height');
-    border-radius: _token('date-container-shape');
-    @include _type('date-label-text');
-  }
-
-  .day.today {
-    --_content-color: #{_token('date-today-label-text-color')};
-    box-shadow: inset 0 0 0 _token('date-today-container-outline-width')
-      _token('date-today-container-outline-color');
-  }
-
-  .day.selected {
-    --_content-color: #{_token('date-selected-label-text-color')};
-    background-color: _token('date-selected-container-color');
-    box-shadow: none;
-  }
-
-  .day:disabled {
-    --_content-color: #{_faded(_token('date-unselected-label-text-color'))};
-    cursor: default;
-  }
-
-  .day.selected:disabled {
-    --_content-color: #{_faded(_token('date-selected-label-text-color'))};
-    background-color: _faded(_token('date-selected-container-color'));
-  }
-
-  .day petal-ripple,
-  .year petal-ripple {
-    border-radius: inherit;
   }
 
   // Years (YearPicker, Year).
@@ -307,9 +126,9 @@ $_cell: 48px;
     clip-path: inset(0 0 100% 0);
     opacity: 0;
     transition:
-      clip-path _spring('default-effects'),
-      opacity _spring('fast-effects'),
-      visibility 0s _spring-duration('default-effects');
+      clip-path entry.spring('default-effects'),
+      opacity entry.spring('fast-effects'),
+      visibility 0s entry.spring-duration('default-effects');
   }
 
   .years.open {
@@ -317,14 +136,14 @@ $_cell: 48px;
     clip-path: inset(0);
     opacity: 1;
     transition:
-      clip-path _spring('default-effects'),
-      opacity _spring('default-effects');
+      clip-path entry.spring('default-effects'),
+      opacity entry.spring('default-effects');
   }
 
   // expandVertically from the bottom: the grid comes down with the edge.
   .years-content {
     translate: 0 -100%;
-    transition: translate _spring('default-effects');
+    transition: translate entry.spring('default-effects');
   }
 
   .years.open .years-content {
@@ -338,30 +157,35 @@ $_cell: 48px;
     align-content: start;
     row-gap: 16px;
     box-sizing: border-box;
-    height: calc(#{$_cell} * 7 - 1px);
+    height: calc(#{entry.$cell} * 7 - 1px);
     padding: 0 12px;
     overflow-y: auto;
     background-color: var(--_container-color);
   }
 
   .year {
-    --_content-color: #{_token('selection-year-unselected-label-text-color')};
-    width: _token('selection-year-container-width');
-    height: _token('selection-year-container-height');
-    border-radius: _token('selection-year-state-layer-shape');
-    @include _type('selection-year-label-text');
+    @include entry.button();
+    --_content-color: #{entry.token('selection-year-unselected-label-text-color')};
+    width: entry.token('selection-year-container-width');
+    height: entry.token('selection-year-container-height');
+    border-radius: entry.token('selection-year-state-layer-shape');
+    @include entry.type('selection-year-label-text');
   }
 
   .year.current {
-    --_content-color: #{_token('date-today-label-text-color')};
-    box-shadow: inset 0 0 0 _token('date-today-container-outline-width')
-      _token('date-today-container-outline-color');
+    --_content-color: #{entry.token('date-today-label-text-color')};
+    box-shadow: inset 0 0 0 entry.token('date-today-container-outline-width')
+      entry.token('date-today-container-outline-color');
   }
 
   .year.selected {
-    --_content-color: #{_token('selection-year-selected-label-text-color')};
-    background-color: _token('selection-year-selected-container-color');
+    --_content-color: #{entry.token('selection-year-selected-label-text-color')};
+    background-color: entry.token('selection-year-selected-container-color');
     box-shadow: none;
+  }
+
+  .year petal-ripple {
+    border-radius: inherit;
   }
 
   // Text input (DateInputContent).
@@ -380,7 +204,6 @@ $_cell: 48px;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .day,
     .year,
     .years,
     .years.open,
@@ -390,20 +213,14 @@ $_cell: 48px;
   }
 
   @media (forced-colors: active) {
-    .day.selected,
     .year.selected {
       forced-color-adjust: none;
       background-color: Highlight;
       color: HighlightText;
     }
 
-    .day.today,
     .year.current {
       box-shadow: inset 0 0 0 1px CanvasText;
-    }
-
-    .day:disabled {
-      color: GrayText;
     }
   }
 }

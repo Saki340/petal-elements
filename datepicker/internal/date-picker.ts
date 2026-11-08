@@ -11,12 +11,11 @@ import '../../iconbutton/icon-button.js';
 import '../../ripple/ripple.js';
 import '../../textfield/outlined-text-field.js';
 
-import {html, isServer, LitElement, nothing, PropertyValues, svg} from 'lit';
+import {html, isServer, nothing, PropertyValues} from 'lit';
 import {property, query, state} from 'lit/decorators.js';
 import {classMap} from 'lit/directives/class-map.js';
 
-import {mixinElementInternals} from '../../behaviors/element-internals.js';
-import {getFormValue, mixinFormAssociated} from '../../behaviors/form-associated.js';
+import {getFormValue} from '../../behaviors/form-associated.js';
 import {
   DEFAULT_EFFECTS,
   DEFAULT_SPATIAL,
@@ -36,7 +35,6 @@ import {
   dateParts,
   daysInMonth,
   firstDayOf,
-  firstDayOfWeek,
   formatIso,
   formatter,
   monthOf,
@@ -46,74 +44,19 @@ import {
   toInputDigits,
   today,
   weekday,
-  weekdayNames,
   withDelimiters,
 } from './calendar.js';
+import {
+  DAYS_IN_WEEK,
+  DateEntry,
+  DatePickerDisplayMode,
+  fill,
+  ICONS,
+  icon,
+  ROWS,
+} from './date-entry.js';
 
-/** The date picker's display mode, as Compose's `DisplayMode`. */
-export type DatePickerDisplayMode = 'picker' | 'input';
-
-/**
- * The text the date picker reads out or shows in errors, to replace its
- * English defaults (Compose's strings). `%1` and `%2` are replaced.
- */
-export interface DatePickerMessages {
-  switchToInputMode?: string;
-  switchToCalendarMode?: string;
-  previousMonth?: string;
-  nextMonth?: string;
-  switchToYearSelection?: string;
-  switchToDaySelection?: string;
-  navigateToYear?: string;
-  today?: string;
-  noSelection?: string;
-  headlineDescription?: string;
-  inputHeadlineDescription?: string;
-  invalidPattern?: string;
-  invalidYearRange?: string;
-  invalidNotAllowed?: string;
-}
-
-const DEFAULT_MESSAGES = {
-  switchToInputMode: 'Switch to text input mode',
-  switchToCalendarMode: 'Switch to calendar input mode',
-  previousMonth: 'Change to previous month',
-  nextMonth: 'Change to next month',
-  switchToYearSelection: 'Activate to change the year',
-  switchToDaySelection: 'Activate to change month and date',
-  navigateToYear: 'Navigate to year %1',
-  today: 'Today',
-  noSelection: 'None',
-  headlineDescription: 'Current selection: %1',
-  inputHeadlineDescription: 'Entered date: %1',
-  invalidPattern: 'Date does not match expected pattern: %1',
-  invalidYearRange: 'Date out of expected year range %1 - %2',
-  invalidNotAllowed: 'Date not allowed: %1',
-};
-
-/**
- * A language tag Intl accepts: without a POSIX `@` part (some systems report
- * `en-US@posix`), canonical, else `en-US`.
- */
-function validLocale(tag: string | null | undefined) {
-  try {
-    return Intl.getCanonicalLocales((tag ?? '').split('@')[0])[0] ?? 'en-US';
-  } catch {
-    return 'en-US';
-  }
-}
-
-function fill(template: string, ...values: string[]) {
-  return values.reduce((text, value, i) => text.replace(`%${i + 1}`, value), template);
-}
-
-/** DatePickerDefaults.YearRange. */
-const FIRST_YEAR = 1900;
-const LAST_YEAR = 2100;
-
-/** MaxCalendarRows, DaysInWeek. */
-const ROWS = 6;
-const DAYS_IN_WEEK = 7;
+export type {DatePickerDisplayMode, DatePickerMessages} from './date-entry.js';
 
 /**
  * The spring of LazyListState.animateScrollToItem (the default spring():
@@ -126,23 +69,6 @@ const FLING_VELOCITY = 400;
 
 /** How far a pointer moves before a swipe starts (px). */
 const TOUCH_SLOP = 8;
-
-// Material icons (Apache-2.0): edit, date_range, keyboard_arrow_left,
-// keyboard_arrow_right and arrow_drop_down.
-const ICONS = {
-  edit: 'M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z',
-  calendar:
-    'M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5a2 2 0 0 0-1.99 2L3 20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 16H5V9h14v11z',
-  previous: 'M15.41 16.59 10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z',
-  next: 'M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z',
-  dropDown: 'M7 10l5 5 5-5z',
-};
-
-function icon(path: string, className = 'icon') {
-  return html`<svg class=${className} viewBox="0 0 24 24" aria-hidden="true">
-    ${svg`<path d=${path} />`}
-  </svg>`;
-}
 
 /** A swipe on the calendar. */
 interface DragState {
@@ -158,8 +84,6 @@ interface DragSample {
   t: number;
 }
 
-const datePickerBaseClass = mixinFormAssociated(mixinElementInternals(LitElement));
-
 /**
  * A date picker, after Jetpack Compose Material 3 (`DatePicker` in
  * DatePicker.kt and DateInput.kt): a header with the selected date, a month
@@ -169,35 +93,9 @@ const datePickerBaseClass = mixinFormAssociated(mixinElementInternals(LitElement
  * @fires input {Event} The selection changed. --bubbles --composed
  * @fires change {Event} The selection changed. --bubbles
  */
-export class DatePicker extends datePickerBaseClass {
+export class DatePicker extends DateEntry {
   /** The selected date, as an ISO date (`2026-10-21`), or `''`. */
   @property() value = '';
-
-  /** The earliest date that can be selected, as an ISO date. */
-  @property() min = '';
-
-  /** The latest date that can be selected, as an ISO date. */
-  @property() max = '';
-
-  /**
-   * The locale for month and weekday names, the date format and the first day
-   * of the week. Defaults to the closest `lang` attribute or the browser's
-   * language.
-   */
-  @property() locale = '';
-
-  /**
-   * The first day of the week, 0 for Sunday to 6 for Saturday. Defaults to the
-   * locale's.
-   */
-  @property({type: Number, attribute: 'first-day-of-week'}) firstDayOfWeek?: number;
-
-  /** `picker` shows the calendar, `input` a text field. */
-  @property({reflect: true, attribute: 'display-mode'})
-  displayMode: DatePickerDisplayMode = 'picker';
-
-  /** Hides the button that switches between the calendar and the text field. */
-  @property({type: Boolean, attribute: 'hide-mode-toggle'}) hideModeToggle = false;
 
   /** The title above the headline in calendar mode. */
   @property({attribute: 'picker-title'}) pickerTitle = 'Select date';
@@ -213,18 +111,6 @@ export class DatePicker extends datePickerBaseClass {
 
   /** The text field's label in text input mode. */
   @property({attribute: 'input-label'}) inputLabel = 'Date';
-
-  /** Hides the title and the headline, leaving only the calendar. */
-  @property({type: Boolean, attribute: 'no-header'}) noHeader = false;
-
-  /**
-   * Whether a date can be selected, as Compose's `SelectableDates`. Called
-   * with ISO dates between `min` and `max`.
-   */
-  @property({attribute: false}) isDateSelectable?: (date: string) => boolean;
-
-  /** Replaces some of the read-out and error texts. */
-  @property({attribute: false}) messages: DatePickerMessages = {};
 
   /** The month the calendar shows. */
   @state() private displayedMonth: CalendarMonth = monthOf(today());
@@ -308,69 +194,6 @@ export class DatePicker extends datePickerBaseClass {
     }
   }
 
-  // Locale and formats.
-
-  private get resolvedLocale() {
-    if (this.locale) return validLocale(this.locale);
-    if (isServer) return 'en-US';
-    // The closest `lang`, also across shadow roots (as in a dialog).
-    let node: Element | null = this;
-    while (node) {
-      const lang = node.closest('[lang]')?.getAttribute('lang');
-      if (lang) return validLocale(lang);
-      const root = node.getRootNode();
-      node = root instanceof ShadowRoot ? root.host : null;
-    }
-    return validLocale(navigator.language);
-  }
-
-  private get text() {
-    return {...DEFAULT_MESSAGES, ...this.messages};
-  }
-
-  // Range.
-
-  private get minDay() {
-    return parseIso(this.min);
-  }
-
-  private get maxDay() {
-    return parseIso(this.max);
-  }
-
-  private get firstMonth(): CalendarMonth {
-    const min = this.minDay;
-    return min === null ? {year: FIRST_YEAR, month: 1} : monthOf(min);
-  }
-
-  private get lastMonth(): CalendarMonth {
-    const max = this.maxDay;
-    return max === null ? {year: LAST_YEAR, month: 12} : monthOf(max);
-  }
-
-  private clampMonth(month: CalendarMonth): CalendarMonth {
-    if (monthsBetween(this.firstMonth, month) < 0) return this.firstMonth;
-    if (monthsBetween(month, this.lastMonth) < 0) return this.lastMonth;
-    return month;
-  }
-
-  private inRange(month: CalendarMonth) {
-    return (
-      monthsBetween(this.firstMonth, month) >= 0 && monthsBetween(month, this.lastMonth) >= 0
-    );
-  }
-
-  private isSelectable(day: number) {
-    const min = this.minDay;
-    const max = this.maxDay;
-    if (min !== null && day < min) return false;
-    if (max !== null && day > max) return false;
-    const {year} = dateParts(day);
-    if (min === null && year < FIRST_YEAR) return false;
-    if (max === null && year > LAST_YEAR) return false;
-    return this.isDateSelectable?.(formatIso(day)) ?? true;
-  }
-
   // Rendering.
 
   protected override render() {
@@ -405,20 +228,12 @@ export class DatePicker extends datePickerBaseClass {
       picker ? text.headlineDescription : text.inputHeadlineDescription,
       selected === null ? text.noSelection : format.description(selected),
     );
-    const toggle = this.hideModeToggle
-      ? nothing
-      : html`<petal-icon-button
-          class="mode-toggle"
-          aria-label=${picker ? text.switchToInputMode : text.switchToCalendarMode}
-          @click=${this.toggleDisplayMode}
-          >${icon(picker ? ICONS.edit : ICONS.calendar)}</petal-icon-button
-        >`;
     return html`
       <div class="header">
         <div class="title">${picker ? this.pickerTitle : this.inputTitle}</div>
         <div class="headline-row">
           <div class="headline" aria-live="polite" aria-label=${description}>${headline}</div>
-          ${toggle}
+          ${this.renderModeToggle(picker, this.toggleDisplayMode)}
         </div>
       </div>
       <petal-divider></petal-divider>
@@ -434,9 +249,7 @@ export class DatePicker extends datePickerBaseClass {
     const month = this.displayedMonth;
     const previous = addMonths(month, -1);
     const next = addMonths(month, 1);
-    const firstWeekday = this.firstDayOfWeek ?? firstDayOfWeek(locale);
-    const names = weekdayNames(locale);
-    const weekdays = Array.from({length: DAYS_IN_WEEK}, (_, i) => names[(firstWeekday + i) % 7]);
+    const firstWeekday = this.firstWeekday(locale);
     const open = this.yearPickerOpen;
     return html`
       <div class="nav ${classMap({'year-picker-open': open})}">
@@ -467,14 +280,7 @@ export class DatePicker extends datePickerBaseClass {
       </div>
       <div class="calendar">
         <div class="grid" role="grid" aria-label=${format.monthYear(month)}>
-          <div class="weekdays" role="row">
-            ${weekdays.map(
-              (name) =>
-                html`<div class="weekday" role="columnheader" aria-label=${name.full}>
-                  <span aria-hidden="true">${name.narrow}</span>
-                </div>`,
-            )}
-          </div>
+          ${this.renderWeekdays(locale)}
           <div
             class="viewport"
             @pointerdown=${this.handlePointerDown}
@@ -629,10 +435,6 @@ export class DatePicker extends datePickerBaseClass {
 
   // Paging between months.
 
-  private reducedMotion() {
-    return !isServer && matchMedia('(prefers-reduced-motion: reduce)').matches;
-  }
-
   /** Moves to the previous (-1) or next (1) month, sliding. */
   private page(direction: number, spec = SCROLL_SPRING, velocity = 0): Promise<void> {
     const target = addMonths(this.displayedMonth, direction);
@@ -768,48 +570,14 @@ export class DatePicker extends datePickerBaseClass {
   private handleDayKeydown(event: KeyboardEvent) {
     const button = (event.target as HTMLElement).closest<HTMLElement>('.day');
     if (!button) return;
-    const day = Number(button.dataset['day']);
-    const rtl = getComputedStyle(this).direction === 'rtl';
-    const {year, month, day: date} = dateParts(day);
-    const firstWeekday = this.firstDayOfWeek ?? firstDayOfWeek(this.resolvedLocale);
-    let target: number;
-    switch (event.key) {
-      case 'ArrowLeft':
-        target = day + (rtl ? 1 : -1);
-        break;
-      case 'ArrowRight':
-        target = day + (rtl ? -1 : 1);
-        break;
-      case 'ArrowUp':
-        target = day - 7;
-        break;
-      case 'ArrowDown':
-        target = day + 7;
-        break;
-      case 'Home':
-        target = day - ((weekday(day) - firstWeekday + 7) % 7);
-        break;
-      case 'End':
-        target = day + 6 - ((weekday(day) - firstWeekday + 7) % 7);
-        break;
-      case 'PageUp':
-      case 'PageDown': {
-        const step = event.key === 'PageUp' ? -1 : 1;
-        const to = addMonths({year, month}, event.shiftKey ? step * 12 : step);
-        target = firstDayOf(to) + Math.min(date, daysInMonth(to)) - 1;
-        break;
-      }
-      default:
-        return;
-    }
+    const target = this.dayKeyTarget(event, Number(button.dataset['day']));
+    if (target === null) return;
     event.preventDefault();
     this.moveFocusTo(target);
   }
 
   private async moveFocusTo(day: number) {
-    const min = this.minDay ?? firstDayOf({year: FIRST_YEAR, month: 1});
-    const max = this.maxDay ?? firstDayOf({year: LAST_YEAR, month: 12}) + 30;
-    if (day < min || day > max) return;
+    if (!this.isShownDay(day)) return;
     this.focusDay = day;
     const delta = monthsBetween(this.displayedMonth, monthOf(day));
     if (Math.abs(delta) === 1) {
@@ -966,21 +734,6 @@ export class DatePicker extends datePickerBaseClass {
     }
     this.typedValue = value;
     this.setValue(value);
-  }
-
-  /** DateInputValidator. */
-  private validate(day: number | null, pattern: string, locale: string) {
-    const text = this.text;
-    const format = formatter(locale);
-    if (day === null) return fill(text.invalidPattern, pattern);
-    const {year} = dateParts(day);
-    const first = this.firstMonth.year;
-    const last = this.lastMonth.year;
-    if (year < first || year > last) {
-      return fill(text.invalidYearRange, format.number(first), format.number(last));
-    }
-    if (!this.isSelectable(day)) return fill(text.invalidNotAllowed, format.headline(day));
-    return '';
   }
 
   private handleInputKeydown(event: KeyboardEvent) {

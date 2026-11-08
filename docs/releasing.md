@@ -13,8 +13,8 @@ How a version of petal-elements is published. Only maintainers do this.
 1.  On GitHub, in the repository settings:
     *   Pages > Build and deployment > Source: "GitHub Actions" (for the
         catalog, `.github/workflows/catalog.yml`).
-    *   Environments: create `npm`, and add required reviewers so that every
-        publish waits for approval.
+    *   Environments: create `npm`, with no required reviewers. The Trusted
+        Publisher below names this environment.
     *   Security: turn on private vulnerability reporting (see SECURITY.md).
 2.  On npmjs.com, in the package settings, add a Trusted Publisher: GitHub
     Actions, user `Saki340`, repository `petal-elements`, workflow
@@ -43,7 +43,8 @@ How a version of petal-elements is published. Only maintainers do this.
     npm pack --dry-run   # look at the file list
     ```
 
-4.  Commit, then tag and push:
+4.  Commit, then tag and push. Pushing the tag publishes the version: nothing
+    asks for approval after this, so finish the checks first.
 
     ```sh
     git tag v0.2.0
@@ -51,9 +52,8 @@ How a version of petal-elements is published. Only maintainers do this.
     ```
 
 5.  The "Release" workflow (`.github/workflows/release.yml`) runs the checks
-    again and publishes to npm through trusted publishing, after approval in
-    the `npm` environment; npm adds provenance itself. It fails if the tag
-    does not match `package.json`.
+    again and publishes to npm through trusted publishing; npm adds provenance
+    itself. It fails if the tag does not match `package.json`.
 6.  Create a GitHub release for the tag with the changelog entries.
 
 ## What is published

@@ -164,6 +164,10 @@ function openPickerDialog(tag: string, height = 640) {
 const SETUP: Record<string, (page: Page) => Promise<void | 'viewport'>> = {
   'images/dialog/hero.webp': (page) => showDialog(page),
   'images/datepicker/usage-dialog.webp': openPickerDialog('petal-date-picker-dialog'),
+  'images/datepicker/usage-date-range-dialog.webp': openPickerDialog(
+    'petal-date-range-picker-dialog',
+    720,
+  ),
   'images/timepicker/usage-dialog.webp': openPickerDialog('petal-time-picker-dialog', 720),
   'images/ripple/hero.webp': press('.ripple-container'),
   'images/ripple/usage.webp': press('.ripple-container'),

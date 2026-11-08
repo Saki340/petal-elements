@@ -2,6 +2,16 @@
 
 ## petal-elements
 
+### Unreleased
+
+#### Features
+
+* **datepicker:** `petal-date-range-picker` and
+  `petal-date-range-picker-dialog`, after Compose's `DateRangePicker`: a
+  scrolling list of months with the range as a band, and a text input mode with
+  a field for each date. See
+  [Date picker](docs/components/date-picker.md#date-ranges).
+
 ### 0.4.0 (2026-11-07)
 
 #### Features

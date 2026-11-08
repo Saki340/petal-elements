@@ -1,0 +1,62 @@
+//
+// Copyright 2026 Saki
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// The date range picker in a dialog. Compose has no dialog for it; its sample
+// (DateRangePickerSample) puts a row with Close and Save above the picker,
+// 12dp from the sides, and the header's 64dp start padding lines up with it.
+// The dialog has the date picker dialog's size and shape: 360dp wide and at
+// most 568dp high, the extra large shape on surface-container-high.
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'date-entry' as entry;
+// go/keep-sorted end
+
+@mixin styles() {
+  :host {
+    display: contents;
+  }
+
+  petal-dialog {
+    --md-dialog-container-color: #{entry.token('container-color')};
+    --md-dialog-container-shape: #{entry.token('container-shape')};
+    width: entry.token('container-width');
+    max-width: 100%;
+    max-height: min(#{entry.token('container-height')}, 100%);
+  }
+
+  // These win over the dialog's own padding for its slots.
+  .content {
+    display: flex;
+    flex-direction: column;
+    height: min(#{entry.token('container-height')}, 100dvh - 96px);
+    padding: 0;
+  }
+
+  // Text input takes only what it needs, as on a page.
+  .content:has(petal-date-range-picker[display-mode='input']) {
+    height: auto;
+  }
+
+  .toolbar {
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 12px;
+  }
+
+  .icon {
+    width: 24px;
+    height: 24px;
+    fill: currentColor;
+  }
+
+  petal-date-range-picker {
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+    height: auto;
+  }
+}

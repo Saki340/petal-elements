@@ -555,6 +555,14 @@ const galleries: Record<string, Gallery> = {
     ],
   },
 
+  'date-range-picker': {
+    states: ['default'],
+    rows: [
+      {name: 'range', render: () => html`<petal-date-range-picker lang="en-US" start="2030-05-08" end="2030-05-23"></petal-date-range-picker>`},
+      {name: 'input', render: () => html`<petal-date-range-picker lang="en-US" display-mode="input" start="2030-05-08" end="2030-05-23"></petal-date-range-picker>`},
+    ],
+  },
+
   'segmented-button': {
     states: ['default'],
     rows: [

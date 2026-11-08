@@ -7,5 +7,7 @@
 import 'petal-elements/button/filled-tonal-button.js';
 import 'petal-elements/datepicker/date-picker-dialog.js';
 import 'petal-elements/datepicker/date-picker.js';
+import 'petal-elements/datepicker/date-range-picker-dialog.js';
+import 'petal-elements/datepicker/date-range-picker.js';
 import 'petal-elements/icon/icon.js';
 import 'petal-elements/textfield/outlined-text-field.js';

@@ -7,12 +7,10 @@
 import '../../button/text-button.js';
 import '../../dialog/dialog.js';
 
-import {html, LitElement, PropertyValues} from 'lit';
-import {property, query, state} from 'lit/decorators.js';
+import {html, PropertyValues} from 'lit';
+import {property, state} from 'lit/decorators.js';
 
-import type {Dialog} from '../../dialog/internal/dialog.js';
-
-import type {DatePickerDisplayMode, DatePickerMessages} from './date-picker.js';
+import {DateEntryDialog} from './date-entry-dialog.js';
 
 /**
  * A date picker in a dialog, after Jetpack Compose Material 3
@@ -29,30 +27,9 @@ import type {DatePickerDisplayMode, DatePickerMessages} from './date-picker.js';
  * outside it. --cancelable
  * @fires change {Event} A date was confirmed with OK. --bubbles
  */
-export class DatePickerDialog extends LitElement {
-  /** Opens the dialog when `true`, closes it when `false`. */
-  @property({type: Boolean, reflect: true}) open = false;
-
+export class DatePickerDialog extends DateEntryDialog {
   /** The confirmed date, as an ISO date (`2026-10-21`), or `''`. */
   @property() value = '';
-
-  /** The earliest date that can be selected, as an ISO date. */
-  @property() min = '';
-
-  /** The latest date that can be selected, as an ISO date. */
-  @property() max = '';
-
-  /** The locale; see `petal-date-picker`. */
-  @property() locale = '';
-
-  /** The first day of the week, 0 for Sunday to 6 for Saturday. */
-  @property({type: Number, attribute: 'first-day-of-week'}) firstDayOfWeek?: number;
-
-  /** `picker` shows the calendar, `input` a text field. */
-  @property({attribute: 'display-mode'}) displayMode: DatePickerDisplayMode = 'picker';
-
-  /** Hides the button that switches between the calendar and the text field. */
-  @property({type: Boolean, attribute: 'hide-mode-toggle'}) hideModeToggle = false;
 
   /** The title above the headline in calendar mode. */
   @property({attribute: 'picker-title'}) pickerTitle = 'Select date';
@@ -75,45 +52,8 @@ export class DatePickerDialog extends LitElement {
   /** The dismiss button's label. */
   @property({attribute: 'dismiss-label'}) dismissLabel = 'Cancel';
 
-  /** Skips the opening and closing animations. */
-  @property({type: Boolean}) quick = false;
-
-  /** Whether a date can be selected; see `petal-date-picker`. */
-  @property({attribute: false}) isDateSelectable?: (date: string) => boolean;
-
-  /** Replaces some of the read-out and error texts. */
-  @property({attribute: false}) messages: DatePickerMessages = {};
-
   /** The date picked in the open dialog, not yet confirmed. */
   @state() private pending = '';
-
-  @query('petal-dialog') private readonly dialog!: Dialog | null;
-
-  /** How the dialog was last closed: `confirm`, `dismiss` or `''`. */
-  get returnValue() {
-    return this.dialog?.returnValue ?? '';
-  }
-
-  /** Opens the dialog. Resolves once it has opened. */
-  async show() {
-    if (this.open) return;
-    const opened = new Promise<void>((resolve) => (this.resolveShow = resolve));
-    this.open = true;
-    await opened;
-  }
-
-  /** Resolves the promise of `show()`. */
-  private resolveShow?: () => void;
-
-  private settleShow() {
-    this.resolveShow?.();
-    this.resolveShow = undefined;
-  }
-
-  /** Closes the dialog. Resolves once it has closed. */
-  async close(returnValue?: string) {
-    await this.dialog?.close(returnValue);
-  }
 
   protected override willUpdate(changed: PropertyValues<this>) {
     // Each opening starts from the confirmed date.
@@ -169,37 +109,5 @@ export class DatePickerDialog extends LitElement {
     this.value = this.pending;
     if (changed) this.dispatchEvent(new Event('change', {bubbles: true}));
     this.dialog?.close('confirm');
-  }
-
-  private dismiss() {
-    this.dialog?.close('dismiss');
-  }
-
-  private handleOpen(event: Event) {
-    // A prevented open leaves the dialog closed.
-    if (!this.redispatch(event)) {
-      this.open = false;
-      this.settleShow();
-    }
-  }
-
-  private handleOpened(event: Event) {
-    this.redispatch(event);
-    this.settleShow();
-  }
-
-  // The inner dialog stays open until its closing animation ends.
-  private handleClosed(event: Event) {
-    this.open = false;
-    this.redispatch(event);
-    this.settleShow();
-  }
-
-  /** Dispatches a copy of a dialog event on this element; false if prevented. */
-  private redispatch(event: Event) {
-    const copy = new Event(event.type, {cancelable: event.cancelable});
-    const proceed = this.dispatchEvent(copy);
-    if (!proceed) event.preventDefault();
-    return proceed;
   }
 }

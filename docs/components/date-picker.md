@@ -20,7 +20,7 @@ dirname: datepicker
 <!-- no-catalog-end -->
 
 [Date pickers](https://m3.material.io/components/date-pickers)<!-- {.external} -->
-let people select a date.
+let people select a date or a range of dates.
 
 </catalog-component-header-title>
 
@@ -38,8 +38,7 @@ let people select a date.
     <!-- {.external} -->
 
 This follows Jetpack Compose Material 3 (`DatePicker`, `DatePickerDialog`,
-`DateInput`, `DatePickerModalTokens`). Picking a range of dates
-(`DateRangePicker`) is not available yet.
+`DateInput`, `DateRangePicker`, `DatePickerModalTokens`).
 
 ## Usage
 
@@ -137,6 +136,61 @@ exist, is outside the years, or cannot be selected.
 <petal-date-picker display-mode="input" value="2026-10-21"></petal-date-picker>
 ```
 
+### Date ranges
+
+`petal-date-range-picker` selects a start and an end date. `start` and `end`
+are ISO dates, and `end` is `''` while only the start is selected. The first
+day picked is the start, a later or equal day is the end, and any other day
+starts over. Each pick fires `input` and `change`.
+
+<!-- no-catalog-start -->
+
+![A date range picker with October 12 to October 21, 2026 selected](images/datepicker/usage-date-range.webp)
+
+<!-- no-catalog-end -->
+<!-- catalog-include "figures/datepicker/usage-date-range.html" -->
+
+```html
+<petal-date-range-picker start="2026-10-12" end="2026-10-21"></petal-date-range-picker>
+```
+
+The months are a list that scrolls, so the picker needs a height: it is 568px
+high and 360px wide unless you set `height` and `width`. `showMonthOf()` scrolls
+to a month. `min`, `max`, `isDateSelectable`, `locale`, `first-day-of-week`,
+`display-mode`, `hide-mode-toggle`, `no-header` and `messages` work as on
+`petal-date-picker`; a range may go over days that cannot be picked, as in
+Compose. With a `name`, a form gets `<name>-start` and `<name>-end`.
+
+`petal-date-range-picker-dialog` shows it in a modal dialog with Close and Save,
+as Compose's sample does; Compose has no dialog of its own for ranges. Save takes
+both dates, and only then do `start` and `end` change and `change` fire.
+
+<!-- no-catalog-start -->
+
+![A date range picker dialog with Close and Save](images/datepicker/usage-date-range-dialog.webp)
+
+<!-- no-catalog-end -->
+<!-- catalog-include "figures/datepicker/usage-date-range-dialog.html" -->
+
+```html
+<petal-filled-tonal-button id="pick-dates">Pick dates</petal-filled-tonal-button>
+<petal-date-range-picker-dialog id="range-dialog"></petal-date-range-picker-dialog>
+
+<script type="module">
+  const dialog = document.querySelector('#range-dialog');
+  document.querySelector('#pick-dates').addEventListener('click', () => dialog.show());
+  dialog.addEventListener('change', () => console.log(dialog.start, dialog.end));
+</script>
+```
+
+In text input mode there is a field for each date. A date before the start in
+the end field, or after the end in the start field, shows Compose's
+`Invalid date range input`.
+
+The visible texts are the attributes `picker-title`, `input-title`, `start-label`
+and `end-label`, and on the dialog `confirm-label` and `dismiss-label`.
+`messages` also has `dayInRange` and `invalidRange`.
+
 ### Limits
 
 `min` and `max` limit the dates that can be picked, and the months and years
@@ -218,6 +272,10 @@ the first or last day turns the month. Each day is read with its full date,
 and today says so. The headline announces the selected date. In the year
 grid, the arrow keys move between years and Escape goes back to the days.
 
+The date range picker has one tab stop too, and the same keys move through the
+whole list of months. Each day is read with its role in the range: start date,
+end date or in range.
+
 ## Compose behavior
 
 *   The picker is 360dp wide on surface-container-high. The header is at least
@@ -238,6 +296,13 @@ grid, the arrow keys move between years and Escape goes back to the days.
 *   The dialog is 360dp wide and at most 568dp high, with the extra large
     shape; the buttons are 8dp apart, 6dp from the end and 8dp from the
     bottom.
+*   In the date range picker the header is at least 68dp, the title and the
+    dates start 64dp in, and the dates are in TitleLarge. Each month has a
+    TitleSmall subhead padded 24, 20 and 8dp.
+*   A range is a 40dp band in secondary container, from the middle of the first
+    day to the middle of the last, with on-secondary-container days. Only the
+    start date's circle fades in. The two modes cross-fade on the fast effects
+    spring.
 
 ## Theming
 
@@ -261,6 +326,9 @@ Token                                                  | Default value
 `--md-date-picker-selection-year-selected-container-color` | `--md-sys-color-primary`
 `--md-date-picker-navigation-content-color`            | `--md-sys-color-on-surface-variant`
 `--md-date-picker-divider-color`                       | `--md-sys-color-outline-variant`
+`--md-date-picker-range-selection-active-indicator-container-color` | `--md-sys-color-secondary-container`
+`--md-date-picker-selection-date-in-range-label-text-color` | `--md-sys-color-on-secondary-container`
+`--md-date-picker-range-selection-month-subhead-color` | `--md-sys-color-on-surface-variant`
 
 ### Example
 
@@ -287,17 +355,17 @@ Token                                                  | Default value
 | Property | Attribute | Type | Default | Description |
 | --- | --- | --- | --- | --- |
 | `value` | `value` | `string` | `''` | The selected date, as an ISO date (`2026-10-21`), or `''`. |
-| `min` | `min` | `string` | `''` | The earliest date that can be selected, as an ISO date. |
-| `max` | `max` | `string` | `''` | The latest date that can be selected, as an ISO date. |
-| `locale` | `locale` | `string` | `''` | The locale for month and weekday names, the date format and the first day of the week. Defaults to the closest `lang` attribute or the browser's language. |
-| `firstDayOfWeek` | `first-day-of-week` | `number` | `undefined` | The first day of the week, 0 for Sunday to 6 for Saturday. Defaults to the locale's. |
-| `displayMode` | `display-mode` | `DatePickerDisplayMode` | `'picker'` | `picker` shows the calendar, `input` a text field. |
-| `hideModeToggle` | `hide-mode-toggle` | `boolean` | `false` | Hides the button that switches between the calendar and the text field. |
 | `pickerTitle` | `picker-title` | `string` | `'Select date'` | The title above the headline in calendar mode. |
 | `inputTitle` | `input-title` | `string` | `'Select date'` | The title above the headline in text input mode. |
 | `pickerHeadline` | `picker-headline` | `string` | `'Selected date'` | The headline in calendar mode while no date is selected. |
 | `inputHeadline` | `input-headline` | `string` | `'Entered date'` | The headline in text input mode while no date is entered. |
 | `inputLabel` | `input-label` | `string` | `'Date'` | The text field's label in text input mode. |
+| `min` | `min` | `string` | `''` | The earliest date that can be selected, as an ISO date. |
+| `max` | `max` | `string` | `''` | The latest date that can be selected, as an ISO date. |
+| `locale` | `locale` | `string` | `''` | The locale for month and weekday names, the date format and the first day of the week. Defaults to the closest `lang` attribute or the browser's language. |
+| `firstDayOfWeek` | `first-day-of-week` | `number` | `undefined` | The first day of the week, 0 for Sunday to 6 for Saturday. Defaults to the locale's. |
+| `displayMode` | `display-mode` | `DatePickerDisplayMode` | `'picker'` | `picker` shows the calendar, `input` text fields. |
+| `hideModeToggle` | `hide-mode-toggle` | `boolean` | `false` | Hides the button that switches between the calendar and text input. |
 | `noHeader` | `no-header` | `boolean` | `false` | Hides the title and the headline, leaving only the calendar. |
 | `isDateSelectable` |  | `(date: string) => boolean` | `undefined` | Whether a date can be selected, as Compose's `SelectableDates`. Called with ISO dates between `min` and `max`. |
 | `messages` |  | `DatePickerMessages` | `{}` | Replaces some of the read-out and error texts. |
@@ -340,14 +408,7 @@ Token                                                  | Default value
 
 | Property | Attribute | Type | Default | Description |
 | --- | --- | --- | --- | --- |
-| `open` | `open` | `boolean` | `false` | Opens the dialog when `true`, closes it when `false`. |
 | `value` | `value` | `string` | `''` | The confirmed date, as an ISO date (`2026-10-21`), or `''`. |
-| `min` | `min` | `string` | `''` | The earliest date that can be selected, as an ISO date. |
-| `max` | `max` | `string` | `''` | The latest date that can be selected, as an ISO date. |
-| `locale` | `locale` | `string` | `''` | The locale; see `petal-date-picker`. |
-| `firstDayOfWeek` | `first-day-of-week` | `number` | `undefined` | The first day of the week, 0 for Sunday to 6 for Saturday. |
-| `displayMode` | `display-mode` | `DatePickerDisplayMode` | `'picker'` | `picker` shows the calendar, `input` a text field. |
-| `hideModeToggle` | `hide-mode-toggle` | `boolean` | `false` | Hides the button that switches between the calendar and the text field. |
 | `pickerTitle` | `picker-title` | `string` | `'Select date'` | The title above the headline in calendar mode. |
 | `inputTitle` | `input-title` | `string` | `'Select date'` | The title above the headline in text input mode. |
 | `pickerHeadline` | `picker-headline` | `string` | `'Selected date'` | The headline in calendar mode while no date is selected. |
@@ -355,6 +416,13 @@ Token                                                  | Default value
 | `inputLabel` | `input-label` | `string` | `'Date'` | The text field's label in text input mode. |
 | `confirmLabel` | `confirm-label` | `string` | `'OK'` | The confirm button's label. |
 | `dismissLabel` | `dismiss-label` | `string` | `'Cancel'` | The dismiss button's label. |
+| `open` | `open` | `boolean` | `false` | Opens the dialog when `true`, closes it when `false`. |
+| `min` | `min` | `string` | `''` | The earliest date that can be selected, as an ISO date. |
+| `max` | `max` | `string` | `''` | The latest date that can be selected, as an ISO date. |
+| `locale` | `locale` | `string` | `''` | The locale; see `petal-date-picker`. |
+| `firstDayOfWeek` | `first-day-of-week` | `number` | `undefined` | The first day of the week, 0 for Sunday to 6 for Saturday. |
+| `displayMode` | `display-mode` | `DatePickerDisplayMode` | `'picker'` | `picker` shows the calendar, `input` text fields. |
+| `hideModeToggle` | `hide-mode-toggle` | `boolean` | `false` | Hides the button that switches between the calendar and text input. |
 | `quick` | `quick` | `boolean` | `false` | Skips the opening and closing animations. |
 | `isDateSelectable` |  | `(date: string) => boolean` | `undefined` | Whether a date can be selected; see `petal-date-picker`. |
 | `messages` |  | `DatePickerMessages` | `{}` | Replaces some of the read-out and error texts. |
@@ -385,6 +453,115 @@ Token                                                  | Default value
 | `closed` | `Event` | No | No | The dialog has closed, after any animations. |
 | `cancel` | `Event` | No | No | The dialog was canceled with Escape or by clicking outside it. --cancelable |
 | `change` | `Event` | Yes | No | A date was confirmed with OK. |
+
+<!-- mdformat on(autogenerated might break rendering in catalog) -->
+
+### PetalDateRangePicker <code>&lt;petal-date-range-picker&gt;</code>
+
+#### Properties
+
+<!-- mdformat off(autogenerated might break rendering in catalog) -->
+
+| Property | Attribute | Type | Default | Description |
+| --- | --- | --- | --- | --- |
+| `start` | `start` | `string` | `''` | The first selected date, as an ISO date (`2026-10-21`), or `''`. |
+| `end` | `end` | `string` | `''` | The last selected date, as an ISO date, or `''` while only the first is selected. It is the same as `start` for a single day. |
+| `pickerTitle` | `picker-title` | `string` | `'Select dates'` | The title above the dates in calendar mode. |
+| `inputTitle` | `input-title` | `string` | `'Enter dates'` | The title above the dates in text input mode. |
+| `startLabel` | `start-label` | `string` | `'Start date'` | Names the first date: its text field and headline while it is empty. |
+| `endLabel` | `end-label` | `string` | `'End date'` | Names the last date: its text field and headline while it is empty. |
+| `min` | `min` | `string` | `''` | The earliest date that can be selected, as an ISO date. |
+| `max` | `max` | `string` | `''` | The latest date that can be selected, as an ISO date. |
+| `locale` | `locale` | `string` | `''` | The locale for month and weekday names, the date format and the first day of the week. Defaults to the closest `lang` attribute or the browser's language. |
+| `firstDayOfWeek` | `first-day-of-week` | `number` | `undefined` | The first day of the week, 0 for Sunday to 6 for Saturday. Defaults to the locale's. |
+| `displayMode` | `display-mode` | `DatePickerDisplayMode` | `'picker'` | `picker` shows the calendar, `input` text fields. |
+| `hideModeToggle` | `hide-mode-toggle` | `boolean` | `false` | Hides the button that switches between the calendar and text input. |
+| `noHeader` | `no-header` | `boolean` | `false` | Hides the title and the headline, leaving only the calendar. |
+| `isDateSelectable` |  | `(date: string) => boolean` | `undefined` | Whether a date can be selected, as Compose's `SelectableDates`. Called with ISO dates between `min` and `max`. |
+| `messages` |  | `DatePickerMessages` | `{}` | Replaces some of the read-out and error texts. |
+| `name` | `name` | `string` | `undefined` | The HTML name to use in form submission. |
+| `disabled` | `disabled` | `boolean` | `undefined` | Whether or not the element is disabled. |
+| `form` |  | `HTMLFormElement` | `undefined` | The associated form element with which this element's value will submit. |
+| `labels` |  | `NodeList` | `undefined` | The labels this element is associated with. |
+
+<!-- mdformat on(autogenerated might break rendering in catalog) -->
+
+#### Methods
+
+<!-- mdformat off(autogenerated might break rendering in catalog) -->
+
+| Method | Parameters | Returns | Description |
+| --- | --- | --- | --- |
+| `showMonthOf` | `date` | `void` | Scrolls to the month that has the given ISO date. |
+| `formResetCallback` | _None_ | `void` |  |
+| `formStateRestoreCallback` | `state` | `void` |  |
+
+<!-- mdformat on(autogenerated might break rendering in catalog) -->
+
+#### Events
+
+<!-- mdformat off(autogenerated might break rendering in catalog) -->
+
+| Event | Type | [Bubbles](https://developer.mozilla.org/en-US/docs/Web/API/Event/bubbles) | [Composed](https://developer.mozilla.org/en-US/docs/Web/API/Event/composed) | Description |
+| --- | --- | --- | --- | --- |
+| `input` | `Event` | Yes | Yes | The selection changed. |
+| `change` | `Event` | Yes | No | The selection changed. |
+
+<!-- mdformat on(autogenerated might break rendering in catalog) -->
+
+### PetalDateRangePickerDialog <code>&lt;petal-date-range-picker-dialog&gt;</code>
+
+#### Properties
+
+<!-- mdformat off(autogenerated might break rendering in catalog) -->
+
+| Property | Attribute | Type | Default | Description |
+| --- | --- | --- | --- | --- |
+| `start` | `start` | `string` | `''` | The confirmed first date, as an ISO date (`2026-10-21`), or `''`. |
+| `end` | `end` | `string` | `''` | The confirmed last date, as an ISO date, or `''`. |
+| `pickerTitle` | `picker-title` | `string` | `'Select dates'` | The title above the dates in calendar mode. |
+| `inputTitle` | `input-title` | `string` | `'Enter dates'` | The title above the dates in text input mode. |
+| `startLabel` | `start-label` | `string` | `'Start date'` | Names the first date: its text field and headline while it is empty. |
+| `endLabel` | `end-label` | `string` | `'End date'` | Names the last date: its text field and headline while it is empty. |
+| `confirmLabel` | `confirm-label` | `string` | `'Save'` | The confirm button's label. |
+| `dismissLabel` | `dismiss-label` | `string` | `'Close'` | The close button's accessible label. |
+| `open` | `open` | `boolean` | `false` | Opens the dialog when `true`, closes it when `false`. |
+| `min` | `min` | `string` | `''` | The earliest date that can be selected, as an ISO date. |
+| `max` | `max` | `string` | `''` | The latest date that can be selected, as an ISO date. |
+| `locale` | `locale` | `string` | `''` | The locale; see `petal-date-picker`. |
+| `firstDayOfWeek` | `first-day-of-week` | `number` | `undefined` | The first day of the week, 0 for Sunday to 6 for Saturday. |
+| `displayMode` | `display-mode` | `DatePickerDisplayMode` | `'picker'` | `picker` shows the calendar, `input` text fields. |
+| `hideModeToggle` | `hide-mode-toggle` | `boolean` | `false` | Hides the button that switches between the calendar and text input. |
+| `quick` | `quick` | `boolean` | `false` | Skips the opening and closing animations. |
+| `isDateSelectable` |  | `(date: string) => boolean` | `undefined` | Whether a date can be selected; see `petal-date-picker`. |
+| `messages` |  | `DatePickerMessages` | `{}` | Replaces some of the read-out and error texts. |
+| `returnValue` |  | `string` | `undefined` |  |
+
+<!-- mdformat on(autogenerated might break rendering in catalog) -->
+
+#### Methods
+
+<!-- mdformat off(autogenerated might break rendering in catalog) -->
+
+| Method | Parameters | Returns | Description |
+| --- | --- | --- | --- |
+| `show` | _None_ | `Promise<void>` | Opens the dialog. Resolves once it has opened. |
+| `close` | `returnValue` | `Promise<void>` | Closes the dialog. Resolves once it has closed. |
+
+<!-- mdformat on(autogenerated might break rendering in catalog) -->
+
+#### Events
+
+<!-- mdformat off(autogenerated might break rendering in catalog) -->
+
+| Event | Type | [Bubbles](https://developer.mozilla.org/en-US/docs/Web/API/Event/bubbles) | [Composed](https://developer.mozilla.org/en-US/docs/Web/API/Event/composed) | Description |
+| --- | --- | --- | --- | --- |
+| `open` | `Event` | No | No | The dialog is opening, before any animations. --cancelable |
+| `opened` | `Event` | No | No | The dialog has opened, after any animations. |
+| `close` | `Event` | No | No | The dialog is closing, before any animations. --cancelable |
+| `closed` | `Event` | No | No | The dialog has closed, after any animations. |
+| `cancel` | `Event` | No | No | The dialog was canceled with Escape or by clicking outside it. --cancelable |
+| `change` | `Event` | Yes | No | A range was confirmed with Save. |
 
 <!-- mdformat on(autogenerated might break rendering in catalog) -->
 

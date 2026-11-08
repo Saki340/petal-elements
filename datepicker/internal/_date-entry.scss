@@ -1,0 +1,229 @@
+//
+// Copyright 2026 Saki
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// What the date picker and the date range picker share, after Jetpack Compose
+// Material 3 (DateEntryContainer, WeekDays, Day, DatePickerModalTokens): the
+// surface, the header and its divider, the panes of the two modes, and 48dp
+// weekday and day cells holding 40dp days.
+//
+// Selection colors change on the default effects spring.
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'sass:map';
+@use '../../tokens/versions/compose/values/md-comp-date-picker-modal' as compose;
+@use '../../tokens/versions/v34/values/md-sys-motion-springs' as springs;
+// go/keep-sorted end
+
+/** RecommendedSizeForAccessibility. */
+$cell: 48px;
+
+@function spring($name) {
+  @return map.get(springs.$values, 'spring-#{$name}-duration')
+    map.get(springs.$values, 'spring-#{$name}');
+}
+
+@function spring-duration($name) {
+  @return map.get(springs.$values, 'spring-#{$name}-duration');
+}
+
+@function token($name) {
+  @return var(--md-date-picker-#{$name}, #{map.get(compose.$values, $name)});
+}
+
+@function faded($color) {
+  // DisabledAlpha.
+  @return color-mix(in srgb, #{$color} 38%, transparent);
+}
+
+@mixin type($prefix) {
+  font-family: token('#{$prefix}-font');
+  font-size: token('#{$prefix}-size');
+  line-height: token('#{$prefix}-line-height');
+  letter-spacing: token('#{$prefix}-tracking');
+  font-weight: token('#{$prefix}-weight');
+}
+
+/** A day or a year. */
+@mixin button() {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  color: var(--_content-color);
+  cursor: pointer;
+  font: inherit;
+  letter-spacing: inherit;
+  transition:
+    background-color spring('default-effects'),
+    color spring('default-effects');
+  --md-ripple-hover-color: var(--_content-color);
+  --md-ripple-pressed-color: var(--_content-color);
+}
+
+@mixin styles() {
+  :host([hidden]) {
+    display: none;
+  }
+
+  :host {
+    --_container-color: #{token('container-color')};
+    --_navigation-color: var(
+      --md-date-picker-navigation-content-color,
+      var(--md-sys-color-on-surface-variant, #49454f)
+    );
+
+    // DatePickerModalTokens.ContainerWidth; set a width to make it wider.
+    display: block;
+    box-sizing: border-box;
+    width: token('container-width');
+    max-width: 100%;
+    background-color: var(--_container-color);
+    color: token('date-unselected-label-text-color');
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .date-picker {
+    display: flex;
+    flex-direction: column;
+  }
+
+  // Header (DatePickerHeader, DateEntryContainer).
+
+  .header {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: token('header-headline-color');
+  }
+
+  .title {
+    color: token('header-supporting-text-color');
+    @include type('header-supporting-text');
+  }
+
+  .headline-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .mode-toggle {
+    flex: none;
+    margin: 0 12px 12px 0;
+  }
+
+  .icon {
+    width: 24px;
+    height: 24px;
+    fill: currentColor;
+  }
+
+  petal-divider {
+    --md-divider-color: var(
+      --md-date-picker-divider-color,
+      var(--md-sys-color-outline-variant, #cac4d0)
+    );
+  }
+
+  .panes {
+    position: relative;
+    overflow: clip;
+  }
+
+  .pane[hidden] {
+    display: none;
+  }
+
+  .pane.leaving {
+    position: absolute;
+    inset: 0 0 auto;
+  }
+
+  // Calendar (WeekDays, Month, Day).
+
+  .weekdays,
+  .week {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+
+  .weekdays {
+    min-height: $cell;
+    color: token('weekdays-label-text-color');
+    @include type('weekdays-label-text');
+  }
+
+  .weekday,
+  .cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: $cell;
+    height: $cell;
+  }
+
+  .day {
+    @include button();
+    --_content-color: #{token('date-unselected-label-text-color')};
+    width: token('date-container-width');
+    height: token('date-container-height');
+    border-radius: token('date-container-shape');
+    @include type('date-label-text');
+  }
+
+  .day.today {
+    --_content-color: #{token('date-today-label-text-color')};
+    box-shadow: inset 0 0 0 token('date-today-container-outline-width')
+      token('date-today-container-outline-color');
+  }
+
+  .day.selected {
+    --_content-color: #{token('date-selected-label-text-color')};
+    background-color: token('date-selected-container-color');
+    box-shadow: none;
+  }
+
+  .day:disabled {
+    --_content-color: #{faded(token('date-unselected-label-text-color'))};
+    cursor: default;
+  }
+
+  .day.selected:disabled {
+    --_content-color: #{faded(token('date-selected-label-text-color'))};
+    background-color: faded(token('date-selected-container-color'));
+  }
+
+  .day petal-ripple {
+    border-radius: inherit;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .day {
+      transition: none;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .day.selected {
+      forced-color-adjust: none;
+      background-color: Highlight;
+      color: HighlightText;
+    }
+
+    .day.today {
+      box-shadow: inset 0 0 0 1px CanvasText;
+    }
+
+    .day:disabled {
+      color: GrayText;
+    }
+  }
+}

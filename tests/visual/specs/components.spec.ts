@@ -28,6 +28,7 @@ const COMPONENTS = [
   'progress',
   'segmented-button',
   'date-picker',
+  'date-range-picker',
   'standard-bottom-sheet',
   'time-picker',
   'bottom-app-bar',

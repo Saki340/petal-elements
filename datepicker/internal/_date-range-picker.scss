@@ -1,0 +1,204 @@
+//
+// Copyright 2026 Saki
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// The date range picker after Jetpack Compose Material 3 (DateRangePicker.kt,
+// DateRangeInput.kt, DatePickerModalTokens): a header of at least 68dp with
+// the title and the dates (TitleLarge) padded 64dp at the start; the weekdays
+// over a list of months, each with a TitleSmall subhead padded 24, 20 and 8dp;
+// and a 40dp band behind the selected range, from the middle of the first day
+// to the middle of the last, without rounding where the rows end.
+//
+// Only the start date's container and days outside the range change color on
+// the default effects spring. The two modes cross-fade on the fast effects
+// spring.
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'date-entry' as entry;
+// go/keep-sorted end
+
+$_months-padding: 12px;
+$_month-height: 336px;
+// RangeSelectionHeaderContainerHeight - HeaderHeightOffset.
+$_header-offset: 60px;
+
+@mixin styles() {
+  @include entry.styles();
+
+  // Compose fills its parent; on a page it gets DatePickerModalTokens'
+  // height, and text input only what it needs. Set a height to change it.
+  :host {
+    display: flex;
+    flex-direction: column;
+    height: entry.token('container-height');
+  }
+
+  :host([display-mode='input']) {
+    height: auto;
+  }
+
+  .date-picker {
+    flex: 1;
+    min-height: 0;
+  }
+
+  .header {
+    flex: none;
+    min-height: calc(#{entry.token('range-selection-header-container-height')} - #{$_header-offset});
+  }
+
+  .title {
+    padding-inline: 64px 12px;
+  }
+
+  // Each date stays whole: the end date goes to a second line if needed.
+  .headline {
+    display: flex;
+    flex: 1;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: 4px;
+    min-width: 0;
+    padding-inline: 64px 12px;
+    padding-bottom: 12px;
+    white-space: nowrap;
+    @include entry.type('range-selection-header-headline');
+  }
+
+  .headline-start {
+    display: inline-flex;
+    gap: 4px;
+  }
+
+  .panes {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .pane.leaving {
+    inset: 0;
+  }
+
+  .picker-pane {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  // DateRangePickerContent, VerticalMonthsList.
+
+  .weekdays {
+    flex: none;
+    padding: 0 $_months-padding;
+  }
+
+  // No scroll bar, as Compose's list: it would take width from the days.
+  .list {
+    flex: 1;
+    min-height: 0;
+    padding: 0 $_months-padding;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: none;
+  }
+
+  .months {
+    position: relative;
+  }
+
+  .list-month {
+    position: absolute;
+    inset-inline: 0;
+    height: $_month-height;
+  }
+
+  .subhead {
+    box-sizing: border-box;
+    height: $_month-height - entry.$cell * 6;
+    padding-block: 20px 8px;
+    padding-inline-start: 24px;
+    color: entry.token('range-selection-month-subhead-color');
+    @include entry.type('range-selection-month-subhead');
+  }
+
+  .weeks {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: entry.$cell * 6;
+  }
+
+  // drawRangeBackground; behind the days, which come later and are positioned.
+  .range {
+    --_cell: min(#{entry.$cell}, 100% / 7);
+    --_gap: max(0px, (100% - #{entry.$cell * 7}) / 8);
+    position: absolute;
+    height: entry.token('range-selection-active-indicator-container-height');
+    background-color: entry.token('range-selection-active-indicator-container-color');
+  }
+
+  // dayContainerColor animates only the start date; dayContentColor only days
+  // not in a range.
+  .day {
+    transition: color entry.spring('default-effects');
+  }
+
+  .day.range-start {
+    transition:
+      background-color entry.spring('default-effects'),
+      color entry.spring('default-effects');
+  }
+
+  .day.in-range {
+    transition: none;
+  }
+
+  .day.range-start.in-range {
+    transition: background-color entry.spring('default-effects');
+  }
+
+  .day.in-range:not(.selected, :disabled) {
+    --_content-color: #{entry.token('selection-date-in-range-label-text-color')};
+  }
+
+  // Text input (DateRangeInputContent).
+
+  .input-pane {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 10px 24px 0;
+  }
+
+  .input-pane petal-outlined-text-field {
+    flex: 1;
+    min-width: 0;
+    margin-bottom: 16px;
+  }
+
+  // The error text takes the place of part of the space below.
+  .input-pane petal-outlined-text-field.has-error {
+    margin-bottom: 12px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .day,
+    .day.range-start,
+    .day.range-start.in-range {
+      transition: none;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .range {
+      forced-color-adjust: none;
+      background-color: Highlight;
+      opacity: 0.4;
+    }
+  }
+}

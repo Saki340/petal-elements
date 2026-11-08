@@ -13,10 +13,49 @@ import {
   formatIso,
   parseInputDigits,
   parseIso,
+  rangeRows,
   toInputDigits,
   weekday,
   withDelimiters,
 } from './calendar.js';
+
+describe('rangeRows', () => {
+  // October 2026 starts on a Thursday: four empty cells with weeks from Sunday.
+  const october = {year: 2026, month: 10};
+  const leading = 4;
+  const first = dayNumber(2026, 10, 1);
+  const on = (date: number) => first + date - 1;
+
+  it('is empty outside the month and for a single day', () => {
+    expect(rangeRows(october, leading, on(40), on(50))).toEqual([]);
+    expect(rangeRows(october, leading, on(-20), on(-10))).toEqual([]);
+    expect(rangeRows(october, leading, on(5), on(5))).toEqual([]);
+  });
+
+  it('goes from middle to middle in one row', () => {
+    expect(rangeRows(october, leading, on(5), on(7))).toEqual([
+      {row: 1, from: {column: 1, part: 0.5}, to: {column: 3, part: 0.5}},
+    ]);
+  });
+
+  it('reaches the edges of the rows in between', () => {
+    expect(rangeRows(october, leading, on(5), on(21))).toEqual([
+      {row: 1, from: {column: 1, part: 0.5}, to: null},
+      {row: 2, from: null, to: null},
+      {row: 3, from: null, to: {column: 3, part: 0.5}},
+    ]);
+  });
+
+  it('starts and ends on whole days when the range goes on in other months', () => {
+    expect(rangeRows(october, leading, on(-5), on(50))).toEqual([
+      {row: 0, from: {column: 4, part: 0}, to: null},
+      {row: 1, from: null, to: null},
+      {row: 2, from: null, to: null},
+      {row: 3, from: null, to: null},
+      {row: 4, from: null, to: {column: 6, part: 1}},
+    ]);
+  });
+});
 
 describe('date picker calendar', () => {
   it('reads and writes ISO dates without time zones', () => {

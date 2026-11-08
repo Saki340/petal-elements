@@ -1,0 +1,22 @@
+<!--
+  @license
+  Copyright 2026 Saki
+  SPDX-License-Identifier: Apache-2.0
+-->
+<div class="figure-wrapper">
+  <figure
+      style="justify-content: center; gap: 16px"
+      title="Date range picker dialog"
+      aria-label="A button that opens a date range picker dialog with Close and Save.">
+    <petal-filled-tonal-button id="pick-dates">Pick dates</petal-filled-tonal-button>
+    <petal-date-range-picker-dialog
+        lang="en-US"
+        id="range-dialog"
+        start="2026-10-12"
+        end="2026-10-21"></petal-date-range-picker-dialog>
+    <script type="module">
+      const dialog = document.getElementById('range-dialog');
+      document.getElementById('pick-dates').addEventListener('click', () => dialog.show());
+    </script>
+  </figure>
+</div>

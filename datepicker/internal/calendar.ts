@@ -126,7 +126,55 @@ const SUNDAY_FIRST = new Set(
 );
 const SATURDAY_FIRST = new Set('AE AF BH DJ DZ EG IQ IR JO KW LY OM QA SD SY'.split(' '));
 
-/** The weekdays' full and narrow names, from Sunday. */
+/** A point on a row of a month: in a column, at a part of its width. */
+export interface RangePoint {
+  column: number;
+  /** 0 is the column's start, 0.5 its middle and 1 its end. */
+  part: number;
+}
+
+/** The stretch of a row a selected range covers; null is the row's edge. */
+export interface RangeRow {
+  row: number;
+  from: RangePoint | null;
+  to: RangePoint | null;
+}
+
+const DAYS_IN_WEEK = 7;
+
+/**
+ * The stretches of a selected range in a month whose days start after
+ * `leading` empty cells (SelectedRangeInfo and drawRangeBackground): from the
+ * middle of the start date to the middle of the end date, past the edges of
+ * the rows in between, and from the first or to the last day where the range
+ * goes on in another month. Empty for a single day and outside the range.
+ */
+export function rangeRows(
+  month: CalendarMonth,
+  leading: number,
+  start: number,
+  end: number,
+): RangeRow[] {
+  const first = firstDayOf(month);
+  const last = first + daysInMonth(month) - 1;
+  if (start > last || end < first || start === end) return [];
+  const startsHere = start >= first;
+  const endsHere = end <= last;
+  const a = leading + (startsHere ? start - first : 0);
+  const b = leading + (endsHere ? end - first : last - first);
+  const firstRow = Math.floor(a / DAYS_IN_WEEK);
+  const lastRow = Math.floor(b / DAYS_IN_WEEK);
+  const from: RangePoint = {column: a % DAYS_IN_WEEK, part: startsHere ? 0.5 : 0};
+  const to: RangePoint = {column: b % DAYS_IN_WEEK, part: endsHere ? 0.5 : 1};
+  if (firstRow === lastRow) return [{row: firstRow, from, to}];
+  const rows: RangeRow[] = [{row: firstRow, from, to: null}];
+  for (let row = firstRow + 1; row < lastRow; row++) {
+    rows.push({row, from: null, to: null});
+  }
+  rows.push({row: lastRow, from: null, to});
+  return rows;
+}
+
 /** A weekday's full and narrow names. */
 export interface WeekdayName {
   full: string;
