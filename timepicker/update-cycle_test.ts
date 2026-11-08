@@ -15,6 +15,25 @@ import './time-picker.js';
 
 import type {PetalTimePicker} from './time-picker.js';
 
+describe('petal-time-picker scroll update cycle', () => {
+  const env = new Environment();
+
+  it('switches to the wheels and sets the time without extra updates', async () => {
+    const root = env.render(html`<div lang="en-US">
+      <petal-time-picker vibrant value="14:30"></petal-time-picker>
+    </div>`);
+    const picker = root.querySelector('petal-time-picker') as PetalTimePicker;
+    await env.waitForStability();
+    picker.displayMode = 'scroll';
+    await env.waitForStability();
+    picker.value = '09:05';
+    await env.waitForStability();
+    picker.hourCycle = '24';
+    await env.waitForStability();
+    expect(picker.displayMode).toBe('scroll');
+  });
+});
+
 describe('petal-time-picker update cycle', () => {
   // The Environment fails a test on Lit's change-in-update warnings.
   const env = new Environment();

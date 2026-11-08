@@ -1,0 +1,22 @@
+<!--
+  @license
+  Copyright 2026 Saki
+  SPDX-License-Identifier: Apache-2.0
+-->
+<div class="figure-wrapper">
+  <figure
+      style="justify-content: center; gap: 16px"
+      title="Scroll time picker dialog"
+      aria-label="A button that opens a dialog with two scroll wheels, Cancel and OK.">
+    <petal-filled-tonal-button id="pick-time">Pick a time</petal-filled-tonal-button>
+    <petal-time-picker-dialog
+        lang="en-US"
+        id="time-dialog"
+        display-mode="scroll"
+        value="14:30"></petal-time-picker-dialog>
+    <script type="module">
+      const dialog = document.getElementById('time-dialog');
+      document.getElementById('pick-time').addEventListener('click', () => dialog.show());
+    </script>
+  </figure>
+</div>

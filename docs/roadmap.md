@@ -79,4 +79,4 @@ need something that is not here.
 
 Roughly in this order:
 
-*   Missing components, after Compose: the Expressive time picker styles.
+*   Nothing is scheduled. Candidates: a vertical slider and swipe to dismiss.

@@ -8,6 +8,11 @@
 // and shape, as wide as the picker plus 24dp at each side; the LabelMedium
 // title 24dp from the top and start with 20dp below it; the actions 8dp
 // apart, as wide as the picker, with 24dp below them.
+//
+// Vibrant (VibrantTimePickerDialog, VibrantTimePickerCustomLayout): no title,
+// surface-container and the extra large shape; 12dp around the picker and
+// between it and the actions, and 24dp at the sides and above the actions
+// when the dial is beside the time.
 
 @mixin styles() {
   :host {
@@ -43,6 +48,28 @@
     align-items: center;
     gap: 8px;
     align-self: stretch;
+  }
+
+  petal-dialog:has(.vibrant) {
+    --md-dialog-container-color: var(--md-sys-color-surface-container, #f3edf7);
+    --md-dialog-container-shape: var(--md-sys-shape-corner-extra-large, 28px);
+  }
+
+  .layout.vibrant {
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .layout.vibrant.picker-mode.layout-horizontal {
+    gap: 24px;
+    padding: 12px 24px;
+  }
+
+  @media (orientation: landscape) and (max-height: 599px) {
+    .layout.vibrant.picker-mode.layout-auto {
+      gap: 24px;
+      padding: 12px 24px;
+    }
   }
 
   .spacer {

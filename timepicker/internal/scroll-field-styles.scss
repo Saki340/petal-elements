@@ -1,0 +1,126 @@
+//
+// Copyright 2026 Saki
+// SPDX-License-Identifier: Apache-2.0
+//
+
+// The wheel of the scroll time picker after Jetpack Compose Material 3
+// (ScrollField.kt): as wide and high as its host, with the large shape on
+// surface-container-lowest; pages of 200/3dp centered on the selected one.
+// Numbers in DisplayMedium and outline, the selected one in emphasized
+// DisplayLarge and on-surface, changing on the fast spatial spring.
+
+// go/keep-sorted start by_regex='(.+) prefix_order=sass:
+@use 'sass:map';
+@use '../../tokens/versions/v34/values/md-sys-motion-springs' as springs;
+// go/keep-sorted end
+
+$_page: calc(200px / 3);
+$_spring: map.get(springs.$values, 'spring-fast-spatial-duration')
+  map.get(springs.$values, 'spring-fast-spatial');
+
+:host {
+  display: block;
+  color: var(
+    --md-scroll-field-content-color,
+    var(--md-sys-color-outline, #79747e)
+  );
+  -webkit-tap-highlight-color: transparent;
+}
+
+.wheel {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  border-radius: var(--md-scroll-field-container-shape, var(--md-sys-shape-corner-large, 16px));
+  outline: none;
+  background-color: var(
+    --md-scroll-field-container-color,
+    var(--md-sys-color-surface-container-lowest, #ffffff)
+  );
+  cursor: pointer;
+  touch-action: none;
+  user-select: none;
+}
+
+:host([disabled]) .wheel {
+  cursor: default;
+  background-color: color-mix(
+    in srgb,
+    var(
+        --md-scroll-field-container-color,
+        var(--md-sys-color-surface-container-lowest, #ffffff)
+      )
+      38%,
+    transparent
+  );
+}
+
+.track {
+  position: absolute;
+  inset: 0;
+}
+
+.item {
+  position: absolute;
+  inset-inline: 0;
+  top: calc(50% + var(--_page) * #{$_page} - #{$_page} / 2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: $_page;
+  font-family: var(
+    --md-sys-typescale-display-medium-font,
+    var(--md-ref-typeface-brand, Roboto)
+  );
+  font-size: var(--md-sys-typescale-display-medium-size, 2.8125rem);
+  line-height: var(--md-sys-typescale-display-medium-line-height, 3.25rem);
+  letter-spacing: var(--md-sys-typescale-display-medium-tracking, 0);
+  font-weight: var(
+    --md-sys-typescale-display-medium-weight,
+    var(--md-ref-typeface-weight-regular, 400)
+  );
+  transition:
+    font-size $_spring,
+    line-height $_spring,
+    letter-spacing $_spring,
+    font-weight $_spring,
+    color $_spring;
+}
+
+.item.selected {
+  color: var(
+    --md-scroll-field-selected-content-color,
+    var(--md-sys-color-on-surface, #1d1b20)
+  );
+  font-family: var(
+    --md-sys-typescale-emphasized-display-large-font,
+    var(--md-ref-typeface-brand, Roboto)
+  );
+  font-size: var(--md-sys-typescale-emphasized-display-large-size, 3.5625rem);
+  line-height: var(--md-sys-typescale-emphasized-display-large-line-height, 4rem);
+  letter-spacing: var(--md-sys-typescale-emphasized-display-large-tracking, -0.015625rem);
+  font-weight: var(
+    --md-sys-typescale-emphasized-display-large-weight,
+    var(--md-ref-typeface-weight-medium, 500)
+  );
+}
+
+:host([disabled]) .item {
+  color: color-mix(in srgb, var(--md-sys-color-on-surface, #1d1b20) 38%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .item {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .wheel {
+    outline: 1px solid CanvasText;
+  }
+
+  .item.selected {
+    color: Highlight;
+  }
+}

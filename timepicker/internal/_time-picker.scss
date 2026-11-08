@@ -18,6 +18,14 @@
 //
 // Input: 96 by 72dp DisplayMedium fields, outlined 1dp (2dp focused) while
 // selected, with BodySmall supporting text 7dp below; the toggle 52 by 72dp.
+//
+// Vibrant (shapes.orVibrant, vibrantColors): 100 by 120dp boxes (132dp wide
+// for 24 hours when vertical) on surface-container-lowest with the large
+// shape, the selected one primary with a 2dp outline; a 16dp colon; the
+// toggle 56 by 120dp, 8dp between its buttons, 16dp after the time (8dp for
+// the fields and the wheels); the 256dp dial 12dp below the time or 52dp
+// beside it. Text fields are DisplayLarge, with supporting text only on an
+// error.
 
 // go/keep-sorted start by_regex='(.+) prefix_order=sass:
 @use 'sass:map';
@@ -33,6 +41,11 @@
 
 @function _p($name) {
   @return var(--md-time-picker-#{$name}, #{map.get(picker.$values, $name)});
+}
+
+/** A color vibrantColors takes from the color scheme instead of the tokens. */
+@function _v($name, $color, $fallback) {
+  @return var(--md-time-picker-#{$name}, var(--md-sys-color-#{$color}, #{$fallback}));
 }
 
 @function _i($name) {
@@ -66,6 +79,22 @@
 
   .dial {
     margin: 0 0 0 36px;
+  }
+
+  // Beside the dial, for HorizontalClockDisplay.
+  .vibrant.picker-mode .period {
+    gap: 16px;
+    width: _p('period-selector-horizontal-container-width');
+    height: 40px;
+    margin: 16px 0 0;
+  }
+
+  .vibrant.h24 .time-selector {
+    width: 100px;
+  }
+
+  .vibrant .dial {
+    margin: 0 0 0 52px;
   }
 }
 
@@ -395,6 +424,105 @@
 
   .support.error {
     color: var(--md-sys-color-error, #b3261e);
+  }
+
+  // Vibrant.
+
+  .vibrant {
+    // ClockFace always has ClockDialContainerSize.
+    --_dial-size: #{_p('clock-dial-container-size')};
+  }
+
+  .vibrant .time-selector {
+    width: 100px;
+    height: 120px;
+    border-radius: var(--md-sys-shape-corner-large, 16px);
+    background-color: _v('time-selector-unselected-container-color', 'surface-container-lowest', #ffffff);
+    color: _v('time-selector-unselected-label-text-color', 'on-surface', #1d1b20);
+  }
+
+  .vibrant.h24 .time-selector {
+    width: 132px;
+  }
+
+  .vibrant .time-selector.selected {
+    background-color: _v('time-selector-selected-container-color', 'surface-container-lowest', #ffffff);
+    color: _v('time-selector-selected-label-text-color', 'primary', #6750a4);
+    box-shadow: inset 0 0 0 2px var(--md-sys-color-primary, #6750a4);
+  }
+
+  .vibrant .separator,
+  .vibrant .input .separator {
+    width: 16px;
+    height: 120px;
+    @include _type(picker.$values, 'time-selector-separator');
+  }
+
+  .vibrant .period {
+    gap: 8px;
+    width: 56px;
+    height: 120px;
+    margin-inline-start: 16px;
+  }
+
+  .vibrant .input .period,
+  .vibrant .scroll .period {
+    margin-inline-start: 8px;
+  }
+
+  .vibrant .dial {
+    margin: 12px 0 0;
+    background-color: _v('clock-dial-color', 'surface-container-lowest', #ffffff);
+  }
+
+  .vibrant .field-column {
+    width: 100px;
+  }
+
+  .vibrant .time-field {
+    width: 100px;
+    height: 120px;
+    border-radius: var(--md-sys-shape-corner-large, 16px);
+    background-color: _v('time-selector-unselected-container-color', 'surface-container-lowest', #ffffff);
+    color: _v('time-selector-unselected-label-text-color', 'on-surface', #1d1b20);
+    @include _type(picker.$values, 'time-selector-label-text');
+  }
+
+  .vibrant .time-field.selected {
+    background-color: _v('time-selector-selected-container-color', 'surface-container-lowest', #ffffff);
+    color: _v('time-selector-selected-label-text-color', 'primary', #6750a4);
+    box-shadow: none;
+  }
+
+  .vibrant .time-field.selected:focus {
+    box-shadow: inset 0 0 0 2px var(--md-sys-color-primary, #6750a4);
+  }
+
+  .vibrant .time-field.invalid {
+    background-color: var(--md-sys-color-error-container, #f9dedc);
+    color: var(--md-sys-color-error, #b3261e);
+    box-shadow: inset 0 0 0 1px var(--md-sys-color-error, #b3261e);
+  }
+
+  .vibrant .time-field.invalid:focus {
+    box-shadow: inset 0 0 0 2px var(--md-sys-color-error, #b3261e);
+  }
+
+  // SupportingText only with `shapes == null || !isValid`.
+  .vibrant .support:not(.error) {
+    display: none;
+  }
+
+  // TimeScrollImpl.
+
+  .scroll {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  petal-scroll-field {
+    width: 100px;
+    height: 120px;
   }
 
   @media (prefers-reduced-motion: reduce) {

@@ -38,9 +38,9 @@ let people select a time.
     <!-- {.external} -->
 
 This follows Jetpack Compose Material 3 (`TimePicker`, `TimeInput`,
-`TimePickerDialog`, `TimePickerTokens`, `TimeInputTokens`). The Expressive
-styles (the vibrant colors and shapes, and the scroll wheel `TimeScroll`) are
-not available yet.
+`TimePickerDialog`, `TimeScroll`, `VibrantTimePickerDialog`, `TimePickerTokens`,
+`TimeInputTokens`). Compose's `TimeInput` and `TimeScroll` with a mode switch
+beside the fields (the `toggle` parameter) are not available.
 
 <!-- catalog-only-start -->
 
@@ -122,6 +122,42 @@ In the dialog, a button switches between the dial and the text fields;
 `hide-mode-toggle` removes it. `is24Hour` reads whether the picker uses 24
 hours (from `hour-cycle` or the locale).
 
+### Vibrant
+
+`vibrant` gives the dial and the text fields Compose's Expressive look: larger
+white boxes with the large shape, the selected number in primary with an
+outline, and in the text fields no supporting text unless there is an error.
+Put it on a surface with some color, like `surface-container`, which is what the
+vibrant dialog has.
+
+<!-- no-catalog-start -->
+
+![A vibrant time picker set to 2:30 PM](images/timepicker/usage-vibrant.webp)
+
+<!-- no-catalog-end -->
+<!-- catalog-include "figures/timepicker/usage-vibrant.html" -->
+
+```html
+<petal-time-picker vibrant value="14:30"></petal-time-picker>
+```
+
+### Scroll wheels
+
+`display-mode="scroll"` has two wheels that go round without end. Drag them,
+use a mouse wheel or the up and down keys, or click a number. They are always
+vibrant, as in Compose. The time changes as a wheel passes each number.
+
+<!-- no-catalog-start -->
+
+![A time picker with two scroll wheels set to 02 and 30](images/timepicker/usage-scroll.webp)
+
+<!-- no-catalog-end -->
+<!-- catalog-include "figures/timepicker/usage-scroll.html" -->
+
+```html
+<petal-time-picker display-mode="scroll" value="14:30"></petal-time-picker>
+```
+
 ### Dialog
 
 `petal-time-picker-dialog` shows the picker in a modal dialog with a title, a
@@ -152,6 +188,22 @@ The dialog fires `change` only when OK is pressed, and `open`, `opened`,
 is `confirm` after OK, `dismiss` after Cancel, and empty after Escape or a
 click outside. `quick` opens and closes it without the
 animation. Labels of the buttons are `confirm-label` and `dismiss-label`.
+
+`vibrant` on the dialog gives it Compose's `VibrantTimePickerDialog`: no title,
+surface-container and a vibrant picker. With `display-mode="scroll"` it is
+always vibrant, and the mode button goes between the wheels and the text fields;
+`scroll-mode-label` names that button.
+
+<!-- no-catalog-start -->
+
+![A dialog with two scroll wheels, Cancel and OK](images/timepicker/usage-scroll-dialog.webp)
+
+<!-- no-catalog-end -->
+<!-- catalog-include "figures/timepicker/usage-scroll-dialog.html" -->
+
+```html
+<petal-time-picker-dialog display-mode="scroll" value="14:30"></petal-time-picker-dialog>
+```
 
 ### Forms
 
@@ -196,6 +248,14 @@ text fields are named "Hour" and "Minute" and announce their errors.
 
 ## Compose behavior
 
+*   Vibrant: 100 by 120dp boxes on surface-container-lowest with the large
+    shape, 132dp wide for 24 hours when vertical; the selected one primary with
+    a 2dp primary outline; a 16dp separator; the toggle 56 by 120dp. The dial
+    is 12dp below the time, or 52dp beside it and always 256dp.
+*   The wheels are 100 by 120dp, with pages of 200/3dp centered on the selected
+    number: DisplayMedium in outline, the selected one emphasized DisplayLarge
+    in on-surface on the fast spatial spring. A fling moves at most one number,
+    as Compose's pager.
 *   The hour and minute are 96 by 80dp in DisplayLarge, primary-container
     when selected, with a 24dp colon. The AM and PM toggle is 52 by 80dp
     (216 by 38dp below the time when horizontal): two buttons 4dp apart that
@@ -231,6 +291,10 @@ Token                                                    | Default value
 `--md-time-picker-period-selector-selected-container-color` | `--md-sys-color-primary-container`
 `--md-time-picker-period-selector-unselected-container-color` | `--md-sys-color-surface-container-lowest`
 `--md-time-picker-clock-dial-container-size`             | `256px`
+`--md-scroll-field-container-color`                      | `--md-sys-color-surface-container-lowest`
+`--md-scroll-field-container-shape`                      | `--md-sys-shape-corner-large`
+`--md-scroll-field-content-color`                        | `--md-sys-color-outline`
+`--md-scroll-field-selected-content-color`               | `--md-sys-color-on-surface`
 
 <!-- auto-generated API docs start -->
 
@@ -246,7 +310,8 @@ Token                                                    | Default value
 | Property | Attribute | Type | Default | Description |
 | --- | --- | --- | --- | --- |
 | `value` | `value` | `string` | `''` | The time, as `HH:MM` in 24 hours (`14:30`), or `''` for none yet. |
-| `displayMode` | `display-mode` | `TimePickerDisplayMode` | `'picker'` | `picker` shows the clock dial, `input` text fields. |
+| `displayMode` | `display-mode` | `TimePickerDisplayMode` | `'picker'` | `picker` shows the clock dial, `input` text fields and `scroll` two scroll wheels, which are always vibrant. |
+| `vibrant` | `vibrant` | `boolean` | `false` | The Expressive colors, sizes and shapes of Compose's vibrant time picker. |
 | `hourCycle` | `hour-cycle` | `"" \| "12" \| "24"` | `''` | `12` or `24` hours. Defaults to the locale's: 24 hours for `de` or `zh`, 12 for `en-US`. |
 | `locale` | `locale` | `string` | `''` | The locale for numbers, AM and PM and the hour cycle. Defaults to the closest `lang` attribute or the browser's language. |
 | `layout` | `layout` | `TimePickerLayout` | `'auto'` | `vertical` (the dial below the time), `horizontal` (beside it), or `auto`: horizontal in a landscape viewport less than 600px high. |
@@ -294,7 +359,8 @@ Token                                                    | Default value
 | --- | --- | --- | --- | --- |
 | `open` | `open` | `boolean` | `false` | Opens the dialog when `true`, closes it when `false`. |
 | `value` | `value` | `string` | `''` | The confirmed time, as `HH:MM`, or `''`. |
-| `displayMode` | `display-mode` | `TimePickerDisplayMode` | `'picker'` | `picker` shows the clock dial, `input` text fields. |
+| `displayMode` | `display-mode` | `TimePickerDisplayMode` | `'picker'` | `picker` shows the clock dial, `input` text fields and `scroll` two scroll wheels. The mode button goes between the text fields and the other one. |
+| `vibrant` | `vibrant` | `boolean` | `false` | The dialog and picker of Compose's vibrant time picker; always for `scroll`. |
 | `hourCycle` | `hour-cycle` | `"" \| "12" \| "24"` | `''` | `12` or `24` hours; defaults to the locale's. |
 | `locale` | `locale` | `string` | `''` | The locale; see `petal-time-picker`. |
 | `layout` | `layout` | `TimePickerLayout` | `'auto'` | The picker's layout; see `petal-time-picker`. |
@@ -304,7 +370,8 @@ Token                                                    | Default value
 | `confirmLabel` | `confirm-label` | `string` | `'OK'` | The confirm button's label. |
 | `dismissLabel` | `dismiss-label` | `string` | `'Cancel'` | The dismiss button's label. |
 | `inputModeLabel` | `input-mode-label` | `string` | `'Switch to text input mode'` | The mode button's name with the dial. |
-| `pickerModeLabel` | `picker-mode-label` | `string` | `'Switch to clock mode'` | The mode button's name with the text fields. |
+| `pickerModeLabel` | `picker-mode-label` | `string` | `'Switch to clock mode'` | The mode button's name with the text fields, going to the clock. |
+| `scrollModeLabel` | `scroll-mode-label` | `string` | `'Switch to scroll mode'` | The mode button's name with the text fields, going to the wheels. |
 | `amLabel` | `am-label` | `string` | `''` | The AM label; see `petal-time-picker`. |
 | `pmLabel` | `pm-label` | `string` | `''` | The PM label; see `petal-time-picker`. |
 | `quick` | `quick` | `boolean` | `false` | Skips the opening and closing animations. |

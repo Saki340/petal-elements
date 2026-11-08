@@ -6,6 +6,7 @@
 
 import '../../focus/md-focus-ring.js';
 import '../../ripple/ripple.js';
+import './scroll-field.js';
 
 import {html, isServer, LitElement, nothing, PropertyValues} from 'lit';
 import {property, query, state} from 'lit/decorators.js';
@@ -15,6 +16,7 @@ import {mixinElementInternals} from '../../behaviors/element-internals.js';
 import {getFormValue, mixinFormAssociated} from '../../behaviors/form-associated.js';
 import {DEFAULT_SPATIAL, Spring, springFromCss} from '../../internal/motion/spring.js';
 
+import type {ScrollField} from './scroll-field.js';
 import {
   angleToHour,
   angleToMinute,
@@ -37,8 +39,11 @@ import {
 /** Which number the dial sets, Compose's `TimePickerSelectionMode`. */
 export type TimePickerSelection = 'hour' | 'minute';
 
-/** The clock dial or the text fields, Compose's `TimePickerDisplayMode`. */
-export type TimePickerDisplayMode = 'picker' | 'input';
+/**
+ * The clock dial, the text fields or the scroll wheels, Compose's
+ * `TimePickerDisplayMode`.
+ */
+export type TimePickerDisplayMode = 'picker' | 'input' | 'scroll';
 
 /** The arrangement: `vertical`, `horizontal`, or `auto` from the viewport. */
 export type TimePickerLayout = 'auto' | 'vertical' | 'horizontal';
@@ -111,7 +116,8 @@ const timePickerBaseClass = mixinFormAssociated(mixinElementInternals(LitElement
  * A time picker, after Jetpack Compose Material 3 (`TimePicker` and
  * `TimeInput` in TimePicker.kt): the hour and minute, an AM and PM toggle in
  * 12-hour time, and a clock dial to set them; or, in `input` mode, two text
- * fields.
+ * fields; or, in `scroll` mode, two wheels (`TimeScroll`). `vibrant` gives the
+ * dial and the text fields the Expressive colors, sizes and shapes.
  *
  * @fires input {Event} The time changed. --bubbles --composed
  * @fires change {Event} The time changed. --bubbles
@@ -120,9 +126,15 @@ export class TimePicker extends timePickerBaseClass {
   /** The time, as `HH:MM` in 24 hours (`14:30`), or `''` for none yet. */
   @property() value = '';
 
-  /** `picker` shows the clock dial, `input` text fields. */
+  /**
+   * `picker` shows the clock dial, `input` text fields and `scroll` two scroll
+   * wheels, which are always vibrant.
+   */
   @property({reflect: true, attribute: 'display-mode'})
   displayMode: TimePickerDisplayMode = 'picker';
+
+  /** The Expressive colors, sizes and shapes of Compose's vibrant time picker. */
+  @property({type: Boolean, reflect: true}) vibrant = false;
 
   /**
    * `12` or `24` hours. Defaults to the locale's: 24 hours for `de` or `zh`,
@@ -255,9 +267,20 @@ export class TimePicker extends timePickerBaseClass {
     const numbers = numberFormatter(locale);
     const periods = dayPeriods(locale);
     const labels = {am: this.amLabel || periods.am, pm: this.pmLabel || periods.pm};
-    const input = this.displayMode === 'input';
-    return html`<div class="time-picker ${input ? 'input-mode' : 'picker-mode'}">
-      ${input ? this.renderInput(numbers, labels) : this.renderPicker(numbers, labels)}
+    const mode = this.displayMode;
+    const classes = {
+      'picker-mode': mode === 'picker',
+      'input-mode': mode === 'input',
+      'scroll-mode': mode === 'scroll',
+      vibrant: this.vibrant || mode === 'scroll',
+      h24: this.is24Hour,
+    };
+    return html`<div class="time-picker ${classMap(classes)}">
+      ${mode === 'input'
+        ? this.renderInput(numbers, labels)
+        : mode === 'scroll'
+          ? this.renderScroll(numbers, labels)
+          : this.renderPicker(numbers, labels)}
     </div>`;
   }
 
@@ -434,6 +457,50 @@ export class TimePicker extends timePickerBaseClass {
       ${field('minute', this.minuteText, minuteValid, text.minuteField, text.minute, text.minuteError)}
       ${is24 ? nothing : this.renderPeriodToggle(labels)}
     </div>`;
+  }
+
+  // TimeScrollImpl: in 12 hours the wheel's values 0 to 11 are the hours 1 to 12.
+  private renderScroll(numbers: NumberFormatter, labels: DayPeriods) {
+    const text = this.text;
+    const is24 = this.is24Hour;
+    const wheelHour = (index: number) => (is24 ? index : index + 1);
+    return html`<div class="scroll" dir="ltr">
+      <petal-scroll-field
+        class="hour-wheel"
+        .count=${is24 ? 24 : 12}
+        .value=${is24 ? this.hour : (this.hour + 11) % 12}
+        .label=${text.selectHour}
+        .format=${(index: number) => numbers.two(wheelHour(index))}
+        .describe=${(index: number) =>
+          fill(is24 ? text.hour24Suffix : text.hourSuffix, String(wheelHour(index)))}
+        ?disabled=${this.disabled}
+        @input=${this.handleHourWheel}></petal-scroll-field>
+      <div class="separator" aria-hidden="true">:</div>
+      <petal-scroll-field
+        class="minute-wheel"
+        .count=${60}
+        .value=${this.minute}
+        .label=${text.selectMinute}
+        .format=${(index: number) => numbers.two(index)}
+        .describe=${(index: number) => fill(text.minuteSuffix, String(index))}
+        ?disabled=${this.disabled}
+        @input=${this.handleMinuteWheel}></petal-scroll-field>
+      ${is24 ? nothing : this.renderPeriodToggle(labels)}
+    </div>`;
+  }
+
+  private handleHourWheel(event: Event) {
+    event.stopPropagation();
+    const index = (event.target as ScrollField).value;
+    const hour = this.is24Hour ? index : ((index + 1) % 12) + (this.isPm ? 12 : 0);
+    this.setTime({hour, minute: this.minute});
+    this.resetFields();
+  }
+
+  private handleMinuteWheel(event: Event) {
+    event.stopPropagation();
+    this.setTime({hour: this.hour, minute: (event.target as ScrollField).value});
+    this.resetFields();
   }
 
   // State changes -------------------------------------------------------------

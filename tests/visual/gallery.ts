@@ -555,6 +555,16 @@ const galleries: Record<string, Gallery> = {
     ],
   },
 
+  'time-picker-expressive': {
+    states: ['default'],
+    rows: [
+      {name: 'vibrant', render: () => html`<petal-time-picker lang="en-US" vibrant layout="vertical" value="14:30"></petal-time-picker>`},
+      {name: 'vibrant 24 hours', render: () => html`<petal-time-picker lang="en-US" vibrant layout="vertical" hour-cycle="24" value="14:30"></petal-time-picker>`},
+      {name: 'vibrant input', render: () => html`<petal-time-picker lang="en-US" vibrant display-mode="input" value="09:05"></petal-time-picker>`},
+      {name: 'scroll', render: () => html`<petal-time-picker lang="en-US" display-mode="scroll" value="14:30"></petal-time-picker>`},
+    ],
+  },
+
   'date-range-picker': {
     states: ['default'],
     rows: [

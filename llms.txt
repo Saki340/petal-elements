@@ -116,7 +116,7 @@ Format: doc — import path(s) — tags — key attributes; slots; events.
 - [Switch](docs/components/switch.md) — `switch/switch.js` — `petal-switch` — `selected`, `icons`, `show-only-selected-icon`, `name`, `value`; event `change`
 - [Slider](docs/components/slider.md) — `slider/slider.js` — `petal-slider` — `min`, `max`, `step`, `value`, `ticks`, `labeled`, `value-label`, `range` with `value-start`/`value-end`; events `input` (drag), `change` (release)
 - [Date picker](docs/components/date-picker.md) — `datepicker/{date-picker,date-picker-dialog}.js` — `petal-date-picker` (inline) and `petal-date-picker-dialog` (`show()`) — `value` (ISO `2026-10-21`), `min`, `max`, `locale`, `display-mode` (picker|input), `isDateSelectable`; event `change` (dialog: on OK). Date ranges: `datepicker/{date-range-picker,date-range-picker-dialog}.js` — `petal-date-range-picker` and `petal-date-range-picker-dialog` — `start`, `end` (ISO), the same limits; event `change` (dialog: on Save)
-- [Time picker](docs/components/time-picker.md) — `timepicker/{time-picker,time-picker-dialog}.js` — `petal-time-picker`, `petal-time-picker-dialog` — `value` (`HH:MM`, 24 h), `hour-cycle` (12|24), `locale`, `display-mode` (picker|input), `layout`; event `change`
+- [Time picker](docs/components/time-picker.md) — `timepicker/{time-picker,time-picker-dialog}.js` — `petal-time-picker`, `petal-time-picker-dialog` — `value` (`HH:MM`, 24 h), `hour-cycle` (12|24), `locale`, `display-mode` (picker|input), `layout`; event `change`. Expressive: `vibrant`, and `display-mode="scroll"` for two scroll wheels
 
 ### Feedback
 

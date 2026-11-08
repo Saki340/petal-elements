@@ -11,6 +11,10 @@
   scrolling list of months with the range as a band, and a text input mode with
   a field for each date. See
   [Date picker](docs/components/date-picker.md#date-ranges).
+* **timepicker:** the Expressive time picker of Compose: `vibrant` on
+  `petal-time-picker` and `petal-time-picker-dialog`, and two scroll wheels with
+  `display-mode="scroll"`. See
+  [Time picker](docs/components/time-picker.md#vibrant).
 
 ### 0.4.0 (2026-11-07)
 

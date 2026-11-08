@@ -31,6 +31,7 @@ const COMPONENTS = [
   'date-range-picker',
   'standard-bottom-sheet',
   'time-picker',
+  'time-picker-expressive',
   'bottom-app-bar',
   'rich-tooltip',
   'carousel',

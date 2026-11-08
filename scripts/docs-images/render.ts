@@ -169,6 +169,7 @@ const SETUP: Record<string, (page: Page) => Promise<void | 'viewport'>> = {
     720,
   ),
   'images/timepicker/usage-dialog.webp': openPickerDialog('petal-time-picker-dialog', 720),
+  'images/timepicker/usage-scroll-dialog.webp': openPickerDialog('petal-time-picker-dialog', 420),
   'images/ripple/hero.webp': press('.ripple-container'),
   'images/ripple/usage.webp': press('.ripple-container'),
   'images/ripple/theming.webp': press('.ripple-container'),
